@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="score"
+            type="Integer" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dialogBackground"
+        tools:context=".ui.block_2048.dialog.Block2048GameOverDialog">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/alata"
+            android:gravity="center"
+            android:text="@{`Your Score: ` + String.valueOf(score)}"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            tools:text="2048" />
+
+    </FrameLayout>
+
+</layout>

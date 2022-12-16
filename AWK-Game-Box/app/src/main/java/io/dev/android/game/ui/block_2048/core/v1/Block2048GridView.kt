@@ -2,12 +2,13 @@ package io.dev.android.game.ui.block_2048.core.v1
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import io.dev.android.game.util.DensityUtil.dpInt
 import io.dev.android.game.util.LogUtil
 
 class Block2048GridView(
@@ -22,11 +23,6 @@ class Block2048GridView(
 
     companion object {
         private const val TAG = "Block2048GridView"
-
-        // Layout parameter
-        private val BLOCK_SIZE = 64.dpInt()
-        private const val cubeMargin = 12
-        private const val CONSTRAINT_RATIO = "1:1"
 
         // Available status of cube
         const val NO_MOVE = 0
@@ -44,10 +40,10 @@ class Block2048GridView(
     fun initGameMap() {
         for (y in 0 until size) {
             for (x in 0 until size) {
-                val cube = mapArray[y][x]
+                val cube = mapArray[x][y]
                 if (cube != null) {
                     cube.visibility = View.GONE
-                    mapArray[y][x] = null
+                    mapArray[x][y] = null
                 }
             }
         }
@@ -78,14 +74,13 @@ class Block2048GridView(
     }
 
     fun createNewCube(y: Int, x: Int, value: Int) {
-        LogUtil.debug(TAG, "[createNewCube]: ($x, $y)")
+        LogUtil.debug(TAG, "[createNewCube]: ($y, $x)")
         val autoTransition: AutoTransition = AutoTransition().apply { duration = 100 }
         val constraintSet = ConstraintSet()
-        val newCube: Block2048GameCube = Block2048GameCube(context).apply {
-            id = View.generateViewId()
-            setValue(value)
-            setCurrentPosition(y, x)
-        }
+        val newCube = Block2048GameCube(context)
+        newCube.id = View.generateViewId()
+        newCube.setCurrentPosition(y, x)
+        newCube.setValue(value)
         mapArray[y][x] = newCube
         // Add new cube to map container
         containerLayout.addView(newCube)
@@ -100,19 +95,19 @@ class Block2048GridView(
     }
 
     private fun setDefaultConstraint(constraintSet: ConstraintSet, id: Int) {
-        constraintSet.constrainHeight(id, BLOCK_SIZE)
-        constraintSet.constrainWidth(id, BLOCK_SIZE)
-        constraintSet.setDimensionRatio(id, CONSTRAINT_RATIO)
+        constraintSet.constrainHeight(id, 0)
+        constraintSet.constrainWidth(id, 0)
+        constraintSet.setDimensionRatio(id, "1:1")
     }
 
     @SuppressLint("DiscouragedApi")
     private fun setPositionConstraint(constraintSet: ConstraintSet, id: Int, y: Int, x: Int) {
         val identifierName = "cube_${y}_${x}"
         val constrainId: Int = context.resources.getIdentifier(identifierName, "id", context.packageName)
-        constraintSet.connect(id, ConstraintSet.LEFT, constrainId, ConstraintSet.LEFT, cubeMargin)
-        constraintSet.connect(id, ConstraintSet.RIGHT, constrainId, ConstraintSet.RIGHT, cubeMargin)
-        constraintSet.connect(id, ConstraintSet.TOP, constrainId, ConstraintSet.TOP, cubeMargin)
-        constraintSet.connect(id, ConstraintSet.BOTTOM, constrainId, ConstraintSet.BOTTOM, cubeMargin)
+        constraintSet.connect(id, ConstraintSet.LEFT, constrainId, ConstraintSet.LEFT, 0)
+        constraintSet.connect(id, ConstraintSet.RIGHT, constrainId, ConstraintSet.RIGHT, 0)
+        constraintSet.connect(id, ConstraintSet.TOP, constrainId, ConstraintSet.TOP, 0)
+        constraintSet.connect(id, ConstraintSet.BOTTOM, constrainId, ConstraintSet.BOTTOM, 0)
     }
 
     private fun getVector(direction: Int): Pair<Int, Int> {
@@ -121,13 +116,13 @@ class Block2048GridView(
             ACTION_DOWN -> Pair(1, 0)
             ACTION_LEFT -> Pair(0, -1)
             ACTION_RIGHT -> Pair(0, 1)
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("$TAG getVector error")
         }
     }
 
     private fun getTraversals(vector: Pair<Int, Int>): Pair<IntArray, IntArray> {
-        val arrayY = IntArray(size)
-        val arrayX = IntArray(size)
+        val arrayY = IntArray(size) { i -> i }
+        val arrayX = IntArray(size) { i -> i }
         if (vector.first == 1) {
             arrayY.reverse()
         } else if (vector.second == 1) {
@@ -143,7 +138,8 @@ class Block2048GridView(
         // Initialize value of other position
         for (y in traversal.first) {
             for (x in traversal.second) {
-                mapArray[y][x]?.let { gameCube ->
+                val gameCube = mapArray[y][x]
+                if (gameCube != null) {
                     gameCube.currentPosition = Pair(y, x)
                     gameCube.isMerged = false
                     gameCube.isMoved = false
@@ -155,35 +151,34 @@ class Block2048GridView(
         // Initialize value of MOVE, MERGE
         for (y in traversal.first) {
             for (x in traversal.second) {
-                if (mapArray[y][x] == null) continue
-                mapArray[y][x]?.let { cube ->
-                    when (shiftPosition(cube, Pair(y, x), vector)) {
-                        MOVE -> {
-                            val startPosition: Pair<Int, Int> = cube.currentPosition
-                            val targetPosition: Pair<Int, Int> = cube.nextPosition
-                            // Update end point
-                            mapArray[targetPosition.first][targetPosition.second] = cube
-                            // Update the starting point
-                            mapArray[startPosition.first][startPosition.second] = null
-                            LogUtil.debug(TAG, "[MOVE] (${startPosition.second}, ${startPosition.first}) -> (${targetPosition.second}, ${targetPosition.first})")
-                        }
-                        MERGE -> {
-                            val startPosition: Pair<Int, Int> = cube.currentPosition
-                            val targetPosition: Pair<Int, Int> = cube.nextPosition
-                            // Update the starting point
-                            mapArray[startPosition.first][startPosition.second] = null
-                            LogUtil.debug(TAG, "[MERGE] (${startPosition.second}, ${startPosition.first}) -> (${targetPosition.second}, ${targetPosition.first})")
-                        }
-                        else -> {}
+                val gameCube = mapArray[y][x] ?: continue
+                when (shiftPosition(gameCube, Pair(y, x), vector)) {
+                    MOVE -> {
+                        val startPosition: Pair<Int, Int> = gameCube.currentPosition
+                        val targetPosition: Pair<Int, Int> = gameCube.nextPosition
+                        // Update end point
+                        mapArray[targetPosition.first][targetPosition.second] = gameCube
+                        // Update the starting point
+                        mapArray[startPosition.first][startPosition.second] = null
+                        LogUtil.debug(TAG, "[MOVE] (${startPosition.second}, ${startPosition.first}) -> (${targetPosition.second}, ${targetPosition.first})")
+                    }
+                    MERGE -> {
+                        val startPosition: Pair<Int, Int> = gameCube.currentPosition
+                        val targetPosition: Pair<Int, Int> = gameCube.nextPosition
+                        // Update the starting point
+                        mapArray[startPosition.first][startPosition.second] = null
+                        LogUtil.debug(TAG, "[MERGE] (${startPosition.second}, ${startPosition.first}) -> (${targetPosition.second}, ${targetPosition.first})")
                     }
                 }
             }
         }
 
-        if (isNothingMerge()) return NOTHING_HAPPEN
+        if (isNothingMerge()) {
+            return NOTHING_HAPPEN
+        }
+
         animMoveCubes()
         animRemoveTiles()
-
         return animNewCubes()
     }
 
@@ -214,6 +209,7 @@ class Block2048GridView(
             val y = previousPosition.first + vector.first
             val x = previousPosition.second + vector.second
             targetPosition = Pair(y, x)
+            currentCube.setNextPosition(previousPosition.first, previousPosition.second)
         } while (checkIsInBoundary(targetPosition) && checkIsAvailableMove(targetPosition))
 
         if (!checkIsInBoundary(targetPosition)) {
@@ -227,7 +223,7 @@ class Block2048GridView(
 
         val targetCube: Block2048GameCube? = mapArray[targetPosition.first][targetPosition.second]
         if (currentCube.currentPosition == previousPosition) {
-            return if (targetCube?.getValue() != currentCube.getValue()) {
+            return if (currentCube.getValue() != targetCube?.getValue()) {
                 // Skip current process when stay in the last position
                 NO_MOVE
             } else {
@@ -238,7 +234,7 @@ class Block2048GridView(
         }
 
         // Check if targetCube value is different with currentCube
-        return if (targetCube?.getValue() != currentCube.getValue()) {
+        return if (currentCube.getValue() != targetCube?.getValue()) {
             shiftMove(currentCube)
             MOVE
         } else {

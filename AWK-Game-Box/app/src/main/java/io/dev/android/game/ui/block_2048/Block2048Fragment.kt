@@ -1,11 +1,13 @@
 package io.dev.android.game.ui.block_2048
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import io.dev.android.game.databinding.FragmentBlock2048Binding
 import io.dev.android.game.ui.block_2048.core.v1.Block2048GridView
 import io.dev.android.game.ui.block_2048.core.v1.Block2048GridView.Companion.NOTHING_HAPPEN
@@ -58,7 +60,7 @@ class Block2048Fragment : Fragment() {
     /* ======================== Logical ======================== */
 
     private fun initialization() {
-        // initUi()
+        initUi()
     }
 
     private fun createRandomNewCube(count: Int) {
@@ -76,7 +78,7 @@ class Block2048Fragment : Fragment() {
     private fun updateScore(score: Int) {
         if (score == NOTHING_HAPPEN) {
             if (checkGameOver()) {
-                startNewGame()
+                processGameOver()
             }
             return
         }
@@ -92,10 +94,10 @@ class Block2048Fragment : Fragment() {
                 // Update Highest Score
                 saveHighestScore(finalScore)
             }
-
-            // Create new cube
-            createRandomNewCube(1)
         }
+
+        // Create new cube
+        createRandomNewCube(1)
     }
 
     private fun checkGameOver(): Boolean {
@@ -118,6 +120,14 @@ class Block2048Fragment : Fragment() {
         }
 
         return true
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun processGameOver() {
+        // Update highest score
+        viewModel.apply { saveHighestScore(finalScore) }
+        binding.touchArea.setOnTouchListener { _, _ -> true }
+        showGameOverDialog()
     }
 
     private fun startNewGame() {
@@ -159,5 +169,10 @@ class Block2048Fragment : Fragment() {
                 binding.textViewHighestScore.text = score.toString()
             }
         }
+    }
+
+    private fun showGameOverDialog() {
+        val action = Block2048FragmentDirections.actionBlock2048FragmentToBlock2048GameOverDialog(viewModel.finalScore)
+        findNavController().navigate(action)
     }
 }

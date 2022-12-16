@@ -7,11 +7,40 @@
     android:background="#fbf8f0"
     tools:context=".ui.block_2048.Block2048Fragment">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical_95"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_80"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
     <TextView
         android:id="@+id/textView_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alata"
+        android:gravity="center"
         android:text="@string/game_2048_title"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -19,15 +48,7 @@
         app:layout_constraintStart_toStartOf="@+id/cardView_game_container"
         app:layout_constraintTop_toTopOf="@+id/cardView_current_score" />
 
-    <View
-        android:id="@+id/touchArea"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_30" />
-
+    <!-- Current Score -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_current_score"
         android:layout_width="wrap_content"
@@ -72,6 +93,7 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Highest Score -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_highest_score"
         android:layout_width="wrap_content"
@@ -114,6 +136,7 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Game Container -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_game_container"
         android:layout_width="320dp"
@@ -125,11 +148,12 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_5"
         app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_30">
 
+        <!-- Game Map View -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout_game_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="6dp"
+            android:padding="4dp"
             app:layout_constraintDimensionRatio="1:1">
 
             <androidx.constraintlayout.widget.Guideline
@@ -174,213 +198,228 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.75" />
 
-            <ImageView
-                android:id="@+id/tile_0_0"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_0_0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_1_0"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_25"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/tile_0_1"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_0_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_1_1"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_50"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_25"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/tile_0_2"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_0_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_1_2"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_75"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_50"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/tile_0_3"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_0_3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_1_3"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_75"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/tile_1_0"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_1_0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_2_0"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_25"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_25"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_0_0"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_1_1"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_1_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_2_1"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_50"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_25"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_25"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_0_1"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_1_2"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_1_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_2_2"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_75"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_50"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_25"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_0_2"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_1_3"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_1_3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_2_3"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_75"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_25"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_25" />
 
-            <ImageView
-                android:id="@+id/tile_2_0"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_2_0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_3_0"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_25"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_50"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_1_0"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_2_1"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_2_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_3_1"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_50"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_25"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_50"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_1_1"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_2_2"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_2_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_3_2"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_75"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_50"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_50"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_1_2"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_2_3"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_2_3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toTopOf="@+id/cube_3_3"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_75"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_50"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_1_3"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_3_0"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_3_0"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_25"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_75"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_2_0"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_3_1"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_3_1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_50"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_25"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_75"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_2_1"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_3_2"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_3_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="@id/guideLine_vertical_75"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_50"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_75"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_2_2"
+                app:layout_constraintVertical_bias="0.5" />
 
-            <ImageView
-                android:id="@+id/tile_3_3"
-                style="@style/tile"
+            <View
+                android:id="@+id/cube_3_3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/cube_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@id/guideLine_vertical_75"
-                app:layout_constraintTop_toTopOf="@id/guideLine_horizontal_75"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/cube_2_3"
+                app:layout_constraintVertical_bias="0.5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal_80"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_95"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
 
     <TextView
         android:id="@+id/textView_intro"
@@ -392,5 +431,14 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_95"
         app:layout_constraintStart_toStartOf="@+id/guideline_vertical_5"
         app:layout_constraintTop_toBottomOf="@+id/cardView_game_container" />
+
+    <View
+        android:id="@+id/touchArea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal_30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

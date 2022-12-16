@@ -37,6 +37,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_block2048Fragment_to_block2048GameOverDialog"
+            app:destination="@id/block2048GameOverDialog"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/oneLineFinishFragment"
@@ -51,4 +58,21 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+    <dialog
+        android:id="@+id/block2048GameOverDialog"
+        android:name="io.dev.android.game.ui.block_2048.dialog.Block2048GameOverDialog"
+        android:label="dialog_block_2048_game_over"
+        tools:layout="@layout/dialog_block_2048_game_over">
+        <action
+            android:id="@+id/action_block2048GameOverDialog_to_block2048Fragment"
+            app:destination="@id/block2048Fragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="score"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
 </navigation>

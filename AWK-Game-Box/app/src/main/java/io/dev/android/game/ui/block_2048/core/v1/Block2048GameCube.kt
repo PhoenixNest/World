@@ -1,11 +1,13 @@
 package io.dev.android.game.ui.block_2048.core.v1
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import io.dev.android.game.R
+import io.dev.android.game.util.DensityUtil.dp
 
 class Block2048GameCube : AppCompatTextView {
 
@@ -36,12 +38,14 @@ class Block2048GameCube : AppCompatTextView {
 
     companion object {
         private const val TAG = "Block2048GameCube"
+        private const val FONT_PATH = "font/alata.ttf"
     }
 
     init {
         // Modify the style of textView
-        textAlignment = TEXT_ALIGNMENT_CENTER
+        elevation = 2.dp()
         gravity = Gravity.CENTER
+        typeface = Typeface.createFromAsset(resources.assets, FONT_PATH)
         setTextColor(resources.getColor(R.color.white, resources.newTheme()))
     }
 
