@@ -17,6 +17,7 @@ class Block2048GameOverDialog : FullScreenDialog() {
     private var score: Int = 0
 
     companion object {
+        const val TAG = "Block2048GameOverDialog"
         private const val ARG_SCORE = "score"
 
         @JvmStatic
@@ -33,7 +34,6 @@ class Block2048GameOverDialog : FullScreenDialog() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             score = it.getInt(ARG_SCORE)
-
         }
     }
 
@@ -51,5 +51,12 @@ class Block2048GameOverDialog : FullScreenDialog() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         binding.score = args.score
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // Avoid OOM
+        _binding = null
     }
 }

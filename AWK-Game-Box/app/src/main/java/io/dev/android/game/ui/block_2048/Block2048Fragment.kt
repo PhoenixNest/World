@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import io.dev.android.game.databinding.FragmentBlock2048Binding
 import io.dev.android.game.ui.block_2048.core.v1.Block2048GridView
 import io.dev.android.game.ui.block_2048.core.v1.Block2048GridView.Companion.NOTHING_HAPPEN
 import io.dev.android.game.ui.block_2048.core.v1.Block2048SwipeTouchListener
+import io.dev.android.game.ui.block_2048.dialog.Block2048GameOverDialog
 import io.dev.android.game.ui.block_2048.viewmodel.Block2048ViewModel
 import kotlin.random.Random
 
@@ -172,7 +172,10 @@ class Block2048Fragment : Fragment() {
     }
 
     private fun showGameOverDialog() {
-        val action = Block2048FragmentDirections.actionBlock2048FragmentToBlock2048GameOverDialog(viewModel.finalScore)
-        findNavController().navigate(action)
+        /*val action = Block2048FragmentDirections.actionBlock2048FragmentToBlock2048GameOverDialog(viewModel.finalScore)
+        findNavController().navigate(action)*/
+        Block2048GameOverDialog.newInstance(viewModel.finalScore)
+            .setOnDismiss { startNewGame() }
+            .show(requireActivity().supportFragmentManager, Block2048GameOverDialog.TAG)
     }
 }
