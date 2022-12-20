@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.android.game.databinding.FragmentHomeBinding
+import io.dev.android.game.ui.home.adapter.HomeRVAdapter
 import io.dev.android.game.ui.home.viewmodel.HomeViewModel
 
 @AndroidEntryPoint
@@ -16,7 +19,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by lazy {
+        ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+    }
 
     companion object {
         const val TAG = "HomeFragment"
@@ -55,6 +60,13 @@ class HomeFragment : Fragment() {
     /* ======================== Ui ======================== */
 
     private fun initUi() {
+        setupRV()
+    }
 
+    private fun setupRV() {
+        binding.recyclerViewHomeContainer.apply {
+            layoutManager = LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.HORIZONTAL }
+            adapter = HomeRVAdapter().apply { setData(emptyList()) }
+        }
     }
 }
