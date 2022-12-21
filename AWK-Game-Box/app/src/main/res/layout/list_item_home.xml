@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{model.backgroundResId}"
+        android:loadBackgroundByResId="@{model.backgroundResId}"
         tools:background="@color/cube8">
 
         <androidx.constraintlayout.widget.Guideline
@@ -49,8 +49,8 @@
                     android:id="@+id/imageView_game_icon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:loadImageByResId="@{model.iconResId}"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@{model.iconResId}"
                     app:tint="@color/cube8"
                     tools:srcCompat="@drawable/ic_score" />
 
