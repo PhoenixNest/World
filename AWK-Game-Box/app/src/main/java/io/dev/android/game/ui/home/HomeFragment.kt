@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.android.game.databinding.FragmentHomeBinding
 import io.dev.android.game.ui.home.adapter.HomeRVAdapter
 import io.dev.android.game.ui.home.viewmodel.HomeViewModel
+import io.dev.android.game.util.Constants
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -66,7 +68,8 @@ class HomeFragment : Fragment() {
     private fun setupRV() {
         binding.recyclerViewHomeContainer.apply {
             layoutManager = LinearLayoutManager(requireContext()).apply { orientation = RecyclerView.HORIZONTAL }
-            adapter = HomeRVAdapter().apply { setData(emptyList()) }
+            adapter = HomeRVAdapter().apply { setData(Constants.getHomeItemList(requireContext())) }
+            PagerSnapHelper().attachToRecyclerView(this)
         }
     }
 }

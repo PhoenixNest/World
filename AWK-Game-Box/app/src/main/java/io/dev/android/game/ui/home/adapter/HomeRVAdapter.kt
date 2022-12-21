@@ -2,9 +2,12 @@ package io.dev.android.game.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import io.dev.android.game.R
 import io.dev.android.game.databinding.ListItemHomeBinding
 import io.dev.android.game.ui.home.model.GameModel
+import io.dev.android.game.util.LogUtil
 
 class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
 
@@ -17,7 +20,6 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
     class HomeRVVH(
         private val binding: ListItemHomeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bindData(model: GameModel) {
             binding.model = model
             binding.executePendingBindings()
@@ -29,7 +31,18 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
     }
 
     override fun onBindViewHolder(holder: HomeRVVH, position: Int) {
-        holder.bindData(dataList[position])
+        val gameModel = dataList[position]
+        holder.bindData(gameModel)
+
+        val itemView = holder.itemView
+        itemView.setOnClickListener {
+            when (gameModel.title) {
+                itemView.resources.getString(R.string.game_2048_title) -> {
+                    LogUtil.verbose(message = "Navigate to 2048")
+                    itemView.findNavController().navigate(R.id.action_homeFragment_to_block2048Fragment)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
