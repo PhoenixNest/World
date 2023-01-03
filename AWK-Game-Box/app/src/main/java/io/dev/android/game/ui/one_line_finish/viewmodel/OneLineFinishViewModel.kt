@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dev.android.game.data.db.AWKDatabase
 import io.dev.android.game.data.db.one_line_finish.OneLineFinishRepository
-import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
+import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,25 +21,25 @@ class OneLineFinishViewModel @Inject constructor(
 
     private val repository: OneLineFinishRepository = OneLineFinishRepository(oneLineFinishDao)
 
-    fun getAllData(): LiveData<List<OneLineFinishRoadModel>> {
+    fun getAllData(): LiveData<List<OneLineFinishEntity>> {
         return repository.getAllData()
     }
 
-    fun insertData(roadModel: OneLineFinishRoadModel) {
+    fun insertData(entity: OneLineFinishEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertData(roadModel)
+            repository.insertData(entity)
         }
     }
 
-    fun updateData(roadModel: OneLineFinishRoadModel) {
+    fun updateData(entity: OneLineFinishEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(roadModel)
+            repository.updateData(entity)
         }
     }
 
-    fun deleteItem(roadModel: OneLineFinishRoadModel) {
+    fun deleteItem(entity: OneLineFinishEntity) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteItem(roadModel)
+            repository.deleteItem(entity)
         }
     }
 

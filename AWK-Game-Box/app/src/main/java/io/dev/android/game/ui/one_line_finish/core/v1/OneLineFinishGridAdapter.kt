@@ -18,15 +18,19 @@ class OneLineFinishGridAdapter : BaseAdapter() {
         private const val TAG_FORBIDDEN_VIEW = "forbidden"
     }
 
-    fun setRoadList(roadModel: OneLineFinishRoadModel) {
-        this.roadList = roadModel.roadList
-        if (roadList.isEmpty()) {
-            this.size = 0
-            this.startPosition = 0
-        } else {
-            this.size = roadModel.rows * roadModel.columns
-            this.startPosition = roadList[0]
+    fun setRoadList(roadModel: OneLineFinishRoadModel?): OneLineFinishGridAdapter {
+        if (roadModel != null) {
+            this.roadList = roadModel.roadList
+            if (roadList.isEmpty()) {
+                this.size = 0
+                this.startPosition = 0
+            } else {
+                this.size = roadModel.rows * roadModel.columns
+                this.startPosition = roadList[0]
+            }
         }
+
+        return this
     }
 
     override fun getCount(): Int {

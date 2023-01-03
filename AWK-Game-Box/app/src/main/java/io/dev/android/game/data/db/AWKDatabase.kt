@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.*
 import io.dev.android.game.data.db.one_line_finish.OneLineFinishConverter
 import io.dev.android.game.data.db.one_line_finish.OneLineFinishDao
-import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
+import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
 
-@Database(entities = [OneLineFinishRoadModel::class], version = 1, exportSchema = false)
+@Database(entities = [OneLineFinishEntity::class], version = 1, exportSchema = false)
 @TypeConverters(OneLineFinishConverter::class)
 abstract class AWKDatabase : RoomDatabase() {
 
