@@ -3,7 +3,7 @@ package io.dev.android.game.data.db.one_line_finish
 import androidx.lifecycle.LiveData
 import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
 
-class OneLineFinishRepository(
+class OneLineFinishDBRepository(
     private val dao: OneLineFinishDao
 ) {
 

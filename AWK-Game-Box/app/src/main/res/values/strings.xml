@@ -8,4 +8,8 @@
     <string name="highest_score">HIGHEST SCORE</string>
     <string name="game_over_title">Your score is</string>
     <string name="game_over_start_new_game">Tap the screen to start a new game</string>
+
+    <!-- One Line Finish -->
+    <string name="game_one_line_finish_title">One Line Finish</string>
+
 </resources>

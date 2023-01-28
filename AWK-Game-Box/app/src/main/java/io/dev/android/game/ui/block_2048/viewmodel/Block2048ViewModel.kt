@@ -19,7 +19,7 @@ class Block2048ViewModel @Inject constructor(
 
     var currentScore = 0
     var finalScore = 0
-    val highestScore: LiveData<Int> = dataStoreRepository.readHighestScore().asLiveData()
+    val highestScore: LiveData<Int> = dataStoreRepository.readHighest2048Score().asLiveData()
 
     companion object {
         private const val TAG = "Block2048ViewModel"
@@ -27,7 +27,7 @@ class Block2048ViewModel @Inject constructor(
 
     fun saveHighestScore(score: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveHighestScore(score)
+            dataStoreRepository.saveHighest2048Score(score)
         }
     }
 

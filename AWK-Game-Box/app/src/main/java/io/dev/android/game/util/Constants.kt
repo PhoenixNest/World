@@ -16,14 +16,14 @@ object Constants {
         )
 
         val oneLineFinish = GameModel(
-            title = context.resources.getString(R.string.game_2048_title),
+            title = context.resources.getString(R.string.game_one_line_finish_title),
             iconResId = R.drawable.ic_game_over,
             backgroundResId = R.color.cubeSuper
         )
 
         return listOf(
             block2048,
-            // oneLineFinish
+            oneLineFinish
         )
     }
 

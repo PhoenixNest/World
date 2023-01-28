@@ -251,9 +251,9 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
     private fun setupGridView(model: OneLineFinishRoadModel?) {
         if (model != null) {
             numColumns = model.columns
-            layoutParams.apply {
-                width = 60F.dp2Px() * model.columns
-            }
+            val layoutParams = layoutParams
+            layoutParams.width = 60F.dp2Px() * model.columns
+            setLayoutParams(layoutParams)
         }
     }
 
