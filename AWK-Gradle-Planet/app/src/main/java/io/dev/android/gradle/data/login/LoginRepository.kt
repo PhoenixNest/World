@@ -1,6 +1,6 @@
-package io.dev.android.gradle.data
+package io.dev.android.gradle.data.login
 
-import io.dev.android.gradle.data.model.LoggedInUser
+import io.dev.android.gradle.data.login.model.LoggedInUser
 
 /**
  * Class that requests authentication and user information from the remote data source and

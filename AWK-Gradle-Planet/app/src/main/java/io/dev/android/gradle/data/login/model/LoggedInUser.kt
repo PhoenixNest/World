@@ -1,4 +1,4 @@
-package io.dev.android.gradle.data.model
+package io.dev.android.gradle.data.login.model
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

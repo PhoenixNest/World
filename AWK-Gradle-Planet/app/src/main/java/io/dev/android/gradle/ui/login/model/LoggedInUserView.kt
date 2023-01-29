@@ -1,4 +1,4 @@
-package io.dev.android.gradle.ui.login
+package io.dev.android.gradle.ui.login.model
 
 /**
  * User details post authentication that is exposed to the UI

@@ -1,4 +1,4 @@
-package io.dev.android.gradle.data
+package io.dev.android.gradle.data.login
 
 /**
  * A generic class that holds a value with its loading status.

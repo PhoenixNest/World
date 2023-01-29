@@ -1,4 +1,4 @@
-package io.dev.android.gradle.ui.login
+package io.dev.android.gradle.ui.login.model
 
 /**
  * Data validation state of the login form.

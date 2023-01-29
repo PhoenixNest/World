@@ -1,9 +1,9 @@
-package io.dev.android.gradle.ui.login
+package io.dev.android.gradle.ui.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import io.dev.android.gradle.data.LoginDataSource
-import io.dev.android.gradle.data.LoginRepository
+import io.dev.android.gradle.data.login.LoginDataSource
+import io.dev.android.gradle.data.login.LoginRepository
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.

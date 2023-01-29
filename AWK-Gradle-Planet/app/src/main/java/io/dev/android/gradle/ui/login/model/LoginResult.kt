@@ -1,4 +1,4 @@
-package io.dev.android.gradle.ui.login
+package io.dev.android.gradle.ui.login.model
 
 /**
  * Authentication result : success (user details) or error message.

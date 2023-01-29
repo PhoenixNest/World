@@ -12,6 +12,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import io.dev.android.gradle.R
 import io.dev.android.gradle.databinding.ActivityLoginBinding
+import io.dev.android.gradle.ui.login.model.LoggedInUserView
+import io.dev.android.gradle.ui.login.viewmodel.LoginViewModel
+import io.dev.android.gradle.ui.login.viewmodel.LoginViewModelFactory
 import io.dev.android.gradle.ui.main.MainActivity
 import io.dev.android.gradle.util.afterTextChanged
 

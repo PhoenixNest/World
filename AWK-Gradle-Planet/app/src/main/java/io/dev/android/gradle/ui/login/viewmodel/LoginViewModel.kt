@@ -1,13 +1,15 @@
-package io.dev.android.gradle.ui.login
+package io.dev.android.gradle.ui.login.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
-import io.dev.android.gradle.data.LoginRepository
-import io.dev.android.gradle.data.Result
-
 import io.dev.android.gradle.R
+import io.dev.android.gradle.data.login.LoginRepository
+import io.dev.android.gradle.data.login.Result
+import io.dev.android.gradle.ui.login.model.LoggedInUserView
+import io.dev.android.gradle.ui.login.model.LoginFormState
+import io.dev.android.gradle.ui.login.model.LoginResult
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
