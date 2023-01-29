@@ -22,9 +22,11 @@ ext {
     // Having consistent versions between modules can avoid conflicts with behavior.
     kotlin_version = "1.9.0"
     appcompatVersion = "1.6.0"
+    annotationVersion = "1.5.0"
     materialVersion = "1.8.0"
 
     // Dependencies
     navigationVersion = "2.5.3"            // Navigation
+    liveDataVersion = "2.5.1"              // LiveData & ViewModel
     workManagerVersion = "2.7.1"           // Worker & WorkManager
 }

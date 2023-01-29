@@ -1,5 +1,6 @@
-package io.dev.android.gradle
+package io.dev.android.gradle.ui.main
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
+import io.dev.android.gradle.R
 import io.dev.android.gradle.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
