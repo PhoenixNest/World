@@ -19,3 +19,5 @@ Current Game List:
 ### AWK-Gradle-Planet
 
 > `aka with Android-With-Kotlin`, this project is which i use to preatice the `gradle development` for `Android` platfrom.
+
+Reference link: [Configure your build](https://developer.android.com/studio/build)

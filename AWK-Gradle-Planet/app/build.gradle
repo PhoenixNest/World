@@ -1,49 +1,246 @@
+/**
+ * The first line in the build configuration applies the Android Gradle plugin
+ * to this build and makes the android block available to specify
+ * Android-specific build options.
+ */
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
 
-android {
-    namespace 'io.dev.android.gradle'
-    compileSdk 33
+/**
+ * When using Android Gradle plugin 3.2.0 and higher,
+ * you need to pass processor arguments that
+ * represent files or directories using Gradle's CommandLineArgumentProvider interface.
+ * Using CommandLineArgumentProvider allows you or the annotation processor author
+ * to improve the correctness and performance of incremental
+ * and cached clean builds by applying incremental build property type annotations to each argument.
+ *
+ * For example, the class below implements CommandLineArgumentProvider
+ * and annotates each argument for the processor.
+ * The sample also uses the Groovy language syntax and is included directly
+ * in the module's build.gradle file.
+ * */
+class MyArgProvider implements CommandLineArgumentProvider {
 
-    defaultConfig {
-        applicationId "io.dev.android.gradle"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+    // Annotates each directory as either an input or output for the
+    // annotation processor.
+    @InputFiles
+    // Using this annotation helps Gradle determine which part of the file path
+    // should be considered during up-to-date checks.
+    @PathSensitive(PathSensitivity.RELATIVE)
+    FileCollection inputDir
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    @OutputDirectory
+    File outputDir
+
+    // The class constructor sets the paths for the input and output directories.
+    MyArgProvider(FileCollection input, File output) {
+        inputDir = input
+        outputDir = output
     }
 
+    // Specifies each directory as a command line argument for the processor.
+    // The Android plugin uses this method to pass the arguments to the
+    // annotation processor.
+    @Override
+    Iterable<String> asArguments() {
+        // Use the form '-Akey[=value]' to pass your options to the Java compiler.
+        ["-ArgInputDir=${inputDir.singleFile().absolutePath}",
+         "-ArgOutputDir=${outputDir.absolutePath()}"]
+    }
+}
+
+/**
+ * The android block is where you configure all your Android-specific
+ * build options.
+ */
+android {
+    /**
+     * The app's [namespace](https://developer.android.com/studio/build/configure-app-module#set-namespace).
+     * Used primarily to access app resources.
+     */
+    namespace rootProject.ext.namespaceId
+
+    /**
+     * The default namespace for the androidTest and
+     * test source sets is the main namespace, with .test added at the end.
+     * For example, if the namespace property in the build.gradle file
+     * is com.example.myapp, the testing namespace is
+     * by default set to com.example.myapp.test.
+     * To change the namespace for testing, use the testNamespace property,
+     * as shown in the following code snippet:
+     * */
+    testNamespace rootProject.ext.namespaceTestId
+
+    /**
+     * compileSdk specifies the Android API level Gradle should use to
+     * compile your app. This means your app can use the API features included in
+     * this API level and lower.
+     */
+    compileSdk rootProject.ext.sdkVersion
+
+    /**
+     * The defaultConfig block encapsulates default settings and entries for all
+     * build variants and can override some attributes in main/AndroidManifest.xml
+     * dynamically from the build system. You can configure product flavors to override
+     * these values for different versions of your app.
+     */
+    defaultConfig {
+        // Uniquely identifies the package for publishing.
+        applicationId rootProject.ext.applicationId
+
+        // By default, the build tools apply an application ID to
+        // your instrumentation test APK using the application ID for
+        // the given build variant appended with .test.
+        // For example, a test APK for the com.example.myapp.free build variant
+        // has the application ID com.example.myapp.free.test.
+
+        // Although it shouldn't be necessary, you can
+        // change the application ID by defining the testApplicationId property
+        // in your defaultConfig or productFlavor block.
+        testApplicationId rootProject.ext.applicationTestId
+
+        // Defines the minimum API level required to run the app.
+        minSdk rootProject.ext.minSdkVersion
+
+        // Specifies the API level used to test the app.
+        targetSdk rootProject.ext.targetSdkVersion
+
+        // Defines the version number of your app.
+        versionCode rootProject.ext.versionCode
+
+        // Defines a user-friendly version name for your app.
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // If you need to pass arguments to an annotation processor,
+        // you can do so using the AnnotationProcessorOptions block
+        // in your module's build configuration. For example,
+        // if you want to pass primitive data types as key-value pairs,
+        // you can use the argument property, as shown below:
+        javaCompileOptions {
+            annotationProcessorOptions {
+                argument 'key1', 'value1'
+                argument 'key2', 'value2'
+                // Creates a new MyArgsProvider object, specifies the input and
+                // output paths for the constructor, and passes the object
+                // to the Android plugin.
+                compilerArgumentProvider new MyArgProvider(files("input/path"), new File("output/path"))
+            }
+        }
+    }
+
+    /**
+     * The buildTypes block is where you can configure multiple [build types](https://developer.android.com/studio/build/build-variants#build-types).
+     * By default, the build system defines two build types: debug and release. The
+     * debug build type is not explicitly shown in the default build configuration,
+     * but it includes debugging tools and is signed with the debug key. The release
+     * build type applies ProGuard settings and is not signed by default.
+     */
     buildTypes {
+        /**
+         * By default, Android Studio configures the release build type to enable code
+         * shrinking, using minifyEnabled, and specifies the default ProGuard rules file.
+         */
         release {
-            minifyEnabled false
+            minifyEnabled /* false */ true // Enables code shrinking for the release build type.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    /**
+     * The productFlavors block is where you can configure multiple [product flavors](https://developer.android.com/studio/build/build-variants#product-flavors).
+     * This lets you create different versions of your app that can
+     * override the defaultConfig block with their own settings. Product flavors
+     * are optional, and the build system does not create them by default.
+     *
+     * This example creates a free and paid product flavor. Each product flavor
+     * then specifies its own application ID, so that they can exist on the Google
+     * Play Store, or an Android device, simultaneously.
+     *
+     * If you declare product flavors, you must also declare flavor dimensions
+     * and assign each flavor to a flavor dimension.
+     */
+    // Reference link: [flavorDimensions](https://developer.android.com/reference/tools/gradle-api/current/com/android/build/api/dsl/ProductFlavor#dimension)
+    flavorDimensions "tier"
+    productFlavors {
+        free {
+            dimension "tier"
+            applicationId rootProject.ext.applicationId + ".free"
+            testApplicationId rootProject.ext.applicationTestId + ".free"
+        }
+
+        paid {
+            dimension "tier"
+            applicationId rootProject.ext.applicationId + ".paid"
+            testApplicationId rootProject.ext.applicationTestId + ".paid"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
     }
 }
 
-dependencies {
+// If you want to add a dependency for a variant that combines a product flavor and a build type,
+// then you must initialize the configuration name in the configurations block.
+// The following sample adds a runtimeOnly dependency to your "freeDebug" build variant (using a local binary dependency).
+configurations {
+    // Initializes a placeholder for the freeDebugRuntimeOnly & paidDebugRuntimeOnly dependency configuration.
+    freeDebugRuntimeOnly {}
+    paidDebugRuntimeOnly {}
+}
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'com.google.android.material:material:1.5.0'
+/**
+ * The dependencies block in the module-level build configuration file
+ * specifies dependencies required to build only the module itself.
+ * To learn more, go to [Add build dependencies](https://developer.android.com/studio/build/dependencies).
+ */
+dependencies {
+    // implementation project(':lib')
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation fileTree(dir: 'lib', include: ['*.aar'])
+    // implementation files('libs/foo.jar', 'libs/bar.jar')
+    // implementation files('libs/foo.aar', 'libs/bar.aar')
+    freeDebugRuntimeOnly fileTree(dir: 'lib/free', includes: ['*.jar'])
+    freeDebugRuntimeOnly fileTree(dir: 'lib/free', includes: ['*.aar'])
+    paidDebugRuntimeOnly fileTree(dir: 'lib/paid', includes: ['*.jar'])
+    paidDebugRuntimeOnly fileTree(dir: 'lib/paid', includes: ['*.jar'])
+
+    implementation "androidx.core:core-ktx:${rootProject.ext.kotlin_version}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompatVersion}"
+    implementation "com.google.android.material:material:${rootProject.ext.materialVersion}"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${rootProject.ext.navigationVersion}"
+    implementation "androidx.navigation:navigation-ui-ktx:${rootProject.ext.navigationVersion}"
+
+    // Worker & WorkManager
+    implementation group: 'androidx.work', name: 'work-runtime', version: rootProject.ext.workManagerVersion
+    implementation group: 'androidx.work', name: 'work-runtime-ktx', version: rootProject.ext.workManagerVersion
+
+    // All of the above configurations apply dependencies to all build variants.
+    // If you instead want to declare a dependency for only a specific build variant
+    // source set or for a testing source set, you must capitalize
+    // the configuration name and prefix it with the name of the build variant
+    // or testing source set.
+
+    // For example, to add an implementation dependency only to your "free" product flavor (using a remote binary dependency), it looks like this:
+    freeImplementation 'com.google.firebase:firebase-ads:21.4.0'
+    // paidImplementation ''
 }
