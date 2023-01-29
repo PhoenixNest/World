@@ -34,6 +34,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        // If you want something from a local repository use mavenLocal()
+        // mavenLocal()
+
+        // Or you can declare specific Maven or Ivy repositories as follows
+        // maven { url 'https://repo.example.com/maven2' }
+        // maven { url 'file://local/repo/' }
+        // ivy { url 'https://repo.example.com/ivy' }
     }
 }
 rootProject.name = "AWK-Gradle-Planet"
