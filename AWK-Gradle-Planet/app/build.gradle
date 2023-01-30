@@ -137,6 +137,35 @@ android {
     }
 
     /**
+     * Note: Including the passwords for your release key and keystore
+     * inside the build file is not a good security practice.
+     * */
+    signingConfigs {
+        release {
+            storeFile file("myReleaseKey.keystore")
+            storePassword "password"
+            keyAlias "MyReleaseKey"
+            keyPassword "password"
+
+            // Instead, configure the build file to obtain these passwords from environment variables
+            // or have the build process prompt you for these passwords.
+            storePassword System.getenv("keyStorePwd")
+            keyPassword System.getenv("keyPwd")
+
+            // You can also save the keyStore file into the other directory,
+            // and use rootProject.file() to gain it.
+            def keyStoreFile = rootProject.file("filePath")
+            storeFile = keyStoreFile
+            // at this time, you can use this code to get the information which inside the file:
+            // new Properties().load(new FileInputStream())
+            def keyStoreProperties = new Properties().load(new FileInputStream(keyStoreFile))
+            storePassword = keyStoreProperties["storePassword"]
+            keyAlias = keyStoreProperties["keyAlias"]
+            keyPassword = keyStoreProperties["keyPassword"]
+        }
+    }
+
+    /**
      * The buildTypes block is where you can configure multiple [build types](https://developer.android.com/studio/build/build-variants#build-types).
      * By default, the build system defines two build types: debug and release. The
      * debug build type is not explicitly shown in the default build configuration,
@@ -152,6 +181,7 @@ android {
         release {
             minifyEnabled /* false */ true // Enables code shrinking for the release build type.
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfigs signingConfigs.release
         }
 
         debug {
