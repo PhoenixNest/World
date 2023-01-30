@@ -1,4 +1,4 @@
-package io.dev.android.gradle.ui
+package io.dev.android.gradle.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
