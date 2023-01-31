@@ -23,23 +23,32 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        initialization()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        // Avoid OOM
         _binding = null
+    }
+
+    private fun initialization() {
+        setupUi()
+    }
+
+    private fun setupUi() {
+        binding.apply {
+            buttonFirst.setOnClickListener {
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
+        }
     }
 }
