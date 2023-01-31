@@ -21,3 +21,5 @@ Current Game List:
 > `aka with Android-With-Kotlin`, this project is which i use to preatice the `gradle development` for `Android` platfrom.
 
 Reference link: [Configure your build](https://developer.android.com/studio/build)
+
+Recommand to read: [Gradle Recipes](https://github.com/android/gradle-recipes)
