@@ -29,4 +29,5 @@ ext {
     navigationVersion = "2.5.3"            // Navigation
     liveDataVersion = "2.5.1"              // LiveData & ViewModel
     workManagerVersion = "2.7.1"           // Worker & WorkManager
+    multidexVersion = "2.0.1"              // Multidex
 }

@@ -134,6 +134,13 @@ android {
 
         // Use this tag to configure your build types with release & debug
         manifestPlaceholders = [hostName: "www.example.com"]
+
+        // Multidex
+        // To learn more about how to enable multidex for apps,
+        // please follow: https://developer.android.com/studio/build/multidex
+        // Note: if the the app's minSdkVersion is set to 21 or higher, multidex is enabled by default
+        //       and you don't need the multidex library.
+        multiDexEnabled true
     }
 
     /**
@@ -154,14 +161,15 @@ android {
 
             // You can also save the keyStore file into the other directory,
             // and use rootProject.file() to gain it.
-            def keyStoreFile = rootProject.file("filePath")
-            storeFile = keyStoreFile
+            // def keyStoreFile = rootProject.file("filePath")
+            // storeFile = keyStoreFile
+
             // at this time, you can use this code to get the information which inside the file:
             // new Properties().load(new FileInputStream())
-            def keyStoreProperties = new Properties().load(new FileInputStream(keyStoreFile))
-            storePassword = keyStoreProperties["storePassword"]
-            keyAlias = keyStoreProperties["keyAlias"]
-            keyPassword = keyStoreProperties["keyPassword"]
+            // def keyStoreProperties = new Properties().load(new FileInputStream(keyStoreFile))
+            // storePassword = keyStoreProperties["storePassword"]
+            // keyAlias = keyStoreProperties["keyAlias"]
+            // keyPassword = keyStoreProperties["keyPassword"]
         }
     }
 
@@ -179,9 +187,25 @@ android {
          * shrinking, using minifyEnabled, and specifies the default ProGuard rules file.
          */
         release {
-            minifyEnabled /* false */ true // Enables code shrinking for the release build type.
+            /**
+             * If you don't convert your PNG images to WebP, you can still speed up your build
+             * by disabling automatic image compression every time you build your app.
+             *
+             * Because build types or product flavors don't define this property, you need to manually
+             * set this property to true when building the release version of your app.
+             * */
+            // Disables PNG crunching for the "release" build type
+            crunchPngs false
+
+            // Specifies whether to enable shrinking resources for this build type.
+            shrinkResources true
+
+            // Enables code shrinking for the release build type.
+            minifyEnabled /* false */ true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfigs signingConfigs.release
+
+            // signingConfigs signingConfigs.release
         }
 
         debug {
@@ -316,6 +340,62 @@ android {
     }
 }
 
+/**
+ * To learn more about how to Extend the Android Gradle plugin,
+ * please follow: https://developer.android.com/studio/build/extend-agp
+ * */
+// Notes: This AGP Extension seems like can be used just with [Kotlin]
+/*androidComponents {
+    // At this stage of the build, you get access to VariantBuilder objects,
+    // which determine the variants that will be created and their properties.
+    //
+    // For example, you can programmatically disable certain variants,
+    // their tests, or change a property's value (for example, minSdk)
+    // only for a chosen variant.
+    beforeVariants { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    // The beforeVariants() callback optionally takes a VariantSelector,
+    // which you can obtain through the selector() method on the androidComponentsExtension.
+    // You can use it to filter components participating in the callback invocation
+    // based on their name, build type, or product flavor.
+    beforeVariants(selector().withName("free")) { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    finalizeDsl { extension ->
+
+    }
+
+    onVariants {
+
+    }
+
+    // onVariants also supports VariantSelectors:
+    onVariants(selector().withBuildType("paid")) { variant ->
+        // Gather the output when we are in single mode (no multi-apk).
+        def mainOutput = variant.outputs.single {
+            it.outputType == OutputType.SINGLE
+        }
+
+        // Create version code generating task
+        def versionCodeTask = project.tasks.register("computeVersionCodeFor${variant.name}", VersionCodeTask::class.java) {
+            it.outputFile.set(project.layout.buildDirectory.file("${variant.name}/versionCode.txt"))
+        }
+
+        // Wire version code from the task output.
+        // map() will create a lazy provider that:
+        // 1. Runs just before the consumer(s), ensuring that the producer
+        // (VersionCodeTask) has run and therefore the file is created.
+        // 2. Contains task dependency information so that the consumer(s) run after
+        // the producer.
+        mainOutput.versionCode.set(versionCodeTask.map {
+            it.outputFile.get().asFile.readText().toInt()
+        })
+    }
+}*/
+
 // If you want to add a dependency for a variant that combines a product flavor and a build type,
 // then you must initialize the configuration name in the configurations block.
 // The following sample adds a runtimeOnly dependency to your "freeDebug" build variant (using a local binary dependency).
@@ -371,4 +451,7 @@ dependencies {
     // For example, to add an implementation dependency only to your "free" product flavor (using a remote binary dependency), it looks like this:
     // freeImplementation 'com.google.firebase:firebase-ads:21.4.0'
     // paidImplementation '[dependencies group & name]:[version code]'
+
+    // Multidex
+    implementation "androidx.multidex:multidex:${rootProject.ext.multidexVersion}"
 }
