@@ -340,6 +340,62 @@ android {
     }
 }
 
+/**
+ * To learn more about how to Extend the Android Gradle plugin,
+ * please follow: https://developer.android.com/studio/build/extend-agp
+ * */
+// Notes: This AGP Extension seems like can be used just with [Kotlin]
+/*androidComponents {
+    // At this stage of the build, you get access to VariantBuilder objects,
+    // which determine the variants that will be created and their properties.
+    //
+    // For example, you can programmatically disable certain variants,
+    // their tests, or change a property's value (for example, minSdk)
+    // only for a chosen variant.
+    beforeVariants { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    // The beforeVariants() callback optionally takes a VariantSelector,
+    // which you can obtain through the selector() method on the androidComponentsExtension.
+    // You can use it to filter components participating in the callback invocation
+    // based on their name, build type, or product flavor.
+    beforeVariants(selector().withName("free")) { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    finalizeDsl { extension ->
+
+    }
+
+    onVariants {
+
+    }
+
+    // onVariants also supports VariantSelectors:
+    onVariants(selector().withBuildType("paid")) { variant ->
+        // Gather the output when we are in single mode (no multi-apk).
+        def mainOutput = variant.outputs.single {
+            it.outputType == OutputType.SINGLE
+        }
+
+        // Create version code generating task
+        def versionCodeTask = project.tasks.register("computeVersionCodeFor${variant.name}", VersionCodeTask::class.java) {
+            it.outputFile.set(project.layout.buildDirectory.file("${variant.name}/versionCode.txt"))
+        }
+
+        // Wire version code from the task output.
+        // map() will create a lazy provider that:
+        // 1. Runs just before the consumer(s), ensuring that the producer
+        // (VersionCodeTask) has run and therefore the file is created.
+        // 2. Contains task dependency information so that the consumer(s) run after
+        // the producer.
+        mainOutput.versionCode.set(versionCodeTask.map {
+            it.outputFile.get().asFile.readText().toInt()
+        })
+    }
+}*/
+
 // If you want to add a dependency for a variant that combines a product flavor and a build type,
 // then you must initialize the configuration name in the configurations block.
 // The following sample adds a runtimeOnly dependency to your "freeDebug" build variant (using a local binary dependency).
