@@ -20,7 +20,7 @@ object OneLineFinishGameData {
     val currentLevelLiveData: LiveData<Int> = dataStoreRepository.readCurrentOneLineLevel().distinctUntilChanged().asLiveData()
 
     val roadValuesList: MutableList<OneLineFinishRoadModel> = mutableListOf(
-        // Chapter 1
+        /*// Chapter 1
         OneLineFinishRoadModel(3, 3, listOf(6, 3, 0, 1, 4, 7, 8)),
         OneLineFinishRoadModel(3, 3, listOf(4, 7, 8, 5, 2, 1, 0)),
         OneLineFinishRoadModel(3, 3, listOf(0, 1, 4, 3, 6, 7, 8)),
@@ -75,7 +75,7 @@ object OneLineFinishGameData {
         OneLineFinishRoadModel(5, 6, listOf(17, 11, 5, 4, 3, 2, 1, 0, 6, 12, 18, 24, 25, 19, 20, 21, 27, 28, 29, 23, 22, 16, 10, 9, 15, 14, 13, 7)),
         OneLineFinishRoadModel(5, 6, listOf(17, 11, 5, 4, 10, 9, 3, 2, 1, 0, 6, 12, 18, 24, 25, 26, 20, 19, 13, 7, 8, 14, 15, 21, 22, 28, 29, 23)),
         // Chapter 5
-        // OneLineFinishRoadModel(5, 6, listOf(6, 0, 1, 7, 8, 2, 3, 4, 10, 16, 15, 21, 20, 19, 13, 12, 18, 24, 25, 26, 27, 28, 22, 23, 17, 11, 5)),
+        OneLineFinishRoadModel(5, 6, listOf(6, 0, 1, 7, 8, 2, 3, 4, 10, 16, 15, 21, 20, 19, 13, 12, 18, 24, 25, 26, 27, 28, 22, 23, 17, 11, 5)),
         OneLineFinishRoadModel(5, 6, listOf(23, 29, 28, 22, 21, 27, 26, 20, 14, 13, 19, 25, 24, 18, 12, 6, 7, 1, 2, 8, 9, 15, 16, 17, 11, 10, 4)),
         OneLineFinishRoadModel(5, 6, listOf(17, 11, 10, 4, 3, 2, 8, 9, 15, 16, 22, 23, 29, 28, 27, 26, 20, 19, 25, 24, 18, 12, 13, 7, 1, 0)),
         OneLineFinishRoadModel(5, 6, listOf(20, 14, 8, 2, 1, 0, 6, 12, 18, 19, 25, 26, 27, 21, 15, 9, 3, 4, 5, 11, 10, 16, 17, 23, 29, 28)),
@@ -166,7 +166,7 @@ object OneLineFinishGameData {
         OneLineFinishRoadModel(6, 5, listOf(24, 19, 18, 17, 16, 21, 20, 15, 10, 11, 6, 5, 0, 1, 2, 7, 8, 3, 4)),
         OneLineFinishRoadModel(6, 5, listOf(6, 5, 10, 15, 16, 11, 12, 7, 8, 13, 18, 17, 22, 27, 28, 23, 24, 29)),
         OneLineFinishRoadModel(6, 5, listOf(4, 9, 14, 13, 12, 17, 18, 23, 28, 27, 22, 21, 20, 15, 16, 11, 6, 5)),
-        OneLineFinishRoadModel(6, 5, listOf(16, 15, 10, 11, 6, 7, 8, 3, 4, 9, 14, 19, 18, 23, 28, 27, 22, 21)),
+        OneLineFinishRoadModel(6, 5, listOf(16, 15, 10, 11, 6, 7, 8, 3, 4, 9, 14, 19, 18, 23, 28, 27, 22, 21)),*/
         // Chapter 8
         OneLineFinishRoadModel(6, 6, listOf(29, 23, 17, 11, 5, 4, 3, 2, 1, 0, 6, 12, 18, 19, 13, 7, 8, 14, 15, 16, 22, 28, 34, 33, 32, 26, 25, 31, 30)),
         OneLineFinishRoadModel(6, 6, listOf(18, 24, 30, 31, 25, 19, 20, 14, 8, 9, 15, 16, 22, 28, 27, 33, 34, 35, 29, 23, 17, 11, 5, 4, 3, 2, 1, 0, 6)),

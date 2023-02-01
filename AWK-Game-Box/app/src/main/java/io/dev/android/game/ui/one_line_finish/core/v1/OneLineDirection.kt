@@ -1,8 +1,8 @@
 package io.dev.android.game.ui.one_line_finish.core.v1
 
-enum class OneLineFinishDirection {
+enum class OneLineDirection {
     LEFT,
     RIGHT,
-    TOP,
-    BOTTOM
+    UP,
+    DOWN
 }

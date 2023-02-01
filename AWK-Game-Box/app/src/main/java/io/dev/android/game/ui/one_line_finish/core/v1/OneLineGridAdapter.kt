@@ -7,7 +7,7 @@ import android.widget.BaseAdapter
 import io.dev.android.game.R
 import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
 
-class OneLineFinishGridAdapter : BaseAdapter() {
+class OneLineGridAdapter : BaseAdapter() {
 
     private var size: Int = 0
     private var startPosition: Int = 0
@@ -18,7 +18,7 @@ class OneLineFinishGridAdapter : BaseAdapter() {
         private const val TAG_FORBIDDEN_VIEW = "forbidden"
     }
 
-    fun setRoadList(roadModel: OneLineFinishRoadModel?): OneLineFinishGridAdapter {
+    fun setRoadList(roadModel: OneLineFinishRoadModel?): OneLineGridAdapter {
         if (roadModel != null) {
             this.roadList = roadModel.roadList
             if (roadList.isEmpty()) {
@@ -45,17 +45,18 @@ class OneLineFinishGridAdapter : BaseAdapter() {
         return position.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
-        var view: View? = null
-        if (convertView == null) {
-            parent?.let {
-                val inflater = LayoutInflater.from(it.context).inflate(R.layout.item_one_line_finish, it, false)
-                view = inflater.findViewById(R.id.relativeLayout_container)
-            }
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup?
+    ): View? {
+        var view: View? = convertView
+        if (view == null && parent != null) {
+            view = LayoutInflater.from(parent.context).inflate(R.layout.item_one_line_finish, parent, false)
         }
 
         if (startPosition == position) {
-            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.grid_selected)
+            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.one_line_grid_start_point)
         }
 
         var isAllowed = false
@@ -67,7 +68,7 @@ class OneLineFinishGridAdapter : BaseAdapter() {
 
         if (!isAllowed) {
             view?.tag = TAG_FORBIDDEN_VIEW
-            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.color.color_transparency)
+            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.one_line_grid_obstacle)
         }
 
         return view

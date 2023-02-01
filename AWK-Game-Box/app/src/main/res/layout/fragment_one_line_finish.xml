@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cubeSuper"
+    android:background="@color/color_cube_super"
     tools:context=".ui.one_line_finish.OneLineFinishFragment">
 
-    <io.dev.android.game.ui.one_line_finish.core.v1.OneLineFinishGridView
+    <io.dev.android.game.ui.one_line_finish.core.v1.OneLineGridView
         android:id="@+id/gridView_one_line_finish"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

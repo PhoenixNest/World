@@ -11,7 +11,7 @@ import io.dev.android.game.util.DensityUtil.dp2Px
 import io.dev.android.game.util.UiUtil
 import io.dev.android.game.util.ValueUtil
 
-class OneLineFinishGridView : GridView, View.OnTouchListener {
+class OneLineGridView : GridView, View.OnTouchListener {
 
     private val passedPositionsList: MutableList<Int> = mutableListOf()
     private var roadModel: OneLineFinishRoadModel? = null
@@ -43,17 +43,19 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
 
     /* ======================== Constructor ======================== */
 
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-
-    /* ======================== Logical ======================== */
-
-    init {
+    constructor(context: Context) : super(context) {
         setOnTouchListener(this)
     }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        setOnTouchListener(this)
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        setOnTouchListener(this)
+    }
+
+    /* ======================== Logical ======================== */
 
     override fun onTouch(
         view: View?,
@@ -193,6 +195,10 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
         this.firstChildPosition = roadModel.roadList[0]
         listener?.stopGettingRoad()
         setupGridView(roadModel)
+
+        val gridAdapter = OneLineGridAdapter()
+        gridAdapter.setRoadList(roadModel)
+        adapter = gridAdapter
     }
 
     fun initPassedGrid(
@@ -219,7 +225,7 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
         this.firstChildPosition = roadList[0]
 
         setupGridView(roadModel)
-        adapter = OneLineFinishGridAdapter().setRoadList(roadModel)
+        adapter = OneLineGridAdapter().setRoadList(roadModel)
 
         if (passedPositionsList.size == 0) {
             if (listener != null) {
@@ -257,20 +263,16 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
         }
     }
 
-    private fun checkDirection(lastPos: Int, curPos: Int): OneLineFinishDirection? {
-        if (lastPos + 1 == curPos && curPos % numColumns != 0
-            || lastPos + numColumns == curPos
-            || lastPos - numColumns == curPos
-            || lastPos - 1 == curPos && lastPos % numColumns != 0
-        ) {
-            if (lastPos in 0 until childCount) {
-                return OneLineFinishDirection.RIGHT
+    private fun checkDirection(lastPos: Int, curPos: Int): OneLineDirection? {
+        if (lastPos in 0 until childCount) {
+            if (lastPos + 1 == curPos && lastPos % numColumns != 0) {
+                return OneLineDirection.RIGHT
             } else if (lastPos + numColumns == curPos) {
-                return OneLineFinishDirection.BOTTOM
+                return OneLineDirection.DOWN
             } else if (lastPos - numColumns == curPos) {
-                return OneLineFinishDirection.TOP
+                return OneLineDirection.UP
             } else if (lastPos - 1 == curPos && lastPos % numColumns != 0) {
-                return OneLineFinishDirection.LEFT
+                return OneLineDirection.LEFT
             }
         }
 
@@ -283,39 +285,52 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
         }
 
         post {
-            val lastChildView: View = getChildAt(lastChildPosition)
-            val curMain: View = curChildView.findViewById(R.id.view_main)
-            when (checkDirection(lastChildPosition, curChildPos)) {
-                OneLineFinishDirection.RIGHT -> {
-                    val lastRight: View = lastChildView.findViewById(R.id.view_right)
-                    val curLeft: View = curChildView.findViewById(R.id.view_left)
-                    lastRight.setBackgroundResource(R.color.cube8)
-                    curLeft.setBackgroundResource(R.color.cube8)
-                    curMain.setBackgroundResource(R.drawable.grid_selected)
+            if (lastChildPosition + 1 == curChildPos && curChildPos % numColumns != 0
+                || lastChildPosition + numColumns == curChildPos
+                || lastChildPosition - numColumns == curChildPos
+                || lastChildPosition - 1 == curChildPos && lastChildPosition % numColumns != 0
+            ) {
+                when (checkDirection(lastChildPosition, curChildPos)) {
+                    OneLineDirection.RIGHT -> {
+                        val lastChildView: View = getChildAt(lastChildPosition)
+                        val curMainView: View = curChildView.findViewById(R.id.view_main)
+                        val lastRight: View = lastChildView.findViewById(R.id.view_right)
+                        val curLeft: View = curChildView.findViewById(R.id.view_left)
+                        lastRight.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curLeft.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
+                    }
+                    OneLineDirection.DOWN -> {
+                        val lastChildView: View = getChildAt(lastChildPosition)
+                        val curMainView: View = curChildView.findViewById(R.id.view_main)
+                        val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
+                        val curTop: View = curChildView.findViewById(R.id.view_top)
+                        lastBottom.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curTop.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
+                    }
+                    OneLineDirection.UP -> {
+                        val lastChildView: View = getChildAt(lastChildPosition)
+                        val curMainView: View = curChildView.findViewById(R.id.view_main)
+                        val lastTop: View = lastChildView.findViewById(R.id.view_top)
+                        val curBottom: View = curChildView.findViewById(R.id.view_bottom)
+                        lastTop.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curBottom.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
+                    }
+                    OneLineDirection.LEFT -> {
+                        val lastChildView: View = getChildAt(lastChildPosition)
+                        val curMainView: View = curChildView.findViewById(R.id.view_main)
+                        val lastLeft: View = lastChildView.findViewById(R.id.view_left)
+                        val curRight: View = curChildView.findViewById(R.id.view_right)
+                        lastLeft.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curRight.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
+                        curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
+                    }
+                    else -> {}
                 }
-                OneLineFinishDirection.BOTTOM -> {
-                    val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
-                    val curTop: View = curChildView.findViewById(R.id.view_top)
-                    lastBottom.setBackgroundResource(R.color.cube8)
-                    curTop.setBackgroundResource(R.color.cube8)
-                    curMain.setBackgroundResource(R.drawable.grid_selected)
-                }
-                OneLineFinishDirection.TOP -> {
-                    val lastTop: View = lastChildView.findViewById(R.id.view_top)
-                    val curBottom: View = curChildView.findViewById(R.id.view_bottom)
-                    lastTop.setBackgroundResource(R.color.cube8)
-                    curBottom.setBackgroundResource(R.color.cube8)
-                    curMain.setBackgroundResource(R.drawable.grid_selected)
-                }
-                OneLineFinishDirection.LEFT -> {
-                    val lastLeft: View = lastChildView.findViewById(R.id.view_left)
-                    val curRight: View = curChildView.findViewById(R.id.view_right)
-                    lastLeft.setBackgroundResource(R.color.cube8)
-                    curRight.setBackgroundResource(R.color.cube8)
-                    curMain.setBackgroundResource(R.drawable.grid_selected)
-                }
-                else -> {}
             }
+
             passedPositionsList.add(curChildPos)
             listener?.saveProgress(roadModel, passedPositionsList)
             curChildView.tag = lastChildPosition
@@ -337,21 +352,21 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
                 lastChildPosition = (curChildView.tag as Int)
                 val lastChildView: View = getChildAt(lastChildPosition)
                 when (checkDirection(lastChildPosition, curChildPos)) {
-                    OneLineFinishDirection.RIGHT -> {
+                    OneLineDirection.RIGHT -> {
                         val lastRight: View = lastChildView.findViewById(R.id.view_right)
-                        lastRight.setBackgroundResource(R.color.color_transparency)
+                        lastRight.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
-                    OneLineFinishDirection.BOTTOM -> {
+                    OneLineDirection.DOWN -> {
                         val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
-                        lastBottom.setBackgroundResource(R.color.color_transparency)
+                        lastBottom.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
-                    OneLineFinishDirection.TOP -> {
+                    OneLineDirection.UP -> {
                         val lastTop: View = lastChildView.findViewById(R.id.view_top)
-                        lastTop.setBackgroundResource(R.color.color_transparency)
+                        lastTop.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
-                    OneLineFinishDirection.LEFT -> {
+                    OneLineDirection.LEFT -> {
                         val lastLeft: View = lastChildView.findViewById(R.id.view_left)
-                        lastLeft.setBackgroundResource(R.color.color_transparency)
+                        lastLeft.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
                     else -> {}
                 }
@@ -360,11 +375,11 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
 
                 curChildView.apply {
                     tag = null
-                    findViewById<View>(R.id.view_right).setBackgroundResource(R.color.color_transparency)
-                    findViewById<View>(R.id.view_bottom).setBackgroundResource(R.color.color_transparency)
-                    findViewById<View>(R.id.view_top).setBackgroundResource(R.color.color_transparency)
-                    findViewById<View>(R.id.view_left).setBackgroundResource(R.color.color_transparency)
-                    findViewById<View>(R.id.view_main).setBackgroundResource(R.drawable.grid_unselected)
+                    findViewById<View>(R.id.view_right).setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
+                    findViewById<View>(R.id.view_bottom).setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
+                    findViewById<View>(R.id.view_top).setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
+                    findViewById<View>(R.id.view_left).setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
+                    findViewById<View>(R.id.view_main).setBackgroundResource(R.drawable.one_line_grid_unselected)
                 }
             }
         }
@@ -384,36 +399,35 @@ class OneLineFinishGridView : GridView, View.OnTouchListener {
                     val curChildPos = roadList[i]
                     val curChildView: View = getChildAt(curChildPos)
                     val lastChildView: View = getChildAt(lastChildPos)
-
-                    val curMain: View = curChildView.findViewById(R.id.view_main)
+                    val curMainView: View = curChildView.findViewById(R.id.view_main)
                     when (checkDirection(lastChildPos, curChildPos)) {
-                        OneLineFinishDirection.RIGHT -> {
+                        OneLineDirection.RIGHT -> {
                             val lastRight: View = lastChildView.findViewById(R.id.view_right)
                             val curLeft: View = curChildView.findViewById(R.id.view_left)
-                            lastRight.setBackgroundResource(R.color.cubeSuper)
-                            curLeft.setBackgroundResource(R.color.cubeSuper)
-                            curMain.setBackgroundResource(R.drawable.grid_help_selected)
+                            lastRight.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curLeft.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curMainView.setBackgroundResource(R.drawable.one_line_grid_help_selected)
                         }
-                        OneLineFinishDirection.BOTTOM -> {
+                        OneLineDirection.DOWN -> {
                             val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
                             val curTop: View = curChildView.findViewById(R.id.view_top)
-                            lastBottom.setBackgroundResource(R.color.cubeSuper)
-                            curTop.setBackgroundResource(R.color.cubeSuper)
-                            curMain.setBackgroundResource(R.drawable.grid_help_selected)
+                            lastBottom.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curTop.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curMainView.setBackgroundResource(R.drawable.one_line_grid_help_selected)
                         }
-                        OneLineFinishDirection.TOP -> {
+                        OneLineDirection.UP -> {
                             val lastTop: View = lastChildView.findViewById(R.id.view_top)
                             val curBottom: View = curChildView.findViewById(R.id.view_bottom)
-                            lastTop.setBackgroundResource(R.color.cubeSuper)
-                            curBottom.setBackgroundResource(R.color.cubeSuper)
-                            curMain.setBackgroundResource(R.drawable.grid_help_selected)
+                            lastTop.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curBottom.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curMainView.setBackgroundResource(R.drawable.one_line_grid_help_selected)
                         }
-                        OneLineFinishDirection.LEFT -> {
+                        OneLineDirection.LEFT -> {
                             val lastLeft: View = lastChildView.findViewById(R.id.view_left)
                             val curRight: View = curChildView.findViewById(R.id.view_right)
-                            lastLeft.setBackgroundResource(R.color.cubeSuper)
-                            curRight.setBackgroundResource(R.color.cubeSuper)
-                            curMain.setBackgroundResource(R.drawable.grid_help_selected)
+                            lastLeft.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curRight.setBackgroundColor(resources.getColor(R.color.color_one_line_help_selected, resources.newTheme()))
+                            curMainView.setBackgroundResource(R.drawable.one_line_grid_help_selected)
                         }
                         else -> {}
                     }
