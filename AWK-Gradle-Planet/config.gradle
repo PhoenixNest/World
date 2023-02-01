@@ -26,6 +26,7 @@ ext {
     materialVersion = "1.8.0"
 
     // Dependencies
+    desugaringVersion = "2.0.0"
     navigationVersion = "2.5.3"            // Navigation
     liveDataVersion = "2.5.1"              // LiveData & ViewModel
     workManagerVersion = "2.7.1"           // Worker & WorkManager
