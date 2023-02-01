@@ -41,6 +41,10 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
                     LogUtil.verbose(message = "Navigate to 2048")
                     itemView.findNavController().navigate(R.id.action_homeFragment_to_block2048Fragment)
                 }
+                itemView.resources.getString(R.string.game_one_line_finish_title) -> {
+                    LogUtil.verbose(message = "Navigate to One Line Finish")
+                    itemView.findNavController().navigate(R.id.action_homeFragment_to_oneLineFinishFragment)
+                }
             }
         }
     }

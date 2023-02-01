@@ -6,8 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
+import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
+import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
 import io.dev.android.game.databinding.FragmentOneLineFinishBinding
+import io.dev.android.game.ui.one_line_finish.core.v1.OneLineFinishGridView
+import io.dev.android.game.ui.one_line_finish.data.OneLineFinishGameData
 import io.dev.android.game.ui.one_line_finish.viewmodel.OneLineFinishViewModel
+import io.dev.android.game.util.LogUtil
 
 class OneLineFinishFragment : Fragment() {
 
@@ -15,6 +22,9 @@ class OneLineFinishFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: OneLineFinishViewModel by viewModels()
+
+    private var firstPassed: Boolean = false
+    private var isHelping: Boolean = false
 
     companion object {
         const val TAG = "OneLineFinishFragment"
@@ -53,7 +63,54 @@ class OneLineFinishFragment : Fragment() {
     /* ======================== Ui ======================== */
 
     private fun initUi() {
-
+        // Game Map
+        OneLineFinishGameData.apply {
+            currentLevelLiveData.observe(viewLifecycleOwner) { level ->
+                LogUtil.debug(TAG, "currentLevel: $level")
+                val roadModel: OneLineFinishRoadModel = roadValuesList[level]
+                LogUtil.debug(TAG, "roadModel info: $roadModel")
+                initGameMap(roadModel)
+            }
+        }
     }
 
+    private fun initGameMap(roadModel: OneLineFinishRoadModel) {
+        binding.gridViewOneLineFinish.apply {
+            refreshMapGrid()
+            initMapGrid(roadModel, object : OneLineFinishGridView.OneLineFinishListener {
+                override fun initGridRoad(initRows: Int, initColumns: Int) {
+
+                }
+
+                override fun stopGettingRoad(): Boolean {
+                    return true
+                }
+
+                override fun saveProgress(roadModel: OneLineFinishRoadModel?, passedPosition: List<Int>) {
+
+                }
+
+                override fun passed(roadModel: OneLineFinishRoadModel?) {
+                    if (roadModel == null) {
+                        return
+                    }
+
+                    if (!firstPassed) {
+                        firstPassed = true
+                        viewModel.insertData(OneLineFinishEntity(roadModel))
+                    }
+
+                    TransitionManager.beginDelayedTransition(binding.gridViewOneLineFinish, AutoTransition())
+                }
+
+                override fun setIsHelping(isHelping: Boolean) {
+                    this@OneLineFinishFragment.isHelping = isHelping
+                }
+
+                override fun isHelping(): Boolean {
+                    return this@OneLineFinishFragment.isHelping
+                }
+            })
+        }
+    }
 }

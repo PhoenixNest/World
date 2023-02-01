@@ -23,5 +23,8 @@
     <color name="cube1024">#ffedc53f</color>
     <color name="cube2048">#ffedc22e</color>
     <color name="cubeSuper">#ff3c3a32</color>
-    
+
+    <!-- One Line Finish -->
+    <color name="color_transparency">#0000</color>
+
 </resources>
