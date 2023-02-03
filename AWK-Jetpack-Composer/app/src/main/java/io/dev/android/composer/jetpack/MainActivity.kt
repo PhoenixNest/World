@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import io.dev.android.composer.jetpack.ui.chat.ChatPage
 import io.dev.android.composer.jetpack.ui.theme.AWKJetpackComposerTheme
 import io.dev.android.composer.jetpack.viewmodel.MainViewModel
 
@@ -41,7 +40,7 @@ class MainActivity : ComponentActivity() {
             AWKJetpackComposerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    ChatPage(viewModel.messageData)
+                    // ChatPage(viewModel.messageData)
                 }
             }
         }

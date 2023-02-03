@@ -16,9 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.dev.android.composer.jetpack.R
-import io.dev.android.composer.jetpack.model.Message
-
-const val defaultContentDes = "Default Content Description"
+import io.dev.android.composer.jetpack.model.chat.Message
+import io.dev.android.composer.jetpack.ui.data.defaultContentDes
 
 @Composable
 fun MessageCard(msg: Message) {

@@ -1,4 +1,4 @@
-package io.dev.android.composer.jetpack.model
+package io.dev.android.composer.jetpack.model.chat
 
 data class Message(
     val id: Int,
