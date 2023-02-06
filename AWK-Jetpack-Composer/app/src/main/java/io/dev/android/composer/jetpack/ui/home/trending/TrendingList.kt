@@ -1,7 +1,6 @@
 package io.dev.android.composer.jetpack.ui.home.trending
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -16,7 +15,7 @@ fun TrendingList(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        // contentPadding = PaddingValues(horizontal = 16.dp),
         modifier = modifier
     ) {
         items(listData) { model ->
