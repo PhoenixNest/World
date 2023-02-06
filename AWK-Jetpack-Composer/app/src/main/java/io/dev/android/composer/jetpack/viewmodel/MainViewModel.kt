@@ -3,7 +3,7 @@ package io.dev.android.composer.jetpack.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.android.composer.jetpack.model.Message
+import io.dev.android.composer.jetpack.model.chat.Message
 import javax.inject.Inject
 
 @HiltViewModel

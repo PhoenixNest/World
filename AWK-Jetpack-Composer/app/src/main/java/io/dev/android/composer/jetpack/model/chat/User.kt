@@ -1,4 +1,4 @@
-package io.dev.android.composer.jetpack.model
+package io.dev.android.composer.jetpack.model.chat
 
 import androidx.annotation.DrawableRes
 import io.dev.android.composer.jetpack.R

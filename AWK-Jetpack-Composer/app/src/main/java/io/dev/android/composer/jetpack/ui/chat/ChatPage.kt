@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.dev.android.composer.jetpack.model.Message
+import io.dev.android.composer.jetpack.model.chat.Message
 
 @Composable
 fun ChatPage(messageData: List<Message>) {

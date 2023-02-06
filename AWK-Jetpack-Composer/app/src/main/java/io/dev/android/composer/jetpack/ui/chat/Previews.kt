@@ -4,8 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import io.dev.android.composer.jetpack.R
-import io.dev.android.composer.jetpack.model.Message
-import io.dev.android.composer.jetpack.model.User
+import io.dev.android.composer.jetpack.model.chat.Message
+import io.dev.android.composer.jetpack.model.chat.User
 import io.dev.android.composer.jetpack.ui.theme.AWKJetpackComposerTheme
 
 @Preview(
