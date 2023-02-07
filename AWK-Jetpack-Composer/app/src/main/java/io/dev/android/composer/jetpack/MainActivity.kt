@@ -25,6 +25,7 @@ import io.dev.android.composer.jetpack.ui.chat.ChatPage
 import io.dev.android.composer.jetpack.ui.home.HomePage
 import io.dev.android.composer.jetpack.ui.home.MyBottomNavigationBar
 import io.dev.android.composer.jetpack.ui.home.anim_list.AnimList
+import io.dev.android.composer.jetpack.ui.home.state_change_list.StateList
 import io.dev.android.composer.jetpack.ui.theme.AWKJetpackComposerTheme
 import io.dev.android.composer.jetpack.ui.welcome.WelcomePage
 import io.dev.android.composer.jetpack.viewmodel.MainViewModel
@@ -65,25 +66,40 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun MyApp() {
         AWKJetpackComposerTheme {
-            Chapter3BasicLayoutsInCompose()
+            // Chapter1ComposeTutorial()
+            // Chapter2JetpackComposeBasics()
+            // Chapter3BasicLayoutsInCompose()
+            Chapter4StateInJetpackCompose()
         }
     }
 
+    /**
+     * Reference Link: [Compose Tutorial](https://developer.android.google.cn/jetpack/compose/tutorial)
+     * */
     @Composable
     private fun Chapter1ComposeTutorial() {
-        // Reference Link: [Compose Tutorial](https://developer.android.google.cn/jetpack/compose/tutorial)
-        ChatPage(viewModel.messageData)
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            ChatPage(viewModel.messageData)
+        }
     }
 
+    /**
+     * Reference Link: [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics)
+     * */
     @Composable
     private fun Chapter2JetpackComposeBasics() {
-        // Reference Link: [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics)
         var shouldShowWelcomePage by rememberSaveable {
             mutableStateOf(true)
         }
 
         if (shouldShowWelcomePage) {
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
                 WelcomePage(onClick = {
                     shouldShowWelcomePage = false
                 })
@@ -93,14 +109,19 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Reference Link: [Basic layouts in Compose](https://developer.android.google.cn/codelabs/jetpack-compose-layouts)
+     * */
     @Composable
     private fun Chapter3BasicLayoutsInCompose() {
-        // Reference Link: [Basic layouts in Compose](https://developer.android.google.cn/codelabs/jetpack-compose-layouts)
         Scaffold(
             bottomBar = { MyBottomNavigationBar() }
         ) { padding: PaddingValues ->
             // A surface container using the 'background' color from the theme
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colors.background
+            ) {
                 // Avoid IDE warning
                 Log.d(TAG, "MyApp paddingValue: $padding")
                 HomePage(
@@ -110,6 +131,32 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.padding(padding)
                 )
             }
+        }
+    }
+
+    /**
+     * Reference Link: [Jetpack Compose State](https://developer.android.com/codelabs/jetpack-compose-state)
+     * */
+    @Composable
+    private fun Chapter4StateInJetpackCompose() {
+        // Also you can access the viewModel by used the viewModel() function invoke
+        // inside the @Composable function
+        val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+        val listData = viewModel.testStateListData
+
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            StateList(
+                dataList = listData,
+                onItemClick = { model ->
+                    viewModel.removeTestStateListItem(model)
+                },
+                onCheckChange = { model, checked ->
+                    viewModel.changeTestStateItemChecked(model, checked)
+                }
+            )
         }
     }
 }
