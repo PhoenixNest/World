@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
-import io.dev.android.composer.jetpack.model.home.FavouriteModel
-import io.dev.android.composer.jetpack.model.home.TrendingModel
-import io.dev.android.composer.jetpack.ui.home.HomePage
+import io.dev.android.composer.jetpack.model.AnimTestModel
 import io.dev.android.composer.jetpack.ui.home.MyBottomNavigationBar
+import io.dev.android.composer.jetpack.ui.home.anim_list.AnimList
 import io.dev.android.composer.jetpack.ui.theme.AWKJetpackComposerTheme
+import io.dev.android.composer.jetpack.ui.welcome.WelcomePage
 import io.dev.android.composer.jetpack.viewmodel.MainViewModel
 
 @AndroidEntryPoint
@@ -43,7 +48,24 @@ class MainActivity : ComponentActivity() {
 
     private fun setupUi() {
         setContent {
-            AWKJetpackComposerTheme {
+            MyApp()
+        }
+    }
+
+    @Composable
+    private fun MyApp() {
+        var shouldShowWelcomePage by rememberSaveable {
+            mutableStateOf(true)
+        }
+
+        AWKJetpackComposerTheme {
+            if (shouldShowWelcomePage) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                    WelcomePage(onClick = {
+                        shouldShowWelcomePage = false
+                    })
+                }
+            } else {
                 Scaffold(
                     bottomBar = { MyBottomNavigationBar() }
                 ) { padding ->
@@ -51,9 +73,15 @@ class MainActivity : ComponentActivity() {
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                         // ChatPage(viewModel.messageData)
 
-                        HomePage(
+                        /*HomePage(
                             trendingListData = TrendingModel.testTrendingList,
                             favouriteListData = FavouriteModel.testFavouriteList,
+                            animListData = AnimTestModel.testAnimData(),
+                            modifier = Modifier.padding(padding)
+                        )*/
+
+                        AnimList(
+                            listData = AnimTestModel.testAnimData(),
                             modifier = Modifier.padding(padding)
                         )
                     }
