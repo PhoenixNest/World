@@ -27,7 +27,7 @@ fun HomeSectionPanel(
                     top = 40.dp,
                     bottom = 8.dp
                 )
-                .padding(16.dp)
+                .padding(8.dp)
         )
         contentView()
     }

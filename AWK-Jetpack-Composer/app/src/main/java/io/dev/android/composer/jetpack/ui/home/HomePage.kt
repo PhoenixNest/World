@@ -11,8 +11,8 @@ import io.dev.android.composer.jetpack.R
 import io.dev.android.composer.jetpack.model.AnimTestModel
 import io.dev.android.composer.jetpack.model.home.FavouriteModel
 import io.dev.android.composer.jetpack.model.home.TrendingModel
-import io.dev.android.composer.jetpack.ui.home.favorite.FavouriteGridList
 import io.dev.android.composer.jetpack.ui.home.anim_list.AnimList
+import io.dev.android.composer.jetpack.ui.home.favorite.FavouriteGridList
 import io.dev.android.composer.jetpack.ui.home.trending.TrendingList
 
 @Composable
@@ -25,9 +25,9 @@ fun HomePage(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(vertical = 8.dp)
     ) {
-        SearchBar(Modifier.padding(horizontal = 16.dp))
+        SearchBar(Modifier.padding(horizontal = 8.dp))
 
         HomeSectionPanel(titleResId = R.string.align_your_body) {
             TrendingList(listData = trendingListData)
