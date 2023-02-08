@@ -135,7 +135,7 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Reference Link: [Jetpack Compose State](https://developer.android.com/codelabs/jetpack-compose-state)
+     * Reference Link: [State in Jetpack Compose](https://developer.android.com/codelabs/jetpack-compose-state)
      * */
     @Composable
     private fun Chapter4StateInJetpackCompose() {
