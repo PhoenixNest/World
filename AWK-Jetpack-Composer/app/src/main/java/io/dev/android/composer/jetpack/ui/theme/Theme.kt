@@ -2,6 +2,7 @@ package io.dev.android.composer.jetpack.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -28,17 +29,26 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun AWKJetpackComposerTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun AWKJetpackComposerTheme(
+    cutOrRounded: UiType = UiType.ROUNDED,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
     }
 
+    val shapeType: Shapes = when (cutOrRounded) {
+        UiType.CUT -> CutCornerShape
+        UiType.ROUNDED -> RoundedShapes
+    }
+
     MaterialTheme(
         colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+        typography = UbuntuTypography,
+        shapes = shapeType,
         content = content
     )
 }

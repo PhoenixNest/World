@@ -3,6 +3,7 @@ package io.dev.android.composer.jetpack.ui.home
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.Icon
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -19,7 +20,7 @@ import io.dev.android.composer.jetpack.ui.data.defaultContentDes
 fun SearchBar(
     modifier: Modifier = Modifier
 ) {
-    TextField(
+    OutlinedTextField(
         value = "",
         onValueChange = {},
         leadingIcon = {

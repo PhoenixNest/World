@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.android.composer.jetpack.model.AnimTestModel
 import io.dev.android.composer.jetpack.model.home.FavouriteModel
@@ -64,6 +65,10 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
+    @Preview(
+        name = "App Entrance",
+        showBackground = true
+    )
     private fun MyApp() {
         AWKJetpackComposerTheme {
             // Chapter1ComposeTutorial()
@@ -77,6 +82,10 @@ class MainActivity : ComponentActivity() {
      * Reference Link: [Compose Tutorial](https://developer.android.google.cn/jetpack/compose/tutorial)
      * */
     @Composable
+    @Preview(
+        name = "Compose Tutorial",
+        showBackground = true,
+    )
     private fun Chapter1ComposeTutorial() {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -90,6 +99,10 @@ class MainActivity : ComponentActivity() {
      * Reference Link: [Jetpack Compose basics](https://developer.android.com/codelabs/jetpack-compose-basics)
      * */
     @Composable
+    @Preview(
+        name = "Jetpack Compose basics",
+        showBackground = true
+    )
     private fun Chapter2JetpackComposeBasics() {
         var shouldShowWelcomePage by rememberSaveable {
             mutableStateOf(true)
@@ -113,6 +126,10 @@ class MainActivity : ComponentActivity() {
      * Reference Link: [Basic layouts in Compose](https://developer.android.google.cn/codelabs/jetpack-compose-layouts)
      * */
     @Composable
+    @Preview(
+        name = "Basic layouts in Compose",
+        showBackground = true
+    )
     private fun Chapter3BasicLayoutsInCompose() {
         Scaffold(
             bottomBar = { MyBottomNavigationBar() }
@@ -138,6 +155,10 @@ class MainActivity : ComponentActivity() {
      * Reference Link: [State in Jetpack Compose](https://developer.android.com/codelabs/jetpack-compose-state)
      * */
     @Composable
+    @Preview(
+        name = "State in Jetpack Compose",
+        showBackground = true
+    )
     private fun Chapter4StateInJetpackCompose() {
         // Also you can access the viewModel by used the viewModel() function invoke
         // inside the @Composable function
