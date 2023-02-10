@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import io.dev.android.game.R
-import io.dev.android.game.databinding.ListItemHomeBinding
+import io.dev.android.game.databinding.ItemHomeBinding
 import io.dev.android.game.ui.home.model.GameModel
 import io.dev.android.game.util.LogUtil
 
@@ -18,7 +18,7 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
     }
 
     class HomeRVVH(
-        private val binding: ListItemHomeBinding
+        private val binding: ItemHomeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindData(model: GameModel) {
             binding.model = model
@@ -27,7 +27,7 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeRVVH {
-        return HomeRVVH(ListItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return HomeRVVH(ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: HomeRVVH, position: Int) {

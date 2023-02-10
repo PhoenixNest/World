@@ -59,7 +59,7 @@ class OneLineGridView : GridView, View.OnTouchListener {
 
     override fun onTouch(
         view: View?,
-        event: MotionEvent?
+        motionEvent: MotionEvent?
     ): Boolean {
         listener?.run {
             if (isHelping()) {
@@ -72,10 +72,10 @@ class OneLineGridView : GridView, View.OnTouchListener {
             return false
         }
 
-        val roadList = roadModel?.roadList
+        val roadList: List<Int>? = roadModel?.roadList
         if (roadList != null) {
             if (listener != null && passedPositionsList.size + 1 == roadList.size) {
-                val roadString = StringBuilder()
+                val roadString: StringBuilder = StringBuilder()
                 for (item in roadList) {
                     roadString.append(item)
                     if (roadList.lastIndexOf(item) != roadList.size - 1) {
@@ -85,10 +85,12 @@ class OneLineGridView : GridView, View.OnTouchListener {
                 listener?.passed(roadModel)
             }
 
-            event?.run {
-                val curX: Float = x
-                val curY: Float = y
-                val curChildPos = pointToPosition(curX.toInt(), curY.toInt())
+            motionEvent?.let { event ->
+                val curChildPos: Int = pointToPosition(
+                    event.x.toInt(),
+                    event.y.toInt()
+                )
+
                 if (curChildPos >= childCount || curChildPos < 0) {
                     return false
                 }
@@ -99,51 +101,72 @@ class OneLineGridView : GridView, View.OnTouchListener {
                 }
 
                 try {
-                    when (action) {
+                    when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
+                            // Record the point where the finger has pressed down
                             downChildPosition = curChildPos
                             if (lastChildPosition == downChildPosition
                                 || downChildPosition == firstChildPosition
                                 || passedPositionsList.contains(downChildPosition)
                             ) {
+                                // Step back is performed when the view position of the
+                                // last operation is the same as the current position
                                 if (lastChildPosition == downChildPosition) {
                                     backWard(childView, downChildPosition)
-                                } else {
+                                }
+                                // When the finger-down point is at the starting position
+                                // or the passed point contains the current down point,
+                                // fall back to the finger-down point
+                                else {
                                     for (i in passedPositionsList.size - 1 downTo 0) {
-                                        val curPos = passedPositionsList[i]
+                                        val curPos: Int = passedPositionsList[i]
+                                        // When the finger-down point is at the starting position
                                         if (curPos == downChildPosition) {
                                             break
                                         }
-
+                                        // The passed point contains the current finger-down point
                                         val curChildView: View = getChildAt(curPos)
                                         if (curChildView.tag == null) {
                                             break
                                         }
-
+                                        // Back to the finger-down point
                                         backWard(curChildView, curPos)
                                     }
                                 }
-                            } else {
+                            }
+                            // Otherwise try to move forward
+                            else {
                                 forward(childView, downChildPosition)
                             }
                         }
                         MotionEvent.ACTION_MOVE -> {
+                            // If the current position is the start position
                             if (curChildPos == firstChildPosition
                                 && lastChildPosition != firstChildPosition
                             ) {
+                                // The current position is the start position and recedes when the previous position of the "pen end" is the start position
                                 val lastChildView: View = getChildAt(lastChildPosition)
                                 if (lastChildView.tag is Int
-                                    && (lastChildView.tag as Int) == firstChildPosition
+                                    && lastChildView.tag == firstChildPosition
                                 ) {
                                     backWard(lastChildView, lastChildPosition)
                                 }
                             }
-                            if (curChildPos != lastMoveChildPosition) {
+                            // The state does not change when you swipe back and forth only within a childView
+                            else if (curChildPos != lastMoveChildPosition) {
                                 if (curChildPos != downChildPosition) {
+                                    // When the record is not empty, there are two situations to perform a backward step:
+                                    // + direct backward step;
+                                    // + sudden backward step when moving forward;
                                     if (childView.tag != null) {
+                                        // Direct backward: Performs backward when the last action point equals the current move point
                                         if (lastChildPosition == curChildPos) {
                                             backWard(childView, curChildPos)
-                                        } else {
+                                        }
+                                        // When forward with suddenly backward:
+                                        // the end of the pen is retreated, and currentChildPosition is the
+                                        // position of the previous step of the tail.
+                                        else {
                                             val lastChildView: View = getChildAt(lastChildPosition)
                                             if (lastChildView.tag is Int
                                                 && (lastChildView.tag as Int) == curChildPos
@@ -151,10 +174,14 @@ class OneLineGridView : GridView, View.OnTouchListener {
                                                 backWard(lastChildView, lastChildPosition)
                                             }
                                         }
-                                    } else {
+                                    }
+                                    // Try to forward when the tag is null
+                                    else {
                                         forward(childView, curChildPos)
                                     }
-                                } else if (childView.tag == null) {
+                                }
+                                // Try to forward when the previous point is the finger-down point and the tag is null
+                                else if (childView.tag == null) {
                                     forward(childView, curChildPos)
                                 }
                             }
@@ -164,7 +191,6 @@ class OneLineGridView : GridView, View.OnTouchListener {
                 } catch (exception: Exception) {
                     UiUtil.showToast(context, "Error, message: $exception")
                 }
-                return false
             }
         }
 
@@ -193,12 +219,9 @@ class OneLineGridView : GridView, View.OnTouchListener {
         this.roadModel = roadModel
         this.lastChildPosition = roadModel.roadList[0]
         this.firstChildPosition = roadModel.roadList[0]
+        this.passedPositionsList.clear()
         listener?.stopGettingRoad()
         setupGridView(roadModel)
-
-        val gridAdapter = OneLineGridAdapter()
-        gridAdapter.setRoadList(roadModel)
-        adapter = gridAdapter
     }
 
     fun initPassedGrid(
@@ -225,7 +248,6 @@ class OneLineGridView : GridView, View.OnTouchListener {
         this.firstChildPosition = roadList[0]
 
         setupGridView(roadModel)
-        adapter = OneLineGridAdapter().setRoadList(roadModel)
 
         if (passedPositionsList.size == 0) {
             if (listener != null) {
@@ -256,21 +278,24 @@ class OneLineGridView : GridView, View.OnTouchListener {
 
     private fun setupGridView(model: OneLineFinishRoadModel?) {
         if (model != null) {
-            numColumns = model.columns
             val layoutParams = layoutParams
             layoutParams.width = 60F.dp2Px() * model.columns
+            layoutParams.height = 60F.dp2Px() * model.columns
             setLayoutParams(layoutParams)
+
+            numColumns = model.columns
+            adapter = OneLineGridAdapter().setRoadList(roadModel)
         }
     }
 
     private fun checkDirection(lastPos: Int, curPos: Int): OneLineDirection? {
         if (lastPos in 0 until childCount) {
-            if (lastPos + 1 == curPos && lastPos % numColumns != 0) {
+            if (lastPos + 1 == curPos && curPos % numColumns != 0) {
                 return OneLineDirection.RIGHT
             } else if (lastPos + numColumns == curPos) {
-                return OneLineDirection.DOWN
-            } else if (lastPos - numColumns == curPos) {
                 return OneLineDirection.UP
+            } else if (lastPos - numColumns == curPos) {
+                return OneLineDirection.DOWN
             } else if (lastPos - 1 == curPos && lastPos % numColumns != 0) {
                 return OneLineDirection.LEFT
             }
@@ -300,7 +325,7 @@ class OneLineGridView : GridView, View.OnTouchListener {
                         curLeft.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
                         curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
                     }
-                    OneLineDirection.DOWN -> {
+                    OneLineDirection.UP -> {
                         val lastChildView: View = getChildAt(lastChildPosition)
                         val curMainView: View = curChildView.findViewById(R.id.view_main)
                         val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
@@ -309,7 +334,7 @@ class OneLineGridView : GridView, View.OnTouchListener {
                         curTop.setBackgroundColor(resources.getColor(R.color.color_one_line_selected, resources.newTheme()))
                         curMainView.setBackgroundResource(R.drawable.one_line_grid_selected)
                     }
-                    OneLineDirection.UP -> {
+                    OneLineDirection.DOWN -> {
                         val lastChildView: View = getChildAt(lastChildPosition)
                         val curMainView: View = curChildView.findViewById(R.id.view_main)
                         val lastTop: View = lastChildView.findViewById(R.id.view_top)
@@ -356,11 +381,11 @@ class OneLineGridView : GridView, View.OnTouchListener {
                         val lastRight: View = lastChildView.findViewById(R.id.view_right)
                         lastRight.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
-                    OneLineDirection.DOWN -> {
+                    OneLineDirection.UP -> {
                         val lastBottom: View = lastChildView.findViewById(R.id.view_bottom)
                         lastBottom.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }
-                    OneLineDirection.UP -> {
+                    OneLineDirection.DOWN -> {
                         val lastTop: View = lastChildView.findViewById(R.id.view_top)
                         lastTop.setBackgroundColor(resources.getColor(R.color.color_transparency, resources.newTheme()))
                     }

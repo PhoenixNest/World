@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.TextView
 import io.dev.android.game.R
 import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
 
@@ -34,7 +35,7 @@ class OneLineGridAdapter : BaseAdapter() {
     }
 
     override fun getCount(): Int {
-        return roadList.size
+        return size
     }
 
     override fun getItem(position: Int): Any {
@@ -55,10 +56,6 @@ class OneLineGridAdapter : BaseAdapter() {
             view = LayoutInflater.from(parent.context).inflate(R.layout.item_one_line_finish, parent, false)
         }
 
-        if (startPosition == position) {
-            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.one_line_grid_start_point)
-        }
-
         var isAllowed = false
         for (item in roadList) {
             if (item == position) {
@@ -66,10 +63,19 @@ class OneLineGridAdapter : BaseAdapter() {
             }
         }
 
+        // Setup start point
+        if (startPosition == position) {
+            view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.one_line_grid_start_point)
+        }
+
+        // Setup obstacle
         if (!isAllowed) {
             view?.tag = TAG_FORBIDDEN_VIEW
             view?.findViewById<View>(R.id.view_main)?.setBackgroundResource(R.drawable.one_line_grid_obstacle)
         }
+
+        // Setup item index
+        view?.findViewById<TextView>(R.id.textView_item_index)?.text = position.toString()
 
         return view
     }
