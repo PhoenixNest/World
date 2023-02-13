@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- To learn more about <application>, please follow: -->
+    <!-- https://developer.android.com/guide/topics/manifest/application-element -->
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AWKGradlePlanet"
+        tools:targetApi="31">
+
+        <!-- To learn more about <activity>, please follow: -->
+        <!-- https://developer.android.com/guide/topics/manifest/activity-element -->
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Base.Theme.AWKGradlePlanet">
+
+            <!-- To learn more about <intent-filter>, please follow: -->
+            <!-- https://developer.android.com/guide/topics/manifest/intent-filter-element -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <!-- To learn more about how to [Verify your Android App with Links], please follow: -->
+                <!-- https://developer.android.com/training/app-links/verify-android-applinks -->
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="www.example.com" />
+                <data android:host="mobile.example.com" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AWKGradlePlanet" />
+
+        <!-- To create an alias for any Activity, the tag must be defined after <activity> -->
+        <!-- To learn more about <activity-alias>, please follow: -->
+        <!-- https://developer.android.com/guide/topics/manifest/activity-alias-element -->
+        <activity-alias
+            android:name=".aliasForMainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main_alias"
+            android:targetActivity=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <!-- To learn more about <meta-data>, please follow: -->
+        <!-- https://developer.android.com/guide/topics/manifest/meta-data-element -->
+        <!-- You can get this data by using context.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GER_META_DATA)-->
+        <meta-data
+            android:name="[key]"
+            android:value="[value]" />
+
+        <!-- You can also use the android:resource tag to get the resource id for any resource file or value field -->
+        <!-- Note: You may only can get the id of the resource this time, you should use the additional function call with getResources() to get the resource itself -->
+        <meta-data
+            android:name="[mainTitleKey]"
+            android:resource="@string/title_activity_main" />
+
+    </application>
+
+</manifest>

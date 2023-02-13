@@ -30,5 +30,17 @@
     <color name="color_one_line_unselected">#FFEEE4DA</color>
     <color name="color_one_line_selected">#FFF2B179</color>
     <color name="color_one_line_help_selected">#FF3C3A32</color>
+    <color name="cube2">#ffeee4da</color>
+    <color name="cube4">#ffede0c8</color>
+    <color name="cube8">#fff2b179</color>
+    <color name="cube16">#fff59563</color>
+    <color name="cube32">#fff67c5f</color>
+    <color name="cube64">#fff65e3b</color>
+    <color name="cube128">#ffedcf72</color>
+    <color name="cube256">#ffedcf72</color>
+    <color name="cube512">#ffedc850</color>
+    <color name="cube1024">#ffedc53f</color>
+    <color name="cube2048">#ffedc22e</color>
+    <color name="cubeSuper">#ff3c3a32</color>
 
 </resources>

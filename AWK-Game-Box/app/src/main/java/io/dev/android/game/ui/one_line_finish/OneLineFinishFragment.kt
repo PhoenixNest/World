@@ -8,9 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
 import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
 import io.dev.android.game.databinding.FragmentOneLineFinishBinding
-import io.dev.android.game.ui.one_line_finish.core.v1.OneLineGridView
+import io.dev.android.game.ui.one_line_finish.core.v1.OneLineFinishGridView
 import io.dev.android.game.ui.one_line_finish.data.OneLineFinishGameData
 import io.dev.android.game.ui.one_line_finish.viewmodel.OneLineFinishViewModel
 import io.dev.android.game.util.LogUtil
@@ -76,7 +77,7 @@ class OneLineFinishFragment : Fragment() {
     private fun initGameMap(roadModel: OneLineFinishRoadModel) {
         binding.gridViewOneLineFinish.apply {
             refreshMapGrid()
-            initMapGrid(roadModel, object : OneLineGridView.OneLineFinishListener {
+            initMapGrid(roadModel, object : OneLineFinishGridView.OneLineFinishListener {
                 override fun initGridRoad(initRows: Int, initColumns: Int) {
 
                 }

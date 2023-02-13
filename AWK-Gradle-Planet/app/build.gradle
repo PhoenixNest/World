@@ -1,0 +1,464 @@
+/**
+ * The first line in the build configuration applies the Android Gradle plugin
+ * to this build and makes the android block available to specify
+ * Android-specific build options.
+ */
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+/**
+ * When using Android Gradle plugin 3.2.0 and higher,
+ * you need to pass processor arguments that
+ * represent files or directories using Gradle's CommandLineArgumentProvider interface.
+ * Using CommandLineArgumentProvider allows you or the annotation processor author
+ * to improve the correctness and performance of incremental
+ * and cached clean builds by applying incremental build property type annotations to each argument.
+ *
+ * For example, the class below implements CommandLineArgumentProvider
+ * and annotates each argument for the processor.
+ * The sample also uses the Groovy language syntax and is included directly
+ * in the module's build.gradle file.
+ * */
+class MyArgProvider implements CommandLineArgumentProvider {
+
+    // Annotates each directory as either an input or output for the
+    // annotation processor.
+    @InputFiles
+    // Using this annotation helps Gradle determine which part of the file path
+    // should be considered during up-to-date checks.
+    @PathSensitive(PathSensitivity.RELATIVE)
+    FileCollection inputDir
+
+    @OutputDirectory
+    File outputDir
+
+    // The class constructor sets the paths for the input and output directories.
+    MyArgProvider(FileCollection input, File output) {
+        inputDir = input
+        outputDir = output
+    }
+
+    // Specifies each directory as a command line argument for the processor.
+    // The Android plugin uses this method to pass the arguments to the
+    // annotation processor.
+    @Override
+    Iterable<String> asArguments() {
+        // Use the form '-Akey[=value]' to pass your options to the Java compiler.
+        ["-ArgInputDir=${inputDir.singleFile().absolutePath}",
+         "-ArgOutputDir=${outputDir.absolutePath()}"]
+    }
+}
+
+/**
+ * The android block is where you configure all your Android-specific
+ * build options.
+ */
+android {
+    /**
+     * The app's [namespace](https://developer.android.com/studio/build/configure-app-module#set-namespace).
+     * Used primarily to access app resources.
+     */
+    namespace rootProject.ext.namespaceId
+
+    /**
+     * The default namespace for the androidTest and
+     * test source sets is the main namespace, with .test added at the end.
+     * For example, if the namespace property in the build.gradle file
+     * is com.example.myapp, the testing namespace is
+     * by default set to com.example.myapp.test.
+     * To change the namespace for testing, use the testNamespace property,
+     * as shown in the following code snippet:
+     * */
+    testNamespace rootProject.ext.namespaceTestId
+
+    /**
+     * compileSdk specifies the Android API level Gradle should use to
+     * compile your app. This means your app can use the API features included in
+     * this API level and lower.
+     */
+    compileSdk rootProject.ext.sdkVersion
+
+    /**
+     * The defaultConfig block encapsulates default settings and entries for all
+     * build variants and can override some attributes in main/AndroidManifest.xml
+     * dynamically from the build system. You can configure product flavors to override
+     * these values for different versions of your app.
+     */
+    defaultConfig {
+        // Uniquely identifies the package for publishing.
+        applicationId rootProject.ext.applicationId
+
+        // By default, the build tools apply an application ID to
+        // your instrumentation test APK using the application ID for
+        // the given build variant appended with .test.
+        // For example, a test APK for the com.example.myapp.free build variant
+        // has the application ID com.example.myapp.free.test.
+
+        // Although it shouldn't be necessary, you can
+        // change the application ID by defining the testApplicationId property
+        // in your defaultConfig or productFlavor block.
+        testApplicationId rootProject.ext.applicationTestId
+
+        // Defines the minimum API level required to run the app.
+        minSdk rootProject.ext.minSdkVersion
+
+        // Specifies the API level used to test the app.
+        targetSdk rootProject.ext.targetSdkVersion
+
+        // Defines the version number of your app.
+        versionCode rootProject.ext.versionCode
+
+        // Defines a user-friendly version name for your app.
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // If you need to pass arguments to an annotation processor,
+        // you can do so using the AnnotationProcessorOptions block
+        // in your module's build configuration. For example,
+        // if you want to pass primitive data types as key-value pairs,
+        // you can use the argument property, as shown below:
+        javaCompileOptions {
+            annotationProcessorOptions {
+                argument 'key1', 'value1'
+                argument 'key2', 'value2'
+
+                // Creates a new MyArgsProvider object, specifies the input and
+                // output paths for the constructor, and passes the object
+                // to the Android plugin.
+                // compilerArgumentProvider new MyArgProvider(files("input/path"), new File("output/path"))
+            }
+        }
+
+        // Use this tag to configure your build types with release & debug
+        manifestPlaceholders = [hostName: "www.example.com"]
+
+        // Multidex
+        // To learn more about how to enable multidex for apps,
+        // please follow: https://developer.android.com/studio/build/multidex
+        // Note: if the the app's minSdkVersion is set to 21 or higher, multidex is enabled by default
+        //       and you don't need the multidex library.
+        multiDexEnabled true
+    }
+
+    /**
+     * Note: Including the passwords for your release key and keystore
+     * inside the build file is not a good security practice.
+     * */
+    signingConfigs {
+        release {
+            storeFile file("myReleaseKey.keystore")
+            storePassword "password"
+            keyAlias "MyReleaseKey"
+            keyPassword "password"
+
+            // Instead, configure the build file to obtain these passwords from environment variables
+            // or have the build process prompt you for these passwords.
+            storePassword System.getenv("keyStorePwd")
+            keyPassword System.getenv("keyPwd")
+
+            // You can also save the keyStore file into the other directory,
+            // and use rootProject.file() to gain it.
+            // def keyStoreFile = rootProject.file("filePath")
+            // storeFile = keyStoreFile
+
+            // at this time, you can use this code to get the information which inside the file:
+            // new Properties().load(new FileInputStream())
+            // def keyStoreProperties = new Properties().load(new FileInputStream(keyStoreFile))
+            // storePassword = keyStoreProperties["storePassword"]
+            // keyAlias = keyStoreProperties["keyAlias"]
+            // keyPassword = keyStoreProperties["keyPassword"]
+        }
+    }
+
+    /**
+     * The buildTypes block is where you can configure multiple [build types](https://developer.android.com/studio/build/build-variants#build-types).
+     * By default, the build system defines two build types: debug and release. The
+     * debug build type is not explicitly shown in the default build configuration,
+     * but it includes debugging tools and is signed with the debug key. The release
+     * build type applies ProGuard settings and is not signed by default.
+     */
+    // Reference link: [buildTypes](https://developer.android.com/reference/tools/gradle-api/7.3/com/android/build/api/dsl/BuildType)
+    buildTypes {
+        /**
+         * By default, Android Studio configures the release build type to enable code
+         * shrinking, using minifyEnabled, and specifies the default ProGuard rules file.
+         */
+        release {
+            /**
+             * If you don't convert your PNG images to WebP, you can still speed up your build
+             * by disabling automatic image compression every time you build your app.
+             *
+             * Because build types or product flavors don't define this property, you need to manually
+             * set this property to true when building the release version of your app.
+             * */
+            // Disables PNG crunching for the "release" build type
+            crunchPngs false
+
+            // Specifies whether to enable shrinking resources for this build type.
+            shrinkResources true
+
+            // Enables code shrinking for the release build type.
+            minifyEnabled /* false */ true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // signingConfigs signingConfigs.release
+        }
+
+        debug {
+            // You can use applicationIdSuffix to change the applicationId for build variants
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
+        /**
+         * The `initWith` property lets you copy configurations from other build types,
+         * then configure only the settings you want to change. This one copies the debug build
+         * type, and then changes the manifest placeholder and application ID.
+         */
+        staging {
+            initWith debug
+            manifestPlaceholders = [hostName: "internal.example.com"]
+            applicationIdSuffix ".debugStaging"
+
+            // Specifies a sorted list of fallback build types that the
+            // plugin can try to use when a dependency does not include a
+            // "staging" build type. You may specify as many fallbacks as you
+            // like, and the plugin selects the first build type that's
+            // available in the dependency.
+            matchingFallbacks = ['release', 'debug']
+        }
+    }
+
+    /**
+     * The productFlavors block is where you can configure multiple [product flavors](https://developer.android.com/studio/build/build-variants#product-flavors).
+     * This lets you create different versions of your app that can
+     * override the defaultConfig block with their own settings. Product flavors
+     * are optional, and the build system does not create them by default.
+     *
+     * This example creates a free and paid product flavor. Each product flavor
+     * then specifies its own application ID, so that they can exist on the Google
+     * Play Store, or an Android device, simultaneously.
+     *
+     * If you declare product flavors, you must also declare flavor dimensions
+     * and assign each flavor to a flavor dimension.
+     */
+    // Reference link: [flavorDimensions](https://developer.android.com/reference/tools/gradle-api/current/com/android/build/api/dsl/ProductFlavor#dimension)
+    // Specifies the flavor dimensions you want to use. The order in which you
+    // list the dimensions determines their priority, from highest to lowest,
+    // when Gradle merges variant sources and configurations. You must assign
+    // each product flavor you configure to one of the flavor dimensions.
+    flavorDimensions "api", "tier"
+    // The final output apk will be like:
+    // app-[minApi24, minApi23, minApi21]-[free, paid]-[Debug, Release].apk
+    // Such as: app-minApi24-free-Debug.apk
+    productFlavors {
+        // After you declare the dimension, the building system will create 2 build types
+        // according to <product-flavor><Build-Type> such as:
+        // - freeDebug
+        // - freeRelease
+        // - paidDebug
+        // - paidRelease
+        free {
+            // Assigns this product flavor to the "tier" flavor dimension.
+            // If you are using only one dimension, this property is optional,
+            // and the plugin automatically assigns all the module's flavors to
+            // that dimension.
+            dimension "tier"
+            applicationId rootProject.ext.applicationId + ".free"
+            testApplicationId rootProject.ext.applicationTestId + ".free"
+
+            // ===== OR use Suffix to change the applicationId =====
+            // applicationIdSuffix ".free"
+        }
+
+        paid {
+            dimension "tier"
+            applicationId rootProject.ext.applicationId + ".paid"
+            testApplicationId rootProject.ext.applicationTestId + ".paid"
+        }
+
+        // Configurations in the "api" product flavors override those in "mode"
+        // flavors and the defaultConfig block. Gradle determines the priority
+        // between flavor dimensions based on the order in which they appear next
+        // to the flavorDimensions property, with the first dimension having a higher
+        // priority than the second, and so on.
+        minApi24 {
+            dimension "api"
+            minSdkVersion 24
+            // To ensure the target device receives the version of the app with
+            // the highest compatible API level, assign version codes in increasing
+            // value with API level.
+            versionCode 30000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi24"
+        }
+
+        minApi23 {
+            dimension "api"
+            minSdkVersion 23
+            versionCode 20000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi23"
+        }
+
+        minApi21 {
+            dimension "api"
+            minSdkVersion 21
+            versionCode 10000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi21"
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+        if (names.contains("minApi21" && names.contains("free"))) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
+    }
+
+    compileOptions {
+        // Enable support for the new language APIs
+        // To learn more about desugaring, please follow: https://developer.android.com/studio/write/java8-support
+        coreLibraryDesugaringEnabled true
+
+        // Set java compatibility to java 8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    sourceSets {
+        main {
+
+        }
+    }
+}
+
+/**
+ * To learn more about how to Extend the Android Gradle plugin,
+ * please follow: https://developer.android.com/studio/build/extend-agp
+ * */
+// Notes: This AGP Extension seems like can be used just with [Kotlin]
+/*androidComponents {
+    // At this stage of the build, you get access to VariantBuilder objects,
+    // which determine the variants that will be created and their properties.
+    //
+    // For example, you can programmatically disable certain variants,
+    // their tests, or change a property's value (for example, minSdk)
+    // only for a chosen variant.
+    beforeVariants { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    // The beforeVariants() callback optionally takes a VariantSelector,
+    // which you can obtain through the selector() method on the androidComponentsExtension.
+    // You can use it to filter components participating in the callback invocation
+    // based on their name, build type, or product flavor.
+    beforeVariants(selector().withName("free")) { variantBuilder ->
+        variantBuilder.minSdk = 23
+    }
+
+    finalizeDsl { extension ->
+
+    }
+
+    onVariants {
+
+    }
+
+    // onVariants also supports VariantSelectors:
+    onVariants(selector().withBuildType("paid")) { variant ->
+        // Gather the output when we are in single mode (no multi-apk).
+        def mainOutput = variant.outputs.single {
+            it.outputType == OutputType.SINGLE
+        }
+
+        // Create version code generating task
+        def versionCodeTask = project.tasks.register("computeVersionCodeFor${variant.name}", VersionCodeTask::class.java) {
+            it.outputFile.set(project.layout.buildDirectory.file("${variant.name}/versionCode.txt"))
+        }
+
+        // Wire version code from the task output.
+        // map() will create a lazy provider that:
+        // 1. Runs just before the consumer(s), ensuring that the producer
+        // (VersionCodeTask) has run and therefore the file is created.
+        // 2. Contains task dependency information so that the consumer(s) run after
+        // the producer.
+        mainOutput.versionCode.set(versionCodeTask.map {
+            it.outputFile.get().asFile.readText().toInt()
+        })
+    }
+}*/
+
+// If you want to add a dependency for a variant that combines a product flavor and a build type,
+// then you must initialize the configuration name in the configurations block.
+// The following sample adds a runtimeOnly dependency to your "freeDebug" build variant (using a local binary dependency).
+configurations {
+    // Initializes a placeholder for the freeDebugRuntimeOnly & paidDebugRuntimeOnly dependency configuration.
+    freeDebugRuntimeOnly {}
+    paidDebugRuntimeOnly {}
+}
+
+/**
+ * The dependencies block in the module-level build configuration file
+ * specifies dependencies required to build only the module itself.
+ * To learn more, go to [Add build dependencies](https://developer.android.com/studio/build/dependencies).
+ */
+dependencies {
+    // implementation project(':lib')
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation fileTree(dir: 'lib', include: ['*.aar'])
+    // implementation files('libs/foo.jar', 'libs/bar.jar')
+    // implementation files('libs/foo.aar', 'libs/bar.aar')
+    freeDebugRuntimeOnly fileTree(dir: 'lib/free', includes: ['*.jar'])
+    freeDebugRuntimeOnly fileTree(dir: 'lib/free', includes: ['*.aar'])
+    paidDebugRuntimeOnly fileTree(dir: 'lib/paid', includes: ['*.jar'])
+    paidDebugRuntimeOnly fileTree(dir: 'lib/paid', includes: ['*.jar'])
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:${rootProject.ext.desugaringVersion}"
+
+    implementation "androidx.core:core-ktx:${rootProject.ext.kotlin_version}"
+    implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompatVersion}"
+    implementation "com.google.android.material:material:${rootProject.ext.materialVersion}"
+    implementation "androidx.annotation:annotation:${rootProject.ext.annotationVersion}"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${rootProject.ext.navigationVersion}"
+    implementation "androidx.navigation:navigation-ui-ktx:${rootProject.ext.navigationVersion}"
+
+    // LiveData & ViewModel
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.liveDataVersion}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.liveDataVersion}"
+
+    // Worker & WorkManager
+    implementation group: 'androidx.work', name: 'work-runtime', version: rootProject.ext.workManagerVersion
+    implementation group: 'androidx.work', name: 'work-runtime-ktx', version: rootProject.ext.workManagerVersion
+
+    // All of the above configurations apply dependencies to all build variants.
+    // If you instead want to declare a dependency for only a specific build variant
+    // source set or for a testing source set, you must capitalize
+    // the configuration name and prefix it with the name of the build variant
+    // or testing source set.
+
+    // For example, to add an implementation dependency only to your "free" product flavor (using a remote binary dependency), it looks like this:
+    // freeImplementation 'com.google.firebase:firebase-ads:21.4.0'
+    // paidImplementation '[dependencies group & name]:[version code]'
+
+    // Multidex
+    implementation "androidx.multidex:multidex:${rootProject.ext.multidexVersion}"
+}
