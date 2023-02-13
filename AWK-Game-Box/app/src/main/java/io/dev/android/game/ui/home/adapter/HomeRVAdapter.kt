@@ -45,6 +45,10 @@ class HomeRVAdapter : RecyclerView.Adapter<HomeRVAdapter.HomeRVVH>() {
                     LogUtil.verbose(message = "Navigate to One Line Finish")
                     itemView.findNavController().navigate(R.id.action_homeFragment_to_oneLineFinishFragment)
                 }
+                itemView.resources.getString(R.string.unscramble_title) -> {
+                    LogUtil.verbose(message = "Navigate to Unscramble the word")
+                    itemView.findNavController().navigate(R.id.action_homeFragment_to_unscrambleTheWordFragment)
+                }
             }
         }
     }

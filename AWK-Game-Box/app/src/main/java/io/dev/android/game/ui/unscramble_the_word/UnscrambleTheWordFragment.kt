@@ -7,19 +7,15 @@ import android.view.ViewGroup
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.compose.NavHost
 
 class UnscrambleTheWordFragment : Fragment() {
 
     companion object {
-
-        @JvmStatic
-        fun newInstance(): UnscrambleTheWordFragment {
-            return UnscrambleTheWordFragment()
-        }
+        const val TAG = "UnscrambleTheWordFragment"
     }
 
     override fun onCreateView(
@@ -31,16 +27,10 @@ class UnscrambleTheWordFragment : Fragment() {
             setContent {
                 Scaffold() { padding ->
                     Surface(modifier = Modifier.padding(padding)) {
-                        UnscrambleTheWordPage()
+                        UnscramblePage.GamePage(modifier = Modifier)
                     }
                 }
             }
         }
     }
-
-    @Composable
-    private fun UnscrambleTheWordPage() {
-        //
-    }
-
 }
