@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
-import io.dev.android.game.data.db.one_line_finish.entity.OneLineFinishEntity
 import io.dev.android.game.data.db.one_line_finish.model.OneLineFinishRoadModel
 import io.dev.android.game.databinding.FragmentOneLineFinishBinding
 import io.dev.android.game.ui.one_line_finish.core.v1.OneLineFinishGridView
