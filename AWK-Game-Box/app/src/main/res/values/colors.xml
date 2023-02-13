@@ -7,10 +7,29 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="dialogBackground">#B8000000</color>
+    <color name="color_transparency">#0000</color>
+    <color name="color_dialog_background">#B8000000</color>
 
     <!-- Block 2048 -->
+    <color name="color_cube_2">#FFEEE4DA</color>
+    <color name="color_cube_4">#FFEDE0C8</color>
+    <color name="color_cube_8">#FFF2B179</color>
+    <color name="color_cube_16">#FFF59563</color>
+    <color name="color_cube_32">#FFF67C5F</color>
+    <color name="color_cube_64">#FFF65E3B</color>
+    <color name="color_cube_128">#FFEDCF72</color>
+    <color name="color_cube_256">#FFEDCF72</color>
+    <color name="color_cube_512">#FFEDC850</color>
+    <color name="color_cube_1024">#FFEDC53F</color>
+    <color name="color_cube_2048">#FFEDC22E</color>
+    <color name="color_cube_super">#FF3C3A32</color>
+
+    <!-- One Line Finish -->
+    <color name="color_one_line_start_point">#03A9F4</color>
+    <color name="color_one_line_obstacle">#FFF65E3B</color>
+    <color name="color_one_line_unselected">#FFEEE4DA</color>
+    <color name="color_one_line_selected">#FFF2B179</color>
+    <color name="color_one_line_help_selected">#FF3C3A32</color>
     <color name="cube2">#ffeee4da</color>
     <color name="cube4">#ffede0c8</color>
     <color name="cube8">#fff2b179</color>
@@ -23,8 +42,5 @@
     <color name="cube1024">#ffedc53f</color>
     <color name="cube2048">#ffedc22e</color>
     <color name="cubeSuper">#ff3c3a32</color>
-
-    <!-- One Line Finish -->
-    <color name="color_transparency">#0000</color>
 
 </resources>

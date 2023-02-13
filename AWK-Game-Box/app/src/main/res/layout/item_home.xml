@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:loadBackgroundByResId="@{model.backgroundResId}"
-        tools:background="@color/cube8">
+        tools:background="@color/color_cube_8">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_horizontal_20"
@@ -51,7 +51,7 @@
                     android:layout_height="match_parent"
                     android:loadImageByResId="@{model.iconResId}"
                     android:scaleType="centerCrop"
-                    app:tint="@color/cube8"
+                    app:tint="@color/color_cube_8"
                     tools:srcCompat="@drawable/ic_score" />
 
             </androidx.cardview.widget.CardView>

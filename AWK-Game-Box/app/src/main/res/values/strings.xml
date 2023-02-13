@@ -9,6 +9,20 @@
     <string name="game_over_title">Your score is</string>
     <string name="game_over_start_new_game">Tap the screen to start a new game</string>
 
+    <!-- Unscramble The Word -->
+    <string name="unscramble_title">Unscramble the word</string>
+    <string name="unscramble_intro">Unscramble the word using all the letters.</string>
+    <string name="skip">Skip</string>
+    <string name="submit">Submit</string>
+    <string name="current_score">Score: %d</string>
+    <string name="word_count">%d of 10 words</string>
+    <string name="enter_your_word">Enter your word</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_scored">"You scored: %d"</string>
+    <string name="exit">Exit</string>
+    <string name="play_again">Play Again</string>
+    <string name="wrong_guess">Wrong Guess!</string>
+
     <!-- One Line Finish -->
     <string name="game_one_line_finish_title">One Line Finish</string>
 

@@ -97,7 +97,7 @@ class OneLineFinishFragment : Fragment() {
 
                     if (!firstPassed) {
                         firstPassed = true
-                        viewModel.insertData(OneLineFinishEntity(roadModel))
+                        // viewModel.insertData(OneLineFinishEntity(roadModel))
                     }
 
                     TransitionManager.beginDelayedTransition(binding.gridViewOneLineFinish, AutoTransition())

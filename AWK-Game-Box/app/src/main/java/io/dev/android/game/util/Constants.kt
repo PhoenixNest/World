@@ -12,17 +12,24 @@ object Constants {
         val block2048 = GameModel(
             title = context.resources.getString(R.string.game_2048_title),
             iconResId = R.drawable.ic_score,
-            backgroundResId = R.color.cube8
+            backgroundResId = R.color.color_cube_8
+        )
+
+        val unscrambleTheWord = GameModel(
+            title = context.resources.getString(R.string.unscramble_title),
+            iconResId = R.drawable.ic_unscramble,
+            backgroundResId = R.color.color_cube_128
         )
 
         val oneLineFinish = GameModel(
             title = context.resources.getString(R.string.game_one_line_finish_title),
             iconResId = R.drawable.ic_game_over,
-            backgroundResId = R.color.cubeSuper
+            backgroundResId = R.color.color_cube_super
         )
 
         return listOf(
             block2048,
+            unscrambleTheWord,
             oneLineFinish
         )
     }

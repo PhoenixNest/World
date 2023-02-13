@@ -12,6 +12,14 @@ Current Game List:
 
 + 2048
 
++ One line finish
+
+---
+
+### AWK-Gradle-Planet
+
+> `aka with Android-With-Kotlin`, this project is which i use to preatice the `gradle development` for `Android` platfrom.
+
 + One line finish `(Under development)`
 
 ---
@@ -36,4 +44,3 @@ Recommand to read:
 
 + [Compose Codelabs](https://codelabs.developers.google.com/?cat=Android&text=compose)
 + [Compose Dev Docs](https://developer.android.google.cn/jetpack/compose/documentation)
-

@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cubeSuper"
+    android:background="#fbf8f0"
     tools:context=".ui.one_line_finish.OneLineFinishFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alata"
+        android:text="@string/game_one_line_finish_title"
+        android:textSize="24sp"
+        android:background="@color/cubeSuper"
+        tools:context=".ui.one_line_finish.OneLineFinishFragment">
 
     <io.dev.android.game.ui.one_line_finish.core.v1.OneLineFinishGridView
         android:id="@+id/gridView_one_line_finish"
@@ -16,7 +26,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_one_line_finish"
-        tools:numColumns="6" />
+        app:layout_constraintVertical_bias="0.1" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
+
+        <io.dev.android.game.ui.one_line_finish.core.v1.OneLineGridView
+            android:id="@+id/gridView_one_line_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:listitem="@layout/item_one_line_finish"
+            tools:numColumns="6" />
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

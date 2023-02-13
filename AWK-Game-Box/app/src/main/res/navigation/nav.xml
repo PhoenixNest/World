@@ -24,6 +24,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_unscrambleTheWordFragment"
+            app:destination="@id/unscrambleTheWordFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/block2048Fragment"
@@ -75,4 +82,17 @@
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/unscrambleTheWordFragment"
+        android:name="io.dev.android.game.ui.unscramble_the_word.UnscrambleTheWordFragment"
+        android:label="fragment_unscramble_the_word"
+        tools:layout="@layout/fragment_unscramble_the_word">
+        <action
+            android:id="@+id/action_unscrambleTheWordFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>
