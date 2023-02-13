@@ -12,15 +12,9 @@ Current Game List:
 
 + 2048
 
++ Unscramble the word
+
 + One line finish
-
----
-
-### AWK-Gradle-Planet
-
-> `aka with Android-With-Kotlin`, this project is which i use to preatice the `gradle development` for `Android` platfrom.
-
-+ One line finish `(Under development)`
 
 ---
 
