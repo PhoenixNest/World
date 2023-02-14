@@ -84,6 +84,9 @@ dependencies {
     // Optional - Integration with ViewModels
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.ext.compose_viewmodel_version}"
 
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:${rootProject.ext.navigation_version}"
+
     // Datastore
     implementation "androidx.datastore:datastore:${rootProject.ext.datastore_version}"
     implementation "androidx.datastore:datastore-preferences:${rootProject.ext.datastore_version}"
