@@ -1,4 +1,4 @@
-package io.dev.android.composer.notes.feature.note.presentation.notes
+package io.dev.android.composer.notes.feature.note.presentation.notes.viewmodel
 
 import io.dev.android.composer.notes.feature.note.domin.model.NoteModel
 import io.dev.android.composer.notes.feature.note.domin.util.NoteOrder

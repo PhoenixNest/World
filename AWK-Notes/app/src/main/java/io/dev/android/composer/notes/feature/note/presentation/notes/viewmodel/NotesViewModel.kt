@@ -1,4 +1,4 @@
-package io.dev.android.composer.notes.feature.note.presentation.notes
+package io.dev.android.composer.notes.feature.note.presentation.notes.viewmodel
 
 import android.app.Application
 import androidx.compose.runtime.State
