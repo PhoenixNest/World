@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.dev.android.composer.notes.ui.theme.*
 
-@Entity
+@Entity(tableName = "note_table")
 data class NoteModel(
     @PrimaryKey val id: Int? = null,
     val title: String,

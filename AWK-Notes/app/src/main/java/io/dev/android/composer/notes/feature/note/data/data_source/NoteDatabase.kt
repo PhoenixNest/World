@@ -6,7 +6,8 @@ import io.dev.android.composer.notes.feature.note.domin.model.NoteModel
 
 @Database(
     entities = [NoteModel::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class NoteDatabase : RoomDatabase() {
 
