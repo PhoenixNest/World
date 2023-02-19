@@ -14,25 +14,22 @@ abstract class AWKDatabase : RoomDatabase() {
 
     companion object {
 
-        private const val DB_NAME = "db_awk"
+        private const val DATABASE_NAME = "db_awk_game_box"
 
         @Volatile
         private var INSTANCE: AWKDatabase? = null
 
         fun getDatabase(context: Context): AWKDatabase {
-            val temp = INSTANCE
-            if (temp != null) {
-                return temp
-            }
-
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
+            return INSTANCE ?: synchronized(this) {
+                Room.databaseBuilder(
+                    context,
                     AWKDatabase::class.java,
-                    DB_NAME
-                ).build()
-                INSTANCE = instance
-                return instance
+                    DATABASE_NAME
+                )
+                    .build()
+                    .also {
+                        INSTANCE = it
+                    }
             }
         }
     }
