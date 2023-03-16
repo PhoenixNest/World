@@ -38,3 +38,11 @@ Recommand to read:
 
 + [Compose Codelabs](https://codelabs.developers.google.com/?cat=Android&text=compose)
 + [Compose Dev Docs](https://developer.android.google.cn/jetpack/compose/documentation)
+
+---
+
+### 📓 AWK-Notes
+
+> `aka with Android-With-Kotlin`, this project is which i use to preatice the `Compose Ui toolkit` and use it to create a Notes App for `Android` platfrom.
+
+Reference link: [How to Make a Clean Architecture Note App (MVVM / CRUD / Jetpack Compose)](https://www.youtube.com/watch?v=8YPXv7xKh2w&t=8s)
