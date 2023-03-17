@@ -68,7 +68,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat_version}"
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.ext.constraintlayout_version}"
     testImplementation "junit:junit:${rootProject.ext.junit_version}"
-    androidTestImplementation "androidx.test.ext:junit:${rootProject.ext.junit_ext_version}"
+    testImplementation "androidx.test.ext:junit:${rootProject.ext.junit_ext_version}"
+    testImplementation "androidx.test.ext:junit-ktx:${rootProject.ext.junit_ext_version}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.ext.espresso_ui_test_version}"
 
     // Compose Ui

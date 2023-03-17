@@ -1,5 +1,6 @@
 package io.dev.android.game.ui.unscramble_the_word
 
+import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -18,15 +19,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import io.dev.android.game.R
+import io.dev.android.game.ui.AppViewModelProvider
 import io.dev.android.game.ui.unscramble_the_word.state.UnscrambleUiState
 import io.dev.android.game.ui.unscramble_the_word.viewmodel.UnscrambleViewModel
+import io.dev.android.game.util.DensityUtil.dp
 
 object UnscramblePage {
 
     @Composable
     fun GamePage(
         modifier: Modifier,
-        viewModel: UnscrambleViewModel = viewModel()
+        viewModel: UnscrambleViewModel = viewModel(
+            factory = AppViewModelProvider.Factory
+        )
     ) {
         val gameUiState by viewModel.uiState.collectAsState()
 

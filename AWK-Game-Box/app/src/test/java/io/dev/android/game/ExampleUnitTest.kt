@@ -1,6 +1,7 @@
 package io.dev.android.game
 
 import io.dev.android.game.test.coroutines.CoroutinesTest
+import io.dev.android.game.test.room.RoomTest
 import io.dev.android.game.test.viewmodel.ViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -39,6 +40,13 @@ class ExampleUnitTest {
             raceParticipant_RacePausedAndResumed_ProgressUpdated()
             raceParticipant_ProgressIncrementZero_ExceptionThrown()
             raceParticipant_MaxProgressZero_ExceptionThrown()
+        }
+    }
+
+    @Test
+    fun testWithRoom() {
+        RoomTest().run {
+
         }
     }
 }

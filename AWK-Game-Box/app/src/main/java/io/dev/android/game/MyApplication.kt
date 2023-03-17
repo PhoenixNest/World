@@ -6,15 +6,16 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class MyApplication : Application() {
 
-    init {
-        instance = this
-    }
-
     companion object {
-        private lateinit var instance: MyApplication
+
+        private var INSTANCE: MyApplication? = null
 
         fun getInstance(): MyApplication {
-            return instance
+            return INSTANCE ?: synchronized(this) {
+                MyApplication()
+            }.also {
+                INSTANCE = it
+            }
         }
     }
 }
