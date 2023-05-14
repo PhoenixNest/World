@@ -27,6 +27,12 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        // Specify the schemas saved location of Room database.
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/room_database_schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -123,9 +129,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext.kotlinx_coroutines_version}"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${rootProject.ext.kotlinx_coroutines_version}"
 
-    // Gson
-    implementation "com.google.code.gson:gson:${rootProject.ext.gson_version}"
-
     // WorkManager
     implementation "androidx.work:work-runtime:${rootProject.ext.work_version}"
     // Kotlin + coroutines
@@ -146,6 +149,9 @@ dependencies {
     testImplementation "androidx.paging:paging-common:${rootProject.ext.paging_version}"
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:${rootProject.ext.paging_compose_version}"
+
+    // Location Services
+    implementation "com.google.android.gms:play-services-location:${rootProject.ext.gms_location_version}"
 
     /* ======================== Third-party Extension ======================== */
 
