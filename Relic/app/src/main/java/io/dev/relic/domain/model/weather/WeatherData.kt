@@ -1,4 +1,4 @@
-package io.dev.relic.domin.model.weather
+package io.dev.relic.domain.model.weather
 
 data class WeatherData(
     val time: String,

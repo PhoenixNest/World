@@ -15,6 +15,9 @@ ext {
     compose_activity_version = "1.7.0"
     compose_viewmodel_version = "2.6.1"
 
+    // Accompanist Components
+    accompanist_version = "0.31.2-alpha"
+
     // Navigation
     navigation_version = "2.5.3"
     navigation_hilt_version = "1.0.0"

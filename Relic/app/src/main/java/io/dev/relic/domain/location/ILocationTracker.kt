@@ -1,4 +1,4 @@
-package io.dev.relic.domin.location
+package io.dev.relic.domain.location
 
 import android.location.Location
 

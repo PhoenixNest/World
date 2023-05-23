@@ -1,4 +1,4 @@
-package io.dev.relic.domin.model
+package io.dev.relic.domain.model
 
 sealed class NetworkResult<T>(
     val code: String? = null,

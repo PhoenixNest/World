@@ -1,4 +1,4 @@
-package io.dev.relic.domin.model.weather
+package io.dev.relic.domain.model.weather
 
 import androidx.annotation.DrawableRes
 import io.dev.relic.R

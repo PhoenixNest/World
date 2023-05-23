@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.relic.domin.repository.IWeatherDataRepository
+import io.dev.relic.domain.repository.IWeatherDataRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

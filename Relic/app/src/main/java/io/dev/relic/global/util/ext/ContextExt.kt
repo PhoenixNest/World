@@ -1,36 +1,17 @@
 package io.dev.relic.global.util.ext
 
 import android.content.Context
-import android.widget.Toast
-import androidx.annotation.StringRes
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
-fun Context.showToast(
-    @StringRes resId: Int,
-    isLongToast: Boolean = false
-) {
-    val content: String = this.resources.getString(resId)
-    Toast.makeText(
-        /* context = */ this,
-        /* text = */ content,
-        /* duration = */ if (isLongToast) {
-            Toast.LENGTH_LONG
-        } else {
-            Toast.LENGTH_SHORT
-        }
-    ).show()
-}
+object ContextExt {
 
-fun Context.showToast(
-    content: String,
-    isLongToast: Boolean = false
-) {
-    Toast.makeText(
-        /* context = */ this,
-        /* text = */ content,
-        /* duration = */ if (isLongToast) {
-            Toast.LENGTH_LONG
-        } else {
-            Toast.LENGTH_SHORT
-        }
-    ).show()
+    /**
+     * Access the global datastore file with Context.
+     * */
+    @ActivityRetainedScoped
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore("relic_datastore")
+
 }

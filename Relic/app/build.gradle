@@ -101,6 +101,9 @@ dependencies {
     // Optional - Integration with ViewModels
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.ext.compose_viewmodel_version}"
 
+    // Accompanist Components
+    implementation "com.google.accompanist:accompanist-systemuicontroller:${rootProject.ext.accompanist_version}"
+
     // Firebase BOM
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     // Add the dependencies for Firebase products you want to use

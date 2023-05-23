@@ -7,7 +7,7 @@ import android.location.LocationManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.dev.relic.core.module.permission.RelicPermissionDetector
-import io.dev.relic.domin.location.ILocationTracker
+import io.dev.relic.domain.location.ILocationTracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject

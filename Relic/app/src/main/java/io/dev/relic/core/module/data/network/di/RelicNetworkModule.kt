@@ -8,17 +8,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.dev.relic.core.module.data.network.api.IFoodRecipesApi
 import io.dev.relic.core.module.data.network.api.IWeatherApi
-import io.dev.relic.core.module.data.network.di.NetworkParameters.BaseUrl.FOOD_RECIPES_API_URL
-import io.dev.relic.core.module.data.network.di.NetworkParameters.BaseUrl.WEATHER_API_URL
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_DISK_CACHE_SIZE
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_OFFLINE_CACHE_TIME
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_ONLINE_CACHE_TIME
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_RETRY_TIMES
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_TIMEOUT_CALL_DURATION
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_TIMEOUT_CONNECT_DURATION
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_TIMEOUT_READ_DURATION
-import io.dev.relic.core.module.data.network.di.NetworkParameters.MAX_TIMEOUT_WRITE_DURATION
 import io.dev.relic.core.module.data.network.interceptor.*
+import io.dev.relic.core.module.data.network.util.NetworkParameters.BaseUrl.FOOD_RECIPES_API_URL
+import io.dev.relic.core.module.data.network.util.NetworkParameters.BaseUrl.WEATHER_API_URL
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_DISK_CACHE_SIZE
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_OFFLINE_CACHE_TIME
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_ONLINE_CACHE_TIME
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_RETRY_TIMES
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_TIMEOUT_CALL_DURATION
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_TIMEOUT_CONNECT_DURATION
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_TIMEOUT_READ_DURATION
+import io.dev.relic.core.module.data.network.util.NetworkParameters.MAX_TIMEOUT_WRITE_DURATION
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -27,58 +27,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
-object NetworkParameters {
-
-    object BaseUrl {
-
-        /**
-         * [Open-Meteo Api](https://open-meteo.com/)
-         * */
-        const val WEATHER_API_URL: String = "https://api.open-meteo.com/"
-
-        /**
-         * [Spoonacular API](https://spoonacular.com/food-api)
-         * */
-        const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/complexSearch"
-
-    }
-
-    /**
-     * Parameters of the okHttpClient constructor builder.
-     *
-     * TimeUnit: seconds
-     * */
-    const val MAX_TIMEOUT_CONNECT_DURATION: Long = 15
-    const val MAX_TIMEOUT_CALL_DURATION: Long = 15
-    const val MAX_TIMEOUT_READ_DURATION: Long = 15
-    const val MAX_TIMEOUT_WRITE_DURATION: Long = 15
-
-    /**
-     * The max duration of the offline-cache.
-     *
-     * TimeUnit: hours
-     * */
-    const val MAX_OFFLINE_CACHE_TIME: Int = 24
-
-    /**
-     * The max duration of the online-cache.
-     *
-     * TimeUnit: seconds
-     * */
-    const val MAX_ONLINE_CACHE_TIME: Int = 30 * 60
-
-    /**
-     * The max retry times for the network request.
-     * */
-    const val MAX_RETRY_TIMES: Int = 10
-
-    /**
-     * The max disk size of offline cache.
-     * */
-    const val MAX_DISK_CACHE_SIZE: Long = 10 * 1024 * 1024
-
-}
 
 @Module
 @InstallIn(SingletonComponent::class)
