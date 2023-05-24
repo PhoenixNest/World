@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.dev.relic.global.util.ext.ContextExt.dataStore
+import io.dev.relic.global.utils.ext.ContextExt.dataStore
 import javax.inject.Singleton
 
 @Module

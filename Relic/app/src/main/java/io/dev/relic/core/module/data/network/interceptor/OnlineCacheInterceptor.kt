@@ -1,6 +1,6 @@
 package io.dev.relic.core.module.data.network.interceptor
 
-import io.dev.relic.global.util.LogUtil
+import io.dev.relic.global.utils.LogUtil
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -18,7 +18,7 @@ open class OnlineCacheInterceptor internal constructor(builder: Builder) : Inter
 
     /* ======================== constructor ======================== */
 
-    class Builder constructor() {
+    class Builder() {
 
         internal var maxCacheTimeDuration: Int = DEFAULT_MAX_ONLINE_CACHE_TIME_DURATION
 

@@ -29,7 +29,10 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun RelicAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun RelicAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors: Colors = if (darkTheme) {
         DarkColorPalette
     } else {
@@ -37,7 +40,7 @@ fun RelicAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
     }
 
     MaterialTheme(
-        colors = colors,
+        colors = LightColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content

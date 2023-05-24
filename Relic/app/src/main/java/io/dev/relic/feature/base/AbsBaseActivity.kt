@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.relic.core.module.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.module.data.network.monitor.NetworkStatus
-import io.dev.relic.global.util.LogUtil
+import io.dev.relic.global.utils.LogUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -26,9 +26,18 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preInitialization()
-        initialization()
-        preInitUi()
+
+        preInitialization(
+            doOnFinish = {
+                initialization()
+            }
+        )
+
+        preInitUi(
+            doOnFinish = {
+                initUi()
+            }
+        )
     }
 
     /* ======================== Logical ======================== */
@@ -36,8 +45,10 @@ abstract class AbsBaseActivity : ComponentActivity() {
     /**
      * Pre-initialize some common function or parameters.
      * */
-    private fun preInitialization() {
+    private fun preInitialization(doOnFinish: () -> Unit) {
         activeNetworkMonitor()
+
+        doOnFinish.invoke()
     }
 
     /**
@@ -53,8 +64,10 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
     /* ======================== Ui ======================== */
 
-    private fun preInitUi() {
+    private fun preInitUi(doOnFinish: () -> Unit) {
         activeImmersiveStatusBar()
+
+        doOnFinish.invoke()
     }
 
     private fun activeImmersiveStatusBar() {

@@ -45,10 +45,13 @@ ext {
 
     // Paging
     paging_version = "3.1.1"
-    paging_compose_version = "1.0.0-alpha18"
+    paging_compose_version = "1.0.0-alpha19"
 
     // Location
     gms_location_version = "21.0.1"
+
+    // Admob
+    admob_version = "22.1.0"
 
     /* ======================== Third-party Extension ======================== */
 
@@ -62,5 +65,9 @@ ext {
 
     // Coil
     coil_version = "2.2.2"
+
+    // Lottie
+    lottie_version = "3.4.0"
+    lottie_compose_version = "6.0.0"
 
 }

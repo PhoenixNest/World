@@ -5,8 +5,8 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.core.content.getSystemService
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.dev.relic.global.MyApplication
-import io.dev.relic.global.util.LogUtil
+import io.dev.relic.feature.RelicApplication
+import io.dev.relic.global.utils.LogUtil
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -41,9 +41,9 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
 
     constructor() : this(Builder())
 
-    class Builder constructor() {
+    class Builder() {
 
-        internal var applicationContext: Context? = MyApplication.getApplicationContext()
+        internal var applicationContext: Context? = RelicApplication.getApplicationContext()
 
         internal var maxOfflineCacheDuration: Int = DEFAULT_DURATION_OF_OFFLINE_CACHE
 

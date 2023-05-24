@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import io.dev.relic.global.util.LogUtil
+import io.dev.relic.global.utils.LogUtil
 
 /**
  * Reference link: [Permissions on Android](https://developer.android.com/guide/topics/permissions/overview)

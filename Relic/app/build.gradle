@@ -29,23 +29,20 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "io.dev.relic"
+        applicationId 'io.dev.relic'
         minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         vectorDrawables {
             useSupportLibrary true
         }
 
         // Specify the schemas saved location of Room database.
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/room_database_schemas".toString()]
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/room_databse_schemas".toString())
         }
     }
 
@@ -117,6 +114,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:${rootProject.ext.compose_viewmodel_version}"
 
     // Accompanist Components
+    implementation "com.google.accompanist:accompanist-permissions:${rootProject.ext.accompanist_version}"
+    implementation "com.google.accompanist:accompanist-navigation-animation:${rootProject.ext.accompanist_version}"
+    implementation "com.google.accompanist:accompanist-navigation-material:${rootProject.ext.accompanist_version}"
+    implementation "com.google.accompanist:accompanist-adaptive:${rootProject.ext.accompanist_version}"
+    implementation "com.google.accompanist:accompanist-placeholder-material:${rootProject.ext.accompanist_version}"
     implementation "com.google.accompanist:accompanist-systemuicontroller:${rootProject.ext.accompanist_version}"
 
     // Firebase BOM
@@ -173,14 +175,17 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:${rootProject.ext.work_hilt_version}"
 
     // Paging
-    implementation "androidx.paging:paging-runtime:${rootProject.ext.paging_version}"
+    implementation "androidx.paging:paging-runtime-ktx:${rootProject.ext.paging_version}"
     // alternatively - without Android dependencies for tests
-    testImplementation "androidx.paging:paging-common:${rootProject.ext.paging_version}"
+    testImplementation "androidx.paging:paging-common-ktx:${rootProject.ext.paging_version}"
     // optional - Jetpack Compose integration
     implementation "androidx.paging:paging-compose:${rootProject.ext.paging_compose_version}"
 
     // Location Services
     implementation "com.google.android.gms:play-services-location:${rootProject.ext.gms_location_version}"
+
+    // Admob
+    // implementation "com.google.android.gms:play-services-ads:${rootProject.ext.admob_version}"
 
     /* ======================== Third-party Extension ======================== */
 
@@ -194,4 +199,8 @@ dependencies {
 
     // Coil
     implementation "io.coil-kt:coil-compose:${rootProject.ext.coil_version}"
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:${rootProject.ext.lottie_version}"
+    implementation "com.airbnb.android:lottie-compose:${rootProject.ext.lottie_compose_version}"
 }
