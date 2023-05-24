@@ -6,6 +6,9 @@ import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.repository.IWeatherDataRepository
 import javax.inject.Inject
 
+/**
+ * @see io.dev.relic.domain.repository.IWeatherDataRepository
+ * */
 class WeatherDataRepositoryImpl @Inject constructor(
     private val weatherApi: IWeatherApi
 ) : IWeatherDataRepository {

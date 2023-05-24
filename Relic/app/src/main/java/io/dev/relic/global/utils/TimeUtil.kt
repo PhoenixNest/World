@@ -1,22 +1,43 @@
 package io.dev.relic.global.utils
 
+import java.time.Clock
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Calendar
 
 object TimeUtil {
 
+    fun getCurrentTime(): LocalDateTime {
+        return LocalDateTime.now()
+    }
+
     /**
-     * Get the current system time.
+     * Get the current system time with milliseconds.
      * */
-    fun getCurrentTime(): Long {
+    fun getCurrentTime(clock: Clock): LocalDateTime {
+        return LocalDateTime.now(clock)
+    }
+
+    /**
+     * Get the current system time with milliseconds.
+     * */
+    fun getCurrentTime(zone: ZoneId?): LocalDateTime {
+        return LocalDateTime.now(zone ?: ZoneId.systemDefault())
+    }
+
+    /**
+     * Get the current system time with milliseconds.
+     * */
+    fun getCurrentTimeInMillis(): Long {
         return Calendar.getInstance().timeInMillis
     }
 
     /**
-     * Get today's zero-hour timestamp.
+     * Get today's zero-hour with timestamp.
      * */
     fun getTodayZero(): Long {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = getCurrentTime()
+        calendar.timeInMillis = getCurrentTimeInMillis()
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -29,7 +50,7 @@ object TimeUtil {
      * */
     fun getNextDayZero(): Long {
         val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = getCurrentTime()
+        calendar.timeInMillis = getCurrentTimeInMillis()
         val year: Int = calendar.get(Calendar.YEAR)
         val month: Int = calendar.get(Calendar.MONTH)
         val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
