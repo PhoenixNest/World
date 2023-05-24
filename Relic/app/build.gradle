@@ -42,7 +42,7 @@ android {
 
         // Specify the schemas saved location of Room database.
         ksp {
-            arg("room.schemaLocation", "$projectDir/room_databse_schemas".toString())
+            arg("room.schemaLocation", "$projectDir/room_database_schemas".toString())
         }
     }
 
