@@ -9,16 +9,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import io.dev.relic.R
+import io.dev.relic.feature.main.unit.home.viewmodel.HomeUiState
+import io.dev.relic.feature.main.unit.home.viewmodel.HomeViewModel
 
 @Composable
-fun HomePageRoute(onNavigate: () -> Unit) {
-    HomePage(onNavigate = onNavigate)
+fun HomePageRoute(
+    onNavigate: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    HomePage(
+        onNavigate = onNavigate,
+        homeUiState = viewModel.homeUiState
+    )
 }
 
 @Composable
 private fun HomePage(
     onNavigate: () -> Unit,
+    homeUiState: HomeUiState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -33,5 +43,8 @@ private fun HomePage(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 private fun HomePagePreview() {
-    HomePage(onNavigate = {})
+    HomePage(
+        onNavigate = {},
+        homeUiState = HomeUiState()
+    )
 }

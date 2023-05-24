@@ -1,8 +1,9 @@
 package io.dev.relic.core.repository
 
 import io.dev.relic.core.module.data.network.api.IWeatherApi
-import io.dev.relic.core.module.data.network.api.model.weather.WeatherDTO
+import io.dev.relic.core.module.data.network.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.dev.relic.domain.model.NetworkResult
+import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.domain.repository.IWeatherDataRepository
 import javax.inject.Inject
 
@@ -16,9 +17,14 @@ class WeatherDataRepositoryImpl @Inject constructor(
     override suspend fun getWeatherData(
         latitude: Double,
         longitude: Double
-    ): NetworkResult<WeatherDTO> {
+    ): NetworkResult<WeatherInfoModel> {
         return try {
-            NetworkResult.Success(data = weatherApi.getWeatherData(latitude, longitude))
+            NetworkResult.Success(
+                data = weatherApi.getWeatherData(
+                    latitude = latitude,
+                    longitude = longitude
+                ).toWeatherInfoModel()
+            )
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")
