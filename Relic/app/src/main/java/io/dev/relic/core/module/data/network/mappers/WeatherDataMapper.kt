@@ -61,8 +61,8 @@ object WeatherDataMapper {
     fun WeatherDTO.toWeatherInfoModel(): WeatherInfoModel {
         val weatherDataMap: Map<Int, List<WeatherDataModel>> = weatherData.toWeatherDataMap()
         val currentTime: LocalDateTime = getCurrentTime()
-        val currentWeatherData = weatherDataMap[0]?.find {
-            val hour = if (currentTime.minute < 30) {
+        val currentWeatherData: WeatherDataModel? = weatherDataMap[0]?.find {
+            val hour: Int = if (currentTime.minute < 30) {
                 currentTime.hour
             } else {
                 currentTime.hour + 1
