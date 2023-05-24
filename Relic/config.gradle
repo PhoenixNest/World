@@ -10,10 +10,13 @@ ext {
     espresso_ui_test_version = "3.5.1"
 
     // Compose Ui
-    compose_bom_version = "2023.01.00"
+    compose_bom_version = "2023.05.00"
     compose_compiler_version = "1.4.2"
     compose_activity_version = "1.7.1"
     compose_viewmodel_version = "2.6.1"
+
+    // Firebase
+    firebase_bom_version = "32.0.0"
 
     // Accompanist Components
     accompanist_version = "0.31.2-alpha"
