@@ -7,13 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import io.dev.relic.core.module.data.database.entity.TodoEntity
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 
 @Dao
 interface TodoDao {
 
     @Query("SELECT * FROM table_todo")
-    fun readAllTodos(): Flow<List<TodoEntity>>
+    fun readAllTodos(): SharedFlow<List<TodoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todoEntity: TodoEntity)

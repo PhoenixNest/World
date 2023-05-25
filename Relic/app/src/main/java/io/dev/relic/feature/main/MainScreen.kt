@@ -39,6 +39,9 @@ fun MainScreen(
         SnackbarHostState()
     }
 
+    val isShowBottomBar: Boolean = (mainScreenState.shouldShowBottomBar)
+            && (mainScreenState.currentTopLevelDestination != null)
+
     // Check the current network status by using networkMonitor flow.
     val networkStatus: NetworkStatus by networkMonitor.observe()
         .collectAsStateWithLifecycle(initialValue = NetworkStatus.Available)
@@ -57,9 +60,7 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (mainScreenState.shouldShowBottomBar
-                && mainScreenState.currentTopLevelDestination != null
-            ) {
+            if (isShowBottomBar) {
                 MainBottomBar(
                     destinations = mainScreenState.topLevelDestinations,
                     onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,

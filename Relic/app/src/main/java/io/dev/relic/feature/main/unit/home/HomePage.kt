@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
@@ -27,10 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import io.dev.relic.R
 import io.dev.relic.feature.main.unit.home.viewmodel.HomeUiState
 import io.dev.relic.feature.main.unit.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.main.unit.home.widget.HomePageCardTitle
 import io.dev.relic.feature.main.unit.home.widget.HomePageTopBar
 import io.dev.relic.feature.main.unit.home.widget.card.HomeFoodRecipesCard
 import io.dev.relic.feature.main.unit.home.widget.card.HomeTodoCard
@@ -84,11 +81,6 @@ private fun HomePage(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(text = if (drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
-                Spacer(Modifier.height(20.dp))
-                Button(onClick = { coroutineScope.launch { drawerState.open() } }
-                ) {
-                    Text("Click to open")
-                }
             }
         }
     ) { paddingValues: PaddingValues ->
@@ -116,21 +108,14 @@ private fun HomePage(
                 }
             )
             Spacer(modifier = modifier.height(8.dp))
-            // Weather
-            HomePageCardTitle(titleResId = R.string.home_card_weather_title)
-            Spacer(modifier = modifier.height(8.dp))
             HomeWeatherCard(
-                weatherInfoModel = homeUiState.weatherInfo,
+                weatherInfoModel = homeUiState.weatherInfoModel,
                 onClick = onNavigateToWeatherDetailPage
             )
-            // Todo
-            HomePageCardTitle(titleResId = R.string.home_card_todo_title)
             Spacer(modifier = modifier.height(8.dp))
             HomeTodoCard(
                 onClick = onNavigateToTodoPage
             )
-            // Food recipes
-            HomePageCardTitle(titleResId = R.string.home_card_food_recipes_title)
             Spacer(modifier = modifier.height(8.dp))
             HomeFoodRecipesCard(
                 onClick = onNavigateToFoodRecipesDetailPage

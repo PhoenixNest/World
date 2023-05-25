@@ -1,5 +1,6 @@
 package io.dev.relic.feature.main.unit.home.widget.card
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -10,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.dev.relic.R
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
+import io.dev.relic.feature.main.unit.home.widget.HomePageCardTitle
 import io.dev.relic.global.utils.TimeUtil
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -21,6 +24,8 @@ fun HomeWeatherCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    HomePageCardTitle(titleResId = R.string.home_card_weather_title)
+    Spacer(modifier = modifier.height(8.dp))
     Card(
         onClick = onClick,
         modifier = modifier

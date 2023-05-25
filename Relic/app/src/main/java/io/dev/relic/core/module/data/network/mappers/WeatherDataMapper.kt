@@ -53,10 +53,10 @@ object WeatherDataMapper {
                 )
             )
         }.groupBy { groupIndexWeatherData: IndexedWeatherData ->
-            // Every weather data will be spilt to one day (24 hours) by divide with 24.
+            // Divide with 24 will spill every weather data to one day (24 hours).
             groupIndexWeatherData.index / 24
         }.mapValues { mapEntry: Map.Entry<Int, List<IndexedWeatherData>> ->
-            // Load up data into next level.
+            // Load up data into the next level.
             mapEntry.value.map { indexedWeatherData: IndexedWeatherData ->
                 indexedWeatherData.data
             }

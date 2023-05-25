@@ -5,6 +5,7 @@ import io.dev.relic.core.module.data.database.dao.WeatherDao
 import io.dev.relic.core.module.data.database.entity.TodoEntity
 import io.dev.relic.core.module.data.database.entity.WeatherEntity
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,7 +36,7 @@ class RelicDatabaseRepository @Inject constructor(
 
     /* ======================== TodoList ======================== */
 
-    fun readAllTodos(): Flow<List<TodoEntity>> {
+    fun readAllTodos(): SharedFlow<List<TodoEntity>> {
         return todoDao.readAllTodos()
     }
 

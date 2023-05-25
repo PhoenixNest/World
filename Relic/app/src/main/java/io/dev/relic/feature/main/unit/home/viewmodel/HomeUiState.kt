@@ -1,23 +1,42 @@
 package io.dev.relic.feature.main.unit.home.viewmodel
 
+import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 
 data class HomeUiState(
-    val isLoading: Boolean = false,
-    val weatherInfo: WeatherInfoModel? = null,
-    val error: String? = null
+
+    /**
+     * Check the current loading of weather data.
+     * */
+    val isLoadingWeatherData: Boolean = false,
+
+    /**
+     * Check the current loading of todo data.
+     * */
+    val isLoadingTodoData: Boolean = false,
+
+    /**
+     * Check the current loading of food recipes data.
+     * */
+    val isLoadingFoodRecipesData: Boolean = false,
+
+    /**
+     * Weather data model.
+     * */
+    val weatherInfoModel: WeatherInfoModel? = null,
+
+    /**
+     * Todo data model.
+     * */
+    val todoDataList: List<TodoDataModel>? = null,
+
+    /**
+     * Error message displayed when the weather data failed to load.
+     * */
+    val errorMessageOfWeatherInfo: String? = null,
+
+    /**
+     * Error message displayed when the todo data failed to load.
+     * */
+    val errorMessageOfTodoInfo: String? = null
 )
-
-sealed class HomeUiEvent {
-    object Loading : HomeUiEvent()
-
-    data class Success(
-        val weatherInfo: WeatherInfoModel?,
-        val error: String?
-    ) : HomeUiEvent()
-
-    data class Error(
-        val message: String
-    ) : HomeUiEvent()
-
-}

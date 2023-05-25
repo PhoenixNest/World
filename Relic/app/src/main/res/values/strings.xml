@@ -30,7 +30,7 @@
     <!-- Home Unit -->
     <string name="home_title">Home</string>
     <string name="home_card_weather_title">Today\'s Weather</string>
-    <string name="home_card_todo_title">Check our your todo tasks</string>
+    <string name="home_card_todo_title">Check out your todo tasks</string>
     <string name="home_card_food_recipes_title">Eat and drink your fill</string>
 
     <!-- Todo Unit -->
