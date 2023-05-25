@@ -2,7 +2,7 @@ ext {
 
     /* ======================== Google Official Extension ======================== */
 
-    kotlin_core_version = "1.10.0"
+    kotlin_core_version = '1.10.1'
     appcompat_version = "1.6.1"
     constraintlayout_version = "2.1.4"
     junit_version = "4.13.2"
@@ -10,7 +10,7 @@ ext {
     espresso_ui_test_version = "3.5.1"
 
     // Compose Ui
-    compose_bom_version = "2023.05.00"
+    compose_bom_version = "2023.05.01"
     compose_compiler_version = "1.4.2"
     compose_activity_version = "1.7.1"
     compose_viewmodel_version = "2.6.1"
@@ -28,7 +28,7 @@ ext {
     // Lifecycle
     lifecycle_ktx_version = "2.6.1"
     lifecycle_ext_version = "2.2.0"
-    lifecycle_compose_version = "2.6.0"
+    lifecycle_compose_version = '2.6.1'
 
     // Datastore
     datastore_version = "1.0.0"
@@ -37,10 +37,10 @@ ext {
     room_version = "2.5.1"
 
     // Dagger Hilt
-    dagger_hilt_version = "2.45"
+    dagger_hilt_version = '2.46.1'
 
     // Coroutine
-    kotlinx_coroutines_version = "1.6.4"
+    kotlinx_coroutines_version = '1.7.1'
 
     // WorkerManager
     work_version = "2.8.1"
@@ -64,13 +64,13 @@ ext {
     retrofit_moshi_conveter_version = "2.9.0"
 
     // Moshi
-    moshi_version = "1.14.0"
+    moshi_version = '1.15.0'
 
     // Coil
-    coil_version = "2.2.2"
+    coil_version = '2.4.0'
 
     // Lottie
-    lottie_version = "3.4.0"
+    lottie_version = '6.0.0'
     lottie_compose_version = "6.0.0"
 
 }
