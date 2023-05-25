@@ -3,7 +3,7 @@ package io.dev.relic.core.repository
 import io.dev.relic.core.module.data.database.RelicDatabaseRepository
 import io.dev.relic.core.module.data.database.entity.TodoEntity
 import io.dev.relic.domain.repository.ITodoDataRepository
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -16,7 +16,7 @@ class TodoDataRepositoryImpl @Inject constructor(
     /**
      * Query all the current user's todo-list data from database.
      * */
-    override fun readAllTodos(): SharedFlow<List<TodoEntity>> {
+    override fun readAllTodos(): Flow<List<TodoEntity>> {
         return databaseRepository.readAllTodos()
     }
 

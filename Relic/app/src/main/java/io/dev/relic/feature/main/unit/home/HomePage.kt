@@ -15,7 +15,6 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -73,7 +72,7 @@ private fun HomePage(
             drawerState = drawerState,
             snackbarHostState = snackBarHostState
         ),
-        drawerContent = {
+        /*drawerContent = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,7 +81,7 @@ private fun HomePage(
             ) {
                 Text(text = if (drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
             }
-        }
+        }*/
     ) { paddingValues: PaddingValues ->
         Column(
             modifier = modifier

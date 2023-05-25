@@ -1,7 +1,7 @@
 package io.dev.relic.domain.repository
 
 import io.dev.relic.core.module.data.database.entity.TodoEntity
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 
 /**
  * @see io.dev.relic.core.repository.TodoDataRepositoryImpl
@@ -11,7 +11,7 @@ interface ITodoDataRepository {
     /**
      * Query all the current user's todo-list data from database.
      * */
-    fun readAllTodos(): SharedFlow<List<TodoEntity>>
+    fun readAllTodos(): Flow<List<TodoEntity>>
 
     /**
      * Insert the new todo data to database.
