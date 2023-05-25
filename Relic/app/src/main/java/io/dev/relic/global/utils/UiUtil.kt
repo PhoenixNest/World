@@ -20,7 +20,7 @@ object UiUtil {
         @Composable
         fun setImmersiveStatusBar() {
             rememberSystemUiController().setStatusBarColor(
-                Color.Transparent,
+                color = Color.Transparent,
                 darkIcons = MaterialTheme.colors.isLight
             )
         }

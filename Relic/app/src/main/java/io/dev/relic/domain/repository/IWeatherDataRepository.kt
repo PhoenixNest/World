@@ -8,6 +8,12 @@ import io.dev.relic.domain.model.weather.WeatherInfoModel
  * */
 interface IWeatherDataRepository {
 
+    /**
+     * Fetch the latest weather info data from Remote-server.
+     *
+     * @param latitude
+     * @param longitude
+     * */
     suspend fun getWeatherData(
         latitude: Double,
         longitude: Double

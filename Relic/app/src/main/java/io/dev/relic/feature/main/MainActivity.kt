@@ -3,6 +3,7 @@ package io.dev.relic.feature.main
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -12,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import io.dev.relic.feature.base.AbsBaseActivity
 import io.dev.relic.feature.main.viewmodel.MainViewModel
@@ -51,7 +53,7 @@ class MainActivity : AbsBaseActivity() {
 
     /* ======================== Ui ======================== */
 
-    override fun initUi() {
+    override fun initUi(modifier: Modifier) {
         setContent {
             // Enable immersive status bar.
             setImmersiveStatusBar()
@@ -61,6 +63,7 @@ class MainActivity : AbsBaseActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
+                        .background(Color.Unspecified)
                         .statusBarsPadding()
                         .captionBarPadding()
                         .imePadding()

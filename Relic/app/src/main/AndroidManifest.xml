@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,12 +14,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Relic"
-        tools:targetApi="31">
+        android:theme="@style/Theme.Relic">
 
         <activity
             android:name=".feature.splash.SplashActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +30,7 @@
         <activity
             android:name=".feature.main.MainActivity"
             android:exported="false"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.Relic" />
 
         <!-- Firebase Performance plugin -->

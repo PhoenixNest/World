@@ -17,7 +17,8 @@ data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val title: String,
+    val subTitle: String,
     val content: String,
-    val color: Int,
+    val color: Long,
     val timeStamp: Long
 )

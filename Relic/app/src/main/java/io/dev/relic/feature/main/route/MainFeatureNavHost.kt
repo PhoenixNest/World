@@ -10,6 +10,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import io.dev.relic.feature.main.route.MainFeatureRoute.HomeUnit.graphHome
 import io.dev.relic.feature.main.unit.hive.navHiveGraph
 import io.dev.relic.feature.main.unit.home.navHomeGraph
+import io.dev.relic.feature.main.unit.todo.navTodoGraph
 import io.dev.relic.feature.main.unit.todo.navigateToTodoPage
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -53,6 +54,11 @@ fun MainFeatureNavHost(
             onNavigateToWeatherDetailPage = {},
             onNavigateToFoodRecipesDetailPage = {},
             onBackClick = navHostController::popBackStack
+        )
+        navTodoGraph(
+            onItemClick = {},
+            onBackClick = navHostController::popBackStack,
+            onCreateClick = {}
         )
         navHiveGraph(
             onNavigate = {},

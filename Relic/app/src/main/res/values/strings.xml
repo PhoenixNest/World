@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Relic</string>
-    <string name="no_network_connection_message">Please check your network connection…</string>
 
-    <string name="privacy_title">User Privacy</string>
-    <string name="privacy_content">
+    <!-- System -->
+    <string name="no_network_connection_message">Please check your network connection…</string>
+    <string name="open_source_license">
         MIT License
         \n\n
         Copyright © 2022 Peter Chen
@@ -27,8 +27,17 @@
         IN THE SOFTWARE.
     </string>
 
+    <!-- Home Unit -->
     <string name="home_title">Home</string>
-    <string name="hive_title">Hive</string>
+    <string name="home_card_weather_title">Today\'s Weather</string>
+    <string name="home_card_todo_title">Check our your todo tasks</string>
+    <string name="home_card_food_recipes_title">Eat and drink your fill</string>
+
+    <!-- Todo Unit -->
     <string name="todo_title">Todo</string>
+    <string name="todo_ext_fab_label">Make a plan</string>
+
+    <!-- Hive Unit -->
+    <string name="hive_title">Hive</string>
 
 </resources>

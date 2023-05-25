@@ -7,3 +7,17 @@ data class HomeUiState(
     val weatherInfo: WeatherInfoModel? = null,
     val error: String? = null
 )
+
+sealed class HomeUiEvent {
+    object Loading : HomeUiEvent()
+
+    data class Success(
+        val weatherInfo: WeatherInfoModel?,
+        val error: String?
+    ) : HomeUiEvent()
+
+    data class Error(
+        val message: String
+    ) : HomeUiEvent()
+
+}

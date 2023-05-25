@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dev.relic.core.module.location.RelicLocationTracker
 import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.model.weather.WeatherInfoModel
+import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.domain.repository.IWeatherDataRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     application: Application,
     private val locationTracker: RelicLocationTracker,
+    private val todoDataRepository: ITodoDataRepository,
     private val weatherDataRepository: IWeatherDataRepository
 ) : AndroidViewModel(application) {
 

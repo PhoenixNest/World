@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.dev.relic.core.module.data.database.RelicDatabase
 import io.dev.relic.core.module.data.database.dao.TodoDao
+import io.dev.relic.core.module.data.database.dao.WeatherDao
 import javax.inject.Singleton
 
 @Module
@@ -28,6 +29,12 @@ class RelicDatabaseModule {
             klass = RelicDatabase::class.java,
             name = DATABASE_NAME
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherDao(database: RelicDatabase): WeatherDao {
+        return database.weatherDao()
     }
 
     @Provides

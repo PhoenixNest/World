@@ -1,15 +1,19 @@
 package io.dev.relic.core.module.data.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import io.dev.relic.core.module.data.database.entity.TodoEntity
 import kotlinx.coroutines.flow.Flow
-import java.util.*
 
 @Dao
 interface TodoDao {
 
     @Query("SELECT * FROM table_todo")
-    fun queryAllTodos(): Flow<List<TodoEntity>>
+    fun readAllTodos(): Flow<List<TodoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todoEntity: TodoEntity)

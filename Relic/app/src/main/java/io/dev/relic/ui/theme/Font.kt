@@ -4,7 +4,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import io.dev.relic.R
 
-object RelicFont {
+object RelicFontFamily {
 
     /**
      * [Google fonts > Ubuntu](https://fonts.google.com/specimen/Ubuntu)

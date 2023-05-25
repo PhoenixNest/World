@@ -18,15 +18,20 @@ fun NavController.navigateToTodoPage(navOptions: NavOptions? = null) {
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.navTodoGraph(
-    onNavigate: () -> Unit,
-    onBackClick: () -> Unit
+    onItemClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onCreateClick: () -> Unit
 ) {
     navigation(
         route = graphTodo,
         startDestination = routeTodoPage
     ) {
         composable(route = routeTodoPage) {
-            TodoPageRoute { onNavigate() }
+            TodoPageRoute(
+                onBackClick = onBackClick,
+                onItemClick = onItemClick,
+                onCreateClick = onCreateClick
+            )
         }
     }
 }

@@ -41,7 +41,7 @@ fun MainScreen(
 
     // Check the current network status by using networkMonitor flow.
     val networkStatus: NetworkStatus by networkMonitor.observe()
-        .collectAsStateWithLifecycle(initialValue = NetworkStatus.Unavailable)
+        .collectAsStateWithLifecycle(initialValue = NetworkStatus.Available)
 
     val noNetworkMessage: String = stringResource(id = R.string.no_network_connection_message)
     LaunchedEffect(networkStatus) {
@@ -57,7 +57,9 @@ fun MainScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (mainScreenState.currentTopLevelDestination != null) {
+            if (mainScreenState.shouldShowBottomBar
+                && mainScreenState.currentTopLevelDestination != null
+            ) {
                 MainBottomBar(
                     destinations = mainScreenState.topLevelDestinations,
                     onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,

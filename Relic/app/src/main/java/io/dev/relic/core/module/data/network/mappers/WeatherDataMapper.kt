@@ -1,5 +1,6 @@
 package io.dev.relic.core.module.data.network.mappers
 
+import io.dev.relic.core.module.data.database.entity.WeatherEntity
 import io.dev.relic.core.module.data.network.api.model.weather.WeatherDTO
 import io.dev.relic.core.module.data.network.api.model.weather.WeatherDataDTO
 import io.dev.relic.domain.model.weather.WeatherDataModel
@@ -9,7 +10,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Convert DTO to model.
+ * Convert weather data DTO to data model.
  *
  * @see io.dev.relic.core.module.data.network.api.model.weather.WeatherDTO
  * @see io.dev.relic.core.module.data.network.api.model.weather.WeatherUnitDataDTO
@@ -28,6 +29,10 @@ object WeatherDataMapper {
         val index: Int,
         val data: WeatherDataModel
     )
+
+    fun WeatherDataDTO.toWeatherEntity(): WeatherEntity {
+        return WeatherEntity(weatherDataDTO = this)
+    }
 
     fun WeatherDataDTO.toWeatherDataMap(): Map<Int, List<WeatherDataModel>> {
         return times.mapIndexed { index: Int, time: String ->

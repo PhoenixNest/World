@@ -28,7 +28,11 @@ fun NavGraphBuilder.navHomeGraph(
         startDestination = routeHomePage
     ) {
         composable(route = routeHomePage) {
-            HomePageRoute(onNavigate = onNavigateToTodoPage)
+            HomePageRoute(
+                onNavigateToTodoPage = onNavigateToTodoPage,
+                onNavigateToWeatherDetailPage = onNavigateToWeatherDetailPage,
+                onNavigateToFoodRecipesDetailPage = onNavigateToFoodRecipesDetailPage
+            )
         }
     }
 }

@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import io.dev.relic.feature.base.AbsBaseActivity
+import io.dev.relic.feature.main.MainActivity
 import io.dev.relic.global.utils.UiUtil.StatusBarUtil.setImmersiveStatusBar
 import io.dev.relic.ui.theme.RelicAppTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsBaseActivity() {
@@ -20,10 +24,14 @@ class SplashActivity : AbsBaseActivity() {
     }
 
     override fun initialization() {
-        //
+        lifecycleScope.launch {
+            delay(2 * 1000L)
+            MainActivity.start(this@SplashActivity)
+            finish()
+        }
     }
 
-    override fun initUi() {
+    override fun initUi(modifier: Modifier) {
         setContent {
             // Enable immersive status bar.
             setImmersiveStatusBar()
@@ -31,7 +39,7 @@ class SplashActivity : AbsBaseActivity() {
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
                 Surface(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxSize()
                         .statusBarsPadding()
                         .captionBarPadding()
