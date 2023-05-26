@@ -11,12 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
 import io.dev.relic.feature.main.unit.home.widget.HomePageCardTitle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeTodoCard(
+    isLoading: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -27,7 +31,12 @@ fun HomeTodoCard(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .placeholder(
+                visible = isLoading,
+                highlight = PlaceholderHighlight.shimmer()
+            ),
+        enabled = !isLoading,
         shape = RoundedCornerShape(16.dp),
         elevation = 2.dp
     ) {
@@ -38,5 +47,8 @@ fun HomeTodoCard(
 @Composable
 @Preview(showBackground = true)
 private fun HomeTodoCardPreview() {
-    HomeTodoCard(onClick = {})
+    HomeTodoCard(
+        isLoading = false,
+        onClick = {}
+    )
 }

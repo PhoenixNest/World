@@ -60,7 +60,6 @@ ext {
 
     // Retrofit
     retrofit_version = "2.9.0"
-    retrofit_gson_conveter_version = "2.9.0"
     retrofit_moshi_conveter_version = "2.9.0"
 
     // Moshi

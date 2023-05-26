@@ -108,15 +108,18 @@ private fun HomePage(
             )
             Spacer(modifier = modifier.height(8.dp))
             HomeWeatherCard(
+                isLoading = homeUiState.isLoadingWeatherData,
                 weatherInfoModel = homeUiState.weatherInfoModel,
                 onClick = onNavigateToWeatherDetailPage
             )
             Spacer(modifier = modifier.height(8.dp))
             HomeTodoCard(
+                isLoading = homeUiState.isLoadingTodoData,
                 onClick = onNavigateToTodoPage
             )
             Spacer(modifier = modifier.height(8.dp))
             HomeFoodRecipesCard(
+                isLoading = homeUiState.isLoadingFoodRecipesData,
                 onClick = onNavigateToFoodRecipesDetailPage
             )
             Spacer(modifier = modifier.height(32.dp))

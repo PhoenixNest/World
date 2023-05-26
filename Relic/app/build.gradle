@@ -148,7 +148,6 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:${rootProject.ext.room_version}"
     implementation "androidx.room:room-ktx:${rootProject.ext.room_version}"
-    annotationProcessor "androidx.room:room-compiler:${rootProject.ext.room_version}"
     androidTestImplementation "androidx.room:room-testing:${rootProject.ext.room_version}"
     ksp "androidx.room:room-compiler:${rootProject.ext.room_version}"
 
@@ -192,11 +191,13 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofit_version}"
-    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofit_gson_conveter_version}"
     implementation "com.squareup.retrofit2:converter-moshi:${rootProject.ext.retrofit_moshi_conveter_version}"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:${rootProject.ext.moshi_version}"
+    implementation "com.squareup.moshi:moshi-adapters:${rootProject.ext.moshi_version}"
+    implementation "com.squareup.moshi:moshi-kotlin:${rootProject.ext.moshi_version}"
+    ksp "com.squareup.moshi:moshi-kotlin-codegen:${rootProject.ext.moshi_version}"
 
     // Coil
     implementation "io.coil-kt:coil-compose:${rootProject.ext.coil_version}"

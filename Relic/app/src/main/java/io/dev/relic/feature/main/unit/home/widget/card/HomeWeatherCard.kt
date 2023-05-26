@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
@@ -20,6 +23,7 @@ import io.dev.relic.global.utils.TimeUtil
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeWeatherCard(
+    isLoading: Boolean,
     weatherInfoModel: WeatherInfoModel?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -31,7 +35,12 @@ fun HomeWeatherCard(
         modifier = modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .placeholder(
+                visible = isLoading,
+                highlight = PlaceholderHighlight.shimmer()
+            ),
+        enabled = !isLoading,
         shape = RoundedCornerShape(16.dp),
         elevation = 2.dp
     ) {
@@ -47,6 +56,7 @@ fun HomeWeatherCard(
 @Preview(showBackground = true)
 private fun HomeWeatherCardPreview() {
     HomeWeatherCard(
+        isLoading = false,
         weatherInfoModel = WeatherInfoModel(
             weatherDataPerDay = emptyMap(),
             currentWeatherData = WeatherDataModel(
@@ -55,7 +65,8 @@ private fun HomeWeatherCardPreview() {
                 weatherCode = -1,
                 humidity = 70,
                 windSpeed = 201.2,
-                pressure = 98.2
+                pressure = 98.2,
+                isDay = true
             )
         ),
         onClick = {}

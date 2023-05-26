@@ -17,7 +17,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import io.dev.relic.core.module.data.network.monitor.NetworkMonitor
+import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.feature.main.route.MainFeatureRoute.HiveUnit.routeHivePage
 import io.dev.relic.feature.main.route.MainFeatureRoute.HomeUnit.routeHomePage
 import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination

@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import io.dev.relic.core.module.data.network.monitor.NetworkMonitor
-import io.dev.relic.core.module.data.network.monitor.NetworkStatus
+import io.dev.relic.core.data.network.monitor.NetworkMonitor
+import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.global.utils.LogUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

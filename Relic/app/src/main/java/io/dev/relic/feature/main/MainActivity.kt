@@ -14,21 +14,12 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.ViewModelProvider
 import io.dev.relic.feature.base.AbsBaseActivity
-import io.dev.relic.feature.main.viewmodel.MainViewModel
 import io.dev.relic.global.utils.UiUtil.StatusBarUtil.setImmersiveStatusBar
 import io.dev.relic.ui.theme.RelicAppTheme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : AbsBaseActivity() {
-
-    /**
-     * ViewModel
-     * */
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
-    }
 
     companion object {
         private const val TAG = "MainActivity"
