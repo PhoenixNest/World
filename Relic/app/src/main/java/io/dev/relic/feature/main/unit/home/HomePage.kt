@@ -71,17 +71,7 @@ private fun HomePage(
         scaffoldState = ScaffoldState(
             drawerState = drawerState,
             snackbarHostState = snackBarHostState
-        ),
-        /*drawerContent = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = if (drawerState.isClosed) ">>> Swipe >>>" else "<<< Swipe <<<")
-            }
-        }*/
+        )
     ) { paddingValues: PaddingValues ->
         Column(
             modifier = modifier
@@ -102,7 +92,7 @@ private fun HomePage(
                     }
                 },
                 onNavigateToTodoPage = {
-                    LogUtil.debug(TAG, "[HomePageTopBar]: Navigate to [Todo]")
+                    LogUtil.debug(TAG, "[HomePageTopBar] Navigate to [Todo]")
                     onNavigateToTodoPage.invoke()
                 }
             )
