@@ -20,8 +20,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Diamond
-import androidx.compose.material.icons.rounded.Hexagon
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Token
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -89,7 +89,7 @@ fun HomePageTopBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Hexagon,
+                    imageVector = Icons.Rounded.Token,
                     contentDescription = DEFAULT_DESC,
                     modifier = modifier.size(36.dp),
                     tint = Color.White

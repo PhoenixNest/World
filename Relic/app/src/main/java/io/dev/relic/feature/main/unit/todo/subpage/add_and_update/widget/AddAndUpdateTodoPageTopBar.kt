@@ -1,4 +1,4 @@
-package io.dev.relic.feature.main.unit.todo.subpage.create.widget
+package io.dev.relic.feature.main.unit.todo.subpage.add_and_update.widget
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,7 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +25,7 @@ import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.ui.theme.RelicFontFamily
 
 @Composable
-fun CreateTodoPageTopBar(
+fun AddAndUpdateTodoPageTopBar(
     onBackClick: () -> Unit,
     onFinishClick: () -> Unit,
     title: String,
@@ -67,7 +67,7 @@ fun CreateTodoPageTopBar(
             modifier = modifier.weight(1F)
         ) {
             Icon(
-                imageVector = Icons.Rounded.Check,
+                imageVector = Icons.Rounded.Done,
                 contentDescription = DEFAULT_DESC
             )
         }
@@ -77,7 +77,7 @@ fun CreateTodoPageTopBar(
 @Composable
 @Preview(showBackground = true)
 private fun CreateTodoPageTopBarPreview() {
-    CreateTodoPageTopBar(
+    AddAndUpdateTodoPageTopBar(
         onBackClick = {},
         onFinishClick = {},
         title = "Hello World"

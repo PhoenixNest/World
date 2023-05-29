@@ -11,6 +11,18 @@ object TodoDataMapper {
 
     private const val TAG = "TodoDataMapper"
 
+    fun TodoDataModel.toTodoEntity(): TodoEntity {
+        return TodoEntity(
+            title = title,
+            subTitle = subTitle,
+            content = content,
+            priority = priority,
+            color = color,
+            timeStamp = timeStamp,
+            isFinish = isFinish
+        )
+    }
+
     fun List<TodoEntity>.toTodoDataList(): List<TodoDataModel> {
         val tempList: MutableList<TodoDataModel> = mutableListOf()
         forEach { todoEntity: TodoEntity ->
@@ -25,8 +37,10 @@ object TodoDataMapper {
             title = title,
             subTitle = subTitle,
             content = content,
+            priority = priority,
             color = color,
-            timeStamp = timeStamp
+            timeStamp = timeStamp,
+            isFinish = isFinish
         )
     }
 

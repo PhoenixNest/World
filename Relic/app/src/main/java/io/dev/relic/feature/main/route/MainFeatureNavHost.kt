@@ -13,8 +13,8 @@ import io.dev.relic.feature.main.unit.hive.navHiveGraph
 import io.dev.relic.feature.main.unit.home.navHomeGraph
 import io.dev.relic.feature.main.unit.mine.navMineGraph
 import io.dev.relic.feature.main.unit.todo.navTodoPage
-import io.dev.relic.feature.main.unit.todo.subpage.create.navCreateTodoPage
-import io.dev.relic.feature.main.unit.todo.subpage.create.navigateToCreateTodoPage
+import io.dev.relic.feature.main.unit.todo.subpage.add_and_update.navAddAndUpdateTodoPage
+import io.dev.relic.feature.main.unit.todo.subpage.add_and_update.navigateToAddAndUpdateTodoPage
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -57,7 +57,7 @@ fun MainFeatureNavHost(
         navHomeGraph(
             onNavigateToSubscribePage = {},
             onNavigateToSettingPage = {},
-            onNavigateToCreateTodoPage = navHostController::navigateToCreateTodoPage,
+            onNavigateToCreateTodoPage = navHostController::navigateToAddAndUpdateTodoPage,
             onNavigateToWeatherDetailPage = {},
             onNavigateToFoodRecipesDetailPage = {}
         )
@@ -73,7 +73,7 @@ fun MainFeatureNavHost(
             onBackClick = navHostController::popBackStack,
             onCreateClick = {}
         )
-        navCreateTodoPage(
+        navAddAndUpdateTodoPage(
             onBackClick = navHostController::popBackStack,
             onFinishClick = {
                 navHostController.apply {

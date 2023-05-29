@@ -1,4 +1,4 @@
-package io.dev.relic.feature.main.unit.todo.subpage.create
+package io.dev.relic.feature.main.unit.todo.subpage.add_and_update
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,22 +23,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.dev.relic.R
-import io.dev.relic.feature.main.unit.todo.subpage.create.widget.CreateTodoPageTopBar
+import io.dev.relic.feature.main.unit.todo.subpage.add_and_update.widget.AddAndUpdateTodoPageTopBar
 import io.dev.relic.global.widget.CommonInputField
 
 @Composable
-fun CreateTodoPageRoute(
+fun AddAndUpdateTodoPageRoute(
     onBackClick: () -> Unit,
     onFinishClick: () -> Unit
 ) {
-    CreateTodoPage(
+    AddAndUpdateTodoPage(
         onBackClick = onBackClick,
         onFinishClick = onFinishClick
     )
 }
 
 @Composable
-private fun CreateTodoPage(
+private fun AddAndUpdateTodoPage(
     onBackClick: () -> Unit,
     onFinishClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -58,7 +58,7 @@ private fun CreateTodoPage(
 
     Scaffold(
         topBar = {
-            CreateTodoPageTopBar(
+            AddAndUpdateTodoPageTopBar(
                 onBackClick = onBackClick,
                 onFinishClick = onFinishClick,
                 title = title
@@ -144,7 +144,7 @@ private fun CreateTodoPage(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 private fun CreateTodoPagePreview() {
-    CreateTodoPage(
+    AddAndUpdateTodoPage(
         onBackClick = {},
         onFinishClick = {}
     )

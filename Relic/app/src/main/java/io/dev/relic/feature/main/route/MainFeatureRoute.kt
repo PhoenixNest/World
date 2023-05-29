@@ -20,7 +20,7 @@ object MainFeatureRoute {
     object TodoUnit {
         const val graphTodo: String = "graph_todo"
         const val routeTodoPage: String = "route_todo_page"
-        const val routeCreateTodoPage: String = "route_create_todo_page"
+        const val routeAddAndUpdateTodoPage: String = "route_add_and_update_todo_page"
     }
 
 }
