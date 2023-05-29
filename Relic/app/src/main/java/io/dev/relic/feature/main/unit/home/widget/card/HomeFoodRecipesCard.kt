@@ -18,7 +18,6 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
-import io.dev.relic.feature.main.unit.home.widget.HomePageCardTitle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

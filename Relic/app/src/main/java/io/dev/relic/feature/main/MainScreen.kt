@@ -85,7 +85,10 @@ fun MainScreen(
                 )
             }
             Column(modifier = modifier.fillMaxSize()) {
-                MainFeatureNavHost(navHostController = mainScreenState.navHostController)
+                MainFeatureNavHost(
+                    mainScreenState = mainScreenState,
+                    navHostController = mainScreenState.navHostController
+                )
             }
         }
     }

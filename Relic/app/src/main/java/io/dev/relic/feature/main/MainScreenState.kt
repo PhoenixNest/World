@@ -20,12 +20,15 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.feature.main.route.MainFeatureRoute.HiveUnit.routeHivePage
 import io.dev.relic.feature.main.route.MainFeatureRoute.HomeUnit.routeHomePage
+import io.dev.relic.feature.main.route.MainFeatureRoute.MineUnit.routeMinePage
 import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination
 import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination.Hive
 import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination.Home
+import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination.Mine
 import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination.values
 import io.dev.relic.feature.main.unit.hive.navigateToHiveUnit
 import io.dev.relic.feature.main.unit.home.navigateToHomeUnit
+import io.dev.relic.feature.main.unit.mine.navigateToMineUnit
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -71,6 +74,7 @@ class MainScreenState(
         @Composable get() = when (currentDestination?.route) {
             routeHomePage -> Home
             routeHivePage -> Hive
+            routeMinePage -> Mine
             else -> null
         }
 
@@ -114,6 +118,7 @@ class MainScreenState(
         when (topLevelDestination) {
             Home -> navHostController.navigateToHomeUnit(navOptions = topLevelNavOptions)
             Hive -> navHostController.navigateToHiveUnit(navOptions = topLevelNavOptions)
+            Mine -> navHostController.navigateToMineUnit(navOptions = topLevelNavOptions)
         }
     }
 

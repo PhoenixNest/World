@@ -10,15 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,24 +22,24 @@ import io.dev.relic.feature.main.unit.home.viewmodel.HomeUiState
 import io.dev.relic.feature.main.unit.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.main.unit.home.widget.HomePageTopBar
 import io.dev.relic.feature.main.unit.home.widget.card.HomeFoodRecipesCard
-import io.dev.relic.feature.main.unit.home.widget.card.HomeTodoCard
 import io.dev.relic.feature.main.unit.home.widget.card.HomeWeatherCard
-import io.dev.relic.global.utils.LogUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 internal const val TAG = "HomePage"
 
 @Composable
 fun HomePageRoute(
-    onNavigateToTodoPage: () -> Unit,
+    onNavigateToSubscribePage: () -> Unit,
+    onNavigateToSettingPage: () -> Unit,
+    onNavigateToCreateTodoPage: () -> Unit,
     onNavigateToWeatherDetailPage: () -> Unit,
     onNavigateToFoodRecipesDetailPage: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     HomePage(
         homeUiState = viewModel.homeUiState,
-        onNavigateToTodoPage = onNavigateToTodoPage,
+        onNavigateToSubscribePage = onNavigateToSubscribePage,
+        onNavigateToSettingPage = onNavigateToSettingPage,
+        onNavigateToCreateTodoPage = onNavigateToCreateTodoPage,
         onNavigateToWeatherDetailPage = onNavigateToWeatherDetailPage,
         onNavigateToFoodRecipesDetailPage = onNavigateToFoodRecipesDetailPage
     )
@@ -55,23 +48,15 @@ fun HomePageRoute(
 @Composable
 private fun HomePage(
     homeUiState: HomeUiState,
-    onNavigateToTodoPage: () -> Unit,
+    onNavigateToSubscribePage: () -> Unit,
+    onNavigateToSettingPage: () -> Unit,
+    onNavigateToCreateTodoPage: () -> Unit,
     onNavigateToWeatherDetailPage: () -> Unit,
     onNavigateToFoodRecipesDetailPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-    val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val snackBarHostState: SnackbarHostState = remember {
-        SnackbarHostState()
-    }
-
     Scaffold(
-        modifier = modifier.fillMaxSize(),
-        scaffoldState = ScaffoldState(
-            drawerState = drawerState,
-            snackbarHostState = snackBarHostState
-        )
+        modifier = modifier.fillMaxSize()
     ) { paddingValues: PaddingValues ->
         Column(
             modifier = modifier
@@ -86,26 +71,15 @@ private fun HomePage(
             horizontalAlignment = Alignment.Start
         ) {
             HomePageTopBar(
-                onOpenDrawer = {
-                    coroutineScope.launch {
-                        drawerState.open()
-                    }
-                },
-                onNavigateToTodoPage = {
-                    LogUtil.debug(TAG, "[HomePageTopBar] Navigate to [Todo]")
-                    onNavigateToTodoPage.invoke()
-                }
+                onNavigateToSubscribePage = onNavigateToSubscribePage,
+                onNavigateToSettingPage = onNavigateToSettingPage,
+                onNavigateToCreateTodoPage = onNavigateToCreateTodoPage
             )
             Spacer(modifier = modifier.height(8.dp))
             HomeWeatherCard(
                 isLoading = homeUiState.isLoadingWeatherData,
                 weatherInfoModel = homeUiState.weatherInfoModel,
                 onClick = onNavigateToWeatherDetailPage
-            )
-            Spacer(modifier = modifier.height(8.dp))
-            HomeTodoCard(
-                isLoading = homeUiState.isLoadingTodoData,
-                onClick = onNavigateToTodoPage
             )
             Spacer(modifier = modifier.height(8.dp))
             HomeFoodRecipesCard(
@@ -118,12 +92,14 @@ private fun HomePage(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 private fun HomePagePreview() {
     HomePage(
-        onNavigateToTodoPage = {},
+        homeUiState = HomeUiState(),
+        onNavigateToSubscribePage = {},
+        onNavigateToSettingPage = {},
+        onNavigateToCreateTodoPage = {},
         onNavigateToWeatherDetailPage = {},
-        onNavigateToFoodRecipesDetailPage = {},
-        homeUiState = HomeUiState()
+        onNavigateToFoodRecipesDetailPage = {}
     )
 }

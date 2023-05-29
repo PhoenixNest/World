@@ -1,4 +1,4 @@
-package io.dev.relic.feature.main.unit.home.widget
+package io.dev.relic.feature.main.unit.home.widget.card
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

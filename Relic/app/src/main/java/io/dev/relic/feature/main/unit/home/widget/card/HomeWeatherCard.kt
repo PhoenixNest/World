@@ -39,7 +39,6 @@ import io.dev.relic.R
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.domain.model.weather.WeatherType
-import io.dev.relic.feature.main.unit.home.widget.HomePageCardTitle
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.TimeUtil
 import io.dev.relic.ui.theme.RelicFontFamily

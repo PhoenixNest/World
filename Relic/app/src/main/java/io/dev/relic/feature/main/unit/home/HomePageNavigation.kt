@@ -18,10 +18,11 @@ fun NavController.navigateToHomeUnit(navOptions: NavOptions? = null) {
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.navHomeGraph(
-    onNavigateToTodoPage: () -> Unit,
+    onNavigateToSubscribePage: () -> Unit,
+    onNavigateToSettingPage: () -> Unit,
+    onNavigateToCreateTodoPage: () -> Unit,
     onNavigateToWeatherDetailPage: () -> Unit,
-    onNavigateToFoodRecipesDetailPage: () -> Unit,
-    onBackClick: () -> Unit
+    onNavigateToFoodRecipesDetailPage: () -> Unit
 ) {
     navigation(
         route = graphHome,
@@ -29,7 +30,9 @@ fun NavGraphBuilder.navHomeGraph(
     ) {
         composable(route = routeHomePage) {
             HomePageRoute(
-                onNavigateToTodoPage = onNavigateToTodoPage,
+                onNavigateToSubscribePage = onNavigateToSubscribePage,
+                onNavigateToSettingPage = onNavigateToSettingPage,
+                onNavigateToCreateTodoPage = onNavigateToCreateTodoPage,
                 onNavigateToWeatherDetailPage = onNavigateToWeatherDetailPage,
                 onNavigateToFoodRecipesDetailPage = onNavigateToFoodRecipesDetailPage
             )

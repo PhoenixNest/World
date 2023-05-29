@@ -33,9 +33,9 @@ import io.dev.relic.ui.theme.mainTextColorLight
 
 @Composable
 fun MainBottomBar(
+    currentDestination: NavDestination?,
     destinations: List<MainFeatureTopLevelDestination>,
     onNavigateToDestination: (MainFeatureTopLevelDestination) -> Unit,
-    currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -94,9 +94,9 @@ private fun RowScope.MainBottomBarItem(
                         mainTextColorLight
                     },
                     fontSize = if (isSelected) {
-                        16.sp
-                    } else {
                         14.sp
+                    } else {
+                        12.sp
                     },
                     fontWeight = if (isSelected) {
                         FontWeight.Bold

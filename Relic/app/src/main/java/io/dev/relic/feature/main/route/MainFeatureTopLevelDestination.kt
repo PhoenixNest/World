@@ -21,5 +21,11 @@ enum class MainFeatureTopLevelDestination(
         labelResId = R.string.hive_title,
         selectedIconResId = R.drawable.ic_bottom_tab_hive_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_hive_unselected,
+    ),
+    Mine(
+        titleResId = R.string.mine_title,
+        labelResId = R.string.mine_title,
+        selectedIconResId = R.drawable.ic_bottom_tab_mine_selected,
+        unselectedIconResId = R.drawable.ic_bottom_tab_mine_unselected
     )
 }

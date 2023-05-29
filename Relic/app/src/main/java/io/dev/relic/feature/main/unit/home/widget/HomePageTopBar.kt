@@ -3,7 +3,6 @@ package io.dev.relic.feature.main.unit.home.widget
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -21,17 +19,27 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Diamond
 import androidx.compose.material.icons.rounded.Hexagon
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.LottieComposition
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import io.dev.relic.R
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.ui.theme.RelicFontFamily
@@ -39,55 +47,68 @@ import io.dev.relic.ui.theme.mainTextColor
 
 @Composable
 fun HomePageTopBar(
-    onOpenDrawer: () -> Unit,
-    onNavigateToTodoPage: () -> Unit,
+    onNavigateToSubscribePage: () -> Unit,
+    onNavigateToSettingPage: () -> Unit,
+    onNavigateToCreateTodoPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
+
+    val composition: LottieComposition? by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.lottie_home_rocket)
+    )
+
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .height(300.dp)
             .background(
-                color = Color.DarkGray,
-                shape = CutCornerShape(bottomEnd = 72.dp)
-            )
-            .padding(16.dp)
+                brush = Brush.radialGradient(
+                    listOf(
+                        Color(color = 0xFFEF3152),
+                        Color.DarkGray
+                    ),
+                    center = Offset.Zero
+                ),
+                shape = RoundedCornerShape(
+                    bottomStart = 16.dp,
+                    bottomEnd = 16.dp
+                )
+            ),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .weight(1F)
+                .padding(16.dp)
         ) {
             Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onOpenDrawer) {
-                    Icon(
-                        imageVector = Icons.Rounded.Hexagon,
-                        contentDescription = DEFAULT_DESC,
-                        modifier = modifier.size(36.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-            Spacer(modifier = modifier.height(24.dp))
-            Text(
-                text = "👋 Hi, Relic",
-                style = TextStyle(
-                    color = Color.White,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.fasthand
+                Icon(
+                    imageVector = Icons.Rounded.Hexagon,
+                    contentDescription = DEFAULT_DESC,
+                    modifier = modifier.size(36.dp),
+                    tint = Color.White
                 )
-            )
-            Spacer(modifier = modifier.height(12.dp))
+                Spacer(modifier = modifier.width(16.dp))
+                Text(
+                    text = "Relic",
+                    style = TextStyle(
+                        color = Color.White,
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = RelicFontFamily.fasthand
+                    )
+                )
+            }
+
             Button(
-                onClick = onNavigateToTodoPage,
+                onClick = onNavigateToCreateTodoPage,
+                modifier = modifier.align(Alignment.BottomStart),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.White
@@ -113,15 +134,75 @@ fun HomePageTopBar(
                     )
                 }
             }
+
+        }
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .weight(1F)
+        ) {
+            Row(
+                modifier = modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp)
+                    .background(
+                        color = Color.LightGray.copy(alpha = 0.1F),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(
+                        horizontal = 8.dp,
+                        vertical = 4.dp
+                    ),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {
+                        // TODO
+                        onNavigateToSubscribePage.invoke()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Diamond,
+                        contentDescription = DEFAULT_DESC,
+                        modifier = modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        // TODO
+                        onNavigateToSettingPage.invoke()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Settings,
+                        contentDescription = DEFAULT_DESC,
+                        modifier = modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                }
+            }
+            LottieAnimation(
+                composition = composition,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(260.dp)
+                    .align(Alignment.BottomCenter),
+                restartOnPlay = true,
+                iterations = Int.MAX_VALUE,
+                contentScale = ContentScale.Crop
+            )
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun HomePageTopBarPreview() {
     HomePageTopBar(
-        onOpenDrawer = {},
-        onNavigateToTodoPage = {}
+        onNavigateToSubscribePage = {},
+        onNavigateToSettingPage = {},
+        onNavigateToCreateTodoPage = {}
     )
 }

@@ -12,9 +12,15 @@ object MainFeatureRoute {
         const val routeHivePage: String = "route_hive_page"
     }
 
+    object MineUnit {
+        const val graphMine: String = "graph_mine"
+        const val routeMinePage: String = "route_mine_page"
+    }
+
     object TodoUnit {
         const val graphTodo: String = "graph_todo"
         const val routeTodoPage: String = "route_todo_page"
+        const val routeCreateTodoPage: String = "route_create_todo_page"
     }
 
 }

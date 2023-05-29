@@ -7,15 +7,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import io.dev.relic.feature.main.MainScreenState
 import io.dev.relic.feature.main.route.MainFeatureRoute.HomeUnit.graphHome
 import io.dev.relic.feature.main.unit.hive.navHiveGraph
 import io.dev.relic.feature.main.unit.home.navHomeGraph
-import io.dev.relic.feature.main.unit.todo.navTodoGraph
-import io.dev.relic.feature.main.unit.todo.navigateToTodoPage
+import io.dev.relic.feature.main.unit.mine.navMineGraph
+import io.dev.relic.feature.main.unit.todo.navTodoPage
+import io.dev.relic.feature.main.unit.todo.subpage.create.navCreateTodoPage
+import io.dev.relic.feature.main.unit.todo.subpage.create.navigateToCreateTodoPage
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainFeatureNavHost(
+    mainScreenState: MainScreenState,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String = graphHome
@@ -49,20 +53,36 @@ fun MainFeatureNavHost(
             )
         }
     ) {
+        // Graph Unit
         navHomeGraph(
-            onNavigateToTodoPage = navHostController::navigateToTodoPage,
+            onNavigateToSubscribePage = {},
+            onNavigateToSettingPage = {},
+            onNavigateToCreateTodoPage = navHostController::navigateToCreateTodoPage,
             onNavigateToWeatherDetailPage = {},
-            onNavigateToFoodRecipesDetailPage = {},
-            onBackClick = navHostController::popBackStack
-        )
-        navTodoGraph(
-            onItemClick = {},
-            onBackClick = navHostController::popBackStack,
-            onCreateClick = {}
+            onNavigateToFoodRecipesDetailPage = {}
         )
         navHiveGraph(
             onNavigate = {},
             onBackClick = navHostController::popBackStack
+        )
+        navMineGraph()
+
+        // Page Unit
+        navTodoPage(
+            onItemClick = {},
+            onBackClick = navHostController::popBackStack,
+            onCreateClick = {}
+        )
+        navCreateTodoPage(
+            onBackClick = navHostController::popBackStack,
+            onFinishClick = {
+                navHostController.apply {
+                    popBackStack()
+                    mainScreenState.navigateToTopLevelDestination(
+                        topLevelDestination = MainFeatureTopLevelDestination.Mine
+                    )
+                }
+            }
         )
     }
 }
