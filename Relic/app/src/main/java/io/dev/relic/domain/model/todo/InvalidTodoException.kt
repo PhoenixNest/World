@@ -7,4 +7,4 @@ package io.dev.relic.domain.model.todo
  * */
 class InvalidTodoException(
     message: String
-) : Exception(message = message)
+) : Exception(message)
