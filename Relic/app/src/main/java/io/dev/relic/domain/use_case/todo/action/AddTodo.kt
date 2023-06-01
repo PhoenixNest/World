@@ -1,4 +1,4 @@
-package io.dev.relic.domain.use_case.todo
+package io.dev.relic.domain.use_case.todo.action
 
 import io.dev.relic.core.data.database.mappers.TodoDataMapper.toTodoEntity
 import io.dev.relic.domain.model.todo.InvalidTodoException

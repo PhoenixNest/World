@@ -1,21 +1,21 @@
-package io.dev.relic.domain.use_case.todo
+package io.dev.relic.domain.use_case.todo.action
 
 import io.dev.relic.core.data.database.mappers.TodoDataMapper.toTodoEntity
 import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.global.utils.LogUtil
 
-class UpdateTodo(private val todoRepository: ITodoDataRepository) {
+class DeleteTodo(private val todoRepository: ITodoDataRepository) {
 
     companion object {
-        private const val TAG = "UpdateTodo"
+        private const val TAG = "DeleteTodo"
     }
 
     suspend operator fun invoke(todoDataModel: TodoDataModel) {
-        todoRepository.updateTodo(
+        todoRepository.deleteTodo(
             todoDataModel.toTodoEntity()
         ).also {
-            LogUtil.debug(TAG, "[Update Todo] todoDataModel: $todoDataModel")
+            LogUtil.debug(TAG, "[Delete Todo] todoDataModel: $todoDataModel")
         }
     }
 

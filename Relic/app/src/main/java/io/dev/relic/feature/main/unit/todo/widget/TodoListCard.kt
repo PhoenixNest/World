@@ -155,8 +155,10 @@ private fun TodoListCardPreview() {
             title = "Title",
             subTitle = "Sub-Title",
             content = stringResource(id = R.string.open_source_license),
+            priority = -1,
             color = 0xFF21313A,
-            timeStamp = getCurrentTimeInMillis()
+            timeStamp = getCurrentTimeInMillis(),
+            isFinish = false
         ),
         onItemClick = {
             //

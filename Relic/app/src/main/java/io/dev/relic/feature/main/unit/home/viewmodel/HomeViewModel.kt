@@ -9,14 +9,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
+import io.dev.relic.core.data.database.entity.WeatherEntity
 import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
 import io.dev.relic.core.data.network.mappers.WeatherDataMapper.toWeatherInfoModel
-import io.dev.relic.domain.location.ILocationTracker
-import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.model.weather.WeatherInfoModel
-import io.dev.relic.domain.repository.IWeatherDataRepository
-import io.dev.relic.global.utils.LogUtil
+import io.dev.relic.domain.use_case.lcoation.LocationUseCase
+import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
+import io.dev.relic.domain.use_case.weather.WeatherUseCase
+import io.dev.relic.domain.use_case.weather.action.FetchRemoteWeatherData
 import io.dev.relic.global.utils.ext.LiveDataExt.observeOnce
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -26,9 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     application: Application,
-    private val locationTracker: ILocationTracker,
-    private val databaseRepository: RelicDatabaseRepository,
-    private val weatherDataRepository: IWeatherDataRepository
+    private val locationUseCase: LocationUseCase,
+    private val weatherUseCase: WeatherUseCase
 ) : AndroidViewModel(application) {
 
     private var _homeUiState: HomeUiState by mutableStateOf(value = HomeUiState())
@@ -48,38 +47,41 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun execute() {
-        accessDeviceLocation(
-            doOnSuccess = {
-                // Fetch the latest weather information data according to the current device location.
-                fetchRemoteWeatherData(it)
-            }
-        )
+        accessDeviceLocation()
     }
 
     /**
      * Try to access the current location of the device first
+     *
+     * @see fetchRemoteWeatherData
      * */
-    private fun accessDeviceLocation(doOnSuccess: (location: Location) -> Unit) {
-        LogUtil.verbose(TAG, "[LocationTracker] Attempts to get the current device location.")
-
+    private fun accessDeviceLocation() {
         viewModelScope.launch {
-            // Try to access the current location of the device first.
-            locationTracker.getCurrentLocation()?.run {
-                LogUtil.apply {
-                    debug(TAG, "[LocationTracker] Get the location information succeeded.")
-                    debug(TAG, "[LocationTracker] (latitude: ${latitude}, longitude:${longitude})")
+            locationUseCase.accessCurrentLocation.invoke(
+                listener = object : AccessCurrentLocation.ILocationListener {
+                    override fun onAccessing() {
+                        // Update the ui state to the Ui layer.
+                        _homeUiState = _homeUiState.copy(isAccessDeviceLocation = true)
+                    }
+
+                    override fun onAccessSucceed(location: Location) {
+                        // Update the ui state to the Ui layer.
+                        _homeUiState = _homeUiState.copy(isAccessDeviceLocation = false)
+
+                        // Fetch the latest weather information data according to the current device location.
+                        fetchRemoteWeatherData(location)
+                    }
+
+                    override fun onAccessFailed(errorMessage: String) {
+                        // Update the ui state to the Ui layer.
+                        _homeUiState = _homeUiState.copy(
+                            isLoadingWeatherData = false,
+                            errorMessageOfDeviceLocation = errorMessage
+                        )
+                    }
+
                 }
-
-                doOnSuccess.invoke(this)
-            } ?: run {
-                LogUtil.error(TAG, "[LocationTracker] Couldn't retrieve the location of current device.")
-
-                // Update the ui state to the Ui layer.
-                _homeUiState = _homeUiState.copy(
-                    isLoadingWeatherData = false,
-                    errorMessageOfWeatherInfo = "Couldn't retrieve the location of current device."
-                )
-            }
+            )
         }
     }
 
@@ -90,70 +92,62 @@ class HomeViewModel @Inject constructor(
      * according to the `current device location`.
      *
      * @param location     The current location of the device.
+     * @see accessDeviceLocation
      * */
     private fun fetchRemoteWeatherData(location: Location) {
-        LogUtil.verbose(TAG, "[WeatherApi] Start requesting weather data.")
-
         viewModelScope.launch {
-            // Update the ui state to the Ui layer.
-            _homeUiState = _homeUiState.copy(
-                isLoadingWeatherData = true,
-                weatherInfoModel = null,
-                errorMessageOfWeatherInfo = null
-            )
-
-            // Fetch the latest weather data from remote-server.
-            val result: NetworkResult<WeatherApiDTO> = weatherDataRepository.getWeatherData(
+            weatherUseCase.fetchRemoteWeatherData.invoke(
                 latitude = location.latitude,
-                longitude = location.longitude
-            )
-
-            // Handle server result.
-            when (result) {
-                is NetworkResult.Failed -> {
-                    LogUtil.apply {
-                        error(TAG, "[WeatherApi] Failed to load weather data.")
-                        error(TAG, "[WeatherApi] Error message: ${result.message}")
+                longitude = location.longitude,
+                listener = object : FetchRemoteWeatherData.IWeatherListener {
+                    override fun onFetching() {
+                        // Update the ui state to the Ui layer.
+                        _homeUiState = _homeUiState.copy(
+                            isLoadingWeatherData = true,
+                            weatherInfoModel = null,
+                            errorMessageOfWeatherInfo = null
+                        )
                     }
 
-                    _homeUiState = _homeUiState.copy(
-                        isLoadingWeatherData = false,
-                        weatherInfoModel = null,
-                        errorMessageOfWeatherInfo = result.message
-                    )
-                }
-
-                is NetworkResult.Success -> {
-                    LogUtil.apply {
-                        debug(TAG, "[WeatherApi] Loading weather data succeeded.")
-                        debug(TAG, "[WeatherApi] Datasource: ${result.data}")
-                    }
-
-                    result.data?.run {
+                    override fun onFetchSucceed(weatherApiDTO: WeatherApiDTO) {
                         // Update the ui state to the Ui layer.
                         _homeUiState = _homeUiState.copy(
                             isLoadingWeatherData = false,
-                            weatherInfoModel = this.toWeatherInfoModel(),
+                            weatherInfoModel = weatherApiDTO.toWeatherInfoModel(),
                             errorMessageOfWeatherInfo = null
                         )
-                    } ?: run {
-                        // In fact, sometimes the request succeeds, but the server returns empty data.
-                        LogUtil.debug(TAG, "[WeatherApi] Server error, retry it after.")
+                    }
 
-                        databaseRepository.readWeatherDataCache()
+                    override fun onFetchSucceedButNoData(errorMessage: String) {
+                        weatherUseCase.readCacheWeatherData.invoke()
                             .asLiveData()
-                            .observeOnce {
-                                val offlineModel: WeatherInfoModel = it.first().weatherDatasource.toWeatherInfoModel()
+                            .observeOnce { weatherEntities: List<WeatherEntity> ->
+                                // Read the cache data from database.
+                                val offlineModel: WeatherInfoModel = weatherEntities
+                                    .first()
+                                    .weatherDatasource
+                                    .toWeatherInfoModel()
+
                                 // Update the ui state to the Ui layer.
                                 _homeUiState = _homeUiState.copy(
                                     isLoadingWeatherData = false,
                                     weatherInfoModel = offlineModel,
-                                    errorMessageOfWeatherInfo = "Server error, retry it after."
+                                    errorMessageOfWeatherInfo = errorMessage
                                 )
                             }
                     }
+
+                    override fun onFetchFailed(errorMessage: String?) {
+                        // Update the ui state to the Ui layer.
+                        _homeUiState = _homeUiState.copy(
+                            isLoadingWeatherData = false,
+                            weatherInfoModel = null,
+                            errorMessageOfWeatherInfo = errorMessage
+                        )
+                    }
+
                 }
-            }
+            )
         }
     }
 

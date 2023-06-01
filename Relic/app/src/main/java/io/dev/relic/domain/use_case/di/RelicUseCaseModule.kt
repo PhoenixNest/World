@@ -1,0 +1,64 @@
+package io.dev.relic.domain.use_case.di
+
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
+import io.dev.relic.domain.location.ILocationTracker
+import io.dev.relic.domain.repository.ITodoDataRepository
+import io.dev.relic.domain.repository.IWeatherDataRepository
+import io.dev.relic.domain.use_case.lcoation.LocationUseCase
+import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
+import io.dev.relic.domain.use_case.todo.TodoUnitUseCase
+import io.dev.relic.domain.use_case.todo.action.AddTodo
+import io.dev.relic.domain.use_case.todo.action.DeleteTodo
+import io.dev.relic.domain.use_case.todo.action.GetAllTodos
+import io.dev.relic.domain.use_case.todo.action.UpdateTodo
+import io.dev.relic.domain.use_case.weather.WeatherUseCase
+import io.dev.relic.domain.use_case.weather.action.CacheWeatherData
+import io.dev.relic.domain.use_case.weather.action.FetchRemoteWeatherData
+import io.dev.relic.domain.use_case.weather.action.ReadCacheWeatherData
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+class RelicUseCaseModule {
+
+    @Singleton
+    @Provides
+    fun provideLocationUnitUseCase(
+        locationTracker: ILocationTracker
+    ): LocationUseCase {
+        return LocationUseCase(
+            accessCurrentLocation = AccessCurrentLocation(locationTracker = locationTracker)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideWeatherUnitUseCase(
+        weatherDataRepository: IWeatherDataRepository,
+        databaseRepository: RelicDatabaseRepository
+    ): WeatherUseCase {
+        return WeatherUseCase(
+            fetchRemoteWeatherData = FetchRemoteWeatherData(weatherDataRepository = weatherDataRepository),
+            cacheWeatherData = CacheWeatherData(databaseRepository = databaseRepository),
+            readCacheWeatherData = ReadCacheWeatherData(databaseRepository = databaseRepository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideTotoUnitUseCase(
+        todoRepository: ITodoDataRepository
+    ): TodoUnitUseCase {
+        return TodoUnitUseCase(
+            addTodo = AddTodo(todoRepository = todoRepository),
+            deleteTodo = DeleteTodo(todoRepository = todoRepository),
+            getAllTodos = GetAllTodos(todoRepository = todoRepository),
+            updateTodo = UpdateTodo(todoRepository = todoRepository)
+        )
+    }
+
+}

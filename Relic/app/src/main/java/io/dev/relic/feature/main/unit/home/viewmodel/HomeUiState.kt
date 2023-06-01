@@ -6,6 +6,11 @@ import io.dev.relic.domain.model.weather.WeatherInfoModel
 data class HomeUiState(
 
     /**
+     * Check the current access status of the device's location.
+     * */
+    val isAccessDeviceLocation: Boolean = false,
+
+    /**
      * Check the current loading of weather data.
      * */
     val isLoadingWeatherData: Boolean = false,
@@ -29,6 +34,11 @@ data class HomeUiState(
      * Todo data model.
      * */
     val todoDataList: List<TodoDataModel>? = null,
+
+    /**
+     * Error message displayed when accessing fail of the current device's location.
+     * */
+    val errorMessageOfDeviceLocation: String? = null,
 
     /**
      * Error message displayed when the weather data failed to load.
