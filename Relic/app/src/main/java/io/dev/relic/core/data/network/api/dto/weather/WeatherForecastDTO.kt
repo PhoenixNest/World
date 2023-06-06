@@ -67,26 +67,26 @@ import com.squareup.moshi.JsonClass
  * @see io.dev.relic.core.module.data.network.mappers.WeatherDataMapper
  * */
 @JsonClass(generateAdapter = true)
-data class WeatherApiDTO(
-    @field:Json(name = "hourly_units")
-    val weatherUnitData: WeatherUnitDataDTO,
-    @field:Json(name = "hourly")
-    val weatherForecastDTO: WeatherForecastDTO
+data class WeatherForecastDTO(
+    @Json(name = "hourly_units")
+    val weatherUnitDataDTO: WeatherUnitDataDTO,
+    @Json(name = "hourly")
+    val weatherHourlyDTO: WeatherHourlyDTO
 )
 
 @JsonClass(generateAdapter = true)
 data class WeatherUnitDataDTO(
-    @field:Json(name = "time")
+    @Json(name = "time")
     val time: String,
-    @field:Json(name = "temperature_2m")
+    @Json(name = "temperature_2m")
     val temperature: String,
-    @field:Json(name = "relativehumidity_2m")
+    @Json(name = "relativehumidity_2m")
     val humidity: String,
-    @field:Json(name = "weathercode")
+    @Json(name = "weathercode")
     val weatherCode: String,
-    @field:Json(name = "surface_pressure")
+    @Json(name = "surface_pressure")
     val pressure: String,
-    @field:Json(name = "windspeed_10m")
+    @Json(name = "windspeed_10m")
     val windSpeed: String
 )
 
@@ -94,19 +94,19 @@ data class WeatherUnitDataDTO(
  * @see io.dev.relic.domain.model.weather.WeatherDataModel
  * */
 @JsonClass(generateAdapter = true)
-data class WeatherForecastDTO(
-    @field:Json(name = "time")
+data class WeatherHourlyDTO(
+    @Json(name = "time")
     val times: List<String>,
-    @field:Json(name = "temperature_2m")
+    @Json(name = "temperature_2m")
     val temperatures: List<Double>,
-    @field:Json(name = "relativehumidity_2m")
+    @Json(name = "relativehumidity_2m")
     val humidity: List<Int>,
-    @field:Json(name = "weathercode")
+    @Json(name = "weathercode")
     val weatherCode: List<Int>,
-    @field:Json(name = "surface_pressure")
+    @Json(name = "surface_pressure")
     val pressures: List<Double>,
-    @field:Json(name = "windspeed_10m")
+    @Json(name = "windspeed_10m")
     val winSpeeds: List<Double>,
-    @field:Json(name = "is_day")
+    @Json(name = "is_day")
     val isDay: List<Int>,
 )

@@ -1,6 +1,6 @@
 package io.dev.relic.domain.repository
 
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import io.dev.relic.domain.model.NetworkResult
 
 /**
@@ -17,6 +17,6 @@ interface IWeatherDataRepository {
     suspend fun getWeatherData(
         latitude: Double,
         longitude: Double
-    ): NetworkResult<WeatherApiDTO>
+    ): NetworkResult<WeatherForecastDTO>
 
 }

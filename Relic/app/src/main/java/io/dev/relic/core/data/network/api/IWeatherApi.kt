@@ -1,6 +1,6 @@
 package io.dev.relic.core.data.network.api
 
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,6 +13,6 @@ interface IWeatherApi {
     suspend fun getWeatherData(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
-    ): WeatherApiDTO
+    ): WeatherForecastDTO
 
 }

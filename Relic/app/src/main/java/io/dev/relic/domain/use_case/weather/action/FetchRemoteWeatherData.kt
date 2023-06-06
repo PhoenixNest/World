@@ -1,6 +1,6 @@
 package io.dev.relic.domain.use_case.weather.action
 
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.repository.IWeatherDataRepository
 import io.dev.relic.domain.use_case.weather.TAG
@@ -15,7 +15,7 @@ class FetchRemoteWeatherData @Inject constructor(
 
         fun onFetching()
 
-        fun onFetchSucceed(weatherApiDTO: WeatherApiDTO)
+        fun onFetchSucceed(weatherForecastDTO: WeatherForecastDTO)
 
         fun onFetchSucceedButNoData(errorMessage: String)
 
@@ -33,7 +33,7 @@ class FetchRemoteWeatherData @Inject constructor(
         listener.onFetching()
 
         // Fetch the latest weather data from remote-server.
-        val result: NetworkResult<WeatherApiDTO> = weatherDataRepository.getWeatherData(
+        val result: NetworkResult<WeatherForecastDTO> = weatherDataRepository.getWeatherData(
             latitude = latitude,
             longitude = longitude
         )
@@ -52,7 +52,7 @@ class FetchRemoteWeatherData @Inject constructor(
                         debug(TAG, "[WeatherApi] Loading weather data succeeded.")
                         debug(TAG, "[WeatherApi] Datasource: ${result.data}")
                     }
-                    listener.onFetchSucceed(weatherApiDTO = result.data)
+                    listener.onFetchSucceed(weatherForecastDTO = result.data)
                 }
             }
 

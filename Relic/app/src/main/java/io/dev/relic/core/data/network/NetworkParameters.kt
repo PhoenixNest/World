@@ -12,7 +12,7 @@ object NetworkParameters {
         /**
          * [Spoonacular API](https://spoonacular.com/food-api)
          * */
-        const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/complexSearch"
+        const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/"
 
     }
 

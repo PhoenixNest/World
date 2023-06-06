@@ -10,7 +10,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dev.relic.core.data.database.entity.WeatherEntity
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import io.dev.relic.core.data.network.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
@@ -109,11 +109,11 @@ class HomeViewModel @Inject constructor(
                         )
                     }
 
-                    override fun onFetchSucceed(weatherApiDTO: WeatherApiDTO) {
+                    override fun onFetchSucceed(weatherForecastDTO: WeatherForecastDTO) {
                         // Update the ui state to the Ui layer.
                         _homeUiState = _homeUiState.copy(
                             isLoadingWeatherData = false,
-                            weatherInfoModel = weatherApiDTO.toWeatherInfoModel(),
+                            weatherInfoModel = weatherForecastDTO.toWeatherInfoModel(),
                             errorMessageOfWeatherInfo = null
                         )
                     }

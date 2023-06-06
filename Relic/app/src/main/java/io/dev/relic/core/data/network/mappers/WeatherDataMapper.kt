@@ -1,8 +1,8 @@
 package io.dev.relic.core.data.network.mappers
 
 import io.dev.relic.core.data.database.entity.WeatherEntity
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
 import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherHourlyDTO
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.global.utils.TimeUtil.getCurrentTime
@@ -30,12 +30,12 @@ object WeatherDataMapper {
         val data: WeatherDataModel
     )
 
-    fun WeatherApiDTO.toWeatherEntity(): WeatherEntity {
+    fun WeatherForecastDTO.toWeatherEntity(): WeatherEntity {
         return WeatherEntity(weatherDatasource = this)
     }
 
-    fun WeatherApiDTO.toWeatherInfoModel(): WeatherInfoModel {
-        val weatherDataMap: Map<Int, List<WeatherDataModel>> = weatherForecastDTO.toWeatherDataMap()
+    fun WeatherForecastDTO.toWeatherInfoModel(): WeatherInfoModel {
+        val weatherDataMap: Map<Int, List<WeatherDataModel>> = weatherHourlyDTO.toWeatherDataMap()
         val currentTime: LocalDateTime = getCurrentTime()
         val currentWeatherData: WeatherDataModel? = weatherDataMap[0]?.find {
             val hour: Int = if (currentTime.minute < 30) {
@@ -52,7 +52,7 @@ object WeatherDataMapper {
         )
     }
 
-    private fun WeatherForecastDTO.toWeatherDataMap(): Map<Int, List<WeatherDataModel>> {
+    private fun WeatherHourlyDTO.toWeatherDataMap(): Map<Int, List<WeatherDataModel>> {
         return times.mapIndexed { index: Int, time: String ->
             val temperature: Double = temperatures[index]
             val humidity: Int = humidity[index]

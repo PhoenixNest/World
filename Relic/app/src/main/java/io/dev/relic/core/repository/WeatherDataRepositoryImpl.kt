@@ -2,7 +2,7 @@ package io.dev.relic.core.repository
 
 import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
 import io.dev.relic.core.data.network.api.IWeatherApi
-import io.dev.relic.core.data.network.api.dto.weather.WeatherApiDTO
+import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import io.dev.relic.core.data.network.mappers.WeatherDataMapper.toWeatherEntity
 import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.repository.IWeatherDataRepository
@@ -31,9 +31,9 @@ class WeatherDataRepositoryImpl @Inject constructor(
     override suspend fun getWeatherData(
         latitude: Double,
         longitude: Double
-    ): NetworkResult<WeatherApiDTO> {
+    ): NetworkResult<WeatherForecastDTO> {
         return try {
-            val weatherApiDTO: WeatherApiDTO = weatherApi.getWeatherData(
+            val weatherApiDTO: WeatherForecastDTO = weatherApi.getWeatherData(
                 latitude = latitude,
                 longitude = longitude
             )
