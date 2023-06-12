@@ -1,7 +1,9 @@
 package io.dev.relic.core.data.database.repository
 
+import io.dev.relic.core.data.database.dao.FoodRecipesDao
 import io.dev.relic.core.data.database.dao.TodoDao
 import io.dev.relic.core.data.database.dao.WeatherDao
+import io.dev.relic.core.data.database.entity.FoodRecipesComplexSearchEntity
 import io.dev.relic.core.data.database.entity.TodoEntity
 import io.dev.relic.core.data.database.entity.WeatherEntity
 import kotlinx.coroutines.flow.Flow
@@ -20,18 +22,9 @@ import javax.inject.Singleton
 @Singleton
 class RelicDatabaseRepository @Inject constructor(
     private val weatherDao: WeatherDao,
+    private val foodRecipesDao: FoodRecipesDao,
     private val todoDao: TodoDao,
 ) {
-
-    /* ======================== Weather ======================== */
-
-    fun readWeatherDataCache(): Flow<List<WeatherEntity>> {
-        return weatherDao.readWeatherDataCache()
-    }
-
-    suspend fun insertWeatherData(weatherEntity: WeatherEntity) {
-        weatherDao.insertWeatherData(weatherEntity)
-    }
 
     /* ======================== TodoList ======================== */
 
@@ -53,6 +46,26 @@ class RelicDatabaseRepository @Inject constructor(
 
     suspend fun deleteAllTodos() {
         todoDao.deleteAll()
+    }
+
+    /* ======================== Weather ======================== */
+
+    fun readWeatherDataCache(): Flow<List<WeatherEntity>> {
+        return weatherDao.readWeatherDataCache()
+    }
+
+    suspend fun insertWeatherData(weatherEntity: WeatherEntity) {
+        weatherDao.insertWeatherData(weatherEntity)
+    }
+
+    /* ======================== FoodRecipes ======================== */
+
+    fun readComplexSearchRecipesCache(): Flow<List<FoodRecipesComplexSearchEntity>> {
+        return foodRecipesDao.readCacheComplexSearchData()
+    }
+
+    suspend fun insertComplexSearchRecipesData(complexSearchEntity: FoodRecipesComplexSearchEntity) {
+        foodRecipesDao.insertComplexSearchData(complexSearchEntity)
     }
 
 }

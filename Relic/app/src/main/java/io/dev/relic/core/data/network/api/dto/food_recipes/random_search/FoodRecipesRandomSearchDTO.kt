@@ -118,7 +118,7 @@ import io.dev.relic.core.data.network.api.dto.food_recipes.ExtendedIngredient
 @JsonClass(generateAdapter = true)
 data class FoodRecipesRandomSearchDTO(
     @Json(name = "recipes")
-    private val recipes: List<FoodRecipesRandomSearchResultDTO>
+    val recipes: List<FoodRecipesRandomSearchResultDTO>
 )
 
 @JsonClass(generateAdapter = true)

@@ -17,9 +17,7 @@ class WeatherDataRepositoryImpl @Inject constructor(
 ) : IWeatherDataRepository {
 
     companion object {
-
         private const val TAG = "WeatherDataRepository"
-
     }
 
     /**

@@ -6,8 +6,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
 import io.dev.relic.domain.location.ILocationTracker
+import io.dev.relic.domain.repository.IFoodRecipesDataRepository
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.domain.repository.IWeatherDataRepository
+import io.dev.relic.domain.use_case.food_receipes.FoodRecipesUseCase
+import io.dev.relic.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
+import io.dev.relic.domain.use_case.food_receipes.action.complex_search.FetchRemoteComplexRecipesData
+import io.dev.relic.domain.use_case.food_receipes.action.complex_search.ReadCacheComplexRecipesData
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
 import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
 import io.dev.relic.domain.use_case.todo.TodoUnitUseCase
@@ -24,6 +29,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RelicUseCaseModule {
+
+    @Singleton
+    @Provides
+    fun provideTotoUnitUseCase(
+        todoRepository: ITodoDataRepository
+    ): TodoUnitUseCase {
+        return TodoUnitUseCase(
+            addTodo = AddTodo(todoRepository = todoRepository),
+            deleteTodo = DeleteTodo(todoRepository = todoRepository),
+            getAllTodos = GetAllTodos(todoRepository = todoRepository),
+            updateTodo = UpdateTodo(todoRepository = todoRepository)
+        )
+    }
 
     @Singleton
     @Provides
@@ -50,14 +68,14 @@ class RelicUseCaseModule {
 
     @Singleton
     @Provides
-    fun provideTotoUnitUseCase(
-        todoRepository: ITodoDataRepository
-    ): TodoUnitUseCase {
-        return TodoUnitUseCase(
-            addTodo = AddTodo(todoRepository = todoRepository),
-            deleteTodo = DeleteTodo(todoRepository = todoRepository),
-            getAllTodos = GetAllTodos(todoRepository = todoRepository),
-            updateTodo = UpdateTodo(todoRepository = todoRepository)
+    fun provideFoodRecipesUnitUseCase(
+        recipesDataRepository: IFoodRecipesDataRepository,
+        databaseRepository: RelicDatabaseRepository
+    ): FoodRecipesUseCase {
+        return FoodRecipesUseCase(
+            fetchRemoteComplexRecipesData = FetchRemoteComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
+            cacheComplexSearchData = CacheComplexSearchData(databaseRepository = databaseRepository),
+            readCacheComplexRecipesData = ReadCacheComplexRecipesData()
         )
     }
 

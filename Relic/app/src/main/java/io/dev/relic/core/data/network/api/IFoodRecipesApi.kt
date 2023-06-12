@@ -24,7 +24,7 @@ interface IFoodRecipesApi {
 
     @GET("recipes/random")
     suspend fun randomSearchData(
-        //
+        number: Int
     ): FoodRecipesRandomSearchDTO
 
 }

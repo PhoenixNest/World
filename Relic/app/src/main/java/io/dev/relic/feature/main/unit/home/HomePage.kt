@@ -36,7 +36,7 @@ fun HomePageRoute(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     HomePage(
-        homeUiState = viewModel.homeUiState,
+        state = viewModel.state,
         onNavigateToSubscribePage = onNavigateToSubscribePage,
         onNavigateToSettingPage = onNavigateToSettingPage,
         onNavigateToCreateTodoPage = onNavigateToCreateTodoPage,
@@ -47,7 +47,7 @@ fun HomePageRoute(
 
 @Composable
 private fun HomePage(
-    homeUiState: HomeUiState,
+    state: HomeUiState,
     onNavigateToSubscribePage: () -> Unit,
     onNavigateToSettingPage: () -> Unit,
     onNavigateToCreateTodoPage: () -> Unit,
@@ -55,38 +55,41 @@ private fun HomePage(
     onNavigateToFoodRecipesDetailPage: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        modifier = modifier.fillMaxSize()
-    ) { paddingValues: PaddingValues ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .verticalScroll(
-                    state = rememberScrollState(),
-                    enabled = true
+    state.run {
+        Scaffold(
+            modifier = modifier.fillMaxSize()
+        ) { paddingValues: PaddingValues ->
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .verticalScroll(
+                        state = rememberScrollState(),
+                        enabled = true
+                    )
+                    .background(color = Color.LightGray.copy(alpha = 0.1F)),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                HomePageTopBar(
+                    onNavigateToSubscribePage = onNavigateToSubscribePage,
+                    onNavigateToSettingPage = onNavigateToSettingPage,
+                    onNavigateToCreateTodoPage = onNavigateToCreateTodoPage
                 )
-                .background(color = Color.LightGray.copy(alpha = 0.1F)),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-            HomePageTopBar(
-                onNavigateToSubscribePage = onNavigateToSubscribePage,
-                onNavigateToSettingPage = onNavigateToSettingPage,
-                onNavigateToCreateTodoPage = onNavigateToCreateTodoPage
-            )
-            Spacer(modifier = modifier.height(8.dp))
-            HomeWeatherCard(
-                isLoading = homeUiState.isLoadingWeatherData,
-                weatherInfoModel = homeUiState.weatherInfoModel,
-                onClick = onNavigateToWeatherDetailPage
-            )
-            Spacer(modifier = modifier.height(8.dp))
-            HomeFoodRecipesCard(
-                isLoading = homeUiState.isLoadingFoodRecipesData,
-                onClick = onNavigateToFoodRecipesDetailPage
-            )
-            Spacer(modifier = modifier.height(32.dp))
+                Spacer(modifier = modifier.height(8.dp))
+                HomeWeatherCard(
+                    isLoading = isLoadingWeatherData,
+                    weatherInfoModel = weatherInfoModel,
+                    onClick = onNavigateToWeatherDetailPage
+                )
+                Spacer(modifier = modifier.height(8.dp))
+                HomeFoodRecipesCard(
+                    isLoading = isLoadingFoodRecipesData,
+                    foodRecipesInfoModelList = foodRecipesInfoModelList,
+                    onClick = onNavigateToFoodRecipesDetailPage
+                )
+                Spacer(modifier = modifier.height(32.dp))
+            }
         }
     }
 }
@@ -95,7 +98,7 @@ private fun HomePage(
 @Preview(showBackground = true, showSystemUi = true)
 private fun HomePagePreview() {
     HomePage(
-        homeUiState = HomeUiState(),
+        state = HomeUiState(),
         onNavigateToSubscribePage = {},
         onNavigateToSettingPage = {},
         onNavigateToCreateTodoPage = {},

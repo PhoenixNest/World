@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.dev.relic.core.repository.FoodRecipesDataRepositoryImpl
 import io.dev.relic.core.repository.TodoDataRepositoryImpl
 import io.dev.relic.core.repository.WeatherDataRepositoryImpl
+import io.dev.relic.domain.repository.IFoodRecipesDataRepository
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.domain.repository.IWeatherDataRepository
 
@@ -17,6 +19,11 @@ interface RepositoryModule {
     fun bindWeatherDataRepository(
         weatherDataRepositoryImpl: WeatherDataRepositoryImpl
     ): IWeatherDataRepository
+
+    @Binds
+    fun bindFoodRecipesRepository(
+        foodRecipesDataRepositoryImpl: FoodRecipesDataRepositoryImpl
+    ): IFoodRecipesDataRepository
 
     @Binds
     fun bindTodoDataRepository(

@@ -18,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +42,6 @@ import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.TimeUtil
 import io.dev.relic.ui.theme.RelicFontFamily
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeWeatherCard(
     isLoading: Boolean,

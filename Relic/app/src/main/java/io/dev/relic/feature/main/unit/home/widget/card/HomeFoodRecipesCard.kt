@@ -1,5 +1,6 @@
 package io.dev.relic.feature.main.unit.home.widget.card
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,11 +19,13 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
+import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeFoodRecipesCard(
     isLoading: Boolean,
+    foodRecipesInfoModelList: List<FoodRecipesComplexSearchInfoModel>?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -47,7 +50,11 @@ fun HomeFoodRecipesCard(
             shape = RoundedCornerShape(16.dp),
             elevation = 2.dp
         ) {
-            // TODO
+            AnimatedVisibility(visible = !isLoading) {
+                foodRecipesInfoModelList?.forEachIndexed { index: Int, model: FoodRecipesComplexSearchInfoModel ->
+
+                }
+            }
         }
     }
 }
@@ -57,6 +64,26 @@ fun HomeFoodRecipesCard(
 private fun HomeFoodRecipesPreview() {
     HomeFoodRecipesCard(
         isLoading = false,
+        foodRecipesInfoModelList = listOf(
+            FoodRecipesComplexSearchInfoModel(
+                id = -1,
+                title = "Food",
+                image = "",
+                imageType = "png"
+            ),
+            FoodRecipesComplexSearchInfoModel(
+                id = -1,
+                title = "Food",
+                image = "",
+                imageType = "png"
+            ),
+            FoodRecipesComplexSearchInfoModel(
+                id = -1,
+                title = "Food",
+                image = "",
+                imageType = "png"
+            )
+        ),
         onClick = {}
     )
 }
