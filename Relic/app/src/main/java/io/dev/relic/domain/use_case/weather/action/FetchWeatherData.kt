@@ -8,7 +8,7 @@ import io.dev.relic.domain.use_case.weather.TAG
 import io.dev.relic.global.utils.LogUtil
 import javax.inject.Inject
 
-class FetchRemoteWeatherData @Inject constructor(
+class FetchWeatherData @Inject constructor(
     private val weatherDataRepository: IWeatherDataRepository
 ) {
 

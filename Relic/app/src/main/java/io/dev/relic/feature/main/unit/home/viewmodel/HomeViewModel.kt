@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
     /**
      * Try to access the current location of the device first
      *
-     * @see fetchRemoteWeatherData
+     * @see fetchWeatherData
      * */
     private fun accessDeviceLocation() {
         viewModelScope.launch {
@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
                         state = state.copy(isAccessDeviceLocation = false)
 
                         // Fetch the latest weather information data according to the current device location.
-                        fetchRemoteWeatherData(location)
+                        fetchWeatherData(location)
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
@@ -95,9 +95,9 @@ class HomeViewModel @Inject constructor(
      * @param location     The current location of the device.
      * @see accessDeviceLocation
      * */
-    private fun fetchRemoteWeatherData(location: Location) {
+    private fun fetchWeatherData(location: Location) {
         viewModelScope.launch {
-            weatherUseCase.fetchRemoteWeatherData.invoke(
+            weatherUseCase.fetchWeatherData.invoke(
                 latitude = location.latitude,
                 longitude = location.longitude,
                 listener = object : IFetchDataMonitor {
@@ -149,13 +149,15 @@ class HomeViewModel @Inject constructor(
     }
 
     /**
-     * Fetch the latest data
+     * Fetch the latest data of food recipes data by using complex search.
+     *
+     * @param offset    The current page index
      * */
-    private fun fetchRemoteFoodRecipesData(
+    private fun fetchFoodRecipesData(
         offset: Int
     ) {
         viewModelScope.launch {
-            foodRecipesUseCase.fetchRemoteComplexRecipesData.invoke(
+            foodRecipesUseCase.fetchComplexRecipesData.invoke(
                 offset = offset,
                 listener = object : IFetchDataMonitor {
                     override fun onFetching() {
@@ -168,7 +170,7 @@ class HomeViewModel @Inject constructor(
 
                     override fun <T> onFetchSucceed(dto: T) {
                         state = state.copy(
-                            isLoadingTodoData = false,
+                            isLoadingFoodRecipesData = false,
                             foodRecipesInfoModelList = (dto as FoodRecipesComplexSearchDTO).toComplexSearchModelList(),
                             errorMessageOfFoodRecipes = null
                         )
@@ -185,7 +187,7 @@ class HomeViewModel @Inject constructor(
                                     .toComplexSearchModelList()
 
                                 state = state.copy(
-                                    isLoadingTodoData = false,
+                                    isLoadingFoodRecipesData = false,
                                     foodRecipesInfoModelList = offlineModelList,
                                     errorMessageOfFoodRecipes = errorMessage
                                 )
@@ -195,7 +197,7 @@ class HomeViewModel @Inject constructor(
 
                     override fun onFetchFailed(errorMessage: String?) {
                         state = state.copy(
-                            isLoadingTodoData = false,
+                            isLoadingFoodRecipesData = false,
                             foodRecipesInfoModelList = null,
                             errorMessageOfFoodRecipes = errorMessage
                         )

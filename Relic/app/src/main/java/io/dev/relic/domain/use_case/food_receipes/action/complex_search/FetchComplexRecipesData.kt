@@ -8,7 +8,7 @@ import io.dev.relic.domain.use_case.weather.TAG
 import io.dev.relic.global.utils.LogUtil
 import javax.inject.Inject
 
-class FetchRemoteComplexRecipesData @Inject constructor(
+class FetchComplexRecipesData @Inject constructor(
     private val foodRecipesDataRepository: IFoodRecipesDataRepository
 ) {
 

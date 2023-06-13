@@ -11,7 +11,7 @@ import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.domain.repository.IWeatherDataRepository
 import io.dev.relic.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.dev.relic.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
-import io.dev.relic.domain.use_case.food_receipes.action.complex_search.FetchRemoteComplexRecipesData
+import io.dev.relic.domain.use_case.food_receipes.action.complex_search.FetchComplexRecipesData
 import io.dev.relic.domain.use_case.food_receipes.action.complex_search.ReadCacheComplexRecipesData
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
 import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
@@ -22,7 +22,7 @@ import io.dev.relic.domain.use_case.todo.action.GetAllTodos
 import io.dev.relic.domain.use_case.todo.action.UpdateTodo
 import io.dev.relic.domain.use_case.weather.WeatherUseCase
 import io.dev.relic.domain.use_case.weather.action.CacheWeatherData
-import io.dev.relic.domain.use_case.weather.action.FetchRemoteWeatherData
+import io.dev.relic.domain.use_case.weather.action.FetchWeatherData
 import io.dev.relic.domain.use_case.weather.action.ReadCacheWeatherData
 import javax.inject.Singleton
 
@@ -60,7 +60,7 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): WeatherUseCase {
         return WeatherUseCase(
-            fetchRemoteWeatherData = FetchRemoteWeatherData(weatherDataRepository = weatherDataRepository),
+            fetchWeatherData = FetchWeatherData(weatherDataRepository = weatherDataRepository),
             cacheWeatherData = CacheWeatherData(databaseRepository = databaseRepository),
             readCacheWeatherData = ReadCacheWeatherData(databaseRepository = databaseRepository)
         )
@@ -73,7 +73,7 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): FoodRecipesUseCase {
         return FoodRecipesUseCase(
-            fetchRemoteComplexRecipesData = FetchRemoteComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
+            fetchComplexRecipesData = FetchComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository = databaseRepository),
             readCacheComplexRecipesData = ReadCacheComplexRecipesData()
         )
