@@ -121,7 +121,7 @@ class MainScreenState(
 
         when (topLevelDestination) {
             Home -> navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
-            Hive -> navHostController.navigateToHiveUnit(navOptions = topLevelNavOptions)
+            Hive -> navHostController.navigateToHivePage(navOptions = topLevelNavOptions)
         }
     }
 

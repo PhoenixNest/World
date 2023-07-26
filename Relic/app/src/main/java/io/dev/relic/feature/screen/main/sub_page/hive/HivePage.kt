@@ -62,7 +62,7 @@ private fun HivePage(
 @Preview(showBackground = true, showSystemUi = true)
 private fun HivePagePreview() {
     HivePage(
-        todoDataList = TodoDataModel.getTestTodosData(),
+        todoDataList = TodoDataModel.testTodoDataList(),
         onNavigateToMine = {},
         onNavigateToTodo = {},
         onTodoClick = {}

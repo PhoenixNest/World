@@ -27,16 +27,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.dev.relic.R
+import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.widget.CommonInputField
 import io.dev.relic.global.widget.CommonTopBar
 
 @Composable
 fun AddAndUpdateTodoPageRoute(
+    todoDataModel: TodoDataModel,
     onBackClick: () -> Unit,
     onFinishClick: () -> Unit
 ) {
     AddAndUpdateTodoPage(
+        todoDataModel = todoDataModel,
         onBackClick = onBackClick,
         onFinishClick = onFinishClick
     )
@@ -44,6 +47,7 @@ fun AddAndUpdateTodoPageRoute(
 
 @Composable
 private fun AddAndUpdateTodoPage(
+    todoDataModel: TodoDataModel,
     onBackClick: () -> Unit,
     onFinishClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -158,6 +162,7 @@ private fun AddAndUpdateTodoPage(
 @Preview(showBackground = true, showSystemUi = true)
 private fun CreateTodoPagePreview() {
     AddAndUpdateTodoPage(
+        todoDataModel = TodoDataModel.emptyModel(),
         onBackClick = {},
         onFinishClick = {}
     )

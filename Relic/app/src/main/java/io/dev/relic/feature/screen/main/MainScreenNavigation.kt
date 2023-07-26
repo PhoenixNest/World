@@ -6,22 +6,25 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import io.dev.relic.feature.route.MainFeatureRoute
 import io.dev.relic.feature.route.MainFeatureRoute.HiveUnit.graphHive
 import io.dev.relic.feature.route.MainFeatureRoute.HiveUnit.routeHivePage
 import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.graphHome
 import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.routeHomePage
 import io.dev.relic.feature.screen.main.sub_page.hive.HivePageRoute
 import io.dev.relic.feature.screen.main.sub_page.home.HomePageRoute
+import io.dev.relic.global.RelicConstants.GlobalLogTags.GLOBAL_TAG_NAV_CONTROLLER
+import io.dev.relic.global.utils.LogUtil
 
 fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
+    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Navigate destination]: HomePage")
     this.navigate(
         route = graphHome,
         navOptions = navOptions
     )
 }
 
-fun NavController.navigateToHiveUnit(navOptions: NavOptions? = null) {
+fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
+    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Navigate destination]: HivePage")
     this.navigate(
         route = graphHive,
         navOptions = navOptions
@@ -37,8 +40,8 @@ fun NavGraphBuilder.navHomeGraph(
     onNavigateToFoodRecipesDetailPage: () -> Unit
 ) {
     navigation(
-        startDestination = routeHomePage,
-        route = graphHome
+        route = graphHome,
+        startDestination = routeHomePage
     ) {
         composable(route = routeHomePage) {
             HomePageRoute(
@@ -59,8 +62,8 @@ fun NavGraphBuilder.navHiveGraph(
     onTodoClick: () -> Unit
 ) {
     navigation(
-        startDestination = routeHivePage,
-        route = graphHive
+        route = graphHive,
+        startDestination = routeHivePage
     ) {
         composable(route = routeHivePage) {
             HivePageRoute(

@@ -12,7 +12,7 @@ ext {
     // Compose Ui
     compose_bom_version = "2023.05.01"
     compose_compiler_version = "1.4.2"
-    compose_activity_version = "1.7.1"
+    compose_activity_version = "1.7.2"
     compose_viewmodel_version = "2.6.1"
 
     // Firebase
@@ -22,7 +22,7 @@ ext {
     accompanist_version = "0.31.2-alpha"
 
     // Navigation
-    navigation_version = "2.5.3"
+    navigation_version = "2.6.0"
     navigation_hilt_version = "1.0.0"
 
     // Lifecycle

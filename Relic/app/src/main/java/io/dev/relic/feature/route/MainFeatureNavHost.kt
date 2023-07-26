@@ -7,12 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.feature.common.setting.navSettingScreen
+import io.dev.relic.feature.common.setting.navigateToSettingScreen
 import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.graphHome
 import io.dev.relic.feature.screen.main.MainScreenState
 import io.dev.relic.feature.screen.main.navHiveGraph
 import io.dev.relic.feature.screen.main.navHomeGraph
 import io.dev.relic.feature.screen.todo.navTodoGraph
+import io.dev.relic.feature.screen.todo.navigateToAddAndUpdateTodoScreen
 import io.dev.relic.feature.screen.todo.navigateToTodoScreen
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -54,24 +57,32 @@ fun MainFeatureNavHost(
     ) {
         navHomeGraph(
             onNavigateToSubscribePage = {},
-            onNavigateToSettingPage = {},
-            onNavigateToCreateTodoPage = {},
+            onNavigateToSettingPage = navHostController::navigateToSettingScreen,
+            onNavigateToCreateTodoPage = {
+                navHostController.navigateToAddAndUpdateTodoScreen(args = null)
+            },
             onNavigateToWeatherDetailPage = {},
             onNavigateToFoodRecipesDetailPage = {}
         )
 
         navHiveGraph(
             onNavigateToMine = {},
-            onNavigateToTodoEdit = navHostController::navigateToTodoScreen,
-            onTodoClick = {}
+            onNavigateToTodoEdit = {
+                navHostController.navigateToAddAndUpdateTodoScreen(args = null)
+            },
+            onTodoClick = navHostController::navigateToTodoScreen
         )
 
         navTodoGraph(
-            onItemClick = {},
-            onBackClick = navHostController::navigateUp,
-            onCreateClick = {}
+            onBackClick = navHostController::popBackStack,
+            onItemClick = { todoDataModel: TodoDataModel ->
+                navHostController.navigateToAddAndUpdateTodoScreen(args = todoDataModel)
+            },
+            onCreateClick = {
+                navHostController.navigateToAddAndUpdateTodoScreen(args = null)
+            }
         )
 
-        navSettingScreen(onBackClick = navHostController::navigateUp)
+        navSettingScreen(onBackClick = navHostController::popBackStack)
     }
 }

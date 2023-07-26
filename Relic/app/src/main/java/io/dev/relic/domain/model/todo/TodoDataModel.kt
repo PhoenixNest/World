@@ -1,7 +1,12 @@
 package io.dev.relic.domain.model.todo
 
+import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import io.dev.relic.global.utils.TimeUtil
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+@JsonClass(generateAdapter = true)
 data class TodoDataModel(
     val title: String,
     val subTitle: String,
@@ -10,10 +15,22 @@ data class TodoDataModel(
     val color: Long,
     val timeStamp: Long,
     val isFinish: Boolean
-) {
+) : Parcelable {
     companion object {
 
-        fun getTestTodosData(): List<TodoDataModel> {
+        fun emptyModel(): TodoDataModel {
+            return TodoDataModel(
+                title = "",
+                subTitle = "",
+                content = "",
+                priority = 0,
+                color = 0xFF21313A,
+                timeStamp = TimeUtil.getCurrentTimeInMillis(),
+                isFinish = false
+            )
+        }
+
+        fun testTodoDataList(): List<TodoDataModel> {
             val tempList: MutableList<TodoDataModel> = mutableListOf()
             repeat(10) {
                 tempList.add(

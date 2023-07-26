@@ -3,7 +3,6 @@ package io.dev.relic.feature.screen.todo
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -60,7 +59,7 @@ fun TodoScreenRoute(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TodoScreen(
     dataList: List<TodoDataModel>,
@@ -141,7 +140,7 @@ private fun TodoScreen(
 @Preview(showBackground = true, showSystemUi = true)
 private fun TodoScreenPreview() {
     TodoScreen(
-        dataList = TodoDataModel.getTestTodosData(),
+        dataList = TodoDataModel.testTodoDataList(),
         onBackClick = {},
         onItemClick = {},
         onSortClick = {},

@@ -110,7 +110,7 @@ private fun HivePageTodoPanelCard(
 @Preview
 private fun HivePageTodoPanelPreview() {
     HivePageTodoPanel(
-        todoDataList = TodoDataModel.getTestTodosData(),
+        todoDataList = TodoDataModel.testTodoDataList(),
         onNavigateToTodo = {},
         onTodoClick = {}
     )

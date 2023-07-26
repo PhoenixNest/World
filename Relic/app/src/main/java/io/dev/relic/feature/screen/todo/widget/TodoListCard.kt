@@ -40,7 +40,7 @@ fun TodoListCard(
 ) {
     Card(
         onClick = {
-            onItemClick.invoke(todoDataModel)
+            // onItemClick.invoke(todoDataModel)
         },
         modifier = modifier
             .fillMaxWidth()
