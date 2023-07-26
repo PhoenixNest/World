@@ -2,7 +2,7 @@ package io.dev.relic.global.utils.ext
 
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import io.dev.relic.feature.main.route.MainFeatureTopLevelDestination
+import io.dev.relic.feature.route.MainFeatureTopLevelDestination
 
 object NavDestinationExt {
 

@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import androidx.core.content.getSystemService
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.dev.relic.feature.RelicApplication
+import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.LogUtil
 import okhttp3.CacheControl
 import okhttp3.Interceptor

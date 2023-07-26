@@ -46,4 +46,7 @@
     <string name="todo_create_subtitle_hint">Subtitle</string>
     <string name="todo_create_content_hint">Content</string>
 
+    <!-- Setting Unit -->
+    <string name="setting_title">Setting</string>
+
 </resources>

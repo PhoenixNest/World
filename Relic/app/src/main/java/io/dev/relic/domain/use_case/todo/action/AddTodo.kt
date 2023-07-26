@@ -21,7 +21,7 @@ class AddTodo(private val todoRepository: ITodoDataRepository) {
             throw InvalidTodoException(message = "The content of Todo task can't be empty.")
         }
 
-        todoRepository.insertTodo(
+        todoRepository.insertTodoTask(
             todoEntity = todoDataModel.toTodoEntity()
         ).also {
             LogUtil.debug(TAG, "[Add Todo] todoDataModel: $todoDataModel")

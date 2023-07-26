@@ -12,7 +12,7 @@ class UpdateTodo(private val todoRepository: ITodoDataRepository) {
     }
 
     suspend operator fun invoke(todoDataModel: TodoDataModel) {
-        todoRepository.updateTodo(
+        todoRepository.updateTodoTask(
             todoDataModel.toTodoEntity()
         ).also {
             LogUtil.debug(TAG, "[Update Todo] todoDataModel: $todoDataModel")

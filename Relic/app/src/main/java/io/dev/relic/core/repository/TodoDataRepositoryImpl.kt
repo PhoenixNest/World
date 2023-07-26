@@ -23,28 +23,28 @@ class TodoDataRepositoryImpl @Inject constructor(
     /**
      * Insert the new todo data to database.
      * */
-    override suspend fun insertTodo(todoEntity: TodoEntity) {
+    override suspend fun insertTodoTask(todoEntity: TodoEntity) {
         databaseRepository.insertTodo(todoEntity)
     }
 
     /**
      * Update the properties for the passed todo data.
      * */
-    override suspend fun updateTodo(todoEntity: TodoEntity) {
+    override suspend fun updateTodoTask(todoEntity: TodoEntity) {
         databaseRepository.updateTodo(todoEntity)
     }
 
     /**
      * Delete the specify todo data from database.
      * */
-    override suspend fun deleteTodo(todoEntity: TodoEntity) {
+    override suspend fun deleteTodoTask(todoEntity: TodoEntity) {
         databaseRepository.deleteTodo(todoEntity)
     }
 
     /**
      * Delete all the data from database temporary.
      * */
-    override suspend fun deleteAllTodos() {
+    override suspend fun deleteAllTodoTasks() {
         databaseRepository.deleteAllTodos()
     }
 

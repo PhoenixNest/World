@@ -94,7 +94,7 @@ private fun CommonInputFieldPreview() {
         contentAlignment = Alignment.Center
     ) {
         CommonInputField(
-            content = "Input Value",
+            content = stringResource(id = R.string.app_name),
             hintResId = R.string.todo_create_title_hint,
             onValueChange = {},
             modifier = Modifier

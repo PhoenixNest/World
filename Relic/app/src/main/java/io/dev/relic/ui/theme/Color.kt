@@ -9,3 +9,5 @@ val Teal200: Color = Color(0xFF03DAC5)
 
 val mainTextColor: Color = Color.DarkGray
 val mainTextColorLight: Color = Color.LightGray
+
+val mainButtonColor: Color = Color.DarkGray

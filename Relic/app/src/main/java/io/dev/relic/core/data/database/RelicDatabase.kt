@@ -9,13 +9,15 @@ import io.dev.relic.core.data.database.convertors.WeatherDataConvertor
 import io.dev.relic.core.data.database.dao.FoodRecipesDao
 import io.dev.relic.core.data.database.dao.TodoDao
 import io.dev.relic.core.data.database.dao.WeatherDao
+import io.dev.relic.core.data.database.entity.FoodRecipesComplexSearchEntity
 import io.dev.relic.core.data.database.entity.TodoEntity
 import io.dev.relic.core.data.database.entity.WeatherEntity
 
 @Database(
     entities = [
+        TodoEntity::class,
         WeatherEntity::class,
-        TodoEntity::class
+        FoodRecipesComplexSearchEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -23,7 +25,7 @@ import io.dev.relic.core.data.database.entity.WeatherEntity
 @TypeConverters(
     value = [
         WeatherDataConvertor::class,
-        FoodRecipesDataConvertor::class
+        FoodRecipesDataConvertor::class,
     ],
     builtInTypeConverters = BuiltInTypeConverters()
 )

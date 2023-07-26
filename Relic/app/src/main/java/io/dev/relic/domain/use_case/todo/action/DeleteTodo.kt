@@ -12,7 +12,7 @@ class DeleteTodo(private val todoRepository: ITodoDataRepository) {
     }
 
     suspend operator fun invoke(todoDataModel: TodoDataModel) {
-        todoRepository.deleteTodo(
+        todoRepository.deleteTodoTask(
             todoDataModel.toTodoEntity()
         ).also {
             LogUtil.debug(TAG, "[Delete Todo] todoDataModel: $todoDataModel")

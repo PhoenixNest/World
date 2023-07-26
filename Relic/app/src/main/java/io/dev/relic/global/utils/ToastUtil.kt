@@ -3,7 +3,7 @@ package io.dev.relic.global.utils
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
-import io.dev.relic.feature.RelicApplication.Companion.getApplicationContext
+import io.dev.relic.global.RelicApplication.Companion.getApplicationContext
 
 /**
  * 🍞 Toast

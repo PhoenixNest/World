@@ -16,21 +16,21 @@ interface ITodoDataRepository {
     /**
      * Insert the new todo data to database.
      * */
-    suspend fun insertTodo(todoEntity: TodoEntity)
+    suspend fun insertTodoTask(todoEntity: TodoEntity)
 
     /**
      * Update the properties for the passed todo data.
      * */
-    suspend fun updateTodo(todoEntity: TodoEntity)
+    suspend fun updateTodoTask(todoEntity: TodoEntity)
 
     /**
      * Delete the specify todo data from database.
      * */
-    suspend fun deleteTodo(todoEntity: TodoEntity)
+    suspend fun deleteTodoTask(todoEntity: TodoEntity)
 
     /**
      * Delete all the data from database temporary.
      * */
-    suspend fun deleteAllTodos()
+    suspend fun deleteAllTodoTasks()
 
 }

@@ -75,7 +75,7 @@ class RelicUseCaseModule {
         return FoodRecipesUseCase(
             fetchComplexRecipesData = FetchComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository = databaseRepository),
-            readCacheComplexRecipesData = ReadCacheComplexRecipesData()
+            readCacheComplexRecipesData = ReadCacheComplexRecipesData(databaseRepository = databaseRepository)
         )
     }
 
