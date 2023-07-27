@@ -1,5 +1,6 @@
 package io.dev.relic.feature.activities.main
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.setContent
@@ -12,6 +13,8 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import io.dev.relic.core.device.permission.RelicPermissionDetector.Native.requestRuntimePermission
+import io.dev.relic.core.device.permission.RelicPermissionDetector.RelicPermissionListener
 import io.dev.relic.feature.screen.main.MainScreen
 import io.dev.relic.global.base.AbsBaseActivity
 import io.dev.relic.global.utils.UiUtil
@@ -38,7 +41,28 @@ class MainActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     override fun initialization() {
-        //
+        requestRuntimePermission()
+    }
+
+    /**
+     * Ask the runtime permission of:
+     *
+     * - Location
+     * */
+    private fun requestRuntimePermission() {
+        requestRuntimePermission(
+            activity = this,
+            requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION,
+            permissionListener = object : RelicPermissionListener {
+                override fun onPermissionGrant() {
+
+                }
+
+                override fun onPermissionDenied() {
+
+                }
+            }
+        )
     }
 
     /* ======================== Ui ======================== */

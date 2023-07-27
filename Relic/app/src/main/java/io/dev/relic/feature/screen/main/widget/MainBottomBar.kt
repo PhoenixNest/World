@@ -1,4 +1,4 @@
-package io.dev.relic.feature.route.widget
+package io.dev.relic.feature.screen.main.widget
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
-import io.dev.relic.feature.route.MainFeatureTopLevelDestination
+import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
@@ -41,8 +41,8 @@ import io.dev.relic.ui.theme.mainTextColorLight
 @Composable
 fun MainBottomBar(
     currentDestination: NavDestination?,
-    destinations: List<MainFeatureTopLevelDestination>,
-    onNavigateToDestination: (MainFeatureTopLevelDestination) -> Unit,
+    destinations: List<MainScreenTopLevelDestination>,
+    onNavigateToDestination: (MainScreenTopLevelDestination) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -61,7 +61,7 @@ fun MainBottomBar(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            destinations.forEach { destination: MainFeatureTopLevelDestination ->
+            destinations.forEach { destination: MainScreenTopLevelDestination ->
                 MainBottomBarItem(
                     isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination),
                     selectedIconResId = destination.selectedIconResId,
@@ -141,7 +141,7 @@ private fun RowScope.MainBottomBarItem(
 @Preview(showBackground = true)
 private fun MainBottomBarPreview() {
     MainBottomBar(
-        destinations = MainFeatureTopLevelDestination.values().asList(),
+        destinations = MainScreenTopLevelDestination.values().asList(),
         onNavigateToDestination = {},
         currentDestination = null
     )

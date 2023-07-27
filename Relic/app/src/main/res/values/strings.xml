@@ -27,6 +27,13 @@
         IN THE SOFTWARE.
     </string>
 
+    <!-- Permission -->
+    <string name="permission_location">Allow your location</string>
+    <string name="permission_location_desc">Your location information will be used to obtain local weather conditions.</string>
+    <string name="permission_location_denied">Unable to obtain current location information, please check permissions</string>
+    <string name="permission_accept">Sure, i\'d Like that</string>
+    <string name="permission_denied">Not now</string>
+
     <!-- Home Unit -->
     <string name="home_title">Home</string>
     <string name="home_card_weather_title">Today\'s Weather</string>

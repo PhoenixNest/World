@@ -15,12 +15,22 @@ class LogInterceptor : Interceptor {
         val request: Request = chain.request()
 
         LogUtil.apply {
-            debug(TAG, "request url: ${request.url.toUrl()}")
-            debug(TAG, "request method: ${request.method}")
-            debug(TAG, "request headers: ${request.headers}")
-            debug(TAG, "request body: ${request.body}")
+            debug(TAG, "┌────── Request ────────────────────────────────────────────────────────────────────────")
+            debug(TAG, "| url: ${request.url.toUrl()}")
+            debug(TAG, "| method: ${request.method}")
+            debug(TAG, "| headers: ${request.headers}")
+            debug(TAG, "| body: ${request.body}")
+            debug(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
         }
 
-        return chain.proceed(request)
+        val response: Response = chain.proceed(request)
+
+        LogUtil.apply {
+            debug(TAG, "┌────── Response ────────────────────────────────────────────────────────────────────────")
+            debug(TAG, "| body: ${response.body?.source()}")
+            debug(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
+        }
+
+        return response
     }
 }

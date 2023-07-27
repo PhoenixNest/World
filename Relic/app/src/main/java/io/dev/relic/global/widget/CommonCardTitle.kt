@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.main.sub_page.home.widget.card
+package io.dev.relic.global.widget
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -24,7 +24,7 @@ import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainTextColor
 
 @Composable
-fun HomePageCardTitle(
+fun CommonCardTitle(
     @StringRes titleResId: Int,
     modifier: Modifier = Modifier
 ) {
@@ -56,6 +56,6 @@ fun HomePageCardTitle(
 
 @Composable
 @Preview(showBackground = true)
-private fun HomePageCardTitlePreview() {
-    HomePageCardTitle(titleResId = R.string.app_name)
+private fun CommonCardTitlePreview() {
+    CommonCardTitle(titleResId = R.string.app_name)
 }

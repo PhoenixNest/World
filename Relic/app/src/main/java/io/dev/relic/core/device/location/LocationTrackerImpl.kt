@@ -6,7 +6,7 @@ import android.location.Location
 import android.location.LocationManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.dev.relic.core.device.permission.RelicPermissionDetector
+import io.dev.relic.core.device.permission.RelicPermissionDetector.Native.checkPermission
 import io.dev.relic.domain.location.ILocationTracker
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -20,12 +20,12 @@ class LocationTrackerImpl @Inject constructor(
 
     override suspend fun getCurrentLocation(): Location? {
 
-        val hasAccessFindLocationPermission: Boolean = RelicPermissionDetector.checkPermission(
+        val hasAccessFindLocationPermission: Boolean = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
         )
 
-        val hasAccessCoarseLocationPermission: Boolean = RelicPermissionDetector.checkPermission(
+        val hasAccessCoarseLocationPermission: Boolean = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
         )

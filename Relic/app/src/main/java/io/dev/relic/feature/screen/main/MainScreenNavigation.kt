@@ -6,17 +6,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.animation.composable
-import io.dev.relic.feature.route.MainFeatureRoute.HiveUnit.graphHive
-import io.dev.relic.feature.route.MainFeatureRoute.HiveUnit.routeHivePage
-import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.graphHome
-import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.routeHomePage
+import io.dev.relic.feature.route.RelicRoute.HiveUnit.graphHive
+import io.dev.relic.feature.route.RelicRoute.HiveUnit.routeHivePage
+import io.dev.relic.feature.route.RelicRoute.HomeUnit.graphHome
+import io.dev.relic.feature.route.RelicRoute.HomeUnit.routeHomePage
 import io.dev.relic.feature.screen.main.sub_page.hive.HivePageRoute
 import io.dev.relic.feature.screen.main.sub_page.home.HomePageRoute
 import io.dev.relic.global.RelicConstants.GlobalLogTags.GLOBAL_TAG_NAV_CONTROLLER
 import io.dev.relic.global.utils.LogUtil
 
 fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
-    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Navigate destination]: HomePage")
+    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Destination] -> HomePage")
     this.navigate(
         route = graphHome,
         navOptions = navOptions
@@ -24,7 +24,7 @@ fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
 }
 
 fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
-    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Navigate destination]: HivePage")
+    LogUtil.debug(GLOBAL_TAG_NAV_CONTROLLER, "[Destination] -> HivePage")
     this.navigate(
         route = graphHive,
         navOptions = navOptions
@@ -35,7 +35,6 @@ fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.navHomeGraph(
     onNavigateToSubscribePage: () -> Unit,
     onNavigateToSettingPage: () -> Unit,
-    onNavigateToCreateTodoPage: () -> Unit,
     onNavigateToWeatherDetailPage: () -> Unit,
     onNavigateToFoodRecipesDetailPage: () -> Unit
 ) {
@@ -47,7 +46,6 @@ fun NavGraphBuilder.navHomeGraph(
             HomePageRoute(
                 onNavigateToSubscribePage = onNavigateToSubscribePage,
                 onNavigateToSettingPage = onNavigateToSettingPage,
-                onNavigateToCreateTodoPage = onNavigateToCreateTodoPage,
                 onNavigateToWeatherDetailPage = onNavigateToWeatherDetailPage,
                 onNavigateToFoodRecipesDetailPage = onNavigateToFoodRecipesDetailPage
             )
@@ -57,9 +55,7 @@ fun NavGraphBuilder.navHomeGraph(
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.navHiveGraph(
-    onNavigateToMine: () -> Unit,
-    onNavigateToTodoEdit: () -> Unit,
-    onTodoClick: () -> Unit
+    onNavigateToMineScreen: () -> Unit
 ) {
     navigation(
         route = graphHive,
@@ -67,9 +63,7 @@ fun NavGraphBuilder.navHiveGraph(
     ) {
         composable(route = routeHivePage) {
             HivePageRoute(
-                onNavigateToMine = onNavigateToMine,
-                onNavigateToTodo = onNavigateToTodoEdit,
-                onTodoClick = onTodoClick
+                onNavigateToMineScreen = onNavigateToMineScreen,
             )
         }
     }

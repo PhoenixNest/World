@@ -1,10 +1,10 @@
-package io.dev.relic.feature.route
+package io.dev.relic.feature.screen.main
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import io.dev.relic.R
 
-enum class MainFeatureTopLevelDestination(
+enum class MainScreenTopLevelDestination(
     @StringRes val titleResId: Int,
     @StringRes val labelResId: Int = titleResId,
     @DrawableRes val selectedIconResId: Int,

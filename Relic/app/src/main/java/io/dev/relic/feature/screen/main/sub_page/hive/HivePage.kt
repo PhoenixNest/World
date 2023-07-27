@@ -11,60 +11,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.core.data.database.entity.TodoEntity
-import io.dev.relic.core.data.database.mappers.TodoDataMapper.toTodoDataList
-import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.feature.screen.main.sub_page.hive.viewmodel.HiveViewModel
-import io.dev.relic.feature.screen.main.sub_page.hive.widget.HivePageTodoPanel
 import io.dev.relic.feature.screen.main.sub_page.hive.widget.HivePageUserPanel
 
 @Composable
 fun HivePageRoute(
-    onNavigateToMine: () -> Unit,
-    onNavigateToTodo: () -> Unit,
-    onTodoClick: () -> Unit,
+    onNavigateToMineScreen: () -> Unit,
     hiveViewModel: HiveViewModel = hiltViewModel()
 ) {
     val todoData: List<TodoEntity> by hiveViewModel.todoData.collectAsStateWithLifecycle()
 
     HivePage(
-        todoDataList = todoData.toTodoDataList().filter {
-            it.isFinish.not()
-        },
-        onNavigateToMine = onNavigateToMine,
-        onNavigateToTodo = onNavigateToTodo,
-        onTodoClick = onTodoClick
+        onNavigateToMineScreen = onNavigateToMineScreen
     )
 }
 
 @Composable
 private fun HivePage(
-    todoDataList: List<TodoDataModel>,
-    onNavigateToMine: () -> Unit,
-    onNavigateToTodo: () -> Unit,
-    onTodoClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateToMineScreen: () -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        HivePageUserPanel(onNavigateToMine = onNavigateToMine)
-        HivePageTodoPanel(
-            todoDataList = todoDataList,
-            onNavigateToTodo = onNavigateToTodo,
-            onTodoClick = onTodoClick
-        )
+        HivePageUserPanel(onNavigateToMine = onNavigateToMineScreen)
     }
 }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 private fun HivePagePreview() {
-    HivePage(
-        todoDataList = TodoDataModel.testTodoDataList(),
-        onNavigateToMine = {},
-        onNavigateToTodo = {},
-        onTodoClick = {}
-    )
+    HivePage(onNavigateToMineScreen = {})
 }

@@ -1,6 +1,6 @@
 package io.dev.relic.feature.route
 
-object MainFeatureRoute {
+object RelicRoute {
 
     object HomeUnit {
         const val graphHome: String = "graph_home"

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 
 /**
- * Reference link: [Determine hardware availability](https://developer.android.com/training/permissions/declaring#determine-hardware-availability)
+ * [Determine hardware availability](https://developer.android.com/training/permissions/declaring#determine-hardware-availability)
  * */
 object DeviceHardwareDetector {
 

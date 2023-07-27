@@ -8,14 +8,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 object UiUtil {
 
-    /**
-     * 状态栏工具
-     * */
     object StatusBarUtil {
-
-        /**
-         * 沉浸式状态栏
-         * */
+        
         @SuppressLint("ComposableNaming")
         @Composable
         fun setImmersiveStatusBar() {

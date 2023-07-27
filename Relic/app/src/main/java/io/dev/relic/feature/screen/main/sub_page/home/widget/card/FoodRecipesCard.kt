@@ -1,6 +1,5 @@
 package io.dev.relic.feature.screen.main.sub_page.home.widget.card
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +19,7 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.dev.relic.global.widget.CommonCardTitle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -34,7 +34,7 @@ fun HomeFoodRecipesCard(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HomePageCardTitle(titleResId = R.string.home_card_food_recipes_title)
+        CommonCardTitle(titleResId = R.string.home_card_food_recipes_title)
         Spacer(modifier = modifier.height(8.dp))
         Card(
             onClick = onClick,
@@ -50,10 +50,8 @@ fun HomeFoodRecipesCard(
             shape = RoundedCornerShape(16.dp),
             elevation = 2.dp
         ) {
-            AnimatedVisibility(visible = !isLoading) {
-                foodRecipesInfoModelList?.forEachIndexed { index: Int, model: FoodRecipesComplexSearchInfoModel ->
-
-                }
+            foodRecipesInfoModelList?.forEachIndexed { index: Int, model: FoodRecipesComplexSearchInfoModel ->
+                // TODO
             }
         }
     }

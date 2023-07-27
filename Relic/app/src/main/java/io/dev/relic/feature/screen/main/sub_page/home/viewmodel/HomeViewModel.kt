@@ -44,20 +44,12 @@ class HomeViewModel @Inject constructor(
 
     /* ======================== Logical ======================== */
 
-    init {
-        execute()
-    }
-
-    private fun execute() {
-        accessDeviceLocation()
-    }
-
     /**
      * Try to access the current location of the device first
      *
      * @see fetchWeatherData
      * */
-    private fun accessDeviceLocation() {
+    fun accessDeviceLocation() {
         viewModelScope.launch {
             locationUseCase.accessCurrentLocation.invoke(
                 listener = object : AccessCurrentLocation.ILocationListener {

@@ -1,6 +1,5 @@
 package io.dev.relic.feature.screen.main.sub_page.home.widget.card
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,43 +39,42 @@ import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.domain.model.weather.WeatherType
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.TimeUtil
+import io.dev.relic.global.widget.CommonCardTitle
 import io.dev.relic.ui.theme.RelicFontFamily
 
 @Composable
 fun HomeWeatherCard(
     isLoading: Boolean,
     weatherInfoModel: WeatherInfoModel?,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HomePageCardTitle(titleResId = R.string.home_card_weather_title)
-        Spacer(modifier = modifier.height(8.dp))
+        CommonCardTitle(titleResId = R.string.home_card_weather_title)
+        Spacer(modifier = Modifier.height(8.dp))
         Card(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
                 .padding(horizontal = 16.dp)
                 .placeholder(
                     visible = isLoading,
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(),
+                    shape = RoundedCornerShape(16.dp)
                 ),
             shape = RoundedCornerShape(16.dp),
             elevation = 2.dp
         ) {
-            AnimatedVisibility(visible = !isLoading) {
-                weatherInfoModel?.currentWeatherData?.run {
-                    HomeWeatherCardContent(
-                        dataModel = this,
-                        onClick = onClick
-                    )
-                } ?: run {
-                    // Text(text = "No Weather Data")
-                }
+            weatherInfoModel?.currentWeatherData?.run {
+                HomeWeatherCardContent(
+                    dataModel = this,
+                    onClick = onClick
+                )
+            } ?: run {
+                // Text(text = "No Weather Data")
             }
         }
     }
@@ -113,12 +111,9 @@ private fun HomeWeatherCardContent(
 }
 
 @Composable
-private fun RowScope.HomeWeatherCardLeftPanel(
-    dataModel: WeatherDataModel,
-    modifier: Modifier = Modifier
-) {
+private fun RowScope.HomeWeatherCardLeftPanel(dataModel: WeatherDataModel) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .weight(2F),
         verticalArrangement = Arrangement.Top,
@@ -131,7 +126,7 @@ private fun RowScope.HomeWeatherCardLeftPanel(
                 fontFamily = RelicFontFamily.ubuntu
             )
         )
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = dataModel.temperature.toString(),
             style = TextStyle(
@@ -147,15 +142,14 @@ private fun RowScope.HomeWeatherCardLeftPanel(
 @Composable
 private fun RowScope.HomeWeatherCardRightPanel(
     dataModel: WeatherDataModel,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     val weatherIconRes: Int = WeatherType.fromWMO(
         dataModel.weatherCode
     ).iconRes
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .weight(1F),
         verticalArrangement = Arrangement.Center,
@@ -164,10 +158,10 @@ private fun RowScope.HomeWeatherCardRightPanel(
         Image(
             painter = painterResource(id = weatherIconRes),
             contentDescription = DEFAULT_DESC,
-            modifier = modifier.size(120.dp),
+            modifier = Modifier.size(120.dp),
             contentScale = ContentScale.Inside
         )
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = onClick,
             shape = RoundedCornerShape(8.dp),

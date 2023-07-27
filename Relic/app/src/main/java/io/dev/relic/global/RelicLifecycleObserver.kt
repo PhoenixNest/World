@@ -11,7 +11,7 @@ import io.dev.relic.feature.activities.splash.SplashActivity
 import io.dev.relic.global.utils.LogUtil
 
 /**
- * Reference link: [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)
+ * [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)
  * */
 object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallbacks {
 
@@ -120,7 +120,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      */
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        LogUtil.warning(TAG, "[Relic] Enter Foreground.")
+        LogUtil.warning(TAG, "[$TAG] Enter Foreground.")
         isInForeground = true
     }
 
@@ -135,7 +135,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      */
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        LogUtil.warning(TAG, "[Relic] Enter Background.")
+        LogUtil.warning(TAG, "[$TAG] Enter Background.")
         isInForeground = false
 
         // Only display the splash-ad when user has entered the main unit.

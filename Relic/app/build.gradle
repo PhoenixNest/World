@@ -184,6 +184,9 @@ dependencies {
     // Location Services
     implementation "com.google.android.gms:play-services-location:${rootProject.ext.gms_location_version}"
 
+    // Gson
+    implementation "com.google.code.gson:gson:${rootProject.ext.gson_version}"
+
     // Admob
     // implementation "com.google.android.gms:play-services-ads:${rootProject.ext.admob_version}"
 

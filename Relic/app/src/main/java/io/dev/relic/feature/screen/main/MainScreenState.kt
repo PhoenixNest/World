@@ -19,12 +19,11 @@ import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
-import io.dev.relic.feature.route.MainFeatureRoute.HiveUnit.routeHivePage
-import io.dev.relic.feature.route.MainFeatureRoute.HomeUnit.routeHomePage
-import io.dev.relic.feature.route.MainFeatureTopLevelDestination
-import io.dev.relic.feature.route.MainFeatureTopLevelDestination.Hive
-import io.dev.relic.feature.route.MainFeatureTopLevelDestination.Home
-import io.dev.relic.feature.route.MainFeatureTopLevelDestination.values
+import io.dev.relic.feature.route.RelicRoute.HiveUnit.routeHivePage
+import io.dev.relic.feature.route.RelicRoute.HomeUnit.routeHomePage
+import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.Hive
+import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.Home
+import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.values
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -75,7 +74,7 @@ class MainScreenState(
             .value
             ?.destination
 
-    val currentTopLevelDestination: MainFeatureTopLevelDestination?
+    val currentTopLevelDestination: MainScreenTopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             routeHomePage -> Home
             routeHivePage -> Hive
@@ -86,7 +85,7 @@ class MainScreenState(
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
-    val topLevelDestinations: List<MainFeatureTopLevelDestination> = values().asList()
+    val topLevelDestinations: List<MainScreenTopLevelDestination> = values().asList()
 
     val shouldShowBottomBar: Boolean
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
@@ -104,7 +103,7 @@ class MainScreenState(
      *
      * @param topLevelDestination   The destination the app needs to navigate to.
      */
-    fun navigateToTopLevelDestination(topLevelDestination: MainFeatureTopLevelDestination) {
+    fun navigateToTopLevelDestination(topLevelDestination: MainScreenTopLevelDestination) {
 
         val topLevelNavOptions: NavOptions = navOptions {
             // Pop up to the start destination of the graph to
