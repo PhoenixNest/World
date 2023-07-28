@@ -54,7 +54,7 @@ fun MainBottomBar(
         color = Color.Transparent
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(color = Color.White),
@@ -83,8 +83,7 @@ private fun RowScope.MainBottomBarItem(
     @DrawableRes selectedIconResId: Int,
     @DrawableRes unselectedIconResId: Int,
     @StringRes labelResId: Int,
-    onItemClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onItemClick: () -> Unit
 ) {
     val iconSource: Painter = painterResource(
         id = if (isSelected) {
@@ -96,14 +95,14 @@ private fun RowScope.MainBottomBarItem(
 
     TextButton(
         onClick = onItemClick,
-        modifier = modifier.weight(1F),
+        modifier = Modifier.weight(1F),
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = Color.LightGray
         )
     ) {
         Column(
-            modifier = modifier,
+            modifier = Modifier,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -111,7 +110,7 @@ private fun RowScope.MainBottomBarItem(
                 painter = iconSource,
                 contentDescription = DEFAULT_DESC
             )
-            Spacer(modifier = modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = stringResource(id = labelResId),
                 style = TextStyle(

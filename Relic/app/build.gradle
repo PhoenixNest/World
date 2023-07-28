@@ -202,6 +202,11 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:${rootProject.ext.moshi_version}"
     ksp "com.squareup.moshi:moshi-kotlin-codegen:${rootProject.ext.moshi_version}"
 
+    // LoggingInterceptor - Interceptor for OkHttp3 with pretty logger
+    implementation("com.github.ihsanbal:LoggingInterceptor:${rootProject.ext.log_interceptor_version}") {
+        exclude group: 'org.json', module: 'json'
+    }
+
     // Coil
     implementation "io.coil-kt:coil-compose:${rootProject.ext.coil_version}"
 

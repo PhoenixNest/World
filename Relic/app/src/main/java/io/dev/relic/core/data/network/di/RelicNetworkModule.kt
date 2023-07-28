@@ -1,6 +1,9 @@
 package io.dev.relic.core.data.network.di
 
 import android.content.Context
+import android.util.Log
+import com.ihsanbal.logging.Level
+import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +53,15 @@ object RelicNetworkModule {
 
     @Provides
     @Singleton
+    fun providePrettyLoggingInterceptor(): LoggingInterceptor {
+        return LoggingInterceptor.Builder()
+            .setLevel(Level.BASIC)
+            .log(Log.VERBOSE)
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideOfflineCacheInterceptor(
         @ApplicationContext context: Context
     ): OfflineCacheInterceptor {
@@ -95,8 +107,7 @@ object RelicNetworkModule {
     @Singleton
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
-        authInterceptor: AuthInterceptor,
-        logInterceptor: LogInterceptor,
+        loggingInterceptor: LoggingInterceptor,
         offlineCacheInterceptor: OfflineCacheInterceptor,
         onlineCacheInterceptor: OnlineCacheInterceptor,
         retryInterceptor: RetryInterceptor
@@ -106,8 +117,7 @@ object RelicNetworkModule {
             .callTimeout(MAX_TIMEOUT_CALL_DURATION, TimeUnit.SECONDS)
             .readTimeout(MAX_TIMEOUT_READ_DURATION, TimeUnit.SECONDS)
             .writeTimeout(MAX_TIMEOUT_WRITE_DURATION, TimeUnit.SECONDS)
-            // .addInterceptor(authInterceptor)
-            .addInterceptor(logInterceptor)
+            .addInterceptor(loggingInterceptor)
             .addInterceptor(offlineCacheInterceptor)
             .addNetworkInterceptor(onlineCacheInterceptor)
             .addInterceptor(retryInterceptor)

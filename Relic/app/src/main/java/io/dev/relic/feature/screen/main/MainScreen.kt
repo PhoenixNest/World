@@ -1,6 +1,6 @@
 package io.dev.relic.feature.screen.main
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,7 +29,6 @@ import io.dev.relic.feature.screen.main.widget.MainRailAppBar
 fun MainScreen(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
-    modifier: Modifier = Modifier,
     mainScreenState: MainScreenState = rememberMainScreenState(
         windowSizeClass = windowSizeClass,
         networkMonitor = networkMonitor
@@ -60,21 +60,12 @@ fun MainScreen(
     // Initialization the App main page.
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            if (isShowBottomBar) {
-                MainBottomBar(
-                    destinations = mainScreenState.topLevelDestinations,
-                    onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                    currentDestination = mainScreenState.currentDestination
-                )
-            }
-        },
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         }
     ) { paddingValues: PaddingValues ->
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
@@ -85,11 +76,19 @@ fun MainScreen(
                     currentDestination = mainScreenState.currentDestination
                 )
             }
-            Column(modifier = modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 MainFeatureNavHost(
                     mainScreenState = mainScreenState,
                     navHostController = mainScreenState.navHostController
                 )
+                if (isShowBottomBar) {
+                    MainBottomBar(
+                        destinations = mainScreenState.topLevelDestinations,
+                        onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
+                        currentDestination = mainScreenState.currentDestination,
+                        modifier = Modifier.align(Alignment.BottomCenter)
+                    )
+                }
             }
         }
     }
