@@ -25,10 +25,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
 import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
@@ -68,7 +66,10 @@ fun MainBottomBar(
                     unselectedIconResId = destination.unselectedIconResId,
                     labelResId = destination.labelResId,
                     onItemClick = {
-                        LogUtil.debug("RelicBottomBar", "[BottomItem] onNavigateTo -> [${destination.name}]")
+                        LogUtil.debug(
+                            "RelicBottomBar",
+                            "[BottomItem] onNavigateTo -> [${destination.name}]"
+                        )
                         onNavigateToDestination.invoke(destination)
                     }
                 )
@@ -118,16 +119,6 @@ private fun RowScope.MainBottomBarItem(
                         mainTextColor
                     } else {
                         mainTextColorLight
-                    },
-                    fontSize = if (isSelected) {
-                        14.sp
-                    } else {
-                        12.sp
-                    },
-                    fontWeight = if (isSelected) {
-                        FontWeight.Bold
-                    } else {
-                        FontWeight.Normal
                     },
                     fontFamily = RelicFontFamily.ubuntu
                 )

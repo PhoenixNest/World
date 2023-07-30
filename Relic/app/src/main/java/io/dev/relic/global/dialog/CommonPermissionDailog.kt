@@ -88,7 +88,7 @@ fun CommonPermissionDialog(
                     Spacer(modifier = Modifier.height(8.dp))
                     CommonTextButton(
                         textResId = R.string.permission_denied,
-                        onClick = onAcceptClick,
+                        onClick = onDeniedClick,
                         textColor = mainTextColor,
                         backgroundColor = Color.Transparent
                     )

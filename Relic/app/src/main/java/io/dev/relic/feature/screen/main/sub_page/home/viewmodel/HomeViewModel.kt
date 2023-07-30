@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
                         LogUtil.debug(TAG, "[Fetch Weather Data] Fetching...")
                         state = state.copy(
                             isLoadingWeatherData = true,
-                            weatherInfoModel = null,
+                            weatherData = null,
                             errorMessageOfWeatherInfo = null
                         )
                     }
@@ -107,7 +107,7 @@ class HomeViewModel @Inject constructor(
                         LogUtil.debug(TAG, "[Fetch Weather Data] Fetch succeed, ${(dto as WeatherForecastDTO)}")
                         state = state.copy(
                             isLoadingWeatherData = false,
-                            weatherInfoModel = (dto as WeatherForecastDTO).toWeatherInfoModel(),
+                            weatherData = (dto as WeatherForecastDTO).toWeatherInfoModel(),
                             errorMessageOfWeatherInfo = null
                         )
                     }
@@ -125,7 +125,7 @@ class HomeViewModel @Inject constructor(
 
                                 state = state.copy(
                                     isLoadingWeatherData = false,
-                                    weatherInfoModel = offlineModel,
+                                    weatherData = offlineModel,
                                     errorMessageOfWeatherInfo = errorMessage
                                 )
                             }
@@ -135,7 +135,7 @@ class HomeViewModel @Inject constructor(
                         LogUtil.error(TAG, "[Fetch Weather Data] Fetch failed, errorMessage: $errorMessage")
                         state = state.copy(
                             isLoadingWeatherData = false,
-                            weatherInfoModel = null,
+                            weatherData = null,
                             errorMessageOfWeatherInfo = errorMessage
                         )
                     }
@@ -160,7 +160,7 @@ class HomeViewModel @Inject constructor(
                     override fun onFetching() {
                         state = state.copy(
                             isLoadingFoodRecipesData = true,
-                            foodRecipesInfoModelList = null,
+                            foodRecipesDataList = null,
                             errorMessageOfDeviceLocation = null
                         )
                     }
@@ -168,7 +168,7 @@ class HomeViewModel @Inject constructor(
                     override fun <T> onFetchSucceed(dto: T) {
                         state = state.copy(
                             isLoadingFoodRecipesData = false,
-                            foodRecipesInfoModelList = (dto as FoodRecipesComplexSearchDTO).toComplexSearchModelList(),
+                            foodRecipesDataList = (dto as FoodRecipesComplexSearchDTO).toComplexSearchModelList(),
                             errorMessageOfFoodRecipes = null
                         )
                     }
@@ -185,7 +185,7 @@ class HomeViewModel @Inject constructor(
 
                                 state = state.copy(
                                     isLoadingFoodRecipesData = false,
-                                    foodRecipesInfoModelList = offlineModelList,
+                                    foodRecipesDataList = offlineModelList,
                                     errorMessageOfFoodRecipes = errorMessage
                                 )
                             }
@@ -195,7 +195,7 @@ class HomeViewModel @Inject constructor(
                     override fun onFetchFailed(errorMessage: String?) {
                         state = state.copy(
                             isLoadingFoodRecipesData = false,
-                            foodRecipesInfoModelList = null,
+                            foodRecipesDataList = null,
                             errorMessageOfFoodRecipes = errorMessage
                         )
                     }

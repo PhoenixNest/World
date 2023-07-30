@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +36,7 @@ fun HomeFoodRecipesCard(
     ) {
         CommonCardTitle(titleResId = R.string.home_card_food_recipes_title)
         Spacer(modifier = modifier.height(8.dp))
-        Card(
+        Surface(
             onClick = onClick,
             modifier = modifier
                 .fillMaxWidth()
@@ -47,8 +47,7 @@ fun HomeFoodRecipesCard(
                     highlight = PlaceholderHighlight.shimmer()
                 ),
             enabled = !isLoading,
-            shape = RoundedCornerShape(16.dp),
-            elevation = 2.dp
+            shape = RoundedCornerShape(16.dp)
         ) {
             foodRecipesInfoModelList?.forEachIndexed { index: Int, model: FoodRecipesComplexSearchInfoModel ->
                 // TODO

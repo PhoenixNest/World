@@ -1,4 +1,4 @@
-package io.dev.relic.domain.model.todo
+package io.dev.relic.core.data.database.util
 
 /**
  * Todo exception information class.

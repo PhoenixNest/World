@@ -32,7 +32,7 @@ class HiveViewModel @Inject constructor(
     fun createTodoTask(todoEntity: TodoEntity) {
         viewModelScope.launch {
             LogUtil.debug(TAG, "[Create Todo Task]: $todoEntity")
-            todoRepository.insertTodoTask(todoEntity = todoEntity)
+            todoRepository.insertTodoTask(entity = todoEntity)
         }
     }
 

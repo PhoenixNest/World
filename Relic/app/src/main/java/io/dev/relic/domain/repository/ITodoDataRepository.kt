@@ -14,19 +14,24 @@ interface ITodoDataRepository {
     fun readAllTodos(): Flow<List<TodoEntity>>
 
     /**
+     * Query todo task by id.
+     * */
+    fun searchTodoTaskById(id: Int): TodoEntity
+
+    /**
      * Insert the new todo data to database.
      * */
-    suspend fun insertTodoTask(todoEntity: TodoEntity)
+    suspend fun insertTodoTask(entity: TodoEntity)
 
     /**
      * Update the properties for the passed todo data.
      * */
-    suspend fun updateTodoTask(todoEntity: TodoEntity)
+    suspend fun updateTodoTask(entity: TodoEntity)
 
     /**
      * Delete the specify todo data from database.
      * */
-    suspend fun deleteTodoTask(todoEntity: TodoEntity)
+    suspend fun deleteTodoTask(entity: TodoEntity)
 
     /**
      * Delete all the data from database temporary.

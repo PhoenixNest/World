@@ -32,6 +32,10 @@ class RelicDatabaseRepository @Inject constructor(
         return todoDao.readAllTodos()
     }
 
+    fun searchTodoById(id: Int): TodoEntity {
+        return todoDao.queryTodoById(id)
+    }
+
     suspend fun insertTodo(todoEntity: TodoEntity) {
         todoDao.insertTodo(todoEntity)
     }

@@ -1,7 +1,7 @@
 package io.dev.relic.feature.screen.main.sub_page.home.viewmodel
 
+import io.dev.relic.core.data.database.entity.TodoEntity
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
-import io.dev.relic.domain.model.todo.TodoDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 
 data class HomeUiState(
@@ -15,9 +15,9 @@ data class HomeUiState(
 
     /* ======================== Data ======================== */
 
-    val todoDataList: List<TodoDataModel>? = null,
-    val weatherInfoModel: WeatherInfoModel? = null,
-    val foodRecipesInfoModelList: List<FoodRecipesComplexSearchInfoModel>? = null,
+    val todoDataList: List<TodoEntity>? = null,
+    val weatherData: WeatherInfoModel? = null,
+    val foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel>? = null,
 
     /* ======================== Error message ======================== */
 

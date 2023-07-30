@@ -1,7 +1,6 @@
 package io.dev.relic.domain.use_case.todo.action
 
-import io.dev.relic.core.data.database.mappers.TodoDataMapper.toTodoEntity
-import io.dev.relic.domain.model.todo.TodoDataModel
+import io.dev.relic.core.data.database.entity.TodoEntity
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.global.utils.LogUtil
 
@@ -11,11 +10,11 @@ class UpdateTodo(private val todoRepository: ITodoDataRepository) {
         private const val TAG = "UpdateTodo"
     }
 
-    suspend operator fun invoke(todoDataModel: TodoDataModel) {
+    suspend operator fun invoke(entity: TodoEntity) {
         todoRepository.updateTodoTask(
-            todoDataModel.toTodoEntity()
+            entity = entity
         ).also {
-            LogUtil.debug(TAG, "[Update Todo] todoDataModel: $todoDataModel")
+            LogUtil.debug(TAG, "[Update Todo] todoDataModel: $entity")
         }
     }
 

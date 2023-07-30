@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,7 +55,7 @@ fun HomeWeatherCard(
     ) {
         CommonCardTitle(titleResId = R.string.home_card_weather_title)
         Spacer(modifier = Modifier.height(8.dp))
-        Card(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
@@ -65,8 +65,7 @@ fun HomeWeatherCard(
                     highlight = PlaceholderHighlight.shimmer(),
                     shape = RoundedCornerShape(16.dp)
                 ),
-            shape = RoundedCornerShape(16.dp),
-            elevation = 2.dp
+            shape = RoundedCornerShape(16.dp)
         ) {
             weatherInfoModel?.currentWeatherData?.run {
                 HomeWeatherCardContent(

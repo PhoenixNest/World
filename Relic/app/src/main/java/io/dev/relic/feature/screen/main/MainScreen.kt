@@ -1,5 +1,6 @@
 package io.dev.relic.feature.screen.main
 
+import android.Manifest
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,13 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import io.dev.relic.R
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screen.main.widget.MainBottomBar
 import io.dev.relic.feature.screen.main.widget.MainRailAppBar
+import io.dev.relic.global.dialog.CommonPermissionDialog
+import io.dev.relic.global.utils.ToastUtil
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainScreen(
     windowSizeClass: WindowSizeClass,
@@ -47,7 +54,16 @@ fun MainScreen(
     val networkStatus: NetworkStatus by networkMonitor.observe()
         .collectAsStateWithLifecycle(initialValue = NetworkStatus.Available)
 
+    // Check if the app has the permission of location.
+    val multiplePermissionsState: MultiplePermissionsState = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    )
+
     val noNetworkMessage: String = stringResource(id = R.string.no_network_connection_message)
+
     LaunchedEffect(networkStatus) {
         if (networkStatus != NetworkStatus.Available) {
             snackBarHostState.showSnackbar(
@@ -91,5 +107,18 @@ fun MainScreen(
                 }
             }
         }
+    }
+
+    if (multiplePermissionsState.allPermissionsGranted.not()) {
+        CommonPermissionDialog(
+            titleResId = R.string.permission_location,
+            descResId = R.string.permission_location_desc,
+            onAcceptClick = {
+                multiplePermissionsState.launchMultiplePermissionRequest()
+            },
+            onDeniedClick = {
+                ToastUtil.showToast(R.string.permission_denied)
+            }
+        )
     }
 }

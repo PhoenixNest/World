@@ -59,6 +59,9 @@ ext {
     // Admob
     admob_version = "22.1.0"
 
+    // Google sign-in
+    google_auth_version = "20.6.0"
+
     /* ======================== Third-party Extension ======================== */
 
     // Retrofit

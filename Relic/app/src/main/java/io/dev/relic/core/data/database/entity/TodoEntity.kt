@@ -1,5 +1,6 @@
 package io.dev.relic.core.data.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -17,7 +18,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "table_todo")
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int,
     val title: String,
     val subTitle: String,
     val content: String,

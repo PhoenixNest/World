@@ -23,13 +23,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import io.dev.relic.R
 import io.dev.relic.feature.screen.main.sub_page.home.viewmodel.HomeUiState
 import io.dev.relic.feature.screen.main.sub_page.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.screen.main.sub_page.home.widget.card.HomeFoodRecipesCard
 import io.dev.relic.feature.screen.main.sub_page.home.widget.card.HomeWeatherCard
-import io.dev.relic.global.dialog.CommonPermissionDialog
-import io.dev.relic.global.utils.ToastUtil
 
 internal const val TAG = "HomePage"
 
@@ -49,20 +46,7 @@ fun HomePageRoute(
         )
     )
 
-    if (multiplePermissionsState.allPermissionsGranted.not()) {
-        CommonPermissionDialog(
-            titleResId = R.string.permission_location,
-            descResId = R.string.permission_location_desc,
-            onAcceptClick = {
-                multiplePermissionsState.launchMultiplePermissionRequest()
-            },
-            onDeniedClick = {
-                ToastUtil.showToast(R.string.permission_denied)
-            }
-        )
-    }
-
-    LaunchedEffect(key1 = multiplePermissionsState) {
+    LaunchedEffect(key1 = multiplePermissionsState.allPermissionsGranted) {
         if (multiplePermissionsState.allPermissionsGranted) {
             viewModel.accessDeviceLocation()
         }
@@ -120,13 +104,13 @@ private fun HomePageContent(
             Spacer(modifier = Modifier.height(16.dp))
             HomeWeatherCard(
                 isLoading = state.isLoadingWeatherData,
-                weatherInfoModel = state.weatherInfoModel,
+                weatherInfoModel = state.weatherData,
                 onClick = onNavigateToWeatherDetailPage
             )
             Spacer(modifier = Modifier.height(8.dp))
             HomeFoodRecipesCard(
                 isLoading = state.isLoadingFoodRecipesData,
-                foodRecipesInfoModelList = state.foodRecipesInfoModelList,
+                foodRecipesInfoModelList = state.foodRecipesDataList,
                 onClick = onNavigateToFoodRecipesDetailPage
             )
             Spacer(modifier = Modifier.height(8.dp))

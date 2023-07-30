@@ -1,8 +1,7 @@
 package io.dev.relic.domain.use_case.todo.action
 
-import io.dev.relic.core.data.database.mappers.TodoDataMapper.toTodoEntity
-import io.dev.relic.domain.model.todo.InvalidTodoException
-import io.dev.relic.domain.model.todo.TodoDataModel
+import io.dev.relic.core.data.database.entity.TodoEntity
+import io.dev.relic.core.data.database.util.InvalidTodoException
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.global.utils.LogUtil
 
@@ -12,19 +11,19 @@ class AddTodo(private val todoRepository: ITodoDataRepository) {
         private const val TAG = "AddTodo"
     }
 
-    suspend operator fun invoke(todoDataModel: TodoDataModel) {
-        if (todoDataModel.title.isBlank()) {
+    suspend operator fun invoke(entity: TodoEntity) {
+        if (entity.title.isBlank()) {
             throw InvalidTodoException(message = "The title of Todo task can't be empty.")
         }
 
-        if (todoDataModel.content.isBlank()) {
+        if (entity.content.isBlank()) {
             throw InvalidTodoException(message = "The content of Todo task can't be empty.")
         }
 
         todoRepository.insertTodoTask(
-            todoEntity = todoDataModel.toTodoEntity()
+            entity = entity
         ).also {
-            LogUtil.debug(TAG, "[Add Todo] todoDataModel: $todoDataModel")
+            LogUtil.debug(TAG, "[Add Todo] todoDataModel: $entity")
         }
     }
 

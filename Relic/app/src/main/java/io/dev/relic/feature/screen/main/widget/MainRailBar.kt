@@ -74,16 +74,6 @@ private fun MainRailBarItem(
                     } else {
                         mainTextColorLight
                     },
-                    fontSize = if (isSelected) {
-                        14.sp
-                    } else {
-                        12.sp
-                    },
-                    fontWeight = if (isSelected) {
-                        FontWeight.Bold
-                    } else {
-                        FontWeight.Normal
-                    },
                     fontFamily = RelicFontFamily.ubuntu
                 )
             )

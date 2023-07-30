@@ -190,6 +190,9 @@ dependencies {
     // Admob
     // implementation "com.google.android.gms:play-services-ads:${rootProject.ext.admob_version}"
 
+    // Google sign-in
+    implementation "com.google.android.gms:play-services-auth:${rootProject.google_auth_version}"
+
     /* ======================== Third-party Extension ======================== */
 
     // Retrofit
