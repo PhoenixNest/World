@@ -1,16 +1,19 @@
-package io.dev.relic.global.base
+package io.dev.relic.feature.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
+import io.dev.relic.feature.GlobalViewModel
 import io.dev.relic.global.utils.LogUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -18,6 +21,8 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    val globalViewModel: GlobalViewModel by viewModels()
 
     companion object {
         private const val TAG: String = "BaseActivity"
@@ -47,8 +52,10 @@ abstract class AbsBaseActivity : ComponentActivity() {
      * Pre-initialize some common function or parameters.
      * */
     private fun preInitialization(doOnFinish: () -> Unit) {
-        activeNetworkMonitor()
-        doOnFinish.invoke()
+        lifecycleScope.launch {
+            activeNetworkMonitor()
+            doOnFinish.invoke()
+        }
     }
 
     /**
@@ -65,8 +72,10 @@ abstract class AbsBaseActivity : ComponentActivity() {
     /* ======================== Ui ======================== */
 
     private fun preInitUi(doOnFinish: () -> Unit) {
-        activeImmersiveStatusBar()
-        doOnFinish.invoke()
+        lifecycleScope.launch {
+            activeImmersiveStatusBar()
+            doOnFinish.invoke()
+        }
     }
 
     private fun activeImmersiveStatusBar() {

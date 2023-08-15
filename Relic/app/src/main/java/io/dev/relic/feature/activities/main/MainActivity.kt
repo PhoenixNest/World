@@ -12,8 +12,8 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.screen.main.MainScreen
-import io.dev.relic.global.base.AbsBaseActivity
 import io.dev.relic.global.utils.UiUtil
 import io.dev.relic.ui.theme.RelicAppTheme
 
@@ -59,7 +59,7 @@ class MainActivity : AbsBaseActivity() {
                 ) {
                     MainScreen(
                         windowSizeClass = calculateWindowSizeClass(activity = this),
-                        networkMonitor = networkMonitor,
+                        networkMonitor = networkMonitor
                     )
                 }
             }

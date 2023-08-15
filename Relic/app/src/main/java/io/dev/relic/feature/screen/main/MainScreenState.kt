@@ -21,9 +21,10 @@ import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.route.RelicRoute.HiveUnit.routeHivePage
 import io.dev.relic.feature.route.RelicRoute.HomeUnit.routeHomePage
-import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.Hive
-import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.Home
-import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination.values
+import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination
+import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination.Hive
+import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination.Home
+import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination.values
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

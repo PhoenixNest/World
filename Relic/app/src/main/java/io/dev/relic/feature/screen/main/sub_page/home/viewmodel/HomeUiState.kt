@@ -1,29 +1,86 @@
 package io.dev.relic.feature.screen.main.sub_page.home.viewmodel
 
+import android.location.Location
+import androidx.compose.runtime.Stable
 import io.dev.relic.core.data.database.entity.TodoEntity
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 
-data class HomeUiState(
+@Stable
+sealed class HomeUiState {
 
-    /* ======================== Loading ======================== */
+    /* Common */
 
-    val isLoadingTodoData: Boolean = false,
-    val isAccessDeviceLocation: Boolean = false,
-    val isLoadingWeatherData: Boolean = false,
-    val isLoadingFoodRecipesData: Boolean = false,
+    object Init : HomeUiState()
 
-    /* ======================== Data ======================== */
+    object Empty : HomeUiState()
 
-    val todoDataList: List<TodoEntity>? = null,
-    val weatherData: WeatherInfoModel? = null,
-    val foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel>? = null,
+    /* Loading */
 
-    /* ======================== Error message ======================== */
+    object AccessingLocation : HomeUiState()
 
-    val errorMessageOfTodoInfo: String? = null,
-    val errorMessageOfDeviceLocation: String? = null,
-    val errorMessageOfWeatherInfo: String? = null,
-    val errorMessageOfFoodRecipes: String? = null
+    object FetchingWeatherData : HomeUiState()
 
-)
+    object FetchingFoodRecipesData : HomeUiState()
+
+    /* Succeed */
+
+    data class ReadTodoDataSucceed(
+        val data: List<TodoEntity>
+    ) : HomeUiState()
+
+    data class AccessLocationSucceed(
+        val location: Location?
+    ) : HomeUiState()
+
+    data class FetchWeatherDataSucceed(
+        val data: WeatherInfoModel?
+    ) : HomeUiState()
+
+    data class FetchFoodRecipesDataSucceed(
+        val data: List<FoodRecipesComplexSearchInfoModel>?
+    ) : HomeUiState()
+
+    /* Succeed but no data */
+
+    data class ReadTodoDataSucceedButNoData(
+        val data: List<TodoEntity>
+    ) : HomeUiState()
+
+    data class AccessLocationSucceedButNoData(
+        val location: Location?
+    ) : HomeUiState()
+
+    data class FetchWeatherDataSucceedButNoData(
+        val data: WeatherInfoModel?
+    ) : HomeUiState()
+
+    data class FetchFoodRecipesDataSucceedButNoData(
+        val data: List<FoodRecipesComplexSearchInfoModel>?
+    ) : HomeUiState()
+
+    /* Failed */
+
+    data class ReadTodoDataFailed(
+        val errorCode: Int?,
+        val errorMessage: String?
+    ) : HomeUiState()
+
+    data class AccessLocationFailed(
+        val errorCode: Int?,
+        val errorMessage: String?
+    ) : HomeUiState()
+
+    data class FetchWeatherDataFailed(
+        val errorCode: Int?,
+        val errorMessage: String?,
+        val offlineData: WeatherInfoModel?
+    ) : HomeUiState()
+
+    data class FetchFoodRecipesDataFailed(
+        val errorCode: Int?,
+        val errorMessage: String?,
+        val offlineData: List<FoodRecipesComplexSearchInfoModel>?
+    ) : HomeUiState()
+
+}

@@ -28,7 +28,6 @@ class AccessCurrentLocation @Inject constructor(
         locationTracker.getCurrentLocation()?.run {
             LogUtil.debug(TAG, "[LocationTracker] Get the location information succeeded.")
             listener.onAccessSucceed(this)
-
         } ?: run {
             val errorMessage = "Couldn't retrieve the location of the current device."
             LogUtil.error(TAG, "[LocationTracker] $errorMessage")

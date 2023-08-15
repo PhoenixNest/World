@@ -1,6 +1,5 @@
 package io.dev.relic.feature.screen.main.sub_page.home
 
-import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,24 +12,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.MultiplePermissionsState
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import io.dev.relic.feature.screen.main.sub_page.home.viewmodel.HomeUiState
 import io.dev.relic.feature.screen.main.sub_page.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.screen.main.sub_page.home.widget.card.HomeFoodRecipesCard
-import io.dev.relic.feature.screen.main.sub_page.home.widget.card.HomeWeatherCard
 
 internal const val TAG = "HomePage"
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomePageRoute(
     onNavigateToSubscribePage: () -> Unit,
@@ -39,21 +31,8 @@ fun HomePageRoute(
     onNavigateToFoodRecipesDetailPage: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val multiplePermissionsState: MultiplePermissionsState = rememberMultiplePermissionsState(
-        permissions = listOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    )
-
-    LaunchedEffect(key1 = multiplePermissionsState.allPermissionsGranted) {
-        if (multiplePermissionsState.allPermissionsGranted) {
-            viewModel.accessDeviceLocation()
-        }
-    }
-
     HomePage(
-        state = viewModel.state,
+        state = HomeUiState.Init,
         onNavigateToSubscribePage = onNavigateToSubscribePage,
         onNavigateToSettingPage = onNavigateToSettingPage,
         onNavigateToWeatherDetailPage = onNavigateToWeatherDetailPage,
@@ -102,7 +81,7 @@ private fun HomePageContent(
             horizontalAlignment = Alignment.Start
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            HomeWeatherCard(
+            /*HomeWeatherCard(
                 isLoading = state.isLoadingWeatherData,
                 weatherInfoModel = state.weatherData,
                 onClick = onNavigateToWeatherDetailPage
@@ -112,7 +91,7 @@ private fun HomePageContent(
                 isLoading = state.isLoadingFoodRecipesData,
                 foodRecipesInfoModelList = state.foodRecipesDataList,
                 onClick = onNavigateToFoodRecipesDetailPage
-            )
+            )*/
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -122,7 +101,7 @@ private fun HomePageContent(
 @Preview(showBackground = true, showSystemUi = true)
 private fun HomePagePreview() {
     HomePage(
-        state = HomeUiState(),
+        state = HomeUiState.Init,
         onNavigateToSubscribePage = {},
         onNavigateToSettingPage = {},
         onNavigateToWeatherDetailPage = {},

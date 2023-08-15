@@ -28,7 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import io.dev.relic.feature.screen.main.MainScreenTopLevelDestination
+import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
