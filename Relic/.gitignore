@@ -2,6 +2,8 @@
 *.iml
 *.DS_Store
 local.properties
+release-config.md
+release-key.jks
 
 # Directory
 .cxx

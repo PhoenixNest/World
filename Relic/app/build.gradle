@@ -44,6 +44,11 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/room_database_schemas".toString())
         }
+
+        // Ndk .so library support
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
 
     buildTypes {
@@ -216,4 +221,8 @@ dependencies {
     // Lottie
     implementation "com.airbnb.android:lottie:${rootProject.ext.lottie_version}"
     implementation "com.airbnb.android:lottie-compose:${rootProject.ext.lottie_compose_version}"
+
+    // Amap
+    implementation "com.amap.api:navi-3dmap:latest.integration"
+    implementation "com.amap.api:search:latest.integration"
 }

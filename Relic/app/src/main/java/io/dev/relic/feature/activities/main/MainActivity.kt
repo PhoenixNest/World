@@ -29,7 +29,7 @@ class MainActivity : AbsBaseActivity() {
                     context,
                     MainActivity::class.java
                 ).apply {
-                    //
+                    action = "[Activity] Main"
                 }
             )
         }

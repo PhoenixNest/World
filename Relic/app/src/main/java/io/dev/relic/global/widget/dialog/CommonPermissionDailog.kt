@@ -1,4 +1,4 @@
-package io.dev.relic.global.dialog
+package io.dev.relic.global.widget.dialog
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -36,7 +36,8 @@ fun CommonPermissionDialog(
     @StringRes titleResId: Int,
     @StringRes descResId: Int,
     onAcceptClick: () -> Unit,
-    onDeniedClick: () -> Unit
+    onDeniedClick: () -> Unit,
+    onDismiss: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -45,7 +46,7 @@ fun CommonPermissionDialog(
         contentAlignment = Alignment.Center
     ) {
         Dialog(
-            onDismissRequest = {},
+            onDismissRequest = onDismiss,
             properties = DialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false
@@ -105,6 +106,7 @@ private fun CommonPermissionDialogPreview() {
         titleResId = R.string.permission_location,
         descResId = R.string.permission_location_desc,
         onAcceptClick = {},
-        onDeniedClick = {}
+        onDeniedClick = {},
+        onDismiss = {}
     )
 }

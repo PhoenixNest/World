@@ -52,12 +52,13 @@ class SplashActivity : ComponentActivity() {
 
     private fun initUi() {
         setContent {
-            val multiplePermissionsState: MultiplePermissionsState = rememberMultiplePermissionsState(
-                permissions = listOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+            val multiplePermissionsState: MultiplePermissionsState =
+                rememberMultiplePermissionsState(
+                    permissions = listOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
                 )
-            )
 
             LaunchedEffect(key1 = multiplePermissionsState.allPermissionsGranted) {
                 if (multiplePermissionsState.allPermissionsGranted) {

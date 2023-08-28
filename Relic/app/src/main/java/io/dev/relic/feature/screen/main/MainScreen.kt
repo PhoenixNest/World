@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,9 +25,7 @@ import io.dev.relic.R
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.route.MainFeatureNavHost
-import io.dev.relic.feature.screen.main.widget.MainBottomBar
-import io.dev.relic.feature.screen.main.widget.MainRailAppBar
-import io.dev.relic.global.dialog.CommonPermissionDialog
+import io.dev.relic.global.widget.dialog.CommonPermissionDialog
 import io.dev.relic.global.utils.ToastUtil
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -37,7 +34,6 @@ fun MainScreen(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
     mainScreenState: MainScreenState = rememberMainScreenState(
-        windowSizeClass = windowSizeClass,
         networkMonitor = networkMonitor
     )
 ) {
@@ -45,10 +41,6 @@ fun MainScreen(
     val snackBarHostState: SnackbarHostState = remember {
         SnackbarHostState()
     }
-
-    // Check if the current can include the bottom bar.
-    val isShowBottomBar: Boolean = (mainScreenState.shouldShowBottomBar)
-            && (mainScreenState.currentTopLevelDestination != null)
 
     // Check the current network status by using networkMonitor flow.
     val networkStatus: NetworkStatus by networkMonitor.observe()
@@ -85,30 +77,16 @@ fun MainScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (mainScreenState.shouldShowRailBar) {
-                MainRailAppBar(
-                    destinations = mainScreenState.topLevelDestinations,
-                    onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                    currentDestination = mainScreenState.currentDestination
-                )
-            }
             Box(modifier = Modifier.fillMaxSize()) {
                 MainFeatureNavHost(
                     mainScreenState = mainScreenState,
                     navHostController = mainScreenState.navHostController
                 )
-                if (isShowBottomBar) {
-                    MainBottomBar(
-                        destinations = mainScreenState.topLevelDestinations,
-                        onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                        currentDestination = mainScreenState.currentDestination,
-                        modifier = Modifier.align(Alignment.BottomCenter)
-                    )
-                }
             }
         }
     }
 
+    // Permission dialog
     if (multiplePermissionsState.allPermissionsGranted.not()) {
         CommonPermissionDialog(
             titleResId = R.string.permission_location,

@@ -23,7 +23,7 @@ open class GlobalViewModel @Inject constructor(
     lateinit var locationUseCase: LocationUseCase
 
     private val _globalStateFlow: MutableStateFlow<GlobalState> = MutableStateFlow(GlobalState.Init)
-    val globalStateFlow: StateFlow<GlobalState> get() =  _globalStateFlow
+    val globalStateFlow: StateFlow<GlobalState> get() = _globalStateFlow
 
     companion object {
         private const val TAG = "FeatureViewModel"
@@ -49,7 +49,10 @@ open class GlobalViewModel @Inject constructor(
                     }
 
                     override fun onAccessSucceed(location: Location) {
-                        LogUtil.debug(TAG, "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})")
+                        LogUtil.debug(
+                            TAG,
+                            "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})"
+                        )
                         setState(
                             stateFlow = _globalStateFlow,
                             newState = GlobalState.AccessLocationSucceed(location)
@@ -57,7 +60,10 @@ open class GlobalViewModel @Inject constructor(
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
-                        LogUtil.debug(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
+                        LogUtil.debug(
+                            TAG,
+                            "[Access Device Location] Access failed, errorMessage: $errorMessage"
+                        )
                         setState(
                             stateFlow = _globalStateFlow,
                             newState = GlobalState.AccessLocationFailed(
