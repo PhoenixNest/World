@@ -3,7 +3,6 @@ package io.dev.relic.feature.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
-import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,6 +81,6 @@ abstract class AbsBaseActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 
-    abstract fun initUi(modifier: Modifier = Modifier)
+    abstract fun initUi()
 
 }

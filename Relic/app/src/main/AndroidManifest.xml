@@ -36,6 +36,12 @@
         </activity>
 
         <activity
+            android:name=".feature.activities.intro.IntroActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
             android:name=".feature.activities.main.MainActivity"
             android:exported="false"
             android:launchMode="singleTask"

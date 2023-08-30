@@ -7,7 +7,12 @@ val Purple500: Color = Color(0xFF6200EE)
 val Purple700: Color = Color(0xFF3700B3)
 val Teal200: Color = Color(0xFF03DAC5)
 
-val mainTextColor: Color = Color.DarkGray
-val mainTextColorLight: Color = Color.LightGray
+val mainThemeColor: Color = Color(0xFF282c34)
+val mainThemeColorAccent: Color = Color(0xFF548af7)
 
-val mainButtonColor: Color = Color.DarkGray
+val mainTextColor: Color = Color.White.copy(alpha = 0.8F)
+val mainTextColorDark: Color = mainThemeColor.copy(alpha = 0.8F)
+
+val mainButtonColor: Color = mainThemeColor
+
+val dividerColor: Color = Color.White.copy(alpha = 0.1F)

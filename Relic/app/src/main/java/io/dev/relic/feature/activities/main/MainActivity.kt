@@ -43,7 +43,7 @@ class MainActivity : AbsBaseActivity() {
 
     /* ======================== Ui ======================== */
 
-    override fun initUi(modifier: Modifier) {
+    override fun initUi() {
         setContent {
             // Setup immersive status bar.
             UiUtil.StatusBarUtil.setImmersiveStatusBar()

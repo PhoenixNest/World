@@ -1,6 +1,8 @@
 package io.dev.relic.feature.activities.splash
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -15,6 +17,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.dev.relic.R
+import io.dev.relic.ui.theme.mainThemeColor
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
@@ -24,16 +27,22 @@ fun SplashScreen(modifier: Modifier = Modifier) {
         LottieCompositionSpec.RawRes(R.raw.lottie_common_loading)
     )
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier
+            .fillMaxSize()
+            .background(color = mainThemeColor)
     ) {
-        LottieAnimation(
-            composition = composition,
-            modifier = modifier.size(120.dp),
-            restartOnPlay = true,
-            iterations = Int.MAX_VALUE
-        )
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            LottieAnimation(
+                composition = composition,
+                modifier = modifier.size(120.dp),
+                restartOnPlay = true,
+                iterations = Int.MAX_VALUE
+            )
+        }
     }
 }
