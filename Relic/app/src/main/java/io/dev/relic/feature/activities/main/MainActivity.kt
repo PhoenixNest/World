@@ -45,7 +45,8 @@ class MainActivity : AbsBaseActivity() {
 
     override fun initUi() {
         setContent {
-            // Setup immersive status bar.
+            // Setup immersive mode.
+            UiUtil.SystemUtil.setImmersiveMode()
             UiUtil.StatusBarUtil.setImmersiveStatusBar()
 
             // A surface container using the 'background' color from the theme

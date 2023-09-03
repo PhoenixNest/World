@@ -3,10 +3,7 @@ package io.dev.relic.feature.activities.splash
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import io.dev.relic.feature.activities.AbsBaseActivity
@@ -38,18 +35,13 @@ class SplashActivity : AbsBaseActivity() {
 
     override fun initUi() {
         setContent {
-            // Setup immersive status bar.
+            // Setup immersive mode.
+            UiUtil.SystemUtil.setImmersiveMode()
             UiUtil.StatusBarUtil.setImmersiveStatusBar()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                        .captionBarPadding()
-                        .navigationBarsPadding()
-                ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     SplashScreen()
                 }
             }

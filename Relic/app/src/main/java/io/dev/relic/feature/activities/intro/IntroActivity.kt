@@ -3,10 +3,7 @@ package io.dev.relic.feature.activities.intro
 import android.Manifest
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -16,6 +13,7 @@ import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
+import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.UiUtil
 import io.dev.relic.ui.theme.RelicAppTheme
 
@@ -40,6 +38,7 @@ class IntroActivity : AbsBaseActivity() {
 
     override fun initialization() {
         permissionLiveData.observe(this) { isGranted: Boolean ->
+            LogUtil.debug(TAG, "[Permission] isGranted: $isGranted")
             if (isGranted) {
                 MainActivity.start(this@IntroActivity)
                 finish()
@@ -62,18 +61,13 @@ class IntroActivity : AbsBaseActivity() {
                 permissionLiveData.postValue(multiplePermissionsState.allPermissionsGranted)
             }
 
-            // Setup immersive status bar.
+            // Setup immersive mode.
+            UiUtil.SystemUtil.setImmersiveMode()
             UiUtil.StatusBarUtil.setImmersiveStatusBar()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .statusBarsPadding()
-                        .captionBarPadding()
-                        .navigationBarsPadding()
-                ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     IntroScreen(onClick = multiplePermissionsState::launchMultiplePermissionRequest)
                 }
             }
