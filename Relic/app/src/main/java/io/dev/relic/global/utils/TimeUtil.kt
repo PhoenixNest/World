@@ -7,19 +7,26 @@ import java.util.Calendar
 
 object TimeUtil {
 
+    /**
+     * Get the current system time with date-time.
+     * */
     fun getCurrentTime(): LocalDateTime {
         return LocalDateTime.now()
     }
 
     /**
-     * Get the current system time with milliseconds.
+     * Get the current system time with date-time.
+     *
+     * @param clock
      * */
     fun getCurrentTime(clock: Clock): LocalDateTime {
         return LocalDateTime.now(clock)
     }
 
     /**
-     * Get the current system time with milliseconds.
+     * Get the current system time with date-time.
+     *
+     * @param zone
      * */
     fun getCurrentTime(zone: ZoneId?): LocalDateTime {
         return LocalDateTime.now(zone ?: ZoneId.systemDefault())
@@ -54,7 +61,14 @@ object TimeUtil {
         val year: Int = calendar.get(Calendar.YEAR)
         val month: Int = calendar.get(Calendar.MONTH)
         val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
-        calendar.set(year, month, day + 1, 0, 0, 0)
+        calendar.set(
+            /* year = */ year,
+            /* month = */ month,
+            /* date = */ day + 1,
+            /* hourOfDay = */ 0,
+            /* minute = */ 0,
+            /* second = */ 0
+        )
         calendar.set(Calendar.MILLISECOND, 0)
         return calendar.timeInMillis
     }
