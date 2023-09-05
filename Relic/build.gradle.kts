@@ -9,15 +9,15 @@ buildscript {
     dependencies {
 
         // Hilt
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.47")
+        classpath(libs.hilt.android.gradle.plugin)
 
         // Google services
         // Add the dependency for the Google services Gradle plugin
-        classpath("com.google.gms:google-services:4.3.15")
+        classpath(libs.google.services)
         // Add the dependency for the Crashlytics Gradle plugin
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.9")
+        classpath(libs.firebase.crashlytics.gradle)
         // Add the dependency for the Performance Monitoring Gradle plugin
-        classpath("com.google.firebase:perf-plugin:1.4.2")
+        classpath(libs.firebase.perf.plugin)
     }
 }
 

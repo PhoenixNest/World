@@ -8,9 +8,6 @@ plugins {
     // Parcelize Models
     id("kotlin-parcelize")
 
-    // Room, Hilt
-    id("kotlin-kapt")
-
     // Hilt
     id("com.google.dagger.hilt.android")
 
@@ -83,25 +80,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.2"
     }
-
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
 
     /* ======================== Google Official Extension ======================== */
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.android.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.constraintlayout)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 
     // Compose Ui
-    val composeBom = platform("androidx.compose:compose-bom:2023.08.00")
+    val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.08.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
     // Material Design
@@ -123,20 +116,20 @@ dependencies {
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Accompanist Components
-    implementation("com.google.accompanist:accompanist-permissions:0.31.2-alpha")
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.31.2-alpha")
-    implementation("com.google.accompanist:accompanist-navigation-material:0.31.2-alpha")
-    implementation("com.google.accompanist:accompanist-adaptive:0.31.2-alpha")
-    implementation("com.google.accompanist:accompanist-placeholder-material:0.31.2-alpha")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.2-alpha")
+    implementation(libs.accompanist.adaptive)
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
+    implementation(libs.accompanist.placeholder.material)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.accompanist.systemuicontroller)
 
     // Firebase BOM
-    val firebaseBom = platform("com.google.firebase:firebase-bom:32.0.0")
+    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.0.0")
     implementation(firebaseBom)
     // Add the dependencies for the Crashlytics and Analytics libraries
     implementation("com.google.firebase:firebase-crashlytics-ktx")
@@ -145,79 +138,79 @@ dependencies {
     implementation("com.google.firebase:firebase-perf-ktx")
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
 
     // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.lifecycle.extensions)
 
     // Datastore
-    implementation("androidx.datastore:datastore:1.0.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation(libs.datastore)
+    implementation(libs.datastore.preferences)
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation("androidx.room:room-ktx:2.5.2")
-    androidTestImplementation("androidx.room:room-testing:2.5.2")
-    ksp("androidx.room:room-compiler:2.5.2")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    androidTestImplementation(libs.room.testing)
+    ksp(libs.room.compiler)
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.47")
-    kapt("com.google.dagger:hilt-compiler:2.47")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // WorkManager
-    implementation("androidx.work:work-runtime:2.8.1")
+    implementation(libs.androidx.work.runtime)
     // Kotlin + coroutines
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation(libs.androidx.work.runtime.ktx)
     // optional - GCMNetworkManager support
-    implementation("androidx.work:work-gcm:2.8.1")
+    implementation(libs.androidx.work.gcm)
     // optional - Test helpers
-    androidTestImplementation("androidx.work:work-testing:2.8.1")
+    androidTestImplementation(libs.androidx.work.testing)
     // optional - Multiprocess support
-    implementation("androidx.work:work-multiprocess:2.8.1")
+    implementation(libs.androidx.work.multiprocess)
     // optional - Integration with WorkManager
-    implementation("androidx.hilt:hilt-work:1.0.0")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    implementation(libs.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
+    implementation(libs.androidx.paging.runtime.ktx)
     // alternatively - without Android dependencies for tests
-    testImplementation("androidx.paging:paging-common-ktx:3.2.0")
+    testImplementation(libs.androidx.paging.common.ktx)
     // optional - Jetpack Compose integration
-    implementation("androidx.paging:paging-compose:3.2.0")
+    implementation(libs.androidx.paging.compose)
 
     // Location Services
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation(libs.play.services.location)
 
     // Gson
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.gson)
 
     // Admob
-    implementation("com.google.android.gms:play-services-ads:22.3.0")
+    implementation(libs.play.services.ads)
 
     // Google sign-in
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation(libs.play.services.auth)
 
     /* ======================== Third-party Extension ======================== */
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.moshi)
 
     // Moshi
-    implementation("com.squareup.moshi:moshi:1.15.0")
-    implementation("com.squareup.moshi:moshi-adapters:1.15.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    implementation(libs.moshi)
+    implementation(libs.moshi.adapters)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 
     // LoggingInterceptor - Interceptor for OkHttp3 with pretty logger
     implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
@@ -225,10 +218,10 @@ dependencies {
     }
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
 
     // Lottie
-    implementation("com.airbnb.android:lottie-compose:6.0.0")
+    implementation(libs.lottie.compose)
 
     // Amap
     implementation("com.amap.api:navi-3dmap:latest.integration")
