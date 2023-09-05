@@ -66,13 +66,13 @@ abstract class AbsAdProvider : IAdProvider {
      * Update the current loading status of ad by adUnitId.
      *
      * @param adUnitId
-     * @param value         New status
+     * @param isLoading
      * */
     fun updateLoadStatus(
         adUnitId: String,
-        value: Boolean
+        isLoading: Boolean
     ) {
-        adLoadStatusMap[adUnitId] = value
+        adLoadStatusMap[adUnitId] = isLoading
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class AbsAdProvider : IAdProvider {
      * */
     fun canLoadAd(adUnitId: String): Boolean {
         getCacheAdInfoWrapper(adUnitId)?.run {
-            adListenerMap[adUnitId]?.onAdLoad()
+            adListenerMap[adUnitId]?.onAdLoaded()
             return false
         }
 

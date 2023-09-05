@@ -2,9 +2,7 @@ package io.dev.relic.core.sdk.ad.provider.core
 
 interface IAdListener {
 
-    fun onAdLoad()
-
-    fun onAdLoadSucceed()
+    fun onAdLoaded()
 
     fun onAdFailToShow(
         errorCode: Int,
@@ -16,10 +14,12 @@ interface IAdListener {
         errorMessage: String
     )
 
-    fun onAdShow()
+    fun onAdShowed()
 
-    fun onAdClick()
+    fun onAdClicked()
 
-    fun onAdClose()
+    fun onAdClosed()
+
+    fun onAdEarnedReward()
 
 }
