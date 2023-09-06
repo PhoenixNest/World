@@ -1,4 +1,4 @@
-package io.dev.relic.core.sdk.ad.model
+package io.dev.relic.core.sdk.ad.core.model
 
 import java.util.Calendar
 

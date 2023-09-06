@@ -31,6 +31,8 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("boolean", "NO_ADS", extra["NO_ADS"].toString())
+
         vectorDrawables {
             useSupportLibrary = true
         }

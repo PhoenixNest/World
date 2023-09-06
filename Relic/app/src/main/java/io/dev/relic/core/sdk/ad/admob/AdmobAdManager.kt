@@ -1,20 +1,25 @@
-package io.dev.relic.core.sdk.ad
+package io.dev.relic.core.sdk.ad.admob
 
 import android.content.Context
-import android.view.View
 import android.view.ViewGroup
-import io.dev.relic.core.sdk.ad.provider.AdmobAdProvider
-import io.dev.relic.core.sdk.ad.provider.core.IAdListener
-import io.dev.relic.core.sdk.ad.utils.AdmobAdType
+import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdType
+import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
+import io.dev.relic.core.sdk.ad.core.provider.IAdListener
 import io.dev.relic.global.RelicLifecycleObserver
 
 /**
  * [Google • Admob](https://developers.google.cn/admob/android/quick-start)
+ *
+ * @see AdmobAdProvider
  * */
 object AdmobAdManager {
 
     fun init(context: Context) {
         AdmobAdProvider.init(context)
+    }
+
+    fun getAdListener(adUnitId: String): IAdListener? {
+        return AdmobAdProvider.getAdListener(adUnitId)
     }
 
     /* ======================== load ======================== */
@@ -23,15 +28,16 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
+        val adUnitId: String = AdmobAdUnitId.OPEN_AD
         AdmobAdProvider.apply {
             setAdListener(
-                adUnitId = "",
+                adUnitId = adUnitId,
                 listener = listener
             )
         }.run {
             loadAd(
                 context = context,
-                adUnitId = "",
+                adUnitId = adUnitId,
                 adType = AdmobAdType.OPEN_AD,
                 adViewContainer = null
             )
@@ -42,15 +48,16 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
+        val adUnitId: String = AdmobAdUnitId.REWARD_AD
         AdmobAdProvider.apply {
             setAdListener(
-                adUnitId = "",
+                adUnitId = adUnitId,
                 listener = listener
             )
         }.run {
             loadAd(
                 context = context,
-                adUnitId = "",
+                adUnitId = adUnitId,
                 adType = AdmobAdType.REWARD_AD,
                 adViewContainer = null
             )
@@ -61,53 +68,62 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
+        val adUnitId: String = AdmobAdUnitId.INTERSTITIAL_AD
         AdmobAdProvider.apply {
             setAdListener(
-                adUnitId = "",
+                adUnitId = adUnitId,
                 listener = listener
             )
         }.run {
             loadAd(
                 context = context,
-                adUnitId = "",
+                adUnitId = adUnitId,
                 adType = AdmobAdType.INTERSTITIAL_AD,
                 adViewContainer = null
             )
         }
     }
 
+    /**
+     * @see showBannerAd
+     * */
     fun loadBannerAd(
         context: Context,
         listener: IAdListener
     ) {
+        val adUnitId: String = AdmobAdUnitId.BANNER_AD
         AdmobAdProvider.apply {
             setAdListener(
-                adUnitId = "",
+                adUnitId = adUnitId,
                 listener = listener
             )
         }.run {
             loadAd(
                 context = context,
-                adUnitId = "",
+                adUnitId = adUnitId,
                 adType = AdmobAdType.BANNER_AD,
                 adViewContainer = null
             )
         }
     }
 
+    /**
+     * @see showNativeAd
+     * */
     fun loadNativeAd(
         context: Context,
         listener: IAdListener
     ) {
+        val adUnitId: String = AdmobAdUnitId.NATIVE_AD
         AdmobAdProvider.apply {
             setAdListener(
-                adUnitId = "",
+                adUnitId = adUnitId,
                 listener = listener
             )
         }.run {
             loadAd(
                 context = context,
-                adUnitId = "",
+                adUnitId = adUnitId,
                 adType = AdmobAdType.NATIVE_AD,
                 adViewContainer = null
             )
@@ -116,10 +132,8 @@ object AdmobAdManager {
 
     /* ======================== show ======================== */
 
-    fun showOpenAd(
-        context: Context,
-        adUnitId: String
-    ) {
+    fun showOpenAd(context: Context) {
+        val adUnitId: String = AdmobAdUnitId.OPEN_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId
@@ -128,12 +142,15 @@ object AdmobAdManager {
 
     fun showRewardAd(
         context: Context,
-        adUnitId: String,
         ifInBackground: (() -> Unit)? = null
     ) {
+        val adUnitId: String = AdmobAdUnitId.REWARD_AD
         RelicLifecycleObserver.runOnForeground(
             foregroundAction = {
-                //
+                AdmobAdProvider.showAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
             },
             backgroundAction = {
                 ifInBackground?.invoke()
@@ -143,21 +160,27 @@ object AdmobAdManager {
 
     fun showInterstitialAd(
         context: Context,
-        adUnitId: String
+        ifInBackground: (() -> Unit)? = null
     ) {
-        RelicLifecycleObserver.runOnForeground {
-            AdmobAdProvider.showAd(
-                context = context,
-                adUnitId = adUnitId
-            )
-        }
+        val adUnitId: String = AdmobAdUnitId.INTERSTITIAL_AD
+        RelicLifecycleObserver.runOnForeground(
+            foregroundAction = {
+                AdmobAdProvider.showAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
+            },
+            backgroundAction = {
+                ifInBackground?.invoke()
+            }
+        )
     }
 
-    fun showBannerAd(
+    private fun showBannerAd(
         context: Context,
-        adUnitId: String,
         adViewContainer: ViewGroup
     ) {
+        val adUnitId: String = AdmobAdUnitId.BANNER_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId,
@@ -165,11 +188,11 @@ object AdmobAdManager {
         )
     }
 
-    fun showNativeAd(
+    private fun showNativeAd(
         context: Context,
-        adUnitId: String,
         adViewContainer: ViewGroup
     ) {
+        val adUnitId: String = AdmobAdUnitId.NATIVE_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId,

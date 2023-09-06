@@ -1,4 +1,4 @@
-package io.dev.relic.core.sdk.ad.utils
+package io.dev.relic.core.sdk.ad.admob.utils
 
 import androidx.annotation.StringDef
 

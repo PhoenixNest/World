@@ -1,4 +1,4 @@
-package io.dev.relic.core.sdk.ad.provider
+package io.dev.relic.core.sdk.ad.admob
 
 import android.app.Activity
 import android.content.Context
@@ -20,31 +20,68 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import io.dev.relic.core.sdk.ad.model.AdInfoWrapper
-import io.dev.relic.core.sdk.ad.provider.core.AbsAdProvider
-import io.dev.relic.core.sdk.ad.provider.core.IAdListener
-import io.dev.relic.core.sdk.ad.utils.AdmobAdType
+import io.dev.relic.BuildConfig
+import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdType
+import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
+import io.dev.relic.core.sdk.ad.core.model.AdInfoWrapper
+import io.dev.relic.core.sdk.ad.core.provider.AbsAdProvider
+import io.dev.relic.core.sdk.ad.core.provider.IAdListener
+import io.dev.relic.global.utils.LogUtil
 
+/**
+ * Provide the core function of ad load and show.
+ *
+ * @see io.dev.relic.core.sdk.ad.core.AdmobAdManager
+ * */
 object AdmobAdProvider : AbsAdProvider() {
 
+    private const val TAG = "AdmobAdProvider"
+
+    /**
+     * Initialize the ad-sdk or do some pre action.
+     *
+     * @param context
+     * */
     override fun init(context: Context) {
-        initAdmobSdk(context)
+        MobileAds.initialize(context)
     }
 
+    /**
+     * Load ad with specify adUnitId.
+     *
+     * @param context
+     * @param adUnitId
+     * @param adType
+     * @param adViewContainer
+     * */
     override fun loadAd(
         context: Context,
         adUnitId: String,
         adType: String,
         adViewContainer: ViewGroup?
     ) {
+        val targetAdUnitId: String = if (BuildConfig.NO_ADS) {
+            LogUtil.warning(TAG, "[Load Ad] Enable No-Ads mode.")
+            AdmobAdUnitId.NO_AD
+        } else {
+            adUnitId
+        }
+
         loadAdmobAd(
             context = context,
-            adUnitId = adUnitId,
+            adUnitId = targetAdUnitId,
             adType = adType,
             adViewContainer = adViewContainer
         )
     }
 
+    /**
+     * Display ad with specify adUnitId when loaded.
+     *
+     * @param context
+     * @param adUnitId
+     * @param adViewContainer
+     * */
     override fun showAd(
         context: Context,
         adUnitId: String,
@@ -59,10 +96,16 @@ object AdmobAdProvider : AbsAdProvider() {
         )
     }
 
-    private fun initAdmobSdk(context: Context) {
-        MobileAds.initialize(context)
-    }
+    /* ======================== load ======================== */
 
+    /**
+     * Load ad with specify adType.
+     *
+     * @param context
+     * @param adUnitId
+     * @param adType            Such as: Open-Ad, Reward-Ad, etc.
+     * @param adViewContainer   Some ad type need the host to display ad, such as: Banner-Ad, Native-Ad, etc.
+     * */
     private fun loadAdmobAd(
         context: Context,
         adUnitId: String,
@@ -71,23 +114,40 @@ object AdmobAdProvider : AbsAdProvider() {
     ) {
         when (adType) {
             AdmobAdType.OPEN_AD -> {
-                loadAdmobOpenAd(context, adUnitId)
+                loadAdmobOpenAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
             }
 
             AdmobAdType.REWARD_AD -> {
-                loadAdmobRewardAd(context, adUnitId)
+                loadAdmobRewardAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
             }
 
             AdmobAdType.INTERSTITIAL_AD -> {
-                loadAdmobInterstitialAd(context, adUnitId)
+                loadAdmobInterstitialAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
             }
 
             AdmobAdType.BANNER_AD -> {
-                loadAdmobBannerAd(context, adUnitId, adViewContainer)
+                loadAdmobBannerAd(
+                    context = context,
+                    adUnitId = adUnitId,
+                    adViewContainer = adViewContainer
+                )
             }
 
             AdmobAdType.NATIVE_AD -> {
-                loadAdmobNativeAd(context, adUnitId, adViewContainer)
+                loadAdmobNativeAd(
+                    context = context,
+                    adUnitId = adUnitId,
+                    adViewContainer = adViewContainer
+                )
             }
         }
     }
@@ -206,21 +266,39 @@ object AdmobAdProvider : AbsAdProvider() {
         )
     }
 
+    /**
+     * @see showAdmobNativeAd
+     * */
     private fun loadAdmobBannerAd(
         context: Context,
         adUnitId: String,
         adViewContainer: ViewGroup?
     ) {
-
+        showAdmobBannerAd(
+            context = context,
+            adUnitId = adUnitId,
+            listener = getAdListener(adUnitId),
+            adViewContainer = adViewContainer
+        )
     }
 
+    /**
+     * @see showAdmobNativeAd
+     * */
     private fun loadAdmobNativeAd(
         context: Context,
         adUnitId: String,
         adViewContainer: ViewGroup?
     ) {
-
+        showAdmobNativeAd(
+            context = context,
+            adUnitId = adUnitId,
+            listener = getAdListener(adUnitId),
+            adViewContainer = adViewContainer
+        )
     }
+
+    /* ======================== show ======================== */
 
     private fun showAdmobAd(
         context: Context,
@@ -275,9 +353,10 @@ object AdmobAdProvider : AbsAdProvider() {
                     adViewContainer = adViewContainer
                 )
             }
-
         }
     }
+
+    /* ======================== show ======================== */
 
     private fun showAdmobOpenAd(
         context: Context,
@@ -312,8 +391,8 @@ object AdmobAdProvider : AbsAdProvider() {
                     listener?.onAdShowed()
                 }
             }
-        }.also {
-            it.show(context as Activity)
+        }.run {
+            show(context as Activity)
         }
     }
 
@@ -415,6 +494,7 @@ object AdmobAdProvider : AbsAdProvider() {
                     override fun onAdClosed() {
                         super.onAdClosed()
                         listener?.onAdClosed()
+                        removeAdInfo(adUnitId)
                     }
 
                     override fun onAdFailedToLoad(error: LoadAdError) {
@@ -465,6 +545,7 @@ object AdmobAdProvider : AbsAdProvider() {
                 override fun onAdClosed() {
                     super.onAdClosed()
                     listener?.onAdClosed()
+                    removeAdInfo(adUnitId)
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {

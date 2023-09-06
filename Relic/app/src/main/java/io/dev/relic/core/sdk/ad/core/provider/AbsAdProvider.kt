@@ -1,6 +1,7 @@
-package io.dev.relic.core.sdk.ad.provider.core
+package io.dev.relic.core.sdk.ad.core.provider
 
-import io.dev.relic.core.sdk.ad.model.AdInfoWrapper
+import io.dev.relic.core.sdk.ad.core.AdConfig
+import io.dev.relic.core.sdk.ad.core.model.AdInfoWrapper
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.TimeUtil
 import java.util.concurrent.TimeUnit
@@ -26,6 +27,12 @@ abstract class AbsAdProvider : IAdProvider {
         private const val TAG = "AbsAdProvider"
     }
 
+    /**
+     * Binds the callback listener to Ad instance with specify adUnitId.
+     *
+     * @param adUnitId
+     * @param listener
+     * */
     override fun setAdListener(adUnitId: String, listener: IAdListener?) {
         if (listener == null) {
             adListenerMap.remove(adUnitId)
@@ -90,7 +97,10 @@ abstract class AbsAdProvider : IAdProvider {
             return false
         }
 
-        updateLoadStatus(adUnitId, true)
+        updateLoadStatus(
+            adUnitId = adUnitId,
+            isLoading = true
+        )
         return true
     }
 
@@ -137,8 +147,11 @@ abstract class AbsAdProvider : IAdProvider {
      * */
     private fun getCacheAdInfoWrapper(adUnitId: String): AdInfoWrapper? {
         return adInfoMap[adUnitId]?.let { adInfoWrapper: AdInfoWrapper ->
-            val interval: Long = TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp
-            val hasExpired: Boolean = TimeUnit.MICROSECONDS.toHours(interval) > 2
+            val interval: Long = (TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
+            val interval2Hours: Long = TimeUnit.MICROSECONDS.toHours(interval)
+            val hasExpired: Boolean = (interval2Hours > AdConfig.EXPIRED_DURATION)
+            LogUtil.debug(TAG, "[Check ad has expired] hasExpired: $hasExpired")
+
             if (hasExpired) {
                 removeAdInfo(adUnitId)
                 null
@@ -147,5 +160,4 @@ abstract class AbsAdProvider : IAdProvider {
             }
         }
     }
-
 }
