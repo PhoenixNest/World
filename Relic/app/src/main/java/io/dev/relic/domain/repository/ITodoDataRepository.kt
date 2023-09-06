@@ -29,7 +29,7 @@ interface ITodoDataRepository {
     suspend fun updateTodoTask(entity: TodoEntity)
 
     /**
-     * Delete the specify todo data from database.
+     * Delete the specified todo data from database.
      * */
     suspend fun deleteTodoTask(entity: TodoEntity)
 

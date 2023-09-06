@@ -12,7 +12,10 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModelProvider
+import io.dev.relic.core.device.location.AmapLocationCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
+import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screen.main.MainScreen
 import io.dev.relic.global.utils.UiUtil
 import io.dev.relic.ui.theme.RelicAppTheme
@@ -20,14 +23,21 @@ import io.dev.relic.ui.theme.RelicAppTheme
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : AbsBaseActivity() {
 
+    /**
+     * VM
+     * */
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
     companion object {
         private const val TAG = "MainActivity"
 
         fun start(context: Context) {
             context.startActivity(
                 Intent(
-                    context,
-                    MainActivity::class.java
+                    /* packageContext = */ context,
+                    /* cls = */ MainActivity::class.java
                 ).apply {
                     action = "[Activity] Main"
                 }
@@ -38,7 +48,7 @@ class MainActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     override fun initialization() {
-        //
+        AmapLocationCenter.verifyAmapPrivacyAgreement(this)
     }
 
     /* ======================== Ui ======================== */

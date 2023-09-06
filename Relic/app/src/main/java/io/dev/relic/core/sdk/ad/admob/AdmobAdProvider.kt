@@ -47,7 +47,7 @@ object AdmobAdProvider : AbsAdProvider() {
     }
 
     /**
-     * Load ad with specify adUnitId.
+     * Load ad with the specified adUnitId.
      *
      * @param context
      * @param adUnitId
@@ -76,7 +76,7 @@ object AdmobAdProvider : AbsAdProvider() {
     }
 
     /**
-     * Display ad with specify adUnitId when loaded.
+     * Display ad with the specified adUnitId when loaded.
      *
      * @param context
      * @param adUnitId
@@ -99,7 +99,7 @@ object AdmobAdProvider : AbsAdProvider() {
     /* ======================== load ======================== */
 
     /**
-     * Load ad with specify adType.
+     * Load ad with the specified adType.
      *
      * @param context
      * @param adUnitId
@@ -162,21 +162,18 @@ object AdmobAdProvider : AbsAdProvider() {
             /* adRequest = */ AdRequest.Builder().build(),
             /* loadCallback = */ object : AppOpenAdLoadCallback() {
                 override fun onAdFailedToLoad(error: LoadAdError) {
-                    super.onAdFailedToLoad(error)
-                    getAdListener(adUnitId)?.onAdFailToLoad(
-                        errorCode = error.code,
-                        errorMessage = error.message
-                    )
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
                     )
                     removeAdInfo(adUnitId)
+                    getAdListener(adUnitId)?.onAdFailToLoad(
+                        errorCode = error.code,
+                        errorMessage = error.message
+                    )
                 }
 
                 override fun onAdLoaded(appOpenAd: AppOpenAd) {
-                    super.onAdLoaded(appOpenAd)
-                    getAdListener(adUnitId)?.onAdLoaded()
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
@@ -185,6 +182,7 @@ object AdmobAdProvider : AbsAdProvider() {
                         adUnitId = adUnitId,
                         adInfoWrapper = AdInfoWrapper(appOpenAd)
                     )
+                    getAdListener(adUnitId)?.onAdLoaded()
                 }
             }
         )
@@ -200,21 +198,18 @@ object AdmobAdProvider : AbsAdProvider() {
             /* adRequest = */ AdRequest.Builder().build(),
             /* loadCallback = */ object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(error: LoadAdError) {
-                    super.onAdFailedToLoad(error)
-                    getAdListener(adUnitId)?.onAdFailToLoad(
-                        errorCode = error.code,
-                        errorMessage = error.message
-                    )
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
                     )
                     removeAdInfo(adUnitId)
+                    getAdListener(adUnitId)?.onAdFailToLoad(
+                        errorCode = error.code,
+                        errorMessage = error.message
+                    )
                 }
 
                 override fun onAdLoaded(rewardedAd: RewardedAd) {
-                    super.onAdLoaded(rewardedAd)
-                    getAdListener(adUnitId)?.onAdLoaded()
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
@@ -223,6 +218,7 @@ object AdmobAdProvider : AbsAdProvider() {
                         adUnitId = adUnitId,
                         adInfoWrapper = AdInfoWrapper(rewardedAd)
                     )
+                    getAdListener(adUnitId)?.onAdLoaded()
                 }
             }
         )
@@ -238,21 +234,18 @@ object AdmobAdProvider : AbsAdProvider() {
             /* adRequest = */ AdRequest.Builder().build(),
             /* loadCallback = */ object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(error: LoadAdError) {
-                    super.onAdFailedToLoad(error)
-                    getAdListener(adUnitId)?.onAdFailToLoad(
-                        errorCode = error.code,
-                        errorMessage = error.message
-                    )
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
                     )
                     removeAdInfo(adUnitId)
+                    getAdListener(adUnitId)?.onAdFailToLoad(
+                        errorCode = error.code,
+                        errorMessage = error.message
+                    )
                 }
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    super.onAdLoaded(interstitialAd)
-                    getAdListener(adUnitId)?.onAdLoaded()
                     updateLoadStatus(
                         adUnitId = adUnitId,
                         isLoading = false
@@ -261,6 +254,7 @@ object AdmobAdProvider : AbsAdProvider() {
                         adUnitId = adUnitId,
                         adInfoWrapper = AdInfoWrapper(interstitialAd)
                     )
+                    getAdListener(adUnitId)?.onAdLoaded()
                 }
             }
         )
@@ -367,27 +361,23 @@ object AdmobAdProvider : AbsAdProvider() {
         openAd.apply {
             fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdClicked() {
-                    super.onAdClicked()
                     listener?.onAdClicked()
                 }
 
                 override fun onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent()
                     listener?.onAdClosed()
                     removeAdInfo(adUnitId)
                 }
 
                 override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                    super.onAdFailedToShowFullScreenContent(error)
+                    removeAdInfo(adUnitId)
                     listener?.onAdFailToShow(
                         errorCode = error.code,
                         errorMessage = error.message
                     )
-                    removeAdInfo(adUnitId)
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    super.onAdShowedFullScreenContent()
                     listener?.onAdShowed()
                 }
             }
@@ -405,27 +395,23 @@ object AdmobAdProvider : AbsAdProvider() {
         rewardAd.apply {
             fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdClicked() {
-                    super.onAdClicked()
                     listener?.onAdClicked()
                 }
 
                 override fun onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent()
                     listener?.onAdClosed()
                     removeAdInfo(adUnitId)
                 }
 
                 override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                    super.onAdFailedToShowFullScreenContent(error)
+                    removeAdInfo(adUnitId)
                     listener?.onAdFailToShow(
                         errorCode = error.code,
                         errorMessage = error.message
                     )
-                    removeAdInfo(adUnitId)
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    super.onAdShowedFullScreenContent()
                     listener?.onAdShowed()
                 }
             }
@@ -445,27 +431,23 @@ object AdmobAdProvider : AbsAdProvider() {
         interstitialAd.apply {
             fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdClicked() {
-                    super.onAdClicked()
                     listener?.onAdClicked()
                 }
 
                 override fun onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent()
-                    listener?.onAdClosed()
                     removeAdInfo(adUnitId)
+                    listener?.onAdClosed()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                    super.onAdFailedToShowFullScreenContent(error)
+                    removeAdInfo(adUnitId)
                     listener?.onAdFailToShow(
                         errorCode = error.code,
                         errorMessage = error.message
                     )
-                    removeAdInfo(adUnitId)
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    super.onAdShowedFullScreenContent()
                     listener?.onAdShowed()
                 }
             }
@@ -487,32 +469,27 @@ object AdmobAdProvider : AbsAdProvider() {
                 loadAd(AdRequest.Builder().build())
                 adListener = object : AdListener() {
                     override fun onAdClicked() {
-                        super.onAdClicked()
                         listener?.onAdClicked()
                     }
 
                     override fun onAdClosed() {
-                        super.onAdClosed()
-                        listener?.onAdClosed()
                         removeAdInfo(adUnitId)
+                        listener?.onAdClosed()
                     }
 
                     override fun onAdFailedToLoad(error: LoadAdError) {
-                        super.onAdFailedToLoad(error)
+                        removeAdInfo(adUnitId)
                         listener?.onAdFailToLoad(
                             errorCode = error.code,
                             errorMessage = error.message
                         )
-                        removeAdInfo(adUnitId)
                     }
 
                     override fun onAdLoaded() {
-                        super.onAdLoaded()
                         listener?.onAdLoaded()
                     }
 
                     override fun onAdOpened() {
-                        super.onAdOpened()
                         listener?.onAdShowed()
                     }
                 }
@@ -538,32 +515,27 @@ object AdmobAdProvider : AbsAdProvider() {
         }.withAdListener(
             object : AdListener() {
                 override fun onAdClicked() {
-                    super.onAdClicked()
                     listener?.onAdClicked()
                 }
 
                 override fun onAdClosed() {
-                    super.onAdClosed()
                     listener?.onAdClosed()
                     removeAdInfo(adUnitId)
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
-                    super.onAdFailedToLoad(error)
+                    removeAdInfo(adUnitId)
                     listener?.onAdFailToLoad(
                         errorCode = error.code,
                         errorMessage = error.message
                     )
-                    removeAdInfo(adUnitId)
                 }
 
                 override fun onAdLoaded() {
-                    super.onAdLoaded()
                     listener?.onAdLoaded()
                 }
 
                 override fun onAdOpened() {
-                    super.onAdOpened()
                     listener?.onAdShowed()
                 }
             }

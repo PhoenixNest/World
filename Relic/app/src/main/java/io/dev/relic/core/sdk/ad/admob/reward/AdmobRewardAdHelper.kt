@@ -2,6 +2,7 @@ package io.dev.relic.core.sdk.ad.admob.reward
 
 import android.content.Context
 import io.dev.relic.core.sdk.ad.admob.AdmobAdManager
+import io.dev.relic.core.sdk.ad.admob.splash.AdmobSplashAdHelper
 import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdConfig
 import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
 import io.dev.relic.core.sdk.ad.core.AdErrorCode
@@ -34,6 +35,7 @@ object AdmobRewardAdHelper {
         onAdEarnedReward: () -> Unit,
         onAdClose: (isEarnedReward: Boolean) -> Unit
     ) {
+        LogUtil.debug(TAG, "[Load-Ad] Loading...")
         val isTimeout: Boolean? = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
@@ -56,6 +58,7 @@ object AdmobRewardAdHelper {
      * @see loadRewardAd
      * */
     fun showRewardAd(context: Context) {
+        LogUtil.debug(TAG, "[Admob | Reward-Ad] Display Ad.")
         AdmobAdManager.showRewardAd(
             context = context,
             ifInBackground = {

@@ -42,7 +42,7 @@ class TodoDataRepositoryImpl @Inject constructor(
     }
 
     /**
-     * Delete the specify todo data from database.
+     * Delete the specified todo data from database.
      * */
     override suspend fun deleteTodoTask(entity: TodoEntity) {
         databaseRepository.deleteTodo(entity)

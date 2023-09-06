@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import io.dev.relic.core.data.datastore.RelicDatastoreCenter
+import io.dev.relic.core.data.datastore.preference_keys.SystemPreferenceKeys
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
 import io.dev.relic.global.utils.LogUtil
@@ -20,17 +22,26 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
     /**
      * [Cold start](https://developer.android.com/topic/performance/vitals/launch-time#cold)
      * */
-    private var isFirstColdStart: Boolean = false
+    var isFirstColdStart: Boolean = dataStoreAppFirstStart
+        private set
 
     /**
      * [Warm start](https://developer.android.com/topic/performance/vitals/launch-time#warm)
      * */
-    private var isWarmStart: Boolean = false
+    var isWarmStart: Boolean = false
+        private set
 
     /**
      * [Hot start](https://developer.android.com/topic/performance/vitals/launch-time#hot)
      * */
-    private var isHotStart: Boolean = false
+    var isHotStart: Boolean = false
+        private set
+
+    /**
+     * Check if the app is first open in datastore.
+     * */
+    private val dataStoreAppFirstStart: Boolean
+        get() = RelicDatastoreCenter.readSyncData(SystemPreferenceKeys.KEY_IS_FIRST_COLD_START, true)
 
     /**
      * Check whether the current App is running in the foreground.
@@ -141,6 +152,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
         // Only display the splash-ad when user has entered the main unit.
         if (hasEnterMainUnit) {
             shouldShowSplashAd = true
+            isFirstColdStart = dataStoreAppFirstStart
         }
     }
 
@@ -189,6 +201,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
         // it is marked as having entered the home unit.
         if (!hasEnterMainUnit && (activity is MainActivity)) {
             hasEnterMainUnit = true
+            RelicDatastoreCenter.writeSyncData(SystemPreferenceKeys.KEY_IS_FIRST_COLD_START, false)
         }
 
         // After entering the home page, the subsequent return to

@@ -41,6 +41,10 @@
     <string name="intro_feature_coffee">Have a cup of coffee and find your passion</string>
     <string name="intro_feature_weather">Know the weather forecast early</string>
     <string name="intro_dive_in">Dive in</string>
+    <string name="intro_agreement_part_1">"By continuing, you agree to our "</string>
+    <string name="intro_agreement_part_2">Terms</string>
+    <string name="intro_agreement_part_3">" and "</string>
+    <string name="intro_agreement_part_4">Privacy Policy</string>
 
     <!-- Home Unit -->
     <string name="home_title">Home</string>

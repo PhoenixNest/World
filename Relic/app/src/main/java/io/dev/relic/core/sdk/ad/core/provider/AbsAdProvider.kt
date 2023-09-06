@@ -28,7 +28,7 @@ abstract class AbsAdProvider : IAdProvider {
     }
 
     /**
-     * Binds the callback listener to Ad instance with specify adUnitId.
+     * Binds the callback listener to Ad instance with the specified adUnitId.
      *
      * @param adUnitId
      * @param listener
@@ -114,6 +114,7 @@ abstract class AbsAdProvider : IAdProvider {
         adUnitId: String,
         adInfoWrapper: AdInfoWrapper
     ) {
+        LogUtil.debug(TAG, "[Save ad info] AdInfoWrapper: $adInfoWrapper")
         adInfoMap[adUnitId] = adInfoWrapper
     }
 

@@ -13,7 +13,7 @@ interface IAdProvider {
     fun init(context: Context)
 
     /**
-     * Load ad with specify adUnitId.
+     * Load ad with the specified adUnitId.
      *
      * @param context
      * @param adUnitId
@@ -28,7 +28,7 @@ interface IAdProvider {
     )
 
     /**
-     * Display ad with specify adUnitId when loaded.
+     * Display ad with the specified adUnitId when loaded.
      *
      * @param context
      * @param adUnitId
@@ -41,7 +41,7 @@ interface IAdProvider {
     )
 
     /**
-     * Binds the callback listener to Ad instance with specify adUnitId.
+     * Binds the callback listener to Ad instance with the specified adUnitId.
      *
      * @param adUnitId
      * @param listener

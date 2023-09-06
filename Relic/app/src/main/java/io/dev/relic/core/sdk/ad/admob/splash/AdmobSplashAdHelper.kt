@@ -31,6 +31,7 @@ object AdmobSplashAdHelper {
         onAdFailed: (errorCode: Int, errorMessage: String) -> Unit,
         onAdClosed: () -> Unit
     ) {
+        LogUtil.debug(TAG, "[Load-Ad] Loading...")
         val isTimeout: Boolean? = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
@@ -52,6 +53,7 @@ object AdmobSplashAdHelper {
      * @see loadSplashAd
      * */
     fun showSplashAd(context: Context) {
+        LogUtil.debug(TAG, "[Admob | Open-Ad] Display Ad.")
         AdmobAdManager.showOpenAd(context)
     }
 
@@ -104,21 +106,21 @@ object AdmobSplashAdHelper {
                          * Callback when ad has already showed.
                          * */
                         override fun onAdShowed() {
-                            LogUtil.debug(TAG, "[Display-Ad] onAdLoaded")
+                            LogUtil.debug(TAG, "[Display-Ad] onAdShowed")
                         }
 
                         /**
                          * Callback when user has performed the click action.
                          * */
                         override fun onAdClicked() {
-                            LogUtil.warning(TAG, "[Click-Ad] onAdLoaded")
+                            LogUtil.warning(TAG, "[Click-Ad] onAdClicked")
                         }
 
                         /**
                          * Callback when user has closed the current showed ad.
                          * */
                         override fun onAdClosed() {
-                            LogUtil.debug(TAG, "[Close-Ad] onAdLoaded")
+                            LogUtil.debug(TAG, "[Close-Ad] onAdClosed")
                             onAdClosed.invoke()
                         }
 
