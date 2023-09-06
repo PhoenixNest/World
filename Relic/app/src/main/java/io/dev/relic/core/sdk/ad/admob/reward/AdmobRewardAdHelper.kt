@@ -2,7 +2,6 @@ package io.dev.relic.core.sdk.ad.admob.reward
 
 import android.content.Context
 import io.dev.relic.core.sdk.ad.admob.AdmobAdManager
-import io.dev.relic.core.sdk.ad.admob.splash.AdmobSplashAdHelper
 import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdConfig
 import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
 import io.dev.relic.core.sdk.ad.core.AdErrorCode

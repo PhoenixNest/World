@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
