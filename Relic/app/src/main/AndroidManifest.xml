@@ -59,15 +59,14 @@
             android:value="true" />
 
         <!-- Admob -->
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="@string/admob_dev_key" />
 
-        <!-- AMap Dev Key-->
+        <!-- Amap-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="请输入您的用户Key" />
+            android:value="@string/amap_dev_key" />
 
     </application>
 

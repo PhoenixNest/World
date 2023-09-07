@@ -1,3 +1,12 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+// Dev config
+private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("admob_dev_key")
+private val amapDevKay: String = gradleLocalProperties(rootDir).getProperty("amap_dev_key")
+
+// App config
+private val isNoAds: String = extra["NO_ADS"].toString()
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -31,7 +40,10 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("boolean", "NO_ADS", extra["NO_ADS"].toString())
+        buildConfigField("boolean", "NO_ADS", isNoAds)
+
+        resValue("string", "admob_dev_key", admobDevKey)
+        resValue("string", "amap_dev_key", amapDevKay)
 
         vectorDrawables {
             useSupportLibrary = true
