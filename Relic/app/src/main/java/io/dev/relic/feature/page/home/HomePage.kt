@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.dev.relic.feature.MainState
+import io.dev.relic.feature.screen.main.MainState
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screen.main.MainScreenState
 import io.dev.relic.ui.theme.mainTextColor

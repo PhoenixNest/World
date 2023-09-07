@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
 import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
-import io.dev.relic.feature.MainState
+import io.dev.relic.feature.screen.main.MainState
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.ViewModelExt.setState
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -25,7 +25,7 @@ import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.MapView
 import io.dev.relic.domain.location.amap.AMapConfig
-import io.dev.relic.feature.MainState
+import io.dev.relic.feature.screen.main.MainState
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screen.main.MainScreenState
 import io.dev.relic.global.utils.LogUtil

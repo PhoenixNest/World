@@ -1,4 +1,4 @@
-package io.dev.relic.feature
+package io.dev.relic.feature.screen.main
 
 import android.location.Location
 
