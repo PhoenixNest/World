@@ -2,6 +2,7 @@ package io.dev.relic.core.device.location
 
 import android.content.Context
 import com.amap.api.maps.MapsInitializer
+import com.amap.api.services.core.ServiceSettings
 import io.dev.relic.core.data.datastore.RelicDatastoreCenter
 import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys
 import io.dev.relic.global.utils.LogUtil
@@ -44,6 +45,8 @@ object AmapLocationCenter {
      *
      * [MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
+     * [ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     *
      * @param  context: 上下文
      * @param  isContains: 隐私权政策是否包含高德开平隐私权政策，true是包含
      * @param  isShow: 隐私权政策是否弹窗展示告知用户，true是展示
@@ -54,6 +57,7 @@ object AmapLocationCenter {
         isShow: Boolean
     ) {
         MapsInitializer.updatePrivacyShow(context, isContains, isShow)
+        ServiceSettings.updatePrivacyShow(context, isContains, isShow)
     }
 
     /**
@@ -63,6 +67,8 @@ object AmapLocationCenter {
      *
      * [MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
+     * [ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     *
      * @param context: 上下文
      * @param isAgree: 隐私权政策是否取得用户同意，true是用户同意
      * */
@@ -71,6 +77,7 @@ object AmapLocationCenter {
         isAgree: Boolean
     ) {
         MapsInitializer.updatePrivacyAgree(context, isAgree)
+        ServiceSettings.updatePrivacyAgree(context, isAgree)
     }
 
 }
