@@ -52,7 +52,7 @@ object RelicDatastoreCenter {
     /* ======================== Async ======================== */
 
     @Suppress("UNCHECKED_CAST")
-    fun <U> readAsyncData(key: String, default: U): Flow<U> {
+    fun <T> readAsyncData(key: String, default: T): Flow<T> {
         val data = when (default) {
             is Long -> readLongFlow(key, default)
             is String -> readStringFlow(key, default)
@@ -61,7 +61,7 @@ object RelicDatastoreCenter {
             is Float -> readFloatFlow(key, default)
             else -> throw IllegalArgumentException("This type can't be saved into DataStore")
         }
-        return data as Flow<U>
+        return data as Flow<T>
     }
 
     suspend fun <T> writeAsyncData(key: String, value: T) {
@@ -93,7 +93,10 @@ object RelicDatastoreCenter {
 
     /* ======================== Read ======================== */
 
-    private fun readBooleanData(key: String, default: Boolean = false): Boolean {
+    private fun readBooleanData(
+        key: String,
+        default: Boolean = false
+    ): Boolean {
         var value = false
         runBlocking {
             dataStore.data.first {
@@ -104,7 +107,10 @@ object RelicDatastoreCenter {
         return value
     }
 
-    private fun readBooleanFlow(key: String, default: Boolean = false): Flow<Boolean> {
+    private fun readBooleanFlow(
+        key: String,
+        default: Boolean = false
+    ): Flow<Boolean> {
         return dataStore.data
             .catch {
                 if (it is IOException) {
@@ -118,7 +124,10 @@ object RelicDatastoreCenter {
             }
     }
 
-    private fun readIntData(key: String, default: Int = 0): Int {
+    private fun readIntData(
+        key: String,
+        default: Int = 0
+    ): Int {
         var value = 0
         runBlocking {
             dataStore.data.first {
@@ -129,7 +138,10 @@ object RelicDatastoreCenter {
         return value
     }
 
-    private fun readIntFlow(key: String, default: Int = 0): Flow<Int> {
+    private fun readIntFlow(
+        key: String,
+        default: Int = 0
+    ): Flow<Int> {
         return dataStore.data
             .catch {
                 if (it is IOException) {
@@ -143,7 +155,10 @@ object RelicDatastoreCenter {
             }
     }
 
-    private fun readStringData(key: String, default: String = ""): String {
+    private fun readStringData(
+        key: String,
+        default: String = ""
+    ): String {
         var value = ""
         runBlocking {
             dataStore.data.first {
@@ -154,7 +169,10 @@ object RelicDatastoreCenter {
         return value
     }
 
-    private fun readStringFlow(key: String, default: String = ""): Flow<String> {
+    private fun readStringFlow(
+        key: String,
+        default: String = ""
+    ): Flow<String> {
         return dataStore.data
             .catch {
                 if (it is IOException) {
@@ -168,7 +186,10 @@ object RelicDatastoreCenter {
             }
     }
 
-    private fun readFloatData(key: String, default: Float = 0f): Float {
+    private fun readFloatData(
+        key: String,
+        default: Float = 0f
+    ): Float {
         var value = 0f
         runBlocking {
             dataStore.data.first {
@@ -179,7 +200,10 @@ object RelicDatastoreCenter {
         return value
     }
 
-    private fun readFloatFlow(key: String, default: Float = 0f): Flow<Float> {
+    private fun readFloatFlow(
+        key: String,
+        default: Float = 0f
+    ): Flow<Float> {
         return dataStore.data
             .catch {
                 if (it is IOException) {
@@ -193,7 +217,10 @@ object RelicDatastoreCenter {
             }
     }
 
-    private fun readLongData(key: String, default: Long = 0L): Long {
+    private fun readLongData(
+        key: String,
+        default: Long = 0L
+    ): Long {
         var value = 0L
         runBlocking {
             dataStore.data.first {
@@ -204,7 +231,10 @@ object RelicDatastoreCenter {
         return value
     }
 
-    private fun readLongFlow(key: String, default: Long = 0L): Flow<Long> {
+    private fun readLongFlow(
+        key: String,
+        default: Long = 0L
+    ): Flow<Long> {
         return dataStore.data
             .catch {
                 if (it is IOException) {
@@ -220,61 +250,91 @@ object RelicDatastoreCenter {
 
     /* ======================== Write ======================== */
 
-    private fun saveSyncBooleanData(key: String, value: Boolean) {
+    private fun saveSyncBooleanData(
+        key: String,
+        value: Boolean
+    ) {
         return runBlocking {
             saveAsyncBooleanData(key, value)
         }
     }
 
-    private suspend fun saveAsyncBooleanData(key: String, value: Boolean) {
+    private suspend fun saveAsyncBooleanData(
+        key: String,
+        value: Boolean
+    ) {
         dataStore.edit { mutablePreferences: MutablePreferences ->
             mutablePreferences[booleanPreferencesKey(key)] = value
         }
     }
 
-    private fun saveSyncIntData(key: String, value: Int) {
+    private fun saveSyncIntData(
+        key: String,
+        value: Int
+    ) {
         return runBlocking {
             saveAsyncIntData(key, value)
         }
     }
 
-    private suspend fun saveAsyncIntData(key: String, value: Int) {
+    private suspend fun saveAsyncIntData(
+        key: String,
+        value: Int
+    ) {
         dataStore.edit { mutablePreferences: MutablePreferences ->
             mutablePreferences[intPreferencesKey(key)] = value
         }
     }
 
-    private fun saveSyncStringData(key: String, value: String) {
+    private fun saveSyncStringData(
+        key: String,
+        value: String
+    ) {
         return runBlocking {
             saveAsyncStringData(key, value)
         }
     }
 
-    private suspend fun saveAsyncStringData(key: String, value: String) {
+    private suspend fun saveAsyncStringData(
+        key: String,
+        value: String
+    ) {
         dataStore.edit { mutablePreferences: MutablePreferences ->
             mutablePreferences[stringPreferencesKey(key)] = value
         }
     }
 
-    private fun saveSyncFloatData(key: String, value: Float) {
+    private fun saveSyncFloatData(
+        key: String,
+        value: Float
+    ) {
         return runBlocking {
             saveAsyncFloatData(key, value)
         }
     }
 
-    private suspend fun saveAsyncFloatData(key: String, value: Float) {
+    private suspend fun saveAsyncFloatData(
+        key: String,
+        value: Float
+    ) {
         dataStore.edit { mutablePreferences: MutablePreferences ->
             mutablePreferences[floatPreferencesKey(key)] = value
         }
     }
 
-    private fun saveSyncLongData(key: String, value: Long) {
+    private fun saveSyncLongData(
+        key: String,
+        value: Long
+    ) {
         return runBlocking {
             saveAsyncLongData(key, value)
         }
     }
 
-    private suspend fun saveAsyncLongData(key: String, value: Long) {
+    private suspend fun saveAsyncLongData(
+        key: String,
+        value: Long
+    ) {
         dataStore.edit { mutablePreferences: MutablePreferences ->
             mutablePreferences[longPreferencesKey(key)] = value
         }
