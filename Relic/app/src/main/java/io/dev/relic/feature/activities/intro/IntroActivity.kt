@@ -13,13 +13,15 @@ import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys
+import io.dev.relic.core.data.datastore.RelicDatastoreCenter.writeSyncData
+import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
+import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screen.intro.IntroScreen
 import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.UiUtil
+import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -46,13 +48,13 @@ class IntroActivity : AbsBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initialization()
-        initUi()
+        initialization(savedInstanceState)
+        initUi(savedInstanceState)
     }
 
     /* ======================== Logical ======================== */
 
-    override fun initialization() {
+    override fun initialization(savedInstanceState: Bundle?) {
         permissionLiveData.observe(this) { isGranted: Boolean ->
             LogUtil.debug(TAG, "[Permission] isGranted: $isGranted")
             updateUserAgreementMarker(
@@ -70,16 +72,14 @@ class IntroActivity : AbsBaseActivity() {
         isAgreeUserTerms: Boolean,
         isAgreeUserPrivacy: Boolean
     ) {
-        RelicDatastoreCenter.apply {
-            writeSyncData(UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT, true)
-            writeSyncData(UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS, isAgreeUserTerms)
-            writeSyncData(UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY, isAgreeUserPrivacy)
-        }
+        writeSyncData(KEY_IS_SHOW_USER_AGREEMENT, true)
+        writeSyncData(KEY_IS_AGREE_USER_TERMS, isAgreeUserTerms)
+        writeSyncData(KEY_IS_AGREE_USER_PRIVACY, isAgreeUserPrivacy)
     }
 
     /* ======================== Ui ======================== */
 
-    override fun initUi() {
+    override fun initUi(savedInstanceState: Bundle?) {
         setContent {
             val multiplePermissionsState: MultiplePermissionsState = rememberMultiplePermissionsState(
                 permissions = listOf(
@@ -93,8 +93,7 @@ class IntroActivity : AbsBaseActivity() {
             }
 
             // Setup immersive mode.
-            UiUtil.SystemUtil.setImmersiveMode()
-            UiUtil.StatusBarUtil.setImmersiveStatusBar()
+            setImmersiveMode()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {

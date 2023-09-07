@@ -15,7 +15,8 @@ import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screen.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
-import io.dev.relic.global.utils.UiUtil
+import io.dev.relic.global.utils.LogUtil
+import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
 
 @SuppressLint("CustomSplashScreen")
@@ -47,16 +48,17 @@ class SplashActivity : AbsBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initialization()
-        initUi()
+        initialization(savedInstanceState)
+        initUi(savedInstanceState)
     }
 
     /* ======================== Logical ======================== */
 
-    override fun initialization() {
+    override fun initialization(savedInstanceState: Bundle?) {
         splashViewModel.execute(
             context = this,
             onSplashProcessEnd = {
+                LogUtil.debug(TAG, "[Splash-Process] Finished, start main logic.")
                 checkAndNavigate()
             }
         )
@@ -68,15 +70,15 @@ class SplashActivity : AbsBaseActivity() {
         } else {
             MainActivity.start(this)
         }
+        finish()
     }
 
     /* ======================== Ui ======================== */
 
-    override fun initUi() {
+    override fun initUi(savedInstanceState: Bundle?) {
         setContent {
             // Setup immersive mode.
-            UiUtil.SystemUtil.setImmersiveMode()
-            UiUtil.StatusBarUtil.setImmersiveStatusBar()
+            setImmersiveMode()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {

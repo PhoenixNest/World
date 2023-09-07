@@ -46,26 +46,33 @@
     <string name="intro_agreement_part_3">" and "</string>
     <string name="intro_agreement_part_4">Privacy Policy</string>
 
-    <!-- Home Unit -->
+    <!-- Home Page -->
     <string name="home_title">Home</string>
     <string name="home_card_weather_title">Today\'s Weather</string>
     <string name="home_card_todo_title">Check out your todo tasks</string>
     <string name="home_card_food_recipes_title">Eat and drink your fill</string>
 
-    <!-- Hive Unit -->
+    <!-- Explore Page -->
+    <string name="explore_title">Explore</string>
+
+    <!-- Hive Page -->
     <string name="hive_title">Hive</string>
 
-    <!-- Mine Unit -->
+    <!-- Mine Page -->
     <string name="mine_title">Me</string>
 
-    <!-- Todo Unit -->
+    <!-- Todo Page -->
     <string name="todo_title">Todo</string>
     <string name="todo_ext_fab_label">Make a plan</string>
     <string name="todo_create_title_hint">Title</string>
     <string name="todo_create_subtitle_hint">Subtitle</string>
     <string name="todo_create_content_hint">Content</string>
 
-    <!-- Setting Unit -->
+    <!-- Setting Page -->
     <string name="setting_title">Setting</string>
+
+    <!-- Debug -->
+    <string name="debug_title">DEBUG CENTER</string>
+    <string name="debug_title_amap">- AMap</string>
 
 </resources>

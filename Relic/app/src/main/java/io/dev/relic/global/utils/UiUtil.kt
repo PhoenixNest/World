@@ -1,7 +1,6 @@
 package io.dev.relic.global.utils
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -15,24 +14,15 @@ object UiUtil {
         @Composable
         fun setImmersiveMode() {
             rememberSystemUiController().apply {
-                setSystemBarsColor(
+                setStatusBarColor(
                     color = Color.Transparent,
-                    darkIcons = isSystemInDarkTheme()
+                    darkIcons = false
+                )
+                setNavigationBarColor(
+                    color = Color.Transparent,
+                    darkIcons = false
                 )
             }
         }
     }
-
-    object StatusBarUtil {
-
-        @SuppressLint("ComposableNaming")
-        @Composable
-        fun setImmersiveStatusBar() {
-            rememberSystemUiController().setStatusBarColor(
-                color = Color.Transparent,
-                darkIcons = MaterialTheme.colors.isLight
-            )
-        }
-    }
-
 }

@@ -3,6 +3,7 @@ package io.dev.relic.global
 import android.app.Application
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
+import io.dev.relic.core.sdk.RelicSdkManager
 
 @HiltAndroidApp
 class RelicApplication : Application() {
@@ -30,10 +31,17 @@ class RelicApplication : Application() {
 
         // Initializes the global lifecycle observer.
         initLifecycleObserver()
+
+        // Initializes the app's required sdk.
+        initSdk(this)
     }
 
     private fun initLifecycleObserver() {
         RelicLifecycleObserver.init()
+    }
+
+    private fun initSdk(context: Context) {
+        RelicSdkManager.initSdk(context)
     }
 
 }

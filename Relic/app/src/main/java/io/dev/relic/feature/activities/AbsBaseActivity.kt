@@ -2,13 +2,11 @@ package io.dev.relic.feature.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
-import io.dev.relic.feature.GlobalViewModel
 import io.dev.relic.global.utils.LogUtil
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +19,6 @@ abstract class AbsBaseActivity : ComponentActivity() {
     @Inject
     lateinit var networkMonitor: NetworkMonitor
 
-    val globalViewModel: GlobalViewModel by viewModels()
-
     companion object {
         private const val TAG: String = "BaseActivity"
     }
@@ -34,13 +30,13 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
         preInitialization(
             doOnFinish = {
-                initialization()
+                initialization(savedInstanceState)
             }
         )
 
         preInitUi(
             doOnFinish = {
-                initUi()
+                initUi(savedInstanceState)
             }
         )
     }
@@ -66,7 +62,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
         }.launchIn(lifecycleScope)
     }
 
-    abstract fun initialization()
+    abstract fun initialization(savedInstanceState: Bundle?)
 
     /* ======================== Ui ======================== */
 
@@ -81,6 +77,6 @@ abstract class AbsBaseActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 
-    abstract fun initUi()
+    abstract fun initUi(savedInstanceState: Bundle?)
 
 }

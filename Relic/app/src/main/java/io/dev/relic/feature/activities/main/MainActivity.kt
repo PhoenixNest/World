@@ -2,6 +2,7 @@ package io.dev.relic.feature.activities.main
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +14,12 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
-import io.dev.relic.core.device.location.AmapLocationCenter
+import io.dev.relic.domain.location.amap.AMapLocationCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screen.main.MainScreen
-import io.dev.relic.global.utils.UiUtil
+import io.dev.relic.global.RelicApplication
+import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -47,17 +49,16 @@ class MainActivity : AbsBaseActivity() {
 
     /* ======================== Logical ======================== */
 
-    override fun initialization() {
-        AmapLocationCenter.verifyAmapPrivacyAgreement(this)
+    override fun initialization(savedInstanceState: Bundle?) {
+        AMapLocationCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
     }
 
     /* ======================== Ui ======================== */
 
-    override fun initUi() {
+    override fun initUi(savedInstanceState: Bundle?) {
         setContent {
             // Setup immersive mode.
-            UiUtil.SystemUtil.setImmersiveMode()
-            UiUtil.StatusBarUtil.setImmersiveStatusBar()
+            setImmersiveMode()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
@@ -69,6 +70,7 @@ class MainActivity : AbsBaseActivity() {
                         .navigationBarsPadding()
                 ) {
                     MainScreen(
+                        savedInstanceState = savedInstanceState,
                         windowSizeClass = calculateWindowSizeClass(activity = this),
                         networkMonitor = networkMonitor
                     )

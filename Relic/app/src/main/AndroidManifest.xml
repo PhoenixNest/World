@@ -53,6 +53,12 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
+        <activity
+            android:name=".feature.activities.debug.DebugActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
         <!-- Firebase Performance plugin -->
         <meta-data
             android:name="firebase_performance_logcat_enabled"

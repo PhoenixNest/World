@@ -62,8 +62,11 @@ class SplashViewModel @Inject constructor(
                 },
                 onAdFailed = { _: Int, _: String ->
                     isAdLoading = false
+                    onAdClosed.invoke()
                 },
-                onAdClosed = onAdClosed
+                onAdClosed = {
+                    onAdClosed.invoke()
+                }
             )
         }
     }

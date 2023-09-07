@@ -89,6 +89,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     composeOptions {
@@ -106,6 +107,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Legacy
+    implementation(libs.material)
+    implementation(libs.androidx.recyclerview)
 
     // Compose Ui
     val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.08.00")

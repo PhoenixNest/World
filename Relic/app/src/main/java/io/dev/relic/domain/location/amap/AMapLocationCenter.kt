@@ -1,15 +1,16 @@
-package io.dev.relic.core.device.location
+package io.dev.relic.domain.location.amap
 
 import android.content.Context
 import com.amap.api.maps.MapsInitializer
 import com.amap.api.services.core.ServiceSettings
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys
+import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
+import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.global.utils.LogUtil
 
-object AmapLocationCenter {
+object AMapLocationCenter {
 
-    private const val TAG = "AmapLocationCenter"
+    private const val TAG = "AMapLocationCenter"
 
     /**
      * 核验是否同意地图合规政策。
@@ -19,23 +20,21 @@ object AmapLocationCenter {
      * @see updatePrivacyShow
      * @see updatePrivacyAgree
      * */
-    fun verifyAmapPrivacyAgreement(context: Context) {
-        RelicDatastoreCenter.apply {
-            val isShowUserAgreement: Boolean = readSyncData(UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT, false)
-            val isAgreeUserPrivacy: Boolean = readSyncData(UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY, false)
-            LogUtil.debug(TAG, "[Verify Amap Privacy-Agreement] isShowUserAgreement: $isShowUserAgreement")
-            LogUtil.debug(TAG, "[Verify Amap Privacy-Agreement] isAgreeUserPrivacy: $isAgreeUserPrivacy")
+    fun verifyAMapPrivacyAgreement(context: Context) {
+        val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
+        val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
+        LogUtil.debug(TAG, "[Verifier] isShowUserAgreement: $isShowUserAgreement")
+        LogUtil.debug(TAG, "[Verifier] isAgreeUserPrivacy: $isAgreeUserPrivacy")
 
-            updatePrivacyShow(
-                context = context,
-                isContains = true,
-                isShow = isShowUserAgreement
-            )
-            updatePrivacyAgree(
-                context = context,
-                isAgree = isAgreeUserPrivacy
-            )
-        }
+        updatePrivacyShow(
+            context = context,
+            isContains = true,
+            isShow = isShowUserAgreement
+        )
+        updatePrivacyAgree(
+            context = context,
+            isAgree = isAgreeUserPrivacy
+        )
     }
 
     /**
@@ -43,9 +42,9 @@ object AmapLocationCenter {
      *
      * [Android 地图SDK • 隐私合规接口说明](https://lbs.amap.com/api/android-sdk/guide/create-project/dev-attention#t2)
      *
-     * [MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     * [3D地图 • MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
-     * [ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     * [搜索服务 • ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
      * @param  context: 上下文
      * @param  isContains: 隐私权政策是否包含高德开平隐私权政策，true是包含
@@ -65,9 +64,9 @@ object AmapLocationCenter {
      *
      * [Android 地图SDK • 隐私合规接口说明](https://lbs.amap.com/api/android-sdk/guide/create-project/dev-attention#t2)
      *
-     * [MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     * [3D地图 • MapsInitializer](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
-     * [ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
+     * [搜索服务 • ServiceSettings](https://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
      *
      * @param context: 上下文
      * @param isAgree: 隐私权政策是否取得用户同意，true是用户同意

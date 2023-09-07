@@ -2,29 +2,29 @@ package io.dev.relic.feature
 
 import android.location.Location
 
-sealed class GlobalState {
+sealed class MainState {
 
     /* Common */
 
-    object Init : GlobalState()
+    object Init : MainState()
 
-    object Empty : GlobalState()
+    object Empty : MainState()
 
     /* Loading */
 
-    object AccessingLocation : GlobalState()
+    object AccessingLocation : MainState()
 
     /* Succeed */
 
     data class AccessLocationSucceed(
         val location: Location?
-    ) : GlobalState()
+    ) : MainState()
 
     /* Failed */
 
     data class AccessLocationFailed(
         val errorCode: Int?,
         val errorMessage: String?
-    ) : GlobalState()
+    ) : MainState()
 
 }
