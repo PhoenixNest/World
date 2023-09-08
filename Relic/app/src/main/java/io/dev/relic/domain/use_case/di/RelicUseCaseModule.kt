@@ -15,7 +15,7 @@ import io.dev.relic.domain.use_case.food_receipes.action.complex_search.FetchCom
 import io.dev.relic.domain.use_case.food_receipes.action.complex_search.ReadCacheComplexRecipesData
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
 import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
-import io.dev.relic.domain.use_case.todo.TodoUnitUseCase
+import io.dev.relic.domain.use_case.todo.TodoUseCase
 import io.dev.relic.domain.use_case.todo.action.AddTodo
 import io.dev.relic.domain.use_case.todo.action.DeleteTodo
 import io.dev.relic.domain.use_case.todo.action.GetAllTodos
@@ -34,8 +34,8 @@ class RelicUseCaseModule {
     @Provides
     fun provideTotoUnitUseCase(
         todoRepository: ITodoDataRepository
-    ): TodoUnitUseCase {
-        return TodoUnitUseCase(
+    ): TodoUseCase {
+        return TodoUseCase(
             addTodo = AddTodo(todoRepository = todoRepository),
             deleteTodo = DeleteTodo(todoRepository = todoRepository),
             getAllTodos = GetAllTodos(todoRepository = todoRepository),

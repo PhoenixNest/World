@@ -3,6 +3,7 @@
 
     <!-- System -->
     <string name="no_network_connection_message">Please check your network connection…</string>
+    <string name="no_data">No Data…</string>
     <string name="open_source_license">
         MIT License
         \n\n

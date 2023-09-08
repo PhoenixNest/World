@@ -7,7 +7,7 @@ import io.dev.relic.domain.use_case.todo.action.UpdateTodo
 
 internal const val TAG = "TodoUnitUseCase"
 
-data class TodoUnitUseCase(
+data class TodoUseCase(
     val addTodo: AddTodo,
     val deleteTodo: DeleteTodo,
     val getAllTodos: GetAllTodos,

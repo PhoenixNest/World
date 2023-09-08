@@ -12,10 +12,9 @@ import java.time.format.DateTimeFormatter
 /**
  * Convert weather data DTO to data model.
  *
- * @see io.dev.relic.core.module.data.network.api.dto.weather.WeatherDTO
- * @see io.dev.relic.core.module.data.network.api.dto.weather.WeatherUnitDataDTO
- * @see io.dev.relic.core.module.data.network.api.dto.weather.WeatherDataDTO
- * @see io.dev.relic.domain.model.weather.WeatherDataModel
+ * @see WeatherForecastDTO
+ * @see WeatherHourlyDTO
+ * @see WeatherDataModel
  * */
 object WeatherDataMapper {
 
