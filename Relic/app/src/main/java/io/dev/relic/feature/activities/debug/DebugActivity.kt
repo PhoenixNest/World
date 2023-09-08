@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
 import io.dev.relic.databinding.ActivityDebugBinding
-import io.dev.relic.domain.location.amap.AMapLocationCenter
+import io.dev.relic.domain.location.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
 
@@ -62,7 +62,7 @@ class DebugActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     private fun verifyAMapPrivacyAgreement() {
-        AMapLocationCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
+        AMapPrivacyCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
     }
 
     /* ======================== Ui ======================== */

@@ -8,9 +8,9 @@ import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_I
 import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.global.utils.LogUtil
 
-object AMapLocationCenter {
+object AMapPrivacyCenter {
 
-    private const val TAG = "AMapLocationCenter"
+    private const val TAG = "AMapPrivacyCenter"
 
     /**
      * 核验是否同意地图合规政策。
