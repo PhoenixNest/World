@@ -11,11 +11,9 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.page.explore.pageExplore
 import io.dev.relic.feature.page.hive.pageHive
 import io.dev.relic.feature.page.home.pageHome
-import io.dev.relic.feature.screen.main.MainScreenState
 
 @Composable
 fun MainFeatureNavHost(
-    mainScreenState: MainScreenState,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
     startDestination: String = RelicRoute.HOME
@@ -39,17 +37,8 @@ fun MainFeatureNavHost(
             )
         }
     ) {
-        pageHome(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel
-        )
-        pageExplore(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel
-        )
-        pageHive(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel
-        )
+        pageHome(mainViewModel = mainViewModel)
+        pageExplore(mainViewModel = mainViewModel)
+        pageHive(mainViewModel = mainViewModel)
     }
 }

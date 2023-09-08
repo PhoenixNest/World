@@ -18,10 +18,7 @@ import io.dev.relic.ui.theme.mainTextColor
 import io.dev.relic.ui.theme.mainThemeColor
 
 @Composable
-fun HomePageRoute(
-    mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel
-) {
+fun HomePageRoute(mainViewModel: MainViewModel) {
     val mainState: MainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
     HomePage()
 }

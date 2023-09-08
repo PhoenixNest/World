@@ -6,7 +6,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.route.RelicRoute
-import io.dev.relic.feature.screen.main.MainScreenState
 
 fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
     this.navigate(
@@ -15,10 +14,7 @@ fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavGraphBuilder.pageHive(
-    mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel
-) {
+fun NavGraphBuilder.pageHive(mainViewModel: MainViewModel) {
     composable(route = RelicRoute.HIVE) {
         HivePageRoute(mainViewModel = mainViewModel)
     }

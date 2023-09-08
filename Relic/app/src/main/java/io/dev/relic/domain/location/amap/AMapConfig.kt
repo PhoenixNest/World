@@ -35,7 +35,7 @@ object AMapConfig {
             val isShowMyLocation: Boolean = readSyncData(KEY_IS_SHOW_MY_LOCATION, true)
             val locationType: Int = readSyncData(KEY_MAP_LOCATION_TYPE, MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
 
-            StringBuilder("[MyLocationStyle]").apply {
+            StringBuilder().apply {
                 append("是否显示定位小蓝点: $isShowMyLocation, ")
                 append("我的位置展示模式: $locationType")
             }.run {
@@ -67,7 +67,7 @@ object AMapConfig {
             val isEnableZoomControl: Boolean = readSyncData(KEY_IS_ENABLE_ZOOM_CONTROL, true)
             val isEnableZoomGesture: Boolean = readSyncData(KEY_IS_ENABLE_ZOOM_GESTURE, true)
 
-            StringBuilder("[AMapOptions]").apply {
+            StringBuilder().apply {
                 append("是否开启指南针: $isEnableCompress, ")
                 append("是否开启手势旋转: $isEnableRotateGesture, ")
                 append("是否展示比例尺: $isEnableScaleControl, ")

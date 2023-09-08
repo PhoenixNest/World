@@ -15,14 +15,8 @@ fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavGraphBuilder.pageHome(
-    mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel
-) {
+fun NavGraphBuilder.pageHome(mainViewModel: MainViewModel) {
     composable(route = RelicRoute.HOME) {
-        HomePageRoute(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel
-        )
+        HomePageRoute(mainViewModel = mainViewModel)
     }
 }

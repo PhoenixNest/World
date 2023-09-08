@@ -95,7 +95,6 @@ fun MainScreen(
             }
             Box(modifier = Modifier.fillMaxSize()) {
                 MainFeatureNavHost(
-                    mainScreenState = mainScreenState,
                     navHostController = mainScreenState.navHostController,
                     modifier = Modifier.fillMaxSize()
                 )
