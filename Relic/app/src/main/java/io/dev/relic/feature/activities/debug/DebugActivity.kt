@@ -3,14 +3,17 @@ package io.dev.relic.feature.activities.debug
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
+import com.tomtom.sdk.map.display.ui.MapFragment
+import io.dev.relic.R
 import io.dev.relic.databinding.ActivityDebugBinding
-import io.dev.relic.domain.location.amap.AMapPrivacyCenter
-import io.dev.relic.feature.activities.AbsBaseActivity
+import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.global.RelicApplication
 
-class DebugActivity : AbsBaseActivity() {
+class DebugActivity : AppCompatActivity() {
 
     private val binding: ActivityDebugBinding by lazy {
         ActivityDebugBinding.inflate(layoutInflater)
@@ -31,43 +34,49 @@ class DebugActivity : AbsBaseActivity() {
         }
     }
 
-    /* ======================== override ======================== */
-
-    override fun initialization(savedInstanceState: Bundle?) {
-        verifyAMapPrivacyAgreement()
-    }
-
-    override fun initUi(savedInstanceState: Bundle?) {
-        setContentView(binding.root)
-        setupDebugAMapView(savedInstanceState)
-    }
-
     /* ======================== Lifecycle ======================== */
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        initialization(savedInstanceState)
+        initUi(savedInstanceState)
+    }
 
     override fun onResume() {
         super.onResume()
-        binding.mapView.onResume()
+        binding.aMapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.mapView.onPause()
+        binding.aMapView.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.mapView.onDestroy()
+        binding.aMapView.onDestroy()
     }
 
     /* ======================== Logical ======================== */
+
+    private fun initialization(savedInstanceState: Bundle?) {
+        verifyAMapPrivacyAgreement()
+    }
 
     private fun verifyAMapPrivacyAgreement() {
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
     }
 
     /* ======================== Ui ======================== */
+
+    private fun initUi(savedInstanceState: Bundle?) {
+        setupDebugAMapView(savedInstanceState)
+        setupDebugTomTomAMapView(savedInstanceState)
+    }
+
     private fun setupDebugAMapView(savedInstanceState: Bundle?) {
-        binding.mapView.apply {
+        binding.aMapView.apply {
             // 此方法必须重写
             onCreate(savedInstanceState)
         }.also { mapView: MapView ->
@@ -81,6 +90,15 @@ class DebugActivity : AbsBaseActivity() {
                 // - MAP_TYPE_SATELLITE
                 // - MAP_TYPE_NIGHT
                 mapType = AMap.MAP_TYPE_NORMAL
+            }
+        }
+    }
+
+    private fun setupDebugTomTomAMapView(savedInstanceState: Bundle?) {
+        val mapFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.tomtomFragmentContainerView)
+        (mapFragment as? MapFragment)?.run {
+            getMapAsync {
+                //
             }
         }
     }

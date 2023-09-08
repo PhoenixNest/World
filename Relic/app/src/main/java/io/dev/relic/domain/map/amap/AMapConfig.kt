@@ -1,4 +1,4 @@
-package io.dev.relic.domain.location.amap
+package io.dev.relic.domain.map.amap
 
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.model.MyLocationStyle

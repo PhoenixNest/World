@@ -67,9 +67,9 @@ hiltCompiler = "2.47"
 hiltWork = "1.0.0"
 
 # Coroutine-ktx
-kotlinxCoroutinesCore = "1.7.1"
-kotlinxCoroutinesAndroid = "1.7.1"
-kotlinxCoroutinesTest = "1.7.1"
+kotlinxCoroutinesCore = "1.7.3"
+kotlinxCoroutinesAndroid = "1.7.3"
+kotlinxCoroutinesTest = "1.7.3"
 
 # Gogole Services
 googleServices = "4.3.15"
@@ -95,6 +95,9 @@ moshiKotlinCodegen = "1.15.0"
 
 # Lottie
 lottieCompose = "6.0.0"
+
+# TomTom
+tomtomMapDisplay = "0.31.1"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -144,6 +147,7 @@ lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx
 lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+tomtom-map-display = { module = "com.tomtom.sdk.maps:map-display", version.ref = "tomtomMapDisplay" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshiAdapters" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }

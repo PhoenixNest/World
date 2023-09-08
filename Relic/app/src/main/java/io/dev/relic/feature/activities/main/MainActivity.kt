@@ -14,7 +14,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
-import io.dev.relic.domain.location.amap.AMapPrivacyCenter
+import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screen.main.MainScreen

@@ -1,4 +1,4 @@
-package io.dev.relic.domain.location.amap
+package io.dev.relic.domain.map.amap
 
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -35,7 +35,7 @@ import com.amap.api.maps.model.MyLocationStyle
  * @see MyLocationStyle
  * */
 @Composable
-fun RelicAMapComponent(
+fun AMapComponent(
     modifier: Modifier = Modifier,
     aMapOptionsFactory: () -> AMapOptions = { AMapOptions() },
     locationStyleFactory: () -> MyLocationStyle = { MyLocationStyle() }

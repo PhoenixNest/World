@@ -1,4 +1,4 @@
-package io.dev.relic.domain.location.amap
+package io.dev.relic.domain.map.amap
 
 import android.content.Context
 import com.amap.api.maps.MapsInitializer

@@ -75,5 +75,6 @@
     <!-- Debug -->
     <string name="debug_title">DEBUG CENTER</string>
     <string name="debug_title_amap">- AMap</string>
+    <string name="debug_title_tomtom">- TomTom</string>
 
 </resources>

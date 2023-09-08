@@ -1,8 +1,9 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev config
-private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("admob_dev_key")
-private val amapDevKay: String = gradleLocalProperties(rootDir).getProperty("amap_dev_key")
+private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("ADMOB_DEV_KEY")
+private val aMapDevKay: String = gradleLocalProperties(rootDir).getProperty("AMAP_DEV_KEY")
+private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
 
 // App config
 private val isNoAds: String = extra["NO_ADS"].toString()
@@ -43,7 +44,8 @@ android {
         buildConfigField("boolean", "NO_ADS", isNoAds)
 
         resValue("string", "admob_dev_key", admobDevKey)
-        resValue("string", "amap_dev_key", amapDevKay)
+        resValue("string", "amap_dev_key", aMapDevKay)
+        resValue("string", "tomtom_dev_key", tomtomDevKey)
 
         vectorDrawables {
             useSupportLibrary = true
@@ -94,6 +96,10 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.2"
+    }
+
+    packaging {
+        jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
 }
 
@@ -242,7 +248,10 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
-    // Amap
+    // AMap
     implementation("com.amap.api:navi-3dmap:latest.integration")
     implementation("com.amap.api:search:latest.integration")
+
+    // TomTom
+    implementation(libs.tomtom.map.display)
 }

@@ -12,6 +12,7 @@ dependencyResolutionManagement {
         jcenter()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://repositories.tomtom.com/artifactory/maven") }
     }
 }
 rootProject.name = "Relic"
