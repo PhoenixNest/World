@@ -57,7 +57,7 @@
             android:name=".feature.activities.debug.DebugActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.Relic" />
 
         <!-- Firebase Performance plugin -->
         <meta-data

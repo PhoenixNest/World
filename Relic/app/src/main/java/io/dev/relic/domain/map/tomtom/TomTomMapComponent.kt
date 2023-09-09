@@ -1,4 +1,4 @@
-package io.dev.relic.domain.map.amap
+package io.dev.relic.domain.map.tomtom
 
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -16,66 +16,60 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.Event.ON_CREATE
+import androidx.lifecycle.Lifecycle.Event.ON_PAUSE
+import androidx.lifecycle.Lifecycle.Event.ON_RESUME
+import androidx.lifecycle.Lifecycle.Event.ON_START
+import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.amap.api.maps.AMapOptions
-import com.amap.api.maps.MapView
-import com.amap.api.maps.model.MyLocationStyle
+import com.tomtom.sdk.map.display.MapOptions
+import com.tomtom.sdk.map.display.ui.MapView
 
 /**
- * The Compose component of [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/).
+ * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
  *
- * @param modifier                  The container modifier of AMapView
- * @param aMapOptionsFactory        Builder of the AMapOptions
- * @param locationStyleFactory      Builder of the MyLocationStyle
+ * @param modifier                 The container modifier of TomTomMapView
+ * @param mapOptionsFactory        Builder of the MapOptions
  *
  * @see MapView
- * @see AMapOptions
- * @see MyLocationStyle
+ * @see MapOptions
  * */
 @Composable
-fun AMapComponent(
+fun TomTomMapComponent(
     modifier: Modifier = Modifier,
-    aMapOptionsFactory: () -> AMapOptions = { AMapOptions() },
-    locationStyleFactory: () -> MyLocationStyle = { MyLocationStyle() }
+    mapOptionsFactory: () -> MapOptions = { MapOptions(TomTomMapConfig.mapDevKey) }
 ) {
+
     if (LocalInspectionMode.current) {
         return
     }
 
     val context: Context = LocalContext.current
 
-    val aMapOptions: AMapOptions = aMapOptionsFactory.invoke()
-    val mLocationStyle: MyLocationStyle = locationStyleFactory.invoke()
-    val mapView: MapView = remember { MapView(context, aMapOptions) }
+    val mapOptions: MapOptions = mapOptionsFactory.invoke()
+    val mapView: MapView = remember { MapView(context, mapOptions) }
 
     AndroidView(
-        factory = {
-            mapView.apply {
-                map.apply {
-                    isMyLocationEnabled = true
-                    myLocationStyle = mLocationStyle
-                }
-            }
-        },
+        factory = { mapView },
         modifier = modifier.fillMaxSize(),
         onRelease = {
             // Avoid OOM
-            it.removeAllViews()
             it.onDestroy()
+            it.removeAllViews()
         }
     )
 
-    AMapLifecycleBinder(mapView = mapView)
+    TomTomMapLifecycleBinder(mapView)
 }
 
 @Composable
-private fun AMapLifecycleBinder(mapView: MapView) {
+private fun TomTomMapLifecycleBinder(mapView: MapView) {
     val context: Context = LocalContext.current
     val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
     val previousAMapState: MutableState<Lifecycle.Event> = remember {
-        mutableStateOf(Lifecycle.Event.ON_CREATE)
+        mutableStateOf(ON_CREATE)
     }
 
     DisposableEffect(
@@ -111,18 +105,26 @@ private fun MapView.lifecycleObserver(
 ): LifecycleObserver {
     return LifecycleEventObserver { _: LifecycleOwner, event: Lifecycle.Event ->
         when (event) {
-            Lifecycle.Event.ON_CREATE -> {
-                if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
+            ON_CREATE -> {
+                if (previousAMapState.value != ON_STOP) {
                     this.onCreate(Bundle())
                 }
             }
 
-            Lifecycle.Event.ON_RESUME -> {
+            ON_START -> {
+                this.onStart()
+            }
+
+            ON_RESUME -> {
                 this.onResume()
             }
 
-            Lifecycle.Event.ON_PAUSE -> {
+            ON_PAUSE -> {
                 this.onPause()
+            }
+
+            ON_STOP -> {
+                this.onStop()
             }
 
             else -> {}
@@ -138,7 +140,7 @@ private fun MapView.componentCallback(): ComponentCallbacks {
         }
 
         override fun onLowMemory() {
-            this@componentCallback.onLowMemory()
+            this@componentCallback.onPause()
         }
     }
 }

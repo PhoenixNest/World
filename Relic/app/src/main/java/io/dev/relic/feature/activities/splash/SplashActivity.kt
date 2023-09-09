@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import io.dev.relic.BuildConfig
 import io.dev.relic.feature.activities.AbsBaseActivity
+import io.dev.relic.feature.activities.debug.DebugActivity
 import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
@@ -28,6 +30,11 @@ class SplashActivity : AbsBaseActivity() {
     private val splashViewModel: SplashViewModel by lazy {
         ViewModelProvider(this)[SplashViewModel::class.java]
     }
+
+    /**
+     * Change this marker to true if you want to enable debug mode.
+     * */
+    private val isDebugMode: Boolean = BuildConfig.DEBUG_MODE
 
     companion object {
         private const val TAG = "SplashActivity"
@@ -65,12 +72,23 @@ class SplashActivity : AbsBaseActivity() {
     }
 
     private fun checkAndNavigate() {
-        if (RelicLifecycleObserver.isFirstColdStart) {
-            IntroActivity.start(this)
-        } else {
-            MainActivity.start(this)
-        }
-        finish()
+        when {
+            RelicLifecycleObserver.isFirstColdStart -> navigateToIntroActivity()
+            isDebugMode -> navigateToDebugActivity()
+            else -> navigateToMainActivity()
+        }.also { finish() }
+    }
+
+    private fun navigateToIntroActivity() {
+        IntroActivity.start(this)
+    }
+
+    private fun navigateToDebugActivity() {
+        DebugActivity.start(this)
+    }
+
+    private fun navigateToMainActivity() {
+        MainActivity.start(this)
     }
 
     /* ======================== Ui ======================== */

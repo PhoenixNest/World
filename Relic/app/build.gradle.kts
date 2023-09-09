@@ -1,12 +1,13 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
-// Dev config
+// App config
+private val isDebugMode: String = gradleLocalProperties(rootDir).getProperty("DEBUG_MODE")
+private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS")
+
+// Dev Key
 private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("ADMOB_DEV_KEY")
 private val aMapDevKay: String = gradleLocalProperties(rootDir).getProperty("AMAP_DEV_KEY")
 private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
-
-// App config
-private val isNoAds: String = extra["NO_ADS"].toString()
 
 plugins {
     id("com.android.application")
@@ -41,6 +42,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("boolean", "DEBUG_MODE", isDebugMode)
         buildConfigField("boolean", "NO_ADS", isNoAds)
 
         resValue("string", "admob_dev_key", admobDevKey)

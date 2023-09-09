@@ -7,13 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
+import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapFragment
+import com.tomtom.sdk.map.display.ui.MapReadyCallback
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityDebugBinding
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
+import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
 
-class DebugActivity : AppCompatActivity() {
+class DebugActivity : AbsBaseActivity() {
 
     private val binding: ActivityDebugBinding by lazy {
         ActivityDebugBinding.inflate(layoutInflater)
@@ -34,35 +37,50 @@ class DebugActivity : AppCompatActivity() {
         }
     }
 
+    /* ======================== override ======================== */
+
+    override fun initialization(savedInstanceState: Bundle?) {
+        verifyAMapPrivacyAgreement()
+    }
+
+    override fun initUi(savedInstanceState: Bundle?) {
+        setContentView(binding.root)
+        setupDebugView(savedInstanceState)
+    }
+
     /* ======================== Lifecycle ======================== */
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        initialization(savedInstanceState)
-        initUi(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+        mapOnStart()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.aMapView.onResume()
+        mapOnResume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.aMapView.onPause()
+        mapOnPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapOnStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapOnSavedInstanceState(outState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding.aMapView.onDestroy()
+        mapOnDestroy()
     }
 
     /* ======================== Logical ======================== */
-
-    private fun initialization(savedInstanceState: Bundle?) {
-        verifyAMapPrivacyAgreement()
-    }
 
     private fun verifyAMapPrivacyAgreement() {
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
@@ -70,7 +88,7 @@ class DebugActivity : AppCompatActivity() {
 
     /* ======================== Ui ======================== */
 
-    private fun initUi(savedInstanceState: Bundle?) {
+    private fun setupDebugView(savedInstanceState: Bundle?) {
         setupDebugAMapView(savedInstanceState)
         setupDebugTomTomAMapView(savedInstanceState)
     }
@@ -95,11 +113,49 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun setupDebugTomTomAMapView(savedInstanceState: Bundle?) {
-        val mapFragment: Fragment? = supportFragmentManager.findFragmentById(R.id.tomtomFragmentContainerView)
-        (mapFragment as? MapFragment)?.run {
-            getMapAsync {
-                //
-            }
+        binding.tomtomMapView.apply {
+            onCreate(savedInstanceState)
+        }.getMapAsync {
+            //
+        }
+    }
+
+    private fun mapOnStart() {
+        binding.apply {
+            tomtomMapView.onStart()
+        }
+    }
+
+    private fun mapOnResume() {
+        binding.apply {
+            aMapView.onResume()
+            tomtomMapView.onResume()
+        }
+    }
+
+    private fun mapOnPause() {
+        binding.apply {
+            aMapView.onPause()
+            tomtomMapView.onPause()
+        }
+    }
+
+    private fun mapOnStop() {
+        binding.apply {
+            tomtomMapView.onStop()
+        }
+    }
+
+    private fun mapOnSavedInstanceState(outState: Bundle) {
+        binding.apply {
+            tomtomMapView.onSaveInstanceState(outState)
+        }
+    }
+
+    private fun mapOnDestroy() {
+        binding.apply {
+            aMapView.onDestroy()
+            tomtomMapView.onDestroy()
         }
     }
 }
