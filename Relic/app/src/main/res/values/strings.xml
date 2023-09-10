@@ -73,6 +73,8 @@
     <string name="setting_title">Setting</string>
 
     <!-- Debug -->
+    <string name="view_default_desc">Powered By View</string>
+    <string name="debug_ml_kit">ML-Kit</string>
     <string name="debug_title">DEBUG CENTER</string>
     <string name="debug_title_amap">- AMap</string>
     <string name="debug_title_tomtom">- TomTom</string>

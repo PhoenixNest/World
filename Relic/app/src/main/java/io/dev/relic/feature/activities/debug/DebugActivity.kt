@@ -3,14 +3,8 @@ package io.dev.relic.feature.activities.debug
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
-import com.tomtom.sdk.map.display.TomTomMap
-import com.tomtom.sdk.map.display.ui.MapFragment
-import com.tomtom.sdk.map.display.ui.MapReadyCallback
-import io.dev.relic.R
 import io.dev.relic.databinding.ActivityDebugBinding
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
@@ -86,11 +80,27 @@ class DebugActivity : AbsBaseActivity() {
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
     }
 
+    private fun navigateToMLKitActivity() {
+        MLKitActivity.start(this)
+    }
+
+    private fun navigateToMediaPipeActivity() {
+        MediaPipeActivity.start(this)
+    }
+
     /* ======================== Ui ======================== */
 
     private fun setupDebugView(savedInstanceState: Bundle?) {
+        setupTopDebugPanel()
         setupDebugAMapView(savedInstanceState)
         setupDebugTomTomAMapView(savedInstanceState)
+    }
+
+    private fun setupTopDebugPanel() {
+        binding.apply {
+            cardViewMlKit.setOnClickListener { navigateToMLKitActivity() }
+            cardViewMediaPipe.setOnClickListener { navigateToMediaPipeActivity() }
+        }
     }
 
     private fun setupDebugAMapView(savedInstanceState: Bundle?) {

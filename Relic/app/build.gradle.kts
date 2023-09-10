@@ -164,6 +164,21 @@ dependencies {
     // Add the dependency for the Performance Monitoring library
     implementation("com.google.firebase:firebase-perf-ktx")
 
+    // CameraX core library using the camera2 implementation
+    // The following line is optional, as the core library is included indirectly by camera-camera2
+    implementation(libs.androidx.camera.camera.core2)
+    implementation(libs.androidx.camera.camera.camera22)
+    // If you want to additionally use the CameraX Lifecycle library
+    implementation(libs.androidx.camera.camera.lifecycle2)
+    // If you want to additionally use the CameraX VideoCapture library
+    implementation(libs.androidx.camera.camera.video2)
+    // If you want to additionally use the CameraX View class
+    implementation(libs.androidx.camera.camera.view2)
+    // If you want to additionally add CameraX ML Kit Vision Integration
+    implementation(libs.androidx.camera.camera.mlkit.vision2)
+    // If you want to additionally use the CameraX Extensions library
+    implementation(libs.androidx.camera.camera.extensions2)
+
     // Navigation
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
@@ -227,7 +242,15 @@ dependencies {
     // Google sign-in
     implementation(libs.play.services.auth)
 
+    // MLKit
+    // - [Object Detection](https://developers.google.cn/ml-kit/vision/object-detection/android?hl=en)
+    implementation(libs.mlkit.objectdetection)
+
     /* ======================== Third-party Extension ======================== */
+
+    // LeakCanary
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation(libs.leakcanary.android)
 
     // Retrofit
     implementation(libs.retrofit)
