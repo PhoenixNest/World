@@ -69,8 +69,8 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:contentDescription="@string/view_default_desc"
                         android:src="@drawable/ic_machine_learning" />
 
@@ -108,8 +108,8 @@
                     tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:contentDescription="@string/view_default_desc"
                         android:src="@drawable/ic_machine_learning" />
 
@@ -121,7 +121,7 @@
                         android:autoSizeMinTextSize="12sp"
                         android:fontFamily="@font/ubuntu_regular"
                         android:gravity="center"
-                        android:text="MediaPipe"
+                        android:text="@string/debug_mediapipe"
                         android:textColor="@color/mainTextColor" />
 
                 </LinearLayout>

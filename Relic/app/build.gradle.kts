@@ -165,19 +165,17 @@ dependencies {
     implementation("com.google.firebase:firebase-perf-ktx")
 
     // CameraX core library using the camera2 implementation
-    // The following line is optional, as the core library is included indirectly by camera-camera2
-    implementation(libs.androidx.camera.camera.core2)
-    implementation(libs.androidx.camera.camera.camera22)
+    implementation(libs.androidx.camera2)
     // If you want to additionally use the CameraX Lifecycle library
-    implementation(libs.androidx.camera.camera.lifecycle2)
+    implementation(libs.androidx.camera.lifecycle)
     // If you want to additionally use the CameraX VideoCapture library
-    implementation(libs.androidx.camera.camera.video2)
+    implementation(libs.androidx.camera.video)
     // If you want to additionally use the CameraX View class
-    implementation(libs.androidx.camera.camera.view2)
+    implementation(libs.androidx.camera.view)
     // If you want to additionally add CameraX ML Kit Vision Integration
-    implementation(libs.androidx.camera.camera.mlkit.vision2)
+    implementation(libs.androidx.camera.mlkit.vision)
     // If you want to additionally use the CameraX Extensions library
-    implementation(libs.androidx.camera.camera.extensions2)
+    implementation(libs.androidx.camera.extensions)
 
     // Navigation
     implementation(libs.navigation.compose)
@@ -274,8 +272,8 @@ dependencies {
     implementation(libs.lottie.compose)
 
     // AMap
-    implementation("com.amap.api:navi-3dmap:latest.integration")
-    implementation("com.amap.api:search:latest.integration")
+    implementation(libs.amap.navi)
+    implementation(libs.amap.search)
 
     // TomTom
     implementation(libs.tomtom.map.display)
