@@ -12,6 +12,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/ubuntu_regular"
         android:gravity="center"
         android:padding="8dp"
@@ -50,9 +51,9 @@
         android:id="@id/cardView_MediaPipe"
         android:layout_width="300dp"
         android:layout_height="160dp"
+        android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/mainThemeColorAccent"
         app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView_MLKit">

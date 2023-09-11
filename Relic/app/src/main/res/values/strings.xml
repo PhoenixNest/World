@@ -77,7 +77,5 @@
     <string name="debug_title">DEBUG CENTER</string>
     <string name="debug_title_map">Map Center</string>
     <string name="debug_title_machine_learning">Machine Learning Center</string>
-    <string name="debug_bottom_tab_map">Map</string>
-    <string name="debug_bottom_tab_machine_learning">ML</string>
 
 </resources>
