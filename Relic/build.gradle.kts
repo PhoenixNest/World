@@ -8,6 +8,9 @@ buildscript {
 
     dependencies {
 
+        // To add Safe Args to your project, include the following classpath in your top level build.gradle file:
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+
         // Hilt
         classpath(libs.hilt.android.gradle.plugin)
 
@@ -28,5 +31,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.46.1" apply false
 
     // [Migrate from kapt to KSP](https://developer.android.com/build/migrate-to-ksp#groovy)
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }

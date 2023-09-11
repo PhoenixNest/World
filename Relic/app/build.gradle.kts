@@ -19,6 +19,9 @@ plugins {
     // Parcelize Models
     id("kotlin-parcelize")
 
+    // SafeArgs
+    id("androidx.navigation.safeargs.kotlin")
+
     // Hilt
     id("com.google.dagger.hilt.android")
 
@@ -97,7 +100,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.2"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 
     packaging {
@@ -119,6 +122,14 @@ dependencies {
     // Legacy
     implementation(libs.material)
     implementation(libs.androidx.recyclerview)
+
+    // Legacy-Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
+    // Optional - Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.2")
+    // Optional - Jetpack Compose Integration
+    implementation("androidx.navigation:navigation-compose:2.7.2")
 
     // Compose Ui
     val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.08.00")
@@ -166,15 +177,15 @@ dependencies {
 
     // CameraX core library using the camera2 implementation
     implementation(libs.androidx.camera2)
-    // If you want to additionally use the CameraX Lifecycle library
+    // Optional - If you want to additionally use the CameraX Lifecycle library
     implementation(libs.androidx.camera.lifecycle)
-    // If you want to additionally use the CameraX VideoCapture library
+    // Optional - If you want to additionally use the CameraX VideoCapture library
     implementation(libs.androidx.camera.video)
-    // If you want to additionally use the CameraX View class
+    // Optional - If you want to additionally use the CameraX View class
     implementation(libs.androidx.camera.view)
-    // If you want to additionally add CameraX ML Kit Vision Integration
+    // Optional - If you want to additionally add CameraX ML Kit Vision Integration
     implementation(libs.androidx.camera.mlkit.vision)
-    // If you want to additionally use the CameraX Extensions library
+    // Optional - If you want to additionally use the CameraX Extensions library
     implementation(libs.androidx.camera.extensions)
 
     // Navigation
@@ -211,13 +222,13 @@ dependencies {
     implementation(libs.androidx.work.runtime)
     // Kotlin + coroutines
     implementation(libs.androidx.work.runtime.ktx)
-    // optional - GCMNetworkManager support
+    // Optional - GCMNetworkManager support
     implementation(libs.androidx.work.gcm)
-    // optional - Test helpers
+    // Optional - Test helpers
     androidTestImplementation(libs.androidx.work.testing)
-    // optional - Multiprocess support
+    // Optional - Multiprocess support
     implementation(libs.androidx.work.multiprocess)
-    // optional - Integration with WorkManager
+    // Optional - Integration with WorkManager
     implementation(libs.hilt.work)
     ksp(libs.androidx.hilt.compiler)
 
@@ -225,7 +236,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     // alternatively - without Android dependencies for tests
     testImplementation(libs.androidx.paging.common.ktx)
-    // optional - Jetpack Compose integration
+    // Optional - Jetpack Compose integration
     implementation(libs.androidx.paging.compose)
 
     // Location Services
