@@ -8,213 +8,41 @@
     android:fitsSystemWindows="true"
     tools:context=".feature.activities.debug.DebugActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline60"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
-
     <TextView
         android:id="@+id/textView_debug_center_title"
-        android:layout_width="0dp"
+        android:layout_width="393dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ubuntu_regular"
+        android:gravity="center"
         android:padding="8dp"
         android:text="@string/debug_title"
         android:textColor="@color/mainTextColor"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView_debug_panel"
+        app:layout_constraintBottom_toTopOf="@+id/navHostFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView_debug_panel"
+    <fragment
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline20"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_debug_center_title">
+        app:layout_constraintTop_toBottomOf="@+id/textView_debug_center_title"
+        app:navGraph="@navigation/nav_debug" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_ml_kit"
-                android:layout_width="96dp"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/mainThemeColorAccent"
-                app:cardCornerRadius="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:contentDescription="@string/view_default_desc"
-                        android:src="@drawable/ic_machine_learning" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:autoSizeMaxTextSize="20sp"
-                        android:autoSizeMinTextSize="12sp"
-                        android:fontFamily="@font/ubuntu_regular"
-                        android:gravity="center"
-                        android:text="@string/debug_ml_kit"
-                        android:textColor="@color/mainTextColor" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_media_pipe"
-                android:layout_width="96dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/teal_700"
-                app:cardCornerRadius="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:contentDescription="@string/view_default_desc"
-                        android:src="@drawable/ic_machine_learning" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:autoSizeMaxTextSize="20sp"
-                        android:autoSizeMinTextSize="12sp"
-                        android:fontFamily="@font/ubuntu_regular"
-                        android:gravity="center"
-                        android:text="@string/debug_mediapipe"
-                        android:textColor="@color/mainTextColor" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
-    <TextView
-        android:id="@+id/textView_AMap_title"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/ubuntu_regular"
-        android:padding="8dp"
-        android:text="@string/debug_title_amap"
-        android:textColor="@color/mainTextColor"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView_AMap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline20" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_AMap"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/cardview_dark_background"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline60"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_AMap_title">
-
-        <com.amap.api.maps.MapView
-            android:id="@+id/aMapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.cardview.widget.CardView>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/textView_Tomtom_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline60" />
-
-    <TextView
-        android:id="@+id/textView_Tomtom_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/ubuntu_regular"
-        android:padding="8dp"
-        android:text="@string/debug_title_tomtom"
-        android:textColor="@color/mainTextColor"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView_Tomtom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_Tomtom"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/cardview_dark_background"
-        app:cardCornerRadius="8dp"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Tomtom_title">
-
-        <com.tomtom.sdk.map.display.ui.MapView xmlns:tomtom="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/tomtomMapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tomtom:mapKey="@string/tomtom_dev_key" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/navHostFragment"
+        app:menu="@menu/menu_debug" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

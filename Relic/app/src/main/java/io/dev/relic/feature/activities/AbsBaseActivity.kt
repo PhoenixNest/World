@@ -20,7 +20,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
     lateinit var networkMonitor: NetworkMonitor
 
     companion object {
-        private const val TAG: String = "BaseActivity"
+        private const val TAG: String = "AbsBaseActivity"
     }
 
     /* ======================== Lifecycle ======================== */

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_debug"
+    app:startDestination="@id/introMapFragment">
+
+    <fragment
+        android:id="@+id/introMapFragment"
+        android:name="io.dev.relic.feature.fragments.map.IntroMapFragment"
+        android:label="@string/debug_bottom_tab_map"
+        tools:layout="@layout/fragment_intro_map" >
+        <action
+            android:id="@+id/action_introMapFragment_to_AMapFragment"
+            app:destination="@id/AMapFragment" />
+        <action
+            android:id="@+id/action_introMapFragment_to_tomTomMapFragment"
+            app:destination="@id/tomTomMapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AMapFragment"
+        android:name="io.dev.relic.feature.fragments.map.AMapFragment"
+        android:label="fragment_amap"
+        tools:layout="@layout/fragment_amap" >
+        <action
+            android:id="@+id/action_AMapFragment_to_introMapFragment"
+            app:destination="@id/introMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tomTomMapFragment"
+        android:name="io.dev.relic.feature.fragments.map.TomTomMapFragment"
+        android:label="fragment_tomtommap"
+        tools:layout="@layout/fragment_tomtommap" >
+        <action
+            android:id="@+id/action_tomTomMapFragment_to_introMapFragment"
+            app:destination="@id/introMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/introMachineLearningFragment2"
+        android:name="io.dev.relic.feature.fragments.machine_learning.IntroMachineLearningFragment"
+        android:label="fragment_intro_machine_learning"
+        tools:layout="@layout/fragment_intro_machine_learning" >
+        <action
+            android:id="@+id/action_introMachineLearningFragment2_to_MLKitFragment"
+            app:destination="@id/MLKitFragment" />
+        <action
+            android:id="@+id/action_introMachineLearningFragment2_to_mediaPipeFragment"
+            app:destination="@id/mediaPipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/MLKitFragment"
+        android:name="io.dev.relic.feature.fragments.machine_learning.MLKitFragment"
+        android:label="fragment_mlkit"
+        tools:layout="@layout/fragment_mlkit" >
+        <action
+            android:id="@+id/action_MLKitFragment_to_introMachineLearningFragment2"
+            app:destination="@id/introMachineLearningFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediaPipeFragment"
+        android:name="io.dev.relic.feature.fragments.machine_learning.MediaPipeFragment"
+        android:label="fragment_mediapipe"
+        tools:layout="@layout/fragment_mediapipe" >
+        <action
+            android:id="@+id/action_mediaPipeFragment_to_introMachineLearningFragment2"
+            app:destination="@id/introMachineLearningFragment2" />
+    </fragment>
+</navigation>

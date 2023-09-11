@@ -3,18 +3,26 @@ package io.dev.relic.feature.activities.debug
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.amap.api.maps.AMap
-import com.amap.api.maps.MapView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
+import io.dev.relic.R
 import io.dev.relic.databinding.ActivityDebugBinding
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
-import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
 
-class DebugActivity : AbsBaseActivity() {
+@AndroidEntryPoint
+class DebugActivity : AppCompatActivity() {
 
     private val binding: ActivityDebugBinding by lazy {
         ActivityDebugBinding.inflate(layoutInflater)
     }
+
+    private lateinit var navController: NavController
 
     companion object {
         private const val TAG = "DebugActivity"
@@ -31,141 +39,35 @@ class DebugActivity : AbsBaseActivity() {
         }
     }
 
-    /* ======================== override ======================== */
-
-    override fun initialization(savedInstanceState: Bundle?) {
-        verifyAMapPrivacyAgreement()
-    }
-
-    override fun initUi(savedInstanceState: Bundle?) {
-        setContentView(binding.root)
-        setupDebugView(savedInstanceState)
-    }
-
     /* ======================== Lifecycle ======================== */
 
-    override fun onStart() {
-        super.onStart()
-        mapOnStart()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapOnResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapOnPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapOnStop()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapOnSavedInstanceState(outState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapOnDestroy()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        initialization(savedInstanceState)
+        initUi(savedInstanceState)
     }
 
     /* ======================== Logical ======================== */
+
+    fun initialization(savedInstanceState: Bundle?) {
+        verifyAMapPrivacyAgreement()
+    }
 
     private fun verifyAMapPrivacyAgreement() {
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(RelicApplication.getApplicationContext())
     }
 
-    private fun navigateToMLKitActivity() {
-        MLKitActivity.start(this)
-    }
-
-    private fun navigateToMediaPipeActivity() {
-        MediaPipeActivity.start(this)
-    }
-
     /* ======================== Ui ======================== */
 
-    private fun setupDebugView(savedInstanceState: Bundle?) {
-        setupTopDebugPanel()
-        setupDebugAMapView(savedInstanceState)
-        setupDebugTomTomAMapView(savedInstanceState)
+    fun initUi(savedInstanceState: Bundle?) {
+        setupDebugView()
     }
 
-    private fun setupTopDebugPanel() {
-        binding.apply {
-            cardViewMlKit.setOnClickListener { navigateToMLKitActivity() }
-            cardViewMediaPipe.setOnClickListener { navigateToMediaPipeActivity() }
-        }
-    }
+    private fun setupDebugView() {
+        navController = findNavController(R.id.navHostFragment)
 
-    private fun setupDebugAMapView(savedInstanceState: Bundle?) {
-        binding.aMapView.apply {
-            // 此方法必须重写
-            onCreate(savedInstanceState)
-        }.also { mapView: MapView ->
-            val aMap: AMap = mapView.map
-            aMap.apply {
-                // 显示实时交通状况
-                isTrafficEnabled = true
-
-                // 地图模式可选类型：
-                // - MAP_TYPE_NORMAL
-                // - MAP_TYPE_SATELLITE
-                // - MAP_TYPE_NIGHT
-                mapType = AMap.MAP_TYPE_NORMAL
-            }
-        }
-    }
-
-    private fun setupDebugTomTomAMapView(savedInstanceState: Bundle?) {
-        binding.tomtomMapView.apply {
-            onCreate(savedInstanceState)
-        }.getMapAsync {
-            //
-        }
-    }
-
-    private fun mapOnStart() {
-        binding.apply {
-            tomtomMapView.onStart()
-        }
-    }
-
-    private fun mapOnResume() {
-        binding.apply {
-            aMapView.onResume()
-            tomtomMapView.onResume()
-        }
-    }
-
-    private fun mapOnPause() {
-        binding.apply {
-            aMapView.onPause()
-            tomtomMapView.onPause()
-        }
-    }
-
-    private fun mapOnStop() {
-        binding.apply {
-            tomtomMapView.onStop()
-        }
-    }
-
-    private fun mapOnSavedInstanceState(outState: Bundle) {
-        binding.apply {
-            tomtomMapView.onSaveInstanceState(outState)
-        }
-    }
-
-    private fun mapOnDestroy() {
-        binding.apply {
-            aMapView.onDestroy()
-            tomtomMapView.onDestroy()
-        }
+        // Binding the navController with bottomNavigationView
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
 }

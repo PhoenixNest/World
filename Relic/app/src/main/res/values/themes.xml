@@ -3,4 +3,9 @@
 
     <style name="Theme.Relic" parent="android:Theme.Material.Light.NoActionBar" />
 
+    <style name="Theme.Relic.Debug" parent="Theme.AppCompat">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

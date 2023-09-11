@@ -65,6 +65,7 @@ workMultiprocess = "2.8.1"
 workRuntime = "2.8.1"
 workRuntimeKtx = "2.8.1"
 workTesting = "2.8.1"
+kotlin = "1.9.0"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -144,3 +145,4 @@ tomtom-map-display = { module = "com.tomtom.sdk.maps:map-display", version.ref =
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
