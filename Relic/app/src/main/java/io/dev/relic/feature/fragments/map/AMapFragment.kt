@@ -10,6 +10,7 @@ import io.dev.relic.databinding.FragmentAmapBinding
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.fragments.AbsBaseFragment
 import io.dev.relic.global.RelicApplication
+import io.dev.relic.global.utils.LogUtil
 
 /**
  * [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/)
@@ -46,16 +47,19 @@ class AMapFragment : AbsBaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        LogUtil.debug(TAG, "[AMap] onResume")
         binding.aMapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        LogUtil.debug(TAG, "[AMap] onPause")
         binding.aMapView.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        LogUtil.debug(TAG, "[AMap] onSaveInstanceState")
         binding.aMapView.onSaveInstanceState(outState)
     }
 
@@ -63,6 +67,7 @@ class AMapFragment : AbsBaseFragment() {
         super.onDestroyView()
 
         // Avoid OOM
+        LogUtil.debug(TAG, "[AMap] onDestroy")
         binding.aMapView.onDestroy()
         _binding = null
     }

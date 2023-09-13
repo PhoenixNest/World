@@ -42,10 +42,10 @@
         android:label="@string/debug_title_machine_learning"
         tools:layout="@layout/fragment_intro_machine_learning">
         <action
-            android:id="@+id/action_introMachineLearningFragment2_to_MLKitFragment"
+            android:id="@+id/action_introMachineLearningFragment_to_MLKitFragment"
             app:destination="@id/MLKitFragment" />
         <action
-            android:id="@+id/action_introMachineLearningFragment2_to_mediaPipeFragment"
+            android:id="@+id/action_introMachineLearningFragment_to_mediaPipeFragment"
             app:destination="@id/mediaPipeFragment" />
     </fragment>
     <fragment
@@ -54,7 +54,7 @@
         android:label="fragment_mlkit"
         tools:layout="@layout/fragment_mlkit">
         <action
-            android:id="@+id/action_MLKitFragment_to_introMachineLearningFragment2"
+            android:id="@+id/action_MLKitFragment_to_introMachineLearningFragment"
             app:destination="@id/introMachineLearningFragment" />
     </fragment>
     <fragment
@@ -63,7 +63,7 @@
         android:label="fragment_mediapipe"
         tools:layout="@layout/fragment_mediapipe">
         <action
-            android:id="@+id/action_mediaPipeFragment_to_introMachineLearningFragment2"
+            android:id="@+id/action_mediaPipeFragment_to_introMachineLearningFragment"
             app:destination="@id/introMachineLearningFragment" />
     </fragment>
 </navigation>

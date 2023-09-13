@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.dev.relic.databinding.FragmentTomtommapBinding
 import io.dev.relic.feature.fragments.AbsBaseFragment
+import io.dev.relic.global.utils.LogUtil
 
 /**
  * [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
@@ -42,26 +43,31 @@ class TomTomMapFragment : AbsBaseFragment() {
 
     override fun onStart() {
         super.onStart()
+        LogUtil.debug(TAG, "[TomTomMap] onStart")
         binding.tomtomMapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
+        LogUtil.debug(TAG, "[TomTomMap] onResume")
         binding.tomtomMapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        LogUtil.debug(TAG, "[TomTomMap] onPause")
         binding.tomtomMapView.onPause()
     }
 
     override fun onStop() {
         super.onStop()
+        LogUtil.debug(TAG, "[TomTomMap] onStop")
         binding.tomtomMapView.onStop()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        LogUtil.debug(TAG, "[TomTomMap] onSaveInstanceState")
         binding.tomtomMapView.onSaveInstanceState(outState)
     }
 
@@ -69,6 +75,7 @@ class TomTomMapFragment : AbsBaseFragment() {
         super.onDestroyView()
 
         // Avoid OOM
+        LogUtil.debug(TAG, "[TomTomMap] onDestroy")
         binding.tomtomMapView.onDestroy()
         _binding = null
     }

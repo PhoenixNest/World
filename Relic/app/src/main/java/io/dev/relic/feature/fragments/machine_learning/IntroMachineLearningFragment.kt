@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import io.dev.relic.R
 import io.dev.relic.databinding.FragmentIntroMachineLearningBinding
 import io.dev.relic.feature.fragments.AbsBaseFragment
+import io.dev.relic.global.utils.LogUtil
 
 class IntroMachineLearningFragment : AbsBaseFragment() {
 
@@ -32,7 +35,33 @@ class IntroMachineLearningFragment : AbsBaseFragment() {
     }
 
     override fun initUi(savedInstanceState: Bundle?) {
-        //
+        setupUi()
+    }
+
+    /* ======================== Logical ======================== */
+
+    private fun navigateToMLKitFragment() {
+        LogUtil.debug(TAG, "[Machine-Learning Debug Intro] Navigate to MLKit.")
+        findNavController().navigate(R.id.action_introMachineLearningFragment_to_MLKitFragment)
+    }
+
+    private fun navigateToMediaPipeFragment() {
+        LogUtil.debug(TAG, "[Machine-Learning Debug Intro] Navigate to MediaPipe.")
+        findNavController().navigate(R.id.action_introMachineLearningFragment_to_mediaPipeFragment)
+    }
+
+    /* ======================== Ui ======================== */
+
+    private fun setupUi() {
+        binding.apply {
+            cardViewMLKit.setOnClickListener {
+                navigateToMLKitFragment()
+            }
+
+            cardViewMediaPipe.setOnClickListener {
+                navigateToMediaPipeFragment()
+            }
+        }
     }
 
 }
