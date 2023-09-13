@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.main
+package io.dev.relic.feature.screens.main
 
 import android.Manifest
 import android.os.Bundle
@@ -27,8 +27,8 @@ import io.dev.relic.R
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.route.MainFeatureNavHost
-import io.dev.relic.feature.screen.main.widget.MainBottomBar
-import io.dev.relic.feature.screen.main.widget.MainRailAppBar
+import io.dev.relic.feature.screens.main.widget.MainBottomBar
+import io.dev.relic.feature.screens.main.widget.MainRailAppBar
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

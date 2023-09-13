@@ -1,4 +1,4 @@
-package io.dev.relic.feature.page.home
+package io.dev.relic.feature.pages.home
 
 import android.location.Location
 import androidx.compose.foundation.background
@@ -8,11 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.screen.main.MainState
+import io.dev.relic.feature.screens.main.MainState
 import io.dev.relic.global.widget.CommonLoadingComponent
 import io.dev.relic.global.widget.CommonNoDataComponent
 import io.dev.relic.ui.theme.mainTextColor
@@ -38,7 +40,7 @@ private fun HomePage(location: Location?) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Home",
+            text = stringResource(R.string.home_title),
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 30.sp

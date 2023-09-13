@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.main.widget
+package io.dev.relic.feature.screens.main.widget
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -12,10 +12,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
-import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
 import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.NavDestinationExt.isTopLevelDestinationInHierarchy

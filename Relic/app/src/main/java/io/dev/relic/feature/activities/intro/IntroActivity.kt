@@ -19,7 +19,7 @@ import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_I
 import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.screen.intro.IntroScreen
+import io.dev.relic.feature.screens.intro.IntroScreen
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme

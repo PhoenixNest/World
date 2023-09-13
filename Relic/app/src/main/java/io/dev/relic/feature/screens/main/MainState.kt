@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.main
+package io.dev.relic.feature.screens.main
 
 import android.location.Location
 
@@ -6,13 +6,13 @@ sealed class MainState {
 
     /* Common */
 
-    object Init : MainState()
+    data object Init : MainState()
 
-    object Empty : MainState()
+    data object Empty : MainState()
 
     /* Loading */
 
-    object AccessingLocation : MainState()
+    data object AccessingLocation : MainState()
 
     /* Succeed */
 

@@ -1,4 +1,4 @@
-package io.dev.relic.feature.page.explore
+package io.dev.relic.feature.pages.hive
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,15 +7,15 @@ import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.route.RelicRoute
 
-fun NavController.navigateToExplorePage(navOptions: NavOptions? = null) {
+fun NavController.navigateToHivePage(navOptions: NavOptions? = null) {
     this.navigate(
-        route = RelicRoute.EXPLORE,
+        route = RelicRoute.HIVE,
         navOptions = navOptions
     )
 }
 
-fun NavGraphBuilder.pageExplore(mainViewModel: MainViewModel) {
-    composable(route = RelicRoute.EXPLORE) {
-        ExplorePageRoute(mainViewModel = mainViewModel)
+fun NavGraphBuilder.pageHive(mainViewModel: MainViewModel) {
+    composable(route = RelicRoute.HIVE) {
+        HivePageRoute(mainViewModel = mainViewModel)
     }
 }

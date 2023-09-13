@@ -46,7 +46,10 @@ class FetchComplexRecipesData @Inject constructor(
                     error(TAG, "[FoodRecipesApi] Failed to load data.")
                     error(TAG, "[FoodRecipesApi] Error message: ${result.message}")
                 }
-                listener.onFetchFailed(errorMessage = result.message)
+                listener.onFetchFailed(
+                    errorCode = result.code,
+                    errorMessage = result.message
+                )
             }
         }
     }

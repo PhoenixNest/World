@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.intro
+package io.dev.relic.feature.screens.intro
 
 import android.content.Context
 import androidx.annotation.DrawableRes

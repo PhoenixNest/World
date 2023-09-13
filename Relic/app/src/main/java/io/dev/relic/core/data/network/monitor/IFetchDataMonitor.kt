@@ -8,6 +8,9 @@ interface IFetchDataMonitor {
 
     fun onFetchSucceedButNoData(errorMessage: String)
 
-    fun onFetchFailed(errorMessage: String?)
+    fun onFetchFailed(
+        errorCode: Int?,
+        errorMessage: String?
+    )
 
 }

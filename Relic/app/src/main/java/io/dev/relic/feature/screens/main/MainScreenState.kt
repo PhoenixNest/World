@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.main
+package io.dev.relic.feature.screens.main
 
 import android.os.Bundle
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -17,12 +17,12 @@ import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.dev.relic.core.data.network.monitor.NetworkMonitor
 import io.dev.relic.core.data.network.monitor.NetworkStatus
-import io.dev.relic.feature.page.explore.navigateToExplorePage
-import io.dev.relic.feature.page.hive.navigateToHivePage
-import io.dev.relic.feature.page.home.navigateToHomePage
+import io.dev.relic.feature.pages.explore.navigateToExplorePage
+import io.dev.relic.feature.pages.hive.navigateToHivePage
+import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.route.RelicRoute
-import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination
-import io.dev.relic.feature.screen.main.util.MainScreenTopLevelDestination.values
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.values
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

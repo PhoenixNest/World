@@ -15,7 +15,7 @@ import io.dev.relic.feature.activities.debug.DebugActivity
 import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
-import io.dev.relic.feature.screen.splash.SplashScreen
+import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode

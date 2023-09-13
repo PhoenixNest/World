@@ -1,7 +1,7 @@
 package io.dev.relic.domain.model
 
 sealed class NetworkResult<T>(
-    val code: String? = null,
+    val code: Int? = null,
     val message: String? = null,
     val data: T? = null
 ) {

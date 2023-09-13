@@ -49,7 +49,10 @@ class FetchWeatherData @Inject constructor(
                     error(TAG, "[WeatherApi] Failed to load data.")
                     error(TAG, "[WeatherApi] Error message: ${result.message}")
                 }
-                listener.onFetchFailed(errorMessage = result.message)
+                listener.onFetchFailed(
+                    errorCode = result.code,
+                    errorMessage = result.message
+                )
             }
         }
     }

@@ -8,9 +8,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.page.explore.pageExplore
-import io.dev.relic.feature.page.hive.pageHive
-import io.dev.relic.feature.page.home.pageHome
+import io.dev.relic.feature.pages.explore.pageExplore
+import io.dev.relic.feature.pages.hive.pageHive
+import io.dev.relic.feature.pages.home.pageHome
 
 @Composable
 fun MainFeatureNavHost(

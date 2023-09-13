@@ -1,4 +1,4 @@
-package io.dev.relic.feature.screen.splash
+package io.dev.relic.feature.screens.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

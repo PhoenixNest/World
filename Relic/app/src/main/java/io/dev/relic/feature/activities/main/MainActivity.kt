@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.screen.main.MainScreen
+import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
