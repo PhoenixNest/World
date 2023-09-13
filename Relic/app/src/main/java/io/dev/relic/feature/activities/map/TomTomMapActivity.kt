@@ -1,23 +1,34 @@
-package io.dev.relic.feature.fragments.map
+package io.dev.relic.feature.activities.map
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import io.dev.relic.databinding.FragmentTomtommapBinding
-import io.dev.relic.feature.fragments.AbsBaseFragment
+import io.dev.relic.databinding.ActivityTomtommapBinding
+import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.utils.LogUtil
 
 /**
- * [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
- */
-class TomTomMapFragment : AbsBaseFragment() {
+ * [TomTomMap](https://developer.tomtom.com/)
+ * */
+class TomTomMapActivity : AbsBaseActivity() {
 
-    private var _binding: FragmentTomtommapBinding? = null
-    private val binding: FragmentTomtommapBinding get() = _binding!!
+    private val binding: ActivityTomtommapBinding by lazy {
+        ActivityTomtommapBinding.inflate(layoutInflater)
+    }
 
     companion object {
-        private const val TAG = "TomTomMapFragment"
+        private const val TAG = "TomTomMapActivity"
+
+        fun start(context: Context) {
+            context.startActivity(
+                Intent(
+                    /* packageContext = */ context,
+                    /* cls = */ TomTomMapActivity::class.java
+                ).apply {
+                    action = "[Activity] TomTomMap"
+                }
+            )
+        }
     }
 
     /* ======================== override ======================== */
@@ -26,16 +37,8 @@ class TomTomMapFragment : AbsBaseFragment() {
         //
     }
 
-    override fun bindView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTomtommapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun initUi(savedInstanceState: Bundle?) {
+        setContentView(binding.root)
         setupDebugTomTomAMapView(savedInstanceState)
     }
 
@@ -71,13 +74,12 @@ class TomTomMapFragment : AbsBaseFragment() {
         binding.tomtomMapView.onSaveInstanceState(outState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
 
         // Avoid OOM
         LogUtil.debug(TAG, "[TomTomMap] onDestroy")
         binding.tomtomMapView.onDestroy()
-        _binding = null
     }
 
     /* ======================== Ui ======================== */

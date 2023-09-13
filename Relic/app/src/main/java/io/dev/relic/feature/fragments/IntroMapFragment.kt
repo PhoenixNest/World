@@ -1,13 +1,12 @@
-package io.dev.relic.feature.fragments.map
+package io.dev.relic.feature.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import io.dev.relic.R
 import io.dev.relic.databinding.FragmentIntroMapBinding
-import io.dev.relic.feature.fragments.AbsBaseFragment
+import io.dev.relic.feature.activities.map.AMapActivity
+import io.dev.relic.feature.activities.map.TomTomMapActivity
 import io.dev.relic.global.utils.LogUtil
 
 class IntroMapFragment : AbsBaseFragment() {
@@ -40,14 +39,14 @@ class IntroMapFragment : AbsBaseFragment() {
 
     /* ======================== Logical ======================== */
 
-    private fun navigateToAMapFragment() {
+    private fun navigateToAMapActivity() {
         LogUtil.debug(TAG, "[Map Debug Intro] Navigate to AMap.")
-        findNavController().navigate(R.id.action_introMapFragment_to_AMapFragment)
+        context?.run { AMapActivity.start(this) }
     }
 
-    private fun navigateToTomTomMapFragment() {
+    private fun navigateToTomTomMapActivity() {
         LogUtil.debug(TAG, "[Map Debug Intro] Navigate to TomTomMap.")
-        findNavController().navigate(R.id.action_introMapFragment_to_tomTomMapFragment)
+        context?.run { TomTomMapActivity.start(this) }
     }
 
     /* ======================== Ui ======================== */
@@ -55,11 +54,11 @@ class IntroMapFragment : AbsBaseFragment() {
     private fun setupUi() {
         binding.apply {
             cardViewAMap.setOnClickListener {
-                navigateToAMapFragment()
+                navigateToAMapActivity()
             }
 
             cardViewTomtom.setOnClickListener {
-                navigateToTomTomMapFragment()
+                navigateToTomTomMapActivity()
             }
         }
     }

@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
-    tools:context=".feature.fragments.map.AMapFragment">
+    android:fitsSystemWindows="true"
+    tools:context=".feature.activities.map.TomTomMapActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_AMap"
+        android:id="@+id/cardView_Tomtom"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="500dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -18,10 +19,11 @@
         app:cardBackgroundColor="@color/cardview_dark_background"
         app:cardCornerRadius="8dp">
 
-        <com.amap.api.maps.MapView
-            android:id="@+id/aMapView"
+        <com.tomtom.sdk.map.display.ui.MapView xmlns:tomtom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tomtomMapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tomtom:mapKey="@string/tomtom_dev_key" />
 
     </androidx.cardview.widget.CardView>
 

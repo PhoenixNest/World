@@ -70,6 +70,30 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.Relic.Debug" />
 
+        <activity
+            android:name=".feature.activities.map.AMapActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.map.TomTomMapActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.machine_learning.MLKitActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.machine_learning.MediaPipeActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
         <!-- Firebase Performance plugin -->
         <meta-data
             android:name="firebase_performance_logcat_enabled"

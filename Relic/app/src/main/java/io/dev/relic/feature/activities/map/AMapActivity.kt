@@ -1,27 +1,38 @@
-package io.dev.relic.feature.fragments.map
+package io.dev.relic.feature.activities.map
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
-import io.dev.relic.databinding.FragmentAmapBinding
+import io.dev.relic.databinding.ActivityAmapBinding
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
-import io.dev.relic.feature.fragments.AbsBaseFragment
+import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.LogUtil
 
 /**
  * [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/)
  * */
-class AMapFragment : AbsBaseFragment() {
+class AMapActivity : AbsBaseActivity() {
 
-    private var _binding: FragmentAmapBinding? = null
-    private val binding: FragmentAmapBinding get() = _binding!!
+    private val binding: ActivityAmapBinding by lazy {
+        ActivityAmapBinding.inflate(layoutInflater)
+    }
 
     companion object {
-        private const val TAG = "AMapFragment"
+        private const val TAG = "AMapActivity"
+
+        fun start(context: Context) {
+            context.startActivity(
+                Intent(
+                    /* packageContext = */ context,
+                    /* cls = */ AMapActivity::class.java
+                ).apply {
+                    action = "[Activity] AMap"
+                }
+            )
+        }
     }
 
     /* ======================== override ======================== */
@@ -30,16 +41,8 @@ class AMapFragment : AbsBaseFragment() {
         verifyAMapPrivacyAgreement()
     }
 
-    override fun bindView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAmapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun initUi(savedInstanceState: Bundle?) {
+        setContentView(binding.root)
         setupMapView(savedInstanceState)
     }
 
@@ -63,13 +66,12 @@ class AMapFragment : AbsBaseFragment() {
         binding.aMapView.onSaveInstanceState(outState)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
 
         // Avoid OOM
         LogUtil.debug(TAG, "[AMap] onDestroy")
         binding.aMapView.onDestroy()
-        _binding = null
     }
 
     /* ======================== Logical ======================== */

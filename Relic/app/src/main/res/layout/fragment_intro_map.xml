@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.fragments.map.IntroMapFragment">
+    tools:context=".feature.fragments.IntroMapFragment">
 
     <TextView
         android:id="@+id/textView"

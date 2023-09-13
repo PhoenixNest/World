@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.fragments.machine_learning.IntroMachineLearningFragment">
+    tools:context=".feature.fragments.IntroMachineLearningFragment">
 
     <TextView
         android:id="@+id/textView"
