@@ -33,7 +33,7 @@ private fun HivePage() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.hive_title),
+            text = stringResource(R.string.hive_label),
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 30.sp

@@ -23,7 +23,7 @@ import io.dev.relic.R
 import io.dev.relic.ui.theme.mainThemeColor
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 fun SplashScreen(modifier: Modifier = Modifier) {
 
     val composition: LottieComposition? by rememberLottieComposition(

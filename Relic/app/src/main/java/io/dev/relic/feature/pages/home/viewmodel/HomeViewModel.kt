@@ -29,8 +29,8 @@ class HomeViewModel @Inject constructor(
     private val foodRecipesUseCase: FoodRecipesUseCase
 ) : AndroidViewModel(application) {
 
-    private val _homeUiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Init)
-    val homeUiState: StateFlow<HomeUiState> get() = _homeUiState
+    private val _homeState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState.Init)
+    val homeState: StateFlow<HomeState> get() = _homeState
 
     companion object {
         private const val TAG = "HomeViewModel"
@@ -63,20 +63,20 @@ class HomeViewModel @Inject constructor(
             longitude = longitude,
             listener = object : IFetchDataMonitor {
                 override fun onFetching() {
-                    setState(_homeUiState, HomeUiState.FetchingData)
+                    setState(_homeState, HomeState.FetchingData)
                 }
 
                 override fun <T> onFetchSucceed(dto: T) {
                     val dataModel: WeatherInfoModel = (dto as WeatherForecastDTO).toWeatherInfoModel()
-                    setState(_homeUiState, HomeUiState.FetchWeatherDataSucceed(dataModel))
+                    setState(_homeState, HomeState.FetchWeatherDataSucceed(dataModel))
                 }
 
                 override fun onFetchSucceedButNoData(errorMessage: String) {
-                    setState(_homeUiState, HomeUiState.NoWeatherData)
+                    setState(_homeState, HomeState.NoWeatherData)
                 }
 
                 override fun onFetchFailed(errorCode: Int?, errorMessage: String?) {
-                    setState(_homeUiState, HomeUiState.FetchWeatherDataFailed(errorCode, errorMessage))
+                    setState(_homeState, HomeState.FetchWeatherDataFailed(errorCode, errorMessage))
                 }
             }
         )
@@ -90,21 +90,20 @@ class HomeViewModel @Inject constructor(
             offset = offset,
             listener = object : IFetchDataMonitor {
                 override fun onFetching() {
-                    setState(_homeUiState, HomeUiState.FetchingData)
+                    setState(_homeState, HomeState.FetchingData)
                 }
 
                 override fun <T> onFetchSucceed(dto: T) {
                     val dataList: List<FoodRecipesComplexSearchInfoModel> = (dto as FoodRecipesComplexSearchDTO).toComplexSearchModelList()
-                    setState(_homeUiState, HomeUiState.FetchFoodRecipesDataSucceed(dataList))
+                    setState(_homeState, HomeState.FetchFoodRecipesDataSucceed(dataList))
                 }
 
                 override fun onFetchSucceedButNoData(errorMessage: String) {
-                    setState(_homeUiState, HomeUiState.NoFoodRecipesData)
-
+                    setState(_homeState, HomeState.NoFoodRecipesData)
                 }
 
                 override fun onFetchFailed(errorCode: Int?, errorMessage: String?) {
-                    setState(_homeUiState, HomeUiState.FetchFoodRecipesDataFailed(errorCode, errorMessage))
+                    setState(_homeState, HomeState.FetchFoodRecipesDataFailed(errorCode, errorMessage))
                 }
             }
         )

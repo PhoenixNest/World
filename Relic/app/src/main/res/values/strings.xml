@@ -25,16 +25,17 @@
     <string name="intro_agreement_part_4">Privacy Policy</string>
 
     <!-- Home Page -->
-    <string name="home_title">Home</string>
+    <string name="home_label">Home</string>
+    <string name="home_main_title">Beyond the World</string>
     <string name="home_card_weather_title">Today\'s Weather</string>
     <string name="home_card_todo_title">Check out your todo tasks</string>
     <string name="home_card_food_recipes_title">Eat and drink your fill</string>
 
     <!-- Explore Page -->
-    <string name="explore_title">Explore</string>
+    <string name="explore_label">Explore</string>
 
     <!-- Hive Page -->
-    <string name="hive_title">Hive</string>
+    <string name="hive_label">Hive</string>
 
     <!-- Mine Page -->
     <string name="mine_title">Me</string>

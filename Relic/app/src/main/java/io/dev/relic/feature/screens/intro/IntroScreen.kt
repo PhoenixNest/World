@@ -250,7 +250,7 @@ private fun IntroFeatureItem(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun IntroScreenPreview() {
     IntroScreen(onClick = {})
 }

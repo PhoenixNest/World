@@ -16,5 +16,6 @@ val mainTextColorDark: Color = mainThemeColor.copy(alpha = 0.8F)
 val mainTextColorDarkLight: Color = mainTextColorDark.copy(0.6F)
 
 val mainButtonColor: Color = mainThemeColor
+val mainButtonColorLight: Color = mainTextColor
 
 val dividerColor: Color = Color.White.copy(alpha = 0.1F)

@@ -68,25 +68,25 @@ fun CommonLoadingComponent(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun CommonLoadingComponentPreview() {
     CommonLoadingComponent(type = COMMON)
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun TodoLoadingComponentPreview() {
     CommonLoadingComponent(type = TODO)
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun WeatherLoadingComponentPreview() {
     CommonLoadingComponent(type = WEATHER)
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun RecipesLoadingComponentPreview() {
     CommonLoadingComponent(type = RECIPES)
 }

@@ -11,20 +11,20 @@ enum class MainScreenTopLevelDestination(
     @DrawableRes val unselectedIconResId: Int
 ) {
     Home(
-        titleResId = R.string.home_title,
-        labelResId = R.string.home_title,
+        titleResId = R.string.home_label,
+        labelResId = R.string.home_label,
         selectedIconResId = R.drawable.ic_bottom_tab_home_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_home_unselected,
     ),
     Explore(
-        titleResId = R.string.explore_title,
-        labelResId = R.string.explore_title,
+        titleResId = R.string.explore_label,
+        labelResId = R.string.explore_label,
         selectedIconResId = R.drawable.ic_bottom_tab_explore_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_explore_unselected,
     ),
     Hive(
-        titleResId = R.string.hive_title,
-        labelResId = R.string.hive_title,
+        titleResId = R.string.hive_label,
+        labelResId = R.string.hive_label,
         selectedIconResId = R.drawable.ic_bottom_tab_hive_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_hive_unselected,
     )

@@ -3,42 +3,42 @@ package io.dev.relic.feature.pages.home.viewmodel
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 
-sealed class HomeUiState {
+sealed class HomeState {
 
     /* Common */
 
-    data object Init : HomeUiState()
+    data object Init : HomeState()
 
-    data object Empty : HomeUiState()
+    data object Empty : HomeState()
 
-    data object NoWeatherData : HomeUiState()
+    data object NoWeatherData : HomeState()
 
-    data object NoFoodRecipesData : HomeUiState()
+    data object NoFoodRecipesData : HomeState()
 
     /* Loading */
 
-    data object FetchingData : HomeUiState()
+    data object FetchingData : HomeState()
 
     /* Succeed */
 
     data class FetchWeatherDataSucceed(
         val weatherInfoModel: WeatherInfoModel?
-    ) : HomeUiState()
+    ) : HomeState()
 
     data class FetchFoodRecipesDataSucceed(
         val foodRecipesModel: List<FoodRecipesComplexSearchInfoModel>?
-    ) : HomeUiState()
+    ) : HomeState()
 
     /* Failed */
 
     data class FetchWeatherDataFailed(
         val errorCode: Int?,
         val errorMessage: String?
-    ) : HomeUiState()
+    ) : HomeState()
 
     data class FetchFoodRecipesDataFailed(
         val errorCode: Int?,
         val errorMessage: String?
-    ) : HomeUiState()
+    ) : HomeState()
 
 }
