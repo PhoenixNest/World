@@ -3,6 +3,7 @@ package io.dev.relic.feature.pages.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -138,26 +140,34 @@ private fun HomePage(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            state = rememberLazyListState(),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
+            contentPadding = PaddingValues(
+                top = 8.dp,
+                bottom = 16.dp
+            )
         ) {
             item {
-                Spacer(modifier = Modifier.height(8.dp))
                 HomePageTopBar(onOpenDrawer = {})
+            }
+            item {
                 Spacer(modifier = Modifier.height(16.dp))
-                HomePageWeatherCard(weatherInfoModel = weatherInfoModel)
+                HomePageWeatherCard(model = weatherInfoModel)
+            }
+            item {
                 Spacer(modifier = Modifier.height(16.dp))
                 HomePageTradeCard()
+            }
+            item {
                 Spacer(modifier = Modifier.height(16.dp))
                 HomePageTodoCard()
-                Spacer(modifier = Modifier.height(16.dp))
             }
-
             items(
                 items = foodRecipesDataList ?: emptyList(),
                 key = { it.id }
             ) {
-                HomePageFoodRecipesCard()
+                HomePageFoodRecipesCard(it)
             }
         }
     }
@@ -210,7 +220,7 @@ private fun HomePageTradeCard() {
 }
 
 @Composable
-private fun HomePageWeatherCard(weatherInfoModel: WeatherInfoModel?) {
+private fun HomePageWeatherCard(model: WeatherInfoModel?) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -224,7 +234,7 @@ private fun HomePageWeatherCard(weatherInfoModel: WeatherInfoModel?) {
 }
 
 @Composable
-private fun HomePageFoodRecipesCard() {
+private fun HomePageFoodRecipesCard(model: FoodRecipesComplexSearchInfoModel?) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)

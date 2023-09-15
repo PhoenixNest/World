@@ -21,15 +21,25 @@ sealed class HomeState {
 
     /* Succeed */
 
+    data class FetchDataSucceed(
+        val model: WeatherInfoModel?,
+        val modelList: List<FoodRecipesComplexSearchInfoModel>?
+    ) : HomeState()
+
     data class FetchWeatherDataSucceed(
-        val weatherInfoModel: WeatherInfoModel?
+        val model: WeatherInfoModel?
     ) : HomeState()
 
     data class FetchFoodRecipesDataSucceed(
-        val foodRecipesModel: List<FoodRecipesComplexSearchInfoModel>?
+        val modelList: List<FoodRecipesComplexSearchInfoModel>?
     ) : HomeState()
 
     /* Failed */
+
+    data class FetchDataFailed(
+        val errorCode: Int?,
+        val errorMessage: String?
+    ) : HomeState()
 
     data class FetchWeatherDataFailed(
         val errorCode: Int?,
