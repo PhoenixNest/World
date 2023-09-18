@@ -3,8 +3,11 @@ package io.dev.relic.feature.pages.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,7 +38,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.R
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
+import io.dev.relic.domain.model.weather.WeatherType
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.home.viewmodel.HomeState
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
@@ -46,7 +51,9 @@ import io.dev.relic.global.widget.CommonNoDataComponent
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainButtonColorLight
 import io.dev.relic.ui.theme.mainTextColor
+import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColor
+import java.time.LocalDateTime
 
 @Composable
 fun HomePageRoute(
@@ -124,6 +131,14 @@ private fun HomePage(homeState: HomeState) {
         is HomeState.FetchFoodRecipesDataFailed -> {
 
         }
+
+        is HomeState.FetchDataFailed -> {
+
+        }
+
+        is HomeState.FetchDataSucceed -> {
+
+        }
     }
 }
 
@@ -153,11 +168,11 @@ private fun HomePage(
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                HomePageWeatherCard(model = weatherInfoModel)
+                WeatherCard(model = weatherInfoModel?.currentWeatherData)
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                HomePageTradeCard()
+                TradeCard()
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -206,7 +221,7 @@ private fun HomePageTopBar(onOpenDrawer: () -> Unit) {
 }
 
 @Composable
-private fun HomePageTradeCard() {
+private fun TradeCard() {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -220,16 +235,94 @@ private fun HomePageTradeCard() {
 }
 
 @Composable
-private fun HomePageWeatherCard(model: WeatherInfoModel?) {
-    Card(
+private fun WeatherCard(model: WeatherDataModel?) {
+    Box(
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .height(200.dp),
-        shape = RoundedCornerShape(16.dp),
-        backgroundColor = Color.LightGray
+            .height(180.dp)
     ) {
-        //
+        Card(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .height(160.dp)
+                .align(Alignment.BottomCenter),
+            shape = RoundedCornerShape(16.dp),
+            backgroundColor = Color.LightGray
+        ) {
+            if (model == null) {
+                //
+            } else {
+                val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode)
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxHeight(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.Start
+                        ) {
+                            Text(
+                                text = "${model.temperature}",
+                                style = TextStyle(
+                                    color = mainTextColorDark,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = RelicFontFamily.ubuntu
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = weatherType.weatherDesc,
+                                style = TextStyle(
+                                    color = mainTextColorDark,
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = RelicFontFamily.ubuntu
+                                )
+                            )
+                        }
+                    }
+
+                    Text(
+                        text = "Weather Data provider: XXX",
+                        style = TextStyle(
+                            color = mainTextColorDark,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = RelicFontFamily.ubuntu
+                        )
+                    )
+                }
+            }
+        }
+        Card(
+            modifier = Modifier.padding(horizontal = 36.dp),
+            shape = RoundedCornerShape(8.dp),
+            backgroundColor = Color.DarkGray
+        ) {
+            Text(
+                text = stringResource(R.string.home_card_weather_title),
+                modifier = Modifier.padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                ),
+                style = TextStyle(
+                    color = mainTextColor,
+                    fontFamily = RelicFontFamily.ubuntu,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
     }
 }
 
@@ -259,6 +352,28 @@ private fun HomePageTodoCard() {
     ) {
         //
     }
+}
+
+@Composable
+@Preview
+private fun TradeCardPreview() {
+    TradeCard()
+}
+
+@Composable
+@Preview
+private fun WeatherCardPreview() {
+    WeatherCard(
+        model = WeatherDataModel(
+            time = LocalDateTime.now(),
+            humidity = 10,
+            temperature = 25.0,
+            weatherCode = 0,
+            windSpeed = 100.0,
+            pressure = 120.0,
+            isDay = true
+        )
+    )
 }
 
 @Composable
