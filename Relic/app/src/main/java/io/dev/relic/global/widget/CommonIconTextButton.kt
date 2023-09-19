@@ -120,7 +120,7 @@ fun CommonIconTextButton(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun CommonIconTextPreview() {
     CommonIconTextButton(
         icon = Icons.Default.Check,

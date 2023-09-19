@@ -86,7 +86,7 @@ class HomeViewModel @Inject constructor(
             }.await()
 
             if (weatherFetchResult.first == FETCH_SUCCEED && foodRecipesFetchResult.first == FETCH_SUCCEED) {
-                setState(_homeState, HomeState.FetchDataSucceed(model = null, modelList = null))
+                setState(_homeState, HomeState.FetchDataSucceed(weatherData = null, recipesData = null))
             }
         }
     }

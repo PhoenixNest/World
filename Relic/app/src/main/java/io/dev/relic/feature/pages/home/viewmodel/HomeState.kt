@@ -22,8 +22,8 @@ sealed class HomeState {
     /* Succeed */
 
     data class FetchDataSucceed(
-        val model: WeatherInfoModel?,
-        val modelList: List<FoodRecipesComplexSearchInfoModel>?
+        val weatherData: WeatherInfoModel?,
+        val recipesData: List<FoodRecipesComplexSearchInfoModel>?
     ) : HomeState()
 
     data class FetchWeatherDataSucceed(

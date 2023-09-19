@@ -4,6 +4,7 @@
     <!-- System -->
     <string name="no_network_connection_message">Please check your network connection…</string>
     <string name="no_data">No Data…</string>
+    <string name="no_data_retry">Retry</string>
 
     <!-- Permission -->
     <string name="permission_location">Allow your location</string>

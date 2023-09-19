@@ -1,5 +1,6 @@
 package io.dev.relic.feature.pages.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,11 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -27,6 +28,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,10 +52,12 @@ import io.dev.relic.global.RelicConstants
 import io.dev.relic.global.widget.CommonLoadingComponent
 import io.dev.relic.global.widget.CommonNoDataComponent
 import io.dev.relic.ui.theme.RelicFontFamily
+import io.dev.relic.ui.theme.mainBackgroundColorLight
 import io.dev.relic.ui.theme.mainButtonColorLight
 import io.dev.relic.ui.theme.mainTextColor
 import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColor
+import io.dev.relic.ui.theme.mainThemeColorAccent
 import java.time.LocalDateTime
 
 @Composable
@@ -96,40 +101,8 @@ fun HomePageRoute(
 @Composable
 private fun HomePage(homeState: HomeState) {
     when (homeState) {
-        is HomeState.Init -> {
-
-        }
-
-        is HomeState.Empty -> {
-
-        }
-
-        is HomeState.NoFoodRecipesData -> {
-
-        }
-
-        is HomeState.NoWeatherData -> {
-
-        }
-
         is HomeState.FetchingData -> {
-
-        }
-
-        is HomeState.FetchWeatherDataSucceed -> {
-
-        }
-
-        is HomeState.FetchFoodRecipesDataSucceed -> {
-
-        }
-
-        is HomeState.FetchWeatherDataFailed -> {
-
-        }
-
-        is HomeState.FetchFoodRecipesDataFailed -> {
-
+            CommonLoadingComponent()
         }
 
         is HomeState.FetchDataFailed -> {
@@ -137,15 +110,22 @@ private fun HomePage(homeState: HomeState) {
         }
 
         is HomeState.FetchDataSucceed -> {
-
+            HomePage(
+                weatherInfoModel = homeState.weatherData,
+                foodRecipesDataList = homeState.recipesData,
+                onRefreshWeatherData = {}
+            )
         }
+
+        else -> {}
     }
 }
 
 @Composable
 private fun HomePage(
     weatherInfoModel: WeatherInfoModel?,
-    foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel>?
+    foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel>?,
+    onRefreshWeatherData: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -165,16 +145,11 @@ private fun HomePage(
         ) {
             item {
                 HomePageTopBar(onOpenDrawer = {})
-            }
-            item {
                 Spacer(modifier = Modifier.height(16.dp))
-                WeatherCard(model = weatherInfoModel?.currentWeatherData)
-            }
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                TradeCard()
-            }
-            item {
+                WeatherCard(
+                    model = weatherInfoModel?.currentWeatherData,
+                    onRetryClick = onRefreshWeatherData
+                )
                 Spacer(modifier = Modifier.height(16.dp))
                 HomePageTodoCard()
             }
@@ -221,86 +196,67 @@ private fun HomePageTopBar(onOpenDrawer: () -> Unit) {
 }
 
 @Composable
-private fun TradeCard() {
-    Card(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .height(200.dp),
-        shape = RoundedCornerShape(16.dp),
-        backgroundColor = Color.LightGray
-    ) {
-        //
-    }
-}
-
-@Composable
-private fun WeatherCard(model: WeatherDataModel?) {
+private fun WeatherCard(
+    model: WeatherDataModel?,
+    onRetryClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .height(136.dp)
     ) {
         Card(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .height(160.dp)
+                .height(120.dp)
                 .align(Alignment.BottomCenter),
             shape = RoundedCornerShape(16.dp),
-            backgroundColor = Color.LightGray
+            backgroundColor = mainBackgroundColorLight
         ) {
             if (model == null) {
                 //
             } else {
                 val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode)
-                Column(
-                    modifier = Modifier.fillMaxHeight(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.Start
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                    Column(
+                        modifier = Modifier.wrapContentHeight(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.Start
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxHeight(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.Start
-                        ) {
-                            Text(
-                                text = "${model.temperature}",
-                                style = TextStyle(
-                                    color = mainTextColorDark,
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = RelicFontFamily.ubuntu
-                                )
+                        Text(
+                            text = "${model.temperature}°C",
+                            style = TextStyle(
+                                color = mainTextColorDark,
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = RelicFontFamily.ubuntu
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = weatherType.weatherDesc,
-                                style = TextStyle(
-                                    color = mainTextColorDark,
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = RelicFontFamily.ubuntu
-                                )
-                            )
-                        }
-                    }
-
-                    Text(
-                        text = "Weather Data provider: XXX",
-                        style = TextStyle(
-                            color = mainTextColorDark,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = RelicFontFamily.ubuntu
                         )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = weatherType.weatherDesc,
+                            style = TextStyle(
+                                color = mainTextColorDark,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = RelicFontFamily.ubuntu
+                            )
+                        )
+                    }
+                    Image(
+                        painter = painterResource(weatherType.iconRes),
+                        contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                        modifier = Modifier
+                            .height(72.dp)
+                            .width(72.dp),
+                        colorFilter = ColorFilter.tint(Color.DarkGray)
                     )
                 }
             }
@@ -308,7 +264,7 @@ private fun WeatherCard(model: WeatherDataModel?) {
         Card(
             modifier = Modifier.padding(horizontal = 36.dp),
             shape = RoundedCornerShape(8.dp),
-            backgroundColor = Color.DarkGray
+            backgroundColor = mainThemeColorAccent
         ) {
             Text(
                 text = stringResource(R.string.home_card_weather_title),
@@ -356,8 +312,11 @@ private fun HomePageTodoCard() {
 
 @Composable
 @Preview
-private fun TradeCardPreview() {
-    TradeCard()
+private fun WeatherCardNoDataPreview() {
+    WeatherCard(
+        model = null,
+        onRetryClick = {}
+    )
 }
 
 @Composable
@@ -368,11 +327,12 @@ private fun WeatherCardPreview() {
             time = LocalDateTime.now(),
             humidity = 10,
             temperature = 25.0,
-            weatherCode = 0,
+            weatherCode = 57,
             windSpeed = 100.0,
             pressure = 120.0,
             isDay = true
-        )
+        ),
+        onRetryClick = {}
     )
 }
 
@@ -381,6 +341,7 @@ private fun WeatherCardPreview() {
 private fun HomePagePreview() {
     HomePage(
         weatherInfoModel = null,
-        foodRecipesDataList = emptyList()
+        foodRecipesDataList = emptyList(),
+        onRefreshWeatherData = {}
     )
 }
