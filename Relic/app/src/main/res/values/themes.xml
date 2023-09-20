@@ -8,4 +8,11 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="Theme.Relic.Splash" parent="Theme.Relic">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/mainThemeColor</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

@@ -39,7 +39,7 @@
             android:name=".feature.activities.splash.SplashActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.Relic">
+            android:theme="@style/Theme.Relic.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

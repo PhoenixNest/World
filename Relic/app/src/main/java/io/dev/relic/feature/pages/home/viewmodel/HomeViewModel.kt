@@ -39,6 +39,8 @@ class HomeViewModel @Inject constructor(
     private val foodRecipesUseCase: FoodRecipesUseCase
 ) : AndroidViewModel(application) {
 
+    private var isFetchingData: Boolean = false
+
     private val _homeState: MutableStateFlow<HomeState> = MutableStateFlow(HomeState.Init)
     val homeState: StateFlow<HomeState> get() = _homeState
 
@@ -76,6 +78,13 @@ class HomeViewModel @Inject constructor(
         offset: Int
     ) {
         LogUtil.debug(TAG, "[Exec] Begin sequence...")
+
+        if (isFetchingData) {
+            LogUtil.debug(TAG, "[Exec] Skip duplicate fetch action.")
+            return
+        }
+
+        isFetchingData = true
         viewModelScope.launch {
             val weatherFetchResult: Pair<FetchStatus, WeatherInfoModel?> = async {
                 fetchWeatherForecastData(latitude = latitude, longitude = longitude)
@@ -86,6 +95,7 @@ class HomeViewModel @Inject constructor(
             }.await()
 
             if (weatherFetchResult.first == FETCH_SUCCEED && foodRecipesFetchResult.first == FETCH_SUCCEED) {
+                isFetchingData = false
                 setState(_homeState, HomeState.FetchDataSucceed(weatherData = null, recipesData = null))
             }
         }
