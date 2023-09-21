@@ -14,7 +14,7 @@ interface IFoodRecipesDataRepository {
      *
      * @param offset    Paging index number
      * */
-    fun getComplexSearchRecipesData(
+    suspend fun getComplexSearchRecipesData(
         offset: Int
     ): NetworkResult<FoodRecipesComplexSearchDTO>
 
@@ -23,7 +23,7 @@ interface IFoodRecipesDataRepository {
      *
      * @param number    Max number of random result
      * */
-    fun getRandomSearchRecipesData(
+    suspend fun getRandomSearchRecipesData(
         number: Int
     ): NetworkResult<FoodRecipesRandomSearchDTO>
 
