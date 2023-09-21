@@ -22,7 +22,6 @@ import io.dev.relic.global.utils.ext.ViewModelExt.setState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -69,21 +68,7 @@ class HomeViewModel @Inject constructor(
         private const val TAG = "HomeViewModel"
     }
 
-    fun fetchRemoteData(
-        latitude: Double,
-        longitude: Double,
-        offset: Int
-    ) {
-        combine(
-            remoteWeatherDataFlow(latitude, longitude),
-            remoteFoodRecipesDataFlow(offset)
-        ) { weatherResult: NetworkResult<WeatherForecastDTO>, foodRecipesResult: NetworkResult<FoodRecipesComplexSearchDTO> ->
-            handleRemoteWeatherData(weatherResult)
-            handleRemoteFoodRecipesData(foodRecipesResult)
-        }
-    }
-
-    private fun remoteWeatherDataFlow(
+    fun execRemoteWeatherDataFlow(
         latitude: Double,
         longitude: Double
     ): StateFlow<NetworkResult<WeatherForecastDTO>> {
@@ -96,7 +81,7 @@ class HomeViewModel @Inject constructor(
             )
     }
 
-    private fun remoteFoodRecipesDataFlow(
+    fun execRemoteFoodRecipesDataFlow(
         offset: Int
     ): StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> {
         return foodRecipesUseCase
