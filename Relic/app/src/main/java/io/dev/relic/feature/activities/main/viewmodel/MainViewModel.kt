@@ -5,8 +5,8 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.dev.relic.domain.location.ILocationListener
 import io.dev.relic.domain.use_case.lcoation.LocationUseCase
-import io.dev.relic.domain.use_case.lcoation.action.AccessCurrentLocation
 import io.dev.relic.feature.screens.main.MainState
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.ViewModelExt.setState
@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(
     private fun accessDeviceLocation() {
         viewModelScope.launch {
             locationUseCase.accessCurrentLocation.invoke(
-                listener = object : AccessCurrentLocation.ILocationListener {
+                listener = object : ILocationListener {
                     override fun onAccessing() {
                         LogUtil.debug(TAG, "[Access Device Location] Accessing...")
                         setState(
@@ -56,7 +56,7 @@ class MainViewModel @Inject constructor(
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
-                        LogUtil.debug(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
+                        LogUtil.error(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
                         setState(
                             stateFlow = _mainStateFlow,
                             newState = MainState.AccessLocationFailed(

@@ -8,9 +8,7 @@ import javax.inject.Inject
 class ReadCacheComplexRecipesData @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) {
-
     operator fun invoke(): Flow<List<FoodRecipesComplexSearchEntity>> {
         return databaseRepository.readComplexSearchRecipesCache()
     }
-
 }

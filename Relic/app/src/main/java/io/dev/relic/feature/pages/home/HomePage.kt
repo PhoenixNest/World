@@ -25,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,12 +46,11 @@ import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherInfoModel
 import io.dev.relic.domain.model.weather.WeatherType
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.pages.home.viewmodel.HomeState
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
+import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
+import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
 import io.dev.relic.feature.screens.main.MainState
 import io.dev.relic.global.RelicConstants
-import io.dev.relic.global.widget.CommonLoadingComponent
-import io.dev.relic.global.widget.CommonNoDataComponent
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainBackgroundColorLight
 import io.dev.relic.ui.theme.mainButtonColorLight
@@ -65,8 +65,10 @@ fun HomePageRoute(
     mainViewModel: MainViewModel,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+
     val mainState: MainState = mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
-    val homeState: HomeState = homeViewModel.homeState.collectAsStateWithLifecycle().value
+    val homeWeatherState: HomeWeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
+    val homeFoodRecipesState: HomeFoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
 
     when (mainState) {
         is MainState.Init -> {
@@ -74,57 +76,33 @@ fun HomePageRoute(
         }
 
         is MainState.Empty -> {
-            CommonNoDataComponent()
+
         }
 
         is MainState.AccessingLocation -> {
-            CommonLoadingComponent()
+
         }
 
         is MainState.AccessLocationFailed -> {
-            CommonNoDataComponent()
+
         }
 
         is MainState.AccessLocationSucceed -> {
-            mainState.location?.run {
-                homeViewModel.exec(
-                    latitude = this.latitude,
-                    longitude = this.longitude,
+            mainState.location?.also {
+                homeViewModel.fetchRemoteData(
+                    latitude = it.latitude,
+                    longitude = it.longitude,
                     offset = 0
                 )
             }
-            HomePage(homeState)
         }
-    }
-}
-
-@Composable
-private fun HomePage(homeState: HomeState) {
-    when (homeState) {
-        is HomeState.FetchingData -> {
-            CommonLoadingComponent()
-        }
-
-        is HomeState.FetchDataFailed -> {
-
-        }
-
-        is HomeState.FetchDataSucceed -> {
-            HomePage(
-                weatherInfoModel = homeState.weatherData,
-                foodRecipesDataList = homeState.recipesData,
-                onRefreshWeatherData = {}
-            )
-        }
-
-        else -> {}
     }
 }
 
 @Composable
 private fun HomePage(
     weatherInfoModel: WeatherInfoModel?,
-    foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel>?,
+    foodRecipesDataList: List<FoodRecipesComplexSearchInfoModel?>?,
     onRefreshWeatherData: () -> Unit
 ) {
     Box(
@@ -155,7 +133,7 @@ private fun HomePage(
             }
             items(
                 items = foodRecipesDataList ?: emptyList(),
-                key = { it.id }
+                key = { it?.id.toString() }
             ) {
                 HomePageFoodRecipesCard(it)
             }
@@ -186,7 +164,7 @@ private fun HomePageTopBar(onOpenDrawer: () -> Unit) {
             modifier = Modifier.align(Alignment.Center),
             style = TextStyle(
                 color = mainTextColor,
-                fontSize = 32.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = RelicFontFamily.ubuntu,
                 textMotion = TextMotion.Animated

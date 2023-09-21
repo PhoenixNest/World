@@ -8,6 +8,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.dev.relic.core.device.permission.RelicPermissionDetector.Native.checkPermission
 import io.dev.relic.domain.location.ILocationTracker
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class LocationTrackerImpl @Inject constructor(
             return null
         }
 
-        return suspendCancellableCoroutine { continuation ->
+        return suspendCancellableCoroutine { continuation: CancellableContinuation<Location?> ->
             locationClient.lastLocation.apply {
                 if (isComplete) {
                     if (isSuccessful) {
@@ -60,7 +61,7 @@ class LocationTrackerImpl @Inject constructor(
                     }
                     return@suspendCancellableCoroutine
                 }
-                addOnSuccessListener { location ->
+                addOnSuccessListener { location: Location ->
                     continuation.resume(
                         value = location,
                         onCancellation = null

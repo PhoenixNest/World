@@ -1,6 +1,6 @@
 package io.dev.relic.domain.use_case.lcoation.action
 
-import android.location.Location
+import io.dev.relic.domain.location.ILocationListener
 import io.dev.relic.domain.location.ILocationTracker
 import io.dev.relic.domain.use_case.lcoation.TAG
 import io.dev.relic.global.utils.LogUtil
@@ -9,17 +9,6 @@ import javax.inject.Inject
 class AccessCurrentLocation @Inject constructor(
     private val locationTracker: ILocationTracker
 ) {
-
-    interface ILocationListener {
-
-        fun onAccessing()
-
-        fun onAccessSucceed(location: Location)
-
-        fun onAccessFailed(errorMessage: String)
-
-    }
-
     suspend operator fun invoke(listener: ILocationListener) {
         LogUtil.verbose(TAG, "[LocationTracker] Attempts to get the current device location.")
         listener.onAccessing()
@@ -34,5 +23,4 @@ class AccessCurrentLocation @Inject constructor(
             listener.onAccessFailed(errorMessage = errorMessage)
         }
     }
-
 }

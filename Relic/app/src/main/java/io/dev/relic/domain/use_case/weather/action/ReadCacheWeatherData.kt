@@ -8,9 +8,7 @@ import javax.inject.Inject
 class ReadCacheWeatherData @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) {
-
     operator fun invoke(): Flow<List<WeatherEntity>> {
         return databaseRepository.readWeatherDataCache()
     }
-
 }
