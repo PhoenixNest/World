@@ -26,9 +26,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import io.dev.relic.R
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherType
+import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
 import io.dev.relic.global.RelicConstants
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainBackgroundColorLight
@@ -39,8 +43,44 @@ import java.time.LocalDateTime
 
 @Composable
 fun HomeWeatherCard(
+    weatherDataState: HomeWeatherDataState,
+    onRefreshClick: () -> Unit
+) {
+    when (val state: HomeWeatherDataState = weatherDataState) {
+        is HomeWeatherDataState.Init,
+        is HomeWeatherDataState.Fetching -> {
+            HomeWeatherCard(
+                isLoading = true,
+                model = null,
+                onRefreshClick = {}
+            )
+        }
+
+        is HomeWeatherDataState.FetchSucceed -> {
+            HomeWeatherCard(
+                isLoading = false,
+                model = state.model?.currentWeatherData,
+                onRefreshClick = onRefreshClick
+            )
+        }
+
+        is HomeWeatherDataState.Empty,
+        is HomeWeatherDataState.NoWeatherData,
+        is HomeWeatherDataState.FetchFailed -> {
+            HomeWeatherCard(
+                isLoading = false,
+                model = null,
+                onRefreshClick = onRefreshClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeWeatherCard(
+    isLoading: Boolean,
     model: WeatherDataModel?,
-    onRetryClick: () -> Unit
+    onRefreshClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -52,55 +92,19 @@ fun HomeWeatherCard(
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .height(120.dp)
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .placeholder(
+                    visible = isLoading,
+                    shape = RoundedCornerShape(16.dp),
+                    highlight = PlaceholderHighlight.shimmer()
+                ),
             shape = RoundedCornerShape(16.dp),
             backgroundColor = mainBackgroundColorLight
         ) {
             if (model == null) {
                 //
             } else {
-                val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier.wrapContentHeight(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.Start
-                    ) {
-                        Text(
-                            text = "${model.temperature}°C",
-                            style = TextStyle(
-                                color = mainTextColorDark,
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = RelicFontFamily.ubuntu
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = weatherType.weatherDesc,
-                            style = TextStyle(
-                                color = mainTextColorDark,
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = RelicFontFamily.ubuntu
-                            )
-                        )
-                    }
-                    Image(
-                        painter = painterResource(weatherType.iconRes),
-                        contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                        modifier = Modifier
-                            .height(72.dp)
-                            .width(72.dp),
-                        colorFilter = ColorFilter.tint(Color.DarkGray)
-                    )
-                }
+                HomeWeatherCardContent(model)
             }
         }
         Card(
@@ -125,18 +129,66 @@ fun HomeWeatherCard(
 }
 
 @Composable
-@Preview
+private fun HomeWeatherCardContent(model: WeatherDataModel) {
+    val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            modifier = Modifier.wrapContentHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = "${model.temperature}°C",
+                style = TextStyle(
+                    color = mainTextColorDark,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = RelicFontFamily.ubuntu
+                )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = weatherType.weatherDesc,
+                style = TextStyle(
+                    color = mainTextColorDark,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = RelicFontFamily.ubuntu
+                )
+            )
+        }
+        Image(
+            painter = painterResource(weatherType.iconRes),
+            contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+            modifier = Modifier
+                .height(72.dp)
+                .width(72.dp),
+            colorFilter = ColorFilter.tint(Color.DarkGray)
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true, backgroundColor = 0xFF282c34)
 private fun HomeWeatherCardNoDataPreview() {
     HomeWeatherCard(
+        isLoading = false,
         model = null,
-        onRetryClick = {}
+        onRefreshClick = {}
     )
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF282c34)
 private fun HomeWeatherCardPreview() {
     HomeWeatherCard(
+        isLoading = false,
         model = WeatherDataModel(
             time = LocalDateTime.now(),
             humidity = 10,
@@ -146,6 +198,6 @@ private fun HomeWeatherCardPreview() {
             pressure = 120.0,
             isDay = true
         ),
-        onRetryClick = {}
+        onRefreshClick = {}
     )
 }

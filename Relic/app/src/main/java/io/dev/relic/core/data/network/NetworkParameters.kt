@@ -1,5 +1,8 @@
 package io.dev.relic.core.data.network
 
+import io.dev.relic.R
+import io.dev.relic.global.RelicResCenter
+
 object NetworkParameters {
 
     object BaseUrl {
@@ -13,6 +16,7 @@ object NetworkParameters {
          * [Spoonacular API](https://spoonacular.com/food-api)
          * */
         const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/"
+        val FOOD_RECIPES_API_DEV_KEY: String = RelicResCenter.getString(R.string.spoonacular_dev_key)
 
     }
 

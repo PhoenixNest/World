@@ -20,7 +20,7 @@ import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainTextColor
-import io.dev.relic.ui.theme.mainThemeColor
+import io.dev.relic.ui.theme.mainThemeColorAccent
 
 @Composable
 fun MainRailAppBar(
@@ -77,9 +77,9 @@ private fun MainRailBarItem(
                 text = stringResource(id = labelResId),
                 style = TextStyle(
                     color = if (isSelected) {
-                        mainTextColor
+                        mainThemeColorAccent
                     } else {
-                        mainThemeColor
+                        mainTextColor
                     },
                     fontFamily = RelicFontFamily.ubuntu
                 )

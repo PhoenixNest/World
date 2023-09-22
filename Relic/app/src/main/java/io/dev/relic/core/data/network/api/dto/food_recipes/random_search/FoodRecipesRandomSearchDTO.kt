@@ -2,127 +2,16 @@ package io.dev.relic.core.data.network.api.dto.food_recipes.random_search
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import io.dev.relic.core.data.network.api.dto.food_recipes.AnalyzedInstruction
-import io.dev.relic.core.data.network.api.dto.food_recipes.ExtendedIngredient
+import io.dev.relic.core.data.network.api.dto.food_recipes.Measures
 
-/**
- * Json sample data:
- *
- * ```
- * {
- *     "recipes": [
- *         {
- *             "vegetarian": false,
- *             "vegan": false,
- *             "glutenFree": true,
- *             "dairyFree": false,
- *             "veryHealthy": false,
- *             "cheap": false,
- *             "veryPopular": false,
- *             "sustainable": false,
- *             "lowFodmap": false,
- *             "weightWatcherSmartPoints": 6,
- *             "gaps": "no",
- *             "preparationMinutes": -1,
- *             "cookingMinutes": -1,
- *             "aggregateLikes": 4,
- *             "healthScore": 30,
- *             "creditsText": "foodista.com",
- *             "sourceName": "foodista.com",
- *             "pricePerServing": 309.37,
- *             "extendedIngredients": [
- *                 {
- *                     "id": 12087,
- *                     "aisle": "Nuts;Health Foods",
- *                     "image": "cashews.jpg",
- *                     "consistency": "SOLID",
- *                     "name": "cashews",
- *                     "nameClean": "cashews",
- *                     "original": "½ cup cashews, roughly chopped",
- *                     "originalName": "cashews, roughly chopped",
- *                     "amount": 0.5,
- *                     "unit": "cup",
- *                     "meta": [
- *                         "roughly chopped"
- *                     ],
- *                     "measures": {
- *                         "us": {
- *                             "amount": 0.5,
- *                             "unitShort": "cups",
- *                             "unitLong": "cups"
- *                         },
- *                         "metric": {
- *                             "amount": 118.294,
- *                             "unitShort": "ml",
- *                             "unitLong": "milliliters"
- *                         }
- *                     }
- *                 },
- *                 ...
- *             ],
- *             "id": 645384,
- *             "title": "Greek Yogurt Chicken Salad",
- *             "readyInMinutes": 30,
- *             "servings": 4,
- *             "sourceUrl": "http://www.foodista.com/recipe/F7WPPMM3/greek-yogurt-chicken-salad",
- *             "image": "https://spoonacular.com/recipeImages/645384-556x370.jpg",
- *             "imageType": "jpg",
- *             "summary": "Greek Yogurt Chicken Salad is a Mediterranean main course. This recipe serves 4 and costs $3.09 per serving. Watching your figure? This gluten free and primal recipe has <b>334 calories</b>, <b>41g of protein</b>, and <b>11g of fat</b> per serving. This recipe from Foodista has 4 fans. Head to the store and pick up greek yogurt, chicken breasts, garlic powder, and a few other things to make it today. From preparation to the plate, this recipe takes approximately <b>30 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 73%</b>, which is solid. <a href=\"https://spoonacular.com/recipes/greek-yogurt-chicken-salad-1321001\">Greek Yogurt Chicken Salad</a>, <a href=\"https://spoonacular.com/recipes/greek-yogurt-chicken-salad-1102192\">Greek Yogurt Chicken Salad</a>, and <a href=\"https://spoonacular.com/recipes/greek-yogurt-chicken-salad-1342611\">Greek Yogurt Chicken Salad</a> are very similar to this recipe.",
- *             "cuisines": [
- *                 "Mediterranean",
- *                 ...
- *             ],
- *             "dishTypes": [
- *                 "lunch",
- *                 ...
- *             ],
- *             "diets": [
- *                 "gluten free",
- *                 "primal"
- *             ],
- *             "occasions": [],
- *             "instructions": "<ol><li>Start by cooking some chicken breasts. I like boiling them in chicken broth or stock, but feel free to boil in water, too. Boiling the chicken in broth, however, will give it significantly more flavor. Bring the chicken broth/stock to a boil and put in whole chicken breasts. Cook until no pink remains. Depending on the size of the chicken breasts, this could take anywhere from 15 - 20 minutes.</li><li>While the chicken is boiling, put together your sauce. Whisk together greek yogurt, dijon mustard, and garlic powder together until well mixed. Add in salt and pepper, to taste.</li><li>Next, stir in dried cranberries or raisins and cashews. If you're worried about the cashews getting too soft, you could add them right before serving!</li><li>After the chicken is done boiling, I like to let it rest for about 5 minutes. This ensures that the juice stays in the chicken instead of spilling out when you cut it!</li><li>Dice up the chicken and mix it into the sauce. Serve.</li></ol>",
- *             "analyzedInstructions": [
- *                 {
- *                     "name": "",
- *                     "steps": [
- *                         {
- *                             "number": 1,
- *                             "step": "Start by cooking some chicken breasts. I like boiling them in chicken broth or stock, but feel free to boil in water, too. Boiling the chicken in broth, however, will give it significantly more flavor. Bring the chicken broth/stock to a boil and put in whole chicken breasts. Cook until no pink remains. Depending on the size of the chicken breasts, this could take anywhere from 15 - 20 minutes.While the chicken is boiling, put together your sauce.",
- *                             "ingredients": [
- *                                 {
- *                                     "id": 5062,
- *                                     "name": "chicken breast",
- *                                     "localizedName": "chicken breast",
- *                                     "image": "chicken-breasts.png"
- *                                 },
- *                                 ...
- *                             ],
- *                             "equipment": [],
- *                             "length": {
- *                                 "number": 20,
- *                                 "unit": "minutes"
- *                             }
- *                         },
- *                         ...
- *                     ]
- *                 }
- *             ],
- *             "originalId": null,
- *             "spoonacularSourceUrl": "https://spoonacular.com/greek-yogurt-chicken-salad-645384"
- *         }
- *     ]
- * }
- * ```
- * */
 @JsonClass(generateAdapter = true)
 data class FoodRecipesRandomSearchDTO(
     @Json(name = "recipes")
-    val recipes: List<FoodRecipesRandomSearchResultDTO>
+    val recipes: List<RecipeItem>
 )
 
 @JsonClass(generateAdapter = true)
-data class FoodRecipesRandomSearchResultDTO(
+data class RecipeItem(
     @Json(name = "vegetarian")
     val vegetarian: Boolean,
     @Json(name = "vegan")
@@ -155,14 +44,14 @@ data class FoodRecipesRandomSearchResultDTO(
     val healthScore: Int,
     @Json(name = "creditsText")
     val creditsText: String,
-    @Json(name = "license")
+    @Json(name = "reciplicensees")
     val license: String,
     @Json(name = "sourceName")
     val sourceName: String,
     @Json(name = "pricePerServing")
     val pricePerServing: Double,
     @Json(name = "extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: List<ExtendedIngredientItem>,
     @Json(name = "id")
     val id: Int,
     @Json(name = "title")
@@ -186,13 +75,95 @@ data class FoodRecipesRandomSearchResultDTO(
     @Json(name = "diets")
     val diets: List<String>,
     @Json(name = "occasions")
-    val occasions: List<Any>,
+    val occasions: List<String>,
     @Json(name = "instructions")
     val instructions: String,
     @Json(name = "analyzedInstructions")
     val analyzedInstructions: List<AnalyzedInstruction>,
     @Json(name = "originalId")
-    val originalId: Any?,
+    val originalId: Any,
     @Json(name = "spoonacularSourceUrl")
     val spoonacularSourceUrl: String
+)
+
+@JsonClass(generateAdapter = true)
+data class ExtendedIngredientItem(
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "aisle")
+    val aisle: String,
+    @Json(name = "recimageipes")
+    val image: String,
+    @Json(name = "consistency")
+    val consistency: String,
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "nameClean")
+    val nameClean: String,
+    @Json(name = "original")
+    val original: String,
+    @Json(name = "originalName")
+    val originalName: String,
+    @Json(name = "amount")
+    val amount: Double,
+    @Json(name = "unit")
+    val unit: String,
+    @Json(name = "meta")
+    val meta: List<String>,
+    @Json(name = "recmeasuresipes")
+    val measures: Measures
+)
+
+@JsonClass(generateAdapter = true)
+data class AnalyzedInstruction(
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "steps")
+    val steps: List<Step>
+)
+
+@JsonClass(generateAdapter = true)
+data class Step(
+    @Json(name = "number")
+    val number: Int,
+    @Json(name = "step")
+    val step: String,
+    @Json(name = "ingredients")
+    val ingredients: List<IngredientItem>,
+    @Json(name = "equipment")
+    val equipment: List<EquipmentItem>,
+    @Json(name = "length")
+    val length: Length
+)
+
+@JsonClass(generateAdapter = true)
+data class IngredientItem(
+    @Json(name = "id")
+    val id: Int,
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "localizedName")
+    val localizedName: String,
+    @Json(name = "image")
+    val image: String
+)
+
+@JsonClass(generateAdapter = true)
+data class EquipmentItem(
+    @Json(name = "reidcipes")
+    val id: Int,
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "localizedName")
+    val localizedName: String,
+    @Json(name = "image")
+    val image: String
+)
+
+@JsonClass(generateAdapter = true)
+data class Length(
+    @Json(name = "number")
+    val number: Int,
+    @Json(name = "unit")
+    val unit: String
 )

@@ -7,6 +7,7 @@ private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS
 // Dev Key
 private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("ADMOB_DEV_KEY")
 private val aMapDevKay: String = gradleLocalProperties(rootDir).getProperty("AMAP_DEV_KEY")
+private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProperty("SPOONACULAR_DEV_KEY")
 private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
 
 plugins {
@@ -50,6 +51,7 @@ android {
 
         resValue("string", "admob_dev_key", admobDevKey)
         resValue("string", "amap_dev_key", aMapDevKay)
+        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
         resValue("string", "tomtom_dev_key", tomtomDevKey)
 
         vectorDrawables {

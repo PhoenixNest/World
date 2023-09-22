@@ -16,6 +16,8 @@ class WeatherDataRepositoryImpl @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) : IWeatherDataRepository {
 
+    private var weatherForecastResult: NetworkResult<WeatherForecastDTO> = NetworkResult.Loading()
+
     companion object {
         private const val TAG = "WeatherDataRepository"
     }
@@ -30,20 +32,15 @@ class WeatherDataRepositoryImpl @Inject constructor(
         latitude: Double,
         longitude: Double
     ): NetworkResult<WeatherForecastDTO> {
-        return try {
-            val weatherApiDTO: WeatherForecastDTO = weatherApi.getWeatherData(
-                latitude = latitude,
-                longitude = longitude
-            )
-
+        val data: WeatherForecastDTO = weatherApi.getWeatherData(latitude, longitude)
+        weatherForecastResult = try {
             // Always save the latest weather information data to the database.
-            databaseRepository.insertWeatherData(weatherEntity = weatherApiDTO.toWeatherEntity())
-
-            NetworkResult.Success(data = weatherApiDTO)
+            databaseRepository.insertWeatherData(weatherEntity = data.toWeatherEntity())
+            NetworkResult.Success(data = data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")
         }
+        return weatherForecastResult
     }
-
 }

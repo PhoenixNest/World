@@ -1,5 +1,6 @@
 package io.dev.relic.domain.use_case.food_receipes.action.complex_search
 
+import io.dev.relic.core.data.network.NetworkParameters
 import io.dev.relic.core.data.network.api.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.repository.IFoodRecipesDataRepository
@@ -12,10 +13,39 @@ import javax.inject.Inject
 class FetchComplexRecipesData @Inject constructor(
     private val foodRecipesDataRepository: IFoodRecipesDataRepository
 ) {
-    operator fun invoke(offset: Int): Flow<NetworkResult<FoodRecipesComplexSearchDTO>> {
+
+    /**
+     * [Search Recipes](https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
+     *
+     * Search through thousands of recipes using advanced filtering and ranking.
+     *
+     * `NOTE`: This method combines searching by query, by ingredients, and by nutrients into one endpoint.
+     *
+     * @param apiKey                     Your dev api key.
+     * @param query                      The (natural language) recipe search query.
+     * @param addRecipeInformation       If set to true, you get more information about the recipes returned.
+     * @param addRecipeNutrition         If set to true, you get nutritional information about each recipes returned.
+     * @param offset                     The number of results to skip (between 0 and 900).
+     *
+     * @see FoodRecipesComplexSearchDTO
+     * */
+    operator fun invoke(
+        apiKey: String = NetworkParameters.BaseUrl.FOOD_RECIPES_API_DEV_KEY,
+        query: String,
+        addRecipeInformation: Boolean,
+        addRecipeNutrition: Boolean,
+        offset: Int
+    ): Flow<NetworkResult<FoodRecipesComplexSearchDTO>> {
         return flow {
             // Fetch the latest data from remote-server.
-            emit(foodRecipesDataRepository.getComplexSearchRecipesData(offset))
+            val result: NetworkResult<FoodRecipesComplexSearchDTO> = foodRecipesDataRepository.getComplexSearchRecipesData(
+                apiKey = apiKey,
+                query = query,
+                addRecipeInformation = addRecipeInformation,
+                addRecipeNutrition = addRecipeNutrition,
+                offset = offset
+            )
+            emit(result)
         }.flowOn(Dispatchers.IO)
     }
 }

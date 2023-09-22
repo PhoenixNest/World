@@ -18,13 +18,13 @@ interface TodoDao {
     @Query("SELECT * FROM table_todo where id = :id")
     fun queryTodoById(id: Int): TodoEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = TodoEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todoEntity: TodoEntity)
 
-    @Update
+    @Update(entity = TodoEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTodo(todoEntity: TodoEntity)
 
-    @Delete
+    @Delete(entity = TodoEntity::class)
     suspend fun deleteTodo(todoEntity: TodoEntity)
 
     @Query("DELETE FROM table_todo")

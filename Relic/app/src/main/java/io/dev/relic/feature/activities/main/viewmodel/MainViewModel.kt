@@ -25,6 +25,8 @@ class MainViewModel @Inject constructor(
         private const val TAG = "MainViewModel"
     }
 
+    var latestLocation: Location? = null
+
     private val _mainStateFlow: MutableStateFlow<MainState> = MutableStateFlow(MainState.Init)
     val mainStateFlow: StateFlow<MainState> get() = _mainStateFlow
 
@@ -49,6 +51,7 @@ class MainViewModel @Inject constructor(
 
                     override fun onAccessSucceed(location: Location) {
                         LogUtil.debug(TAG, "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})")
+                        latestLocation = location
                         setState(
                             stateFlow = _mainStateFlow,
                             newState = MainState.AccessLocationSucceed(location)
@@ -69,5 +72,4 @@ class MainViewModel @Inject constructor(
             )
         }
     }
-
 }

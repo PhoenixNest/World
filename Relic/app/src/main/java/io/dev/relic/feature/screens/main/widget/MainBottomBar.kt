@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
@@ -46,17 +45,18 @@ fun MainBottomBar(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp
+        ),
         color = Color.Transparent
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .background(color = mainThemeColorAccent),
+                .background(color = mainThemeColor),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -114,9 +114,9 @@ private fun RowScope.MainBottomBarItem(
                 text = stringResource(id = labelResId),
                 style = TextStyle(
                     color = if (isSelected) {
-                        mainTextColor
+                        mainThemeColorAccent
                     } else {
-                        mainThemeColor
+                        mainTextColor
                     },
                     fontFamily = RelicFontFamily.ubuntu
                 )
@@ -129,7 +129,7 @@ private fun RowScope.MainBottomBarItem(
 @Preview
 private fun MainBottomBarPreview() {
     MainBottomBar(
-        destinations = MainScreenTopLevelDestination.values().asList(),
+        destinations = MainScreenTopLevelDestination.entries,
         onNavigateToDestination = {},
         currentDestination = null
     )

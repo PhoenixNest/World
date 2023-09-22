@@ -1,9 +1,12 @@
 package io.dev.relic.feature.pages.home.widget
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -24,36 +27,51 @@ import io.dev.relic.global.RelicConstants
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainButtonColorLight
 import io.dev.relic.ui.theme.mainTextColor
+import io.dev.relic.ui.theme.mainThemeColorAccent
 
 @Composable
 fun HomeTopBar(onOpenDrawer: () -> Unit) {
     Box(
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxWidth()
             .wrapContentHeight()
+            .background(
+                color = mainThemeColorAccent,
+                shape = RoundedCornerShape(
+                    bottomStart = 16.dp,
+                    bottomEnd = 16.dp
+                )
+            )
     ) {
-        IconButton(
-            onClick = onOpenDrawer,
-            modifier = Modifier.align(Alignment.CenterStart)
+        Box(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .systemBarsPadding()
         ) {
-            Icon(
-                imageVector = Icons.Rounded.Apps,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLight
+            IconButton(
+                onClick = onOpenDrawer,
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Apps,
+                    contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                    tint = mainButtonColorLight
+                )
+            }
+            Text(
+                text = stringResource(R.string.home_main_title),
+                modifier = Modifier.align(Alignment.Center),
+                style = TextStyle(
+                    color = mainTextColor,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = RelicFontFamily.ubuntu,
+                    textMotion = TextMotion.Animated
+                )
             )
         }
-        Text(
-            text = stringResource(R.string.home_main_title),
-            modifier = Modifier.align(Alignment.Center),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = RelicFontFamily.ubuntu,
-                textMotion = TextMotion.Animated
-            )
-        )
     }
 }
 
