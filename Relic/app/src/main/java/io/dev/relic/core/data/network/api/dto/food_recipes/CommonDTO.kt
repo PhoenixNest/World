@@ -31,6 +31,7 @@ data class Metric(
     val unitLong: String
 )
 
+@JsonClass(generateAdapter = true)
 data class NutrientItem(
     @Json(name = "name")
     val name: String,
