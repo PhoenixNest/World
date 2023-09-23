@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.core.data.datastore.RelicDatastoreCenter.writeSyncData
 import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
@@ -21,8 +23,9 @@ import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.intro.IntroScreen
 import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
+import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
+import io.dev.relic.ui.theme.mainThemeColor
 
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {
@@ -93,7 +96,7 @@ class IntroActivity : AbsBaseActivity() {
             }
 
             // Setup immersive mode.
-            setImmersiveMode()
+            rememberSystemUiController().enableImmersiveMode()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {

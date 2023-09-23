@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.BuildConfig
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.debug.DebugActivity
@@ -18,8 +20,9 @@ import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
 import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.UiUtil.SystemUtil.setImmersiveMode
+import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
+import io.dev.relic.ui.theme.mainThemeColor
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsBaseActivity() {
@@ -96,7 +99,7 @@ class SplashActivity : AbsBaseActivity() {
     override fun initUi(savedInstanceState: Bundle?) {
         setContent {
             // Setup immersive mode.
-            setImmersiveMode()
+            rememberSystemUiController().enableImmersiveMode()
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
