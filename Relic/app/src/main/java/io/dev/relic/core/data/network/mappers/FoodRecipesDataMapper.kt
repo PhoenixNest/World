@@ -10,15 +10,15 @@ object FoodRecipesDataMapper {
         return FoodRecipesComplexSearchEntity(foodRecipesComplexSearchDTO = this)
     }
 
-    fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchInfoModel> {
-        val tempList: MutableList<FoodRecipesComplexSearchInfoModel> = mutableListOf()
-        this.results.forEach {
+    fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchInfoModel?> {
+        val tempList: MutableList<FoodRecipesComplexSearchInfoModel?> = mutableListOf()
+        this.results?.forEach {
             tempList.add(
                 FoodRecipesComplexSearchInfoModel(
-                    id = it.id,
-                    title = it.title,
-                    image = it.image,
-                    imageType = it.imageType
+                    id = it?.id,
+                    title = it?.title,
+                    image = it?.image,
+                    imageType = it?.imageType
                 )
             )
         }

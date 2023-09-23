@@ -3,6 +3,7 @@ package io.dev.relic.domain.use_case.weather.action
 import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
 import io.dev.relic.domain.model.NetworkResult
 import io.dev.relic.domain.repository.IWeatherDataRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

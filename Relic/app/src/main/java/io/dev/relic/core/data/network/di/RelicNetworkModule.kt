@@ -22,7 +22,7 @@ import io.dev.relic.core.data.network.NetworkParameters.MAX_TIMEOUT_WRITE_DURATI
 import io.dev.relic.core.data.network.api.IFoodRecipesApi
 import io.dev.relic.core.data.network.api.IWeatherApi
 import io.dev.relic.core.data.network.interceptor.AuthInterceptor
-import io.dev.relic.core.data.network.interceptor.LogInterceptor
+import io.dev.relic.core.data.network.interceptor.SimpleLogInterceptor
 import io.dev.relic.core.data.network.interceptor.OfflineCacheInterceptor
 import io.dev.relic.core.data.network.interceptor.OnlineCacheInterceptor
 import io.dev.relic.core.data.network.interceptor.RetryInterceptor
@@ -47,8 +47,8 @@ object RelicNetworkModule {
 
     @Provides
     @Singleton
-    fun provideLogInterceptor(): LogInterceptor {
-        return LogInterceptor()
+    fun provideSimpleLogInterceptor(): SimpleLogInterceptor {
+        return SimpleLogInterceptor()
     }
 
     @Provides
@@ -108,6 +108,7 @@ object RelicNetworkModule {
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         loggingInterceptor: LoggingInterceptor,
+        simpleLogInterceptor: SimpleLogInterceptor,
         offlineCacheInterceptor: OfflineCacheInterceptor,
         onlineCacheInterceptor: OnlineCacheInterceptor,
         retryInterceptor: RetryInterceptor
@@ -118,6 +119,7 @@ object RelicNetworkModule {
             .readTimeout(MAX_TIMEOUT_READ_DURATION, TimeUnit.SECONDS)
             .writeTimeout(MAX_TIMEOUT_WRITE_DURATION, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(simpleLogInterceptor)
             .addInterceptor(offlineCacheInterceptor)
             .addNetworkInterceptor(onlineCacheInterceptor)
             .addInterceptor(retryInterceptor)

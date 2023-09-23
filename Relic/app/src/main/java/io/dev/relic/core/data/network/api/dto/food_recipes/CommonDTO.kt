@@ -6,39 +6,39 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Us(
     @Json(name = "amount")
-    val amount: Double,
+    val amount: Double?,
     @Json(name = "unitShort")
-    val unitShort: String,
+    val unitShort: String?,
     @Json(name = "unitLong")
-    val unitLong: String
+    val unitLong: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class Measures(
     @Json(name = "us")
-    val us: Us,
+    val us: Us?,
     @Json(name = "metric")
-    val metric: Metric
+    val metric: Metric?
 )
 
 @JsonClass(generateAdapter = true)
 data class Metric(
     @Json(name = "amount")
-    val amount: Double,
+    val amount: Double?,
     @Json(name = "unitShort")
-    val unitShort: String,
+    val unitShort: String?,
     @Json(name = "unitLong")
-    val unitLong: String
+    val unitLong: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class NutrientItem(
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "amount")
-    val amount: Double,
+    val amount: Double?,
     @Json(name = "unit")
-    val unit: String,
+    val unit: String?,
     @Json(name = "percentOfDailyNeeds")
-    val percentOfDailyNeeds: Double
+    val percentOfDailyNeeds: Double?
 )

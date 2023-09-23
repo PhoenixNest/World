@@ -19,7 +19,7 @@ sealed class HomeFoodRecipesDataState {
     /* Succeed */
 
     data class FetchSucceed(
-        val modelList: List<FoodRecipesComplexSearchInfoModel>?
+        val modelList: List<FoodRecipesComplexSearchInfoModel?>?
     ) : HomeFoodRecipesDataState()
 
     /* Failed */

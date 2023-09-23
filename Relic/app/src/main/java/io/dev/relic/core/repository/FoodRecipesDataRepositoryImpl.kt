@@ -44,14 +44,15 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
         addRecipeNutrition: Boolean,
         offset: Int
     ): NetworkResult<FoodRecipesComplexSearchDTO> {
-        val data: FoodRecipesComplexSearchDTO = foodRecipesApi.complexSearchData(
-            apiKey = apiKey,
-            query = query,
-            addRecipeInformation = addRecipeInformation,
-            addRecipeNutrition = addRecipeNutrition,
-            offset = offset
-        )
         complexSearchResult = try {
+            val data: FoodRecipesComplexSearchDTO = foodRecipesApi.complexSearchData(
+                apiKey = apiKey,
+                query = query,
+                addRecipeInformation = addRecipeInformation,
+                addRecipeNutrition = addRecipeNutrition,
+                offset = offset
+            )
+
             // Always save the latest recipes data to the database.
             databaseRepository.insertComplexSearchRecipesData(data.toComplexSearchEntity())
             NetworkResult.Success(data = data)
@@ -82,13 +83,14 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
         tags: String,
         number: Int
     ): NetworkResult<FoodRecipesRandomSearchDTO> {
-        val data: FoodRecipesRandomSearchDTO = foodRecipesApi.randomSearchData(
-            apiKey = apiKey,
-            limitLicense = limitLicense,
-            tags = tags,
-            number = number
-        )
         randomSearchResult = try {
+            val data: FoodRecipesRandomSearchDTO = foodRecipesApi.randomSearchData(
+                apiKey = apiKey,
+                limitLicense = limitLicense,
+                tags = tags,
+                number = number
+            )
+
             // Always save the latest recipes data to the database.
             // databaseRepository.insertRandomSearchRecipesData(data.toRandomSearchEntity())
             NetworkResult.Success(data = data)

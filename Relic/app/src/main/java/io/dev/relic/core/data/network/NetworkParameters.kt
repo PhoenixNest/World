@@ -25,10 +25,10 @@ object NetworkParameters {
      *
      * TimeUnit: seconds
      * */
-    const val MAX_TIMEOUT_CONNECT_DURATION: Long = 15
-    const val MAX_TIMEOUT_CALL_DURATION: Long = 15
-    const val MAX_TIMEOUT_READ_DURATION: Long = 15
-    const val MAX_TIMEOUT_WRITE_DURATION: Long = 15
+    const val MAX_TIMEOUT_CONNECT_DURATION: Long = 30
+    const val MAX_TIMEOUT_CALL_DURATION: Long = 30
+    const val MAX_TIMEOUT_READ_DURATION: Long = 30
+    const val MAX_TIMEOUT_WRITE_DURATION: Long = 30
 
     /**
      * The max duration of the offline-cache.
@@ -47,7 +47,7 @@ object NetworkParameters {
     /**
      * The max retry times for the network request.
      * */
-    const val MAX_RETRY_TIMES: Int = 10
+    const val MAX_RETRY_TIMES: Int = 3
 
     /**
      * The max disk size of offline cache.

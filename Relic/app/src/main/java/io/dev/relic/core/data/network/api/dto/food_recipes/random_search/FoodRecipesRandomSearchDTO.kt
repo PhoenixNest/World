@@ -7,163 +7,163 @@ import io.dev.relic.core.data.network.api.dto.food_recipes.Measures
 @JsonClass(generateAdapter = true)
 data class FoodRecipesRandomSearchDTO(
     @Json(name = "recipes")
-    val recipes: List<RecipeItem>
+    val recipes: List<RecipeItem?>?
 )
 
 @JsonClass(generateAdapter = true)
 data class RecipeItem(
     @Json(name = "vegetarian")
-    val vegetarian: Boolean,
+    val vegetarian: Boolean?,
     @Json(name = "vegan")
-    val vegan: Boolean,
+    val vegan: Boolean?,
     @Json(name = "glutenFree")
-    val glutenFree: Boolean,
+    val glutenFree: Boolean?,
     @Json(name = "dairyFree")
-    val dairyFree: Boolean,
+    val dairyFree: Boolean?,
     @Json(name = "veryHealthy")
-    val veryHealthy: Boolean,
+    val veryHealthy: Boolean?,
     @Json(name = "cheap")
-    val cheap: Boolean,
+    val cheap: Boolean?,
     @Json(name = "veryPopular")
-    val veryPopular: Boolean,
+    val veryPopular: Boolean?,
     @Json(name = "sustainable")
-    val sustainable: Boolean,
+    val sustainable: Boolean?,
     @Json(name = "lowFodmap")
-    val lowFodmap: Boolean,
+    val lowFodmap: Boolean?,
     @Json(name = "weightWatcherSmartPoints")
-    val weightWatcherSmartPoints: Int,
+    val weightWatcherSmartPoints: Int?,
     @Json(name = "gaps")
-    val gaps: String,
+    val gaps: String?,
     @Json(name = "preparationMinutes")
-    val preparationMinutes: Int,
+    val preparationMinutes: Int?,
     @Json(name = "cookingMinutes")
-    val cookingMinutes: Int,
+    val cookingMinutes: Int?,
     @Json(name = "aggregateLikes")
-    val aggregateLikes: Int,
+    val aggregateLikes: Int?,
     @Json(name = "healthScore")
-    val healthScore: Int,
+    val healthScore: Int?,
     @Json(name = "creditsText")
-    val creditsText: String,
+    val creditsText: String?,
     @Json(name = "reciplicensees")
-    val license: String,
+    val license: String?,
     @Json(name = "sourceName")
-    val sourceName: String,
+    val sourceName: String?,
     @Json(name = "pricePerServing")
-    val pricePerServing: Double,
+    val pricePerServing: Double?,
     @Json(name = "extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredientItem>,
+    val extendedIngredients: List<ExtendedIngredientItem?>?,
     @Json(name = "id")
-    val id: Int,
+    val id: Int?,
     @Json(name = "title")
-    val title: String,
+    val title: String?,
     @Json(name = "readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int?,
     @Json(name = "servings")
-    val servings: Int,
+    val servings: Int?,
     @Json(name = "sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String?,
     @Json(name = "image")
-    val image: String,
+    val image: String?,
     @Json(name = "imageType")
-    val imageType: String,
+    val imageType: String?,
     @Json(name = "summary")
-    val summary: String,
+    val summary: String?,
     @Json(name = "cuisines")
-    val cuisines: List<String>,
+    val cuisines: List<String?>?,
     @Json(name = "dishTypes")
-    val dishTypes: List<String>,
+    val dishTypes: List<String?>?,
     @Json(name = "diets")
-    val diets: List<String>,
+    val diets: List<String?>?,
     @Json(name = "occasions")
-    val occasions: List<String>,
+    val occasions: List<String?>?,
     @Json(name = "instructions")
-    val instructions: String,
+    val instructions: String?,
     @Json(name = "analyzedInstructions")
-    val analyzedInstructions: List<AnalyzedInstruction>,
+    val analyzedInstructions: List<AnalyzedInstruction?>?,
     @Json(name = "originalId")
-    val originalId: Any,
+    val originalId: Any?,
     @Json(name = "spoonacularSourceUrl")
-    val spoonacularSourceUrl: String
+    val spoonacularSourceUrl: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class ExtendedIngredientItem(
     @Json(name = "id")
-    val id: Int,
+    val id: Int?,
     @Json(name = "aisle")
-    val aisle: String,
+    val aisle: String?,
     @Json(name = "recimageipes")
-    val image: String,
+    val image: String?,
     @Json(name = "consistency")
-    val consistency: String,
+    val consistency: String?,
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "nameClean")
-    val nameClean: String,
+    val nameClean: String?,
     @Json(name = "original")
-    val original: String,
+    val original: String?,
     @Json(name = "originalName")
-    val originalName: String,
+    val originalName: String?,
     @Json(name = "amount")
-    val amount: Double,
+    val amount: Double?,
     @Json(name = "unit")
-    val unit: String,
+    val unit: String?,
     @Json(name = "meta")
-    val meta: List<String>,
+    val meta: List<String?>?,
     @Json(name = "recmeasuresipes")
-    val measures: Measures
+    val measures: Measures?
 )
 
 @JsonClass(generateAdapter = true)
 data class AnalyzedInstruction(
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "steps")
-    val steps: List<Step>
+    val steps: List<Step?>?
 )
 
 @JsonClass(generateAdapter = true)
 data class Step(
     @Json(name = "number")
-    val number: Int,
+    val number: Int?,
     @Json(name = "step")
-    val step: String,
+    val step: String?,
     @Json(name = "ingredients")
-    val ingredients: List<IngredientItem>,
+    val ingredients: List<IngredientItem?>?,
     @Json(name = "equipment")
-    val equipment: List<EquipmentItem>,
+    val equipment: List<EquipmentItem?>?,
     @Json(name = "length")
-    val length: Length
+    val length: Length?
 )
 
 @JsonClass(generateAdapter = true)
 data class IngredientItem(
     @Json(name = "id")
-    val id: Int,
+    val id: Int?,
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "localizedName")
-    val localizedName: String,
+    val localizedName: String?,
     @Json(name = "image")
-    val image: String
+    val image: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class EquipmentItem(
     @Json(name = "reidcipes")
-    val id: Int,
+    val id: Int?,
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "localizedName")
-    val localizedName: String,
+    val localizedName: String?,
     @Json(name = "image")
-    val image: String
+    val image: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class Length(
     @Json(name = "number")
-    val number: Int,
+    val number: Int?,
     @Json(name = "unit")
-    val unit: String
+    val unit: String?
 )

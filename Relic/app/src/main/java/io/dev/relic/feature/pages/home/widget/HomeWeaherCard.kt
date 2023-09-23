@@ -130,7 +130,7 @@ private fun HomeWeatherCard(
 
 @Composable
 private fun HomeWeatherCardContent(model: WeatherDataModel) {
-    val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode)
+    val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode ?: -1)
     Row(
         modifier = Modifier
             .fillMaxWidth()

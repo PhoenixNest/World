@@ -80,7 +80,7 @@ class HomeViewModel @Inject constructor(
     init {
         fetchFoodRecipesData(
             isRefresh = false,
-            query = "",
+            query = "coffee",
             addRecipeInformation = true,
             addRecipeNutrition = true,
         )

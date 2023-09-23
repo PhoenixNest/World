@@ -61,7 +61,7 @@ class LocationTrackerImpl @Inject constructor(
                     }
                     return@suspendCancellableCoroutine
                 }
-                addOnSuccessListener { location: Location ->
+                addOnSuccessListener { location: Location? ->
                     continuation.resume(
                         value = location,
                         onCancellation = null

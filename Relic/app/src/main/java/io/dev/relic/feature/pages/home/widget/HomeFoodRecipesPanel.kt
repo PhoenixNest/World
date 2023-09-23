@@ -186,7 +186,7 @@ private fun HomeFoodRecipesCardItem(data: FoodRecipesComplexSearchInfoModel) {
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = data.title,
+                    text = data.title ?: "",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)

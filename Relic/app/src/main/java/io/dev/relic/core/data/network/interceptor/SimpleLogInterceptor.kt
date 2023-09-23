@@ -5,20 +5,20 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-class LogInterceptor : Interceptor {
+class SimpleLogInterceptor : Interceptor {
 
     companion object {
-        private const val TAG: String = "LogInterceptor"
+        private const val TAG: String = "SimpleLogInterceptor"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()
-
+        val headerMessage: String = if (request.headers.size > 0) request.headers.toString() else "null"
         LogUtil.apply {
             debug(TAG, "┌────── Request ────────────────────────────────────────────────────────────────────────")
             debug(TAG, "| url: ${request.url.toUrl()}")
             debug(TAG, "| method: ${request.method}")
-            debug(TAG, "| headers: ${request.headers}")
+            debug(TAG, "| headers: $headerMessage")
             debug(TAG, "| body: ${request.body}")
             debug(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
         }
