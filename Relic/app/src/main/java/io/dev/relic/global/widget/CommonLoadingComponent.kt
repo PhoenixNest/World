@@ -20,14 +20,17 @@ import io.dev.relic.R
 import io.dev.relic.ui.theme.mainThemeColor
 
 @Composable
-fun CommonLoadingComponent(modifier: Modifier = Modifier) {
+fun CommonLoadingComponent(
+    modifier: Modifier = Modifier,
+    iconSizeModifier: Modifier = Modifier
+) {
 
     val commonLoadingRes: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_common_loading)
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = mainThemeColor)
             .statusBarsPadding(),
@@ -35,7 +38,7 @@ fun CommonLoadingComponent(modifier: Modifier = Modifier) {
     ) {
         LottieAnimation(
             composition = commonLoadingRes,
-            modifier = modifier.size(128.dp),
+            modifier = iconSizeModifier.size(128.dp),
             restartOnPlay = true,
             iterations = Int.MAX_VALUE,
             alignment = Alignment.Center,

@@ -13,6 +13,8 @@ val mainThemeColorAccent: Color = Color(0xFF0061FF)
 val mainBackgroundColor: Color = Color.DarkGray
 val mainBackgroundColorLight: Color = Color.White.copy(alpha = 0.8F)
 
+val placeHolderHighlightColor: Color = mainBackgroundColorLight
+
 val mainTextColor: Color = Color.White.copy(alpha = 0.8F)
 val mainTextColorDark: Color = mainThemeColor.copy(alpha = 0.8F)
 

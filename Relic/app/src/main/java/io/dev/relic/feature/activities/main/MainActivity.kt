@@ -18,11 +18,11 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.domain.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
-import io.dev.relic.ui.theme.mainThemeColor
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : AbsBaseActivity() {
@@ -32,6 +32,10 @@ class MainActivity : AbsBaseActivity() {
      * */
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+    private val homeViewModel: HomeViewModel by lazy {
+        ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     companion object {

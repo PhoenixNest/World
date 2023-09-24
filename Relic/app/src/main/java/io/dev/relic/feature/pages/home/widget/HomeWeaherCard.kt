@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
+import com.google.accompanist.placeholder.shimmer
 import io.dev.relic.R
 import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherType
@@ -39,6 +39,7 @@ import io.dev.relic.ui.theme.mainBackgroundColorLight
 import io.dev.relic.ui.theme.mainTextColor
 import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColorAccent
+import io.dev.relic.ui.theme.placeHolderHighlightColor
 import java.time.LocalDateTime
 
 @Composable
@@ -95,8 +96,9 @@ private fun HomeWeatherCard(
                 .align(Alignment.BottomCenter)
                 .placeholder(
                     visible = isLoading,
+                    color = Color.DarkGray,
                     shape = RoundedCornerShape(16.dp),
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 ),
             shape = RoundedCornerShape(16.dp),
             backgroundColor = mainBackgroundColorLight

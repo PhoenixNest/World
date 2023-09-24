@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,21 +42,25 @@ fun CommonIconTextButton(
     isEnable: Boolean = true,
     backgroundColor: Color = Color.Transparent,
     textColor: Color = mainTextColor,
-    iconColor: Color = mainTextColor
+    iconColor: Color = mainTextColor,
+    shape: Shape = RoundedCornerShape(8.dp)
 ) {
     TextButton(
         onClick = onClick,
-        modifier = containerModifier,
+        modifier = containerModifier.wrapContentSize(),
         enabled = isEnable,
+        shape = shape,
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor
         )
     ) {
         Row(
-            modifier = modifier.padding(
-                horizontal = 12.dp,
-                vertical = 8.dp
-            ),
+            modifier = modifier
+                .wrapContentSize()
+                .padding(
+                    horizontal = 12.dp,
+                    vertical = 8.dp
+                ),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {

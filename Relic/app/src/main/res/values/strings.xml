@@ -31,6 +31,12 @@
     <string name="home_card_weather_title">Today\'s Weather</string>
     <string name="home_card_todo_title">Check out your todo tasks</string>
     <string name="home_card_food_recipes_title">Eat and drink your fill</string>
+    <string name="home_food_recipes_label_coffee">Coffee</string>
+    <string name="home_food_recipes_label_breakfast">Breakfast</string>
+    <string name="home_food_recipes_label_lunch">Lunch</string>
+    <string name="home_food_recipes_label_dinner">Dinner</string>
+    <string name="home_food_recipes_label_cookie">Cookie</string>
+    <string name="home_food_recipes_label_snack">Snack</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>

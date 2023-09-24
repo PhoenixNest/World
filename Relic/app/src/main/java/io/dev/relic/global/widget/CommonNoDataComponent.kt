@@ -32,14 +32,18 @@ import io.dev.relic.ui.theme.mainTextColor
 import io.dev.relic.ui.theme.mainThemeColor
 
 @Composable
-fun CommonNoDataComponent(modifier: Modifier = Modifier) {
+fun CommonNoDataComponent(
+    modifier: Modifier = Modifier,
+    iconSizeModifier: Modifier = Modifier,
+    isShowText: Boolean = true
+) {
 
     val commonLoadingRes: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_no_data)
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = mainThemeColor)
             .statusBarsPadding(),
@@ -52,22 +56,24 @@ fun CommonNoDataComponent(modifier: Modifier = Modifier) {
         ) {
             LottieAnimation(
                 composition = commonLoadingRes,
-                modifier = modifier.size(128.dp),
+                modifier = iconSizeModifier.size(128.dp),
                 restartOnPlay = true,
                 iterations = Int.MAX_VALUE,
                 alignment = Alignment.Center,
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = stringResource(R.string.no_data),
-                style = TextStyle(
-                    color = mainTextColor,
-                    fontSize = 24.sp,
-                    fontFamily = RelicFontFamily.ubuntu,
-                    textAlign = TextAlign.Center
+            if (isShowText) {
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = stringResource(R.string.no_data),
+                    style = TextStyle(
+                        color = mainTextColor,
+                        fontSize = 24.sp,
+                        fontFamily = RelicFontFamily.ubuntu,
+                        textAlign = TextAlign.Center
+                    )
                 )
-            )
+            }
         }
     }
 }

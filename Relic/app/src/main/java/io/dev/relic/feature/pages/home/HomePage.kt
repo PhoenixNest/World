@@ -5,14 +5,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
@@ -23,15 +25,18 @@ import io.dev.relic.feature.pages.home.widget.HomeTopBar
 import io.dev.relic.feature.pages.home.widget.HomeWeatherCard
 import io.dev.relic.feature.screens.main.MainState
 import io.dev.relic.ui.theme.mainThemeColor
+import kotlinx.coroutines.flow.filter
 
 @Composable
 fun HomePageRoute(
     mainViewModel: MainViewModel,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel
 ) {
     val mainState: MainState = mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
     val homeWeatherState: HomeWeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
     val homeFoodRecipesState: HomeFoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
+
+    val lazyListState: LazyListState = rememberLazyListState()
 
     LaunchedEffect(
         key1 = mainState,
@@ -56,7 +61,21 @@ fun HomePageRoute(
         }
     )
 
+    LaunchedEffect(
+        key1 = lazyListState,
+        block = {
+            snapshotFlow {
+                lazyListState.firstVisibleItemIndex
+            }.filter {
+                it % 5 == 0
+            }.collect {
+
+            }
+        }
+    )
+
     HomePage(
+        lazyListState = lazyListState,
         weatherDataState = homeWeatherState,
         foodRecipesState = homeFoodRecipesState,
         onRefreshWeatherData = {
@@ -65,31 +84,26 @@ fun HomePageRoute(
             }
         },
         onRefreshFoodRecipesData = {
-            homeViewModel.fetchFoodRecipesData(
-                isRefresh = true,
-                query = "",
-                addRecipeInformation = true,
-                addRecipeNutrition = true
-            )
+            homeViewModel.fetchFoodRecipesData(isRefresh = true)
         },
         onFetchMoreFoodRecipesData = {
-            homeViewModel.fetchFoodRecipesData(
-                isRefresh = false,
-                query = "",
-                addRecipeInformation = true,
-                addRecipeNutrition = true
-            )
+            homeViewModel.fetchFoodRecipesData(isRefresh = false)
+        },
+        onSelectedFoodRecipesTabItem = {
+            homeViewModel.fetchFoodRecipesData(isRefresh = false, query = it)
         }
     )
 }
 
 @Composable
 private fun HomePage(
+    lazyListState: LazyListState,
     weatherDataState: HomeWeatherDataState,
     foodRecipesState: HomeFoodRecipesDataState,
     onRefreshWeatherData: () -> Unit,
     onRefreshFoodRecipesData: () -> Unit,
     onFetchMoreFoodRecipesData: () -> Unit,
+    onSelectedFoodRecipesTabItem: (selectedTab: String) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -97,6 +111,7 @@ private fun HomePage(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            state = lazyListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -109,13 +124,14 @@ private fun HomePage(
                     weatherDataState = weatherDataState,
                     onRefreshClick = onRefreshWeatherData
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(32.dp))
             }
             item {
                 HomeFoodRecipesPanel(
                     foodRecipesState = foodRecipesState,
                     onRefreshClick = onRefreshFoodRecipesData,
-                    onFetchMore = onFetchMoreFoodRecipesData
+                    onFetchMore = onFetchMoreFoodRecipesData,
+                    onTabItemClick = onSelectedFoodRecipesTabItem
                 )
             }
         }
@@ -126,10 +142,12 @@ private fun HomePage(
 @Preview(showBackground = true)
 private fun HomePagePreview() {
     HomePage(
+        lazyListState = rememberLazyListState(),
         weatherDataState = HomeWeatherDataState.Init,
         foodRecipesState = HomeFoodRecipesDataState.Init,
         onRefreshWeatherData = {},
         onRefreshFoodRecipesData = {},
-        onFetchMoreFoodRecipesData = {}
+        onFetchMoreFoodRecipesData = {},
+        onSelectedFoodRecipesTabItem = {}
     )
 }

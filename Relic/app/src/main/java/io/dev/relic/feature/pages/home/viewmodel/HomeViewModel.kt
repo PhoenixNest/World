@@ -78,12 +78,7 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
-        fetchFoodRecipesData(
-            isRefresh = false,
-            query = "coffee",
-            addRecipeInformation = true,
-            addRecipeNutrition = true,
-        )
+        fetchFoodRecipesData(isRefresh = true)
     }
 
     fun fetchWeatherData(
@@ -125,9 +120,9 @@ class HomeViewModel @Inject constructor(
      * */
     fun fetchFoodRecipesData(
         isRefresh: Boolean,
-        query: String,
-        addRecipeInformation: Boolean,
-        addRecipeNutrition: Boolean,
+        query: String = "coffee",
+        addRecipeInformation: Boolean = true,
+        addRecipeNutrition: Boolean = true,
     ): StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> {
         isFirstFetchFoodRecipes = isRefresh
         foodRecipesOffset += if (isRefresh) 0 else 10

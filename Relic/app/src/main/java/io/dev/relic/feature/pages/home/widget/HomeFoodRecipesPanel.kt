@@ -1,12 +1,13 @@
 package io.dev.relic.feature.pages.home.widget
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,31 +22,41 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
+import com.google.accompanist.placeholder.shimmer
+import io.dev.relic.R
 import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.dev.relic.feature.pages.home.util.HomeFoodRecipesSimpleCategories
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
-import io.dev.relic.global.RelicConstants
+import io.dev.relic.global.widget.CommonAsyncImage
+import io.dev.relic.global.widget.CommonIconTextButton
 import io.dev.relic.ui.theme.RelicFontFamily
+import io.dev.relic.ui.theme.mainBackgroundColor
 import io.dev.relic.ui.theme.mainBackgroundColorLight
+import io.dev.relic.ui.theme.mainTextColor
 import io.dev.relic.ui.theme.mainThemeColor
+import io.dev.relic.ui.theme.placeHolderHighlightColor
 
 @Composable
 fun HomeFoodRecipesPanel(
     foodRecipesState: HomeFoodRecipesDataState,
     onRefreshClick: () -> Unit,
-    onFetchMore: () -> Unit
+    onFetchMore: () -> Unit,
+    onTabItemClick: (selectedItem: String) -> Unit
 ) {
     when (val state: HomeFoodRecipesDataState = foodRecipesState) {
         is HomeFoodRecipesDataState.Init,
@@ -53,7 +64,8 @@ fun HomeFoodRecipesPanel(
             HomeFoodRecipesPanel(
                 isLoading = true,
                 modelList = emptyList(),
-                onRefreshClick = {}
+                onRefreshClick = {},
+                onTabItemClick = {}
             )
         }
 
@@ -61,7 +73,8 @@ fun HomeFoodRecipesPanel(
             HomeFoodRecipesPanel(
                 isLoading = false,
                 modelList = state.modelList,
-                onRefreshClick = onRefreshClick
+                onRefreshClick = onRefreshClick,
+                onTabItemClick = onTabItemClick
             )
         }
 
@@ -71,7 +84,8 @@ fun HomeFoodRecipesPanel(
             HomeFoodRecipesPanel(
                 isLoading = false,
                 modelList = emptyList(),
-                onRefreshClick = onRefreshClick
+                onRefreshClick = onRefreshClick,
+                onTabItemClick = onTabItemClick
             )
         }
     }
@@ -81,75 +95,126 @@ fun HomeFoodRecipesPanel(
 private fun HomeFoodRecipesPanel(
     isLoading: Boolean,
     modelList: List<FoodRecipesComplexSearchInfoModel?>?,
-    onRefreshClick: () -> Unit
+    onRefreshClick: () -> Unit,
+    onTabItemClick: (selectedItem: String) -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
-        HomeFoodRecipesPanelTitle()
-        Spacer(modifier = Modifier.height(16.dp))
-        HomeFoodRecipesCardList(
-            isLoading = isLoading,
-            modelList = modelList
-        )
-    }
-}
-
-@Composable
-private fun HomeFoodRecipesPanelTitle() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .background(color = mainBackgroundColorLight)
-    ) {
-
-    }
-}
-
-@Composable
-private fun HomeFoodRecipesCardList(
-    isLoading: Boolean,
-    modelList: List<FoodRecipesComplexSearchInfoModel?>?
-) {
-    if (modelList == null) {
-        //
-    } else {
-        LazyRow(
+    if (modelList.isNullOrEmpty()) {
+        Card(
             modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .height(300.dp),
+            shape = RoundedCornerShape(16.dp),
+            backgroundColor = mainBackgroundColorLight
+        ) {
+            //
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .placeholder(
                     visible = isLoading,
+                    color = Color.DarkGray,
                     shape = RoundedCornerShape(16.dp),
-                    highlight = PlaceholderHighlight.shimmer()
+                    highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 ),
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 12.dp,
-                alignment = Alignment.CenterHorizontally
-            ),
-            verticalAlignment = Alignment.CenterVertically,
-            contentPadding = PaddingValues(
-                horizontal = 16.dp,
-                vertical = 8.dp
-            )
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
         ) {
-            items(
-                items = modelList,
-                key = { it?.id ?: -1 }
-            ) { data: FoodRecipesComplexSearchInfoModel? ->
-                if (data == null) {
-                    //
-                } else {
-                    HomeFoodRecipesCardItem(data = data)
-                }
+            HomeFoodRecipesTabBar(onTabItemClick = onTabItemClick)
+            Spacer(modifier = Modifier.height(16.dp))
+            HomeFoodRecipesCardList(modelList = modelList)
+        }
+    }
+}
+
+@Composable
+private fun HomeFoodRecipesCardList(modelList: List<FoodRecipesComplexSearchInfoModel?>) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        horizontalArrangement = Arrangement.spacedBy(
+            space = 12.dp,
+            alignment = Alignment.CenterHorizontally
+        ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        items(
+            items = modelList,
+            key = { it?.id ?: -1 }
+        ) { data: FoodRecipesComplexSearchInfoModel? ->
+            if (data == null) {
+                //
+            } else {
+                HomeFoodRecipesCardItem(data = data)
             }
         }
     }
+}
+
+@Composable
+private fun HomeFoodRecipesTabBar(onTabItemClick: (selectedItem: String) -> Unit) {
+    var currentSelectedTab: Int by remember {
+        mutableIntStateOf(0)
+    }
+
+    Box(modifier = Modifier.height(136.dp)) {
+        Text(
+            text = stringResource(id = R.string.home_card_food_recipes_title),
+
+            style = TextStyle(
+                color = mainTextColor,
+                fontSize = 24.sp,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .align(Alignment.BottomCenter),
+            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HomeFoodRecipesSimpleCategories.entries.forEach { item ->
+                HomeFoodRecipesTabItem(
+                    isSelected = (currentSelectedTab == item.ordinal),
+                    iconResId = item.selectedIconResId,
+                    tabLabelResId = item.tabLabelResId,
+                    onTabClick = {
+                        currentSelectedTab = item.ordinal
+                        onTabItemClick.invoke(it)
+                    }
+                )
+            }
+        }
+    }
+
+}
+
+@Composable
+private fun HomeFoodRecipesTabItem(
+    isSelected: Boolean,
+    @DrawableRes iconResId: Int,
+    @StringRes tabLabelResId: Int,
+    onTabClick: (selectedTab: String) -> Unit
+) {
+    val tabLabel: String = stringResource(id = tabLabelResId)
+    CommonIconTextButton(
+        iconResId = iconResId,
+        labelResId = tabLabelResId,
+        onClick = { onTabClick.invoke(tabLabel) },
+        backgroundColor = if (isSelected) {
+            mainBackgroundColorLight
+        } else {
+            mainBackgroundColor
+        },
+        shape = RoundedCornerShape(16.dp)
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -161,21 +226,10 @@ private fun HomeFoodRecipesCardItem(data: FoodRecipesComplexSearchInfoModel) {
         backgroundColor = mainThemeColor
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(data.image)
-                    .build(),
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            CommonAsyncImage(data.image)
             Column(
                 modifier = Modifier
-                    .padding(
-                        start = 8.dp,
-                        end = 8.dp,
-                        bottom = 8.dp
-                    )
+                    .padding(8.dp)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .background(
@@ -188,8 +242,8 @@ private fun HomeFoodRecipesCardItem(data: FoodRecipesComplexSearchInfoModel) {
                 Text(
                     text = data.title ?: "",
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(8.dp)
+                        .fillMaxWidth()
                         .basicMarquee(),
                     style = TextStyle(
                         color = mainThemeColor,
@@ -208,7 +262,8 @@ private fun HomeFoodRecipesNoDataCardPreview() {
     HomeFoodRecipesPanel(
         isLoading = false,
         modelList = null,
-        onRefreshClick = {}
+        onRefreshClick = {},
+        onTabItemClick = {}
     )
 }
 
@@ -231,6 +286,7 @@ private fun HomeFoodRecipesCardPreview() {
                 imageType = "xxx"
             )
         ),
-        onRefreshClick = {}
+        onRefreshClick = {},
+        onTabItemClick = {}
     )
 }
