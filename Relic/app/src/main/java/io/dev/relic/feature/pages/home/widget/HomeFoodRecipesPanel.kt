@@ -120,48 +120,50 @@ private fun HomeFoodRecipesPanel(
             onTabItemClick = onTabItemClick
         )
         Spacer(modifier = Modifier.height(16.dp))
-        if (modelList.isNullOrEmpty()) {
-            if (!isFetchingData) {
+        if (isFetchingData) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .height(196.dp)
+                    .background(
+                        color = mainBackgroundColorLight,
+                        RoundedCornerShape(16.dp)
+                    )
+                    .placeholder(
+                        visible = true,
+                        color = Color.DarkGray,
+                        shape = RoundedCornerShape(16.dp),
+                        highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+                    )
+            )
+        } else {
+            if (modelList.isNullOrEmpty()) {
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     containerHeight = 196.dp
                 )
+            } else {
+                HomeFoodRecipesCardList(
+                    lazyListState = lazyListState,
+                    modelList = modelList,
+                    onRetryClick = onRetryClick
+                )
             }
-        } else {
-            HomeFoodRecipesCardList(
-                isFetchingData = isFetchingData,
-                lazyListState = lazyListState,
-                modelList = modelList,
-                onRetryClick = onRetryClick
-            )
         }
     }
 }
 
 @Composable
 private fun HomeFoodRecipesCardList(
-    isFetchingData: Boolean,
     lazyListState: LazyListState,
     modelList: List<FoodRecipesComplexSearchInfoModel?>,
     onRetryClick: () -> Unit
 ) {
     LazyRow(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .background(
-                color = if (isFetchingData) {
-                    mainBackgroundColorLight
-                } else {
-                    Color.Transparent
-                }
-            )
-            .placeholder(
-                visible = isFetchingData,
-                color = Color.DarkGray,
-                shape = RoundedCornerShape(16.dp),
-                highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-            ),
+            .fillMaxSize()
+            .wrapContentHeight(),
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(
             space = 12.dp,
@@ -175,7 +177,7 @@ private fun HomeFoodRecipesCardList(
             } else {
                 val itemDecorationModifier: Modifier = Modifier.padding(
                     start = if (index == 0) 16.dp else 0.dp,
-                    end = if (index == HomeFoodRecipesSimpleCategories.entries.size - 1) 16.dp else 0.dp
+                    end = if (index == modelList.size - 1) 16.dp else 0.dp
                 )
                 HomeFoodRecipesCardItem(
                     data = data,
