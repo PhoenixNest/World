@@ -17,15 +17,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,7 +49,6 @@ import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColor
 import io.dev.relic.ui.theme.mainThemeColorAccent
 import io.dev.relic.ui.theme.placeHolderHighlightColor
-import kotlinx.coroutines.flow.filter
 
 @Composable
 fun HomeFoodRecipesPanel(
@@ -63,16 +59,6 @@ fun HomeFoodRecipesPanel(
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
     val lazyListState: LazyListState = rememberLazyListState()
-
-    LaunchedEffect(lazyListState) {
-        snapshotFlow {
-            lazyListState.firstVisibleItemIndex
-        }.filter {
-            it % 5 == 0
-        }.collect {
-
-        }
-    }
 
     when (val state: HomeFoodRecipesDataState = foodRecipesState) {
         is HomeFoodRecipesDataState.Init,
@@ -124,7 +110,6 @@ private fun HomeFoodRecipesPanel(
 ) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
         verticalArrangement = Arrangement.Top,
@@ -135,32 +120,27 @@ private fun HomeFoodRecipesPanel(
             onTabItemClick = onTabItemClick
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Box(
-            modifier = Modifier.placeholder(
-                visible = isFetchingData,
-                color = Color.DarkGray,
-                shape = RoundedCornerShape(16.dp),
-                highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-            )
-        ) {
-            if (modelList.isNullOrEmpty()) {
+        if (modelList.isNullOrEmpty()) {
+            if (!isFetchingData) {
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     containerHeight = 196.dp
                 )
-            } else {
-                HomeFoodRecipesCardList(
-                    lazyListState = lazyListState,
-                    modelList = modelList,
-                    onRetryClick = onRetryClick
-                )
             }
+        } else {
+            HomeFoodRecipesCardList(
+                isFetchingData = isFetchingData,
+                lazyListState = lazyListState,
+                modelList = modelList,
+                onRetryClick = onRetryClick
+            )
         }
     }
 }
 
 @Composable
 private fun HomeFoodRecipesCardList(
+    isFetchingData: Boolean,
     lazyListState: LazyListState,
     modelList: List<FoodRecipesComplexSearchInfoModel?>,
     onRetryClick: () -> Unit
@@ -168,7 +148,20 @@ private fun HomeFoodRecipesCardList(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .height(180.dp)
+            .background(
+                color = if (isFetchingData) {
+                    mainBackgroundColorLight
+                } else {
+                    Color.Transparent
+                }
+            )
+            .placeholder(
+                visible = isFetchingData,
+                color = Color.DarkGray,
+                shape = RoundedCornerShape(16.dp),
+                highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+            ),
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(
             space = 12.dp,
@@ -176,14 +169,18 @@ private fun HomeFoodRecipesCardList(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(
-            items = modelList,
-            key = { it?.id ?: -1 }
-        ) { data: FoodRecipesComplexSearchInfoModel? ->
+        itemsIndexed(items = modelList) { index: Int, data: FoodRecipesComplexSearchInfoModel? ->
             if (data == null) {
-                CommonRetryComponent(onRetryClick = onRetryClick)
+                //
             } else {
-                HomeFoodRecipesCardItem(data = data)
+                val itemDecorationModifier: Modifier = Modifier.padding(
+                    start = if (index == 0) 16.dp else 0.dp,
+                    end = if (index == HomeFoodRecipesSimpleCategories.entries.size - 1) 16.dp else 0.dp
+                )
+                HomeFoodRecipesCardItem(
+                    data = data,
+                    modifier = itemDecorationModifier
+                )
             }
         }
     }
@@ -194,7 +191,12 @@ private fun HomeFoodRecipesTabBar(
     currentSelectedTab: Int,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
-    Box(modifier = Modifier.height(120.dp)) {
+    Box(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .height(120.dp)
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -281,9 +283,12 @@ private fun HomeFoodRecipesTabItem(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun HomeFoodRecipesCardItem(data: FoodRecipesComplexSearchInfoModel) {
+private fun HomeFoodRecipesCardItem(
+    data: FoodRecipesComplexSearchInfoModel,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.size(180.dp),
+        modifier = modifier.size(180.dp),
         shape = RoundedCornerShape(16.dp),
         backgroundColor = mainThemeColor
     ) {

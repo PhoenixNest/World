@@ -2,6 +2,7 @@ package io.dev.relic.global.widget
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ fun CommonRetryComponent(
 ) {
     Card(
         modifier = Modifier
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(containerHeight),
         shape = RoundedCornerShape(16.dp),
