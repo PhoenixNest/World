@@ -8,7 +8,6 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -31,10 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
@@ -43,12 +43,13 @@ import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.feature.pages.home.util.HomeFoodRecipesSimpleCategories
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
 import io.dev.relic.global.widget.CommonAsyncImage
-import io.dev.relic.global.widget.CommonIconTextButton
+import io.dev.relic.global.widget.CommonVerticalIconTextButton
 import io.dev.relic.ui.theme.RelicFontFamily
-import io.dev.relic.ui.theme.mainBackgroundColor
 import io.dev.relic.ui.theme.mainBackgroundColorLight
 import io.dev.relic.ui.theme.mainTextColor
+import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColor
+import io.dev.relic.ui.theme.mainThemeColorAccent
 import io.dev.relic.ui.theme.placeHolderHighlightColor
 
 @Composable
@@ -98,35 +99,37 @@ private fun HomeFoodRecipesPanel(
     onRefreshClick: () -> Unit,
     onTabItemClick: (selectedItem: String) -> Unit
 ) {
-    if (modelList.isNullOrEmpty()) {
-        Card(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-                .height(300.dp),
-            shape = RoundedCornerShape(16.dp),
-            backgroundColor = mainBackgroundColorLight
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
+    ) {
+        HomeFoodRecipesTabBar(onTabItemClick = onTabItemClick)
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(
+            modifier = Modifier.placeholder(
+                visible = isLoading,
+                color = Color.DarkGray,
+                shape = RoundedCornerShape(16.dp),
+                highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+            )
         ) {
-            //
-        }
-    } else {
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .placeholder(
-                    visible = isLoading,
-                    color = Color.DarkGray,
+            if (modelList.isNullOrEmpty()) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(196.dp),
                     shape = RoundedCornerShape(16.dp),
-                    highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-                ),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-            HomeFoodRecipesTabBar(onTabItemClick = onTabItemClick)
-            Spacer(modifier = Modifier.height(16.dp))
-            HomeFoodRecipesCardList(modelList = modelList)
+                    backgroundColor = mainBackgroundColorLight
+                ) {
+                    //
+                }
+            } else {
+                HomeFoodRecipesCardList(modelList = modelList)
+            }
         }
     }
 }
@@ -158,39 +161,64 @@ private fun HomeFoodRecipesCardList(modelList: List<FoodRecipesComplexSearchInfo
 
 @Composable
 private fun HomeFoodRecipesTabBar(onTabItemClick: (selectedItem: String) -> Unit) {
+
     var currentSelectedTab: Int by remember {
         mutableIntStateOf(0)
     }
 
-    Box(modifier = Modifier.height(136.dp)) {
-        Text(
-            text = stringResource(id = R.string.home_card_food_recipes_title),
-
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 24.sp,
-                fontFamily = RelicFontFamily.ubuntu
-            )
-        )
-        Row(
+    Box(modifier = Modifier.height(120.dp)) {
+        Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(104.dp)
                 .align(Alignment.BottomCenter),
-            horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically
+            backgroundColor = mainBackgroundColorLight,
+            shape = RoundedCornerShape(16.dp)
         ) {
-            HomeFoodRecipesSimpleCategories.entries.forEach { item ->
-                HomeFoodRecipesTabItem(
-                    isSelected = (currentSelectedTab == item.ordinal),
-                    iconResId = item.selectedIconResId,
-                    tabLabelResId = item.tabLabelResId,
-                    onTabClick = {
-                        currentSelectedTab = item.ordinal
-                        onTabItemClick.invoke(it)
-                    }
-                )
+            LazyRow(
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                itemsIndexed(HomeFoodRecipesSimpleCategories.entries) { index: Int, item: HomeFoodRecipesSimpleCategories ->
+                    val tabLabel: String = stringResource(id = item.tabLabelResId)
+                    val itemDecorationModifier: Modifier = Modifier.padding(
+                        start = if (index == 0) 16.dp else 0.dp,
+                        end = if (index == HomeFoodRecipesSimpleCategories.entries.size - 1) 16.dp else 0.dp
+                    )
+                    HomeFoodRecipesTabItem(
+                        isSelected = (currentSelectedTab == index),
+                        iconResId = item.selectedIconResId,
+                        tabLabelResId = item.tabLabelResId,
+                        onTabClick = {
+                            currentSelectedTab = index
+                            onTabItemClick.invoke(tabLabel)
+                        },
+                        modifier = itemDecorationModifier
+                    )
+                }
             }
+        }
+        Card(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(8.dp),
+            backgroundColor = mainThemeColorAccent
+        ) {
+            Text(
+                text = stringResource(R.string.home_card_food_recipes_title),
+                modifier = Modifier.padding(
+                    horizontal = 12.dp,
+                    vertical = 8.dp
+                ),
+                style = TextStyle(
+                    color = mainTextColor,
+                    fontFamily = RelicFontFamily.ubuntu,
+                    fontWeight = FontWeight.Bold
+                )
+            )
         }
     }
 
@@ -201,20 +229,27 @@ private fun HomeFoodRecipesTabItem(
     isSelected: Boolean,
     @DrawableRes iconResId: Int,
     @StringRes tabLabelResId: Int,
-    onTabClick: (selectedTab: String) -> Unit
+    onTabClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    val tabLabel: String = stringResource(id = tabLabelResId)
-    CommonIconTextButton(
-        iconResId = iconResId,
-        labelResId = tabLabelResId,
-        onClick = { onTabClick.invoke(tabLabel) },
-        backgroundColor = if (isSelected) {
-            mainBackgroundColorLight
-        } else {
-            mainBackgroundColor
-        },
-        shape = RoundedCornerShape(16.dp)
-    )
+    Box(modifier = modifier) {
+        CommonVerticalIconTextButton(
+            iconResId = iconResId,
+            labelResId = tabLabelResId,
+            onClick = onTabClick,
+            backgroundColor = if (isSelected) {
+                mainThemeColorAccent
+            } else {
+                Color.Transparent
+            },
+            textColor = if (isSelected) {
+                mainTextColor
+            } else {
+                mainTextColorDark
+            },
+            shape = RoundedCornerShape(16.dp)
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)

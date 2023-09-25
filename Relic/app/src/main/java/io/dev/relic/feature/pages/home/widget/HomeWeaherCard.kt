@@ -85,12 +85,12 @@ private fun HomeWeatherCard(
 ) {
     Box(
         modifier = Modifier
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(136.dp)
     ) {
         Card(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
                 .fillMaxWidth()
                 .height(120.dp)
                 .align(Alignment.BottomCenter)
@@ -110,7 +110,7 @@ private fun HomeWeatherCard(
             }
         }
         Card(
-            modifier = Modifier.padding(horizontal = 36.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
             shape = RoundedCornerShape(8.dp),
             backgroundColor = mainThemeColorAccent
         ) {
@@ -136,7 +136,7 @@ private fun HomeWeatherCardContent(model: WeatherDataModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(start = 16.dp, end = 24.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

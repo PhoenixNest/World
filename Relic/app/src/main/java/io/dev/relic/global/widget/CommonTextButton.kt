@@ -41,7 +41,7 @@ fun CommonTextButton(
             .fillMaxWidth()
             .height(52.dp),
         enabled = isEnable,
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor,
             contentColor = Color.LightGray

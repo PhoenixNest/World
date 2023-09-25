@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +32,7 @@ import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainTextColor
 
 @Composable
-fun CommonIconTextButton(
+fun CommonHorizontalIconTextButton(
     @DrawableRes iconResId: Int,
     @StringRes labelResId: Int,
     onClick: () -> Unit,
@@ -55,12 +54,7 @@ fun CommonIconTextButton(
         )
     ) {
         Row(
-            modifier = modifier
-                .wrapContentSize()
-                .padding(
-                    horizontal = 12.dp,
-                    vertical = 8.dp
-                ),
+            modifier = modifier.wrapContentSize(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -83,7 +77,7 @@ fun CommonIconTextButton(
 }
 
 @Composable
-fun CommonIconTextButton(
+fun CommonHorizontalIconTextButton(
     icon: ImageVector,
     @StringRes labelResId: Int,
     onClick: () -> Unit,
@@ -96,7 +90,7 @@ fun CommonIconTextButton(
 ) {
     TextButton(
         onClick = onClick,
-        modifier = containerModifier,
+        modifier = containerModifier.wrapContentSize(),
         enabled = isEnable,
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = backgroundColor,
@@ -104,7 +98,7 @@ fun CommonIconTextButton(
         )
     ) {
         Row(
-            modifier = modifier,
+            modifier = modifier.wrapContentSize(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -128,8 +122,8 @@ fun CommonIconTextButton(
 
 @Composable
 @Preview
-private fun CommonIconTextPreview() {
-    CommonIconTextButton(
+private fun CommonHorizontalIconTextButtonPreview() {
+    CommonHorizontalIconTextButton(
         icon = Icons.Default.Check,
         labelResId = R.string.app_name,
         onClick = {}
