@@ -64,18 +64,15 @@ fun HomeFoodRecipesPanel(
 ) {
     val lazyListState: LazyListState = rememberLazyListState()
 
-    LaunchedEffect(
-        key1 = lazyListState,
-        block = {
-            snapshotFlow {
-                lazyListState.firstVisibleItemIndex
-            }.filter {
-                it % 5 == 0
-            }.collect {
+    LaunchedEffect(lazyListState) {
+        snapshotFlow {
+            lazyListState.firstVisibleItemIndex
+        }.filter {
+            it % 5 == 0
+        }.collect {
 
-            }
         }
-    )
+    }
 
     when (val state: HomeFoodRecipesDataState = foodRecipesState) {
         is HomeFoodRecipesDataState.Init,

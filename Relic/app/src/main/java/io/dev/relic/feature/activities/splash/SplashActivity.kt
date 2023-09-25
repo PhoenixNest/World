@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.BuildConfig
@@ -22,7 +21,6 @@ import io.dev.relic.global.RelicLifecycleObserver
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
-import io.dev.relic.ui.theme.mainThemeColor
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsBaseActivity() {

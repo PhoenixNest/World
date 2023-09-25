@@ -37,28 +37,25 @@ fun HomePageRoute(
 
     val lazyListState: LazyListState = rememberLazyListState()
 
-    LaunchedEffect(
-        key1 = mainState,
-        block = {
-            when (mainState) {
-                is MainState.Init,
-                is MainState.AccessingLocation -> {
-                    //
-                }
+    LaunchedEffect(mainState) {
+        when (mainState) {
+            is MainState.Init,
+            is MainState.AccessingLocation -> {
+                //
+            }
 
-                is MainState.Empty,
-                is MainState.AccessLocationFailed -> {
-                    //
-                }
+            is MainState.Empty,
+            is MainState.AccessLocationFailed -> {
+                //
+            }
 
-                is MainState.AccessLocationSucceed -> {
-                    mainState.location?.also {
-                        homeViewModel.fetchWeatherData(it.latitude, it.longitude)
-                    }
+            is MainState.AccessLocationSucceed -> {
+                mainState.location?.also {
+                    homeViewModel.fetchWeatherData(it.latitude, it.longitude)
                 }
             }
         }
-    )
+    }
 
     HomePage(
         lazyListState = lazyListState,
