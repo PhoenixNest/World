@@ -53,6 +53,12 @@
             android:theme="@style/Theme.Relic" />
 
         <activity
+            android:name=".feature.activities.login.LoginActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
             android:name=".feature.activities.main.MainActivity"
             android:exported="false"
             android:launchMode="singleTask"
