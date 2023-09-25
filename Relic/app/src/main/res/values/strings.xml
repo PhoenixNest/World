@@ -27,6 +27,7 @@
 
     <!-- Home Page -->
     <string name="home_label">Home</string>
+    <string name="home_title">@string/home_label</string>
     <string name="home_main_title">Beyond the World</string>
     <string name="home_card_weather_title">Today\'s Weather</string>
     <string name="home_card_todo_title">Check out your todo tasks</string>

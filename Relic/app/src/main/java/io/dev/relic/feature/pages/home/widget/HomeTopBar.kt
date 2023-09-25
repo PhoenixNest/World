@@ -61,7 +61,7 @@ fun HomeTopBar(onOpenDrawer: () -> Unit) {
                 )
             }
             Text(
-                text = stringResource(R.string.home_main_title),
+                text = stringResource(R.string.home_title),
                 modifier = Modifier.align(Alignment.Center),
                 style = TextStyle(
                     color = mainTextColor,

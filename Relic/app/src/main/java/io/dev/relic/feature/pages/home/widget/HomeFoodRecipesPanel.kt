@@ -15,17 +15,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +43,7 @@ import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.feature.pages.home.util.HomeFoodRecipesSimpleCategories
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
 import io.dev.relic.global.widget.CommonAsyncImage
+import io.dev.relic.global.widget.CommonRetryComponent
 import io.dev.relic.global.widget.CommonVerticalIconTextButton
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainBackgroundColorLight
@@ -51,30 +52,51 @@ import io.dev.relic.ui.theme.mainTextColorDark
 import io.dev.relic.ui.theme.mainThemeColor
 import io.dev.relic.ui.theme.mainThemeColorAccent
 import io.dev.relic.ui.theme.placeHolderHighlightColor
+import kotlinx.coroutines.flow.filter
 
 @Composable
 fun HomeFoodRecipesPanel(
+    currentSelectedTab: Int,
     foodRecipesState: HomeFoodRecipesDataState,
-    onRefreshClick: () -> Unit,
+    onRetryClick: () -> Unit,
     onFetchMore: () -> Unit,
-    onTabItemClick: (selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
+    val lazyListState: LazyListState = rememberLazyListState()
+
+    LaunchedEffect(
+        key1 = lazyListState,
+        block = {
+            snapshotFlow {
+                lazyListState.firstVisibleItemIndex
+            }.filter {
+                it % 5 == 0
+            }.collect {
+
+            }
+        }
+    )
+
     when (val state: HomeFoodRecipesDataState = foodRecipesState) {
         is HomeFoodRecipesDataState.Init,
         is HomeFoodRecipesDataState.Fetching -> {
             HomeFoodRecipesPanel(
-                isLoading = true,
+                currentSelectedTab = currentSelectedTab,
+                isFetchingData = true,
+                lazyListState = lazyListState,
                 modelList = emptyList(),
-                onRefreshClick = {},
-                onTabItemClick = {}
+                onRetryClick = {},
+                onTabItemClick = { _: Int, _: String -> }
             )
         }
 
         is HomeFoodRecipesDataState.FetchSucceed -> {
             HomeFoodRecipesPanel(
-                isLoading = false,
+                currentSelectedTab = currentSelectedTab,
+                isFetchingData = false,
+                lazyListState = lazyListState,
                 modelList = state.modelList,
-                onRefreshClick = onRefreshClick,
+                onRetryClick = onRetryClick,
                 onTabItemClick = onTabItemClick
             )
         }
@@ -83,9 +105,11 @@ fun HomeFoodRecipesPanel(
         is HomeFoodRecipesDataState.NoFoodRecipesData,
         is HomeFoodRecipesDataState.FetchFailed -> {
             HomeFoodRecipesPanel(
-                isLoading = false,
+                currentSelectedTab = currentSelectedTab,
+                isFetchingData = false,
+                lazyListState = lazyListState,
                 modelList = emptyList(),
-                onRefreshClick = onRefreshClick,
+                onRetryClick = onRetryClick,
                 onTabItemClick = onTabItemClick
             )
         }
@@ -94,10 +118,12 @@ fun HomeFoodRecipesPanel(
 
 @Composable
 private fun HomeFoodRecipesPanel(
-    isLoading: Boolean,
+    currentSelectedTab: Int,
+    isFetchingData: Boolean,
+    lazyListState: LazyListState,
     modelList: List<FoodRecipesComplexSearchInfoModel?>?,
-    onRefreshClick: () -> Unit,
-    onTabItemClick: (selectedItem: String) -> Unit
+    onRetryClick: () -> Unit,
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -107,39 +133,46 @@ private fun HomeFoodRecipesPanel(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        HomeFoodRecipesTabBar(onTabItemClick = onTabItemClick)
+        HomeFoodRecipesTabBar(
+            currentSelectedTab = currentSelectedTab,
+            onTabItemClick = onTabItemClick
+        )
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier.placeholder(
-                visible = isLoading,
+                visible = isFetchingData,
                 color = Color.DarkGray,
                 shape = RoundedCornerShape(16.dp),
                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
             )
         ) {
             if (modelList.isNullOrEmpty()) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(196.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    backgroundColor = mainBackgroundColorLight
-                ) {
-                    //
-                }
+                CommonRetryComponent(
+                    onRetryClick = onRetryClick,
+                    containerHeight = 196.dp
+                )
             } else {
-                HomeFoodRecipesCardList(modelList = modelList)
+                HomeFoodRecipesCardList(
+                    lazyListState = lazyListState,
+                    modelList = modelList,
+                    onRetryClick = onRetryClick
+                )
             }
         }
     }
 }
 
 @Composable
-private fun HomeFoodRecipesCardList(modelList: List<FoodRecipesComplexSearchInfoModel?>) {
+private fun HomeFoodRecipesCardList(
+    lazyListState: LazyListState,
+    modelList: List<FoodRecipesComplexSearchInfoModel?>,
+    onRetryClick: () -> Unit
+) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
+        state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(
             space = 12.dp,
             alignment = Alignment.CenterHorizontally
@@ -151,7 +184,7 @@ private fun HomeFoodRecipesCardList(modelList: List<FoodRecipesComplexSearchInfo
             key = { it?.id ?: -1 }
         ) { data: FoodRecipesComplexSearchInfoModel? ->
             if (data == null) {
-                //
+                CommonRetryComponent(onRetryClick = onRetryClick)
             } else {
                 HomeFoodRecipesCardItem(data = data)
             }
@@ -160,12 +193,10 @@ private fun HomeFoodRecipesCardList(modelList: List<FoodRecipesComplexSearchInfo
 }
 
 @Composable
-private fun HomeFoodRecipesTabBar(onTabItemClick: (selectedItem: String) -> Unit) {
-
-    var currentSelectedTab: Int by remember {
-        mutableIntStateOf(0)
-    }
-
+private fun HomeFoodRecipesTabBar(
+    currentSelectedTab: Int,
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+) {
     Box(modifier = Modifier.height(120.dp)) {
         Card(
             modifier = Modifier
@@ -191,11 +222,10 @@ private fun HomeFoodRecipesTabBar(onTabItemClick: (selectedItem: String) -> Unit
                     )
                     HomeFoodRecipesTabItem(
                         isSelected = (currentSelectedTab == index),
-                        iconResId = item.selectedIconResId,
+                        iconResId = item.iconResId,
                         tabLabelResId = item.tabLabelResId,
                         onTabClick = {
-                            currentSelectedTab = index
-                            onTabItemClick.invoke(tabLabel)
+                            onTabItemClick.invoke(index, tabLabel)
                         },
                         modifier = itemDecorationModifier
                     )
@@ -295,10 +325,12 @@ private fun HomeFoodRecipesCardItem(data: FoodRecipesComplexSearchInfoModel) {
 @Preview
 private fun HomeFoodRecipesNoDataCardPreview() {
     HomeFoodRecipesPanel(
-        isLoading = false,
+        currentSelectedTab = 0,
+        isFetchingData = false,
+        lazyListState = rememberLazyListState(),
         modelList = null,
-        onRefreshClick = {},
-        onTabItemClick = {}
+        onRetryClick = {},
+        onTabItemClick = { _: Int, _: String -> }
     )
 }
 
@@ -306,7 +338,9 @@ private fun HomeFoodRecipesNoDataCardPreview() {
 @Preview
 private fun HomeFoodRecipesCardPreview() {
     HomeFoodRecipesPanel(
-        isLoading = false,
+        currentSelectedTab = 0,
+        isFetchingData = false,
+        lazyListState = rememberLazyListState(),
         modelList = listOf(
             FoodRecipesComplexSearchInfoModel(
                 id = -1,
@@ -321,7 +355,7 @@ private fun HomeFoodRecipesCardPreview() {
                 imageType = "xxx"
             )
         ),
-        onRefreshClick = {},
-        onTabItemClick = {}
+        onRetryClick = {},
+        onTabItemClick = { _: Int, _: String -> }
     )
 }

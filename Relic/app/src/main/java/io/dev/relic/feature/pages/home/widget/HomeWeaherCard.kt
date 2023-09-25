@@ -34,6 +34,7 @@ import io.dev.relic.domain.model.weather.WeatherDataModel
 import io.dev.relic.domain.model.weather.WeatherType
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
 import io.dev.relic.global.RelicConstants
+import io.dev.relic.global.widget.CommonRetryComponent
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainBackgroundColorLight
 import io.dev.relic.ui.theme.mainTextColor
@@ -45,7 +46,7 @@ import java.time.LocalDateTime
 @Composable
 fun HomeWeatherCard(
     weatherDataState: HomeWeatherDataState,
-    onRefreshClick: () -> Unit
+    onRetryClick: () -> Unit
 ) {
     when (val state: HomeWeatherDataState = weatherDataState) {
         is HomeWeatherDataState.Init,
@@ -53,7 +54,7 @@ fun HomeWeatherCard(
             HomeWeatherCard(
                 isLoading = true,
                 model = null,
-                onRefreshClick = {}
+                onRetryClick = {}
             )
         }
 
@@ -61,7 +62,7 @@ fun HomeWeatherCard(
             HomeWeatherCard(
                 isLoading = false,
                 model = state.model?.currentWeatherData,
-                onRefreshClick = onRefreshClick
+                onRetryClick = onRetryClick
             )
         }
 
@@ -71,7 +72,7 @@ fun HomeWeatherCard(
             HomeWeatherCard(
                 isLoading = false,
                 model = null,
-                onRefreshClick = onRefreshClick
+                onRetryClick = onRetryClick
             )
         }
     }
@@ -81,7 +82,7 @@ fun HomeWeatherCard(
 private fun HomeWeatherCard(
     isLoading: Boolean,
     model: WeatherDataModel?,
-    onRefreshClick: () -> Unit
+    onRetryClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -104,7 +105,10 @@ private fun HomeWeatherCard(
             backgroundColor = mainBackgroundColorLight
         ) {
             if (model == null) {
-                //
+                CommonRetryComponent(
+                    onRetryClick = onRetryClick,
+                    containerHeight = 120.dp
+                )
             } else {
                 HomeWeatherCardContent(model)
             }
@@ -182,7 +186,7 @@ private fun HomeWeatherCardNoDataPreview() {
     HomeWeatherCard(
         isLoading = false,
         model = null,
-        onRefreshClick = {}
+        onRetryClick = {}
     )
 }
 
@@ -200,6 +204,6 @@ private fun HomeWeatherCardPreview() {
             pressure = 120.0,
             isDay = true
         ),
-        onRefreshClick = {}
+        onRetryClick = {}
     )
 }

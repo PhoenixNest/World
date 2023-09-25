@@ -1,6 +1,9 @@
 package io.dev.relic.feature.pages.home.viewmodel
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,6 +39,14 @@ class HomeViewModel @Inject constructor(
     private val foodRecipesUseCase: FoodRecipesUseCase
 ) : AndroidViewModel(application) {
 
+    /**
+     * Indicate the current selected food recipes tab.
+     * */
+    var currentSelectedFoodRecipesTab: Int by mutableIntStateOf(0)
+
+    /**
+     * Check whether if already fetch the recipes data for initialize.
+     * */
     private var isFirstFetchFoodRecipes: Boolean = true
 
     /**
@@ -43,9 +54,15 @@ class HomeViewModel @Inject constructor(
      * */
     private var foodRecipesOffset: Int = 0
 
+    /**
+     * The data flow of weather forecast.
+     * */
     private val _weatherDataStateFlow: MutableStateFlow<HomeWeatherDataState> = MutableStateFlow(HomeWeatherDataState.Init)
     val weatherDataStateFlow: StateFlow<HomeWeatherDataState> get() = _weatherDataStateFlow
 
+    /**
+     * The data flow of daily food recipes.
+     * */
     private val _foodRecipesDataStateFlow: MutableStateFlow<HomeFoodRecipesDataState> = MutableStateFlow(HomeFoodRecipesDataState.Init)
     val foodRecipesDataStateFlow: StateFlow<HomeFoodRecipesDataState> get() = _foodRecipesDataStateFlow
 
@@ -145,6 +162,10 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+    }
+
+    fun updateSelectedFoodRecipesTabs(newIndex: Int) {
+        currentSelectedFoodRecipesTab = newIndex
     }
 
     private fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {

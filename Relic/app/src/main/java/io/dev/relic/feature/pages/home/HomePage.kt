@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,8 +23,8 @@ import io.dev.relic.feature.pages.home.widget.HomeFoodRecipesPanel
 import io.dev.relic.feature.pages.home.widget.HomeTopBar
 import io.dev.relic.feature.pages.home.widget.HomeWeatherCard
 import io.dev.relic.feature.screens.main.MainState
+import io.dev.relic.global.widget.dialog.CommonItemDivider
 import io.dev.relic.ui.theme.mainThemeColor
-import kotlinx.coroutines.flow.filter
 
 @Composable
 fun HomePageRoute(
@@ -61,36 +60,27 @@ fun HomePageRoute(
         }
     )
 
-    LaunchedEffect(
-        key1 = lazyListState,
-        block = {
-            snapshotFlow {
-                lazyListState.firstVisibleItemIndex
-            }.filter {
-                it % 5 == 0
-            }.collect {
-
-            }
-        }
-    )
-
     HomePage(
         lazyListState = lazyListState,
         weatherDataState = homeWeatherState,
         foodRecipesState = homeFoodRecipesState,
-        onRefreshWeatherData = {
+        currentSelectedFoodRecipesTabs = homeViewModel.currentSelectedFoodRecipesTab,
+        onWeatherRetry = {
             mainViewModel.latestLocation?.also {
                 homeViewModel.fetchWeatherData(it.latitude, it.longitude)
             }
         },
-        onRefreshFoodRecipesData = {
+        onFoodRecipesRetry = {
             homeViewModel.fetchFoodRecipesData(isRefresh = true)
         },
         onFetchMoreFoodRecipesData = {
             homeViewModel.fetchFoodRecipesData(isRefresh = false)
         },
-        onSelectedFoodRecipesTabItem = {
-            homeViewModel.fetchFoodRecipesData(isRefresh = false, query = it)
+        onSelectedFoodRecipesTabItem = { currentSelectedTab: Int, selectedItem: String ->
+            homeViewModel.apply {
+                updateSelectedFoodRecipesTabs(currentSelectedTab)
+                fetchFoodRecipesData(isRefresh = true, query = selectedItem)
+            }
         }
     )
 }
@@ -100,10 +90,11 @@ private fun HomePage(
     lazyListState: LazyListState,
     weatherDataState: HomeWeatherDataState,
     foodRecipesState: HomeFoodRecipesDataState,
-    onRefreshWeatherData: () -> Unit,
-    onRefreshFoodRecipesData: () -> Unit,
+    currentSelectedFoodRecipesTabs: Int,
+    onWeatherRetry: () -> Unit,
+    onFoodRecipesRetry: () -> Unit,
     onFetchMoreFoodRecipesData: () -> Unit,
-    onSelectedFoodRecipesTabItem: (selectedTab: String) -> Unit
+    onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -122,14 +113,15 @@ private fun HomePage(
             item {
                 HomeWeatherCard(
                     weatherDataState = weatherDataState,
-                    onRefreshClick = onRefreshWeatherData
+                    onRetryClick = onWeatherRetry
                 )
-                Spacer(modifier = Modifier.height(32.dp))
+                CommonItemDivider()
             }
             item {
                 HomeFoodRecipesPanel(
+                    currentSelectedFoodRecipesTabs,
                     foodRecipesState = foodRecipesState,
-                    onRefreshClick = onRefreshFoodRecipesData,
+                    onRetryClick = onFoodRecipesRetry,
                     onFetchMore = onFetchMoreFoodRecipesData,
                     onTabItemClick = onSelectedFoodRecipesTabItem
                 )
@@ -145,9 +137,10 @@ private fun HomePagePreview() {
         lazyListState = rememberLazyListState(),
         weatherDataState = HomeWeatherDataState.Init,
         foodRecipesState = HomeFoodRecipesDataState.Init,
-        onRefreshWeatherData = {},
-        onRefreshFoodRecipesData = {},
+        currentSelectedFoodRecipesTabs = 0,
+        onWeatherRetry = {},
+        onFoodRecipesRetry = {},
         onFetchMoreFoodRecipesData = {},
-        onSelectedFoodRecipesTabItem = {}
+        onSelectedFoodRecipesTabItem = { _: Int, _: String -> }
     )
 }

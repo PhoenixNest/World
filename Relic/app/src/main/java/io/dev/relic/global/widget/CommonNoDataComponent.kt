@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -34,6 +36,7 @@ import io.dev.relic.ui.theme.mainThemeColor
 @Composable
 fun CommonNoDataComponent(
     modifier: Modifier = Modifier,
+    backgroundColor: Color = mainThemeColor,
     iconSizeModifier: Modifier = Modifier,
     isShowText: Boolean = true
 ) {
@@ -45,7 +48,7 @@ fun CommonNoDataComponent(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(color = mainThemeColor)
+            .background(color = backgroundColor)
             .statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {

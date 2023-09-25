@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import io.dev.relic.ui.theme.mainThemeColor
 @Composable
 fun CommonLoadingComponent(
     modifier: Modifier = Modifier,
+    backgroundColor: Color = mainThemeColor,
     iconSizeModifier: Modifier = Modifier
 ) {
 
@@ -32,7 +34,7 @@ fun CommonLoadingComponent(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(color = mainThemeColor)
+            .background(color = backgroundColor)
             .statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
