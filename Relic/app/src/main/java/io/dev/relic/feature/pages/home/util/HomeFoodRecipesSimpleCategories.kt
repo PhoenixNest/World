@@ -10,8 +10,8 @@ enum class HomeFoodRecipesSimpleCategories(
 ) {
     Coffee(R.drawable.ic_coffee, R.string.home_food_recipes_label_coffee),
     Breakfast(R.drawable.ic_breakfast, R.string.home_food_recipes_label_breakfast),
-    Lunch(R.drawable.ic_coffee, R.string.home_food_recipes_label_lunch),
-    Dinner(R.drawable.ic_coffee, R.string.home_food_recipes_label_dinner),
+    Lunch(R.drawable.ic_lunch, R.string.home_food_recipes_label_lunch),
+    Dinner(R.drawable.ic_dinner, R.string.home_food_recipes_label_dinner),
     Cookie(R.drawable.ic_cookie, R.string.home_food_recipes_label_cookie),
     Snack(R.drawable.ic_snack, R.string.home_food_recipes_label_snack)
 }

@@ -122,6 +122,7 @@ private fun HomePage(
                     onFetchMore = onFetchMoreFoodRecipesData,
                     onTabItemClick = onSelectedFoodRecipesTabItem
                 )
+                CommonItemDivider()
             }
         }
     }
