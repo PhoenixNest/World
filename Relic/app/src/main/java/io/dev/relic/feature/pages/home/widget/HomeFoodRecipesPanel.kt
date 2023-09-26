@@ -146,8 +146,7 @@ private fun HomeFoodRecipesPanel(
             } else {
                 HomeFoodRecipesCardList(
                     lazyListState = lazyListState,
-                    modelList = modelList,
-                    onRetryClick = onRetryClick
+                    modelList = modelList
                 )
             }
         }
@@ -157,8 +156,7 @@ private fun HomeFoodRecipesPanel(
 @Composable
 private fun HomeFoodRecipesCardList(
     lazyListState: LazyListState,
-    modelList: List<FoodRecipesComplexSearchInfoModel?>,
-    onRetryClick: () -> Unit
+    modelList: List<FoodRecipesComplexSearchInfoModel?>
 ) {
     LazyRow(
         modifier = Modifier
