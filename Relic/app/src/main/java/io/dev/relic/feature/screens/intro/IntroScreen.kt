@@ -90,11 +90,14 @@ private fun IntroTitlePanel() {
     Spacer(modifier = Modifier.height(16.dp))
     Box(modifier = Modifier.fillMaxWidth()) {
         Box(
-            Modifier
+            modifier = Modifier
                 .height(4.dp)
                 .width(96.dp)
                 .align(Alignment.Center)
-                .background(color = mainTextColor, shape = RoundedCornerShape(12.dp))
+                .background(
+                    color = mainTextColor,
+                    shape = RoundedCornerShape(16.dp)
+                )
         )
     }
     Spacer(modifier = Modifier.height(32.dp))

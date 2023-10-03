@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
@@ -29,7 +30,7 @@ import io.dev.relic.ui.theme.mainThemeColor
 @Composable
 fun HomePageRoute(
     mainViewModel: MainViewModel,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val mainState: MainState = mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
     val homeWeatherState: HomeWeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
@@ -61,7 +62,7 @@ fun HomePageRoute(
         lazyListState = lazyListState,
         weatherDataState = homeWeatherState,
         foodRecipesState = homeFoodRecipesState,
-        currentSelectedFoodRecipesTabs = homeViewModel.currentSelectedFoodRecipesTab,
+        currentSelectedFoodRecipesTab = homeViewModel.currentSelectedFoodRecipesTab,
         onWeatherRetry = {
             mainViewModel.latestLocation?.also {
                 homeViewModel.fetchWeatherData(it.latitude, it.longitude)
@@ -87,7 +88,7 @@ private fun HomePage(
     lazyListState: LazyListState,
     weatherDataState: HomeWeatherDataState,
     foodRecipesState: HomeFoodRecipesDataState,
-    currentSelectedFoodRecipesTabs: Int,
+    currentSelectedFoodRecipesTab: Int,
     onWeatherRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit,
     onFetchMoreFoodRecipesData: () -> Unit,
@@ -116,7 +117,7 @@ private fun HomePage(
             }
             item {
                 HomeFoodRecipesPanel(
-                    currentSelectedFoodRecipesTabs,
+                    currentSelectedTab = currentSelectedFoodRecipesTab,
                     foodRecipesState = foodRecipesState,
                     onRetryClick = onFoodRecipesRetry,
                     onFetchMore = onFetchMoreFoodRecipesData,
@@ -135,7 +136,7 @@ private fun HomePagePreview() {
         lazyListState = rememberLazyListState(),
         weatherDataState = HomeWeatherDataState.Init,
         foodRecipesState = HomeFoodRecipesDataState.Init,
-        currentSelectedFoodRecipesTabs = 0,
+        currentSelectedFoodRecipesTab = 0,
         onWeatherRetry = {},
         onFoodRecipesRetry = {},
         onFetchMoreFoodRecipesData = {},

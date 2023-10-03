@@ -274,7 +274,7 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
 
     // LoggingInterceptor - Interceptor for OkHttp3 with pretty logger
-    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
+    implementation(libs.prettyLoggingInterceptor) {
         exclude(group = "org.json", module = "json")
     }
 
@@ -289,5 +289,7 @@ dependencies {
     implementation(libs.amap.search)
 
     // TomTom
-    implementation(libs.tomtom.map.display)
+    implementation(libs.tomtom.map.display){
+        exclude(group = "androidx.compose", module = "androidx")
+    }
 }

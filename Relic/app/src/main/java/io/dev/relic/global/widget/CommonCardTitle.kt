@@ -39,7 +39,7 @@ fun CommonCardTitle(
                 .height(16.dp)
                 .background(
                     color = Color.DarkGray,
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(16.dp)
                 )
         )
         Spacer(modifier = modifier.width(8.dp))

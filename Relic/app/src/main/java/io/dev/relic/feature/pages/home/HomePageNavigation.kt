@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.route.RelicRoute
 
 fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
@@ -15,14 +14,8 @@ fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavGraphBuilder.pageHome(
-    mainViewModel: MainViewModel,
-    homeViewModel: HomeViewModel
-) {
+fun NavGraphBuilder.pageHome(mainViewModel: MainViewModel) {
     composable(route = RelicRoute.HOME) {
-        HomePageRoute(
-            mainViewModel = mainViewModel,
-            homeViewModel = homeViewModel
-        )
+        HomePageRoute(mainViewModel = mainViewModel)
     }
 }

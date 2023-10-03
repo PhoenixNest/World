@@ -11,16 +11,14 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
-import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 
 @Composable
 fun MainFeatureNavHost(
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = RelicRoute.HOME
+    startDestination: String = RelicRoute.BASE_ROUTE
 ) {
     val mainViewModel: MainViewModel = hiltViewModel()
-    val homeViewModel: HomeViewModel = hiltViewModel()
 
     NavHost(
         navController = navHostController,
@@ -39,7 +37,7 @@ fun MainFeatureNavHost(
             )
         }
     ) {
-        pageHome(mainViewModel = mainViewModel, homeViewModel = homeViewModel)
+        pageHome(mainViewModel = mainViewModel)
         pageExplore(mainViewModel = mainViewModel)
         pageHive(mainViewModel = mainViewModel)
     }

@@ -139,10 +139,12 @@ private fun HomeFoodRecipesPanel(
             )
         } else {
             if (modelList.isNullOrEmpty()) {
-                CommonRetryComponent(
-                    onRetryClick = onRetryClick,
-                    containerHeight = 196.dp
-                )
+                Box(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    CommonRetryComponent(
+                        onRetryClick = onRetryClick,
+                        containerHeight = 196.dp
+                    )
+                }
             } else {
                 HomeFoodRecipesCardList(
                     lazyListState = lazyListState,
@@ -223,17 +225,15 @@ private fun HomeFoodRecipesTabBar(
                         isSelected = (currentSelectedTab == index),
                         iconResId = item.iconResId,
                         tabLabelResId = item.tabLabelResId,
-                        onTabClick = {
-                            onTabItemClick.invoke(index, tabLabel)
-                        },
+                        onTabClick = { onTabItemClick.invoke(index, tabLabel) },
                         modifier = itemDecorationModifier
                     )
                 }
             }
         }
         Card(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.padding(horizontal = 8.dp),
+            shape = RoundedCornerShape(16.dp),
             backgroundColor = mainThemeColorAccent
         ) {
             Text(
@@ -301,7 +301,7 @@ private fun HomeFoodRecipesCardItem(
                     .align(Alignment.BottomCenter)
                     .background(
                         color = mainBackgroundColorLight,
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(16.dp)
                     ),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start

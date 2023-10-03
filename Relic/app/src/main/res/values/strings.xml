@@ -41,6 +41,15 @@
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>
+    <string name="explore_bottom_sheet_title">Great Oaks From Little Acorns Grow</string>
+    <string name="explore_bottom_sheet_tab_foods_title">Foods</string>
+    <string name="explore_bottom_sheet_tab_drinks_title">Drinks</string>
+    <string name="explore_bottom_sheet_tab_hotel_title">Hotel</string>
+    <string name="explore_bottom_sheet_tab_views_title">Views</string>
+    <string name="explore_bottom_sheet_tab_shopping_title">Shopping</string>
+    <string name="explore_bottom_sheet_tab_sport_title">Sport</string>
+    <string name="explore_bottom_sheet_tab_health_title">Health</string>
+    <string name="explore_bottom_sheet_tab_traffic_service_title">Services</string>
 
     <!-- Hive Page -->
     <string name="hive_label">Hive</string>

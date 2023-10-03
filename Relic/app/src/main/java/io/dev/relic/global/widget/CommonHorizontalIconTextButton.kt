@@ -42,7 +42,7 @@ fun CommonHorizontalIconTextButton(
     backgroundColor: Color = Color.Transparent,
     textColor: Color = mainTextColor,
     iconColor: Color = textColor,
-    shape: Shape = RoundedCornerShape(8.dp)
+    shape: Shape = RoundedCornerShape(16.dp)
 ) {
     TextButton(
         onClick = onClick,

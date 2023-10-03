@@ -77,7 +77,7 @@ private fun CommonInputFieldNoContentPreview() {
                 .fillMaxWidth()
                 .background(
                     color = Color.LightGray.copy(alpha = 0.3F),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(16.dp)
                 )
                 .padding(20.dp)
         )
@@ -101,7 +101,7 @@ private fun CommonInputFieldPreview() {
                 .fillMaxWidth()
                 .background(
                     color = Color.LightGray.copy(alpha = 0.3F),
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(16.dp)
                 )
                 .padding(20.dp)
         )
