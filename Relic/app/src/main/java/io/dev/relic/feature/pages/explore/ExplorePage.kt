@@ -44,7 +44,6 @@ private fun ExplorePage(
     BottomSheetScaffold(
         sheetContent = {
             ExploreBottomSheet(
-                bottomSheetHeight = 512.dp,
                 currentSelectedTab = currentSelectedBottomSheetTab,
                 onTabItemClick = onTabItemClick
             )

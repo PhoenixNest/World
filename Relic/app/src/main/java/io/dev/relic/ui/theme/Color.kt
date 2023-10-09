@@ -22,3 +22,4 @@ val mainButtonColor: Color = mainThemeColor
 val mainButtonColorLight: Color = mainTextColor
 
 val dividerColor: Color = Color.White.copy(alpha = 0.1F)
+val dividerColorDark: Color = Color.Black.copy(alpha = 0.1F)

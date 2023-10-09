@@ -162,7 +162,7 @@ private fun HomeFoodRecipesCardList(
 ) {
     LazyRow(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .wrapContentHeight(),
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(

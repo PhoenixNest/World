@@ -88,7 +88,7 @@ class MainScreenState(
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
-    val topLevelDestinations: List<MainScreenTopLevelDestination> = values().asList()
+    val topLevelDestinations: List<MainScreenTopLevelDestination> = MainScreenTopLevelDestination.entries
 
     val shouldShowBottomBar: Boolean
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact

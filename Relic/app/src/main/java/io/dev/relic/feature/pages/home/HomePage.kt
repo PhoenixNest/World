@@ -1,12 +1,10 @@
 package io.dev.relic.feature.pages.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,8 +34,6 @@ fun HomePageRoute(
     val homeWeatherState: HomeWeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
     val homeFoodRecipesState: HomeFoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
 
-    val lazyListState: LazyListState = rememberLazyListState()
-
     LaunchedEffect(mainState) {
         when (mainState) {
             is MainState.Init,
@@ -59,7 +55,6 @@ fun HomePageRoute(
     }
 
     HomePage(
-        lazyListState = lazyListState,
         weatherDataState = homeWeatherState,
         foodRecipesState = homeFoodRecipesState,
         currentSelectedFoodRecipesTab = homeViewModel.currentSelectedFoodRecipesTab,
@@ -85,7 +80,6 @@ fun HomePageRoute(
 
 @Composable
 private fun HomePage(
-    lazyListState: LazyListState,
     weatherDataState: HomeWeatherDataState,
     foodRecipesState: HomeFoodRecipesDataState,
     currentSelectedFoodRecipesTab: Int,
@@ -98,33 +92,26 @@ private fun HomePage(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
     ) {
-        LazyColumn(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            state = lazyListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
-                HomeTopBar(onOpenDrawer = {})
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-            item {
-                HomeWeatherCard(
-                    weatherDataState = weatherDataState,
-                    onRetryClick = onWeatherRetry
-                )
-                CommonItemDivider()
-            }
-            item {
-                HomeFoodRecipesPanel(
-                    currentSelectedTab = currentSelectedFoodRecipesTab,
-                    foodRecipesState = foodRecipesState,
-                    onRetryClick = onFoodRecipesRetry,
-                    onFetchMore = onFetchMoreFoodRecipesData,
-                    onTabItemClick = onSelectedFoodRecipesTabItem
-                )
-                CommonItemDivider()
-            }
+            HomeTopBar(onOpenDrawer = {})
+            Spacer(modifier = Modifier.height(32.dp))
+            HomeWeatherCard(
+                weatherDataState = weatherDataState,
+                onRetryClick = onWeatherRetry
+            )
+            CommonItemDivider()
+            HomeFoodRecipesPanel(
+                currentSelectedTab = currentSelectedFoodRecipesTab,
+                foodRecipesState = foodRecipesState,
+                onRetryClick = onFoodRecipesRetry,
+                onFetchMore = onFetchMoreFoodRecipesData,
+                onTabItemClick = onSelectedFoodRecipesTabItem
+            )
+            CommonItemDivider()
         }
     }
 }
@@ -133,7 +120,6 @@ private fun HomePage(
 @Preview(showBackground = true)
 private fun HomePagePreview() {
     HomePage(
-        lazyListState = rememberLazyListState(),
         weatherDataState = HomeWeatherDataState.Init,
         foodRecipesState = HomeFoodRecipesDataState.Init,
         currentSelectedFoodRecipesTab = 0,

@@ -6,15 +6,38 @@ import io.dev.relic.ui.theme.mainThemeColor
 
 object SystemUiControllerExt {
 
-    fun SystemUiController.enableImmersiveMode() {
+    fun SystemUiController.enableImmersiveMode(
+        statusBarColor: Color = Color.Transparent,
+        navigationBarColor: Color = mainThemeColor,
+        darkIcons: Boolean = false
+    ) {
         setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = false
+            color = statusBarColor,
+            darkIcons = darkIcons
         )
         setNavigationBarColor(
-            color = mainThemeColor,
-            darkIcons = false
+            color = navigationBarColor,
+            darkIcons = darkIcons
         )
     }
 
+    fun SystemUiController.updateStatusBarColor(
+        statusBarColor: Color = Color.Transparent,
+        darkIcons: Boolean = false
+    ) {
+        setStatusBarColor(
+            color = statusBarColor,
+            darkIcons = darkIcons
+        )
+    }
+
+    fun SystemUiController.updateNavigationBarColor(
+        navigationBarColor: Color = mainThemeColor,
+        darkIcons: Boolean = false
+    ) {
+        setNavigationBarColor(
+            color = navigationBarColor,
+            darkIcons = darkIcons
+        )
+    }
 }
