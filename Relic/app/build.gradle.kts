@@ -126,15 +126,15 @@ dependencies {
     implementation(libs.androidx.recyclerview)
 
     // Legacy-Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
     // Optional - Feature module Support
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.2")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.4")
     // Optional - Jetpack Compose Integration
-    implementation("androidx.navigation:navigation-compose:2.7.2")
+    implementation("androidx.navigation:navigation-compose:2.7.4")
 
     // Compose Ui
-    val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.08.00")
+    val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.10.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
     // Material Design
@@ -289,7 +289,7 @@ dependencies {
     implementation(libs.amap.search)
 
     // TomTom
-    implementation(libs.tomtom.map.display){
+    implementation(libs.tomtom.map.display) {
         exclude(group = "androidx.compose", module = "androidx")
     }
 }

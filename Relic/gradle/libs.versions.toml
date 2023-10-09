@@ -2,9 +2,9 @@
 
 [versions]
 accompanist = "0.31.2-alpha"
-activityCompose = "1.7.2"
-androidGradlePlugin = "8.1.1"
-androidxComposeBom = "2023.08.00"
+activityCompose = "1.8.0"
+androidGradlePlugin = "8.1.2"
+androidxComposeBom = "2023.10.00"
 amapVersion = "latest.integration"
 appcompat = "1.6.1"
 camera2 = "1.2.3"
