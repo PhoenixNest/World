@@ -4,8 +4,10 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
@@ -30,6 +32,109 @@ import io.dev.relic.R
 import io.dev.relic.global.RelicConstants
 import io.dev.relic.ui.theme.RelicFontFamily
 import io.dev.relic.ui.theme.mainTextColor
+
+/* ======================== Horizontal ======================== */
+
+@Composable
+fun CommonHorizontalIconTextButton(
+    @DrawableRes iconResId: Int,
+    @StringRes labelResId: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
+    isEnable: Boolean = true,
+    backgroundColor: Color = Color.Transparent,
+    textColor: Color = mainTextColor,
+    iconColor: Color = textColor,
+    shape: Shape = RoundedCornerShape(16.dp)
+) {
+    TextButton(
+        onClick = onClick,
+        modifier = containerModifier.wrapContentSize(),
+        enabled = isEnable,
+        shape = shape,
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = backgroundColor
+        )
+    ) {
+        Row(
+            modifier = modifier.wrapContentSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = iconResId),
+                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                tint = iconColor
+            )
+            Spacer(modifier = modifier.width(6.dp))
+            Text(
+                text = stringResource(id = labelResId),
+                style = TextStyle(
+                    color = textColor,
+                    fontSize = 12.sp,
+                    fontFamily = RelicFontFamily.ubuntu
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun CommonHorizontalIconTextButton(
+    icon: ImageVector,
+    @StringRes labelResId: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    containerModifier: Modifier = Modifier,
+    isEnable: Boolean = true,
+    backgroundColor: Color = Color.Transparent,
+    textColor: Color = mainTextColor,
+    iconColor: Color = mainTextColor
+) {
+    TextButton(
+        onClick = onClick,
+        modifier = containerModifier.wrapContentSize(),
+        enabled = isEnable,
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = backgroundColor,
+            contentColor = Color.LightGray
+        )
+    ) {
+        Row(
+            modifier = modifier.wrapContentSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                tint = iconColor
+            )
+            Spacer(modifier = modifier.width(6.dp))
+            Text(
+                text = stringResource(id = labelResId),
+                style = TextStyle(
+                    color = textColor,
+                    fontSize = 12.sp,
+                    fontFamily = RelicFontFamily.ubuntu
+                )
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+private fun CommonHorizontalIconTextButtonPreview() {
+    CommonHorizontalIconTextButton(
+        icon = Icons.Default.Check,
+        labelResId = R.string.app_name,
+        onClick = {}
+    )
+}
+
+/* ======================== Vertical ======================== */
 
 @Composable
 fun CommonVerticalIconTextButton(
