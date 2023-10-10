@@ -232,8 +232,8 @@ private fun HomeFoodRecipesTabBar(
             }
         }
         Card(
-            modifier = Modifier.padding(horizontal = 8.dp),
-            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(8.dp),
             backgroundColor = mainThemeColorAccent
         ) {
             Text(
@@ -245,7 +245,8 @@ private fun HomeFoodRecipesTabBar(
                 style = TextStyle(
                     color = mainTextColor,
                     fontFamily = RelicFontFamily.ubuntu,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
             )
         }
@@ -293,15 +294,19 @@ private fun HomeFoodRecipesCardItem(
         backgroundColor = mainThemeColor
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            CommonAsyncImage(data.image)
+            CommonAsyncImage(
+                url = data.image,
+                imageWidth = 180.dp,
+                imageHeight = 180.dp
+            )
             Column(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(12.dp)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .background(
                         color = mainBackgroundColorLight,
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
@@ -309,7 +314,7 @@ private fun HomeFoodRecipesCardItem(
                 Text(
                     text = data.title ?: "",
                     modifier = Modifier
-                        .padding(8.dp)
+                        .padding(vertical = 8.dp)
                         .fillMaxWidth()
                         .basicMarquee(),
                     style = TextStyle(
