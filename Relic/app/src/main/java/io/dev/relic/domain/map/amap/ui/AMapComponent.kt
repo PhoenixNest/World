@@ -22,6 +22,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.MapView
 import com.amap.api.maps.model.MyLocationStyle
+import io.dev.relic.domain.map.amap.AMapConfig
 
 /**
  * The Compose component of [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/).
@@ -37,8 +38,8 @@ import com.amap.api.maps.model.MyLocationStyle
 @Composable
 fun AMapComponent(
     modifier: Modifier = Modifier,
-    aMapOptionsFactory: () -> AMapOptions = { AMapOptions() },
-    locationStyleFactory: () -> MyLocationStyle = { MyLocationStyle() }
+    aMapOptionsFactory: () -> AMapOptions = { AMapConfig.OptionsConfig.defaultConfig() },
+    locationStyleFactory: () -> MyLocationStyle = { AMapConfig.MapStyle.defaultStyle() }
 ) {
     if (LocalInspectionMode.current) {
         return

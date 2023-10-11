@@ -27,17 +27,18 @@ object AMapConfig {
      *
      * @see MyLocationStyle
      * */
-    object MapConfig {
+    object MapStyle {
 
         private const val TAG = "${AMapConfig.TAG}_MapConfig"
 
-        fun defaultConfig(): MyLocationStyle {
+        fun defaultStyle(): MyLocationStyle {
             val isShowMyLocation: Boolean = readSyncData(KEY_IS_SHOW_MY_LOCATION, true)
             val locationType: Int = readSyncData(KEY_MAP_LOCATION_TYPE, MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
 
             StringBuilder().apply {
-                append("是否显示定位小蓝点: $isShowMyLocation, ")
-                append("我的位置展示模式: $locationType")
+                append("[MyLocationStyle] 是否显示定位小蓝点: $isShowMyLocation")
+                append("\n")
+                append("[MyLocationStyle] 我的位置展示模式: $locationType")
             }.run {
                 LogUtil.debug(TAG, this.toString())
             }
@@ -68,13 +69,19 @@ object AMapConfig {
             val isEnableZoomGesture: Boolean = readSyncData(KEY_IS_ENABLE_ZOOM_GESTURE, true)
 
             StringBuilder().apply {
-                append("是否开启指南针: $isEnableCompress, ")
-                append("是否开启手势旋转: $isEnableRotateGesture, ")
-                append("是否展示比例尺: $isEnableScaleControl, ")
-                append("是否开启手势滑动: $isEnableScrollGesture, ")
-                append("是否开启手势倾斜: $isEnableTiltGesture, ")
-                append("是否允许缩放: $isEnableZoomControl, ")
-                append("是否开启手势缩放: $isEnableZoomGesture")
+                append("[AMapOptions] 是否开启指南针: $isEnableCompress")
+                append("\n")
+                append("[AMapOptions] 是否开启手势旋转: $isEnableRotateGesture")
+                append("\n")
+                append("[AMapOptions] 是否展示比例尺: $isEnableScaleControl")
+                append("\n")
+                append("[AMapOptions] 是否开启手势滑动: $isEnableScrollGesture")
+                append("\n")
+                append("[AMapOptions] 是否开启手势倾斜: $isEnableTiltGesture")
+                append("\n")
+                append("[AMapOptions] 是否允许缩放: $isEnableZoomControl")
+                append("\n")
+                append("[AMapOptions] 是否开启手势缩放: $isEnableZoomGesture")
             }.run {
                 LogUtil.debug(TAG, this.toString())
             }

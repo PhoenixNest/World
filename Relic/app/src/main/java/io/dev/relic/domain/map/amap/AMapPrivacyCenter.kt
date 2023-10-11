@@ -23,8 +23,8 @@ object AMapPrivacyCenter {
     fun verifyAMapPrivacyAgreement(context: Context) {
         val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
         val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
-        LogUtil.debug(TAG, "[Verifier] isShowUserAgreement: $isShowUserAgreement")
-        LogUtil.debug(TAG, "[Verifier] isAgreeUserPrivacy: $isAgreeUserPrivacy")
+        LogUtil.debug(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
+        LogUtil.debug(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
         updatePrivacyShow(
             context = context,
