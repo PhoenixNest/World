@@ -29,7 +29,7 @@ object AMapConfig {
      * */
     object MapStyle {
 
-        private const val TAG = "${AMapConfig.TAG}_MapConfig"
+        private const val TAG = "${AMapConfig.TAG}_MyLocationStyle"
 
         fun defaultStyle(): MyLocationStyle {
             val isShowMyLocation: Boolean = readSyncData(KEY_IS_SHOW_MY_LOCATION, true)
