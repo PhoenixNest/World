@@ -1,12 +1,8 @@
-package io.dev.relic.domain.map.amap
+package io.dev.relic.domain.location.map.amap
 
 import android.content.Context
 import com.amap.api.maps.MapsInitializer
 import com.amap.api.services.core.ServiceSettings
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
-import io.dev.relic.global.utils.LogUtil
 
 object AMapPrivacyCenter {
 
@@ -20,12 +16,11 @@ object AMapPrivacyCenter {
      * @see updatePrivacyShow
      * @see updatePrivacyAgree
      * */
-    fun verifyAMapPrivacyAgreement(context: Context) {
-        val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
-        val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
-        LogUtil.debug(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
-        LogUtil.debug(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
-
+    fun verifyAMapPrivacyAgreement(
+        context: Context,
+        isShowUserAgreement: Boolean,
+        isAgreeUserPrivacy: Boolean
+    ) {
         updatePrivacyShow(
             context = context,
             isContains = true,

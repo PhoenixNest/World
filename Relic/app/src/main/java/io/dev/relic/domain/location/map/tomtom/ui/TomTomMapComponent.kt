@@ -1,4 +1,4 @@
-package io.dev.relic.domain.map.tomtom.ui
+package io.dev.relic.domain.location.map.tomtom.ui
 
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -23,7 +23,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.ui.MapView
-import io.dev.relic.domain.map.tomtom.TomTomMapConfig
+import io.dev.relic.domain.location.map.tomtom.TomTomMapConfig
 
 /**
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)

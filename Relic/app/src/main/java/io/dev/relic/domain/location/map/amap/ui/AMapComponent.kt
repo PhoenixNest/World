@@ -1,4 +1,4 @@
-package io.dev.relic.domain.map.amap.ui
+package io.dev.relic.domain.location.map.amap.ui
 
 import android.content.ComponentCallbacks
 import android.content.Context
@@ -22,7 +22,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.MapView
 import com.amap.api.maps.model.MyLocationStyle
-import io.dev.relic.domain.map.amap.AMapConfig
+import io.dev.relic.domain.location.map.amap.AMapConfig
 
 /**
  * The Compose component of [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/).

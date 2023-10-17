@@ -1,4 +1,4 @@
-package io.dev.relic.domain.map.amap
+package io.dev.relic.domain.location.map.amap
 
 import android.content.Context
 import com.amap.api.services.poisearch.PoiSearchV2

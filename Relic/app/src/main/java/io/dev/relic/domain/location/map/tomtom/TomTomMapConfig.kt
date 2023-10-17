@@ -1,4 +1,4 @@
-package io.dev.relic.domain.map.tomtom
+package io.dev.relic.domain.location.map.tomtom
 
 import io.dev.relic.R
 import io.dev.relic.global.RelicResCenter

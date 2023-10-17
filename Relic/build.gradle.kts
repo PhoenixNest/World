@@ -1,11 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    repositories {
-        // Lottie
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
-    }
-
     dependencies {
 
         // To add Safe Args to your project, include the following classpath in your top level build.gradle file:
@@ -25,11 +20,13 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("com.android.library") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
-    id("com.google.dagger.hilt.android") version "2.46.1" apply false
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+
+    // Hilt
+    alias(libs.plugins.hiltAndroid) apply false
 
     // [Migrate from kapt to KSP](https://developer.android.com/build/migrate-to-ksp#groovy)
-    id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
+    alias(libs.plugins.kotlinSymbolProcessingAndroid) apply false
 }

@@ -13,6 +13,9 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://repositories.tomtom.com/artifactory/maven") }
+
+        // Lottie
+        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
 }
 rootProject.name = "Relic"

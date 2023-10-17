@@ -11,11 +11,11 @@ private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProper
 private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
 
     // KSP
-    id("com.google.devtools.ksp")
+    alias(libs.plugins.kotlinSymbolProcessingAndroid)
 
     // Parcelize Models
     id("kotlin-parcelize")
@@ -24,7 +24,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 
     // Hilt
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.hiltAndroid)
 
     // Firebase
     // Add the Google services Gradle plugin
@@ -102,7 +102,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     packaging {
