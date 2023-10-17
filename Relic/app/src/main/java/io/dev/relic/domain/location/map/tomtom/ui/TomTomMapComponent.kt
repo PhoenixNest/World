@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -21,7 +22,9 @@ import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
+import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
 import io.dev.relic.domain.location.map.tomtom.TomTomMapConfig
 
@@ -55,6 +58,7 @@ fun TomTomMapComponent(
     )
 
     TomTomMapLifecycleBinder(mapView)
+    // TomTomMapLocationProviderBinder(mapView)
 }
 
 /* ======================== Util ======================== */
@@ -89,6 +93,18 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
             // Avoid OOM
             mapView.onDestroy()
             mapView.removeAllViews()
+        }
+    }
+}
+
+@Composable
+private fun TomTomMapLocationProviderBinder(mapView: MapView) {
+    val context: Context = LocalContext.current
+
+    SideEffect {
+        val locationProvider: AndroidLocationProvider = TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider(context)
+        mapView.getMapAsync { tomTomMap: TomTomMap ->
+            tomTomMap.setLocationProvider(locationProvider)
         }
     }
 }

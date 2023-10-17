@@ -292,4 +292,5 @@ dependencies {
     implementation(libs.tomtom.map.display) {
         exclude(group = "androidx.compose", module = "androidx")
     }
+    implementation(libs.tomtom.map.provider.android)
 }
