@@ -88,7 +88,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         }
     }
 
-    DisposableEffect(key1 = mapView) {
+    DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
             mapView.onDestroy()

@@ -22,6 +22,11 @@ object AMapPreferenceKeys {
         const val KEY_MAP_LOCATION_TYPE = "key_map_location_type"
 
         /**
+         * 定位间隔
+         * */
+        const val KEY_MAP_FETCH_INTERVAL = "key_map_fetch_interval"
+
+        /**
          * 设置是否显示定位小蓝点。
          *
          * - true 显示

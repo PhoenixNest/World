@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,17 +20,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.MapView
 import com.amap.api.maps.model.MyLocationStyle
 import io.dev.relic.domain.location.map.amap.AMapConfig
+import io.dev.relic.global.utils.LogUtil
+
+private const val TAG = "AMapComponent"
 
 /**
  * The Compose component of [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/).
  *
  * @param modifier                  The container modifier of AMapView
- * @param aMapOptionsFactory        Builder of the AMapOptions
- * @param locationStyleFactory      Builder of the MyLocationStyle
+ * @param aMapOptions        Builder of the AMapOptions
+ * @param locationStyle      Builder of the MyLocationStyle
  *
  * @see MapView
  * @see AMapOptions
@@ -38,8 +43,8 @@ import io.dev.relic.domain.location.map.amap.AMapConfig
 @Composable
 fun AMapComponent(
     modifier: Modifier = Modifier,
-    aMapOptionsFactory: () -> AMapOptions = { AMapConfig.OptionsConfig.defaultConfig() },
-    locationStyleFactory: () -> MyLocationStyle = { AMapConfig.MapStyle.defaultStyle() }
+    aMapOptions: AMapOptions = AMapConfig.OptionsConfig.options,
+    locationStyle: MyLocationStyle = AMapConfig.MapStyle.myLocationStyle
 ) {
     if (LocalInspectionMode.current) {
         return
@@ -47,23 +52,21 @@ fun AMapComponent(
 
     val context: Context = LocalContext.current
 
-    val aMapOptions: AMapOptions = aMapOptionsFactory.invoke()
-    val mLocationStyle: MyLocationStyle = locationStyleFactory.invoke()
-    val mapView: MapView = remember { MapView(context, aMapOptions) }
+    val mAMapOptions: AMapOptions = aMapOptions
+    val mLocationStyle: MyLocationStyle = locationStyle
+    val mapView: MapView = remember {
+        MapView(context, mAMapOptions).apply {
+            AMapConfig.ViewConfig.setup(map, mLocationStyle)
+        }
+    }
 
     AndroidView(
-        factory = {
-            mapView.apply {
-                map.apply {
-                    isMyLocationEnabled = true
-                    myLocationStyle = mLocationStyle
-                }
-            }
-        },
+        factory = { mapView },
         modifier = modifier.fillMaxSize()
     )
 
     AMapLifecycleBinder(mapView = mapView)
+    AMapListenerBinder(mapView = mapView)
 }
 
 @Composable
@@ -91,11 +94,27 @@ private fun AMapLifecycleBinder(mapView: MapView) {
         }
     }
 
-    DisposableEffect(key1 = mapView) {
+    DisposableEffect(mapView) {
         onDispose {
-            // Avoid OOM
+            LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_DESTROY")
             mapView.onDestroy()
             mapView.removeAllViews()
+        }
+    }
+}
+
+@Composable
+private fun AMapListenerBinder(mapView: MapView) {
+    val aMap: AMap = mapView.map
+    val locationChangeListener: AMap.OnMyLocationChangeListener = AMapConfig.ViewConfig.locationChangeListener()
+
+    LaunchedEffect(mapView) {
+        aMap.addOnMyLocationChangeListener(locationChangeListener)
+    }
+
+    DisposableEffect(mapView) {
+        onDispose {
+            aMap.removeOnMyLocationChangeListener(locationChangeListener)
         }
     }
 }
@@ -109,15 +128,18 @@ private fun MapView.lifecycleObserver(
         when (event) {
             Lifecycle.Event.ON_CREATE -> {
                 if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
+                    LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_CREATE")
                     this.onCreate(Bundle())
                 }
             }
 
             Lifecycle.Event.ON_RESUME -> {
+                LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_RESUME")
                 this.onResume()
             }
 
             Lifecycle.Event.ON_PAUSE -> {
+                LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_PAUSE")
                 this.onPause()
             }
 
