@@ -20,11 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.R
-import io.dev.relic.core.data.network.monitor.NetworkMonitor
-import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
+import io.module.core.network.monitor.NetworkMonitor
+import io.module.core.network.monitor.NetworkStatus
 
 @Composable
 fun MainScreen(

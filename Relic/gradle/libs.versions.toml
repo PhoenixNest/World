@@ -69,6 +69,7 @@ workRuntimeKtx = "2.8.1"
 workTesting = "2.8.1"
 kotlin = "1.9.10"
 ksp = "1.9.10-1.0.13"
+org-jetbrains-kotlin-jvm = "1.9.10"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -154,3 +155,4 @@ androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugi
 hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSymbolProcessingAndroid = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }

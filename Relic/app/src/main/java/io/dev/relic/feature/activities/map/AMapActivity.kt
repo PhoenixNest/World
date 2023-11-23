@@ -5,14 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.databinding.ActivityAmapBinding
 import io.dev.relic.domain.location.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.LogUtil
+import io.module.core.datastore.RelicDatastoreCenter.readSyncData
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 
 /**
  * [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/)

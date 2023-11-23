@@ -15,14 +15,13 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import io.dev.relic.core.data.network.monitor.NetworkMonitor
-import io.dev.relic.core.data.network.monitor.NetworkStatus
 import io.dev.relic.feature.pages.explore.navigateToExplorePage
 import io.dev.relic.feature.pages.hive.navigateToHivePage
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.route.RelicRoute
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.values
+import io.module.core.network.monitor.NetworkMonitor
+import io.module.core.network.monitor.NetworkStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -122,9 +121,11 @@ class MainScreenState(
             MainScreenTopLevelDestination.Home -> {
                 navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
             }
+
             MainScreenTopLevelDestination.Explore -> {
                 navHostController.navigateToExplorePage(navOptions = topLevelNavOptions)
             }
+
             MainScreenTopLevelDestination.Hive -> {
                 navHostController.navigateToHivePage(navOptions = topLevelNavOptions)
             }

@@ -29,4 +29,5 @@ plugins {
 
     // [Migrate from kapt to KSP](https://developer.android.com/build/migrate-to-ksp#groovy)
     alias(libs.plugins.kotlinSymbolProcessingAndroid) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
 }

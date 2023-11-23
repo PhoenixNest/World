@@ -15,9 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.domain.location.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -26,6 +23,9 @@ import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
 import io.dev.relic.ui.theme.RelicAppTheme
+import io.module.core.datastore.RelicDatastoreCenter.readSyncData
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : AbsBaseActivity() {

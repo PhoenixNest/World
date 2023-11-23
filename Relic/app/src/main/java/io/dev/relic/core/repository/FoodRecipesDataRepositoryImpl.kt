@@ -1,12 +1,12 @@
 package io.dev.relic.core.repository
 
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
-import io.dev.relic.core.data.network.api.IFoodRecipesApi
-import io.dev.relic.core.data.network.api.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
-import io.dev.relic.core.data.network.api.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
-import io.dev.relic.core.data.network.mappers.FoodRecipesDataMapper.toComplexSearchEntity
-import io.dev.relic.domain.model.NetworkResult
+import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
+import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
+import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
+import io.data.model.NetworkResult
 import io.dev.relic.domain.repository.IFoodRecipesDataRepository
+import io.module.core.database.repository.RelicDatabaseRepository
+import io.module.core.network.api.IFoodRecipesApi
 import javax.inject.Inject
 
 class FoodRecipesDataRepositoryImpl @Inject constructor(

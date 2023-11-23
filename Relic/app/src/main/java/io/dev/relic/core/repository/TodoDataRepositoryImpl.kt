@@ -1,8 +1,8 @@
 package io.dev.relic.core.repository
 
-import io.dev.relic.core.data.database.entity.TodoEntity
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
+import io.data.entity.TodoEntity
 import io.dev.relic.domain.repository.ITodoDataRepository
+import io.module.core.database.repository.RelicDatabaseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

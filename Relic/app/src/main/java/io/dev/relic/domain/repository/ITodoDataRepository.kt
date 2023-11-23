@@ -1,6 +1,6 @@
 package io.dev.relic.domain.repository
 
-import io.dev.relic.core.data.database.entity.TodoEntity
+import io.data.entity.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
 /**

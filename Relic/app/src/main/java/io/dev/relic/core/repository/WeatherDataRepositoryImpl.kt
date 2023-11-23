@@ -1,11 +1,11 @@
 package io.dev.relic.core.repository
 
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
-import io.dev.relic.core.data.network.api.IWeatherApi
-import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
-import io.dev.relic.core.data.network.mappers.WeatherDataMapper.toWeatherEntity
-import io.dev.relic.domain.model.NetworkResult
+import io.data.dto.weather.WeatherForecastDTO
+import io.data.mappers.WeatherDataMapper.toWeatherEntity
+import io.data.model.NetworkResult
 import io.dev.relic.domain.repository.IWeatherDataRepository
+import io.module.core.database.repository.RelicDatabaseRepository
+import io.module.core.network.api.IWeatherApi
 import javax.inject.Inject
 
 /**

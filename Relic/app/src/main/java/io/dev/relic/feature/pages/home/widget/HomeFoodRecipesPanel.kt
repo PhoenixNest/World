@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
+import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.R
-import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.feature.pages.home.util.HomeFoodRecipesSimpleCategories
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
 import io.dev.relic.global.widget.CommonAsyncImage

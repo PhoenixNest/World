@@ -3,20 +3,19 @@ package io.dev.relic.domain.location.map.amap
 import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.model.MyLocationStyle
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.writeSyncData
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_COMPRESS
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ROTATE_GESTURE
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_SCALE_CONTROL_ENABLE
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_SCROLL_GESTURE
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_TILT_GESTURE
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ZOOM_CONTROL
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ZOOM_GESTURE
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_IS_SHOW_MY_LOCATION
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_MAP_FETCH_INTERVAL
-import io.dev.relic.core.data.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_MAP_LOCATION_TYPE
 import io.dev.relic.global.utils.LogUtil
+import io.module.core.datastore.RelicDatastoreCenter.readSyncData
+import io.module.core.datastore.RelicDatastoreCenter.writeSyncData
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_COMPRESS
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ROTATE_GESTURE
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_SCALE_CONTROL_ENABLE
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_SCROLL_GESTURE
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_TILT_GESTURE
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ZOOM_CONTROL
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.AMapOptions.KEY_IS_ENABLE_ZOOM_GESTURE
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_IS_SHOW_MY_LOCATION
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_MAP_FETCH_INTERVAL
+import io.module.core.datastore.preference_keys.AMapPreferenceKeys.MyLocationStyle.KEY_MAP_LOCATION_TYPE
 
 /**
  * @see AMapPreferenceKeys

@@ -1,6 +1,6 @@
 package io.dev.relic.feature.pages.home.viewmodel.state
 
-import io.dev.relic.domain.model.weather.WeatherInfoModel
+import io.data.model.weather.WeatherInfoModel
 
 sealed class HomeWeatherDataState {
 

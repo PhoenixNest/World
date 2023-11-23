@@ -1,7 +1,7 @@
 package io.dev.relic.domain.repository
 
-import io.dev.relic.core.data.network.api.dto.weather.WeatherForecastDTO
-import io.dev.relic.domain.model.NetworkResult
+import io.data.dto.weather.WeatherForecastDTO
+import io.data.model.NetworkResult
 
 /**
  * @see io.dev.relic.core.repository.WeatherDataRepositoryImpl

@@ -6,13 +6,12 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.writeSyncData
-import io.dev.relic.core.data.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
 import io.dev.relic.global.utils.LogUtil
+import io.module.core.datastore.RelicDatastoreCenter.readSyncData
+import io.module.core.datastore.RelicDatastoreCenter.writeSyncData
+import io.module.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
 
 /**
  * [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)

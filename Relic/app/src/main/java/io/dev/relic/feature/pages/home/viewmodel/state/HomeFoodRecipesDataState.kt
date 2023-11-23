@@ -1,6 +1,6 @@
 package io.dev.relic.feature.pages.home.viewmodel.state
 
-import io.dev.relic.domain.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 
 sealed class HomeFoodRecipesDataState {
 

@@ -1,7 +1,7 @@
 package io.dev.relic.domain.use_case.food_receipes.action.complex_search
 
-import io.dev.relic.core.data.database.entity.FoodRecipesComplexSearchEntity
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
+import io.data.entity.FoodRecipesComplexSearchEntity
+import io.module.core.database.repository.RelicDatabaseRepository
 import javax.inject.Inject
 
 class CacheComplexSearchData @Inject constructor(

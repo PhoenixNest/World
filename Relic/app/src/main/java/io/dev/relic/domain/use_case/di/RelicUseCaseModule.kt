@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.dev.relic.core.data.database.repository.RelicDatabaseRepository
 import io.dev.relic.domain.location.ILocationTracker
 import io.dev.relic.domain.repository.IFoodRecipesDataRepository
 import io.dev.relic.domain.repository.ITodoDataRepository
@@ -24,6 +23,7 @@ import io.dev.relic.domain.use_case.weather.WeatherUseCase
 import io.dev.relic.domain.use_case.weather.action.CacheWeatherData
 import io.dev.relic.domain.use_case.weather.action.FetchWeatherData
 import io.dev.relic.domain.use_case.weather.action.ReadCacheWeatherData
+import io.module.core.database.repository.RelicDatabaseRepository
 import javax.inject.Singleton
 
 @Module

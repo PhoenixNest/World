@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
+import io.data.model.weather.WeatherDataModel
+import io.data.model.weather.WeatherType
 import io.dev.relic.R
-import io.dev.relic.domain.model.weather.WeatherDataModel
-import io.dev.relic.domain.model.weather.WeatherType
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
 import io.dev.relic.global.RelicConstants
 import io.dev.relic.global.widget.CommonRetryComponent

@@ -112,6 +112,14 @@ android {
 
 dependencies {
 
+    /* ======================== Module ======================== */
+
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:database"))
+    implementation(project(":core:datastore"))
+    implementation(project(":core:network"))
+
     /* ======================== Google Official Extension ======================== */
 
     implementation(libs.android.ktx)
@@ -201,16 +209,6 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.extensions)
 
-    // Datastore
-    implementation(libs.datastore)
-    implementation(libs.datastore.preferences)
-
-    // Room
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    androidTestImplementation(libs.room.testing)
-    ksp(libs.room.compiler)
-
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -244,9 +242,6 @@ dependencies {
     // Location Services
     implementation(libs.play.services.location)
 
-    // Gson
-    implementation(libs.gson)
-
     // Admob
     implementation(libs.play.services.ads)
 
@@ -262,21 +257,6 @@ dependencies {
     // LeakCanary
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation(libs.leakcanary.android)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit2.converter.moshi)
-
-    // Moshi
-    implementation(libs.moshi)
-    implementation(libs.moshi.adapters)
-    implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
-
-    // LoggingInterceptor - Interceptor for OkHttp3 with pretty logger
-    implementation(libs.prettyLoggingInterceptor) {
-        exclude(group = "org.json", module = "json")
-    }
 
     // Coil
     implementation(libs.coil.compose)

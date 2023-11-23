@@ -1,12 +1,12 @@
 package io.dev.relic.global
 
-import android.app.Application
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
 import io.dev.relic.core.sdk.RelicSdkManager
+import io.module.common.app.BaseApplication
 
 @HiltAndroidApp
-class RelicApplication : Application() {
+class RelicApplication : BaseApplication() {
 
     companion object {
 

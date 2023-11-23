@@ -9,13 +9,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.dev.relic.R
-import io.dev.relic.core.data.datastore.RelicDatastoreCenter.readSyncData
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.dev.relic.core.data.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.databinding.ActivityDebugBinding
 import io.dev.relic.domain.location.map.amap.AMapPrivacyCenter
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.utils.LogUtil
+import io.module.core.datastore.RelicDatastoreCenter.readSyncData
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 
 @AndroidEntryPoint
 class DebugActivity : AppCompatActivity() {

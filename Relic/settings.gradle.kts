@@ -20,3 +20,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Relic"
 include(":app")
+include(":core:common")
+include(":core:database")
+include(":core:datastore")
+include(":core:network")
+include(":core:data")
+include(":module_map")

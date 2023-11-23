@@ -1,9 +1,9 @@
 package io.dev.relic.domain.use_case.todo.action
 
-import io.dev.relic.core.data.database.entity.TodoEntity
-import io.dev.relic.core.data.database.util.InvalidTodoException
+import io.data.entity.TodoEntity
 import io.dev.relic.domain.repository.ITodoDataRepository
 import io.dev.relic.global.utils.LogUtil
+import io.module.core.database.util.InvalidTodoException
 
 class AddTodo(private val todoRepository: ITodoDataRepository) {
 
