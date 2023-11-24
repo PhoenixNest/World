@@ -22,8 +22,8 @@ import io.dev.relic.feature.pages.home.widget.HomeFoodRecipesPanel
 import io.dev.relic.feature.pages.home.widget.HomeTopBar
 import io.dev.relic.feature.pages.home.widget.HomeWeatherCard
 import io.dev.relic.feature.screens.main.MainState
-import io.dev.relic.global.widget.dialog.CommonItemDivider
-import io.dev.relic.ui.theme.mainThemeColor
+import io.ui.dialog.CommonItemDivider
+import io.ui.theme.mainThemeColor
 
 @Composable
 fun HomePageRoute(

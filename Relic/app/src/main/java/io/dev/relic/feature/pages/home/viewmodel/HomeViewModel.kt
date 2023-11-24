@@ -20,8 +20,8 @@ import io.dev.relic.domain.use_case.todo.TodoUseCase
 import io.dev.relic.domain.use_case.weather.WeatherUseCase
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
-import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.ext.ViewModelExt.setState
+import io.module.common.ext.ViewModelExt.setState
+import io.module.common.util.LogUtil
 import io.module.core.database.repository.RelicDatabaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

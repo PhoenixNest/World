@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 import io.module.core.network.monitor.NetworkMonitor
 import io.module.core.network.monitor.NetworkStatus
 import kotlinx.coroutines.flow.launchIn

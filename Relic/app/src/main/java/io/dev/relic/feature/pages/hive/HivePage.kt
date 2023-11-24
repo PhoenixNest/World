@@ -15,8 +15,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.R
 import io.dev.relic.feature.screens.main.MainState
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.ui.theme.mainTextColor
-import io.dev.relic.ui.theme.mainThemeColor
+import io.ui.theme.mainTextColor
+import io.ui.theme.mainThemeColor
 
 @Composable
 fun HivePageRoute(mainViewModel: MainViewModel) {

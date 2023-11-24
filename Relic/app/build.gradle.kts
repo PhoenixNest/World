@@ -6,9 +6,6 @@ private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS
 
 // Dev Key
 private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("ADMOB_DEV_KEY")
-private val aMapDevKay: String = gradleLocalProperties(rootDir).getProperty("AMAP_DEV_KEY")
-private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProperty("SPOONACULAR_DEV_KEY")
-private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -41,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId = "io.dev.relic"
-        minSdk = 26
+        minSdk = 24
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -50,9 +47,6 @@ android {
         buildConfigField("boolean", "NO_ADS", isNoAds)
 
         resValue("string", "admob_dev_key", admobDevKey)
-        resValue("string", "amap_dev_key", aMapDevKay)
-        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
-        resValue("string", "tomtom_dev_key", tomtomDevKey)
 
         vectorDrawables {
             useSupportLibrary = true
@@ -114,67 +108,18 @@ dependencies {
 
     /* ======================== Module ======================== */
 
+    // Core Module
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:database"))
     implementation(project(":core:datastore"))
     implementation(project(":core:network"))
+    implementation(project(":core:ui"))
+
+    // Map Module
+    implementation(project(":module_map"))
 
     /* ======================== Google Official Extension ======================== */
-
-    implementation(libs.android.ktx)
-    implementation(libs.appcompat)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-
-    // Legacy
-    implementation(libs.material)
-    implementation(libs.androidx.recyclerview)
-
-    // Legacy-Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
-    // Optional - Feature module Support
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.4")
-    // Optional - Jetpack Compose Integration
-    implementation("androidx.navigation:navigation-compose:2.7.4")
-
-    // Compose Ui
-    val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.10.00")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    // Material Design
-    implementation("androidx.compose.material:material")
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // Optional - Included automatically by material, only add when you need
-    // the icons but not the material library (e.g. when using Material3 or a
-    // custom design system based on Foundation)
-    implementation("androidx.compose.material:material-icons-core")
-    // Optional - Add full set of material icons
-    implementation("androidx.compose.material:material-icons-extended")
-    // Optional - Add window size utils
-    implementation("androidx.compose.material3:material3-window-size-class")
-    // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
-    // Optional - Integration with activities
-    implementation(libs.androidx.activity.compose)
-    // Optional - Integration with ViewModels
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    // Accompanist Components
-    implementation(libs.accompanist.adaptive)
-    implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.placeholder.material)
-    implementation(libs.accompanist.permissions)
-    implementation(libs.accompanist.systemuicontroller)
 
     // Firebase BOM
     val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.0.0")
@@ -185,62 +130,9 @@ dependencies {
     // Add the dependency for the Performance Monitoring library
     implementation("com.google.firebase:firebase-perf-ktx")
 
-    // CameraX core library using the camera2 implementation
-    implementation(libs.androidx.camera2)
-    // Optional - If you want to additionally use the CameraX Lifecycle library
-    implementation(libs.androidx.camera.lifecycle)
-    // Optional - If you want to additionally use the CameraX VideoCapture library
-    implementation(libs.androidx.camera.video)
-    // Optional - If you want to additionally use the CameraX View class
-    implementation(libs.androidx.camera.view)
-    // Optional - If you want to additionally add CameraX ML Kit Vision Integration
-    implementation(libs.androidx.camera.mlkit.vision)
-    // Optional - If you want to additionally use the CameraX Extensions library
-    implementation(libs.androidx.camera.extensions)
-
-    // Navigation
-    implementation(libs.navigation.compose)
-    implementation(libs.hilt.navigation.compose)
-
-    // Lifecycle
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.lifecycle.runtime.compose)
-    implementation(libs.lifecycle.extensions)
-
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    // WorkManager
-    implementation(libs.androidx.work.runtime)
-    // Kotlin + coroutines
-    implementation(libs.androidx.work.runtime.ktx)
-    // Optional - GCMNetworkManager support
-    implementation(libs.androidx.work.gcm)
-    // Optional - Test helpers
-    androidTestImplementation(libs.androidx.work.testing)
-    // Optional - Multiprocess support
-    implementation(libs.androidx.work.multiprocess)
-    // Optional - Integration with WorkManager
-    implementation(libs.hilt.work)
-    ksp(libs.androidx.hilt.compiler)
-
-    // Paging
-    implementation(libs.androidx.paging.runtime.ktx)
-    // alternatively - without Android dependencies for tests
-    testImplementation(libs.androidx.paging.common.ktx)
-    // Optional - Jetpack Compose integration
-    implementation(libs.androidx.paging.compose)
-
-    // Location Services
-    implementation(libs.play.services.location)
 
     // Admob
     implementation(libs.play.services.ads)
@@ -248,29 +140,9 @@ dependencies {
     // Google sign-in
     implementation(libs.play.services.auth)
 
-    // MLKit
-    // - [Object Detection](https://developers.google.cn/ml-kit/vision/object-detection/android?hl=en)
-    implementation(libs.mlkit.objectdetection)
-
     /* ======================== Third-party Extension ======================== */
 
     // LeakCanary
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation(libs.leakcanary.android)
-
-    // Coil
-    implementation(libs.coil.compose)
-
-    // Lottie
-    implementation(libs.lottie.compose)
-
-    // AMap
-    implementation(libs.amap.navi)
-    implementation(libs.amap.search)
-
-    // TomTom
-    implementation(libs.tomtom.map.display) {
-        exclude(group = "androidx.compose", module = "androidx")
-    }
-    implementation(libs.tomtom.map.provider.android)
 }

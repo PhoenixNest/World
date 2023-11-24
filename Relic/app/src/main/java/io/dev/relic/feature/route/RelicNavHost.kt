@@ -1,7 +1,5 @@
 package io.dev.relic.feature.route
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +13,7 @@ import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.dev.relic.global.utils.ext.SystemUiControllerExt.updateStatusBarColor
+import io.ui.ext.SystemUiControllerExt.updateStatusBarColor
 
 @Composable
 fun MainFeatureNavHost(

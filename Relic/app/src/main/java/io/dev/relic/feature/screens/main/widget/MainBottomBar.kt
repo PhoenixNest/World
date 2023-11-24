@@ -29,13 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.dev.relic.global.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.dev.relic.global.utils.LogUtil
 import io.dev.relic.global.utils.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
-import io.dev.relic.ui.theme.RelicFontFamily
-import io.dev.relic.ui.theme.mainTextColor
-import io.dev.relic.ui.theme.mainThemeColor
-import io.dev.relic.ui.theme.mainThemeColorAccent
+import io.module.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.module.common.util.LogUtil
+import io.ui.theme.RelicFontFamily
+import io.ui.theme.mainTextColor
+import io.ui.theme.mainThemeColor
+import io.ui.theme.mainThemeColorAccent
 
 @Composable
 fun MainBottomBar(

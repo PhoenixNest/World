@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.dev.relic.R
-import io.dev.relic.ui.theme.RelicFontFamily
-import io.dev.relic.ui.theme.mainBackgroundColor
-import io.dev.relic.ui.theme.mainBackgroundColorLight
-import io.dev.relic.ui.theme.mainTextColor
+import io.ui.theme.RelicFontFamily
+import io.ui.theme.mainBackgroundColor
+import io.ui.theme.mainBackgroundColorLight
+import io.ui.theme.mainTextColor
 
 @Composable
 fun ExploreBottomSheet(

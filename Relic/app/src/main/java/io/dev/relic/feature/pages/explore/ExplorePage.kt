@@ -14,12 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.dev.relic.domain.location.map.amap.ui.AMapComponent
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainState
-import io.dev.relic.ui.theme.mainThemeColor
+import io.module.map.amap.ui.AMapComponent
+import io.ui.theme.mainThemeColor
 
 @Composable
 fun ExplorePageRoute(

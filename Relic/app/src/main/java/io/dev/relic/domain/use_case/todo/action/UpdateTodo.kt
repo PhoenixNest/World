@@ -2,7 +2,7 @@ package io.dev.relic.domain.use_case.todo.action
 
 import io.data.entity.TodoEntity
 import io.dev.relic.domain.repository.ITodoDataRepository
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 
 class UpdateTodo(private val todoRepository: ITodoDataRepository) {
 

@@ -45,32 +45,67 @@ dependencies {
 
     /* ======================== Google Official Extension ======================== */
 
+    api(libs.android.ktx)
+    api(libs.appcompat)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
-    // Lifecycle
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.lifecycle.runtime.compose)
-    implementation(libs.lifecycle.extensions)
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // Legacy-Navigation
+    api("androidx.navigation:navigation-fragment-ktx:2.7.4")
+    api("androidx.navigation:navigation-ui-ktx:2.7.4")
+    // Optional - Feature module Support
+    api("androidx.navigation:navigation-dynamic-features-fragment:2.7.4")
+    // Optional - Jetpack Compose Integration
+    api("androidx.navigation:navigation-compose:2.7.4")
+
+    // Navigation
+    api(libs.navigation.compose)
+    api(libs.hilt.navigation.compose)
+
+    // Lifecycle
+    api(libs.lifecycle.runtime.ktx)
+    api(libs.lifecycle.livedata.ktx)
+    api(libs.lifecycle.viewmodel.ktx)
+    api(libs.lifecycle.runtime.compose)
+    api(libs.lifecycle.extensions)
+
     // WorkManager
-    implementation(libs.androidx.work.runtime)
+    api(libs.androidx.work.runtime)
     // Kotlin + coroutines
-    implementation(libs.androidx.work.runtime.ktx)
+    api(libs.androidx.work.runtime.ktx)
     // Optional - GCMNetworkManager support
-    implementation(libs.androidx.work.gcm)
+    api(libs.androidx.work.gcm)
     // Optional - Test helpers
-    androidTestImplementation(libs.androidx.work.testing)
+    androidTestApi(libs.androidx.work.testing)
     // Optional - Multiprocess support
-    implementation(libs.androidx.work.multiprocess)
+    api(libs.androidx.work.multiprocess)
     // Optional - Integration with WorkManager
-    implementation(libs.hilt.work)
+    api(libs.hilt.work)
     ksp(libs.androidx.hilt.compiler)
+
+    // Coroutines
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.coroutines.android)
+    testApi(libs.kotlinx.coroutines.test)
+
+    // Paging
+    api(libs.androidx.paging.runtime.ktx)
+    // alternatively - without Android dependencies for tests
+    testApi(libs.androidx.paging.common.ktx)
+    // Optional - Jetpack Compose integration
+    api(libs.androidx.paging.compose)
+
+    // Accompanist Components
+    api(libs.accompanist.adaptive)
+    api(libs.accompanist.navigation.animation)
+    api(libs.accompanist.navigation.material)
+    api(libs.accompanist.placeholder.material)
+    api(libs.accompanist.permissions)
+    api(libs.accompanist.systemuicontroller)
 }

@@ -13,6 +13,7 @@ cameraLifecycle = "1.2.3"
 cameraMlkitVision = "1.3.0-beta02"
 cameraVideo = "1.2.3"
 cameraView = "1.2.3"
+cardview = "1.0.0"
 coilCompose = "2.4.0"
 constraintlayout = "2.1.4"
 converterMoshi = "2.9.0"
@@ -88,6 +89,7 @@ androidx-camera-mlkit-vision = { module = "androidx.camera:camera-mlkit-vision",
 androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraVideo" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 androidx-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera2" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeCompose" }

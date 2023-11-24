@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dev.relic.core.sdk.ad.admob.splash.AdmobSplashAdHelper
 import io.dev.relic.global.RelicLifecycleObserver
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

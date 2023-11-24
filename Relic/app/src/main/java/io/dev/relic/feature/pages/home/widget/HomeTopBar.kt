@@ -23,11 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.dev.relic.R
-import io.dev.relic.global.RelicConstants
-import io.dev.relic.ui.theme.RelicFontFamily
-import io.dev.relic.ui.theme.mainButtonColorLight
-import io.dev.relic.ui.theme.mainTextColor
-import io.dev.relic.ui.theme.mainThemeColorAccent
+import io.module.common.RelicConstants
+import io.ui.theme.RelicFontFamily
+import io.ui.theme.mainButtonColorLight
+import io.ui.theme.mainTextColor
+import io.ui.theme.mainThemeColorAccent
 
 @Composable
 fun HomeTopBar(onOpenDrawer: () -> Unit) {

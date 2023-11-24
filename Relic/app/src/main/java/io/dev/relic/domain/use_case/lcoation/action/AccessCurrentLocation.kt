@@ -1,9 +1,9 @@
 package io.dev.relic.domain.use_case.lcoation.action
 
-import io.dev.relic.domain.location.ILocationListener
-import io.dev.relic.domain.location.ILocationTracker
 import io.dev.relic.domain.use_case.lcoation.TAG
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
+import io.module.map.ILocationListener
+import io.module.map.ILocationTracker
 import javax.inject.Inject
 
 class AccessCurrentLocation @Inject constructor(

@@ -2,8 +2,8 @@ package io.dev.relic.core.sdk.ad.core.provider
 
 import io.dev.relic.core.sdk.ad.core.AdConfig
 import io.dev.relic.core.sdk.ad.core.model.AdInfoWrapper
-import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.TimeUtil
+import io.module.common.util.LogUtil
+import io.module.common.util.TimeUtil
 import java.util.concurrent.TimeUnit
 
 abstract class AbsAdProvider : IAdProvider {

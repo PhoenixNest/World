@@ -11,8 +11,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.login.LoginScreen
-import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
-import io.dev.relic.ui.theme.RelicAppTheme
+import io.ui.ext.SystemUiControllerExt.enableImmersiveMode
+import io.ui.theme.RelicAppTheme
 
 class LoginActivity : AbsBaseActivity() {
 

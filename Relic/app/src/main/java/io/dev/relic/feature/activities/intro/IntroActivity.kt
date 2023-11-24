@@ -17,13 +17,13 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.intro.IntroScreen
-import io.dev.relic.global.utils.LogUtil
-import io.dev.relic.global.utils.ext.SystemUiControllerExt.enableImmersiveMode
-import io.dev.relic.ui.theme.RelicAppTheme
+import io.module.common.util.LogUtil
+import io.ui.theme.RelicAppTheme
 import io.module.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
 import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.ui.ext.SystemUiControllerExt.enableImmersiveMode
 
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {

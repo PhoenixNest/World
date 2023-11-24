@@ -26,7 +26,7 @@ import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
 import io.dev.relic.core.sdk.ad.core.model.AdInfoWrapper
 import io.dev.relic.core.sdk.ad.core.provider.AbsAdProvider
 import io.dev.relic.core.sdk.ad.core.provider.IAdListener
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 
 /**
  * Provide the core function of ad load and show.

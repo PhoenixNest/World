@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 import io.module.core.datastore.RelicDatastoreCenter.readSyncData
 import io.module.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.module.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START

@@ -6,13 +6,13 @@ import android.os.Bundle
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
 import io.dev.relic.databinding.ActivityAmapBinding
-import io.dev.relic.domain.location.map.amap.AMapPrivacyCenter
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 import io.module.core.datastore.RelicDatastoreCenter.readSyncData
 import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.module.map.amap.AMapPrivacyCenter
 
 /**
  * [Ali-Map](https://lbs.amap.com/api/android-sdk/summary/)

@@ -11,7 +11,7 @@ import com.amap.api.services.core.PoiItemV2
 import com.amap.api.services.poisearch.PoiResultV2
 import com.amap.api.services.poisearch.PoiSearchV2.OnPoiSearchListener
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.relic.domain.location.map.amap.AMapPoiCenter
+import io.module.map.amap.AMapPoiCenter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

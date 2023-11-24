@@ -6,7 +6,7 @@ import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdConfig
 import io.dev.relic.core.sdk.ad.admob.utils.AdmobAdUnitId
 import io.dev.relic.core.sdk.ad.core.AdErrorCode
 import io.dev.relic.core.sdk.ad.core.provider.IAdListener
-import io.dev.relic.global.utils.LogUtil
+import io.module.common.util.LogUtil
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.coroutines.resume
