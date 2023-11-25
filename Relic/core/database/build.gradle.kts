@@ -13,7 +13,7 @@ plugins {
 }
 
 android {
-    namespace = "io.module.database"
+    namespace = "io.core.database"
     compileSdk = 34
 
     defaultConfig {
@@ -21,6 +21,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // Specify the schemas saved location of Room database.
+        ksp {
+            arg("room.schemaLocation", "${projectDir}/room_database_schemas")
+        }
     }
 
     buildTypes {
@@ -44,8 +49,11 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    implementation(project(":core:common"))
+    // Core Module
     implementation(project(":core:data"))
+
+    // Common Module
+    implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 

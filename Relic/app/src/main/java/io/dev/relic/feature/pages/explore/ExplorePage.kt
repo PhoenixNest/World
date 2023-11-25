@@ -19,7 +19,7 @@ import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainState
 import io.module.map.amap.ui.AMapComponent
-import io.ui.theme.mainThemeColor
+import io.core.ui.theme.mainThemeColor
 
 @Composable
 fun ExplorePageRoute(

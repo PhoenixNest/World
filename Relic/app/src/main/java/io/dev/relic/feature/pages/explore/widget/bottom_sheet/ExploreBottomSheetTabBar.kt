@@ -18,10 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.dev.relic.feature.pages.explore.util.ExploreBottomTabs
-import io.ui.CommonVerticalIconTextButton
-import io.ui.theme.mainTextColor
-import io.ui.theme.mainTextColorDark
-import io.ui.theme.mainThemeColorAccent
+import io.core.ui.CommonVerticalIconTextButton
+import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainThemeColorAccent
 
 @Composable
 fun ExploreBottomSheetTabBar(

@@ -13,7 +13,7 @@ plugins {
 }
 
 android {
-    namespace = "io.module.datastore"
+    namespace = "io.core.datastore"
     compileSdk = 34
 
     defaultConfig {
@@ -44,8 +44,11 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    implementation(project(":core:common"))
+    // Core Module
     implementation(project(":core:data"))
+
+    // Common Module
+    implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 

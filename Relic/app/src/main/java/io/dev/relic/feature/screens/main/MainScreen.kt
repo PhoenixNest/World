@@ -23,8 +23,8 @@ import io.dev.relic.R
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
-import io.module.core.network.monitor.NetworkMonitor
-import io.module.core.network.monitor.NetworkStatus
+import io.core.network.monitor.NetworkMonitor
+import io.core.network.monitor.NetworkStatus
 
 @Composable
 fun MainScreen(

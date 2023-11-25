@@ -16,10 +16,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.dev.relic.R
-import io.module.common.RelicConstants
-import io.ui.theme.RelicFontFamily
-import io.ui.theme.mainTextColor
-import io.ui.theme.mainThemeColorAccent
+import io.common.RelicConstants
+import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainThemeColorAccent
 
 @Composable
 fun ExploreExtendFloatingActionButton(

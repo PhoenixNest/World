@@ -2,8 +2,7 @@ package io.dev.relic.global
 
 import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
-import io.dev.relic.core.sdk.RelicSdkManager
-import io.module.common.app.BaseApplication
+import io.common.app.BaseApplication
 
 @HiltAndroidApp
 class RelicApplication : BaseApplication() {

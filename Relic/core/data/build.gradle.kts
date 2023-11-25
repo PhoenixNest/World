@@ -41,7 +41,8 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    implementation(project(":core:common"))
+    // Common Module
+    implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 

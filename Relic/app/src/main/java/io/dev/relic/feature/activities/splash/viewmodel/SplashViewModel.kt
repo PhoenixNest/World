@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.relic.core.sdk.ad.admob.splash.AdmobSplashAdHelper
+import io.module.ad.admob.splash.AdmobSplashAdHelper
 import io.dev.relic.global.RelicLifecycleObserver
-import io.module.common.util.LogUtil
+import io.common.util.LogUtil
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -54,11 +54,11 @@ class SplashViewModel @Inject constructor(
 
         viewModelScope.launch {
             isAdLoading = true
-            AdmobSplashAdHelper.loadSplashAd(
+            io.module.ad.admob.splash.AdmobSplashAdHelper.loadSplashAd(
                 context = context,
                 onAdLoaded = {
                     isAdLoading = false
-                    AdmobSplashAdHelper.showSplashAd(context)
+                    io.module.ad.admob.splash.AdmobSplashAdHelper.showSplashAd(context)
                 },
                 onAdFailed = { _: Int, _: String ->
                     isAdLoading = false

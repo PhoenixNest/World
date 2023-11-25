@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.ui"
+    namespace = "io.core.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -44,7 +44,8 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    implementation(project(":core:common"))
+    // Common Module
+    implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 

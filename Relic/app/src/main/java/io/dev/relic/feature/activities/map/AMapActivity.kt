@@ -8,10 +8,10 @@ import com.amap.api.maps.MapView
 import io.dev.relic.databinding.ActivityAmapBinding
 import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.global.RelicApplication
-import io.module.common.util.LogUtil
-import io.module.core.datastore.RelicDatastoreCenter.readSyncData
-import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.common.util.LogUtil
+import io.core.datastore.RelicDatastoreCenter.readSyncData
+import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.module.map.amap.AMapPrivacyCenter
 
 /**

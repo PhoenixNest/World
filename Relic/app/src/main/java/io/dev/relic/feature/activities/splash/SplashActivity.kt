@@ -18,9 +18,9 @@ import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
-import io.module.common.util.LogUtil
-import io.ui.ext.SystemUiControllerExt.enableImmersiveMode
-import io.ui.theme.RelicAppTheme
+import io.common.util.LogUtil
+import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
+import io.core.ui.theme.RelicAppTheme
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsBaseActivity() {

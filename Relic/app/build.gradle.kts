@@ -44,17 +44,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("boolean", "DEBUG_MODE", isDebugMode)
-        buildConfigField("boolean", "NO_ADS", isNoAds)
 
         resValue("string", "admob_dev_key", admobDevKey)
 
         vectorDrawables {
             useSupportLibrary = true
-        }
-
-        // Specify the schemas saved location of Room database.
-        ksp {
-            arg("room.schemaLocation", "${projectDir}/room_database_schemas")
         }
 
         // Ndk .so library support
@@ -108,16 +102,14 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    // Core Module
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:network"))
-    implementation(project(":core:ui"))
+    // Domain Layer
+    implementation(project(":domain"))
 
     // Map Module
-    implementation(project(":module_map"))
+    implementation(project(":module:map"))
+
+    // Ad Module
+    implementation(project(":module:ad"))
 
     /* ======================== Google Official Extension ======================== */
 
@@ -133,9 +125,6 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Admob
-    implementation(libs.play.services.ads)
 
     // Google sign-in
     implementation(libs.play.services.auth)

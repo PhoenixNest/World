@@ -20,8 +20,8 @@ import io.dev.relic.feature.pages.hive.navigateToHivePage
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.route.RelicRoute
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.module.core.network.monitor.NetworkMonitor
-import io.module.core.network.monitor.NetworkStatus
+import io.core.network.monitor.NetworkMonitor
+import io.core.network.monitor.NetworkStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

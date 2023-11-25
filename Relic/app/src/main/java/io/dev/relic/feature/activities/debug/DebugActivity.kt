@@ -11,10 +11,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityDebugBinding
 import io.dev.relic.global.RelicApplication
-import io.module.common.util.LogUtil
-import io.module.core.datastore.RelicDatastoreCenter.readSyncData
-import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.module.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.common.util.LogUtil
+import io.core.datastore.RelicDatastoreCenter.readSyncData
+import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
+import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.module.map.amap.AMapPrivacyCenter
 
 @AndroidEntryPoint

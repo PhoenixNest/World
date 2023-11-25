@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import io.dev.relic.databinding.ActivityTomtommapBinding
 import io.dev.relic.feature.activities.AbsBaseActivity
-import io.module.common.util.LogUtil
+import io.common.util.LogUtil
 
 /**
  * [TomTomMap](https://developer.tomtom.com/)

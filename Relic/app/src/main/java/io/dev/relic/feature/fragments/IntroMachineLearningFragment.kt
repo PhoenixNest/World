@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import io.dev.relic.databinding.FragmentIntroMachineLearningBinding
 import io.dev.relic.feature.activities.machine_learning.MLKitActivity
 import io.dev.relic.feature.activities.machine_learning.MediaPipeActivity
-import io.module.common.util.LogUtil
+import io.common.util.LogUtil
 
 class IntroMachineLearningFragment : AbsBaseFragment() {
 

@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.amap.api.navi.model.search.LatLonPoint
 import com.amap.api.navi.model.search.PoiItem
-import io.ui.CommonAsyncImage
-import io.ui.theme.RelicFontFamily
-import io.ui.theme.mainTextColor
-import io.ui.theme.mainThemeColor
+import io.core.ui.CommonAsyncImage
+import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainThemeColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

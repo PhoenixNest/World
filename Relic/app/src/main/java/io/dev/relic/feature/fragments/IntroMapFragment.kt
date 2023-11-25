@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import io.dev.relic.databinding.FragmentIntroMapBinding
 import io.dev.relic.feature.activities.map.AMapActivity
 import io.dev.relic.feature.activities.map.TomTomMapActivity
-import io.module.common.util.LogUtil
+import io.common.util.LogUtil
 
 class IntroMapFragment : AbsBaseFragment() {
 

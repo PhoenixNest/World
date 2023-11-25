@@ -8,10 +8,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
-import io.module.common.util.LogUtil
-import io.module.core.datastore.RelicDatastoreCenter.readSyncData
-import io.module.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.module.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
+import io.common.util.LogUtil
+import io.core.datastore.RelicDatastoreCenter.readSyncData
+import io.core.datastore.RelicDatastoreCenter.writeSyncData
+import io.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
 
 /**
  * [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)

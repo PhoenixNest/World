@@ -5,10 +5,10 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.dev.relic.domain.use_case.lcoation.LocationUseCase
+import io.domain.use_case.lcoation.LocationUseCase
 import io.dev.relic.feature.screens.main.MainState
-import io.module.common.ext.ViewModelExt.setState
-import io.module.common.util.LogUtil
+import io.common.ext.ViewModelExt.setState
+import io.common.util.LogUtil
 import io.module.map.ILocationListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

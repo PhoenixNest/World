@@ -1,7 +1,5 @@
 package io.dev.relic.feature.pages.home.widget
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,14 +33,14 @@ import io.data.model.weather.WeatherDataModel
 import io.data.model.weather.WeatherType
 import io.dev.relic.R
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
-import io.module.common.RelicConstants
-import io.ui.CommonRetryComponent
-import io.ui.theme.RelicFontFamily
-import io.ui.theme.mainBackgroundColorLight
-import io.ui.theme.mainTextColor
-import io.ui.theme.mainTextColorDark
-import io.ui.theme.mainThemeColorAccent
-import io.ui.theme.placeHolderHighlightColor
+import io.common.RelicConstants
+import io.core.ui.CommonRetryComponent
+import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.mainBackgroundColorLight
+import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainThemeColorAccent
+import io.core.ui.theme.placeHolderHighlightColor
 import java.time.LocalDateTime
 
 @Composable

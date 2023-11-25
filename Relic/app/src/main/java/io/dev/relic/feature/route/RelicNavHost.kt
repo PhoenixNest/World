@@ -13,7 +13,7 @@ import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.ui.ext.SystemUiControllerExt.updateStatusBarColor
+import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 
 @Composable
 fun MainFeatureNavHost(

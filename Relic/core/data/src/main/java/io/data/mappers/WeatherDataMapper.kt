@@ -7,7 +7,7 @@ import io.data.model.weather.WeatherDataModel
 import io.data.model.weather.WeatherInfoModel
 import io.data.dto.weather.WeatherForecastDTO
 import io.data.dto.weather.WeatherHourlyDTO
-import io.module.common.util.TimeUtil.getCurrentTime
+import io.common.util.TimeUtil.getCurrentTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 

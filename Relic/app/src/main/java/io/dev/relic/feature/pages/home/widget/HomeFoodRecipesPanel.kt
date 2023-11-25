@@ -39,16 +39,16 @@ import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.R
 import io.dev.relic.feature.pages.home.util.HomeFoodRecipesSimpleCategories
 import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
-import io.ui.CommonAsyncImage
-import io.ui.CommonRetryComponent
-import io.ui.CommonVerticalIconTextButton
-import io.ui.theme.RelicFontFamily
-import io.ui.theme.mainBackgroundColorLight
-import io.ui.theme.mainTextColor
-import io.ui.theme.mainTextColorDark
-import io.ui.theme.mainThemeColor
-import io.ui.theme.mainThemeColorAccent
-import io.ui.theme.placeHolderHighlightColor
+import io.core.ui.CommonAsyncImage
+import io.core.ui.CommonRetryComponent
+import io.core.ui.CommonVerticalIconTextButton
+import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.mainBackgroundColorLight
+import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainThemeColor
+import io.core.ui.theme.mainThemeColorAccent
+import io.core.ui.theme.placeHolderHighlightColor
 
 @Composable
 fun HomeFoodRecipesPanel(

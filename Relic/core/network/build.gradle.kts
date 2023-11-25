@@ -18,7 +18,7 @@ plugins {
 }
 
 android {
-    namespace = "io.module.network"
+    namespace = "io.core.network"
     compileSdk = 34
 
     defaultConfig {
@@ -51,8 +51,11 @@ dependencies {
 
     /* ======================== Module ======================== */
 
-    implementation(project(":core:common"))
+    // Core Module
     implementation(project(":core:data"))
+
+    // Common Module
+    implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 

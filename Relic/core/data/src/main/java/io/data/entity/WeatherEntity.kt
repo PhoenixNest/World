@@ -3,7 +3,7 @@ package io.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.data.dto.weather.WeatherForecastDTO
-import io.module.common.util.TimeUtil
+import io.common.util.TimeUtil
 
 @Entity(tableName = "table_weather")
 class WeatherEntity(
