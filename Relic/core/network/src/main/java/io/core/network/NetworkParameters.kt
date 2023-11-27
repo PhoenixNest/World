@@ -9,14 +9,22 @@ object NetworkParameters {
         /**
          * [Open-Meteo Api](https://open-meteo.com/)
          * */
-        const val WEATHER_API_URL: String = "https://api.open-meteo.com/"
+        const val WEATHER_API_URL: String = "https://api.open-meteo.com/v1/"
 
         /**
          * [Spoonacular API](https://spoonacular.com/food-api)
          * */
         const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/"
-        val FOOD_RECIPES_API_DEV_KEY: String = RelicResCenter.getString(R.string.spoonacular_dev_key)
 
+        /**
+         * [News Api](https://newsapi.org/docs)
+         * */
+        const val NEWS_API_URL: String = "https://newsapi.org/v2/"
+    }
+
+    object Keys {
+        val FOOD_RECIPES_API_DEV_KEY: String = RelicResCenter.getString(R.string.spoonacular_dev_key)
+        val NEWS_API_DEV_KEY: String = RelicResCenter.getString(-1)
     }
 
     /**

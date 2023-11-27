@@ -5,9 +5,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.domain.repository.IFoodRecipesDataRepository
+import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.repository.impl.FoodRecipesDataRepositoryImpl
+import io.domain.repository.impl.NewsDataRepositoryImpl
 import io.domain.repository.impl.TodoDataRepositoryImpl
 import io.domain.repository.impl.WeatherDataRepositoryImpl
 
@@ -29,5 +31,10 @@ interface RepositoryModule {
     fun bindTodoDataRepository(
         todoDataRepositoryImpl: TodoDataRepositoryImpl
     ): ITodoDataRepository
+
+    @Binds
+    fun bindNewsDataRepository(
+        newsDataRepositoryImpl: NewsDataRepositoryImpl
+    ): INewsDataRepository
 
 }

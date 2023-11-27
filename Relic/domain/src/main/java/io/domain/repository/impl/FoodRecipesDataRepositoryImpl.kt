@@ -9,6 +9,9 @@ import io.data.model.NetworkResult
 import io.domain.repository.IFoodRecipesDataRepository
 import javax.inject.Inject
 
+/**
+ * @see IFoodRecipesDataRepository
+ * */
 class FoodRecipesDataRepositoryImpl @Inject constructor(
     private val foodRecipesApi: IFoodRecipesApi,
     private val databaseRepository: RelicDatabaseRepository

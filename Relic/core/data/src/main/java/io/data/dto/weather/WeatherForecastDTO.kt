@@ -27,9 +27,6 @@ data class WeatherUnitDataDTO(
     val windSpeed: String?
 )
 
-/**
- * @see io.dev.relic.domain.model.weather.WeatherDataModel
- * */
 @JsonClass(generateAdapter = true)
 data class WeatherHourlyDTO(
     @Json(name = "time")

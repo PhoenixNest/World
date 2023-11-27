@@ -20,6 +20,7 @@ import io.core.network.NetworkParameters.MAX_TIMEOUT_CONNECT_DURATION
 import io.core.network.NetworkParameters.MAX_TIMEOUT_READ_DURATION
 import io.core.network.NetworkParameters.MAX_TIMEOUT_WRITE_DURATION
 import io.core.network.api.IFoodRecipesApi
+import io.core.network.api.INewsApi
 import io.core.network.api.IWeatherApi
 import io.core.network.interceptor.AuthInterceptor
 import io.core.network.interceptor.OfflineCacheInterceptor
@@ -128,7 +129,7 @@ object RelicNetworkModule {
     }
 
     /**
-     * Provide the Weather Retrofit client instance with OkHttpClient.
+     * Provide the `Weather` Retrofit client instance with OkHttpClient.
      *
      * @param okHttpClient
      * @param moshiConverterFactory
@@ -148,7 +149,7 @@ object RelicNetworkModule {
     }
 
     /**
-     * Provide the Weather Retrofit client instance with OkHttpClient.
+     * Provide the `Food Recipes` Retrofit client instance with OkHttpClient.
      *
      * @param okHttpClient
      * @param moshiConverterFactory
@@ -162,6 +163,25 @@ object RelicNetworkModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(FOOD_RECIPES_API_URL)
+            .addConverterFactory(moshiConverterFactory)
+            .build()
+            .create()
+    }
+
+    /**
+     * Provide the `News` Retrofit client instance with OkHttpClient.
+     *
+     * @param okHttpClient
+     * @param moshiConverterFactory
+     * */
+    @Provides
+    @Singleton
+    fun provideNewsApi(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): INewsApi {
+        return Retrofit.Builder()
+            .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()
             .create()

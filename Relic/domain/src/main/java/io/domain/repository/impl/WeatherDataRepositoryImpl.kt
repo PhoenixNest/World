@@ -9,7 +9,7 @@ import io.core.network.api.IWeatherApi
 import javax.inject.Inject
 
 /**
- * @see io.dev.relic.domain.repository.IWeatherDataRepository
+ * @see IWeatherDataRepository
  * */
 class WeatherDataRepositoryImpl @Inject constructor(
     private val weatherApi: IWeatherApi,

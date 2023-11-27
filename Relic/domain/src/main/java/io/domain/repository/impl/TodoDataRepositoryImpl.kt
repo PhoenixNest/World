@@ -6,6 +6,9 @@ import io.domain.repository.ITodoDataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+/**
+ * @see ITodoDataRepository
+ * */
 class TodoDataRepositoryImpl @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) : ITodoDataRepository {

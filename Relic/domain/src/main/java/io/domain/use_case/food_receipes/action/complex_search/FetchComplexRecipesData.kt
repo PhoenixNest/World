@@ -30,7 +30,7 @@ class FetchComplexRecipesData @Inject constructor(
      * @see FoodRecipesComplexSearchDTO
      * */
     operator fun invoke(
-        apiKey: String = NetworkParameters.BaseUrl.FOOD_RECIPES_API_DEV_KEY,
+        apiKey: String = NetworkParameters.Keys.FOOD_RECIPES_API_DEV_KEY,
         query: String,
         addRecipeInformation: Boolean,
         addRecipeNutrition: Boolean,
