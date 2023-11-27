@@ -7,7 +7,7 @@ import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 class FoodRecipesDataConvertor {
 
     @TypeConverter
-    fun dataToJson(sourceData: FoodRecipesComplexSearchDTO): String {
+    fun dataToComplexSearchJson(sourceData: FoodRecipesComplexSearchDTO): String {
         return Moshi.Builder()
             .build()
             .adapter(FoodRecipesComplexSearchDTO::class.java)
@@ -15,7 +15,7 @@ class FoodRecipesDataConvertor {
     }
 
     @TypeConverter
-    fun jsonToData(json: String): FoodRecipesComplexSearchDTO? {
+    fun jsonToComplexSearchData(json: String): FoodRecipesComplexSearchDTO? {
         return Moshi.Builder()
             .build()
             .adapter(FoodRecipesComplexSearchDTO::class.java)

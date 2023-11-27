@@ -1,29 +1,27 @@
 package io.core.database.repository
 
-import io.data.entity.FoodRecipesComplexSearchEntity
-import io.data.entity.TodoEntity
-import io.data.entity.WeatherEntity
 import io.core.database.dao.FoodRecipesDao
+import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
 import io.core.database.dao.WeatherDao
+import io.data.entity.FoodRecipesComplexSearchEntity
+import io.data.entity.NewsEverythingEntity
+import io.data.entity.NewsTopHeadlinesEntity
+import io.data.entity.TodoEntity
+import io.data.entity.WeatherEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * @see RelicDatabase
- *
- * @see WeatherDao
- * @see WeatherEntity
- *
- * @see TodoDao
- * @see TodoEntity
+ * @see io.core.database.RelicDatabase
  * */
 @Singleton
 class RelicDatabaseRepository @Inject constructor(
+    private val todoDao: TodoDao,
     private val weatherDao: WeatherDao,
     private val foodRecipesDao: FoodRecipesDao,
-    private val todoDao: TodoDao,
+    private val newsDao: NewsDao
 ) {
 
     /* ======================== TodoList ======================== */
@@ -70,6 +68,24 @@ class RelicDatabaseRepository @Inject constructor(
 
     suspend fun insertComplexSearchRecipesData(complexSearchEntity: FoodRecipesComplexSearchEntity) {
         foodRecipesDao.insertComplexSearchData(complexSearchEntity)
+    }
+
+    /* ======================== News ======================== */
+
+    fun readNewsEverythingCache(): Flow<List<NewsEverythingEntity>> {
+        return newsDao.readAllNewsEverythingData()
+    }
+
+    suspend fun insertNewsEverythingData(newsEverythingEntity: NewsEverythingEntity) {
+        newsDao.insertNewsEverythingData(newsEverythingEntity)
+    }
+
+    fun readNewsTopHeadlineCache(): Flow<List<NewsTopHeadlinesEntity>> {
+        return newsDao.readAllNewsTopHeadlineData()
+    }
+
+    suspend fun insertNewsTopHeadlineData(newsTopHeadlinesEntity: NewsTopHeadlinesEntity) {
+        newsDao.insertNewsTopHeadlineData(newsTopHeadlinesEntity)
     }
 
 }
