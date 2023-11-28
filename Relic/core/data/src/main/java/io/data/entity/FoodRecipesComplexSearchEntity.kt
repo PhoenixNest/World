@@ -1,15 +1,19 @@
 package io.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.common.util.TimeUtil
+import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 
 @Entity(tableName = "table_food_recipes")
 class FoodRecipesComplexSearchEntity(
-    val foodRecipesComplexSearchDTO: FoodRecipesComplexSearchDTO,
+    @ColumnInfo(name = "datasource")
+    val datasource: FoodRecipesComplexSearchDTO,
+    @ColumnInfo(name = "last_update_time")
     val lastUpdateTime: Long = TimeUtil.getCurrentTimeInMillis()
 ) {
-    @PrimaryKey
-    var id: Int = 0
+    @ColumnInfo(name = "uid", index = true)
+    @PrimaryKey(autoGenerate = false)
+    var uid: Int = 0
 }

@@ -7,7 +7,7 @@ import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 object FoodRecipesDataMapper {
 
     fun FoodRecipesComplexSearchDTO.toComplexSearchEntity(): FoodRecipesComplexSearchEntity {
-        return FoodRecipesComplexSearchEntity(foodRecipesComplexSearchDTO = this)
+        return FoodRecipesComplexSearchEntity(datasource = this)
     }
 
     fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchInfoModel?> {

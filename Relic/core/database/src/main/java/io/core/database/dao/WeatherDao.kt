@@ -13,7 +13,7 @@ interface WeatherDao {
     @Query("SELECT * FROM table_weather")
     fun readWeatherDataCache(): Flow<List<WeatherEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = WeatherEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeatherData(weatherEntity: WeatherEntity)
 
 }

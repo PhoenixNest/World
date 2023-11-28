@@ -4,13 +4,16 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.entity.NewsEverythingArticleEntity
 import io.data.entity.NewsEverythingEntity
+import io.data.entity.NewsTopHeadlineArticleEntity
 import io.data.entity.NewsTopHeadlinesEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsDao {
+
+    /* ======================== Everything ======================== */
 
     @Query("SELECT * FROM table_news_everything")
     fun readAllNewsEverythingData(): Flow<List<NewsEverythingEntity>>
@@ -18,10 +21,18 @@ interface NewsDao {
     @Insert(entity = NewsEverythingEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNewsEverythingData(newsEverythingEntity: NewsEverythingEntity)
 
-    @Query("SELECT * FROM table_news_head_lines")
+    @Insert(entity = NewsEverythingArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNewsEverythingArticle(articleEntity: NewsEverythingArticleEntity)
+
+    /* ======================== Top-Headline ======================== */
+
+    @Query("SELECT * FROM table_news_headlines")
     fun readAllNewsTopHeadlineData(): Flow<List<NewsTopHeadlinesEntity>>
 
-    @Insert(entity = NewsTopHeadlinesDTO::class, onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = NewsTopHeadlinesEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNewsTopHeadlineData(topHeadlinesEntity: NewsTopHeadlinesEntity)
+
+    @Insert(entity = NewsTopHeadlineArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity)
 
 }

@@ -1,28 +1,27 @@
 package io.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/**
- * Entity class for notes.
- *
- * @param id            Auto-generate id for each note
- * @param title         Title for each note, such as Today's Work List
- * @param subTitle      Subtitle for each note
- * @param content       Content for each note, such as Wash the bathroom
- * @param priority      Priority level of the note
- * @param color         Color in the background of the note
- * @param timeStamp     Auto-adding times of each note
- * */
 @Entity(tableName = "table_todo")
 data class TodoEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @ColumnInfo(name = "title")
     val title: String,
-    val subTitle: String,
+    @ColumnInfo(name = "subtitle")
+    val subtitle: String,
+    @ColumnInfo(name = "content")
     val content: String,
+    @ColumnInfo(name = "priority")
     val priority: Int,
+    @ColumnInfo(name = "color_hex")
     val color: Long,
+    @ColumnInfo(name = "update_time")
     val timeStamp: Long,
+    @ColumnInfo(name = "isFinish")
     val isFinish: Boolean
-)
+) {
+    @ColumnInfo(name = "uid", index = true)
+    @PrimaryKey(autoGenerate = true)
+    var uid: Int = 0
+}

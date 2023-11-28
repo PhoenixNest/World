@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FoodRecipesDao {
 
+    /* ======================== Complex search ======================== */
+
     @Query("SELECT * FROM table_food_recipes")
     fun readCacheComplexSearchData(): Flow<List<FoodRecipesComplexSearchEntity>>
 

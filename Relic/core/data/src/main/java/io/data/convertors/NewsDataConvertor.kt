@@ -2,10 +2,13 @@ package io.data.convertors
 
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
+import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 
 class NewsDataConvertor {
+
+    /* ======================== Everything ======================== */
 
     @TypeConverter
     fun dataToNewsEverythingJson(sourceData: NewsEverythingDTO): String {
@@ -22,6 +25,8 @@ class NewsDataConvertor {
             .adapter(NewsEverythingDTO::class.java)
             .fromJson(json)
     }
+
+    /* ======================== Top-Headline ======================== */
 
     @TypeConverter
     fun dataToNewsTopHeadlineJson(sourceData: NewsTopHeadlinesDTO): String {

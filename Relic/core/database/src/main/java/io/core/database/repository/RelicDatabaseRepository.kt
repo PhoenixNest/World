@@ -5,7 +5,9 @@ import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
 import io.core.database.dao.WeatherDao
 import io.data.entity.FoodRecipesComplexSearchEntity
+import io.data.entity.NewsEverythingArticleEntity
 import io.data.entity.NewsEverythingEntity
+import io.data.entity.NewsTopHeadlineArticleEntity
 import io.data.entity.NewsTopHeadlinesEntity
 import io.data.entity.TodoEntity
 import io.data.entity.WeatherEntity
@@ -80,12 +82,20 @@ class RelicDatabaseRepository @Inject constructor(
         newsDao.insertNewsEverythingData(newsEverythingEntity)
     }
 
+    suspend fun insertNewsEverythingArticle(articleEntity: NewsEverythingArticleEntity) {
+        newsDao.insertNewsEverythingArticle(articleEntity)
+    }
+
     fun readNewsTopHeadlineCache(): Flow<List<NewsTopHeadlinesEntity>> {
         return newsDao.readAllNewsTopHeadlineData()
     }
 
     suspend fun insertNewsTopHeadlineData(newsTopHeadlinesEntity: NewsTopHeadlinesEntity) {
         newsDao.insertNewsTopHeadlineData(newsTopHeadlinesEntity)
+    }
+
+    suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity) {
+        newsDao.insertNewsTopHeadlineArticle(articleEntity)
     }
 
 }

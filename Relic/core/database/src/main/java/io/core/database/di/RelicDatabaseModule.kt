@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.core.database.RelicDatabase
 import io.core.database.dao.FoodRecipesDao
+import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
 import io.core.database.dao.WeatherDao
 import javax.inject.Singleton
@@ -48,5 +49,11 @@ class RelicDatabaseModule {
     @Singleton
     fun provideFoodRecipesDao(database: RelicDatabase): FoodRecipesDao {
         return database.foodRecipesDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(database: RelicDatabase): NewsDao {
+        return database.newsDao()
     }
 }

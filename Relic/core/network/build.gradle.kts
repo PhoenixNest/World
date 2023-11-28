@@ -2,6 +2,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
 private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProperty("SPOONACULAR_DEV_KEY")
+private val newsDevKey: String = gradleLocalProperties(rootDir).getProperty("NEWS_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -28,6 +29,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         resValue("string", "spoonacular_dev_key", spoonacularDevKey)
+        resValue("string", "news_dev_key", newsDevKey)
     }
 
     buildTypes {

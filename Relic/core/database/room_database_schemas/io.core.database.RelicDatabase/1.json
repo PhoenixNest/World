@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9ef6bd76e719bd1f79b93688f8d50373",
+    "identityHash": "c939258fc8b8963d10974e4cd1780764",
     "entities": [
       {
         "tableName": "table_todo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `subTitle` TEXT NOT NULL, `content` TEXT NOT NULL, `priority` INTEGER NOT NULL, `color` INTEGER NOT NULL, `timeStamp` INTEGER NOT NULL, `isFinish` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `subtitle` TEXT NOT NULL, `content` TEXT NOT NULL, `priority` INTEGER NOT NULL, `color_hex` INTEGER NOT NULL, `update_time` INTEGER NOT NULL, `isFinish` INTEGER NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "title",
             "columnName": "title",
@@ -21,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "subTitle",
-            "columnName": "subTitle",
+            "fieldPath": "subtitle",
+            "columnName": "subtitle",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -40,13 +34,13 @@
           },
           {
             "fieldPath": "color",
-            "columnName": "color",
+            "columnName": "color_hex",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "timeStamp",
-            "columnName": "timeStamp",
+            "columnName": "update_time",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -55,36 +49,52 @@
             "columnName": "isFinish",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": true,
           "columnNames": [
-            "id"
+            "uid"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_table_todo_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_todo_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "table_weather",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`weatherDatasource` TEXT NOT NULL, `lastUpdateTime` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`datasource` TEXT NOT NULL, `last_update_time` INTEGER NOT NULL, `uid` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
         "fields": [
           {
-            "fieldPath": "weatherDatasource",
-            "columnName": "weatherDatasource",
+            "fieldPath": "datasource",
+            "columnName": "datasource",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "lastUpdateTime",
-            "columnName": "lastUpdateTime",
+            "columnName": "last_update_time",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "uid",
+            "columnName": "uid",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -92,31 +102,41 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "uid"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_table_weather_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_weather_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "table_food_recipes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`foodRecipesComplexSearchDTO` TEXT NOT NULL, `lastUpdateTime` INTEGER NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`datasource` TEXT NOT NULL, `last_update_time` INTEGER NOT NULL, `uid` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
         "fields": [
           {
-            "fieldPath": "foodRecipesComplexSearchDTO",
-            "columnName": "foodRecipesComplexSearchDTO",
+            "fieldPath": "datasource",
+            "columnName": "datasource",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "lastUpdateTime",
-            "columnName": "lastUpdateTime",
+            "columnName": "last_update_time",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "uid",
+            "columnName": "uid",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -124,17 +144,279 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "uid"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_table_food_recipes_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_food_recipes_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "table_news_everything",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`datasource` TEXT NOT NULL, `last_update_time` INTEGER NOT NULL, `uid` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
+        "fields": [
+          {
+            "fieldPath": "datasource",
+            "columnName": "datasource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdateTime",
+            "columnName": "last_update_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_table_news_everything_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_news_everything_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "table_news_headlines",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`datasource` TEXT NOT NULL, `last_update_time` INTEGER NOT NULL, `uid` INTEGER NOT NULL, PRIMARY KEY(`uid`))",
+        "fields": [
+          {
+            "fieldPath": "datasource",
+            "columnName": "datasource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdateTime",
+            "columnName": "last_update_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_table_news_headlines_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_news_headlines_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "table_news_everything_articles",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`article_id` TEXT, `source` TEXT, `author` TEXT, `title` TEXT, `description` TEXT, `url` TEXT, `image_url` TEXT, `publish_time` TEXT, `content` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "article_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urlToImage",
+            "columnName": "image_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "publishedAt",
+            "columnName": "publish_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_table_news_everything_articles_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_news_everything_articles_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "table_news_top_headline_articles",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`article_id` TEXT, `source` TEXT, `author` TEXT, `title` TEXT, `description` TEXT, `url` TEXT, `image_url` TEXT, `publish_time` TEXT, `content` TEXT, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "article_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "urlToImage",
+            "columnName": "image_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "publishedAt",
+            "columnName": "publish_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "uid"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_table_news_top_headline_articles_uid",
+            "unique": false,
+            "columnNames": [
+              "uid"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_table_news_top_headline_articles_uid` ON `${TABLE_NAME}` (`uid`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9ef6bd76e719bd1f79b93688f8d50373')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c939258fc8b8963d10974e4cd1780764')"
     ]
   }
 }

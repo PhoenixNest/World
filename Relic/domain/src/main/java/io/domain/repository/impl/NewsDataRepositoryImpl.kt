@@ -2,8 +2,13 @@ package io.domain.repository.impl
 
 import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.INewsApi
+import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.mappers.NewsDataMapper.toNewsEverythingArticleEntity
+import io.data.mappers.NewsDataMapper.toNewsEverythingEntity
+import io.data.mappers.NewsDataMapper.toNewsTopHeadlineArticleEntity
+import io.data.mappers.NewsDataMapper.toNewsTopHeadlineEntity
 import io.data.model.NetworkResult
 import io.domain.repository.INewsDataRepository
 import javax.inject.Inject
@@ -61,7 +66,8 @@ class NewsDataRepositoryImpl @Inject constructor(
                 page = page
             )
 
-            // TODO: Always save the latest recipes data to the database.
+            // Always save the latest recipes data to the database.
+            insertNewsEverythingData(data)
             NetworkResult.Success(data = data)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -110,7 +116,8 @@ class NewsDataRepositoryImpl @Inject constructor(
                 page = page
             )
 
-            // TODO: Always save the latest recipes data to the database.
+            // Always save the latest recipes data to the database.
+            insertNewsTopHeadlineData(data)
             NetworkResult.Success(data = data)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -118,5 +125,23 @@ class NewsDataRepositoryImpl @Inject constructor(
         }
 
         return topHeadlinesResult
+    }
+
+    private suspend fun insertNewsEverythingData(data: NewsEverythingDTO) {
+        databaseRepository.insertNewsEverythingData(data.toNewsEverythingEntity())
+        data.articles?.forEach { articleItem: NewsArticleDTO? ->
+            articleItem.toNewsEverythingArticleEntity()?.let {
+                databaseRepository.insertNewsEverythingArticle(it)
+            }
+        }
+    }
+
+    private suspend fun insertNewsTopHeadlineData(data: NewsTopHeadlinesDTO) {
+        databaseRepository.insertNewsTopHeadlineData(data.toNewsTopHeadlineEntity())
+        data.articles?.forEach { articleItem: NewsArticleDTO? ->
+            articleItem.toNewsTopHeadlineArticleEntity()?.let {
+                databaseRepository.insertNewsTopHeadlineArticle(it)
+            }
+        }
     }
 }

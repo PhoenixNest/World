@@ -32,7 +32,7 @@ object WeatherDataMapper {
     )
 
     fun WeatherForecastDTO.toWeatherEntity(): WeatherEntity {
-        return WeatherEntity(weatherDatasource = this)
+        return WeatherEntity(datasource = this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

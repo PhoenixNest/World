@@ -12,7 +12,9 @@ import io.data.convertors.FoodRecipesDataConvertor
 import io.data.convertors.NewsDataConvertor
 import io.data.convertors.WeatherDataConvertor
 import io.data.entity.FoodRecipesComplexSearchEntity
+import io.data.entity.NewsEverythingArticleEntity
 import io.data.entity.NewsEverythingEntity
+import io.data.entity.NewsTopHeadlineArticleEntity
 import io.data.entity.NewsTopHeadlinesEntity
 import io.data.entity.TodoEntity
 import io.data.entity.WeatherEntity
@@ -23,7 +25,9 @@ import io.data.entity.WeatherEntity
         WeatherEntity::class,
         FoodRecipesComplexSearchEntity::class,
         NewsEverythingEntity::class,
-        NewsTopHeadlinesEntity::class
+        NewsTopHeadlinesEntity::class,
+        NewsEverythingArticleEntity::class,
+        NewsTopHeadlineArticleEntity::class
     ],
     version = 1,
     exportSchema = true

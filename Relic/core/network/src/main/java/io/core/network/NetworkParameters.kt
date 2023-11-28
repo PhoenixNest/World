@@ -24,7 +24,7 @@ object NetworkParameters {
 
     object Keys {
         val FOOD_RECIPES_API_DEV_KEY: String = RelicResCenter.getString(R.string.spoonacular_dev_key)
-        val NEWS_API_DEV_KEY: String = RelicResCenter.getString(-1)
+        val NEWS_API_DEV_KEY: String = RelicResCenter.getString(R.string.news_dev_key)
     }
 
     /**
