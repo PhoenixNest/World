@@ -7,6 +7,7 @@ import android.location.LocationManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.common.RelicPermissionDetector.Native.checkPermission
+import io.common.util.LogUtil
 import io.module.map.ILocationTracker
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,24 +20,35 @@ class LocationTrackerImpl @Inject constructor(
     private val locationClient: FusedLocationProviderClient
 ) : ILocationTracker {
 
+    companion object {
+        private const val TAG = "LocationTracker"
+    }
+
     override suspend fun getCurrentLocation(): Location? {
 
         val hasAccessFindLocationPermission: Boolean = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
-        )
+        ).also {
+            LogUtil.debug(TAG, "[Permission Status] [Find Location] isGranted: $it")
+        }
 
         val hasAccessCoarseLocationPermission: Boolean = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
-        )
+        ).also {
+            LogUtil.debug(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
+        }
 
         val locationManager: LocationManager = context.getSystemService(
             Context.LOCATION_SERVICE
         ) as LocationManager
 
-        val isGpsEnabled: Boolean = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isGpsEnabled: Boolean = (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            .also {
+                LogUtil.debug(TAG, "[GPS Status] isEnabled: $it")
+            }
 
         if (!hasAccessFindLocationPermission
             || !hasAccessCoarseLocationPermission
@@ -47,6 +59,7 @@ class LocationTrackerImpl @Inject constructor(
 
         return suspendCancellableCoroutine { continuation: CancellableContinuation<Location?> ->
             locationClient.lastLocation.apply {
+                // Cached the latest device’s location.
                 if (isComplete) {
                     if (isSuccessful) {
                         continuation.resume(
@@ -61,19 +74,25 @@ class LocationTrackerImpl @Inject constructor(
                     }
                     return@suspendCancellableCoroutine
                 }
+
                 addOnSuccessListener { location: Location? ->
+                    LogUtil.debug(TAG, "[Access Success] Data: $location")
                     continuation.resume(
                         value = location,
                         onCancellation = null
                     )
                 }
+
                 addOnFailureListener {
+                    LogUtil.error(TAG, "[Access Failed] Message: ${it.message}")
                     continuation.resume(
                         value = null,
                         onCancellation = null
                     )
                 }
+
                 addOnCanceledListener {
+                    LogUtil.debug(TAG, "[Access Canceled]")
                     continuation.cancel()
                 }
             }

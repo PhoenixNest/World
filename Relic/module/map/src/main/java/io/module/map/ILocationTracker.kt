@@ -3,7 +3,7 @@ package io.module.map
 import android.location.Location
 
 /**
- * @see io.dev.relic.core.device.location.LocationTrackerImpl
+ * @see io.module.map.impl.LocationTrackerImpl
  * */
 interface ILocationTracker {
 
