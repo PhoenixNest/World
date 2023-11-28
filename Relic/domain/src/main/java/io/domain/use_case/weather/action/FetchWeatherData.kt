@@ -12,6 +12,13 @@ import javax.inject.Inject
 class FetchWeatherData @Inject constructor(
     private val weatherDataRepository: IWeatherDataRepository
 ) {
+
+    /**
+     * Fetch the latest weather info data from Remote-server.
+     *
+     * @param latitude
+     * @param longitude
+     * */
     operator fun invoke(
         latitude: Double,
         longitude: Double

@@ -1,16 +1,9 @@
-package io.dev.relic.feature.pages.home.widget
+package io.dev.relic.feature.function.weather.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -18,58 +11,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
-import io.data.model.weather.WeatherDataModel
-import io.data.model.weather.WeatherType
-import io.dev.relic.R
-import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
-import io.common.RelicConstants
 import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.placeHolderHighlightColor
+import io.data.model.weather.WeatherDataModel
+import io.dev.relic.R
+import io.dev.relic.feature.function.weather.WeatherDataState
 import java.time.LocalDateTime
 
 @Composable
-fun HomeWeatherCard(
-    weatherDataState: HomeWeatherDataState,
+fun WeatherCard(
+    weatherDataState: WeatherDataState,
     onRetryClick: () -> Unit
 ) {
-    when (val state: HomeWeatherDataState = weatherDataState) {
-        is HomeWeatherDataState.Init,
-        is HomeWeatherDataState.Fetching -> {
-            HomeWeatherCard(
+    when (val state: WeatherDataState = weatherDataState) {
+        is WeatherDataState.Init,
+        is WeatherDataState.Fetching -> {
+            WeatherCard(
                 isLoading = true,
                 model = null,
                 onRetryClick = {}
             )
         }
 
-        is HomeWeatherDataState.FetchSucceed -> {
-            HomeWeatherCard(
+        is WeatherDataState.FetchSucceed -> {
+            WeatherCard(
                 isLoading = false,
                 model = state.model?.currentWeatherData,
                 onRetryClick = onRetryClick
             )
         }
 
-        is HomeWeatherDataState.Empty,
-        is HomeWeatherDataState.NoWeatherData,
-        is HomeWeatherDataState.FetchFailed -> {
-            HomeWeatherCard(
+        is WeatherDataState.Empty,
+        is WeatherDataState.NoWeatherData,
+        is WeatherDataState.FetchFailed -> {
+            WeatherCard(
                 isLoading = false,
                 model = null,
                 onRetryClick = onRetryClick
@@ -79,7 +66,7 @@ fun HomeWeatherCard(
 }
 
 @Composable
-private fun HomeWeatherCard(
+private fun WeatherCard(
     isLoading: Boolean,
     model: WeatherDataModel?,
     onRetryClick: () -> Unit
@@ -110,7 +97,7 @@ private fun HomeWeatherCard(
                     containerHeight = 120.dp
                 )
             } else {
-                HomeWeatherCardContent(model)
+                WeatherCardContent(model)
             }
         }
         Card(
@@ -135,55 +122,9 @@ private fun HomeWeatherCard(
 }
 
 @Composable
-private fun HomeWeatherCardContent(model: WeatherDataModel) {
-    val weatherType: WeatherType = WeatherType.fromWMO(model.weatherCode ?: -1)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 24.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = Modifier.wrapContentHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = "${model.temperature}°C",
-                style = TextStyle(
-                    color = mainTextColorDark,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.ubuntu
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = weatherType.weatherDesc,
-                style = TextStyle(
-                    color = mainTextColorDark,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.ubuntu
-                )
-            )
-        }
-        Image(
-            painter = painterResource(weatherType.iconRes),
-            contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-            modifier = Modifier
-                .height(72.dp)
-                .width(72.dp),
-            colorFilter = ColorFilter.tint(Color.DarkGray)
-        )
-    }
-}
-
-@Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282c34)
 private fun HomeWeatherCardNoDataPreview() {
-    HomeWeatherCard(
+    WeatherCard(
         isLoading = false,
         model = null,
         onRetryClick = {}
@@ -193,7 +134,7 @@ private fun HomeWeatherCardNoDataPreview() {
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282c34)
 private fun HomeWeatherCardPreview() {
-    HomeWeatherCard(
+    WeatherCard(
         isLoading = false,
         model = WeatherDataModel(
             time = LocalDateTime.now(),

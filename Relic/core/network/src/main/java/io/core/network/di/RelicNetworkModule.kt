@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.core.network.NetworkParameters.BaseUrl.FOOD_RECIPES_API_URL
+import io.core.network.NetworkParameters.BaseUrl.NEWS_API_URL
 import io.core.network.NetworkParameters.BaseUrl.WEATHER_API_URL
 import io.core.network.NetworkParameters.MAX_DISK_CACHE_SIZE
 import io.core.network.NetworkParameters.MAX_OFFLINE_CACHE_TIME
@@ -182,6 +183,7 @@ object RelicNetworkModule {
     ): INewsApi {
         return Retrofit.Builder()
             .client(okHttpClient)
+            .baseUrl(NEWS_API_URL)
             .addConverterFactory(moshiConverterFactory)
             .build()
             .create()

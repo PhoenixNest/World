@@ -35,7 +35,6 @@ object WeatherDataMapper {
         return WeatherEntity(datasource = this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun WeatherForecastDTO.toWeatherInfoModel(): WeatherInfoModel {
         val weatherDataMap: Map<Int, List<WeatherDataModel?>?>? = weatherHourlyDTO?.toWeatherDataMap()
         val currentTime: LocalDateTime = getCurrentTime()

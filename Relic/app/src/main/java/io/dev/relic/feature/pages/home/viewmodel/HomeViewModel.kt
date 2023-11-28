@@ -7,6 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.ext.ViewModelExt.setState
+import io.common.util.LogUtil
+import io.core.database.repository.RelicDatabaseRepository
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.weather.WeatherForecastDTO
 import io.data.entity.FoodRecipesComplexSearchEntity
@@ -15,14 +18,11 @@ import io.data.entity.WeatherEntity
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
 import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
+import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.weather.WeatherDataState
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.weather.WeatherUseCase
-import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
-import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
-import io.common.ext.ViewModelExt.setState
-import io.common.util.LogUtil
-import io.core.database.repository.RelicDatabaseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -57,14 +57,14 @@ class HomeViewModel @Inject constructor(
     /**
      * The data flow of weather forecast.
      * */
-    private val _weatherDataStateFlow: MutableStateFlow<HomeWeatherDataState> = MutableStateFlow(HomeWeatherDataState.Init)
-    val weatherDataStateFlow: StateFlow<HomeWeatherDataState> get() = _weatherDataStateFlow
+    private val _weatherDataStateFlow: MutableStateFlow<WeatherDataState> = MutableStateFlow(WeatherDataState.Init)
+    val weatherDataStateFlow: StateFlow<WeatherDataState> get() = _weatherDataStateFlow
 
     /**
      * The data flow of daily food recipes.
      * */
-    private val _foodRecipesDataStateFlow: MutableStateFlow<HomeFoodRecipesDataState> = MutableStateFlow(HomeFoodRecipesDataState.Init)
-    val foodRecipesDataStateFlow: StateFlow<HomeFoodRecipesDataState> get() = _foodRecipesDataStateFlow
+    private val _foodRecipesDataStateFlow: MutableStateFlow<FoodRecipesDataState> = MutableStateFlow(FoodRecipesDataState.Init)
+    val foodRecipesDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesDataStateFlow
 
     private val localWeatherData: StateFlow<List<WeatherEntity>> = databaseRepository
         .readWeatherDataCache()
@@ -98,6 +98,12 @@ class HomeViewModel @Inject constructor(
         fetchFoodRecipesData(isRefresh = true)
     }
 
+    /**
+     * Fetch the latest weather info data from Remote-server.
+     *
+     * @param latitude
+     * @param longitude
+     * */
     fun fetchWeatherData(
         latitude: Double,
         longitude: Double
@@ -172,16 +178,16 @@ class HomeViewModel @Inject constructor(
         when (result) {
             is NetworkResult.Loading -> {
                 LogUtil.debug(TAG, "[Handle Weather Data] Loading...")
-                setState(_weatherDataStateFlow, HomeWeatherDataState.Fetching)
+                setState(_weatherDataStateFlow, WeatherDataState.Fetching)
             }
 
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.debug(TAG, "[Handle Weather Data] Succeed, data: $it")
-                    setState(_weatherDataStateFlow, HomeWeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
+                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
                 } ?: {
                     LogUtil.warning(TAG, "[Handle Weather Data] Succeed without data")
-                    setState(_weatherDataStateFlow, HomeWeatherDataState.NoWeatherData)
+                    setState(_weatherDataStateFlow, WeatherDataState.NoWeatherData)
                 }
             }
 
@@ -189,7 +195,7 @@ class HomeViewModel @Inject constructor(
                 val errorCode: Int? = result.code
                 val errorMessage: String? = result.message
                 LogUtil.error(TAG, "[Handle Weather Data] Failed, ($errorCode, $errorMessage)")
-                setState(_weatherDataStateFlow, HomeWeatherDataState.FetchFailed(errorCode, errorMessage))
+                setState(_weatherDataStateFlow, WeatherDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }
@@ -198,16 +204,16 @@ class HomeViewModel @Inject constructor(
         when (result) {
             is NetworkResult.Loading -> {
                 LogUtil.debug(TAG, "[Handle Food Recipes Data] Loading...")
-                setState(_foodRecipesDataStateFlow, HomeFoodRecipesDataState.Fetching)
+                setState(_foodRecipesDataStateFlow, FoodRecipesDataState.Fetching)
             }
 
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.debug(TAG, "[Handle Food Recipes Data] Succeed, data: $it")
-                    setState(_foodRecipesDataStateFlow, HomeFoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList()))
+                    setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList()))
                 } ?: {
                     LogUtil.debug(TAG, "[Handle Food Recipes Data] Succeed without data")
-                    setState(_foodRecipesDataStateFlow, HomeFoodRecipesDataState.NoFoodRecipesData)
+                    setState(_foodRecipesDataStateFlow, FoodRecipesDataState.NoFoodRecipesData)
                 }
             }
 
@@ -215,7 +221,7 @@ class HomeViewModel @Inject constructor(
                 val errorCode: Int? = result.code
                 val errorMessage: String? = result.message
                 LogUtil.error(TAG, "[Handle Food Recipes Data] Failed, ($errorCode, $errorMessage)")
-                setState(_foodRecipesDataStateFlow, HomeFoodRecipesDataState.FetchFailed(errorCode, errorMessage))
+                setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }

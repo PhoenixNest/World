@@ -1,10 +1,10 @@
-package io.dev.relic.feature.pages.home.util
+package io.dev.relic.feature.function.food_recipes.util
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import io.dev.relic.R
 
-enum class HomeFoodRecipesSimpleCategories(
+enum class FoodRecipesSimpleCategories(
     @DrawableRes val iconResId: Int,
     @StringRes val tabLabelResId: Int
 ) {

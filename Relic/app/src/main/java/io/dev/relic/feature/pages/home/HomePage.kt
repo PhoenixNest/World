@@ -14,16 +14,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.pages.home.viewmodel.state.HomeFoodRecipesDataState
-import io.dev.relic.feature.pages.home.viewmodel.state.HomeWeatherDataState
-import io.dev.relic.feature.pages.home.widget.HomeFoodRecipesPanel
-import io.dev.relic.feature.pages.home.widget.HomeTopBar
-import io.dev.relic.feature.pages.home.widget.HomeWeatherCard
-import io.dev.relic.feature.screens.main.MainState
 import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
+import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_FOOD_RECIPES_CARD
+import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_NEWS_CARD
+import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_WEATHER_CARD
+import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
+import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.weather.WeatherDataState
+import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesPanel
+import io.dev.relic.feature.pages.home.widget.HomeTopBar
+import io.dev.relic.feature.function.weather.ui.WeatherCard
+import io.dev.relic.feature.screens.main.MainState
 
 @Composable
 fun HomePageRoute(
@@ -31,8 +34,8 @@ fun HomePageRoute(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val mainState: MainState = mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
-    val homeWeatherState: HomeWeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
-    val homeFoodRecipesState: HomeFoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
+    val weatherState: WeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
+    val foodRecipesState: FoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
 
     LaunchedEffect(mainState) {
         when (mainState) {
@@ -55,8 +58,11 @@ fun HomePageRoute(
     }
 
     HomePage(
-        weatherDataState = homeWeatherState,
-        foodRecipesState = homeFoodRecipesState,
+        isShowWeatherCard = IS_SHOW_WEATHER_CARD,
+        isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
+        isShowNewsContent = IS_SHOW_NEWS_CARD,
+        weatherDataState = weatherState,
+        foodRecipesState = foodRecipesState,
         currentSelectedFoodRecipesTab = homeViewModel.currentSelectedFoodRecipesTab,
         onWeatherRetry = {
             mainViewModel.latestLocation?.also {
@@ -80,8 +86,11 @@ fun HomePageRoute(
 
 @Composable
 private fun HomePage(
-    weatherDataState: HomeWeatherDataState,
-    foodRecipesState: HomeFoodRecipesDataState,
+    isShowWeatherCard: Boolean,
+    isShowFoodRecipesCard: Boolean,
+    isShowNewsContent: Boolean,
+    weatherDataState: WeatherDataState,
+    foodRecipesState: FoodRecipesDataState,
     currentSelectedFoodRecipesTab: Int,
     onWeatherRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit,
@@ -99,19 +108,26 @@ private fun HomePage(
         ) {
             HomeTopBar(onOpenDrawer = {})
             Spacer(modifier = Modifier.height(32.dp))
-            HomeWeatherCard(
-                weatherDataState = weatherDataState,
-                onRetryClick = onWeatherRetry
-            )
-            CommonItemDivider()
-            HomeFoodRecipesPanel(
-                currentSelectedTab = currentSelectedFoodRecipesTab,
-                foodRecipesState = foodRecipesState,
-                onRetryClick = onFoodRecipesRetry,
-                onFetchMore = onFetchMoreFoodRecipesData,
-                onTabItemClick = onSelectedFoodRecipesTabItem
-            )
-            CommonItemDivider()
+            if (isShowWeatherCard) {
+                WeatherCard(
+                    weatherDataState = weatherDataState,
+                    onRetryClick = onWeatherRetry
+                )
+                CommonItemDivider()
+            }
+            if (isShowFoodRecipesCard) {
+                FoodRecipesPanel(
+                    currentSelectedTab = currentSelectedFoodRecipesTab,
+                    foodRecipesState = foodRecipesState,
+                    onRetryClick = onFoodRecipesRetry,
+                    onFetchMore = onFetchMoreFoodRecipesData,
+                    onTabItemClick = onSelectedFoodRecipesTabItem
+                )
+                CommonItemDivider()
+            }
+            if (isShowNewsContent) {
+
+            }
         }
     }
 }
@@ -120,8 +136,11 @@ private fun HomePage(
 @Preview(showBackground = true)
 private fun HomePagePreview() {
     HomePage(
-        weatherDataState = HomeWeatherDataState.Init,
-        foodRecipesState = HomeFoodRecipesDataState.Init,
+        isShowWeatherCard = IS_SHOW_WEATHER_CARD,
+        isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
+        isShowNewsContent = IS_SHOW_NEWS_CARD,
+        weatherDataState = WeatherDataState.Init,
+        foodRecipesState = FoodRecipesDataState.Init,
         currentSelectedFoodRecipesTab = 0,
         onWeatherRetry = {},
         onFoodRecipesRetry = {},

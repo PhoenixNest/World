@@ -7,6 +7,7 @@ import io.data.entity.NewsEverythingArticleEntity
 import io.data.entity.NewsEverythingEntity
 import io.data.entity.NewsTopHeadlineArticleEntity
 import io.data.entity.NewsTopHeadlinesEntity
+import io.data.model.news.NewsArticleModel
 
 object NewsDataMapper {
 
@@ -24,8 +25,8 @@ object NewsDataMapper {
         }
 
         return NewsEverythingArticleEntity(
-            id = this.source?.id ?: "article id",
-            source = this.source?.name ?: "Unknown source",
+            id = source?.id ?: "article id",
+            source = source?.name ?: "Unknown source",
             author = author,
             title = title,
             description = description,
@@ -42,8 +43,8 @@ object NewsDataMapper {
         }
 
         return NewsTopHeadlineArticleEntity(
-            id = this.source?.id ?: "article id",
-            source = this.source?.name ?: "Unknown source",
+            id = source?.id ?: "article id",
+            source = source?.name ?: "Unknown source",
             author = author,
             title = title,
             description = description,
@@ -54,4 +55,22 @@ object NewsDataMapper {
         )
     }
 
+    fun List<NewsArticleDTO?>.toNewsArticleModelList(): List<NewsArticleModel?> {
+        val tempList: MutableList<NewsArticleModel?> = mutableListOf()
+        this.forEach {
+            tempList.add(
+                NewsArticleModel(
+                    title = it?.title,
+                    subtitle = it?.description,
+                    author = it?.author,
+                    thumbnailImageUrl = it?.urlToImage,
+                    publishDate = it?.publishedAt,
+                    contentUrl = it?.url,
+                    source = it?.source?.name
+                )
+            )
+        }
+
+        return tempList.toList()
+    }
 }
