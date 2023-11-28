@@ -4,7 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.core.database.repository.RelicDatabaseRepository
 import io.domain.repository.IFoodRecipesDataRepository
+import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
@@ -13,6 +15,9 @@ import io.domain.use_case.food_receipes.action.complex_search.FetchComplexRecipe
 import io.domain.use_case.food_receipes.action.complex_search.ReadCacheComplexRecipesData
 import io.domain.use_case.lcoation.LocationUseCase
 import io.domain.use_case.lcoation.action.AccessCurrentLocation
+import io.domain.use_case.news.NewsUseCase
+import io.domain.use_case.news.action.FetchEverythingNews
+import io.domain.use_case.news.action.FetchHeadlineNews
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.todo.action.AddTodo
 import io.domain.use_case.todo.action.DeleteTodo
@@ -22,7 +27,6 @@ import io.domain.use_case.weather.WeatherUseCase
 import io.domain.use_case.weather.action.CacheWeatherData
 import io.domain.use_case.weather.action.FetchWeatherData
 import io.domain.use_case.weather.action.ReadCacheWeatherData
-import io.core.database.repository.RelicDatabaseRepository
 import io.module.map.ILocationTracker
 import javax.inject.Singleton
 
@@ -76,6 +80,17 @@ class RelicUseCaseModule {
             fetchComplexRecipesData = FetchComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository = databaseRepository),
             readCacheComplexRecipesData = ReadCacheComplexRecipesData(databaseRepository = databaseRepository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideNewsUnitUseCase(
+        newsRepository: INewsDataRepository
+    ): NewsUseCase {
+        return NewsUseCase(
+            fetchEverythingNews = FetchEverythingNews(newsRepository = newsRepository),
+            fetchTopHeadlineNews = FetchHeadlineNews(newsRepository = newsRepository)
         )
     }
 
