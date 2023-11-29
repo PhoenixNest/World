@@ -26,6 +26,14 @@ object RelicFontFamily {
      * [Google fonts > Fasthand](https://fonts.google.com/specimen/Fasthand)
      * */
     val fasthand: FontFamily = FontFamily(
-        Font(R.font.fasthand_regular)
+        Font(R.font.fasthand_regular, FontWeight.Normal)
+    )
+
+    /**
+     * [Google fonts > Newsreader](https://fonts.google.com/specimen/Newsreader?query=News&sort=popularity)
+     * */
+    val newsReader: FontFamily = FontFamily(
+        Font(R.font.newsreader, FontWeight.Normal),
+        Font(R.font.newsreader_italic, FontWeight.Normal, FontStyle.Italic)
     )
 }

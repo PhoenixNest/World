@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
@@ -28,42 +30,48 @@ fun CommonAsyncImage(
     imageWidth: Dp,
     imageHeight: Dp,
     modifier: Modifier = Modifier,
-    lottieViewWidth: Dp = 72.dp,
-    lottieViewHeight: Dp = 72.dp
+    lottieViewWidth: Dp = imageWidth,
+    lottieViewHeight: Dp = imageHeight,
+    imageRadius: Dp = 16.dp,
+    imageShape: Shape = RoundedCornerShape(imageRadius)
 ) {
-    SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .build(),
-        contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+    Surface(
         modifier = modifier
             .width(imageWidth)
             .height(imageHeight),
-        contentScale = ContentScale.Crop
+        shape = imageShape
     ) {
-        when (painter.state) {
-            is AsyncImagePainter.State.Loading -> Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .placeholder(
-                        visible = true,
-                        color = Color.DarkGray,
-                        shape = RoundedCornerShape(16.dp),
-                        highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-                    )
-            )
+        SubcomposeAsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(url)
+                .build(),
+            contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        ) {
+            when (painter.state) {
+                is AsyncImagePainter.State.Loading -> Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .placeholder(
+                            visible = true,
+                            color = Color.DarkGray,
+                            highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+                        )
+                )
 
-            is AsyncImagePainter.State.Empty,
-            is AsyncImagePainter.State.Error -> CommonNoDataComponent(
-                modifier = Modifier.fillMaxSize(),
-                backgroundColor = Color.DarkGray,
-                iconSizeModifier = Modifier
-                    .width(lottieViewWidth)
-                    .height(lottieViewHeight),
-                isShowText = false
-            )
+                is AsyncImagePainter.State.Empty,
+                is AsyncImagePainter.State.Error -> CommonNoDataComponent(
+                    modifier = Modifier.fillMaxSize(),
+                    backgroundColor = Color.DarkGray,
+                    iconSizeModifier = Modifier
+                        .width(lottieViewWidth)
+                        .height(lottieViewHeight),
+                    isShowText = false
+                )
 
-            is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+                is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+            }
         }
     }
 }

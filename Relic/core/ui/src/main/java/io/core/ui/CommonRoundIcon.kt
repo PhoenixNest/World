@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants
-import io.core.ui.R
 import io.core.ui.theme.mainThemeColor
 
 @Composable
