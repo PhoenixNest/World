@@ -123,7 +123,7 @@ private fun WeatherCard(
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282c34)
-private fun HomeWeatherCardNoDataPreview() {
+private fun WeatherCardNoDataPreview() {
     WeatherCard(
         isLoading = false,
         model = null,
@@ -133,7 +133,7 @@ private fun HomeWeatherCardNoDataPreview() {
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282c34)
-private fun HomeWeatherCardPreview() {
+private fun WeatherCardPreview() {
     WeatherCard(
         isLoading = false,
         model = WeatherDataModel(

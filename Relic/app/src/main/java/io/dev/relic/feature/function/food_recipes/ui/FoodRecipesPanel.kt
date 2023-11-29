@@ -135,7 +135,7 @@ private fun FoodRecipesPanel(
 
 @Composable
 @Preview
-private fun HomeFoodRecipesNoDataCardPreview() {
+private fun FoodRecipesNoDataCardPreview() {
     FoodRecipesPanel(
         currentSelectedTab = 0,
         isFetchingData = false,
@@ -148,7 +148,7 @@ private fun HomeFoodRecipesNoDataCardPreview() {
 
 @Composable
 @Preview
-private fun HomeFoodRecipesCardPreview() {
+private fun FoodRecipesCardPreview() {
     FoodRecipesPanel(
         currentSelectedTab = 0,
         isFetchingData = false,
