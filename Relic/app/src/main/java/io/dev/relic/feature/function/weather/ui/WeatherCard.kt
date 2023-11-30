@@ -106,7 +106,7 @@ private fun WeatherCard(
             backgroundColor = mainThemeColorAccent
         ) {
             Text(
-                text = stringResource(R.string.home_card_weather_title),
+                text = stringResource(R.string.weather_card_title),
                 modifier = Modifier.padding(
                     horizontal = 16.dp,
                     vertical = 8.dp

@@ -80,7 +80,7 @@ fun FoodRecipesTabBar(
             backgroundColor = mainThemeColorAccent
         ) {
             Text(
-                text = stringResource(R.string.home_card_food_recipes_title),
+                text = stringResource(R.string.food_recipes_card_title),
                 modifier = Modifier.padding(
                     horizontal = 12.dp,
                     vertical = 8.dp

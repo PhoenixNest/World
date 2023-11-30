@@ -29,15 +29,6 @@
     <string name="home_label">Home</string>
     <string name="home_title">@string/home_label</string>
     <string name="home_main_title">Beyond the World</string>
-    <string name="home_card_weather_title">Today\'s Weather</string>
-    <string name="home_card_todo_title">Check out your todo tasks</string>
-    <string name="home_card_food_recipes_title">Eat and drink your fill</string>
-    <string name="home_food_recipes_label_coffee">Coffee</string>
-    <string name="home_food_recipes_label_breakfast">Breakfast</string>
-    <string name="home_food_recipes_label_lunch">Lunch</string>
-    <string name="home_food_recipes_label_dinner">Dinner</string>
-    <string name="home_food_recipes_label_cookie">Cookie</string>
-    <string name="home_food_recipes_label_snack">Snack</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>
@@ -57,13 +48,6 @@
     <!-- Mine Page -->
     <string name="mine_title">Me</string>
 
-    <!-- Todo Page -->
-    <string name="todo_title">Todo</string>
-    <string name="todo_ext_fab_label">Make a plan</string>
-    <string name="todo_create_title_hint">Title</string>
-    <string name="todo_create_subtitle_hint">Subtitle</string>
-    <string name="todo_create_content_hint">Content</string>
-
     <!-- Setting Page -->
     <string name="setting_title">Setting</string>
 
@@ -72,5 +56,34 @@
     <string name="debug_title">DEBUG CENTER</string>
     <string name="debug_title_map">Map Center</string>
     <string name="debug_title_machine_learning">Machine Learning Center</string>
+
+    <!-- Todo Unit -->
+    <string name="todo_card_title">Check out your todo tasks</string>
+    <string name="todo_title">Todo</string>
+    <string name="todo_ext_fab_label">Make a plan</string>
+    <string name="todo_create_title_hint">Title</string>
+    <string name="todo_create_subtitle_hint">Subtitle</string>
+    <string name="todo_create_content_hint">Content</string>
+
+    <!-- Weather Unit -->
+    <string name="weather_card_title">Today\'s Weather</string>
+
+    <!-- Food Recipes Unit -->
+    <string name="food_recipes_card_title">Eat and drink your fill</string>
+    <string name="food_recipes_label_coffee">Coffee</string>
+    <string name="food_recipes_label_breakfast">Breakfast</string>
+    <string name="food_recipes_label_lunch">Lunch</string>
+    <string name="food_recipes_label_dinner">Dinner</string>
+    <string name="food_recipes_label_cookie">Cookie</string>
+    <string name="food_recipes_label_snack">Snack</string>
+
+    <!-- News Unit -->
+    <string name="news_label_for_you">For you</string>
+    <string name="news_label_technology">Technology</string>
+    <string name="news_label_science">Science</string>
+    <string name="news_label_business">Business</string>
+    <string name="news_label_entertainment">Entertainment</string>
+    <string name="news_label_sports">Sports</string>
+    <string name="news_label_health">Health</string>
 
 </resources>
