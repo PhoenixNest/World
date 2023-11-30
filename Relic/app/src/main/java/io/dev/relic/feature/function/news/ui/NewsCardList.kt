@@ -70,7 +70,7 @@ fun NewsCardList(
             } else {
                 val itemDecorationModifier: Modifier = Modifier.padding(
                     top = if (index == 0) 16.dp else 0.dp,
-                    bottom = if (index == modelList.size - 1) 16.dp else 0.dp
+                    bottom = if (index == modelList.size - 1) 120.dp else 0.dp
                 )
                 NewsCardItem(
                     data = data,

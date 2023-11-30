@@ -11,6 +11,7 @@ import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.EverythingNewsDataState
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
+import io.dev.relic.feature.function.news.ui.NewsPanel
 import io.dev.relic.feature.pages.hive.viewmodel.HiveViewModel
 import io.dev.relic.feature.screens.main.MainState
 
@@ -38,6 +39,6 @@ private fun HivePage(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
     ) {
-        //
+        NewsPanel()
     }
 }

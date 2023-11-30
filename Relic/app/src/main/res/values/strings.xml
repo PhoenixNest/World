@@ -78,6 +78,7 @@
     <string name="food_recipes_label_snack">Snack</string>
 
     <!-- News Unit -->
+    <string name="news_title">Newspaper</string>
     <string name="news_label_for_you">For you</string>
     <string name="news_label_technology">Technology</string>
     <string name="news_label_science">Science</string>
