@@ -42,17 +42,17 @@ class HomeViewModel @Inject constructor(
     /**
      * Indicate the current selected food recipes tab.
      * */
-    var currentSelectedFoodRecipesTab: Int by mutableIntStateOf(0)
+    private var _currentSelectedFoodRecipesTab: Int by mutableIntStateOf(0)
 
     /**
      * Check whether if already fetch the recipes data for initialize.
      * */
-    private var isFirstFetchFoodRecipes: Boolean = true
+    private var _isFirstFetchFoodRecipes: Boolean = true
 
     /**
      * The number of results to skip (between 0 and 900).
      * */
-    private var foodRecipesOffset: Int = 0
+    private var _foodRecipesOffset: Int = 0
 
     /**
      * The data flow of weather forecast.
@@ -147,14 +147,14 @@ class HomeViewModel @Inject constructor(
         addRecipeInformation: Boolean = true,
         addRecipeNutrition: Boolean = true,
     ): StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> {
-        isFirstFetchFoodRecipes = isRefresh
-        foodRecipesOffset += if (isRefresh) 0 else 10
+        _isFirstFetchFoodRecipes = isRefresh
+        _foodRecipesOffset += if (isRefresh) 0 else 10
         return foodRecipesUseCase
             .fetchComplexRecipesData(
                 query = query,
                 addRecipeInformation = addRecipeInformation,
                 addRecipeNutrition = addRecipeNutrition,
-                offset = foodRecipesOffset
+                offset = _foodRecipesOffset
             )
             .stateIn(
                 scope = viewModelScope,
@@ -170,8 +170,12 @@ class HomeViewModel @Inject constructor(
             }
     }
 
-    fun updateSelectedFoodRecipesTabs(newIndex: Int) {
-        currentSelectedFoodRecipesTab = newIndex
+    fun getSelectedFoodRecipesTab(): Int {
+        return _currentSelectedFoodRecipesTab
+    }
+
+    fun updateSelectedFoodRecipesTab(newIndex: Int) {
+        _currentSelectedFoodRecipesTab = newIndex
     }
 
     private fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {

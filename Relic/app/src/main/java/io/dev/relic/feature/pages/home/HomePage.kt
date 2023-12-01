@@ -17,15 +17,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesPanel
+import io.dev.relic.feature.function.weather.WeatherDataState
+import io.dev.relic.feature.function.weather.ui.WeatherCard
 import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_FOOD_RECIPES_CARD
-import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_NEWS_CARD
 import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_WEATHER_CARD
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.weather.WeatherDataState
-import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesPanel
 import io.dev.relic.feature.pages.home.widget.HomeTopBar
-import io.dev.relic.feature.function.weather.ui.WeatherCard
 import io.dev.relic.feature.screens.main.MainState
 
 @Composable
@@ -60,10 +59,9 @@ fun HomePageRoute(
     HomePage(
         isShowWeatherCard = IS_SHOW_WEATHER_CARD,
         isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
-        isShowNewsContent = IS_SHOW_NEWS_CARD,
         weatherDataState = weatherState,
         foodRecipesState = foodRecipesState,
-        currentSelectedFoodRecipesTab = homeViewModel.currentSelectedFoodRecipesTab,
+        currentSelectedFoodRecipesTab = homeViewModel.getSelectedFoodRecipesTab(),
         onWeatherRetry = {
             mainViewModel.latestLocation?.also {
                 homeViewModel.fetchWeatherData(it.latitude, it.longitude)
@@ -77,7 +75,7 @@ fun HomePageRoute(
         },
         onSelectedFoodRecipesTabItem = { currentSelectedTab: Int, selectedItem: String ->
             homeViewModel.apply {
-                updateSelectedFoodRecipesTabs(currentSelectedTab)
+                updateSelectedFoodRecipesTab(currentSelectedTab)
                 fetchFoodRecipesData(isRefresh = true, query = selectedItem)
             }
         }
@@ -88,7 +86,6 @@ fun HomePageRoute(
 private fun HomePage(
     isShowWeatherCard: Boolean,
     isShowFoodRecipesCard: Boolean,
-    isShowNewsContent: Boolean,
     weatherDataState: WeatherDataState,
     foodRecipesState: FoodRecipesDataState,
     currentSelectedFoodRecipesTab: Int,
@@ -125,9 +122,6 @@ private fun HomePage(
                 )
                 CommonItemDivider()
             }
-            if (isShowNewsContent) {
-
-            }
         }
     }
 }
@@ -138,7 +132,6 @@ private fun HomePagePreview() {
     HomePage(
         isShowWeatherCard = IS_SHOW_WEATHER_CARD,
         isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
-        isShowNewsContent = IS_SHOW_NEWS_CARD,
         weatherDataState = WeatherDataState.Init,
         foodRecipesState = FoodRecipesDataState.Init,
         currentSelectedFoodRecipesTab = 0,

@@ -10,12 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.core.ui.CommonNoDataComponent
 import io.data.model.news.NewsArticleModel
+import io.data.model.news.NewsArticleModel.Companion.testList
 
 @Composable
-fun NewsPanel() {
+fun NewsPanel(
+    currentSelectedTab: Int,
+    modelList: List<NewsArticleModel?>?,
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    onCardClick: (model: NewsArticleModel) -> Unit,
+    onLikeClick: (model: NewsArticleModel) -> Unit,
+    onShareClick: (model: NewsArticleModel) -> Unit
+) {
     val lazyListState: LazyListState = rememberLazyListState()
-    val testModelList: List<NewsArticleModel> = NewsArticleModel.testList()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -23,22 +31,33 @@ fun NewsPanel() {
         horizontalAlignment = Alignment.Start
     ) {
         NewsTabBar(
-            currentSelectedTab = 0,
-            onTabItemClick = { _: Int, _: String -> },
+            currentSelectedTab = currentSelectedTab,
+            onTabItemClick = onTabItemClick,
             modifier = Modifier.statusBarsPadding()
         )
-        NewsCardList(
-            lazyListState = lazyListState,
-            modelList = testModelList,
-            onCardClick = {},
-            onLikeClick = {},
-            onShareClick = {}
-        )
+        if (modelList.isNullOrEmpty()) {
+            CommonNoDataComponent()
+        } else {
+            NewsCardList(
+                lazyListState = lazyListState,
+                modelList = modelList,
+                onCardClick = onCardClick,
+                onLikeClick = onLikeClick,
+                onShareClick = onShareClick
+            )
+        }
     }
 }
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282C34)
 private fun NewsPanelPreview() {
-    NewsPanel()
+    NewsPanel(
+        currentSelectedTab = 0,
+        modelList = testList(),
+        onTabItemClick = { _: Int, _: String -> },
+        onCardClick = {},
+        onLikeClick = {},
+        onShareClick = {}
+    )
 }

@@ -3,12 +3,14 @@ package io.domain.use_case.news.action
 import io.core.network.NetworkParameters
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.model.NetworkResult
+import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
 import io.domain.repository.INewsDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.util.Locale
 import javax.inject.Inject
 
 class FetchEverythingNews @Inject constructor(
@@ -37,7 +39,7 @@ class FetchEverythingNews @Inject constructor(
         apiKey: String = NetworkParameters.Keys.NEWS_API_DEV_KEY,
         keyWords: String,
         source: String,
-        language: String,
+        language: NewsLanguageType,
         sortBy: NewsSortRule,
         pageSize: Int,
         page: Int
@@ -47,8 +49,8 @@ class FetchEverythingNews @Inject constructor(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 source = source,
-                language = language,
-                sortBy = sortBy.ruleString,
+                language = language.name.lowercase(Locale.getDefault()),
+                sortBy = sortBy.ruleString.lowercase(Locale.getDefault()),
                 pageSize = pageSize,
                 page = page
             )

@@ -1,6 +1,9 @@
 package io.dev.relic.feature.pages.hive.viewmodel
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,8 +15,15 @@ import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
+import io.data.util.NewsCountryType
+import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
 import io.dev.relic.feature.function.news.EverythingNewsDataState
+import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
+import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
+import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_NEWS_SORT_RULE
+import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_NEWS_LANGUAGE
+import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_SEARCH_KEYWORDS
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.domain.use_case.news.NewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +41,11 @@ class HiveViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     /**
+     * Indicate the current selected top headline categories tab.
+     * */
+    private var _currentSelectedTopHeadlineNewsCategories: Int by mutableIntStateOf(0)
+
+    /**
      * The data flow of everything news.
      * */
     private val _everythingNewsDataStateFlow: MutableStateFlow<EverythingNewsDataState> = MutableStateFlow(EverythingNewsDataState.Init)
@@ -46,13 +61,17 @@ class HiveViewModel @Inject constructor(
         private const val TAG = "HiveViewModel"
     }
 
+    init {
+        fetchEverythingNewsData()
+    }
+
     fun fetchEverythingNewsData(
-        keyWords: String,
-        source: String,
-        language: String,
-        sortBy: NewsSortRule,
-        pageSize: Int,
-        page: Int
+        keyWords: String = DEFAULT_SEARCH_KEYWORDS,
+        source: String = "",
+        language: NewsLanguageType = DEFAULT_NEWS_LANGUAGE,
+        sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
+        pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
+        page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
     ): StateFlow<NetworkResult<NewsEverythingDTO>> {
         return newsUseCase
             .fetchEverythingNews(
@@ -79,7 +98,7 @@ class HiveViewModel @Inject constructor(
 
     fun fetchTopHeadlineNewsData(
         keyWords: String,
-        country: String,
+        country: NewsCountryType,
         category: NewsCategory,
         pageSize: Int,
         page: Int
@@ -104,6 +123,14 @@ class HiveViewModel @Inject constructor(
                     }
                 }
             }
+    }
+
+    fun getSelectedTopHeadlineNewsCategoriesTab(): Int {
+        return _currentSelectedTopHeadlineNewsCategories
+    }
+
+    fun updateSelectedTopHeadlineCategoriesTab(newIndex: Int) {
+        _currentSelectedTopHeadlineNewsCategories = newIndex
     }
 
     private fun handleEverythingNewsData(result: NetworkResult<NewsEverythingDTO>) {

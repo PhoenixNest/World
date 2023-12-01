@@ -4,6 +4,7 @@ import io.core.network.NetworkParameters
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
+import io.data.util.NewsCountryType
 import io.domain.repository.INewsDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,7 +38,7 @@ class FetchHeadlineNews @Inject constructor(
     operator fun invoke(
         apiKey: String = NetworkParameters.Keys.NEWS_API_DEV_KEY,
         keyWords: String,
-        country: String,
+        country: NewsCountryType,
         category: NewsCategory,
         pageSize: Int,
         page: Int
@@ -46,7 +47,7 @@ class FetchHeadlineNews @Inject constructor(
             val result: NetworkResult<NewsTopHeadlinesDTO> = newsRepository.fetchTopHeadlinesNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
-                country = country,
+                country = country.name.lowercase(Locale.getDefault()),
                 category = category.name.lowercase(Locale.getDefault()),
                 pageSize = pageSize,
                 page = page
