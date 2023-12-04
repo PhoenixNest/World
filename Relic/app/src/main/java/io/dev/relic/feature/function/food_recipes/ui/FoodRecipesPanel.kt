@@ -33,28 +33,30 @@ fun FoodRecipesPanel(
     foodRecipesState: FoodRecipesDataState,
     onRetryClick: () -> Unit,
     onFetchMore: () -> Unit,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    tabLazyListState: LazyListState,
+    contentLazyListState: LazyListState
 ) {
-    val lazyListState: LazyListState = rememberLazyListState()
-
     when (val state: FoodRecipesDataState = foodRecipesState) {
         is FoodRecipesDataState.Init,
         is FoodRecipesDataState.Fetching -> {
             FoodRecipesPanel(
                 currentSelectedTab = currentSelectedTab,
                 isFetchingData = true,
-                lazyListState = lazyListState,
                 modelList = emptyList(),
                 onRetryClick = {},
-                onTabItemClick = { _: Int, _: String -> }
+                onTabItemClick = { _: Int, _: String -> },
+                tabLazyListState = tabLazyListState,
+                contentLazyListState = contentLazyListState
             )
         }
 
         is FoodRecipesDataState.FetchSucceed -> {
             FoodRecipesPanel(
                 currentSelectedTab = currentSelectedTab,
+                tabLazyListState = tabLazyListState,
+                contentLazyListState = contentLazyListState,
                 isFetchingData = false,
-                lazyListState = lazyListState,
                 modelList = state.modelList,
                 onRetryClick = onRetryClick,
                 onTabItemClick = onTabItemClick
@@ -67,13 +69,13 @@ fun FoodRecipesPanel(
             FoodRecipesPanel(
                 currentSelectedTab = currentSelectedTab,
                 isFetchingData = false,
-                lazyListState = lazyListState,
                 modelList = emptyList(),
                 onRetryClick = onRetryClick,
-                onTabItemClick = onTabItemClick
+                onTabItemClick = onTabItemClick,
+                tabLazyListState = tabLazyListState,
+                contentLazyListState = contentLazyListState
             )
         }
-
     }
 }
 
@@ -81,10 +83,11 @@ fun FoodRecipesPanel(
 private fun FoodRecipesPanel(
     currentSelectedTab: Int,
     isFetchingData: Boolean,
-    lazyListState: LazyListState,
     modelList: List<FoodRecipesComplexSearchInfoModel?>?,
     onRetryClick: () -> Unit,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    tabLazyListState: LazyListState,
+    contentLazyListState: LazyListState
 ) {
     Column(
         modifier = Modifier
@@ -94,6 +97,7 @@ private fun FoodRecipesPanel(
         horizontalAlignment = Alignment.Start
     ) {
         FoodRecipesTabBar(
+            lazyListState = tabLazyListState,
             currentSelectedTab = currentSelectedTab,
             onTabItemClick = onTabItemClick
         )
@@ -125,7 +129,7 @@ private fun FoodRecipesPanel(
                 }
             } else {
                 FoodRecipesCardList(
-                    lazyListState = lazyListState,
+                    lazyListState = contentLazyListState,
                     modelList = modelList
                 )
             }
@@ -139,10 +143,11 @@ private fun FoodRecipesNoDataCardPreview() {
     FoodRecipesPanel(
         currentSelectedTab = 0,
         isFetchingData = false,
-        lazyListState = rememberLazyListState(),
         modelList = null,
         onRetryClick = {},
-        onTabItemClick = { _: Int, _: String -> }
+        onTabItemClick = { _: Int, _: String -> },
+        tabLazyListState = rememberLazyListState(),
+        contentLazyListState = rememberLazyListState()
     )
 }
 
@@ -152,7 +157,6 @@ private fun FoodRecipesCardPreview() {
     FoodRecipesPanel(
         currentSelectedTab = 0,
         isFetchingData = false,
-        lazyListState = rememberLazyListState(),
         modelList = listOf(
             FoodRecipesComplexSearchInfoModel(
                 id = -1,
@@ -168,6 +172,8 @@ private fun FoodRecipesCardPreview() {
             )
         ),
         onRetryClick = {},
-        onTabItemClick = { _: Int, _: String -> }
+        onTabItemClick = { _: Int, _: String -> },
+        tabLazyListState = rememberLazyListState(),
+        contentLazyListState = rememberLazyListState()
     )
 }

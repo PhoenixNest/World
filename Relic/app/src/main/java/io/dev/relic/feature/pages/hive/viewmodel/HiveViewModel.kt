@@ -19,11 +19,14 @@ import io.data.util.NewsCountryType
 import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
 import io.dev.relic.feature.function.news.EverythingNewsDataState
+import io.dev.relic.feature.function.news.NewsUnitConfig
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_NEWS_SORT_RULE
 import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_NEWS_LANGUAGE
-import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_SEARCH_KEYWORDS
+import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_NEWS_SOURCE
+import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_CATEGORY
+import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.domain.use_case.news.NewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,11 +66,12 @@ class HiveViewModel @Inject constructor(
 
     init {
         fetchEverythingNewsData()
+        fetchTopHeadlineNewsData()
     }
 
     fun fetchEverythingNewsData(
-        keyWords: String = DEFAULT_SEARCH_KEYWORDS,
-        source: String = "",
+        keyWords: String = NewsUnitConfig.Everything.DEFAULT_SEARCH_KEYWORDS,
+        source: String = DEFAULT_NEWS_SOURCE,
         language: NewsLanguageType = DEFAULT_NEWS_LANGUAGE,
         sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
@@ -97,11 +101,11 @@ class HiveViewModel @Inject constructor(
     }
 
     fun fetchTopHeadlineNewsData(
-        keyWords: String,
-        country: NewsCountryType,
-        category: NewsCategory,
-        pageSize: Int,
-        page: Int
+        keyWords: String = NewsUnitConfig.TopHeadline.DEFAULT_SEARCH_KEYWORDS,
+        country: NewsCountryType = DEFAULT_NEWS_COUNTRY_TYPE,
+        category: NewsCategory = DEFAULT_NEWS_CATEGORY,
+        pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
+        page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
     ): StateFlow<NetworkResult<NewsTopHeadlinesDTO>> {
         return newsUseCase
             .fetchTopHeadlineNews(

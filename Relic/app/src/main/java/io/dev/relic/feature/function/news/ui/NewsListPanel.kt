@@ -37,22 +37,45 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.common.RelicConstants
 import io.core.ui.CommonAsyncImage
+import io.core.ui.CommonNoDataComponent
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainButtonColorLightDark
 import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
+import io.data.model.news.NewsArticleModel.Companion.testList
 import java.time.LocalTime
 
 @Composable
-fun NewsCardList(
-    lazyListState: LazyListState,
+fun NewsListPanel(
+    modelList: List<NewsArticleModel?>?,
+    onCardClick: (model: NewsArticleModel) -> Unit,
+    onLikeClick: (model: NewsArticleModel) -> Unit,
+    onShareClick: (model: NewsArticleModel) -> Unit,
+    lazyListState: LazyListState
+) {
+    if (modelList.isNullOrEmpty()) {
+        CommonNoDataComponent()
+    } else {
+        NewsCardList(
+            modelList = modelList,
+            onCardClick = onCardClick,
+            onLikeClick = onLikeClick,
+            onShareClick = onShareClick,
+            lazyListState = lazyListState
+        )
+    }
+}
+
+@Composable
+private fun NewsCardList(
     modelList: List<NewsArticleModel?>,
     onCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
-    onShareClick: (model: NewsArticleModel) -> Unit
+    onShareClick: (model: NewsArticleModel) -> Unit,
+    lazyListState: LazyListState
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -60,7 +83,7 @@ fun NewsCardList(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.spacedBy(
             space = 16.dp,
-            Alignment.Top
+            alignment = Alignment.Top
         ),
         contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
@@ -236,21 +259,21 @@ private fun NewsCardFunctionBar(
         IconButton(onClick = onLikeClick) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                contentDescription = DEFAULT_DESC,
+                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
                 tint = mainButtonColorLightDark
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.Share,
-                contentDescription = DEFAULT_DESC,
+                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
                 tint = mainButtonColorLightDark
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = DEFAULT_DESC,
+                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
                 tint = mainButtonColorLightDark
             )
         }
@@ -259,31 +282,12 @@ private fun NewsCardFunctionBar(
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282C34)
-private fun NewsCardListPreview() {
-    NewsCardList(
-        lazyListState = rememberLazyListState(),
-        modelList = listOf(
-            NewsArticleModel(
-                title = "Just this... and WoW will be perfect for me.",
-                subtitle = "(First of all, English is not my first language so forgive me if something is weird..) \\n \\nIt seems that the gypsy witch who stopped me one day while I was going to work and told me that you are all NPCs, this is just a simulation and the world conspires in my…",
-                author = "Fantazma",
-                thumbnailImageUrl = "null",
-                publishDate = "2023-11-28 T00:40:11Z",
-                contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
-                source = "Mmo-champion.com"
-            ),
-            NewsArticleModel(
-                title = "House speaker suggest George Santos will quit rather than be expelled",
-                subtitle = "Speaker of the House Mike Johnson on Monday afternoon said he has spoken to U.S. Rep. George Santos, suggesting the embattled and indicted New York Republican might resign rather than face an impending expulsion vote he’s likely to lose.But over the holiday w…",
-                author = "David Badash, The New Civil Rights Movement",
-                thumbnailImageUrl = "https://www.rawstory.com/media-library/george-santos.jpg?id=32972710&width=1200&height=600&coordinates=0%2C25%2C0%2C25",
-                publishDate = "2023-11-27 T21:08:30Z",
-                contentUrl = "https://www.rawstory.com/house-speaker-suggest-george-santos-will-quit-rather-than-be-expelled/",
-                source = "Raw Story"
-            )
-        ),
+private fun NewsListPanelPreview() {
+    NewsListPanel(
+        modelList = testList(),
         onCardClick = {},
         onLikeClick = {},
-        onShareClick = {}
+        onShareClick = {},
+        lazyListState = rememberLazyListState()
     )
 }

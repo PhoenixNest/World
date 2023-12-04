@@ -1,5 +1,6 @@
 package io.core.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -21,7 +23,7 @@ import coil.request.ImageRequest
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
-import io.common.RelicConstants
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.placeHolderHighlightColor
 
 @Composable
@@ -39,13 +41,14 @@ fun CommonAsyncImage(
         modifier = modifier
             .width(imageWidth)
             .height(imageHeight),
-        shape = imageShape
+        shape = imageShape,
+        color = Color.Transparent
     ) {
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url)
                 .build(),
-            contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+            contentDescription = DEFAULT_DESC,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         ) {
@@ -61,14 +64,19 @@ fun CommonAsyncImage(
                 )
 
                 is AsyncImagePainter.State.Empty,
-                is AsyncImagePainter.State.Error -> CommonNoDataComponent(
-                    modifier = Modifier.fillMaxSize(),
-                    backgroundColor = Color.DarkGray,
-                    iconSizeModifier = Modifier
-                        .width(lottieViewWidth)
-                        .height(lottieViewHeight),
-                    isShowText = false
-                )
+                is AsyncImagePainter.State.Error -> {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        shape = RoundedCornerShape(imageRadius),
+                        color = Color.Transparent
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.no_data_placeholder),
+                            contentDescription = DEFAULT_DESC,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
 
                 is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
             }

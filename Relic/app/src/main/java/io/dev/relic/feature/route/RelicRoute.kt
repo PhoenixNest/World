@@ -6,5 +6,5 @@ object RelicRoute {
     const val EXPLORE = "route_explore"
     const val HIVE = "route_hive"
 
-    const val BASE_ROUTE: String = HOME
+    const val BASE_ROUTE: String = HIVE
 }

@@ -11,13 +11,14 @@ object NewsUnitConfig {
     const val DEFAULT_INIT_NEWS_PAGE_INDEX = 1
 
     object Everything {
-        const val DEFAULT_SEARCH_KEYWORDS = "For you"
+        const val DEFAULT_SEARCH_KEYWORDS = "Trending"
+        const val DEFAULT_NEWS_SOURCE = ""
         val DEFAULT_NEWS_LANGUAGE = NewsLanguageType.EN
     }
 
     object TopHeadline {
         const val DEFAULT_SEARCH_KEYWORDS = ""
-        val DEFAULT_NEWS_CATEGORY = NewsCategory.Technology
         val DEFAULT_NEWS_COUNTRY_TYPE = NewsCountryType.US
+        val DEFAULT_NEWS_CATEGORY = NewsCategory.Technology
     }
 }

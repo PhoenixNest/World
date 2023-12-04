@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,6 +38,11 @@ fun HomePageRoute(
     val weatherState: WeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
     val foodRecipesState: FoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
 
+    /* ======================== Ui ======================== */
+
+    val foodRecipesTabLazyListState: LazyListState = rememberLazyListState()
+    val foodRecipesContentLazyListState: LazyListState = rememberLazyListState()
+
     LaunchedEffect(mainState) {
         when (mainState) {
             is MainState.Init,
@@ -61,6 +68,8 @@ fun HomePageRoute(
         isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
         weatherDataState = weatherState,
         foodRecipesState = foodRecipesState,
+        foodRecipesTabLazyListState = foodRecipesTabLazyListState,
+        foodRecipesContentLazyListState = foodRecipesContentLazyListState,
         currentSelectedFoodRecipesTab = homeViewModel.getSelectedFoodRecipesTab(),
         onWeatherRetry = {
             mainViewModel.latestLocation?.also {
@@ -88,6 +97,8 @@ private fun HomePage(
     isShowFoodRecipesCard: Boolean,
     weatherDataState: WeatherDataState,
     foodRecipesState: FoodRecipesDataState,
+    foodRecipesTabLazyListState: LazyListState,
+    foodRecipesContentLazyListState: LazyListState,
     currentSelectedFoodRecipesTab: Int,
     onWeatherRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit,
@@ -115,6 +126,8 @@ private fun HomePage(
             if (isShowFoodRecipesCard) {
                 FoodRecipesPanel(
                     currentSelectedTab = currentSelectedFoodRecipesTab,
+                    tabLazyListState = foodRecipesTabLazyListState,
+                    contentLazyListState = foodRecipesContentLazyListState,
                     foodRecipesState = foodRecipesState,
                     onRetryClick = onFoodRecipesRetry,
                     onFetchMore = onFetchMoreFoodRecipesData,
@@ -134,6 +147,8 @@ private fun HomePagePreview() {
         isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
         weatherDataState = WeatherDataState.Init,
         foodRecipesState = FoodRecipesDataState.Init,
+        foodRecipesTabLazyListState = rememberLazyListState(),
+        foodRecipesContentLazyListState = rememberLazyListState(),
         currentSelectedFoodRecipesTab = 0,
         onWeatherRetry = {},
         onFoodRecipesRetry = {},
