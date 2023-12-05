@@ -19,7 +19,7 @@ sealed class TopHeadlineNewsDataState {
     /* Succeed */
 
     data class FetchSucceed(
-        val modelList: List<NewsArticleModel?>?
+        val modelList: List<NewsArticleModel?>
     ) : TopHeadlineNewsDataState()
 
     /* Failed */

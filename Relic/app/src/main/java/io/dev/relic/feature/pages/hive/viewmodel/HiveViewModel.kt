@@ -145,9 +145,14 @@ class HiveViewModel @Inject constructor(
             }
 
             is NetworkResult.Success -> {
-                result.data?.also {
-                    LogUtil.debug(TAG, "[Handle Everything News Data] Succeed, data: $it")
-                    setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(it.articles?.toNewsArticleModelList()))
+                result.data?.also { dto: NewsEverythingDTO ->
+                    LogUtil.debug(TAG, "[Handle Everything News Data] Succeed, data: $dto")
+                    dto.articles?.also {
+                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                    } ?: {
+                        LogUtil.warning(TAG, "[Handle Everything News Data] Succeed without [Articles] data")
+                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                    }
                 } ?: {
                     LogUtil.warning(TAG, "[Handle Everything News Data] Succeed without data")
                     setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
@@ -171,9 +176,14 @@ class HiveViewModel @Inject constructor(
             }
 
             is NetworkResult.Success -> {
-                result.data?.also {
-                    LogUtil.debug(TAG, "[Handle Top Headline News Data] Succeed, data: $it")
-                    setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.articles?.toNewsArticleModelList()))
+                result.data?.also { dto: NewsTopHeadlinesDTO ->
+                    LogUtil.debug(TAG, "[Handle Top Headline News Data] Succeed, data: $dto")
+                    dto.articles?.also {
+                        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                    } ?: {
+                        LogUtil.warning(TAG, "[Handle Top Headline News Data] Succeed without [Articles] data")
+                        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
+                    }
                 } ?: {
                     LogUtil.warning(TAG, "[Handle Top Headline News Data] Succeed without data")
                     setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)

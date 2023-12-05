@@ -108,7 +108,7 @@ private fun NewsCardList(
 }
 
 @Composable
-private fun NewsCardItem(
+fun NewsCardItem(
     data: NewsArticleModel,
     onCardClick: () -> Unit,
     onLikeClick: () -> Unit,
