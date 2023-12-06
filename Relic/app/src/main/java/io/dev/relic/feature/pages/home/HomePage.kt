@@ -1,10 +1,10 @@
 package io.dev.relic.feature.pages.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
@@ -109,31 +109,37 @@ private fun HomePage(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeTopBar(onOpenDrawer = {})
-            Spacer(modifier = Modifier.height(32.dp))
-            if (isShowWeatherCard) {
-                WeatherCard(
-                    weatherDataState = weatherDataState,
-                    onRetryClick = onWeatherRetry
-                )
-                CommonItemDivider()
+            item {
+                HomeTopBar(onOpenDrawer = {})
+                Spacer(modifier = Modifier.height(32.dp))
             }
-            if (isShowFoodRecipesCard) {
-                FoodRecipesPanel(
-                    currentSelectedTab = currentSelectedFoodRecipesTab,
-                    tabLazyListState = foodRecipesTabLazyListState,
-                    contentLazyListState = foodRecipesContentLazyListState,
-                    foodRecipesState = foodRecipesState,
-                    onRetryClick = onFoodRecipesRetry,
-                    onFetchMore = onFetchMoreFoodRecipesData,
-                    onTabItemClick = onSelectedFoodRecipesTabItem
-                )
-                CommonItemDivider()
+            item {
+                if (isShowWeatherCard) {
+                    WeatherCard(
+                        weatherDataState = weatherDataState,
+                        onRetryClick = onWeatherRetry
+                    )
+                    CommonItemDivider()
+                }
+            }
+            item {
+                if (isShowFoodRecipesCard) {
+                    FoodRecipesPanel(
+                        currentSelectedTab = currentSelectedFoodRecipesTab,
+                        tabLazyListState = foodRecipesTabLazyListState,
+                        contentLazyListState = foodRecipesContentLazyListState,
+                        foodRecipesState = foodRecipesState,
+                        onRetryClick = onFoodRecipesRetry,
+                        onFetchMore = onFetchMoreFoodRecipesData,
+                        onTabItemClick = onSelectedFoodRecipesTabItem
+                    )
+                    CommonItemDivider()
+                }
             }
         }
     }
