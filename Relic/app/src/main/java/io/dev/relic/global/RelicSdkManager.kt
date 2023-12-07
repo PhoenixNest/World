@@ -1,6 +1,7 @@
 package io.dev.relic.global
 
 import android.content.Context
+import io.module.ad.admob.AdmobAdManager
 
 object RelicSdkManager {
 
@@ -17,7 +18,7 @@ object RelicSdkManager {
      * @param context
      * */
     private fun initAdmob(context: Context) {
-        io.module.ad.admob.AdmobAdManager.init(context)
+        AdmobAdManager.init(context)
     }
 
 }
