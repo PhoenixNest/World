@@ -14,13 +14,15 @@ import io.core.ui.theme.dividerColor
 fun CommonItemDivider(
     modifier: Modifier = Modifier,
     lineColor: Color = dividerColor,
-    thickness: Dp = 1.dp
+    thickness: Dp = 1.dp,
+    horizontalMargin: Dp = 20.dp,
+    verticalMargin: Dp = 16.dp
 ) {
     Divider(
         modifier = modifier
             .padding(
-                horizontal = 20.dp,
-                vertical = 16.dp
+                horizontal = horizontalMargin,
+                vertical = verticalMargin
             )
             .fillMaxWidth(),
         color = lineColor,

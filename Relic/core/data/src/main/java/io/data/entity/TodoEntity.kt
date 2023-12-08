@@ -17,7 +17,7 @@ data class TodoEntity(
     @ColumnInfo(name = "color_hex")
     val color: Long,
     @ColumnInfo(name = "update_time")
-    val timeStamp: Long,
+    val updateTime: String,
     @ColumnInfo(name = "isFinish")
     val isFinish: Boolean
 ) {

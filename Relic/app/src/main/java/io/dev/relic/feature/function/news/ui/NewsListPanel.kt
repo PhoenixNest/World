@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
+import io.common.util.TimeUtil
 import io.core.ui.CommonAsyncImage
 import io.core.ui.CommonNoDataComponent
 import io.core.ui.theme.RelicFontFamily
@@ -139,7 +140,7 @@ fun NewsCardItem(
                 NewsCardItemIntro(
                     title = title ?: "Title",
                     thumbnailImageUrl = thumbnailImageUrl,
-                    publishDate = publishDate ?: LocalTime.now().toString()
+                    publishDate = publishDate ?: TimeUtil.getCurrentTime().toString()
                 )
                 Spacer(modifier = Modifier.height(18.dp))
                 NewsCardItemDesc(
