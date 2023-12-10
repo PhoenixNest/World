@@ -14,12 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tomtom.sdk.location.GeoLocation
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainState
 import io.module.map.amap.ui.AMapComponent
 import io.core.ui.theme.mainThemeColor
+import io.module.map.tomtom.ui.TomTomMapComponent
 
 @Composable
 fun ExplorePageRoute(
@@ -31,6 +33,9 @@ fun ExplorePageRoute(
         currentSelectedBottomSheetTab = exploreViewModel.currentSelectedBottomSheetTab,
         onTabItemClick = { currentSelectedTab: Int, selectedItem: String ->
             exploreViewModel.updateSelectedBottomSheetTab(currentSelectedTab)
+        },
+        onLocationUpdate = { location: GeoLocation ->
+            //
         }
     )
 }
@@ -39,7 +44,8 @@ fun ExplorePageRoute(
 @Composable
 private fun ExplorePage(
     currentSelectedBottomSheetTab: Int,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    onLocationUpdate: (location: GeoLocation) -> Unit
 ) {
     BottomSheetScaffold(
         sheetContent = {
@@ -61,7 +67,7 @@ private fun ExplorePage(
                     .fillMaxSize()
                     .background(color = mainThemeColor)
             ) {
-                AMapComponent()
+                TomTomMapComponent(onLocationUpdate = onLocationUpdate)
             }
         }
     )
@@ -72,6 +78,7 @@ private fun ExplorePage(
 private fun ExplorePagePreview() {
     ExplorePage(
         currentSelectedBottomSheetTab = 0,
-        onTabItemClick = { _: Int, _: String -> }
+        onTabItemClick = { _: Int, _: String -> },
+        onLocationUpdate = { _: GeoLocation -> }
     )
 }

@@ -22,11 +22,13 @@ import androidx.lifecycle.Lifecycle.Event.ON_STOP
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.tomtom.sdk.location.GeoLocation
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.tomtom.TomTomMapConfig
+import io.module.map.tomtom.TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider
 
 /**
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
@@ -39,6 +41,7 @@ import io.module.map.tomtom.TomTomMapConfig
  * */
 @Composable
 fun TomTomMapComponent(
+    onLocationUpdate: (location: GeoLocation) -> Unit,
     modifier: Modifier = Modifier,
     mapOptionsFactory: () -> MapOptions = { MapOptions(TomTomMapConfig.mapDevKey) }
 ) {
@@ -58,7 +61,10 @@ fun TomTomMapComponent(
     )
 
     TomTomMapLifecycleBinder(mapView)
-    // TomTomMapLocationProviderBinder(mapView)
+    TomTomMapLocationProviderBinder(
+        mapView = mapView,
+        onLocationUpdate = onLocationUpdate
+    )
 }
 
 /* ======================== Util ======================== */
@@ -98,11 +104,18 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
 }
 
 @Composable
-private fun TomTomMapLocationProviderBinder(mapView: MapView) {
+private fun TomTomMapLocationProviderBinder(
+    mapView: MapView,
+    onLocationUpdate: (location: GeoLocation) -> Unit
+) {
     val context: Context = LocalContext.current
 
     SideEffect {
-        val locationProvider: AndroidLocationProvider = TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider(context)
+        val locationProvider: AndroidLocationProvider = defaultLocationProvider(
+            context = context,
+            onLocationUpdate = onLocationUpdate
+        )
+
         mapView.getMapAsync { tomTomMap: TomTomMap ->
             tomTomMap.setLocationProvider(locationProvider)
         }

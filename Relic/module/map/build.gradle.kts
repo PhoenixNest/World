@@ -85,4 +85,7 @@ dependencies {
         exclude(group = "androidx.compose", module = "androidx")
     }
     api(libs.tomtom.map.provider.android)
+    implementation("com.tomtom.sdk.location:provider-gms:0.40.0")
+    implementation("com.tomtom.sdk.location:provider-proxy:0.40.0")
+    implementation("com.tomtom.sdk.location:provider-api:0.40.0")
 }

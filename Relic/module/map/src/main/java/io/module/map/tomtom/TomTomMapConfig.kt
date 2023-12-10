@@ -2,7 +2,11 @@ package io.module.map.tomtom
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.ui.platform.AndroidUiDispatcher
 import com.tomtom.quantity.Distance
+import com.tomtom.sdk.location.GeoLocation
+import com.tomtom.sdk.location.LocationProvider
+import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.location.android.AndroidLocationProviderConfig
 import com.tomtom.sdk.map.display.MapOptions
@@ -40,14 +44,40 @@ object TomTomMapConfig {
     object MapLocationProviderConfig {
         fun defaultLocationProvider(
             context: Context,
-            config: AndroidLocationProviderConfig = defaultLocationProviderConfig()
+            config: AndroidLocationProviderConfig = defaultLocationProviderConfig(),
+            onLocationUpdate: (location: GeoLocation) -> Unit
         ): AndroidLocationProvider {
             return AndroidLocationProvider(
                 context = context,
                 config = config
             ).apply {
                 enable()
+            }.also { provider: AndroidLocationProvider ->
+                registerLocationUpdateListener(
+                    provider = provider,
+                    onLocationUpdate = onLocationUpdate
+                )
             }
+        }
+
+        private fun registerLocationUpdateListener(
+            provider: AndroidLocationProvider,
+            onLocationUpdate: (location: GeoLocation) -> Unit
+        ): OnLocationUpdateListener {
+            val locationUpdateListener = OnLocationUpdateListener { location: GeoLocation ->
+                onLocationUpdate.invoke(location)
+            }
+
+            provider.addOnLocationUpdateListener(locationUpdateListener)
+
+            return locationUpdateListener
+        }
+
+        private fun unregisterLocationUpdateListener(
+            provider: AndroidLocationProvider,
+            listener: OnLocationUpdateListener
+        ) {
+            provider.removeOnLocationUpdateListener(listener)
         }
 
         private fun defaultLocationProviderConfig(): AndroidLocationProviderConfig {
