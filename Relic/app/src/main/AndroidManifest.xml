@@ -34,55 +34,46 @@
         <activity
             android:name=".feature.activities.intro.IntroActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.login.LoginActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.main.MainActivity"
             android:exported="false"
-            android:launchMode="singleTask"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.web.WebActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
-            android:name=".feature.activities.debug.DebugActivity"
+            android:name="io.module.debug.activities.debug.DebugActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic.Debug" />
 
         <activity
-            android:name=".feature.activities.map.AMapActivity"
+            android:name="io.module.debug.activities.map.amap.AMapActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
-            android:name=".feature.activities.map.TomTomMapActivity"
+            android:name="io.module.debug.activities.map.tomtom.TomTomMapActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
-            android:name=".feature.activities.machine_learning.MLKitActivity"
+            android:name="io.module.debug.activities.machine_learning.MLKitActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <activity
-            android:name=".feature.activities.machine_learning.MediaPipeActivity"
+            android:name="io.module.debug.activities.machine_learning.MediaPipeActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic" />
 
         <!-- Firebase Performance plugin -->

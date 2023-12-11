@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.dev.relic.feature.activities.AbsBaseActivity
-import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.screens.login.LoginScreen
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
+import io.dev.relic.feature.activities.main.MainActivity
+import io.dev.relic.feature.screens.login.LoginScreen
+import io.domain.AbsBaseActivity
 
 class LoginActivity : AbsBaseActivity() {
 

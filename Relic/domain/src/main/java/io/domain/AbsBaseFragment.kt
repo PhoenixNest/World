@@ -1,4 +1,4 @@
-package io.dev.relic.feature.fragments
+package io.domain
 
 import android.os.Bundle
 import android.view.LayoutInflater

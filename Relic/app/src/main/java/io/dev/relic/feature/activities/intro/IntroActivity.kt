@@ -14,16 +14,16 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.dev.relic.feature.activities.AbsBaseActivity
-import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.screens.intro.IntroScreen
 import io.common.util.LogUtil
-import io.core.ui.theme.RelicAppTheme
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
+import io.core.ui.theme.RelicAppTheme
+import io.dev.relic.feature.activities.main.MainActivity
+import io.dev.relic.feature.screens.intro.IntroScreen
+import io.domain.AbsBaseActivity
 
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {

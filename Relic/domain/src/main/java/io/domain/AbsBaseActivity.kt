@@ -1,4 +1,4 @@
-package io.dev.relic.feature.activities
+package io.domain
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

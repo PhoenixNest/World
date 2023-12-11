@@ -1,11 +1,11 @@
-package io.dev.relic.feature.activities.map
+package io.module.debug.activities.map.tomtom
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import io.dev.relic.databinding.ActivityTomtommapBinding
-import io.dev.relic.feature.activities.AbsBaseActivity
 import io.common.util.LogUtil
+import io.domain.AbsBaseActivity
+import io.module.debug.databinding.ActivityTomtommapBinding
 
 /**
  * [TomTomMap](https://developer.tomtom.com/)

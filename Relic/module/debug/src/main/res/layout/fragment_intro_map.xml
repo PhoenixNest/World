@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.fragments.IntroMachineLearningFragment">
+    tools:context="io.module.debug.fragments.IntroMapFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -16,55 +16,44 @@
         android:fontFamily="@font/ubuntu_regular"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/debug_title_machine_learning"
+        android:text="@string/debug_title_map"
         android:textColor="@color/mainTextColor"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView_MLKit"
+        app:layout_constraintBottom_toTopOf="@+id/cardView_AMap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView_MLKit"
+        android:id="@+id/cardView_AMap"
         android:layout_width="300dp"
         android:layout_height="160dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
         app:cardBackgroundColor="@color/cardview_dark_background"
         app:cardCornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView_MediaPipe"
+        app:layout_constraintBottom_toTopOf="@+id/cardView_Tomtom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@id/cardView_Tomtom"
+        android:layout_width="300dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/cardview_dark_background"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_AMap">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/view_default_desc"
             android:scaleType="centerCrop"
-            android:src="@mipmap/mlkit" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@id/cardView_MediaPipe"
-        android:layout_width="300dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="16dp"
-        app:cardBackgroundColor="@color/mainThemeColorAccent"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView_MLKit">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/view_default_desc"
-            android:scaleType="centerInside"
-            android:src="@mipmap/mediapipe" />
+            android:src="@mipmap/tomtom" />
 
     </androidx.cardview.widget.CardView>
 

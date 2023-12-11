@@ -10,17 +10,17 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.common.util.LogUtil
+import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.BuildConfig
-import io.dev.relic.feature.activities.AbsBaseActivity
-import io.dev.relic.feature.activities.debug.DebugActivity
 import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
-import io.common.util.LogUtil
-import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
-import io.core.ui.theme.RelicAppTheme
+import io.domain.AbsBaseActivity
+import io.module.debug.activities.debug.DebugActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AbsBaseActivity() {

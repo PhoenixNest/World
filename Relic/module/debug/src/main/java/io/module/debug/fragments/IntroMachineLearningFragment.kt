@@ -1,13 +1,14 @@
-package io.dev.relic.feature.fragments
+package io.module.debug.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.dev.relic.databinding.FragmentIntroMachineLearningBinding
-import io.dev.relic.feature.activities.machine_learning.MLKitActivity
-import io.dev.relic.feature.activities.machine_learning.MediaPipeActivity
 import io.common.util.LogUtil
+import io.domain.AbsBaseFragment
+import io.module.debug.activities.machine_learning.MLKitActivity
+import io.module.debug.activities.machine_learning.MediaPipeActivity
+import io.module.debug.databinding.FragmentIntroMachineLearningBinding
 
 class IntroMachineLearningFragment : AbsBaseFragment() {
 

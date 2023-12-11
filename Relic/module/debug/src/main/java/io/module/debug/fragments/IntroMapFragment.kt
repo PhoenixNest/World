@@ -1,13 +1,14 @@
-package io.dev.relic.feature.fragments
+package io.module.debug.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.dev.relic.databinding.FragmentIntroMapBinding
-import io.dev.relic.feature.activities.map.AMapActivity
-import io.dev.relic.feature.activities.map.TomTomMapActivity
 import io.common.util.LogUtil
+import io.domain.AbsBaseFragment
+import io.module.debug.activities.map.amap.AMapActivity
+import io.module.debug.activities.map.tomtom.TomTomMapActivity
+import io.module.debug.databinding.FragmentIntroMapBinding
 
 class IntroMapFragment : AbsBaseFragment() {
 

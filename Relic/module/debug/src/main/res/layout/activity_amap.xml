@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.activities.map.AMapActivity">
+    tools:context=".activities.map.amap.AMapActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_AMap"

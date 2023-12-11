@@ -42,6 +42,10 @@ object TomTomMapConfig {
     }
 
     object MapLocationProviderConfig {
+
+        /**
+         * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
+         * */
         fun defaultLocationProvider(
             context: Context,
             config: AndroidLocationProviderConfig = defaultLocationProviderConfig(),

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.activities.debug.DebugActivity">
+    tools:context=".activities.debug.DebugActivity">
 
     <fragment
         android:id="@+id/navHostFragment"

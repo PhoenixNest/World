@@ -7,13 +7,14 @@
 
     <fragment
         android:id="@+id/introMapFragment"
-        android:name="io.dev.relic.feature.fragments.IntroMapFragment"
+        android:name="io.module.debug.fragments.IntroMapFragment"
         android:label="@string/debug_title_map"
         tools:layout="@layout/fragment_intro_map"/>
 
     <fragment
         android:id="@+id/introMachineLearningFragment"
-        android:name="io.dev.relic.feature.fragments.IntroMachineLearningFragment"
+        android:name="io.module.debug.fragments.IntroMachineLearningFragment"
         android:label="@string/debug_title_machine_learning"
         tools:layout="@layout/fragment_intro_machine_learning"/>
+
 </navigation>

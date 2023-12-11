@@ -17,9 +17,6 @@ plugins {
     // Parcelize Models
     id("kotlin-parcelize")
 
-    // SafeArgs
-    id("androidx.navigation.safeargs.kotlin")
-
     // Hilt
     alias(libs.plugins.hiltAndroid)
 
@@ -110,6 +107,9 @@ dependencies {
 
     // Ad Module
     implementation(project(":module:ad"))
+
+    // Debug Module
+    implementation(project(":module:debug"))
 
     /* ======================== Google Official Extension ======================== */
 

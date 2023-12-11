@@ -1,4 +1,4 @@
-package io.dev.relic.feature.activities.debug
+package io.module.debug.activities.debug
 
 import android.content.Context
 import android.content.Intent
@@ -8,13 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.dev.relic.R
-import io.dev.relic.databinding.ActivityDebugBinding
-import io.dev.relic.global.RelicApplication
 import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.module.debug.R
+import io.module.debug.databinding.ActivityDebugBinding
 import io.module.map.amap.AMapPrivacyCenter
 
 @AndroidEntryPoint
@@ -63,7 +62,7 @@ class DebugActivity : AppCompatActivity() {
         LogUtil.debug(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(
-            context = RelicApplication.getApplicationContext(),
+            context = this,
             isShowUserAgreement = isShowUserAgreement,
             isAgreeUserPrivacy = isAgreeUserPrivacy
         )

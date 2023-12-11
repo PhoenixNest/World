@@ -1,30 +1,30 @@
-package io.dev.relic.feature.activities.machine_learning
+package io.module.debug.activities.machine_learning
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import io.dev.relic.databinding.ActivityMediapipeBinding
-import io.dev.relic.feature.activities.AbsBaseActivity
+import io.domain.AbsBaseActivity
+import io.module.debug.databinding.ActivityMlkitBinding
 
 /**
- * [MediaPipe](https://developers.google.cn/mediapipe/framework/getting_started/android)
+ * [MLKit](https://developers.google.cn/ml-kit/guides?hl=en)
  * */
-class MediaPipeActivity : AbsBaseActivity() {
+class MLKitActivity : AbsBaseActivity() {
 
-    private val binding: ActivityMediapipeBinding by lazy {
-        ActivityMediapipeBinding.inflate(layoutInflater)
+    private val binding: ActivityMlkitBinding by lazy {
+        ActivityMlkitBinding.inflate(layoutInflater)
     }
 
     companion object {
-        private const val TAG = "MediaPipeActivity"
+        private const val TAG = "MLKitActivity"
 
         fun start(context: Context) {
             context.startActivity(
                 Intent(
                     /* packageContext = */ context,
-                    /* cls = */ MediaPipeActivity::class.java
+                    /* cls = */ MLKitActivity::class.java
                 ).apply {
-                    action = "[Activity] MediaPipe"
+                    action = "[Activity] MLKit"
                 }
             )
         }
@@ -39,5 +39,4 @@ class MediaPipeActivity : AbsBaseActivity() {
     override fun initUi(savedInstanceState: Bundle?) {
         setContentView(binding.root)
     }
-
 }

@@ -21,10 +21,10 @@ import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PR
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
-import io.dev.relic.feature.activities.AbsBaseActivity
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
+import io.domain.AbsBaseActivity
 import io.module.map.amap.AMapPrivacyCenter
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

@@ -5,6 +5,4 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.activities.machine_learning.MediaPipeActivity">
-
-</FrameLayout>
+    tools:context=".activities.machine_learning.MediaPipeActivity" />

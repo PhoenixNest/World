@@ -1,17 +1,16 @@
-package io.dev.relic.feature.activities.map
+package io.module.debug.activities.map.amap
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.amap.api.maps.AMap
 import com.amap.api.maps.MapView
-import io.dev.relic.databinding.ActivityAmapBinding
-import io.dev.relic.feature.activities.AbsBaseActivity
-import io.dev.relic.global.RelicApplication
 import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.domain.AbsBaseActivity
+import io.module.debug.databinding.ActivityAmapBinding
 import io.module.map.amap.AMapPrivacyCenter
 
 /**
@@ -86,7 +85,7 @@ class AMapActivity : AbsBaseActivity() {
         LogUtil.debug(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(
-            context = RelicApplication.getApplicationContext(),
+            context = this,
             isShowUserAgreement = isShowUserAgreement,
             isAgreeUserPrivacy = isShowUserAgreement
         )

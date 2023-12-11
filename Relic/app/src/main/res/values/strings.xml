@@ -51,12 +51,6 @@
     <!-- Setting Page -->
     <string name="setting_title">Setting</string>
 
-    <!-- Debug -->
-    <string name="view_default_desc">Powered By View</string>
-    <string name="debug_title">DEBUG CENTER</string>
-    <string name="debug_title_map">Map Center</string>
-    <string name="debug_title_machine_learning">Machine Learning Center</string>
-
     <!-- Todo Unit -->
     <string name="todo_card_title">Check out your todo tasks</string>
     <string name="todo_title">Todo</string>

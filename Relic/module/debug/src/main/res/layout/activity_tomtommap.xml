@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/mainThemeColor"
     android:fitsSystemWindows="true"
-    tools:context=".feature.activities.map.TomTomMapActivity">
+    tools:context=".activities.map.tomtom.TomTomMapActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_Tomtom"
