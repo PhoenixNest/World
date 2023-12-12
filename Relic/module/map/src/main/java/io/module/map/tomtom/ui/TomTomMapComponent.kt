@@ -7,8 +7,8 @@ import android.os.Bundle
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,6 +28,7 @@ import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.tomtom.TomTomMapConfig
+import io.module.map.tomtom.TomTomMapConfig.LocationMarkerConfig.defaultLocationMarkerOptions
 import io.module.map.tomtom.TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider
 
 /**
@@ -65,6 +66,7 @@ fun TomTomMapComponent(
         mapView = mapView,
         onLocationUpdate = onLocationUpdate
     )
+    TomTomMapLocationMarkerBinder(mapView)
 }
 
 /* ======================== Util ======================== */
@@ -97,8 +99,8 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
-            mapView.onDestroy()
             mapView.removeAllViews()
+            mapView.onDestroy()
         }
     }
 }
@@ -110,7 +112,7 @@ private fun TomTomMapLocationProviderBinder(
 ) {
     val context: Context = LocalContext.current
 
-    SideEffect {
+    LaunchedEffect(key1 = Unit) {
         val locationProvider: AndroidLocationProvider = defaultLocationProvider(
             context = context,
             onLocationUpdate = onLocationUpdate
@@ -118,6 +120,15 @@ private fun TomTomMapLocationProviderBinder(
 
         mapView.getMapAsync { tomTomMap: TomTomMap ->
             tomTomMap.setLocationProvider(locationProvider)
+        }
+    }
+}
+
+@Composable
+private fun TomTomMapLocationMarkerBinder(mapView: MapView) {
+    LaunchedEffect(key1 = Unit) {
+        mapView.getMapAsync { tomTomMap: TomTomMap ->
+            tomTomMap.enableLocationMarker(defaultLocationMarkerOptions())
         }
     }
 }

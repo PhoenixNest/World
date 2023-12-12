@@ -2,16 +2,15 @@ package io.module.map.tomtom
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.ui.platform.AndroidUiDispatcher
 import com.tomtom.quantity.Distance
 import com.tomtom.sdk.location.GeoLocation
-import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.location.android.AndroidLocationProviderConfig
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.common.screen.Padding
+import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.map.OnlineCachePolicy
 import com.tomtom.sdk.map.display.style.StyleDescriptor
 import com.tomtom.sdk.map.display.style.StyleMode
@@ -54,13 +53,13 @@ object TomTomMapConfig {
             return AndroidLocationProvider(
                 context = context,
                 config = config
-            ).apply {
-                enable()
-            }.also { provider: AndroidLocationProvider ->
+            ).also { provider: AndroidLocationProvider ->
                 registerLocationUpdateListener(
                     provider = provider,
                     onLocationUpdate = onLocationUpdate
                 )
+            }.apply {
+                enable()
             }
         }
 
@@ -88,6 +87,15 @@ object TomTomMapConfig {
             return AndroidLocationProviderConfig(
                 minTimeInterval = 250L.milliseconds,
                 minDistance = Distance.meters(20.0)
+            )
+        }
+    }
+
+    object LocationMarkerConfig {
+
+        fun defaultLocationMarkerOptions(): LocationMarkerOptions {
+            return LocationMarkerOptions(
+                type = LocationMarkerOptions.Type.Pointer
             )
         }
     }
