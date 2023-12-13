@@ -2,8 +2,8 @@ package io.module.map.tomtom.ui
 
 import android.content.ComponentCallbacks
 import android.content.Context
-import android.content.res.Configuration
-import android.os.Bundle
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,11 +18,9 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
-import androidx.lifecycle.Lifecycle.Event.ON_STOP
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.tomtom.sdk.location.GeoLocation
+import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.TomTomMap
@@ -30,6 +28,8 @@ import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.tomtom.TomTomMapConfig
 import io.module.map.tomtom.TomTomMapConfig.LocationMarkerConfig.defaultLocationMarkerOptions
 import io.module.map.tomtom.TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider
+import io.module.map.tomtom.kit.componentCallback
+import io.module.map.tomtom.kit.lifecycleObserver
 
 /**
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
@@ -44,10 +44,15 @@ import io.module.map.tomtom.TomTomMapConfig.MapLocationProviderConfig.defaultLoc
 fun TomTomMapComponent(
     onLocationUpdate: (location: GeoLocation) -> Unit,
     modifier: Modifier = Modifier,
-    mapOptionsFactory: () -> MapOptions = { MapOptions(TomTomMapConfig.mapDevKey) }
+    mapOptionsFactory: () -> MapOptions = { MapOptions(TomTomMapConfig.mapDevKey) },
+    contentDescription: String? = null,
+    locationProvider: LocationProvider? = null,
+    contentPadding: PaddingValues = PaddingValues(),
+    content: (@Composable () -> Unit)? = null
 ) {
 
     if (LocalInspectionMode.current) {
+        Box(modifier = modifier)
         return
     }
 
@@ -75,7 +80,7 @@ fun TomTomMapComponent(
 private fun TomTomMapLifecycleBinder(mapView: MapView) {
     val context: Context = LocalContext.current
     val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
-    val previousAMapState: MutableState<Lifecycle.Event> = remember {
+    val previousMapState: MutableState<Lifecycle.Event> = remember {
         mutableStateOf(ON_CREATE)
     }
 
@@ -85,10 +90,10 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         key3 = mapView
     ) {
         val mapComponentCallback: ComponentCallbacks = mapView.componentCallback()
-        val mapLifecycleObserver: LifecycleObserver = mapView.lifecycleObserver(previousAMapState)
+        val mapLifecycleObserver: LifecycleObserver = mapView.lifecycleObserver(previousMapState)
 
-        context.registerComponentCallbacks(mapComponentCallback)
         lifecycle.addObserver(mapLifecycleObserver)
+        context.registerComponentCallbacks(mapComponentCallback)
 
         onDispose {
             lifecycle.removeObserver(mapLifecycleObserver)
@@ -99,8 +104,8 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
-            mapView.removeAllViews()
             mapView.onDestroy()
+            mapView.removeAllViews()
         }
     }
 }
@@ -129,43 +134,6 @@ private fun TomTomMapLocationMarkerBinder(mapView: MapView) {
     LaunchedEffect(key1 = Unit) {
         mapView.getMapAsync { tomTomMap: TomTomMap ->
             tomTomMap.enableLocationMarker(defaultLocationMarkerOptions())
-        }
-    }
-}
-
-private fun MapView.lifecycleObserver(
-    previousAMapState: MutableState<Lifecycle.Event>
-): LifecycleObserver {
-    return LifecycleEventObserver { _: LifecycleOwner, event: Lifecycle.Event ->
-        when (event) {
-            Lifecycle.Event.ON_CREATE -> {
-                if (previousAMapState.value != ON_STOP) {
-                    this.onCreate(Bundle())
-                }
-            }
-
-            Lifecycle.Event.ON_START -> this.onStart()
-            Lifecycle.Event.ON_RESUME -> this.onResume()
-            Lifecycle.Event.ON_PAUSE -> this.onPause()
-            Lifecycle.Event.ON_STOP -> this.onStop()
-            Lifecycle.Event.ON_DESTROY -> {
-                // Handled in onDispose.
-            }
-
-            else -> throw IllegalStateException()
-        }
-        previousAMapState.value = event
-    }
-}
-
-private fun MapView.componentCallback(): ComponentCallbacks {
-    return object : ComponentCallbacks {
-        override fun onConfigurationChanged(newConfig: Configuration) {
-            //
-        }
-
-        override fun onLowMemory() {
-            this@componentCallback.onPause()
         }
     }
 }
