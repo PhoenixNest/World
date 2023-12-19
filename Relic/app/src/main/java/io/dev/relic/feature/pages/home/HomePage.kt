@@ -1,33 +1,30 @@
 package io.dev.relic.feature.pages.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Surface
+import androidx.compose.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.ModalDrawer
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.core.ui.dialog.CommonItemDivider
+import io.common.util.LogUtil
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesPanel
 import io.dev.relic.feature.function.weather.WeatherDataState
-import io.dev.relic.feature.function.weather.ui.WeatherCard
 import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_FOOD_RECIPES_CARD
 import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_WEATHER_CARD
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.pages.home.widget.HomeTopBar
+import io.dev.relic.feature.pages.home.widget.HomeDrawer
+import io.dev.relic.feature.pages.home.widget.HomePageContent
 import io.dev.relic.feature.screens.main.MainState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomePageRoute(
@@ -77,15 +74,18 @@ fun HomePageRoute(
             }
         },
         onFoodRecipesRetry = {
-            homeViewModel.fetchFoodRecipesData(isRefresh = true)
+            homeViewModel.fetchFoodRecipesData(true)
         },
         onFetchMoreFoodRecipesData = {
-            homeViewModel.fetchFoodRecipesData(isRefresh = false)
+            homeViewModel.fetchFoodRecipesData(false)
         },
         onSelectedFoodRecipesTabItem = { currentSelectedTab: Int, selectedItem: String ->
             homeViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
-                fetchFoodRecipesData(isRefresh = true, query = selectedItem)
+                fetchFoodRecipesData(
+                    isRefresh = true,
+                    query = selectedItem
+                )
             }
         }
     )
@@ -103,46 +103,45 @@ private fun HomePage(
     onWeatherRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit,
     onFetchMoreFoodRecipesData: () -> Unit,
-    onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = mainThemeColor
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            item {
-                HomeTopBar(onOpenDrawer = {})
-                Spacer(modifier = Modifier.height(32.dp))
-            }
-            item {
-                if (isShowWeatherCard) {
-                    WeatherCard(
-                        weatherDataState = weatherDataState,
-                        onRetryClick = onWeatherRetry
-                    )
-                    CommonItemDivider()
-                }
-            }
-            item {
-                if (isShowFoodRecipesCard) {
-                    FoodRecipesPanel(
-                        currentSelectedTab = currentSelectedFoodRecipesTab,
-                        tabLazyListState = foodRecipesTabLazyListState,
-                        contentLazyListState = foodRecipesContentLazyListState,
-                        foodRecipesState = foodRecipesState,
-                        onRetryClick = onFoodRecipesRetry,
-                        onFetchMore = onFetchMoreFoodRecipesData,
-                        onTabItemClick = onSelectedFoodRecipesTabItem
-                    )
-                    CommonItemDivider()
-                }
-            }
+
+    val drawerState: DrawerState = rememberDrawerState(
+        initialValue = DrawerValue.Closed,
+        confirmStateChange = { drawerValue: DrawerValue ->
+            LogUtil.debug("HomePage", "[Drawer] State: ${drawerValue.name}")
+            true
         }
-    }
+    )
+
+    ModalDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            HomeDrawer()
+        },
+        drawerBackgroundColor = mainThemeColor,
+        content = {
+            HomePageContent(
+                isShowWeatherCard = isShowWeatherCard,
+                isShowFoodRecipesCard = isShowFoodRecipesCard,
+                weatherDataState = weatherDataState,
+                foodRecipesState = foodRecipesState,
+                foodRecipesTabLazyListState = foodRecipesTabLazyListState,
+                foodRecipesContentLazyListState = foodRecipesContentLazyListState,
+                currentSelectedFoodRecipesTab = currentSelectedFoodRecipesTab,
+                onOpenDrawer = {
+                    coroutineScope.launch {
+                        drawerState.open()
+                    }
+                },
+                onWeatherRetry = onWeatherRetry,
+                onFoodRecipesRetry = onFoodRecipesRetry,
+                onFetchMoreFoodRecipesData = onFetchMoreFoodRecipesData,
+                onSelectedFoodRecipesTabItem = onSelectedFoodRecipesTabItem
+            )
+        }
+    )
 }
 
 @Composable

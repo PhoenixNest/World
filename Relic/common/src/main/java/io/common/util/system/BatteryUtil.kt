@@ -10,16 +10,44 @@ import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_LONG
 import io.common.util.LogUtil
 import io.common.util.system.SystemUtil.getBatteryManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.runBlocking
 
 object BatteryUtil {
 
     private const val TAG = "BatteryUtil"
+
+    private val chargingFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val temperatureFlow: MutableStateFlow<Int> = MutableStateFlow(0)
 
     enum class ChargeType(val type: Int) {
         USB(BatteryManager.BATTERY_PLUGGED_USB),
         AC(BatteryManager.BATTERY_PLUGGED_AC),
         WIRELESS(BatteryManager.BATTERY_PLUGGED_WIRELESS),
         UNKNOWN(-1)
+    }
+
+    fun emitChargingStatus(isCharging: Boolean) {
+        runBlocking(Dispatchers.IO) {
+            chargingFlow.emit(isCharging)
+        }
+    }
+
+    fun emitTemperature(value: Int) {
+        runBlocking(Dispatchers.IO) {
+            temperatureFlow.emit(value)
+        }
+    }
+
+    fun getChargingFlow(): StateFlow<Boolean> {
+        return chargingFlow
+    }
+
+    fun getTemperatureFlow(): StateFlow<Int> {
+        return temperatureFlow
     }
 
     fun isCharging(context: Context): Boolean {

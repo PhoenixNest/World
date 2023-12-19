@@ -22,7 +22,7 @@
 
         <!-- Battery Receiver Start-->
         <receiver
-            android:name=".PowerConnectionReceiver"
+            android:name=".services.PowerConnectionReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
@@ -30,10 +30,11 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".BatteryLevelReceiver"
+            android:name=".services.BatteryLevelReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
                 <action android:name="android.intent.action.BATTERY_OKAY" />
             </intent-filter>
         </receiver>

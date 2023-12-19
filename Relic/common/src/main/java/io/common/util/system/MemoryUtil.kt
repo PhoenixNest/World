@@ -15,8 +15,6 @@ object MemoryUtil {
 
     private const val TAG = "RelicSystemInfo"
 
-    /* ======================== ROM/RAM ======================== */
-
     private val file: File = Environment.getDataDirectory()
     private val statFs = StatFs(file.path)
 
@@ -24,6 +22,8 @@ object MemoryUtil {
     private var totalRAMSize: Long = UNKNOWN_VALUE_LONG
 
     private const val RAM_FILE_DIR = "/proc/meminfo"
+
+    /* ======================== ROM ======================== */
 
     fun getTotalROMSize(): Long {
         if (totalROMSize != UNKNOWN_VALUE_LONG) {
@@ -53,6 +53,8 @@ object MemoryUtil {
             UNKNOWN_VALUE_LONG
         }
     }
+
+    /* ======================== RAM ======================== */
 
     fun getTotalRAMSize(): Long {
         if (totalRAMSize != UNKNOWN_VALUE_LONG) {
