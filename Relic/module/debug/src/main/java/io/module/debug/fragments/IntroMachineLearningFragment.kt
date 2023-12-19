@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.common.util.LogUtil
-import io.domain.AbsBaseFragment
+import io.domain.app.AbsBaseFragment
 import io.module.debug.activities.machine_learning.MLKitActivity
 import io.module.debug.activities.machine_learning.MediaPipeActivity
 import io.module.debug.databinding.FragmentIntroMachineLearningBinding

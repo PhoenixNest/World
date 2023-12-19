@@ -12,4 +12,12 @@ object RelicConstants {
         const val DEFAULT_DESC = "default description"
     }
 
+    object Common {
+        const val ANDROID = "Android"
+        const val UNKNOWN_VALUE_INT = 0
+        const val UNKNOWN_VALUE_LONG = 0L
+        const val UNKNOWN_VALUE_FLOAT = 0F
+        const val UNKNOWN_VALUE_STRING = "Unknown"
+    }
+
 }

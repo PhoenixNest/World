@@ -18,7 +18,7 @@ import io.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_
  * */
 object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallbacks {
 
-    private const val TAG: String = "RelicLifecycleObserver"
+    private const val TAG = "RelicLifecycleObserver"
 
     /**
      * [Cold start](https://developer.android.com/topic/performance/vitals/launch-time#cold)

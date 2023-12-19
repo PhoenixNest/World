@@ -12,7 +12,7 @@ import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.login.LoginScreen
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 
 class LoginActivity : AbsBaseActivity() {
 

@@ -12,7 +12,7 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
     private var currentRetryTimes = 0
 
     companion object {
-        private const val TAG: String = "RetryInterceptor"
+        private const val TAG= "RetryInterceptor"
 
         /**
          * Because the retryOnConnectionFailure has enabled,

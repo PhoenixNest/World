@@ -24,7 +24,7 @@ import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 import io.module.map.amap.AMapPrivacyCenter
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

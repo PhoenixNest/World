@@ -3,7 +3,7 @@ package io.module.debug.activities.machine_learning
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 import io.module.debug.databinding.ActivityMlkitBinding
 
 /**

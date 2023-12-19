@@ -19,7 +19,7 @@ import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 import io.module.debug.activities.debug.DebugActivity
 
 @SuppressLint("CustomSplashScreen")

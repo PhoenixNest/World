@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import io.common.util.LogUtil
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 import io.module.debug.databinding.ActivityTomtommapBinding
 
 /**

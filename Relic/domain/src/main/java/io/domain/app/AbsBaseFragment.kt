@@ -1,4 +1,4 @@
-package io.domain
+package io.domain.app
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 abstract class AbsBaseFragment : Fragment() {
 
     companion object {
-        private const val TAG: String = "AbsBaseFragment"
+        private const val TAG = "AbsBaseFragment"
     }
 
     override fun onCreateView(

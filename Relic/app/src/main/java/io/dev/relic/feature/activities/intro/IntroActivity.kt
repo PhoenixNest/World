@@ -23,7 +23,7 @@ import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.intro.IntroScreen
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {

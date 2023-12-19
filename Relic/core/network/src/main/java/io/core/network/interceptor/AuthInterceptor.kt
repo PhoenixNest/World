@@ -10,7 +10,7 @@ open class AuthInterceptor internal constructor(builder: Builder) : Interceptor 
     private var authHeaderValue: String = builder.authHeaderValue
 
     companion object {
-        private const val TAG: String = "AuthInterceptor"
+        private const val TAG = "AuthInterceptor"
         private const val KEY_HEADER_AUTHORIZATION: String = "Authorization"
     }
 

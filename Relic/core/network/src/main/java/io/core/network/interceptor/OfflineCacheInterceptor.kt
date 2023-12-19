@@ -22,7 +22,7 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
 
     companion object {
 
-        private const val TAG: String = "OfflineCacheInterceptor"
+        private const val TAG = "OfflineCacheInterceptor"
 
         /**
          * Default duration of the offline-cache in app.

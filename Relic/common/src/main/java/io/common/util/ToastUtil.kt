@@ -3,6 +3,7 @@ package io.common.util
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
+import io.common.app.BaseApplication
 import io.common.app.BaseApplication.Companion.getApplicationContext
 
 /**
@@ -24,9 +25,9 @@ object ToastUtil {
     ) {
         if (toast == null) {
             toast = Toast.makeText(
-                getApplicationContext(),
-                content,
-                if (isLongToast) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+                /* context = */ getApplicationContext(),
+                /* text = */ content,
+                /* duration = */ if (isLongToast) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
             )
         } else {
             toast?.apply {
@@ -51,9 +52,9 @@ object ToastUtil {
 
         if (toast == null) {
             toast = Toast.makeText(
-                getApplicationContext(),
-                content,
-                if (isLongToast) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+                /* context = */ getApplicationContext(),
+                /* text = */ content,
+                /* duration = */ if (isLongToast) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
             )
         } else {
             toast?.apply {

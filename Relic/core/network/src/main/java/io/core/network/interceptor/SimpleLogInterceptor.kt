@@ -8,7 +8,7 @@ import okhttp3.Response
 class SimpleLogInterceptor : Interceptor {
 
     companion object {
-        private const val TAG: String = "SimpleLogInterceptor"
+        private const val TAG = "SimpleLogInterceptor"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {

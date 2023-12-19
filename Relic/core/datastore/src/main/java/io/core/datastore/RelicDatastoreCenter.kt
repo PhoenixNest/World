@@ -10,7 +10,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import io.common.app.BaseApplication
+import io.common.app.BaseApplication.Companion.getApplicationContext
 import io.core.datastore.kit.ContextExt.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -21,7 +21,7 @@ import java.io.IOException
 
 object RelicDatastoreCenter {
 
-    private val dataStore: DataStore<Preferences> = BaseApplication.getApplicationContext().dataStore
+    private val dataStore: DataStore<Preferences> = getApplicationContext().dataStore
 
     /* ======================== Sync ======================== */
 

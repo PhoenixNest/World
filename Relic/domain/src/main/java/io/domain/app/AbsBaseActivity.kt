@@ -1,4 +1,4 @@
-package io.domain
+package io.domain.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
     lateinit var networkMonitor: NetworkMonitor
 
     companion object {
-        private const val TAG: String = "AbsBaseActivity"
+        private const val TAG = "AbsBaseActivity"
     }
 
     /* ======================== Lifecycle ======================== */

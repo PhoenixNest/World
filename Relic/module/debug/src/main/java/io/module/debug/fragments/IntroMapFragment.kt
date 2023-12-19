@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.common.util.LogUtil
-import io.domain.AbsBaseFragment
+import io.domain.app.AbsBaseFragment
 import io.module.debug.activities.map.amap.AMapActivity
 import io.module.debug.activities.map.tomtom.TomTomMapActivity
 import io.module.debug.databinding.FragmentIntroMapBinding

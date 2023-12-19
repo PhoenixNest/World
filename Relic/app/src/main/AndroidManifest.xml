@@ -20,6 +20,25 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
 
+        <!-- Battery Receiver Start-->
+        <receiver
+            android:name=".PowerConnectionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".BatteryLevelReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+            </intent-filter>
+        </receiver>
+        <!-- Battery Receiver End-->
+
         <activity
             android:name=".feature.activities.splash.SplashActivity"
             android:exported="true"

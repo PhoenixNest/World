@@ -10,7 +10,8 @@ open class OnlineCacheInterceptor internal constructor(builder: Builder) : Inter
     private var maxCacheTimeDuration: Int = builder.maxCacheTimeDuration
 
     companion object {
-        private const val TAG: String = "OnlineCacheInterceptor"
+        private const val TAG = "OnlineCacheInterceptor"
+
         private const val HEADER_PRAGMA: String = "Pragma"
         private const val HEADER_CACHE_CONTROL: String = "Cache-Control"
         private const val DEFAULT_MAX_ONLINE_CACHE_TIME_DURATION: Int = 30 * 60

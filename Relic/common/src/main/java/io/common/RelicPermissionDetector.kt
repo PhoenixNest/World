@@ -15,7 +15,7 @@ import io.common.util.LogUtil
 
 object RelicPermissionDetector {
 
-    private const val TAG: String = "RelicPermissionDetector"
+    private const val TAG = "RelicPermissionDetector"
 
     interface RelicPermissionListener {
 

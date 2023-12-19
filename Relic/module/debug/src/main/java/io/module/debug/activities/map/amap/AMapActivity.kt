@@ -9,7 +9,7 @@ import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
-import io.domain.AbsBaseActivity
+import io.domain.app.AbsBaseActivity
 import io.module.debug.databinding.ActivityAmapBinding
 import io.module.map.amap.AMapPrivacyCenter
 
