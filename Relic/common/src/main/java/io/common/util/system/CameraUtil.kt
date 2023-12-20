@@ -18,7 +18,7 @@ object CameraUtil {
         return try {
             val totalNumbers: Int = Camera.getNumberOfCameras()
             val cameraInfo = Camera.CameraInfo()
-            for (i in 0 until totalNumbers) {
+            for (i: Int in 0 until totalNumbers) {
                 Camera.getCameraInfo(i, cameraInfo)
                 if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                     frontCameraId = i
@@ -35,7 +35,7 @@ object CameraUtil {
 
     fun getCameraInfos() {
         val totalNumbers = Camera.getNumberOfCameras()
-        for (i in 0 until totalNumbers) {
+        for (i: Int in 0 until totalNumbers) {
             val cameraInfo = Camera.CameraInfo()
             Camera.getCameraInfo(i, cameraInfo)
         }

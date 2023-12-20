@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.system.BatteryUtil
 import io.common.util.system.MemoryUtil
+import io.common.util.system.SystemUtil
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
 
@@ -26,8 +27,10 @@ fun HomeDrawer() {
 
     val screenWidth: Dp = LocalConfiguration.current.screenWidthDp.dp - 72.dp
 
-    val currentChargingStatus: Boolean = BatteryUtil.getChargingFlow().collectAsStateWithLifecycle().value
-    val currentBatteryTemperature: Int = BatteryUtil.getTemperatureFlow().collectAsStateWithLifecycle().value
+    val currentChargingStatus: Boolean =
+        BatteryUtil.getChargingFlow().collectAsStateWithLifecycle().value
+    val currentBatteryTemperature: Int =
+        BatteryUtil.getTemperatureFlow().collectAsStateWithLifecycle().value
 
     Column(
         modifier = Modifier
@@ -44,6 +47,38 @@ fun HomeDrawer() {
         ),
         horizontalAlignment = Alignment.Start
     ) {
+        Text(
+            text = "[MemoryUtil getFreeROMSize] ${SystemUtil.getOSInfo()}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[SystemUtil getPhoneBoardInfo] ${SystemUtil.getPhoneBoardInfo()}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[SystemUtil getPhoneModelInfo] ${SystemUtil.getPhoneModelInfo()}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[SystemUtil getAvailableProcessors] ${SystemUtil.getAvailableProcessors()}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
         Text(
             text = "[MemoryUtil getFreeROMSize] ${MemoryUtil.getTotalROMSize()}",
             style = TextStyle(

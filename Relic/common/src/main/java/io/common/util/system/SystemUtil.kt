@@ -18,9 +18,18 @@ object SystemUtil {
 
     /* ======================== Common ======================== */
 
+    private var brandInfo: String = UNKNOWN_VALUE_STRING
+    private var modelInfo: String = UNKNOWN_VALUE_STRING
+    private var boardInfo: String = UNKNOWN_VALUE_STRING
+
     fun getBrandInfo(context: Context): String {
+        if (brandInfo != UNKNOWN_VALUE_STRING) {
+            return brandInfo
+        }
+
         return try {
-            Build.BRAND ?: UNKNOWN_VALUE_STRING
+            brandInfo = Build.BRAND ?: UNKNOWN_VALUE_STRING
+            brandInfo
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[Brand] Error, ${exception.message}")
             exception.printStackTrace()
@@ -28,9 +37,29 @@ object SystemUtil {
         }
     }
 
-    fun getPhoneModelInfo(): String {
+    fun getPhoneBoardInfo(): String {
+        if (boardInfo != UNKNOWN_VALUE_STRING) {
+            return boardInfo
+        }
+
         return try {
-            Build.MODEL ?: UNKNOWN_VALUE_STRING
+            boardInfo = Build.BOARD ?: UNKNOWN_VALUE_STRING
+            boardInfo
+        } catch (exception: Exception) {
+            LogUtil.error(TAG, "[Board] Error, ${exception.message}")
+            exception.printStackTrace()
+            UNKNOWN_VALUE_STRING
+        }
+    }
+
+    fun getPhoneModelInfo(): String {
+        if (modelInfo != UNKNOWN_VALUE_STRING) {
+            return modelInfo
+        }
+
+        return try {
+            modelInfo = Build.MODEL ?: UNKNOWN_VALUE_STRING
+            modelInfo
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[Phone Model] Error, ${exception.message}")
             exception.printStackTrace()
