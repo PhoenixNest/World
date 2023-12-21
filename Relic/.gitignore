@@ -11,3 +11,4 @@ release-key.jks
 .gradle
 .idea
 /app/build
+/properties

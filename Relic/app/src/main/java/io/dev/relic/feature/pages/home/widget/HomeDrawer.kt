@@ -48,7 +48,7 @@ fun HomeDrawer() {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "[MemoryUtil getFreeROMSize] ${SystemUtil.getOSInfo()}",
+            text = "[MemoryUtil getOSInfo] ${SystemUtil.getOSInfo()}",
             style = TextStyle(
                 color = mainTextColor,
                 fontFamily = RelicFontFamily.ubuntu
