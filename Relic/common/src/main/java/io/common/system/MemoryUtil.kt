@@ -1,12 +1,12 @@
-package io.common.util.system
+package io.common.system
 
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Environment
 import android.os.StatFs
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_LONG
+import io.common.RelicSystemServiceManager.getActivityManger
 import io.common.util.LogUtil
-import io.common.util.system.SystemUtil.getActivityManger
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader

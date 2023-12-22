@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
+import io.common.system.BatteryUtil.emitChargingStatus
+import io.common.system.BatteryUtil.emitChargingVoltage
+import io.common.system.BatteryUtil.emitTemperature
 import io.common.util.LogUtil
-import io.common.util.system.BatteryUtil
 
 class PowerConnectionReceiver : BroadcastReceiver() {
 
@@ -18,18 +20,20 @@ class PowerConnectionReceiver : BroadcastReceiver() {
             when (it) {
                 Intent.ACTION_POWER_CONNECTED -> {
                     LogUtil.debug(TAG, "[Power Status] Connected")
-                    BatteryUtil.emitChargingStatus(true)
+                    emitChargingStatus(true)
                 }
 
                 Intent.ACTION_POWER_DISCONNECTED -> {
                     LogUtil.debug(TAG, "[Power Status] Disconnected")
-                    BatteryUtil.emitChargingStatus(false)
+                    emitChargingStatus(false)
                 }
 
                 Intent.ACTION_BATTERY_CHANGED -> {
                     LogUtil.debug(TAG, "[Battery Status] onChange")
                     val temperature: Int = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0)
-                    BatteryUtil.emitTemperature(temperature)
+                    val voltage: Int = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0)
+                    emitChargingVoltage(voltage)
+                    emitTemperature(temperature)
                 }
 
                 else -> {

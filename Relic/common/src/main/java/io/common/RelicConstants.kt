@@ -17,6 +17,7 @@ object RelicConstants {
         const val UNKNOWN_VALUE_INT = 0
         const val UNKNOWN_VALUE_LONG = 0L
         const val UNKNOWN_VALUE_FLOAT = 0F
+        const val UNKNOWN_VALUE_DOUBLE = 0.0
         const val UNKNOWN_VALUE_STRING = "Unknown"
     }
 

@@ -1,4 +1,4 @@
-package io.common.util.system
+package io.common.system
 
 import android.content.Context
 import android.content.Intent

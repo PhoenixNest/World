@@ -1,15 +1,26 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
-private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS")
+private val geminiDevKey: String =
+    gradleLocalProperties(rootDir).getProperty("AGENT_GEMINI_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
+
+    // KSP
+    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+
+    // Parcelize Models
+    id("kotlin-parcelize")
+
+
+    // Hilt
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
-    namespace = "io.module.ad"
+    namespace = "io.agent.gemini"
     compileSdk = 34
 
     defaultConfig {
@@ -18,7 +29,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("boolean", "NO_ADS", isNoAds)
+        resValue("string", "agent_gemini_dev_key", geminiDevKey)
     }
 
     buildTypes {
@@ -45,11 +56,20 @@ dependencies {
 
     /* ======================== Module ======================== */
 
+    implementation(project(":core:database"))
+    implementation(project(":core:datastore"))
+    implementation(project(":core:ui"))
+
     // Common Module
     implementation(project(":common"))
 
     /* ======================== Google Official Extension ======================== */
 
-    // Admob
-    implementation(libs.play.services.ads)
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    // Google AI client SDK for Android
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
+
 }

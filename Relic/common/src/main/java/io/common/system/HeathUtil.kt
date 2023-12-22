@@ -1,10 +1,10 @@
-package io.common.util.system
+package io.common.system
 
 import android.content.Context
 import android.os.Process
 import android.os.health.HealthStats
+import io.common.RelicSystemServiceManager.getSystemHealthManager
 import io.common.util.LogUtil
-import io.common.util.system.SystemUtil.getSystemHealthManager
 
 object HeathUtil {
 

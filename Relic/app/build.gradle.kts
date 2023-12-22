@@ -102,14 +102,20 @@ dependencies {
     // Domain Layer
     implementation(project(":domain"))
 
-    // Map Module
-    implementation(project(":module:map"))
-
     // Ad Module
     implementation(project(":module:ad"))
 
+    // Subscribe Module
+    implementation(project(":module:subscribe"))
+
     // Debug Module
     implementation(project(":module:debug"))
+
+    // Agent Module
+    implementation(project(":agent:gemini"))
+
+    // Map Module
+    implementation(project(":module:map"))
 
     /* ======================== Google Official Extension ======================== */
 

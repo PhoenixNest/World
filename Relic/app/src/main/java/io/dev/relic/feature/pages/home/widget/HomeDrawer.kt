@@ -16,16 +16,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.common.util.system.BatteryUtil
-import io.common.util.system.MemoryUtil
-import io.common.util.system.SystemUtil
+import io.common.system.BatteryUtil
+import io.common.system.MemoryUtil
+import io.common.system.NetworkUtil
+import io.common.system.ScreenUtil
+import io.common.system.SystemUtil
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
 
 @Composable
 fun HomeDrawer() {
 
-    val screenWidth: Dp = LocalConfiguration.current.screenWidthDp.dp - 72.dp
+    val context = LocalContext.current
+    val screenWidth: Dp = LocalConfiguration.current.screenWidthDp.dp
+    val drawerWidth: Dp = screenWidth - 72.dp
 
     val currentChargingStatus: Boolean =
         BatteryUtil.getChargingFlow().collectAsStateWithLifecycle().value
@@ -35,7 +39,7 @@ fun HomeDrawer() {
     Column(
         modifier = Modifier
             .statusBarsPadding()
-            .width(screenWidth)
+            .width(drawerWidth)
             .fillMaxHeight()
             .padding(
                 horizontal = 16.dp,
@@ -88,7 +92,7 @@ fun HomeDrawer() {
         )
 
         Text(
-            text = "[MemoryUtil getFreeRAMSize] ${MemoryUtil.getFreeRAMSize(LocalContext.current)}",
+            text = "[MemoryUtil getFreeRAMSize] ${MemoryUtil.getFreeRAMSize(context)}",
             style = TextStyle(
                 color = mainTextColor,
                 fontFamily = RelicFontFamily.ubuntu
@@ -105,6 +109,54 @@ fun HomeDrawer() {
 
         Text(
             text = "[Temperature] $currentBatteryTemperature",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getScreenInch] ${ScreenUtil.getScreenInch(context)}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getScreenWidth] ${ScreenUtil.getScreenWidth(context)}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getScreenHeight] ${ScreenUtil.getScreenHeight(context)}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getCurrentNetworkType] ${NetworkUtil.getCurrentNetworkType(context).name}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getMacAddressInfo] ${NetworkUtil.getMacAddressInfo(context)}",
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = RelicFontFamily.ubuntu
+            )
+        )
+
+        Text(
+            text = "[getGateWay] ${NetworkUtil.getGateWay()}",
             style = TextStyle(
                 color = mainTextColor,
                 fontFamily = RelicFontFamily.ubuntu

@@ -1,18 +1,25 @@
-package io.common.util.system
+package io.common.system
 
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
+import android.os.BatteryManager.BATTERY_PLUGGED_AC
+import android.os.BatteryManager.BATTERY_PLUGGED_USB
+import android.os.BatteryManager.BATTERY_PLUGGED_WIRELESS
+import android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY
+import android.os.BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER
+import android.os.BatteryManager.EXTRA_LEVEL
+import android.os.BatteryManager.EXTRA_PLUGGED
+import android.os.BatteryManager.EXTRA_SCALE
 import android.os.Build
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_FLOAT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_LONG
+import io.common.RelicSystemServiceManager.getBatteryManager
 import io.common.util.LogUtil
-import io.common.util.system.SystemUtil.getBatteryManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 
@@ -21,18 +28,25 @@ object BatteryUtil {
     private const val TAG = "BatteryUtil"
 
     private val chargingFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val voltageFlow: MutableStateFlow<Int> = MutableStateFlow(0)
     private val temperatureFlow: MutableStateFlow<Int> = MutableStateFlow(0)
 
     enum class ChargeType(val type: Int) {
-        USB(BatteryManager.BATTERY_PLUGGED_USB),
-        AC(BatteryManager.BATTERY_PLUGGED_AC),
-        WIRELESS(BatteryManager.BATTERY_PLUGGED_WIRELESS),
+        USB(BATTERY_PLUGGED_USB),
+        AC(BATTERY_PLUGGED_AC),
+        WIRELESS(BATTERY_PLUGGED_WIRELESS),
         UNKNOWN(-1)
     }
 
     fun emitChargingStatus(isCharging: Boolean) {
         runBlocking(Dispatchers.IO) {
             chargingFlow.emit(isCharging)
+        }
+    }
+
+    fun emitChargingVoltage(value: Int) {
+        runBlocking(Dispatchers.IO) {
+            voltageFlow.emit(value)
         }
     }
 
@@ -77,15 +91,16 @@ object BatteryUtil {
 
     fun getBatteryChargeType(context: Context): ChargeType? {
         return try {
-            val chargePlug: Int = getBatteryStatus(context)?.getIntExtra(
-                /* name = */ BatteryManager.EXTRA_PLUGGED,
+            val intent: Intent = getBatteryStatusIntent(context) ?: return ChargeType.UNKNOWN
+            val chargePlug: Int = intent.getIntExtra(
+                /* name = */ EXTRA_PLUGGED,
                 /* defaultValue = */ ChargeType.UNKNOWN.type
-            ) ?: ChargeType.UNKNOWN.type
+            )
 
             when (chargePlug) {
-                BatteryManager.BATTERY_PLUGGED_USB -> ChargeType.USB
-                BatteryManager.BATTERY_PLUGGED_AC -> ChargeType.AC
-                BatteryManager.BATTERY_PLUGGED_WIRELESS -> ChargeType.WIRELESS
+                BATTERY_PLUGGED_USB -> ChargeType.USB
+                BATTERY_PLUGGED_AC -> ChargeType.AC
+                BATTERY_PLUGGED_WIRELESS -> ChargeType.WIRELESS
                 else -> ChargeType.UNKNOWN
             }
         } catch (exception: Exception) {
@@ -97,10 +112,9 @@ object BatteryUtil {
 
     fun getBatteryLevel(context: Context): Int {
         return try {
-            val result: Int? = getBatteryManager(context)?.getIntProperty(
-                BatteryManager.BATTERY_PROPERTY_CAPACITY
-            )
-            result ?: UNKNOWN_VALUE_INT
+            val manager: BatteryManager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
+            val result: Int = manager.getIntProperty(BATTERY_PROPERTY_CAPACITY)
+            result
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[Battery Level] Error, ${exception.message}")
             exception.printStackTrace()
@@ -119,10 +133,11 @@ object BatteryUtil {
      * */
     fun getCurrentBatteryLevel(context: Context): Float {
         return try {
-            var result: Float = UNKNOWN_VALUE_FLOAT
-            getBatteryStatus(context)?.let {
-                val level: Int = it.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-                val scale: Int = it.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            var result: Float
+            val intent: Intent = getBatteryStatusIntent(context) ?: return UNKNOWN_VALUE_FLOAT
+            intent.apply {
+                val level: Int = getIntExtra(EXTRA_LEVEL, -1)
+                val scale: Int = getIntExtra(EXTRA_SCALE, -1)
                 result = level * 100 / scale.toFloat()
             }
             result
@@ -135,10 +150,9 @@ object BatteryUtil {
 
     fun getBatteryEnergyCounter(context: Context): Int {
         return try {
-            val result: Int? = getBatteryManager(context)?.getIntProperty(
-                BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER
-            )
-            result ?: UNKNOWN_VALUE_INT
+            val manager: BatteryManager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
+            val result: Int = manager.getIntProperty(BATTERY_PROPERTY_ENERGY_COUNTER)
+            result
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[Battery Energy Counter] Error, ${exception.message}")
             exception.printStackTrace()
@@ -153,7 +167,7 @@ object BatteryUtil {
      *
      * @param context
      * */
-    private fun getBatteryStatus(context: Context): Intent? {
+    private fun getBatteryStatusIntent(context: Context): Intent? {
         return try {
             IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
                 context.registerReceiver(
@@ -167,5 +181,4 @@ object BatteryUtil {
             null
         }
     }
-
 }
