@@ -13,27 +13,29 @@ object SensorUtil {
     private const val TAG = "SensorUtil"
     private const val SAMPLING_PERIOD_US: Int = 2 * 1000
 
-    fun init(context: Context) {
-        getAllSensors(context)
+    fun getAllSensors(context: Context): List<Sensor> {
+        return try {
+            val manager: SensorManager = getSystemSensorManager(context) ?: return emptyList()
+            manager.getSensorList(Sensor.TYPE_ALL)
+        } catch (exception: Exception) {
+            LogUtil.error(TAG, "[Sensor] Error, ${exception.message}")
+            exception.printStackTrace()
+            emptyList()
+        }
     }
 
-    private fun getAllSensors(context: Context) {
-        try {
-            val manager: SensorManager? = getSystemSensorManager(context)
-            manager?.apply {
-                val sensorList: List<Sensor> = getSensorList(Sensor.TYPE_ALL)
-                if (sensorList.isNotEmpty()) {
-                    for (sensor: Sensor in sensorList) {
-                        LogUtil.debug(TAG, "[${sensor.name} Sensor] Detected.")
-                        registerSensorEventListener(
-                            context = context,
-                            sensor = sensor
-                        )
-                    }
-                }
+    fun registerSensorEventListener(
+        context: Context,
+        sensorList: List<Sensor>
+    ) {
+        if (sensorList.isNotEmpty()) {
+            for (sensor: Sensor in sensorList) {
+                LogUtil.debug(TAG, "[${sensor.name} Sensor] Detected.")
+                registerSensorEventListener(
+                    context = context,
+                    sensor = sensor
+                )
             }
-        } catch (exception: Exception) {
-            exception.printStackTrace()
         }
     }
 

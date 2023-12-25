@@ -2,6 +2,7 @@ package io.common
 
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.NotificationManager
 import android.content.Context
 import android.hardware.SensorManager
 import android.hardware.camera2.CameraManager
@@ -57,6 +58,8 @@ object RelicSystemServiceManager {
 
     /**
      * [ConnectivityManager](https://developer.android.google.cn/reference/kotlin/android/net/ConnectivityManager?hl=en)
+     *
+     * @param context
      * */
     fun getConnectivityManager(context: Context): ConnectivityManager? {
         return try {
@@ -87,27 +90,14 @@ object RelicSystemServiceManager {
 
     /**
      * [HardwarePropertiesManager](https://developer.android.google.cn/reference/kotlin/android/os/HardwarePropertiesManager?hl=en)
+     *
+     * @param context
      * */
     fun getHardwarePropertiesManager(context: Context): HardwarePropertiesManager? {
         return try {
             context.getSystemService(Context.HARDWARE_PROPERTIES_SERVICE) as HardwarePropertiesManager
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[Hardware Properties Manager] Error, ${exception.message}")
-            exception.printStackTrace()
-            null
-        }
-    }
-
-    /**
-     * [Sensors Overview](https://developer.android.google.cn/develop/sensors-and-location/sensors/sensors_overview)
-     *
-     * @param context
-     * */
-    fun getSystemSensorManager(context: Context): SensorManager? {
-        return try {
-            context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Sensor Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -123,6 +113,31 @@ object RelicSystemServiceManager {
             context.getSystemService(Context.SYSTEM_HEALTH_SERVICE) as SystemHealthManager
         } catch (exception: Exception) {
             LogUtil.error(TAG, "[System Health] Error, ${exception.message}")
+            exception.printStackTrace()
+            null
+        }
+    }
+
+    fun getSystemNotificationManager(context: Context): NotificationManager? {
+        return try {
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        } catch (exception: Exception) {
+            LogUtil.error(TAG, "[Notification] Error, ${exception.message}")
+            exception.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * [Sensors Overview](https://developer.android.google.cn/develop/sensors-and-location/sensors/sensors_overview)
+     *
+     * @param context
+     * */
+    fun getSystemSensorManager(context: Context): SensorManager? {
+        return try {
+            context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        } catch (exception: Exception) {
+            LogUtil.error(TAG, "[Sensor Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
