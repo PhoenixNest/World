@@ -3,7 +3,7 @@
 [versions]
 accompanist = "0.32.0"
 activityCompose = "1.8.1"
-androidGradlePlugin = "8.1.4"
+androidGradlePlugin = "8.2.0"
 androidxComposeBom = "2023.10.01"
 amapVersion = "latest.integration"
 appcompat = "1.6.1"
