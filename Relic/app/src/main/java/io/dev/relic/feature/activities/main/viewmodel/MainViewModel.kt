@@ -5,10 +5,10 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.domain.use_case.lcoation.LocationUseCase
-import io.dev.relic.feature.screens.main.MainState
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
+import io.dev.relic.feature.screens.main.MainState
+import io.domain.use_case.lcoation.LocationUseCase
 import io.module.map.ILocationListener
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,14 +21,14 @@ class MainViewModel @Inject constructor(
     private val locationUseCase: LocationUseCase
 ) : AndroidViewModel(application) {
 
-    companion object {
-        private const val TAG = "MainViewModel"
-    }
-
     var latestLocation: Location? = null
 
     private val _mainStateFlow: MutableStateFlow<MainState> = MutableStateFlow(MainState.Init)
     val mainStateFlow: StateFlow<MainState> get() = _mainStateFlow
+
+    companion object {
+        private const val TAG = "MainViewModel"
+    }
 
     init {
         accessDeviceLocation()
@@ -50,7 +50,10 @@ class MainViewModel @Inject constructor(
                     }
 
                     override fun onAccessSucceed(location: Location) {
-                        LogUtil.debug(TAG, "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})")
+                        LogUtil.debug(
+                            TAG,
+                            "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})"
+                        )
                         latestLocation = location
                         setState(
                             stateFlow = _mainStateFlow,
@@ -59,7 +62,10 @@ class MainViewModel @Inject constructor(
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
-                        LogUtil.error(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
+                        LogUtil.error(
+                            TAG,
+                            "[Access Device Location] Access failed, errorMessage: $errorMessage"
+                        )
                         setState(
                             stateFlow = _mainStateFlow,
                             newState = MainState.AccessLocationFailed(

@@ -5,6 +5,8 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.os.CpuUsageInfo
+import android.os.HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -16,8 +18,14 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.common.RelicSystemServiceManager.getSystemNotificationManager
-import io.common.system.CpuUtil
+import io.common.system.CpuUtil.emitCpuTemperatureFlow
+import io.common.system.CpuUtil.emitCpuUsageInfoList
+import io.common.system.CpuUtil.emitFanSpeedsList
+import io.common.system.CpuUtil.getCpuUsageInfo
+import io.common.system.CpuUtil.getFanSpeeds
+import io.common.system.CpuUtil.getHardwareTemperatureByType
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
@@ -45,7 +53,57 @@ class CpuWorker @AssistedInject constructor(
         }
     }
 
-    private fun mCpuNotification(context: Context): Notification {
+    /* ======================== override ======================== */
+
+    override suspend fun getForegroundInfo(): ForegroundInfo {
+        return ForegroundInfo(
+            /* notificationId = */ NOTIFICATION_ID,
+            /* notification = */ defaultWorkerNotification(context)
+        )
+    }
+
+    override suspend fun doWork(): Result {
+        return withContext(Dispatchers.IO) {
+            try {
+                // Cpu info
+                val cpuUsageInfo: List<CpuUsageInfo> = getCpuUsageInfo(context)
+                val cpuTemperature: Float = getHardwareTemperatureByType(
+                    context = context,
+                    type = DEVICE_TEMPERATURE_CPU
+                )
+
+                // If the device has fans
+                val fanSpeeds: List<Float> = getFanSpeeds(context)
+
+                val cpuUsageInfoUpdateResult: Boolean = async {
+                    updateCpuUsageInfoFlow(cpuUsageInfo)
+                }.await()
+
+                val cpuTemperatureUpdateResult: Boolean = async {
+                    updateCpuTemperatureFlow(cpuTemperature)
+                }.await()
+
+                val fanSpeedsUpdateResult: Boolean = async {
+                    updateFanSpeedsFlow(fanSpeeds)
+                }.await()
+
+                if (cpuUsageInfoUpdateResult
+                    && cpuTemperatureUpdateResult
+                    || fanSpeedsUpdateResult
+                ) {
+                    Result.success()
+                } else {
+                    Result.retry()
+                }
+            } catch (exception: Exception) {
+                Result.failure()
+            }
+        }
+    }
+
+    /* ======================== Logical ======================== */
+
+    private fun defaultWorkerNotification(context: Context): Notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel: NotificationChannel = NotificationChannel(
                 /* id = */ NOTIFICATION_CHANNEL_ID,
@@ -67,25 +125,15 @@ class CpuWorker @AssistedInject constructor(
         }.build()
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo {
-        return ForegroundInfo(
-            /* notificationId = */ NOTIFICATION_ID,
-            /* notification = */ mCpuNotification(context)
-        )
+    private fun updateCpuUsageInfoFlow(list: List<CpuUsageInfo?>?): Boolean {
+        return emitCpuUsageInfoList(list)
     }
 
-    override suspend fun doWork(): Result {
-        return withContext(Dispatchers.IO) {
-            try {
-                CpuUtil.apply {
-                    getTotalCoresNumber(context)
-                    getCpuUsageInfo(context)
-                    getFanSpeeds(context)
-                }
-                Result.success()
-            } catch (exception: Exception) {
-                Result.failure()
-            }
-        }
+    private fun updateCpuTemperatureFlow(value: Float?): Boolean {
+        return emitCpuTemperatureFlow(value)
+    }
+
+    private fun updateFanSpeedsFlow(list: List<Float?>): Boolean {
+        return emitFanSpeedsList(list)
     }
 }

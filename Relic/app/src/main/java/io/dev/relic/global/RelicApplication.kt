@@ -30,17 +30,9 @@ class RelicApplication : BaseApplication() {
 
         // Initializes the global lifecycle observer.
         initLifecycleObserver()
-
-        // Initializes the app's required sdk.
-        initSdk(this)
     }
 
     private fun initLifecycleObserver() {
         RelicLifecycleObserver.init()
     }
-
-    private fun initSdk(context: Context) {
-        RelicSdkManager.initSdk(context)
-    }
-
 }

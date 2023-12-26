@@ -38,21 +38,21 @@ object BatteryUtil {
         UNKNOWN(-1)
     }
 
-    fun emitChargingStatus(isCharging: Boolean) {
-        runBlocking(Dispatchers.IO) {
-            chargingFlow.emit(isCharging)
+    fun emitChargingStatus(isCharging: Boolean): Boolean {
+        return runBlocking(Dispatchers.IO) {
+            chargingFlow.tryEmit(isCharging)
         }
     }
 
-    fun emitChargingVoltage(value: Int) {
-        runBlocking(Dispatchers.IO) {
-            voltageFlow.emit(value)
+    fun emitChargingVoltage(value: Int): Boolean {
+        return runBlocking(Dispatchers.IO) {
+            voltageFlow.tryEmit(value)
         }
     }
 
-    fun emitTemperature(value: Int) {
-        runBlocking(Dispatchers.IO) {
-            temperatureFlow.emit(value)
+    fun emitTemperature(value: Int): Boolean {
+        return runBlocking(Dispatchers.IO) {
+            temperatureFlow.tryEmit(value)
         }
     }
 

@@ -9,18 +9,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.common.util.LogUtil
-import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
+import io.dev.relic.feature.activities.intro.viewmodel.IntroViewModel
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.intro.IntroScreen
 import io.domain.app.AbsBaseActivity
@@ -28,7 +25,9 @@ import io.domain.app.AbsBaseActivity
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {
 
-    private val permissionLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val viewModel: IntroViewModel by lazy {
+        ViewModelProvider(this)[IntroViewModel::class.java]
+    }
 
     companion object {
         private const val TAG = "IntroActivity"
@@ -56,41 +55,47 @@ class IntroActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     override fun initialization(savedInstanceState: Bundle?) {
-        permissionLiveData.observe(this) { isGranted: Boolean ->
+        checkPermission()
+    }
+
+    private fun checkPermission() {
+        viewModel.getPermissionLiveData().observe(this) { isGranted: Boolean ->
             LogUtil.debug(TAG, "[Permission] isGranted: $isGranted")
-            updateUserAgreementMarker(
-                isAgreeUserTerms = isGranted,
-                isAgreeUserPrivacy = isGranted
-            )
-            if (isGranted) {
-                MainActivity.start(this@IntroActivity)
-                finish()
-            }
+            if (isGranted) onPermissionGranted()
         }
     }
 
-    private fun updateUserAgreementMarker(
-        isAgreeUserTerms: Boolean,
-        isAgreeUserPrivacy: Boolean
-    ) {
-        writeSyncData(KEY_IS_SHOW_USER_AGREEMENT, true)
-        writeSyncData(KEY_IS_AGREE_USER_TERMS, isAgreeUserTerms)
-        writeSyncData(KEY_IS_AGREE_USER_PRIVACY, isAgreeUserPrivacy)
+    private fun onPermissionGranted() {
+        viewModel.apply {
+            updateUserAgreementMarker()
+            initRequiredAppComponent(applicationContext)
+        }
+
+        navigateToMainActivity()
+    }
+
+    private fun navigateToMainActivity() {
+        MainActivity.start(this)
+        finish()
     }
 
     /* ======================== Ui ======================== */
 
     override fun initUi(savedInstanceState: Bundle?) {
         setContent {
-            val multiplePermissionsState: MultiplePermissionsState = rememberMultiplePermissionsState(
-                permissions = listOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+            val multiplePermissionsState: MultiplePermissionsState =
+                rememberMultiplePermissionsState(
+                    permissions = listOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.BATTERY_STATS
+                    )
                 )
-            )
 
             LaunchedEffect(multiplePermissionsState.allPermissionsGranted) {
-                permissionLiveData.postValue(multiplePermissionsState.allPermissionsGranted)
+                val isGranted: Boolean = multiplePermissionsState.allPermissionsGranted
+                viewModel.updatePermissionLiveData(isGranted)
             }
 
             // Setup immersive mode.
