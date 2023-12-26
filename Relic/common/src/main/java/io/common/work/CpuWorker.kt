@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
@@ -24,6 +23,7 @@ import io.common.system.CpuUtil.emitFanSpeedsList
 import io.common.system.CpuUtil.getCpuUsageInfo
 import io.common.system.CpuUtil.getFanSpeeds
 import io.common.system.CpuUtil.getHardwareTemperatureByType
+import io.common.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -36,20 +36,19 @@ class CpuWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, parameters) {
 
     companion object {
-        private const val TAG = "CpuWorker"
+        const val TAG = "CpuWorker"
 
         private const val NOTIFICATION_ID = 0
-        private const val NOTIFICATION_CHANNEL_ID = ""
-        private const val NOTIFICATION_CHANNEL_NAME = ""
-        private const val NOTIFICATION_CHANNEL_DESC = ""
+        private const val NOTIFICATION_CHANNEL_ID = "99"
+        private const val NOTIFICATION_CHANNEL_NAME = TAG
+        private const val NOTIFICATION_CHANNEL_DESC = TAG
+        private const val DEFAULT_INTERVAL_MINUTES = 15L
 
         fun buildRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<CpuWorker>(
-                repeatInterval = 500L,
-                repeatIntervalTimeUnit = TimeUnit.MICROSECONDS
-            ).apply {
-                setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-            }.build()
+                repeatInterval = DEFAULT_INTERVAL_MINUTES,
+                repeatIntervalTimeUnit = TimeUnit.MINUTES
+            ).build()
         }
     }
 
@@ -63,6 +62,7 @@ class CpuWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result {
+        LogUtil.debug(TAG, "[Cpu Worker] Started...")
         return withContext(Dispatchers.IO) {
             try {
                 // Cpu info
@@ -91,11 +91,14 @@ class CpuWorker @AssistedInject constructor(
                     && cpuTemperatureUpdateResult
                     || fanSpeedsUpdateResult
                 ) {
+                    LogUtil.debug(TAG, "[Cpu Worker] Succeed.")
                     Result.success()
                 } else {
+                    LogUtil.warning(TAG, "[Cpu Worker] Retry.")
                     Result.retry()
                 }
             } catch (exception: Exception) {
+                LogUtil.error(TAG, "[Cpu Worker] Error, message: ${exception.message}")
                 Result.failure()
             }
         }
