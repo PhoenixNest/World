@@ -9,7 +9,7 @@ import io.common.RelicSystemServiceManager.getHardwarePropertiesManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 object CpuUtil {
 
@@ -17,20 +17,20 @@ object CpuUtil {
     private val cpuTemperatureFlow: MutableStateFlow<Float?> = MutableStateFlow(null)
     private val fanSpeedsFlow: MutableStateFlow<List<Float?>?> = MutableStateFlow(null)
 
-    fun emitCpuUsageInfoList(list: List<CpuUsageInfo?>?): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitCpuUsageInfoList(list: List<CpuUsageInfo?>?): Boolean {
+        return withContext(Dispatchers.IO) {
             cpuUsageInfoFlow.tryEmit(list)
         }
     }
 
-    fun emitCpuTemperatureFlow(value: Float?): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitCpuTemperatureFlow(value: Float?): Boolean {
+        return withContext(Dispatchers.IO) {
             cpuTemperatureFlow.tryEmit(value)
         }
     }
 
-    fun emitFanSpeedsList(list: List<Float?>?): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitFanSpeedsList(list: List<Float?>?): Boolean {
+        return withContext(Dispatchers.IO) {
             fanSpeedsFlow.tryEmit(list)
         }
     }

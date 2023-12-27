@@ -11,6 +11,9 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
@@ -44,7 +47,14 @@ class CpuWorker @AssistedInject constructor(
         private const val NOTIFICATION_CHANNEL_DESC = TAG
         private const val DEFAULT_INTERVAL_MINUTES = 15L
 
-        fun buildRequest(): PeriodicWorkRequest {
+        fun buildOneTimeRequest(): OneTimeWorkRequest {
+            return OneTimeWorkRequestBuilder<CpuWorker>()
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .setInitialDelay(200L, TimeUnit.MILLISECONDS)
+                .build()
+        }
+
+        fun buildPeriodRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<CpuWorker>(
                 repeatInterval = DEFAULT_INTERVAL_MINUTES,
                 repeatIntervalTimeUnit = TimeUnit.MINUTES

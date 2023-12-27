@@ -1,4 +1,4 @@
-package io.dev.relic.services
+package io.common.services.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

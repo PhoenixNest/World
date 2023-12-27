@@ -48,7 +48,7 @@ class IntroViewModel @Inject constructor(
 
     private fun startWorkerRequest(context: Context) {
         // Cpu worker
-        val cpuWorkerRequest: PeriodicWorkRequest = CpuWorker.buildRequest()
+        val cpuWorkerRequest: PeriodicWorkRequest = CpuWorker.buildPeriodRequest()
         RelicWorkerSystem.enqueueUniquePeriodWorker(context, CpuWorker.TAG, cpuWorkerRequest)
     }
 }

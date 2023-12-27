@@ -21,7 +21,7 @@ import io.common.util.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 object BatteryUtil {
 
@@ -38,20 +38,20 @@ object BatteryUtil {
         UNKNOWN(-1)
     }
 
-    fun emitChargingStatus(isCharging: Boolean): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitChargingStatus(isCharging: Boolean): Boolean {
+        return withContext(Dispatchers.IO) {
             chargingFlow.tryEmit(isCharging)
         }
     }
 
-    fun emitChargingVoltage(value: Int): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitChargingVoltage(value: Int): Boolean {
+        return withContext(Dispatchers.IO) {
             voltageFlow.tryEmit(value)
         }
     }
 
-    fun emitTemperature(value: Int): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    suspend fun emitTemperature(value: Int): Boolean {
+        return withContext(Dispatchers.IO) {
             temperatureFlow.tryEmit(value)
         }
     }

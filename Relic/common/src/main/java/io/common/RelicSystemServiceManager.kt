@@ -2,6 +2,7 @@ package io.common
 
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.AlarmManager
 import android.app.NotificationManager
 import android.content.Context
 import android.hardware.SensorManager
@@ -35,6 +36,15 @@ object RelicSystemServiceManager {
     fun getActivityManger(context: Context): ActivityManager? {
         return try {
             context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+            null
+        }
+    }
+
+    fun getAlarmManager(context: Context): AlarmManager? {
+        return try {
+            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         } catch (exception: Exception) {
             exception.printStackTrace()
             null

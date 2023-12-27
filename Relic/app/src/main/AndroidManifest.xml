@@ -20,9 +20,9 @@
         tools:replace="android:fullBackupContent"
         tools:targetApi="31">
 
-        <!-- Battery Receiver Start-->
+        <!-- Battery Receiver Start -->
         <receiver
-            android:name=".services.PowerConnectionReceiver"
+            android:name="io.common.services.receiver.PowerConnectionReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
@@ -30,7 +30,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".services.BatteryLevelReceiver"
+            android:name="io.common.services.receiver.BatteryLevelReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
@@ -38,7 +38,7 @@
                 <action android:name="android.intent.action.BATTERY_OKAY" />
             </intent-filter>
         </receiver>
-        <!-- Battery Receiver End-->
+        <!-- Battery Receiver End -->
 
         <activity
             android:name=".feature.activities.splash.SplashActivity"
