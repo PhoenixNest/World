@@ -24,7 +24,8 @@ class CpuService : Service() {
     /**
      * Register a broadcast receiver to this service.
      *
-     * @see updateCpuInfo
+     * @see CpuInfoReceiver
+     * @see CpuInfoReceiver.updateCpuInfo
      * */
     private var receiver: BroadcastReceiver? = null
 
