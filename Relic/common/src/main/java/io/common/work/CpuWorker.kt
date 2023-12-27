@@ -138,15 +138,15 @@ class CpuWorker @AssistedInject constructor(
         }.build()
     }
 
-    private fun updateCpuUsageInfoFlow(list: List<CpuUsageInfo?>?): Boolean {
+    private suspend fun updateCpuUsageInfoFlow(list: List<CpuUsageInfo?>?): Boolean {
         return emitCpuUsageInfoList(list)
     }
 
-    private fun updateCpuTemperatureFlow(value: Float?): Boolean {
+    private suspend fun updateCpuTemperatureFlow(value: Float?): Boolean {
         return emitCpuTemperatureFlow(value)
     }
 
-    private fun updateFanSpeedsFlow(list: List<Float?>): Boolean {
+    private suspend fun updateFanSpeedsFlow(list: List<Float?>): Boolean {
         return emitFanSpeedsList(list)
     }
 }

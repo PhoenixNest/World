@@ -17,7 +17,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,9 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.core.ui.CommonLoadingComponent
-import io.core.ui.CommonNoDataComponent
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.CommonRetryComponent
+import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
@@ -41,19 +39,31 @@ import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEW
 import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.ui.NewsCardItem
+import io.dev.relic.feature.function.news.ui.NewsLoadingPlaceholder
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 import io.dev.relic.feature.function.news.ui.NewsTrendingPanel
 import io.dev.relic.feature.pages.hive.viewmodel.HiveViewModel
-import io.dev.relic.feature.screens.main.MainState
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun HivePageRoute(
     mainViewModel: MainViewModel,
     hiveViewModel: HiveViewModel = hiltViewModel()
 ) {
-    val mainState: MainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
-    val everythingNewsDataState: EverythingNewsDataState = hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle().value
-    val topHeadlineNewsDataState: TopHeadlineNewsDataState = hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle().value
+
+    /* ======================== Field ======================== */
+
+    // Trending
+    val everythingNewsDataStateFlow: StateFlow<EverythingNewsDataState> =
+        hiveViewModel.everythingNewsDataStateFlow
+    val everythingNewsDataState: EverythingNewsDataState =
+        everythingNewsDataStateFlow.collectAsStateWithLifecycle().value
+
+    // Top-headline
+    val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> =
+        hiveViewModel.topHeadlineNewsDataStateFlow
+    val topHeadlineNewsDataState: TopHeadlineNewsDataState =
+        topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle().value
 
     /* ======================== Ui ======================== */
 
@@ -74,11 +84,9 @@ fun HivePageRoute(
         topHeadlineNewsDataState = topHeadlineNewsDataState,
         currentSelectedNewsTabCategory = hiveViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
         onTabItemClick = { currentSelectedTab: Int, keyWords: String ->
-            hiveViewModel.updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
-            if (currentSelectedTab == 0) {
-                hiveViewModel.fetchEverythingNewsData()
-            } else {
-                hiveViewModel.fetchTopHeadlineNewsData(
+            hiveViewModel.apply {
+                updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
+                fetchTopHeadlineNewsData(
                     keyWords = keyWords,
                     country = DEFAULT_NEWS_COUNTRY_TYPE,
                     category = DEFAULT_NEWS_CATEGORY,
@@ -96,6 +104,8 @@ fun HivePageRoute(
         onShareClick = {
             //
         },
+        onRetryTrendingClick = hiveViewModel::fetchEverythingNewsData,
+        onRetryTopHeadlineClick = hiveViewModel::fetchTopHeadlineNewsData,
         everythingNewsContentLazyListState = everythingNewsContentLazyListState,
         topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
         topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState
@@ -112,6 +122,8 @@ private fun HivePage(
     onCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
     onShareClick: (model: NewsArticleModel) -> Unit,
+    onRetryTrendingClick: () -> Unit,
+    onRetryTopHeadlineClick: () -> Unit,
     everythingNewsContentLazyListState: LazyListState,
     topHeadlineNewsTabLazyListState: LazyListState,
     topHeadlineNewsContentLazyListState: LazyListState
@@ -131,6 +143,7 @@ private fun HivePage(
             HiveTrendingPanel(
                 everythingNewsDataState = everythingNewsDataState,
                 onCardClick = onCardClick,
+                onRetryClick = onRetryTrendingClick,
                 everythingNewsContentLazyListState = everythingNewsContentLazyListState
             )
             stickyHeader {
@@ -145,6 +158,7 @@ private fun HivePage(
                 onCardClick = onCardClick,
                 onLikeClick = onLikeClick,
                 onShareClick = onShareClick,
+                onRetryClick = onRetryTopHeadlineClick
             )
         }
     }
@@ -154,6 +168,7 @@ private fun HivePage(
 private fun LazyListScope.HiveTrendingPanel(
     everythingNewsDataState: EverythingNewsDataState,
     onCardClick: (model: NewsArticleModel) -> Unit,
+    onRetryClick: () -> Unit,
     everythingNewsContentLazyListState: LazyListState
 ) {
     item {
@@ -162,6 +177,7 @@ private fun LazyListScope.HiveTrendingPanel(
         HiveEverythingNewsPanel(
             everythingNewsDataState = everythingNewsDataState,
             onCardClick = onCardClick,
+            onRetryClick = onRetryClick,
             lazyListState = everythingNewsContentLazyListState
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -179,7 +195,7 @@ private fun HiveNewsTitle() {
         style = TextStyle(
             color = mainTextColor,
             fontSize = 72.sp,
-            fontFamily = RelicFontFamily.newsReader,
+            fontFamily = newsReader,
         )
     )
 }
@@ -188,21 +204,26 @@ private fun HiveNewsTitle() {
 private fun HiveEverythingNewsPanel(
     everythingNewsDataState: EverythingNewsDataState,
     onCardClick: (model: NewsArticleModel) -> Unit,
+    onRetryClick: () -> Unit,
     lazyListState: LazyListState
 ) {
     when (val newsDataState: EverythingNewsDataState = everythingNewsDataState) {
         is EverythingNewsDataState.Init,
         is EverythingNewsDataState.Fetching -> {
-            CommonLoadingComponent()
+            NewsLoadingPlaceholder(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+                    .padding(12.dp)
+            )
         }
 
         is EverythingNewsDataState.Empty,
         is EverythingNewsDataState.FetchFailed,
         is EverythingNewsDataState.NoNewsData -> {
-            NewsTrendingPanel(
-                modelList = emptyList(),
-                onCardClick = onCardClick,
-                lazyListState = lazyListState
+            CommonRetryComponent(
+                onRetryClick = onRetryClick,
+                containerHeight = 196.dp
             )
         }
 
@@ -235,12 +256,18 @@ private fun LazyListScope.HiveTopHeadlineNewsPanel(
     onCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
     onShareClick: (model: NewsArticleModel) -> Unit,
+    onRetryClick: () -> Unit
 ) {
     when (val newsDataState: TopHeadlineNewsDataState = topHeadlineNewsDataState) {
         is TopHeadlineNewsDataState.Init,
         is TopHeadlineNewsDataState.Fetching -> {
             item {
-                CommonLoadingComponent()
+                NewsLoadingPlaceholder(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .padding(12.dp)
+                )
             }
         }
 
@@ -248,7 +275,10 @@ private fun LazyListScope.HiveTopHeadlineNewsPanel(
         is TopHeadlineNewsDataState.FetchFailed,
         is TopHeadlineNewsDataState.NoNewsData -> {
             item {
-                CommonNoDataComponent()
+                CommonRetryComponent(
+                    onRetryClick = onRetryClick,
+                    containerHeight = 300.dp
+                )
             }
         }
 

@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.CommonAsyncImage
 import io.core.ui.CommonNoDataComponent
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.newsReader
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
@@ -119,7 +120,7 @@ private fun NewsTrendingCardItem(
                             color = mainTextColor,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = RelicFontFamily.newsReader
+                            fontFamily = newsReader
                         )
                     )
                     Text(
@@ -129,14 +130,14 @@ private fun NewsTrendingCardItem(
                         style = TextStyle(
                             color = mainTextColor,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = RelicFontFamily.ubuntu
+                            fontFamily = ubuntu
                         )
                     )
                     Text(
                         text = publishDate ?: "",
                         style = TextStyle(
                             color = mainTextColor,
-                            fontFamily = RelicFontFamily.ubuntu
+                            fontFamily = ubuntu
                         )
                     )
                 }

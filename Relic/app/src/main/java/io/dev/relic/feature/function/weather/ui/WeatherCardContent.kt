@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColorDark
 import io.data.model.weather.WeatherDataModel
 import io.data.model.weather.WeatherType
@@ -48,7 +48,7 @@ fun WeatherCardContent(model: WeatherDataModel) {
                     color = mainTextColorDark,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -58,7 +58,7 @@ fun WeatherCardContent(model: WeatherDataModel) {
                     color = mainTextColorDark,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }

@@ -41,13 +41,13 @@ import io.common.RelicConstants
 import io.common.util.TimeUtil
 import io.core.ui.CommonAsyncImage
 import io.core.ui.CommonNoDataComponent
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.newsReader
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainButtonColorLightDark
 import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
 import io.data.model.news.NewsArticleModel.Companion.testList
-import java.time.LocalTime
 
 @Composable
 fun NewsListPanel(
@@ -187,7 +187,7 @@ private fun NewsCardItemIntro(
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -198,7 +198,7 @@ private fun NewsCardItemIntro(
                     color = mainTextColor,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.newsReader,
+                    fontFamily = newsReader,
                     lineHeight = TextUnit(
                         value = 1.6F,
                         type = TextUnitType.Em
@@ -227,7 +227,7 @@ private fun NewsCardItemDesc(
             style = TextStyle(
                 color = mainTextColor,
                 fontWeight = FontWeight.Bold,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = ubuntu
             )
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -237,7 +237,7 @@ private fun NewsCardItemDesc(
             maxLines = 5,
             style = TextStyle(
                 color = mainTextColor.copy(alpha = 0.5F),
-                fontFamily = RelicFontFamily.ubuntu,
+                fontFamily = ubuntu,
                 lineHeight = TextUnit(
                     value = 1.6F,
                     type = TextUnitType.Em

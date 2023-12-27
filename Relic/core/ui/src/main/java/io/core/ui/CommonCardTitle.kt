@@ -19,7 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 
 @Composable
@@ -47,7 +47,7 @@ fun CommonCardTitle(
             style = TextStyle(
                 color = mainTextColor,
                 fontWeight = FontWeight.Bold,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = ubuntu
             )
         )
     }

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.amap.api.navi.model.search.LatLonPoint
 import com.amap.api.navi.model.search.PoiItem
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 
@@ -68,7 +68,7 @@ fun ExplorePoiCardItem(
                     .basicMarquee(),
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu,
+                    fontFamily = ubuntu,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )

@@ -29,8 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
-import io.core.ui.R
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 
 /* ======================== Horizontal ======================== */
@@ -73,7 +72,7 @@ fun CommonHorizontalIconTextButton(
                 style = TextStyle(
                     color = textColor,
                     fontSize = 12.sp,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }
@@ -117,7 +116,7 @@ fun CommonHorizontalIconTextButton(
                 style = TextStyle(
                     color = textColor,
                     fontSize = 12.sp,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }
@@ -174,7 +173,7 @@ fun CommonVerticalIconTextButton(
                 style = TextStyle(
                     color = textColor,
                     fontSize = 12.sp,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }
@@ -218,7 +217,7 @@ fun CommonVerticalIconTextButton(
                 style = TextStyle(
                     color = textColor,
                     fontSize = 12.sp,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }

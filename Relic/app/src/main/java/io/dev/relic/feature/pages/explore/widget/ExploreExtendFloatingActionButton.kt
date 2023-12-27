@@ -15,11 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.dev.relic.R
 import io.common.RelicConstants
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.R
 
 @Composable
 fun ExploreExtendFloatingActionButton(
@@ -34,7 +34,7 @@ fun ExploreExtendFloatingActionButton(
                 text = stringResource(id = labelRedId),
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         },

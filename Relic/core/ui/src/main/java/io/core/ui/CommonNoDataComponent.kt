@@ -27,8 +27,7 @@ import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import io.core.ui.R
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 
@@ -71,7 +70,7 @@ fun CommonNoDataComponent(
                     style = TextStyle(
                         color = mainTextColor,
                         fontSize = 24.sp,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = ubuntu,
                         textAlign = TextAlign.Center
                     )
                 )

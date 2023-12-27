@@ -24,7 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainThemeColor
 import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
@@ -99,7 +99,7 @@ private fun FoodRecipesCardItem(
                         .basicMarquee(),
                     style = TextStyle(
                         color = mainThemeColor,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = ubuntu,
                         textAlign = TextAlign.Center
                     )
                 )

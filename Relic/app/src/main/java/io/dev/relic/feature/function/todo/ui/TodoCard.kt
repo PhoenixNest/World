@@ -33,16 +33,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.gms.common.internal.service.Common
 import io.common.util.TimeUtil
 import io.core.ui.CommonNoDataComponent
 import io.core.ui.dialog.CommonItemDivider
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.newsReader
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
-import io.data.model.news.NewsArticleModel
 import io.data.model.todo.TodoDataModel
-import io.dev.relic.feature.function.news.ui.NewsCardItem
 
 @Composable
 fun TodoCardPanel(
@@ -134,7 +132,7 @@ fun TodoCardItem(
                     style = TextStyle(
                         color = mainTextColor,
                         fontSize = 16.sp,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = ubuntu,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -145,7 +143,7 @@ fun TodoCardItem(
                     overflow = TextOverflow.Ellipsis,
                     style = TextStyle(
                         color = mainTextColor,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = ubuntu,
                         lineHeight = TextUnit(
                             value = 1.6F,
                             type = TextUnitType.Em
@@ -185,7 +183,7 @@ private fun TodoIntro(
                 maxLines = 1,
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -196,7 +194,7 @@ private fun TodoIntro(
                 style = TextStyle(
                     color = mainTextColor,
                     fontSize = 24.sp,
-                    fontFamily = RelicFontFamily.newsReader
+                    fontFamily = newsReader
                 )
             )
         }

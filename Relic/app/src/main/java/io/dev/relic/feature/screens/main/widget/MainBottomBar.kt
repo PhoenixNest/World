@@ -28,14 +28,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
+import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
 
 @Composable
 fun MainBottomBar(
@@ -67,7 +67,10 @@ fun MainBottomBar(
                     unselectedIconResId = destination.unselectedIconResId,
                     labelResId = destination.labelResId,
                     onItemClick = {
-                        LogUtil.debug("RelicBottomBar", "[BottomItem] onNavigateTo -> [${destination.name}]")
+                        LogUtil.debug(
+                            "RelicBottomBar",
+                            "[BottomItem] onNavigateTo -> [${destination.name}]"
+                        )
                         onNavigateToDestination.invoke(destination)
                     }
                 )
@@ -118,7 +121,7 @@ private fun RowScope.MainBottomBarItem(
                     } else {
                         mainTextColor
                     },
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         }

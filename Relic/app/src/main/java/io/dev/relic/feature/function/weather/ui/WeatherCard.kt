@@ -20,7 +20,7 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.core.ui.CommonRetryComponent
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
@@ -113,7 +113,7 @@ private fun WeatherCard(
                 ),
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu,
+                    fontFamily = ubuntu,
                     fontWeight = FontWeight.Bold
                 )
             )

@@ -22,12 +22,12 @@ import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.dev.relic.R
 import io.common.RelicConstants
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainButtonColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.R
 
 @Composable
 fun HomeTopBar(onOpenDrawer: () -> Unit) {
@@ -67,7 +67,7 @@ fun HomeTopBar(onOpenDrawer: () -> Unit) {
                     color = mainTextColor,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = RelicFontFamily.ubuntu,
+                    fontFamily = ubuntu,
                     textMotion = TextMotion.Animated
                 )
             )

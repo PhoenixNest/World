@@ -14,13 +14,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
+import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
 
 @Composable
 fun MainRailAppBar(
@@ -37,7 +37,10 @@ fun MainRailAppBar(
                 unselectedIconResId = destination.unselectedIconResId,
                 labelResId = destination.labelResId,
                 onItemClick = {
-                    LogUtil.debug("RelicRailBar", "[RailItem] onNavigateTo -> [${destination.name}]")
+                    LogUtil.debug(
+                        "RelicRailBar",
+                        "[RailItem] onNavigateTo -> [${destination.name}]"
+                    )
                     onNavigateToDestination(destination)
                 }
             )
@@ -81,7 +84,7 @@ private fun MainRailBarItem(
                     } else {
                         mainTextColor
                     },
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = ubuntu
                 )
             )
         },

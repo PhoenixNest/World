@@ -24,11 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.dev.relic.R
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
+import io.dev.relic.R
 
 @Composable
 fun ExploreBottomSheet(
@@ -89,7 +89,7 @@ private fun ExploreBottomSheetHeader() {
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 18.sp,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = ubuntu
             )
         )
         Spacer(modifier = Modifier.height(32.dp))

@@ -39,16 +39,16 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.dev.relic.R
-import io.dev.relic.feature.activities.web.WebActivity
 import io.common.RelicConstants
 import io.core.ui.CommonRoundIcon
 import io.core.ui.CommonTextButton
 import io.core.ui.dialog.CommonItemDivider
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.R
+import io.dev.relic.feature.activities.web.WebActivity
 
 @Composable
 fun IntroScreen(onClick: () -> Unit) {
@@ -112,7 +112,7 @@ private fun IntroTitlePanel() {
                 color = mainTextColor,
                 fontSize = 52.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = ubuntu
             )
         )
     }
@@ -123,7 +123,7 @@ private fun IntroTitlePanel() {
         style = TextStyle(
             color = mainTextColor,
             fontSize = 20.sp,
-            fontFamily = RelicFontFamily.ubuntu
+            fontFamily = ubuntu
         )
     )
     Spacer(modifier = Modifier.height(24.dp))
@@ -211,7 +211,7 @@ private fun IntroPrivacy() {
         style = TextStyle(
             color = normalTextColor,
             fontSize = 11.sp,
-            fontFamily = RelicFontFamily.ubuntu,
+            fontFamily = ubuntu,
             textAlign = TextAlign.Center
         ),
         onClick = { offset: Int ->
@@ -246,7 +246,7 @@ private fun IntroFeatureItem(
             style = TextStyle(
                 color = mainTextColorDark,
                 fontSize = 16.sp,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = ubuntu
             )
         )
     }

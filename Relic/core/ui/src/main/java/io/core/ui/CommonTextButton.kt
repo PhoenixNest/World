@@ -20,8 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.core.ui.R
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainButtonColor
 
 @Composable
@@ -53,7 +52,7 @@ fun CommonTextButton(
             style = TextStyle(
                 color = textColor,
                 fontSize = fontSize,
-                fontFamily = RelicFontFamily.ubuntu,
+                fontFamily = ubuntu,
                 textAlign = TextAlign.Center
             )
         )

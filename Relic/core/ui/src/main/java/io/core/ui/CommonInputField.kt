@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.ubuntu
 
 @Composable
 fun CommonInputField(
@@ -38,7 +38,7 @@ fun CommonInputField(
         enabled = isEnabled,
         textStyle = textStyle.copy(
             color = Color.DarkGray,
-            fontFamily = RelicFontFamily.ubuntu,
+            fontFamily = ubuntu,
             textAlign = TextAlign.Start
         ),
         maxLines = maxLines,
@@ -49,7 +49,7 @@ fun CommonInputField(
                     text = stringResource(id = hintResId),
                     style = textStyle.copy(
                         color = Color.LightGray,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = ubuntu,
                         textAlign = TextAlign.Start
                     )
                 )
