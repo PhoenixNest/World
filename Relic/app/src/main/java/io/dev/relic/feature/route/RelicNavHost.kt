@@ -7,13 +7,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 
 @Composable
 fun MainFeatureNavHost(
@@ -60,8 +61,12 @@ fun MainFeatureNavHost(
             )
         }*/
     ) {
-        pageHome(mainViewModel = mainViewModel)
-        pageExplore(mainViewModel = mainViewModel)
-        pageHive(mainViewModel = mainViewModel)
+        // Main unit
+        pageHome(mainScreenState, mainViewModel)
+        pageExplore(mainScreenState, mainViewModel)
+        pageHive(mainScreenState, mainViewModel)
+
+        // Detail
+        pageNewsDetail(navHostController::popBackStack)
     }
 }

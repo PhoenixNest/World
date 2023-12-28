@@ -15,16 +15,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomtom.sdk.location.GeoLocation
+import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
+import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.MainState
-import io.module.map.amap.ui.AMapComponent
-import io.core.ui.theme.mainThemeColor
 import io.module.map.tomtom.ui.TomTomMapComponent
 
 @Composable
 fun ExplorePageRoute(
+    mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
     exploreViewModel: ExploreViewModel = hiltViewModel()
 ) {

@@ -5,17 +5,24 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.route.RelicRoute
+import io.dev.relic.feature.route.RelicRoute.HOME
+import io.dev.relic.feature.screens.main.MainScreenState
 
 fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
     this.navigate(
-        route = RelicRoute.HOME,
+        route = HOME,
         navOptions = navOptions
     )
 }
 
-fun NavGraphBuilder.pageHome(mainViewModel: MainViewModel) {
-    composable(route = RelicRoute.HOME) {
-        HomePageRoute(mainViewModel = mainViewModel)
+fun NavGraphBuilder.pageHome(
+    mainScreenState: MainScreenState,
+    mainViewModel: MainViewModel
+) {
+    composable(route = HOME) {
+        HomePageRoute(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel
+        )
     }
 }

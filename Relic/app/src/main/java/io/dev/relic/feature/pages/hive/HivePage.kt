@@ -42,11 +42,13 @@ import io.dev.relic.feature.function.news.ui.NewsCardItem
 import io.dev.relic.feature.function.news.ui.NewsLoadingPlaceholder
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 import io.dev.relic.feature.function.news.ui.NewsTrendingPanel
+import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
 import io.dev.relic.feature.pages.hive.viewmodel.HiveViewModel
-import kotlinx.coroutines.flow.StateFlow
+import io.dev.relic.feature.screens.main.MainScreenState
 
 @Composable
 fun HivePageRoute(
+    mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
     hiveViewModel: HiveViewModel = hiltViewModel()
 ) {
@@ -54,16 +56,12 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val everythingNewsDataStateFlow: StateFlow<EverythingNewsDataState> =
-        hiveViewModel.everythingNewsDataStateFlow
     val everythingNewsDataState: EverythingNewsDataState =
-        everythingNewsDataStateFlow.collectAsStateWithLifecycle().value
+        hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle().value
 
     // Top-headline
-    val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> =
-        hiveViewModel.topHeadlineNewsDataStateFlow
     val topHeadlineNewsDataState: TopHeadlineNewsDataState =
-        topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle().value
+        hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle().value
 
     /* ======================== Ui ======================== */
 
@@ -96,7 +94,10 @@ fun HivePageRoute(
             }
         },
         onCardClick = {
-            //
+            mainScreenState.navHostController.navigateToNewsDetailPage(
+                title = it.title,
+                contUrl = it.contentUrl
+            )
         },
         onLikeClick = {
             //

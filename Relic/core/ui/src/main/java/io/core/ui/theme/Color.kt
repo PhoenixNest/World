@@ -18,6 +18,9 @@ val placeHolderHighlightColor: Color = mainBackgroundColorLight
 val mainTextColor: Color = Color.White.copy(alpha = 0.8F)
 val mainTextColorDark: Color = mainThemeColor.copy(alpha = 0.8F)
 
+val mainIconColor: Color = mainThemeColor
+val mainIconColorLight = Color.White.copy(alpha = 0.8F)
+
 val mainButtonColor: Color = mainThemeColor
 val mainButtonColorLight: Color = mainTextColor
 val mainButtonColorLightDark: Color = mainButtonColorLight.copy(alpha = 0.8F)

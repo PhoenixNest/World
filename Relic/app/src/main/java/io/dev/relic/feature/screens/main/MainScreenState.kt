@@ -15,13 +15,13 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import io.core.network.monitor.NetworkMonitor
+import io.core.network.monitor.NetworkStatus
 import io.dev.relic.feature.pages.explore.navigateToExplorePage
 import io.dev.relic.feature.pages.hive.navigateToHivePage
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.route.RelicRoute
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
-import io.core.network.monitor.NetworkMonitor
-import io.core.network.monitor.NetworkStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

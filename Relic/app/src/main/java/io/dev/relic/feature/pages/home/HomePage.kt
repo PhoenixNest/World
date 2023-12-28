@@ -22,18 +22,31 @@ import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_WEATHER_CARD
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.pages.home.widget.HomeDrawer
 import io.dev.relic.feature.pages.home.widget.HomePageContent
+import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.MainState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomePageRoute(
+    mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    val mainState: MainState = mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
-    val weatherState: WeatherDataState = homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
-    val foodRecipesState: FoodRecipesDataState = homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
+
+    /* ======================== Field ======================== */
+
+    // Location
+    val mainState: MainState =
+        mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
+
+    // Weather
+    val weatherState: WeatherDataState =
+        homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
+
+    // Food recipes
+    val foodRecipesState: FoodRecipesDataState =
+        homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
 
     /* ======================== Ui ======================== */
 

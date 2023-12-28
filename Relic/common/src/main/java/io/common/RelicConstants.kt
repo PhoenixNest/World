@@ -5,6 +5,7 @@ object RelicConstants {
     object URL {
         const val USER_TERMS = "https://www.bing.com"
         const val USER_PRIVACY = "https://www.bing.com"
+        const val DEFAULT_PLACEHOLDER_URL = "https://www.bing.com"
     }
 
     object ComposeUi {
