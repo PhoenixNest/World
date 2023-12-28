@@ -80,5 +80,6 @@
     <string name="news_label_entertainment">Entertainment</string>
     <string name="news_label_sports">Sports</string>
     <string name="news_label_health">Health</string>
+    <string name="news_label_trending">Trending</string>
 
 </resources>

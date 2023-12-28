@@ -8,6 +8,7 @@ enum class NewsTopHeadlineCategories(
     @DrawableRes val iconResId: Int,
     @StringRes val tabLabelResId: Int
 ) {
+    Trending(R.drawable.ic_news_trending, R.string.news_label_trending),
     Technology(R.drawable.ic_news_technology, R.string.news_label_technology),
     Science(R.drawable.ic_news_science, R.string.news_label_science),
     Business(R.drawable.ic_news_business, R.string.news_label_business),
