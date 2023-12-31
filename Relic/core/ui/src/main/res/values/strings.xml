@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Relic</string>
+
+    <string name="common_input_field_hint">Hint</string>
+    <string name="common_no_data">No data…</string>
+    <string name="common_retry">Retry</string>
+</resources>

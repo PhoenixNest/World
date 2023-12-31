@@ -1,3 +1,85 @@
 <resources>
     <string name="app_name">Relic</string>
+
+    <!-- System -->
+    <string name="no_network_connection_message">Please check your network connection…</string>
+    <string name="no_data">No Data…</string>
+    <string name="no_data_retry">Retry</string>
+
+    <!-- Permission -->
+    <string name="permission_location">Allow your location</string>
+    <string name="permission_location_desc">Your location information will be used to obtain local weather conditions.</string>
+    <string name="permission_location_denied">Unable to obtain current location information, please check permissions</string>
+    <string name="permission_accept">Sure, i\'d Like that</string>
+    <string name="permission_denied">Not now</string>
+
+    <!-- Intro -->
+    <string name="intro_title">@string/app_name</string>
+    <string name="intro_sub_title">Your personal location device</string>
+    <string name="intro_feature_route">Provides excellent navigation route planning</string>
+    <string name="intro_feature_coffee">Have a cup of coffee and find your passion</string>
+    <string name="intro_feature_weather">Know the weather forecast early</string>
+    <string name="intro_dive_in">Dive in</string>
+    <string name="intro_agreement_part_1">"By continuing, you agree to our "</string>
+    <string name="intro_agreement_part_2">Terms</string>
+    <string name="intro_agreement_part_3">" and "</string>
+    <string name="intro_agreement_part_4">Privacy Policy</string>
+
+    <!-- Home Page -->
+    <string name="home_label">Home</string>
+    <string name="home_title">@string/home_label</string>
+    <string name="home_main_title">Beyond the World</string>
+
+    <!-- Explore Page -->
+    <string name="explore_label">Explore</string>
+    <string name="explore_bottom_sheet_title">Great Oaks From Little Acorns Grow</string>
+    <string name="explore_bottom_sheet_tab_foods_title">Foods</string>
+    <string name="explore_bottom_sheet_tab_drinks_title">Drinks</string>
+    <string name="explore_bottom_sheet_tab_hotel_title">Hotel</string>
+    <string name="explore_bottom_sheet_tab_views_title">Views</string>
+    <string name="explore_bottom_sheet_tab_shopping_title">Shopping</string>
+    <string name="explore_bottom_sheet_tab_sport_title">Sport</string>
+    <string name="explore_bottom_sheet_tab_health_title">Health</string>
+    <string name="explore_bottom_sheet_tab_traffic_service_title">Services</string>
+
+    <!-- Hive Page -->
+    <string name="hive_label">Hive</string>
+
+    <!-- Mine Page -->
+    <string name="mine_title">Me</string>
+
+    <!-- Setting Page -->
+    <string name="setting_title">Setting</string>
+
+    <!-- Todo Unit -->
+    <string name="todo_card_title">Check out your todo tasks</string>
+    <string name="todo_title">Todo</string>
+    <string name="todo_ext_fab_label">Make a plan</string>
+    <string name="todo_create_title_hint">Title</string>
+    <string name="todo_create_subtitle_hint">Subtitle</string>
+    <string name="todo_create_content_hint">Content</string>
+
+    <!-- Weather Unit -->
+    <string name="weather_card_title">Today\'s Weather</string>
+
+    <!-- Food Recipes Unit -->
+    <string name="food_recipes_card_title">Eat and drink your fill</string>
+    <string name="food_recipes_label_coffee">Coffee</string>
+    <string name="food_recipes_label_breakfast">Breakfast</string>
+    <string name="food_recipes_label_lunch">Lunch</string>
+    <string name="food_recipes_label_dinner">Dinner</string>
+    <string name="food_recipes_label_cookie">Cookie</string>
+    <string name="food_recipes_label_snack">Snack</string>
+
+    <!-- News Unit -->
+    <string name="news_title">Newspaper</string>
+    <string name="news_label_for_you">For you</string>
+    <string name="news_label_technology">Technology</string>
+    <string name="news_label_science">Science</string>
+    <string name="news_label_business">Business</string>
+    <string name="news_label_entertainment">Entertainment</string>
+    <string name="news_label_sports">Sports</string>
+    <string name="news_label_health">Health</string>
+    <string name="news_label_trending">Trending</string>
+
 </resources>

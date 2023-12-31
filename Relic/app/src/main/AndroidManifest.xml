@@ -1,8 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
+        android:name=".global.RelicApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -10,18 +17,100 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Relic"
+        tools:replace="android:fullBackupContent"
         tools:targetApi="31">
+
+        <!-- Battery Receiver Start -->
+        <receiver
+            android:name="io.common.services.receiver.PowerConnectionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="io.common.services.receiver.BatteryLevelReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+            </intent-filter>
+        </receiver>
+        <!-- Battery Receiver End -->
+
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.activities.splash.SplashActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Relic">
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Relic.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".feature.activities.intro.IntroActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.main.MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.web.WebActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name="io.module.debug.activities.debug.DebugActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic.Debug" />
+
+        <activity
+            android:name="io.module.debug.activities.map.amap.AMapActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name="io.module.debug.activities.map.tomtom.TomTomMapActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name="io.module.debug.activities.machine_learning.MLKitActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name="io.module.debug.activities.machine_learning.MediaPipeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <!-- Firebase Performance plugin -->
+        <meta-data
+            android:name="firebase_performance_logcat_enabled"
+            android:value="true" />
+
+        <!-- Admob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_dev_key" />
+
+        <!-- Amap-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="@string/amap_dev_key" />
+
     </application>
 
 </manifest>
