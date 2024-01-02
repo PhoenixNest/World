@@ -9,16 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.core.ui.R
 import io.core.ui.theme.mainBackgroundColor
 
 @Composable
 fun CommonRetryComponent(
     onRetryClick: () -> Unit,
+    modifier: Modifier = Modifier,
     containerHeight: Dp = 196.dp
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(containerHeight),
         shape = RoundedCornerShape(16.dp),

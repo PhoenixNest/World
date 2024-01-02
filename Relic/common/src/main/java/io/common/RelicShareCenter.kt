@@ -14,6 +14,7 @@ object RelicShareCenter {
     private const val SHARE_TITLE = "Share to..."
     private const val SHARE_TYPE_PLAIN_TEXT = "text/plain"
     private const val SHARE_TYPE_RTF_TEXT = "text/rtf"
+    private const val SHARE_TYPE_HTML = "text/html"
 
     fun shareTextOnly(
         context: Context,
@@ -21,8 +22,8 @@ object RelicShareCenter {
     ) {
         LogUtil.debug(TAG, "[Share - Text only] content: $shareContent")
         val intent: Intent = Intent().apply {
-            setAction(Intent.ACTION_SEND)
-            setType(SHARE_TYPE_PLAIN_TEXT)
+            action = Intent.ACTION_SEND
+            type = SHARE_TYPE_PLAIN_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
         val chooserIntent: Intent = Intent.createChooser(intent, SHARE_TITLE)
@@ -35,11 +36,27 @@ object RelicShareCenter {
     ) {
         LogUtil.debug(TAG, "[Share - RTF] content: $shareContent")
         val intent: Intent = Intent().apply {
-            setAction(Intent.ACTION_SEND)
-            setType(SHARE_TYPE_RTF_TEXT)
+            action = Intent.ACTION_SEND
+            type = SHARE_TYPE_RTF_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
         val chooserIntent: Intent = Intent.createChooser(intent, SHARE_TITLE)
+        context.startActivity(chooserIntent)
+    }
+
+    fun shareWebLink(
+        context: Context,
+        title: String?,
+        url: String?
+    ) {
+        LogUtil.debug(TAG, "[Share - Web Link] content: $url")
+        val intent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = SHARE_TYPE_HTML
+            putExtra(Intent.EXTRA_TITLE, title ?: SHARE_TITLE)
+            putExtra(Intent.EXTRA_TEXT, url ?: DEFAULT_PLACEHOLDER_URL)
+        }
+        val chooserIntent: Intent = Intent.createChooser(intent, title)
         context.startActivity(chooserIntent)
     }
 }

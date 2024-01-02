@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.common.RelicShareCenter.shareTextOnly
+import io.common.RelicShareCenter.shareWebLink
 import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.mainTextColor
@@ -107,9 +107,10 @@ fun HivePageRoute(
             //
         },
         onShareClick = {
-            shareTextOnly(
+            shareWebLink(
                 context = context,
-                shareContent = it.contentUrl
+                title = it.title,
+                url = it.contentUrl
             )
         },
         onRetryTrendingClick = hiveViewModel::fetchEverythingNewsData,
@@ -231,6 +232,7 @@ private fun HiveEverythingNewsPanel(
         is EverythingNewsDataState.NoNewsData -> {
             CommonRetryComponent(
                 onRetryClick = onRetryClick,
+                modifier = Modifier.padding(12.dp),
                 containerHeight = 196.dp
             )
         }
@@ -285,6 +287,7 @@ private fun LazyListScope.HiveTopHeadlineNewsPanel(
             item {
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
+                    modifier = Modifier.padding(12.dp),
                     containerHeight = 300.dp
                 )
             }
