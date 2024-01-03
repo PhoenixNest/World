@@ -1,8 +1,8 @@
 package io.domain.use_case.todo.action
 
-import io.data.entity.TodoEntity
-import io.domain.repository.ITodoDataRepository
 import io.common.util.LogUtil
+import io.data.entity.todo.TodoEntity
+import io.domain.repository.ITodoDataRepository
 
 class UpdateTodo(private val todoRepository: ITodoDataRepository) {
 

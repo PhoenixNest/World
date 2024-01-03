@@ -19,17 +19,21 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Relic"
+// Third-party module
+include(":module:map")
+include(":module:ad")
+include(":module:subscribe")
+include(":module:debug")
+// Artificial intelligence
+include(":agent:gemini")
+// Feature layer
 include(":app")
+// Domain layer
+include(":domain")
 include(":common")
+// Core layer
 include(":core:database")
 include(":core:datastore")
 include(":core:network")
 include(":core:data")
 include(":core:ui")
-include(":domain")
-include(":module:map")
-include(":module:ad")
-include(":module:subscribe")
-include(":module:debug")
-include(":agent")
-include(":agent:gemini")

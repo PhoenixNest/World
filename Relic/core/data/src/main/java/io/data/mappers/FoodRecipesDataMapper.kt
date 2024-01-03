@@ -1,7 +1,7 @@
 package io.data.mappers
 
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
-import io.data.entity.FoodRecipesComplexSearchEntity
+import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 
 object FoodRecipesDataMapper {

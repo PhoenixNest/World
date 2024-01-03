@@ -1,11 +1,13 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 // App config
-private val isDebugMode: String = gradleLocalProperties(rootDir).getProperty("DEBUG_MODE")
-private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS")
+private val localProperties: Properties = gradleLocalProperties(rootDir)
+private val isDebugMode: String = localProperties.getProperty("DEBUG_MODE")
+private val isNoAds: String = localProperties.getProperty("NO_ADS")
 
 // Dev Key
-private val admobDevKey: String = gradleLocalProperties(rootDir).getProperty("ADMOB_DEV_KEY")
+private val admobDevKey: String = localProperties.getProperty("ADMOB_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -52,11 +54,8 @@ android {
         ndk {
             abiFilters.addAll(
                 listOf(
-                    "armeabi",
-                    "armeabi-v7a",
-                    "arm64-v8a",
-                    "x86",
-                    "x86_64"
+                    "armeabi", "armeabi-v7a", "arm64-v8a",
+                    "x86", "x86_64"
                 )
             )
         }

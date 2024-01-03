@@ -1,31 +1,8 @@
 package io.core.network
 
-import io.common.RelicResCenter
+import io.common.RelicResCenter.getString
 
 object NetworkParameters {
-
-    object BaseUrl {
-
-        /**
-         * [Open-Meteo Api](https://open-meteo.com/)
-         * */
-        const val WEATHER_API_URL: String = "https://api.open-meteo.com/v1/"
-
-        /**
-         * [Spoonacular API](https://spoonacular.com/food-api)
-         * */
-        const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/"
-
-        /**
-         * [News Api](https://newsapi.org/docs)
-         * */
-        const val NEWS_API_URL: String = "https://newsapi.org/v2/"
-    }
-
-    object Keys {
-        val FOOD_RECIPES_API_DEV_KEY: String = RelicResCenter.getString(R.string.spoonacular_dev_key)
-        val NEWS_API_DEV_KEY: String = RelicResCenter.getString(R.string.news_dev_key)
-    }
 
     /**
      * Parameters of the okHttpClient constructor builder.
@@ -60,5 +37,28 @@ object NetworkParameters {
      * The max disk size of offline cache.
      * */
     const val MAX_DISK_CACHE_SIZE: Long = 10 * 1024 * 1024
+
+    object BaseUrl {
+
+        /**
+         * [Open-Meteo Api](https://open-meteo.com/)
+         * */
+        const val WEATHER_API_URL: String = "https://api.open-meteo.com/v1/"
+
+        /**
+         * [Spoonacular API](https://spoonacular.com/food-api)
+         * */
+        const val FOOD_RECIPES_API_URL: String = "https://api.spoonacular.com/recipes/"
+
+        /**
+         * [News Api](https://newsapi.org/docs)
+         * */
+        const val NEWS_API_URL: String = "https://newsapi.org/v2/"
+    }
+
+    object Keys {
+        val FOOD_RECIPES_API_DEV_KEY: String = getString(R.string.spoonacular_dev_key)
+        val NEWS_API_DEV_KEY: String = getString(R.string.news_dev_key)
+    }
 
 }

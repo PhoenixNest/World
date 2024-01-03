@@ -4,10 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.data.entity.NewsEverythingArticleEntity
-import io.data.entity.NewsEverythingEntity
-import io.data.entity.NewsTopHeadlineArticleEntity
-import io.data.entity.NewsTopHeadlinesEntity
+import io.data.entity.news.NewsEverythingArticleEntity
+import io.data.entity.news.NewsEverythingEntity
+import io.data.entity.news.NewsTopHeadlineArticleEntity
+import io.data.entity.news.NewsTopHeadlinesEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

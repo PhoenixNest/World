@@ -1,8 +1,9 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 // App config
-private val geminiDevKey: String =
-    gradleLocalProperties(rootDir).getProperty("AGENT_GEMINI_DEV_KEY")
+private val localProperties: Properties = gradleLocalProperties(rootDir)
+private val geminiDevKey: String = localProperties.getProperty("AGENT_GEMINI_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -24,22 +25,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         resValue("string", "agent_gemini_dev_key", geminiDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {

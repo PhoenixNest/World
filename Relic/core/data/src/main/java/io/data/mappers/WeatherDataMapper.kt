@@ -2,12 +2,12 @@ package io.data.mappers
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import io.data.entity.WeatherEntity
-import io.data.model.weather.WeatherDataModel
-import io.data.model.weather.WeatherInfoModel
+import io.common.util.TimeUtil.getCurrentTime
 import io.data.dto.weather.WeatherForecastDTO
 import io.data.dto.weather.WeatherHourlyDTO
-import io.common.util.TimeUtil.getCurrentTime
+import io.data.entity.weather.WeatherEntity
+import io.data.model.weather.WeatherDataModel
+import io.data.model.weather.WeatherInfoModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -36,7 +36,8 @@ object WeatherDataMapper {
     }
 
     fun WeatherForecastDTO.toWeatherInfoModel(): WeatherInfoModel {
-        val weatherDataMap: Map<Int, List<WeatherDataModel?>?>? = weatherHourlyDTO?.toWeatherDataMap()
+        val weatherDataMap: Map<Int, List<WeatherDataModel?>?>? =
+            weatherHourlyDTO?.toWeatherDataMap()
         val currentTime: LocalDateTime = getCurrentTime()
         val currentWeatherData: WeatherDataModel? = weatherDataMap?.get(0)?.find {
             val hour: Int = if (currentTime.minute < 30) {

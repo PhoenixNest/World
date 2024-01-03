@@ -1,8 +1,10 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 // Dev Key
-private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProperty("SPOONACULAR_DEV_KEY")
-private val newsDevKey: String = gradleLocalProperties(rootDir).getProperty("NEWS_DEV_KEY")
+private val localProperties: Properties = gradleLocalProperties(rootDir)
+private val spoonacularDevKey: String = localProperties.getProperty("SPOONACULAR_DEV_KEY")
+private val newsDevKey: String = localProperties.getProperty("NEWS_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -23,20 +25,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         resValue("string", "spoonacular_dev_key", spoonacularDevKey)
         resValue("string", "news_dev_key", newsDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
 
     compileOptions {

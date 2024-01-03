@@ -1,7 +1,7 @@
 package io.domain.repository.impl
 
 import io.core.database.repository.RelicDatabaseRepository
-import io.data.entity.TodoEntity
+import io.data.entity.todo.TodoEntity
 import io.domain.repository.ITodoDataRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

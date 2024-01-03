@@ -1,7 +1,9 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 // App config
-private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS")
+private val localProperties: Properties = gradleLocalProperties(rootDir)
+private val isNoAds: String = localProperties.getProperty("NO_ADS")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -13,22 +15,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         buildConfigField("boolean", "NO_ADS", isNoAds)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {

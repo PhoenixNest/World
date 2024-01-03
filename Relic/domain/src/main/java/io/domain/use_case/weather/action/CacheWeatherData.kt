@@ -1,7 +1,7 @@
 package io.domain.use_case.weather.action
 
-import io.data.entity.WeatherEntity
 import io.core.database.repository.RelicDatabaseRepository
+import io.data.entity.weather.WeatherEntity
 import javax.inject.Inject
 
 class CacheWeatherData @Inject constructor(

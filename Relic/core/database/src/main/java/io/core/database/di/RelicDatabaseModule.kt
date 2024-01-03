@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.core.database.RelicDatabase
+import io.core.database.dao.AgentDao
+import io.core.database.dao.AgentGeminiDao
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
@@ -55,5 +57,17 @@ class RelicDatabaseModule {
     @Singleton
     fun provideNewsDao(database: RelicDatabase): NewsDao {
         return database.newsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAgentDao(database: RelicDatabase): AgentDao {
+        return database.agentDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAgentGeminiDao(database: RelicDatabase): AgentGeminiDao {
+        return database.agentGeminiDao()
     }
 }

@@ -3,10 +3,10 @@ package io.data.mappers
 import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
-import io.data.entity.NewsEverythingArticleEntity
-import io.data.entity.NewsEverythingEntity
-import io.data.entity.NewsTopHeadlineArticleEntity
-import io.data.entity.NewsTopHeadlinesEntity
+import io.data.entity.news.NewsEverythingArticleEntity
+import io.data.entity.news.NewsEverythingEntity
+import io.data.entity.news.NewsTopHeadlineArticleEntity
+import io.data.entity.news.NewsTopHeadlinesEntity
 import io.data.model.news.NewsArticleModel
 
 object NewsDataMapper {

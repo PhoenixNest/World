@@ -1,8 +1,10 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 // Dev Key
-private val aMapDevKay: String = gradleLocalProperties(rootDir).getProperty("AMAP_DEV_KEY")
-private val tomtomDevKey: String = gradleLocalProperties(rootDir).getProperty("TOMTOM_DEV_KEY")
+private val localProperties: Properties = gradleLocalProperties(rootDir)
+private val aMapDevKay: String = localProperties.getProperty("AMAP_DEV_KEY")
+private val tomtomDevKey: String = localProperties.getProperty("TOMTOM_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -20,20 +22,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         resValue("string", "amap_dev_key", aMapDevKay)
         resValue("string", "tomtom_dev_key", tomtomDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
 
     compileOptions {

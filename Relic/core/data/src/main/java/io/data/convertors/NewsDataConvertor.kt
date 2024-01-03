@@ -2,7 +2,6 @@ package io.data.convertors
 
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
-import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 

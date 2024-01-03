@@ -1,6 +1,6 @@
 package io.domain.repository
 
-import io.data.entity.TodoEntity
+import io.data.entity.todo.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
 /**

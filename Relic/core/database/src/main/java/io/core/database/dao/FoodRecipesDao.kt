@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.data.entity.FoodRecipesComplexSearchEntity
+import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
