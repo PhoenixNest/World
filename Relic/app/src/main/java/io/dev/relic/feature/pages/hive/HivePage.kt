@@ -17,6 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -60,12 +61,10 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val everythingNewsDataState: EverythingNewsDataState =
-        hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle().value
+    val remoteEverythingNewsDataState: EverythingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
 
     // Top-headline
-    val topHeadlineNewsDataState: TopHeadlineNewsDataState =
-        hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle().value
+    val topHeadlineNewsDataState: TopHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
@@ -82,7 +81,7 @@ fun HivePageRoute(
     }
 
     HivePage(
-        everythingNewsDataState = everythingNewsDataState,
+        everythingNewsDataState = remoteEverythingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
         currentSelectedNewsTabCategory = hiveViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
         onTabItemClick = { currentSelectedTab: Int, keyWords: String ->

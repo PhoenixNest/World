@@ -23,7 +23,7 @@ class AddTodo(private val todoRepository: ITodoDataRepository) {
         todoRepository.insertTodoTask(
             entity = entity
         ).also {
-            LogUtil.debug(TAG, "[Add Todo] todoDataModel: $entity")
+            LogUtil.d(TAG, "[Add Todo] todoDataModel: $entity")
         }
     }
 

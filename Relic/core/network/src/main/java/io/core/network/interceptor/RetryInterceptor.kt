@@ -54,14 +54,14 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
     /* ======================== override ======================== */
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        LogUtil.warning(TAG, "Checking With [$TAG]")
+        LogUtil.w(TAG, "Checking With [$TAG]")
 
         val request: Request = chain.request()
         var response: Response = chain.proceed(request)
 
         while (!response.isSuccessful && currentRetryTimes < maxRetryTimes) {
             currentRetryTimes++
-            LogUtil.debug(TAG, "currentRetryTimes: $currentRetryTimes")
+            LogUtil.d(TAG, "currentRetryTimes: $currentRetryTimes")
             response.close()
             response = chain.call().clone().execute()
         }

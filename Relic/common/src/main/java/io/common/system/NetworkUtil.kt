@@ -75,7 +75,7 @@ object NetworkUtil {
         return try {
             getConnectionInfo(context)?.macAddress ?: UNKNOWN_VALUE_STRING
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Mac Address] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Mac Address] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }
@@ -168,7 +168,7 @@ object NetworkUtil {
         return try {
             getWifiManager(context)?.connectionInfo
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Connection] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Connection] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }

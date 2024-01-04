@@ -40,7 +40,7 @@ object AMapConfig {
 
         fun locationChangeListener(): AMap.OnMyLocationChangeListener {
             return AMap.OnMyLocationChangeListener {
-                LogUtil.debug(TAG, "[当前经纬度]: (${it.longitude}, ${it.altitude})")
+                LogUtil.d(TAG, "[当前经纬度]: (${it.longitude}, ${it.altitude})")
             }
         }
     }
@@ -58,7 +58,7 @@ object AMapConfig {
 
         fun setMyLocationType(type: Int): MyLocationStyle {
             return myLocationStyle.apply {
-                LogUtil.debug(TAG, "[MyLocationStyle] 我的位置展示模式: $type")
+                LogUtil.d(TAG, "[MyLocationStyle] 我的位置展示模式: $type")
                 writeSyncData(KEY_IS_SHOW_MY_LOCATION, type)
                 myLocationType(type)
             }
@@ -66,7 +66,7 @@ object AMapConfig {
 
         fun setFetchInterval(interval: Long): MyLocationStyle {
             return myLocationStyle.apply {
-                LogUtil.debug(TAG, "[MyLocationStyle] 定位间隔: $interval")
+                LogUtil.d(TAG, "[MyLocationStyle] 定位间隔: $interval")
                 writeSyncData(KEY_MAP_FETCH_INTERVAL, interval)
                 interval(interval)
             }
@@ -74,7 +74,7 @@ object AMapConfig {
 
         fun isShowMyLocation(isEnable: Boolean): MyLocationStyle {
             return myLocationStyle.apply {
-                LogUtil.debug(TAG, "[MyLocationStyle] 是否显示定位小蓝点: $isEnable")
+                LogUtil.d(TAG, "[MyLocationStyle] 是否显示定位小蓝点: $isEnable")
                 writeSyncData(KEY_MAP_LOCATION_TYPE, isEnable)
                 showMyLocation(isEnable)
             }
@@ -90,7 +90,7 @@ object AMapConfig {
                 append("\n")
                 append("[MyLocationStyle 默认配置] 是否显示定位小蓝点: $isShowMyLocation")
             }.run {
-                LogUtil.debug(TAG, this.toString())
+                LogUtil.d(TAG, this.toString())
             }
 
             return MyLocationStyle().apply {
@@ -128,7 +128,7 @@ object AMapConfig {
 
         fun isEnableCompass(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否开启指南针: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否开启指南针: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_COMPRESS, true)
                 compassEnabled(isEnable)
             }
@@ -136,7 +136,7 @@ object AMapConfig {
 
         fun isEnableRotateGesture(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否开启手势旋转: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否开启手势旋转: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_ROTATE_GESTURE, true)
                 rotateGesturesEnabled(isEnable)
             }
@@ -144,7 +144,7 @@ object AMapConfig {
 
         fun isEnableScaleControls(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否展示比例尺: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否展示比例尺: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_SCALE_CONTROL_ENABLE, true)
                 scaleControlsEnabled(isEnable)
             }
@@ -152,7 +152,7 @@ object AMapConfig {
 
         fun isEnableScrollGesture(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否开启手势滑动: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否开启手势滑动: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_SCROLL_GESTURE, true)
                 scrollGesturesEnabled(isEnable)
             }
@@ -160,7 +160,7 @@ object AMapConfig {
 
         fun isEnableTiltGestures(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否开启手势倾斜: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否开启手势倾斜: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_TILT_GESTURE, true)
                 tiltGesturesEnabled(isEnable)
             }
@@ -168,7 +168,7 @@ object AMapConfig {
 
         fun isEnableZoomControls(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否允许缩放: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否允许缩放: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_ZOOM_CONTROL, true)
                 zoomControlsEnabled(isEnable)
             }
@@ -176,7 +176,7 @@ object AMapConfig {
 
         fun isEnableZoomGestures(isEnable: Boolean): AMapOptions {
             return options.apply {
-                LogUtil.debug(TAG, "[AMapOptions] 是否开启手势缩放: $isEnable")
+                LogUtil.d(TAG, "[AMapOptions] 是否开启手势缩放: $isEnable")
                 writeSyncData(KEY_IS_ENABLE_ZOOM_GESTURE, true)
                 zoomGesturesEnabled(isEnable)
             }
@@ -206,7 +206,7 @@ object AMapConfig {
                 append("\n")
                 append("[AMapOptions 默认配置] 是否开启手势缩放: $isEnableZoomGesture")
             }.run {
-                LogUtil.debug(TAG, this.toString())
+                LogUtil.d(TAG, this.toString())
             }
 
             return AMapOptions().apply {

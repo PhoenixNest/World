@@ -68,7 +68,7 @@ object BatteryUtil {
         return try {
             getBatteryManager(context)?.isCharging ?: false
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[isCharging] Error, ${exception.message}")
+            LogUtil.e(TAG, "[isCharging] Error, ${exception.message}")
             exception.printStackTrace()
             false
         }
@@ -83,7 +83,7 @@ object BatteryUtil {
             }
             result
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Remain Charging Time] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Remain Charging Time] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_LONG
         }
@@ -104,7 +104,7 @@ object BatteryUtil {
                 else -> ChargeType.UNKNOWN
             }
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Charge Type] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Charge Type] Error, ${exception.message}")
             exception.printStackTrace()
             ChargeType.UNKNOWN
         }
@@ -116,7 +116,7 @@ object BatteryUtil {
             val result: Int = manager.getIntProperty(BATTERY_PROPERTY_CAPACITY)
             result
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Battery Level] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Battery Level] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_INT
         }
@@ -142,7 +142,7 @@ object BatteryUtil {
             }
             result
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Current Battery Level] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Current Battery Level] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_FLOAT
         }
@@ -154,7 +154,7 @@ object BatteryUtil {
             val result: Int = manager.getIntProperty(BATTERY_PROPERTY_ENERGY_COUNTER)
             result
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Battery Energy Counter] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Battery Energy Counter] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_INT
         }
@@ -176,7 +176,7 @@ object BatteryUtil {
                 )
             }
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Battery Status] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Battery Status] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }

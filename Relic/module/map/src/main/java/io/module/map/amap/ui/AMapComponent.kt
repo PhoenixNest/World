@@ -96,7 +96,7 @@ private fun AMapLifecycleBinder(mapView: MapView) {
 
     DisposableEffect(mapView) {
         onDispose {
-            LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_DESTROY")
+            LogUtil.d(TAG, "[AMap lifecycleObserver]: ON_DESTROY")
             mapView.onDestroy()
             mapView.removeAllViews()
         }
@@ -128,18 +128,18 @@ private fun MapView.lifecycleObserver(
         when (event) {
             Lifecycle.Event.ON_CREATE -> {
                 if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
-                    LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_CREATE")
+                    LogUtil.d(TAG, "[AMap lifecycleObserver]: ON_CREATE")
                     this.onCreate(Bundle())
                 }
             }
 
             Lifecycle.Event.ON_RESUME -> {
-                LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_RESUME")
+                LogUtil.d(TAG, "[AMap lifecycleObserver]: ON_RESUME")
                 this.onResume()
             }
 
             Lifecycle.Event.ON_PAUSE -> {
-                LogUtil.debug(TAG, "[AMap lifecycleObserver]: ON_PAUSE")
+                LogUtil.d(TAG, "[AMap lifecycleObserver]: ON_PAUSE")
                 this.onPause()
             }
 

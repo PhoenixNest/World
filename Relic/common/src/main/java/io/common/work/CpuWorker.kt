@@ -72,7 +72,7 @@ class CpuWorker @AssistedInject constructor(
     }
 
     override suspend fun doWork(): Result {
-        LogUtil.debug(TAG, "[Cpu Worker] Started...")
+        LogUtil.d(TAG, "[Cpu Worker] Started...")
         return withContext(Dispatchers.IO) {
             try {
                 // Cpu info
@@ -101,14 +101,14 @@ class CpuWorker @AssistedInject constructor(
                     && cpuTemperatureUpdateResult
                     || fanSpeedsUpdateResult
                 ) {
-                    LogUtil.debug(TAG, "[Cpu Worker] Succeed.")
+                    LogUtil.d(TAG, "[Cpu Worker] Succeed.")
                     Result.success()
                 } else {
-                    LogUtil.warning(TAG, "[Cpu Worker] Retry.")
+                    LogUtil.w(TAG, "[Cpu Worker] Retry.")
                     Result.retry()
                 }
             } catch (exception: Exception) {
-                LogUtil.error(TAG, "[Cpu Worker] Error, message: ${exception.message}")
+                LogUtil.e(TAG, "[Cpu Worker] Error, message: ${exception.message}")
                 Result.failure()
             }
         }

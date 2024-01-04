@@ -61,7 +61,7 @@ object AdmobAdProvider : AbsAdProvider() {
         adViewContainer: ViewGroup?
     ) {
         val targetAdUnitId: String = if (BuildConfig.NO_ADS) {
-            LogUtil.warning(TAG, "[Load Ad] Enable No-Ads mode.")
+            LogUtil.w(TAG, "[Load Ad] Enable No-Ads mode.")
             AdmobAdUnitId.NO_AD
         } else {
             adUnitId

@@ -66,7 +66,7 @@ class SplashActivity : AbsBaseActivity() {
         splashViewModel.execute(
             context = this,
             onSplashProcessEnd = {
-                LogUtil.debug(TAG, "[Splash-Process] Finished, start main logic.")
+                LogUtil.d(TAG, "[Splash-Process] Finished, start main logic.")
                 checkAndNavigate()
             }
         )

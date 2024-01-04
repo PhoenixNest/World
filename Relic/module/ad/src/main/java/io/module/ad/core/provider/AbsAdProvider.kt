@@ -114,7 +114,7 @@ abstract class AbsAdProvider : IAdProvider {
         adUnitId: String,
         adInfoWrapper: AdInfoWrapper
     ) {
-        LogUtil.debug(TAG, "[Save ad info] AdInfoWrapper: $adInfoWrapper")
+        LogUtil.d(TAG, "[Save ad info] AdInfoWrapper: $adInfoWrapper")
         adInfoMap[adUnitId] = adInfoWrapper
     }
 
@@ -124,7 +124,7 @@ abstract class AbsAdProvider : IAdProvider {
      * @param adUnitId
      * */
     fun removeAdInfo(adUnitId: String) {
-        LogUtil.debug(TAG, "[Remove ad info] adUnitId: $adUnitId")
+        LogUtil.d(TAG, "[Remove ad info] adUnitId: $adUnitId")
         adInfoMap.remove(adUnitId)
     }
 
@@ -151,7 +151,7 @@ abstract class AbsAdProvider : IAdProvider {
             val interval: Long = (TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
             val interval2Hours: Long = TimeUnit.MICROSECONDS.toHours(interval)
             val hasExpired: Boolean = (interval2Hours > AdConfig.EXPIRED_DURATION)
-            LogUtil.debug(TAG, "[Check ad has expired] hasExpired: $hasExpired")
+            LogUtil.d(TAG, "[Check ad has expired] hasExpired: $hasExpired")
 
             if (hasExpired) {
                 removeAdInfo(adUnitId)

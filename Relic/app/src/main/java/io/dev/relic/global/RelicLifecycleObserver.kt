@@ -132,7 +132,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      */
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        LogUtil.warning(TAG, "[$TAG] Enter Foreground.")
+        LogUtil.w(TAG, "[$TAG] Enter Foreground.")
         isInForeground = true
     }
 
@@ -147,7 +147,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      */
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        LogUtil.warning(TAG, "[$TAG] Enter Background.")
+        LogUtil.w(TAG, "[$TAG] Enter Background.")
         isInForeground = false
 
         // Only display the splash-ad when user has entered the main unit.
@@ -170,7 +170,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * Called when the Activity calls [super.onStart()][Activity.onStart].
      */
     override fun onActivityStarted(activity: Activity) {
-        LogUtil.debug(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
+        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
 
         // Update parameter
         hasEnterBySplashActivity = when {
@@ -196,7 +196,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * Called when the Activity calls [super.onResume()][Activity.onResume].
      */
     override fun onActivityResumed(activity: Activity) {
-        LogUtil.debug(TAG, "[${activity::class.java.simpleName}] || onActivityResumed")
+        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityResumed")
 
         // If you have not entered the main unit and the current Activity is MainActivity,
         // it is marked as having entered the home unit.
@@ -244,7 +244,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * Called when the Activity calls [super.onDestroy()][Activity.onDestroy].
      */
     override fun onActivityDestroyed(activity: Activity) {
-        LogUtil.debug(TAG, "[${activity::class.java.simpleName}] || onActivityDestroyed")
+        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityDestroyed")
     }
 
 }

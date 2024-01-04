@@ -42,37 +42,19 @@ class MainViewModel @Inject constructor(
             locationUseCase.accessCurrentLocation.invoke(
                 listener = object : ILocationListener {
                     override fun onAccessing() {
-                        LogUtil.debug(TAG, "[Access Device Location] Accessing...")
-                        setState(
-                            stateFlow = _mainStateFlow,
-                            newState = MainState.AccessingLocation
-                        )
+                        LogUtil.d(TAG, "[Access Device Location] Accessing...")
+                        setState(_mainStateFlow, MainState.AccessingLocation)
                     }
 
                     override fun onAccessSucceed(location: Location) {
-                        LogUtil.debug(
-                            TAG,
-                            "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})"
-                        )
+                        LogUtil.d(TAG, "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})")
                         latestLocation = location
-                        setState(
-                            stateFlow = _mainStateFlow,
-                            newState = MainState.AccessLocationSucceed(location)
-                        )
+                        setState(_mainStateFlow, MainState.AccessLocationSucceed(location))
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
-                        LogUtil.error(
-                            TAG,
-                            "[Access Device Location] Access failed, errorMessage: $errorMessage"
-                        )
-                        setState(
-                            stateFlow = _mainStateFlow,
-                            newState = MainState.AccessLocationFailed(
-                                errorCode = null,
-                                errorMessage = errorMessage
-                            )
-                        )
+                        LogUtil.e(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
+                        setState(_mainStateFlow, MainState.AccessLocationFailed(null, errorMessage))
                     }
                 }
             )

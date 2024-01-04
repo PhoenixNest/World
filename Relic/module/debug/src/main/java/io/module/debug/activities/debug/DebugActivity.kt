@@ -58,8 +58,8 @@ class DebugActivity : AppCompatActivity() {
     private fun verifyAMapPrivacyAgreement() {
         val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
         val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
-        LogUtil.debug(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
-        LogUtil.debug(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
+        LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
+        LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
         AMapPrivacyCenter.verifyAMapPrivacyAgreement(
             context = this,

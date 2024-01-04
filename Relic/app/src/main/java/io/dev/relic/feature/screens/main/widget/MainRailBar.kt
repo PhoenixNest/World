@@ -37,7 +37,7 @@ fun MainRailAppBar(
                 unselectedIconResId = destination.unselectedIconResId,
                 labelResId = destination.labelResId,
                 onItemClick = {
-                    LogUtil.debug(
+                    LogUtil.d(
                         "RelicRailBar",
                         "[RailItem] onNavigateTo -> [${destination.name}]"
                     )

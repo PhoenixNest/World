@@ -41,12 +41,12 @@ class IntroMapFragment : AbsBaseFragment() {
     /* ======================== Logical ======================== */
 
     private fun navigateToAMapActivity() {
-        LogUtil.debug(TAG, "[Map Debug Intro] Navigate to AMap.")
+        LogUtil.d(TAG, "[Map Debug Intro] Navigate to AMap.")
         context?.run { AMapActivity.start(this) }
     }
 
     private fun navigateToTomTomMapActivity() {
-        LogUtil.debug(TAG, "[Map Debug Intro] Navigate to TomTomMap.")
+        LogUtil.d(TAG, "[Map Debug Intro] Navigate to TomTomMap.")
         context?.run { TomTomMapActivity.start(this) }
     }
 

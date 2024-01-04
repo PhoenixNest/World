@@ -22,17 +22,17 @@ class PowerConnectionReceiver : BroadcastReceiver() {
         intent?.action?.let {
             when (it) {
                 Intent.ACTION_POWER_CONNECTED -> {
-                    LogUtil.debug(TAG, "[Power Status] Connected")
+                    LogUtil.d(TAG, "[Power Status] Connected")
                     updateChargingStatus(true)
                 }
 
                 Intent.ACTION_POWER_DISCONNECTED -> {
-                    LogUtil.debug(TAG, "[Power Status] Disconnected")
+                    LogUtil.d(TAG, "[Power Status] Disconnected")
                     updateChargingStatus(false)
                 }
 
                 Intent.ACTION_BATTERY_CHANGED -> {
-                    LogUtil.debug(TAG, "[Power Status] onChange")
+                    LogUtil.d(TAG, "[Power Status] onChange")
                     onBatteryChanged(intent)
                 }
 
@@ -60,13 +60,13 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                 if (batteryChargingVoltageUpdateResult
                     && batteryTemperatureUpdateResult
                 ) {
-                    LogUtil.debug(TAG, "[Update] Succeed.")
+                    LogUtil.d(TAG, "[Update] Succeed.")
                 } else {
-                    LogUtil.warning(TAG, "[Update] Failed.")
+                    LogUtil.w(TAG, "[Update] Failed.")
                 }
             }
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Update] Error, message: ${exception.message}")
+            LogUtil.e(TAG, "[Update] Error, message: ${exception.message}")
             exception.printStackTrace()
         }
     }

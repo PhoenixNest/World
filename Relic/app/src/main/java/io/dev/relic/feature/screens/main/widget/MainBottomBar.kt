@@ -67,7 +67,7 @@ fun MainBottomBar(
                     unselectedIconResId = destination.unselectedIconResId,
                     labelResId = destination.labelResId,
                     onItemClick = {
-                        LogUtil.debug(
+                        LogUtil.d(
                             "RelicBottomBar",
                             "[BottomItem] onNavigateTo -> [${destination.name}]"
                         )

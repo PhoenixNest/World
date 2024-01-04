@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.module.ad.admob.splash.AdmobSplashAdHelper
 import io.dev.relic.global.RelicLifecycleObserver
 import io.common.util.LogUtil
 import kotlinx.coroutines.launch
@@ -41,14 +40,14 @@ class SplashViewModel @Inject constructor(
     ) {
         // There is no need to display ads if the app is launched for the first time.
         if (RelicLifecycleObserver.isFirstColdStart) {
-            LogUtil.warning(TAG, "[Load Splash-Ad] No need to request the Ad if the app is launched for the first time")
+            LogUtil.w(TAG, "[Load Splash-Ad] No need to request the Ad if the app is launched for the first time")
             onAdClosed.invoke()
             return
         }
 
         // If the Ad is currently loading, there is no need to request the Ad twice.
         if (isAdLoading) {
-            LogUtil.warning(TAG, "[Load Splash-Ad] No need to request the Ad twice")
+            LogUtil.w(TAG, "[Load Splash-Ad] No need to request the Ad twice")
             return
         }
 

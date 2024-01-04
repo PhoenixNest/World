@@ -14,7 +14,7 @@ class DeleteTodo(private val todoRepository: ITodoDataRepository) {
         todoRepository.deleteTodoTask(
             entity = entity
         ).also {
-            LogUtil.debug(TAG, "[Delete Todo] todoDataModel: $entity")
+            LogUtil.d(TAG, "[Delete Todo] todoDataModel: $entity")
         }
     }
 

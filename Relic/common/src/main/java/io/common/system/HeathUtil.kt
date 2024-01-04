@@ -28,7 +28,7 @@ object HeathUtil {
         return try {
             getSystemHealthManager(context)?.takeUidSnapshot(uid)
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[System Health] Error, ${exception.message}")
+            LogUtil.e(TAG, "[System Health] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }

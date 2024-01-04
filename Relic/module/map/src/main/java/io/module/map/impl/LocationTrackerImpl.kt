@@ -30,14 +30,14 @@ class LocationTrackerImpl @Inject constructor(
             context = context,
             requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
         ).also {
-            LogUtil.debug(TAG, "[Permission Status] [Find Location] isGranted: $it")
+            LogUtil.d(TAG, "[Permission Status] [Find Location] isGranted: $it")
         }
 
         val hasAccessCoarseLocationPermission: Boolean = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
         ).also {
-            LogUtil.debug(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
+            LogUtil.d(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
         }
 
         val locationManager: LocationManager = context.getSystemService(
@@ -47,7 +47,7 @@ class LocationTrackerImpl @Inject constructor(
         val isGpsEnabled: Boolean = (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             .also {
-                LogUtil.debug(TAG, "[GPS Status] isEnabled: $it")
+                LogUtil.d(TAG, "[GPS Status] isEnabled: $it")
             }
 
         if (!hasAccessFindLocationPermission
@@ -76,7 +76,7 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnSuccessListener { location: Location? ->
-                    LogUtil.debug(TAG, "[Access Success] Data: $location")
+                    LogUtil.d(TAG, "[Access Success] Data: $location")
                     continuation.resume(
                         value = location,
                         onCancellation = null
@@ -84,7 +84,7 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnFailureListener {
-                    LogUtil.error(TAG, "[Access Failed] Message: ${it.message}")
+                    LogUtil.e(TAG, "[Access Failed] Message: ${it.message}")
                     continuation.resume(
                         value = null,
                         onCancellation = null
@@ -92,7 +92,7 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnCanceledListener {
-                    LogUtil.debug(TAG, "[Access Canceled]")
+                    LogUtil.d(TAG, "[Access Canceled]")
                     continuation.cancel()
                 }
             }

@@ -58,7 +58,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
      * */
     private fun activeNetworkMonitor() {
         networkMonitor.observe().onEach { status: NetworkStatus ->
-            LogUtil.debug(TAG, "Current Network status: ${status.name}")
+            LogUtil.d(TAG, "Current Network status: ${status.name}")
         }.launchIn(lifecycleScope)
     }
 

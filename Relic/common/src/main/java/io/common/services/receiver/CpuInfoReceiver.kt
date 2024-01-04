@@ -30,7 +30,7 @@ class CpuInfoReceiver : BroadcastReceiver() {
         context?.let { ctx: Context ->
             intent?.action?.let { action: String ->
                 if (action == FIELD_BROADCAST_ACTION) {
-                    LogUtil.debug(TAG, "[Cpu BroadcastReceiver] onReceive")
+                    LogUtil.d(TAG, "[Cpu BroadcastReceiver] onReceive")
                     updateCpuInfo(ctx)
                     onReceive?.invoke()
                 }
@@ -73,13 +73,13 @@ class CpuInfoReceiver : BroadcastReceiver() {
                     && cpuTemperatureUpdateResult
                     || fanSpeedsUpdateResult
                 ) {
-                    LogUtil.debug(TAG, "[Update] Succeed.")
+                    LogUtil.d(TAG, "[Update] Succeed.")
                 } else {
-                    LogUtil.debug(TAG, "[Update] Failed.")
+                    LogUtil.d(TAG, "[Update] Failed.")
                 }
             }
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Update] Error, message: ${exception.message}")
+            LogUtil.e(TAG, "[Update] Error, message: ${exception.message}")
         }
 
     }

@@ -31,7 +31,7 @@ object ScreenUtil {
             screenWidth = getScreenDisplay(context)?.width ?: UNKNOWN_VALUE_INT
             screenWidth
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Screen Width] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Screen Width] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_INT
         }
@@ -47,7 +47,7 @@ object ScreenUtil {
             screenHeight = getScreenDisplay(context)?.height ?: screenHeight
             screenHeight
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Screen Height] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Screen Height] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_INT
         }
@@ -94,7 +94,7 @@ object ScreenUtil {
                 getWindowManager(context)?.defaultDisplay
             }
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Screen Display] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Screen Display] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }

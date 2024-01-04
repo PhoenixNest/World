@@ -123,7 +123,7 @@ private fun HomePage(
     val drawerState: DrawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed,
         confirmStateChange = { drawerValue: DrawerValue ->
-            LogUtil.debug("HomePage", "[Drawer] State: ${drawerValue.name}")
+            LogUtil.d("HomePage", "[Drawer] State: ${drawerValue.name}")
             true
         }
     )

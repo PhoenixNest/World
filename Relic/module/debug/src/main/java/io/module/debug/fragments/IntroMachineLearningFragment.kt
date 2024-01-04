@@ -41,12 +41,12 @@ class IntroMachineLearningFragment : AbsBaseFragment() {
     /* ======================== Logical ======================== */
 
     private fun navigateToMLKitActivity() {
-        LogUtil.debug(TAG, "[Machine-Learning Debug Intro] Navigate to MLKit.")
+        LogUtil.d(TAG, "[Machine-Learning Debug Intro] Navigate to MLKit.")
         context?.run { MLKitActivity.start(this) }
     }
 
     private fun navigateToMediaPipeActivity() {
-        LogUtil.debug(TAG, "[Machine-Learning Debug Intro] Navigate to MediaPipe.")
+        LogUtil.d(TAG, "[Machine-Learning Debug Intro] Navigate to MediaPipe.")
         context?.run { MediaPipeActivity.start(this) }
     }
 

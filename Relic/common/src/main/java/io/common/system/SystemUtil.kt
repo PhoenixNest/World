@@ -36,7 +36,7 @@ object SystemUtil {
 
             processResult
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Shell] ${exception.message}")
+            LogUtil.e(TAG, "[Shell] ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }
@@ -51,7 +51,7 @@ object SystemUtil {
             brandInfo = Build.BRAND ?: UNKNOWN_VALUE_STRING
             brandInfo
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Brand] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Brand] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }
@@ -66,7 +66,7 @@ object SystemUtil {
             boardInfo = Build.BOARD ?: UNKNOWN_VALUE_STRING
             boardInfo
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Board] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Board] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }
@@ -81,7 +81,7 @@ object SystemUtil {
             modelInfo = Build.MODEL ?: UNKNOWN_VALUE_STRING
             modelInfo
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Phone Model] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Phone Model] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }
@@ -91,7 +91,7 @@ object SystemUtil {
         return try {
             "$ANDROID ${Build.VERSION.RELEASE}"
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[OS] Error, ${exception.message}")
+            LogUtil.e(TAG, "[OS] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_STRING
         }

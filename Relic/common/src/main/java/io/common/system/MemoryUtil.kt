@@ -36,7 +36,7 @@ object MemoryUtil {
             totalROMSize = blockSize * blockCount
             totalROMSize
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Total ROM] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Total ROM] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_LONG
         }
@@ -48,7 +48,7 @@ object MemoryUtil {
             val availableBlocks: Long = statFs.availableBlocksLong
             blockSize * availableBlocks
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Available ROM] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Available ROM] Error, ${exception.message}")
             exception.printStackTrace()
             UNKNOWN_VALUE_LONG
         }
@@ -75,7 +75,7 @@ object MemoryUtil {
                 totalMemory.replace("\\D+", "")
             }
             val result: Long = Integer.parseInt(totalMemory) * 1024L
-            LogUtil.debug(TAG, "[Total RAM] $result")
+            LogUtil.d(TAG, "[Total RAM] $result")
             totalRAMSize = result
             totalRAMSize
         } catch (exception: Exception) {

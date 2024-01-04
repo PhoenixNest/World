@@ -15,20 +15,20 @@ class SimpleLogInterceptor : Interceptor {
         val request: Request = chain.request()
         val headerMessage: String = if (request.headers.size > 0) request.headers.toString() else "null"
         LogUtil.apply {
-            debug(TAG, "┌────── Request ────────────────────────────────────────────────────────────────────────")
-            debug(TAG, "| url: ${request.url.toUrl()}")
-            debug(TAG, "| method: ${request.method}")
-            debug(TAG, "| headers: $headerMessage")
-            debug(TAG, "| body: ${request.body}")
-            debug(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
+            d(TAG, "┌────── Request ────────────────────────────────────────────────────────────────────────")
+            d(TAG, "| url: ${request.url.toUrl()}")
+            d(TAG, "| method: ${request.method}")
+            d(TAG, "| headers: $headerMessage")
+            d(TAG, "| body: ${request.body}")
+            d(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
         }
 
         val response: Response = chain.proceed(request)
 
         LogUtil.apply {
-            debug(TAG, "┌────── Response ────────────────────────────────────────────────────────────────────────")
-            debug(TAG, "| body: ${response.body?.source()}")
-            debug(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
+            d(TAG, "┌────── Response ────────────────────────────────────────────────────────────────────────")
+            d(TAG, "| body: ${response.body?.source()}")
+            d(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
         }
 
         return response

@@ -34,7 +34,7 @@ object AdmobRewardAdHelper {
         onAdEarnedReward: () -> Unit,
         onAdClose: (isEarnedReward: Boolean) -> Unit
     ) {
-        LogUtil.debug(TAG, "[Load-Ad] Loading...")
+        LogUtil.d(TAG, "[Load-Ad] Loading...")
         val isTimeout: Boolean? = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
@@ -44,7 +44,7 @@ object AdmobRewardAdHelper {
         )
 
         if (isTimeout == null) {
-            LogUtil.debug(TAG, "[Admob | Reward-Ad] Server Timeout.")
+            LogUtil.d(TAG, "[Admob | Reward-Ad] Server Timeout.")
             onAdFailed.invoke(AdErrorCode.TIMEOUT, "Server Timeout.")
         }
     }
@@ -57,11 +57,11 @@ object AdmobRewardAdHelper {
      * @see loadRewardAd
      * */
     fun showRewardAd(context: Context) {
-        LogUtil.debug(TAG, "[Admob | Reward-Ad] Display Ad.")
+        LogUtil.d(TAG, "[Admob | Reward-Ad] Display Ad.")
         AdmobAdManager.showRewardAd(
             context = context,
             ifInBackground = {
-                LogUtil.error(TAG, "[Admob | Reward-Ad] No ads are allowed in the background.")
+                LogUtil.e(TAG, "[Admob | Reward-Ad] No ads are allowed in the background.")
                 val listener: IAdListener? = AdmobAdManager.getAdListener(AdmobAdUnitId.REWARD_AD)
                 listener?.onAdFailToShow(
                     errorCode = AdErrorCode.AD_SHOW_IN_BACKGROUND,
@@ -90,7 +90,7 @@ object AdmobRewardAdHelper {
                          * Callback when ad has already loaded.
                          * */
                         override fun onAdLoaded() {
-                            LogUtil.debug(TAG, "[Load-Ad] onAdLoaded")
+                            LogUtil.d(TAG, "[Load-Ad] onAdLoaded")
                             onAdLoaded.invoke()
                             it.resume(true)
                         }
@@ -102,7 +102,7 @@ object AdmobRewardAdHelper {
                          * @param errorMessage
                          * */
                         override fun onAdFailToLoad(errorCode: Int, errorMessage: String) {
-                            LogUtil.error(TAG, "[Load-Ad] onAdFailToLoad($errorCode, $errorMessage)")
+                            LogUtil.e(TAG, "[Load-Ad] onAdFailToLoad($errorCode, $errorMessage)")
                             onAdFailed.invoke(errorCode, errorMessage)
                             it.resume(false)
                         }
@@ -114,7 +114,7 @@ object AdmobRewardAdHelper {
                          * @param errorMessage
                          * */
                         override fun onAdFailToShow(errorCode: Int, errorMessage: String) {
-                            LogUtil.error(TAG, "[Load-Ad] onAdFailToShow($errorCode, $errorMessage)")
+                            LogUtil.e(TAG, "[Load-Ad] onAdFailToShow($errorCode, $errorMessage)")
                             onAdFailed.invoke(errorCode, errorMessage)
                             it.resume(false)
                         }
@@ -123,21 +123,21 @@ object AdmobRewardAdHelper {
                          * Callback when ad has already showed.
                          * */
                         override fun onAdShowed() {
-                            LogUtil.debug(TAG, "[Display-Ad] onAdShowed")
+                            LogUtil.d(TAG, "[Display-Ad] onAdShowed")
                         }
 
                         /**
                          * Callback when user has performed the click action.
                          * */
                         override fun onAdClicked() {
-                            LogUtil.warning(TAG, "[Click-Ad] onAdClicked")
+                            LogUtil.w(TAG, "[Click-Ad] onAdClicked")
                         }
 
                         /**
                          * Callback when user has closed the current showed ad.
                          * */
                         override fun onAdClosed() {
-                            LogUtil.debug(TAG, "[Close-Ad] onAdClosed, isEarnedReward: $isEarnedReward")
+                            LogUtil.d(TAG, "[Close-Ad] onAdClosed, isEarnedReward: $isEarnedReward")
                             onAdClose.invoke(isEarnedReward)
                         }
 
@@ -145,7 +145,7 @@ object AdmobRewardAdHelper {
                          * Callback when user has finished and earned reward from the last ad process.
                          * */
                         override fun onAdEarnedReward() {
-                            LogUtil.debug(TAG, "[Close-Ad] onAdEarnedReward")
+                            LogUtil.d(TAG, "[Close-Ad] onAdEarnedReward")
                             onAdEarnedReward.invoke()
                             isEarnedReward = true
                         }

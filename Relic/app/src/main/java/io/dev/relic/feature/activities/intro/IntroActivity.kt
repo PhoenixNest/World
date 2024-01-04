@@ -60,7 +60,7 @@ class IntroActivity : AbsBaseActivity() {
 
     private fun checkPermission() {
         viewModel.getPermissionLiveData().observe(this) { isGranted: Boolean ->
-            LogUtil.debug(TAG, "[Permission] isGranted: $isGranted")
+            LogUtil.d(TAG, "[Permission] isGranted: $isGranted")
             if (isGranted) onPermissionGranted()
         }
     }

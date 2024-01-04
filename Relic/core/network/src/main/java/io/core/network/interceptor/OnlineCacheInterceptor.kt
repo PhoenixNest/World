@@ -42,7 +42,7 @@ open class OnlineCacheInterceptor internal constructor(builder: Builder) : Inter
     /* ======================== override ======================== */
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        LogUtil.warning(TAG, "Checking With [$TAG]")
+        LogUtil.w(TAG, "Checking With [$TAG]")
 
         val request: Request = chain.request()
         val response: Response = chain.proceed(request)

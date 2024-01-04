@@ -85,7 +85,7 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
     /* ======================== override ======================== */
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        LogUtil.warning(TAG, "Checking With [$TAG]")
+        LogUtil.w(TAG, "Checking With [$TAG]")
 
         val request: Request = chain.request()
         val response: Response = chain.proceed(request)

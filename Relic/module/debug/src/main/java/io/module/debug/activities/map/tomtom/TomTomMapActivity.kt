@@ -46,31 +46,31 @@ class TomTomMapActivity : AbsBaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        LogUtil.debug(TAG, "[TomTomMap] onStart")
+        LogUtil.d(TAG, "[TomTomMap] onStart")
         binding.tomtomMapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        LogUtil.debug(TAG, "[TomTomMap] onResume")
+        LogUtil.d(TAG, "[TomTomMap] onResume")
         binding.tomtomMapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtil.debug(TAG, "[TomTomMap] onPause")
+        LogUtil.d(TAG, "[TomTomMap] onPause")
         binding.tomtomMapView.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtil.debug(TAG, "[TomTomMap] onStop")
+        LogUtil.d(TAG, "[TomTomMap] onStop")
         binding.tomtomMapView.onStop()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        LogUtil.debug(TAG, "[TomTomMap] onSaveInstanceState")
+        LogUtil.d(TAG, "[TomTomMap] onSaveInstanceState")
         binding.tomtomMapView.onSaveInstanceState(outState)
     }
 
@@ -78,7 +78,7 @@ class TomTomMapActivity : AbsBaseActivity() {
         super.onDestroy()
 
         // Avoid OOM
-        LogUtil.debug(TAG, "[TomTomMap] onDestroy")
+        LogUtil.d(TAG, "[TomTomMap] onDestroy")
         binding.tomtomMapView.onDestroy()
     }
 

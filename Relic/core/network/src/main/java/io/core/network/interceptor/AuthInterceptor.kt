@@ -41,7 +41,7 @@ open class AuthInterceptor internal constructor(builder: Builder) : Interceptor 
     /* ======================== override ======================== */
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        LogUtil.warning(TAG, "Checking With [$TAG]")
+        LogUtil.w(TAG, "Checking With [$TAG]")
 
         val request: Request = chain.request()
 

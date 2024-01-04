@@ -20,7 +20,7 @@ object RelicShareCenter {
         context: Context,
         shareContent: String?
     ) {
-        LogUtil.debug(TAG, "[Share - Text only] content: $shareContent")
+        LogUtil.d(TAG, "[Share - Text only] content: $shareContent")
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_PLAIN_TEXT
@@ -34,7 +34,7 @@ object RelicShareCenter {
         context: Context,
         shareContent: String?
     ) {
-        LogUtil.debug(TAG, "[Share - RTF] content: $shareContent")
+        LogUtil.d(TAG, "[Share - RTF] content: $shareContent")
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_RTF_TEXT
@@ -49,7 +49,7 @@ object RelicShareCenter {
         title: String?,
         url: String?
     ) {
-        LogUtil.debug(TAG, "[Share - Web Link] content: $url")
+        LogUtil.d(TAG, "[Share - Web Link] content: $url")
         val intent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_HTML

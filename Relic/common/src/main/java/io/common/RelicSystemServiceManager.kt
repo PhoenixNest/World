@@ -60,7 +60,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Battery Manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Battery Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -75,7 +75,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Connectivity Manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Connectivity Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -92,7 +92,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Camera Manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Camera Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -107,7 +107,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.HARDWARE_PROPERTIES_SERVICE) as HardwarePropertiesManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Hardware Properties Manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Hardware Properties Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -122,7 +122,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.SYSTEM_HEALTH_SERVICE) as SystemHealthManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[System Health] Error, ${exception.message}")
+            LogUtil.e(TAG, "[System Health] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -132,7 +132,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Notification] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Notification] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -147,7 +147,7 @@ object RelicSystemServiceManager {
         return try {
             context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Sensor Manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Sensor Manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -166,7 +166,7 @@ object RelicSystemServiceManager {
         return try {
             (context.getSystemService(Context.WIFI_SERVICE)) as WifiManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Wifi manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Wifi manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }
@@ -176,7 +176,7 @@ object RelicSystemServiceManager {
         return try {
             return (context as Activity).windowManager
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Window manager] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Window manager] Error, ${exception.message}")
             exception.printStackTrace()
             null
         }

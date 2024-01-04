@@ -18,7 +18,7 @@ object SensorUtil {
             val manager: SensorManager = getSystemSensorManager(context) ?: return emptyList()
             manager.getSensorList(Sensor.TYPE_ALL)
         } catch (exception: Exception) {
-            LogUtil.error(TAG, "[Sensor] Error, ${exception.message}")
+            LogUtil.e(TAG, "[Sensor] Error, ${exception.message}")
             exception.printStackTrace()
             emptyList()
         }
@@ -30,7 +30,7 @@ object SensorUtil {
     ) {
         if (sensorList.isNotEmpty()) {
             for (sensor: Sensor in sensorList) {
-                LogUtil.debug(TAG, "[${sensor.name} Sensor] Detected.")
+                LogUtil.d(TAG, "[${sensor.name} Sensor] Detected.")
                 registerSensorEventListener(
                     context = context,
                     sensor = sensor
@@ -59,10 +59,10 @@ object SensorUtil {
             override fun onSensorChanged(event: SensorEvent?) {
                 event?.sensor?.apply {
                     LogUtil.apply {
-                        debug(TAG, "[onSensorChanged] Name: $name")
-                        debug(TAG, "[onSensorChanged] Type: $type")
-                        debug(TAG, "[onSensorChanged] Vendor: $vendor")
-                        debug(TAG, "[onSensorChanged] Version: $version")
+                        d(TAG, "[onSensorChanged] Name: $name")
+                        d(TAG, "[onSensorChanged] Type: $type")
+                        d(TAG, "[onSensorChanged] Vendor: $vendor")
+                        d(TAG, "[onSensorChanged] Version: $version")
                     }
                 }
             }

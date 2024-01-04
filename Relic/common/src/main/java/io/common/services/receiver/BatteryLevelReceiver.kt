@@ -15,11 +15,11 @@ class BatteryLevelReceiver : BroadcastReceiver() {
         intent?.action?.let {
             when (it) {
                 Intent.ACTION_BATTERY_LOW -> {
-                    LogUtil.debug(TAG, "[Current Level] Low")
+                    LogUtil.d(TAG, "[Current Level] Low")
                 }
 
                 Intent.ACTION_BATTERY_OKAY -> {
-                    LogUtil.debug(TAG, "[Current Level] Okay")
+                    LogUtil.d(TAG, "[Current Level] Okay")
                 }
 
                 else -> {

@@ -68,7 +68,7 @@ object RelicPermissionDetector {
             )
 
             if (isGranted) {
-                LogUtil.debug(TAG, "$requestPermission Permission has already granted.")
+                LogUtil.d(TAG, "$requestPermission Permission has already granted.")
                 permissionListener.onPermissionGrant()
                 return
             } else {
@@ -81,7 +81,7 @@ object RelicPermissionDetector {
                 ) { _isGranted: Boolean ->
                     if (_isGranted) {
                         // Permission is granted. Continue the action or workflow in your app.
-                        LogUtil.debug(TAG, "$requestPermission Permission Granted.")
+                        LogUtil.d(TAG, "$requestPermission Permission Granted.")
                         permissionListener.onPermissionGrant()
                     } else {
                         // Explain to the user that the feature is unavailable because the
@@ -89,7 +89,7 @@ object RelicPermissionDetector {
                         // same time, respect the user's decision. Don't link to system
                         // settings in an effort to convince the user to change their
                         // decision.
-                        LogUtil.debug(TAG, "$requestPermission Permission Denied.")
+                        LogUtil.d(TAG, "$requestPermission Permission Denied.")
                         permissionListener.onPermissionDenied()
                     }
                 }

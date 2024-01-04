@@ -14,7 +14,7 @@ class UpdateTodo(private val todoRepository: ITodoDataRepository) {
         todoRepository.updateTodoTask(
             entity = entity
         ).also {
-            LogUtil.debug(TAG, "[Update Todo] todoDataModel: $entity")
+            LogUtil.d(TAG, "[Update Todo] todoDataModel: $entity")
         }
     }
 
