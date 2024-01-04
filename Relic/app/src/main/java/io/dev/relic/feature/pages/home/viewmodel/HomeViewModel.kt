@@ -161,10 +161,7 @@ class HomeViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $it")
-                    setState(
-                        _weatherDataStateFlow,
-                        WeatherDataState.FetchSucceed(it.toWeatherInfoModel())
-                    )
+                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
                 } ?: {
                     LogUtil.w(TAG, "[Handle Weather Data] Succeed without data")
                     setState(_weatherDataStateFlow, WeatherDataState.NoWeatherData)
@@ -175,10 +172,7 @@ class HomeViewModel @Inject constructor(
                 val errorCode: Int? = result.code
                 val errorMessage: String? = result.message
                 LogUtil.e(TAG, "[Handle Weather Data] Failed, ($errorCode, $errorMessage)")
-                setState(
-                    _weatherDataStateFlow,
-                    WeatherDataState.FetchFailed(errorCode, errorMessage)
-                )
+                setState(_weatherDataStateFlow, WeatherDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }
@@ -193,10 +187,7 @@ class HomeViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $it")
-                    setState(
-                        _foodRecipesDataStateFlow,
-                        FoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList())
-                    )
+                    setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList()))
                 } ?: {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed without data")
                     setState(_foodRecipesDataStateFlow, FoodRecipesDataState.NoFoodRecipesData)
@@ -207,10 +198,7 @@ class HomeViewModel @Inject constructor(
                 val errorCode: Int? = result.code
                 val errorMessage: String? = result.message
                 LogUtil.e(TAG, "[Handle Food Recipes Data] Failed, ($errorCode, $errorMessage)")
-                setState(
-                    _foodRecipesDataStateFlow,
-                    FoodRecipesDataState.FetchFailed(errorCode, errorMessage)
-                )
+                setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }
