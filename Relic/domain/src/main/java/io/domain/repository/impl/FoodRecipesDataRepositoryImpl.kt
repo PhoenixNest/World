@@ -48,7 +48,7 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
         offset: Int
     ): NetworkResult<FoodRecipesComplexSearchDTO> {
         complexSearchResult = try {
-            val data: FoodRecipesComplexSearchDTO = foodRecipesApi.complexSearchData(
+            val data = foodRecipesApi.complexSearchData(
                 apiKey = apiKey,
                 query = query,
                 addRecipeInformation = addRecipeInformation,
@@ -87,7 +87,7 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
         number: Int
     ): NetworkResult<FoodRecipesRandomSearchDTO> {
         randomSearchResult = try {
-            val data: FoodRecipesRandomSearchDTO = foodRecipesApi.randomSearchData(
+            val data = foodRecipesApi.randomSearchData(
                 apiKey = apiKey,
                 limitLicense = limitLicense,
                 tags = tags,

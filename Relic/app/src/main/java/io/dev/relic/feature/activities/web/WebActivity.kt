@@ -34,7 +34,7 @@ class WebActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web)
-        val webView: WebView = findViewById(R.id.webView)
+        val webView = findViewById<WebView>(R.id.webView)
         webView.loadUrl(intent.getStringExtra("http_url") ?: "https://www.bing.com")
     }
 

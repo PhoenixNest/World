@@ -8,17 +8,16 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import io.common.util.LogUtil
 import okhttp3.CacheControl
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
 class OfflineCacheInterceptor internal constructor(builder: Builder) : Interceptor {
 
-    private var applicationContext: Context? = builder.applicationContext
+    private var applicationContext = builder.applicationContext
 
-    private var maxOfflineCacheDuration: Int = builder.maxOfflineCacheDuration
+    private var maxOfflineCacheDuration = builder.maxOfflineCacheDuration
 
-    private var timeUnit: TimeUnit = builder.timeUnit
+    private var timeUnit = builder.timeUnit
 
     companion object {
 
@@ -32,7 +31,7 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
         /**
          * Default time unit of the offline-cache.
          * */
-        private val DEFAULT_TIME_UNIT: TimeUnit = TimeUnit.HOURS
+        private val DEFAULT_TIME_UNIT = TimeUnit.HOURS
 
     }
 
@@ -44,9 +43,9 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
 
         internal var applicationContext: Context? = null
 
-        internal var maxOfflineCacheDuration: Int = DEFAULT_DURATION_OF_OFFLINE_CACHE
+        internal var maxOfflineCacheDuration = DEFAULT_DURATION_OF_OFFLINE_CACHE
 
-        internal var timeUnit: TimeUnit = DEFAULT_TIME_UNIT
+        internal var timeUnit = DEFAULT_TIME_UNIT
 
         internal constructor(offlineCacheInterceptor: OfflineCacheInterceptor) : this() {
             this.applicationContext = offlineCacheInterceptor.applicationContext
@@ -87,17 +86,17 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
     override fun intercept(chain: Interceptor.Chain): Response {
         LogUtil.w(TAG, "Checking With [$TAG]")
 
-        val request: Request = chain.request()
-        val response: Response = chain.proceed(request)
+        val request = chain.request()
+        val response = chain.proceed(request)
 
         // Use Network monitor to check if we should use this interceptor
         if (!isNetworkAvailable()) {
-            val cacheControl: CacheControl = CacheControl.Builder()
+            val cacheControl = CacheControl.Builder()
                 .onlyIfCached()
                 .maxStale(maxOfflineCacheDuration, timeUnit)
                 .build()
 
-            val newRequest: Request = request.newBuilder()
+            val newRequest = request.newBuilder()
                 .cacheControl(cacheControl)
                 .build()
 
@@ -110,7 +109,7 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
     @Suppress("DEPRECATION")
     private fun isNetworkAvailable(): Boolean {
         var isNetworkAvailable = false
-        applicationContext?.let { context: Context ->
+        applicationContext?.let { context ->
             val systemService: ConnectivityManager? = context.getSystemService()
             val networkInfo: NetworkInfo? = systemService?.activeNetworkInfo
             isNetworkAvailable = (networkInfo != null && networkInfo.isConnected)

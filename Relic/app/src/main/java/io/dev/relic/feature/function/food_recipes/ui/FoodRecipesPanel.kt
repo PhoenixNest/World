@@ -37,7 +37,7 @@ fun FoodRecipesPanel(
     tabLazyListState: LazyListState,
     contentLazyListState: LazyListState
 ) {
-    when (val state: FoodRecipesDataState = foodRecipesState) {
+    when (foodRecipesState) {
         is FoodRecipesDataState.Init,
         is FoodRecipesDataState.Fetching -> {
             FoodRecipesPanel(
@@ -57,7 +57,7 @@ fun FoodRecipesPanel(
                 tabLazyListState = tabLazyListState,
                 contentLazyListState = contentLazyListState,
                 isFetchingData = false,
-                modelList = state.modelList,
+                modelList = foodRecipesState.modelList,
                 onRetryClick = onRetryClick,
                 onTabItemClick = onTabItemClick
             )
@@ -145,7 +145,7 @@ private fun FoodRecipesNoDataCardPreview() {
         isFetchingData = false,
         modelList = null,
         onRetryClick = {},
-        onTabItemClick = { _: Int, _: String -> },
+        onTabItemClick = { _, _ -> },
         tabLazyListState = rememberLazyListState(),
         contentLazyListState = rememberLazyListState()
     )
@@ -172,7 +172,7 @@ private fun FoodRecipesCardPreview() {
             )
         ),
         onRetryClick = {},
-        onTabItemClick = { _: Int, _: String -> },
+        onTabItemClick = { _, _ -> },
         tabLazyListState = rememberLazyListState(),
         contentLazyListState = rememberLazyListState()
     )

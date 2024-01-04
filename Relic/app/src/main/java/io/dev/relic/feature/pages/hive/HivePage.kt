@@ -61,22 +61,22 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val remoteEverythingNewsDataState: EverythingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
+    val remoteEverythingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
 
     // Top-headline
-    val topHeadlineNewsDataState: TopHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
+    val topHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
-    val everythingNewsContentLazyListState: LazyListState = rememberLazyListState()
-    val topHeadlineNewsTabLazyListState: LazyListState = rememberLazyListState()
-    val topHeadlineNewsContentLazyListState: LazyListState = rememberLazyListState()
+    val everythingNewsContentLazyListState = rememberLazyListState()
+    val topHeadlineNewsTabLazyListState = rememberLazyListState()
+    val topHeadlineNewsContentLazyListState = rememberLazyListState()
 
-    LaunchedEffect(key1 = everythingNewsContentLazyListState) {
+    LaunchedEffect(everythingNewsContentLazyListState) {
         //
     }
 
-    LaunchedEffect(key1 = topHeadlineNewsContentLazyListState) {
+    LaunchedEffect(topHeadlineNewsContentLazyListState) {
         //
     }
 
@@ -84,7 +84,7 @@ fun HivePageRoute(
         everythingNewsDataState = remoteEverythingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
         currentSelectedNewsTabCategory = hiveViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
-        onTabItemClick = { currentSelectedTab: Int, keyWords: String ->
+        onTabItemClick = { currentSelectedTab, keyWords ->
             hiveViewModel.apply {
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
                 fetchTopHeadlineNewsData(
@@ -215,7 +215,7 @@ private fun HiveEverythingNewsPanel(
     onRetryClick: () -> Unit,
     lazyListState: LazyListState
 ) {
-    when (val newsDataState: EverythingNewsDataState = everythingNewsDataState) {
+    when (everythingNewsDataState) {
         is EverythingNewsDataState.Init,
         is EverythingNewsDataState.Fetching -> {
             NewsLoadingPlaceholder(
@@ -238,7 +238,7 @@ private fun HiveEverythingNewsPanel(
 
         is EverythingNewsDataState.FetchSucceed -> {
             NewsTrendingPanel(
-                modelList = newsDataState.modelList,
+                modelList = everythingNewsDataState.modelList,
                 onCardClick = onCardClick,
                 lazyListState = lazyListState
             )
@@ -267,7 +267,7 @@ private fun LazyListScope.HiveTopHeadlineNewsPanel(
     onShareClick: (model: NewsArticleModel) -> Unit,
     onRetryClick: () -> Unit
 ) {
-    when (val newsDataState: TopHeadlineNewsDataState = topHeadlineNewsDataState) {
+    when (topHeadlineNewsDataState) {
         is TopHeadlineNewsDataState.Init,
         is TopHeadlineNewsDataState.Fetching -> {
             item {
@@ -293,13 +293,13 @@ private fun LazyListScope.HiveTopHeadlineNewsPanel(
         }
 
         is TopHeadlineNewsDataState.FetchSucceed -> {
-            itemsIndexed(newsDataState.modelList) { index: Int, data: NewsArticleModel? ->
+            itemsIndexed(topHeadlineNewsDataState.modelList) { index, data ->
                 if (data == null) {
                     //
                 } else {
-                    val itemDecorationModifier: Modifier = Modifier.padding(
+                    val itemDecorationModifier = Modifier.padding(
                         top = 16.dp,
-                        bottom = if (index == newsDataState.modelList.size - 1) 120.dp else 0.dp
+                        bottom = if (index == topHeadlineNewsDataState.modelList.size - 1) 120.dp else 0.dp
                     )
                     NewsCardItem(
                         data = data,

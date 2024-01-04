@@ -7,9 +7,9 @@ import androidx.annotation.IntRange
 
 object BrightnessUtil {
 
-    private const val MAX_BRIGHTNESS_VALUE: Int = 255
-    private const val MODERNIZE_BRIGHTNESS_VALUE: Int = (255 / 2)
-    private const val MINIMIZE_BRIGHTNESS_VALUE: Int = 1
+    private const val MAX_BRIGHTNESS_VALUE = 255
+    private const val MODERNIZE_BRIGHTNESS_VALUE = (255 / 2)
+    private const val MINIMIZE_BRIGHTNESS_VALUE = 1
 
     fun maximizeBrightness(context: Context) {
         changeScreenBrightness(

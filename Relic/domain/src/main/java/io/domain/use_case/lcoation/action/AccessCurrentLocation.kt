@@ -1,7 +1,7 @@
 package io.domain.use_case.lcoation.action
 
-import io.domain.use_case.lcoation.TAG
 import io.common.util.LogUtil
+import io.domain.use_case.lcoation.TAG
 import io.module.map.ILocationListener
 import io.module.map.ILocationTracker
 import javax.inject.Inject

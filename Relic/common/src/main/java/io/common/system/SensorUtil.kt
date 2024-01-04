@@ -4,18 +4,17 @@ import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import io.common.RelicSystemServiceManager.getSystemSensorManager
 import io.common.util.LogUtil
 
 object SensorUtil {
 
     private const val TAG = "SensorUtil"
-    private const val SAMPLING_PERIOD_US: Int = 2 * 1000
+    private const val SAMPLING_PERIOD_US = 2 * 1000
 
     fun getAllSensors(context: Context): List<Sensor> {
         return try {
-            val manager: SensorManager = getSystemSensorManager(context) ?: return emptyList()
+            val manager = getSystemSensorManager(context) ?: return emptyList()
             manager.getSensorList(Sensor.TYPE_ALL)
         } catch (exception: Exception) {
             LogUtil.e(TAG, "[Sensor] Error, ${exception.message}")
@@ -29,7 +28,7 @@ object SensorUtil {
         sensorList: List<Sensor>
     ) {
         if (sensorList.isNotEmpty()) {
-            for (sensor: Sensor in sensorList) {
+            for (sensor in sensorList) {
                 LogUtil.d(TAG, "[${sensor.name} Sensor] Detected.")
                 registerSensorEventListener(
                     context = context,

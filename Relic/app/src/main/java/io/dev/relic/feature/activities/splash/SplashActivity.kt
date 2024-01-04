@@ -28,14 +28,14 @@ class SplashActivity : AbsBaseActivity() {
     /**
      * VM
      * */
-    private val splashViewModel: SplashViewModel by lazy {
+    private val splashViewModel by lazy {
         ViewModelProvider(this)[SplashViewModel::class.java]
     }
 
     /**
      * Change this marker to true if you want to enable debug mode.
      * */
-    private val isDebugMode: Boolean = BuildConfig.DEBUG_MODE
+    private val isDebugMode = BuildConfig.DEBUG_MODE
 
     companion object {
         private const val TAG = "SplashActivity"

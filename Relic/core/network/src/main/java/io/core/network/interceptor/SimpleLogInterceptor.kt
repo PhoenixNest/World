@@ -2,7 +2,6 @@ package io.core.network.interceptor
 
 import io.common.util.LogUtil
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 
 class SimpleLogInterceptor : Interceptor {
@@ -12,8 +11,8 @@ class SimpleLogInterceptor : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request: Request = chain.request()
-        val headerMessage: String = if (request.headers.size > 0) request.headers.toString() else "null"
+        val request = chain.request()
+        val headerMessage = if (request.headers.size > 0) request.headers.toString() else "null"
         LogUtil.apply {
             d(TAG, "┌────── Request ────────────────────────────────────────────────────────────────────────")
             d(TAG, "| url: ${request.url.toUrl()}")
@@ -23,7 +22,7 @@ class SimpleLogInterceptor : Interceptor {
             d(TAG, "└───────────────────────────────────────────────────────────────────────────────────────")
         }
 
-        val response: Response = chain.proceed(request)
+        val response = chain.proceed(request)
 
         LogUtil.apply {
             d(TAG, "┌────── Response ────────────────────────────────────────────────────────────────────────")

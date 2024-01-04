@@ -11,7 +11,7 @@ import io.module.debug.databinding.ActivityMediapipeBinding
  * */
 class MediaPipeActivity : AbsBaseActivity() {
 
-    private val binding: ActivityMediapipeBinding by lazy {
+    private val binding by lazy {
         ActivityMediapipeBinding.inflate(layoutInflater)
     }
 

@@ -33,7 +33,7 @@ class MainActivity : AbsBaseActivity() {
     /**
      * VM
      * */
-    private val mainViewModel: MainViewModel by lazy {
+    private val mainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
@@ -59,8 +59,8 @@ class MainActivity : AbsBaseActivity() {
     }
 
     private fun verifyAMapPrivacyAgreement() {
-        val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
-        val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
+        val isShowUserAgreement = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
+        val isAgreeUserPrivacy = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
         LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
         LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
@@ -83,14 +83,15 @@ class MainActivity : AbsBaseActivity() {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Unspecified)
+                        .background(color = Color.Unspecified)
                         .imePadding()
                         .navigationBarsPadding()
                 ) {
                     MainScreen(
                         savedInstanceState = savedInstanceState,
                         windowSizeClass = calculateWindowSizeClass(activity = this),
-                        networkMonitor = networkMonitor
+                        networkMonitor = networkMonitor,
+                        mainViewModel = mainViewModel
                     )
                 }
             }

@@ -43,7 +43,7 @@ fun CommonInputField(
         ),
         maxLines = maxLines,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        decorationBox = { innerTextField: @Composable () -> Unit ->
+        decorationBox = { innerTextField ->
             if (content.isEmpty() || content.isBlank()) {
                 Text(
                     text = stringResource(id = hintResId),

@@ -11,7 +11,7 @@ object RelicFontFamily {
     /**
      * [Google fonts > Ubuntu](https://fonts.google.com/specimen/Ubuntu)
      * */
-    val ubuntu: FontFamily = FontFamily(
+    val ubuntu = FontFamily(
         Font(R.font.ubuntu_regular, FontWeight.Normal),
         Font(R.font.ubuntu_bold, FontWeight.Bold),
         Font(R.font.ubuntu_boldltalic, FontWeight.Bold, FontStyle.Italic),
@@ -25,14 +25,14 @@ object RelicFontFamily {
     /**
      * [Google fonts > Fasthand](https://fonts.google.com/specimen/Fasthand)
      * */
-    val fasthand: FontFamily = FontFamily(
+    val fasthand = FontFamily(
         Font(R.font.fasthand_regular, FontWeight.Normal)
     )
 
     /**
      * [Google fonts > Newsreader](https://fonts.google.com/specimen/Newsreader?query=News&sort=popularity)
      * */
-    val newsReader: FontFamily = FontFamily(
+    val newsReader = FontFamily(
         Font(R.font.newsreader, FontWeight.Normal),
         Font(R.font.newsreader_italic, FontWeight.Normal, FontStyle.Italic)
     )

@@ -12,7 +12,7 @@ import io.module.debug.databinding.ActivityTomtommapBinding
  * */
 class TomTomMapActivity : AbsBaseActivity() {
 
-    private val binding: ActivityTomtommapBinding by lazy {
+    private val binding by lazy {
         ActivityTomtommapBinding.inflate(layoutInflater)
     }
 

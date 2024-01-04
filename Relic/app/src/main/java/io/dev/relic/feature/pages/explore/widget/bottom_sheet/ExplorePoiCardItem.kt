@@ -21,7 +21,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.amap.api.navi.model.search.LatLonPoint
 import com.amap.api.navi.model.search.PoiItem
@@ -36,10 +35,10 @@ fun ExplorePoiCardItem(
     poiItem: PoiItem,
     onItemClick: () -> Unit
 ) {
-    val screenWidth: Dp = LocalConfiguration.current.screenWidthDp.dp
-    val screenHeight: Dp = LocalConfiguration.current.screenHeightDp.dp
-    val containerWidth: Dp = screenWidth / 2
-    val containerHeight: Dp = screenHeight / 3
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val containerWidth = screenWidth / 2
+    val containerHeight = screenHeight / 3
 
     Card(
         modifier = Modifier
@@ -56,7 +55,7 @@ fun ExplorePoiCardItem(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CommonAsyncImage(
-                url = "poiItem.photos.first().url",
+                url = poiItem.photos.first().url,
                 imageWidth = containerWidth,
                 imageHeight = containerHeight / 2,
             )

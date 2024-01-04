@@ -56,7 +56,7 @@ object NewsDataMapper {
     }
 
     fun List<NewsArticleDTO?>.toNewsArticleModelList(): List<NewsArticleModel?> {
-        val tempList: MutableList<NewsArticleModel?> = mutableListOf()
+        val tempList = mutableListOf<NewsArticleModel?>()
         this.forEach {
             tempList.add(
                 NewsArticleModel(

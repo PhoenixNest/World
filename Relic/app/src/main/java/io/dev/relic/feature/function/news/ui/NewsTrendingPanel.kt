@@ -54,11 +54,11 @@ fun NewsTrendingPanel(
             ),
             verticalAlignment = Alignment.Top
         ) {
-            itemsIndexed(modelList) { index: Int, data: NewsArticleModel? ->
+            itemsIndexed(modelList) { index, data ->
                 if (data == null) {
                     //
                 } else {
-                    val itemDecorationModifier: Modifier = Modifier.padding(
+                    val itemDecorationModifier = Modifier.padding(
                         start = if (index == 0) 16.dp else 0.dp,
                         end = if (index == modelList.size - 1) 16.dp else 0.dp
                     )

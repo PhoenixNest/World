@@ -20,7 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 object TomTomMapConfig {
 
-    val mapDevKey: String = RelicResCenter.getString(R.string.tomtom_dev_key)
+    val mapDevKey = RelicResCenter.getString(R.string.tomtom_dev_key)
 
     object MapOptionsConfig {
 
@@ -53,7 +53,7 @@ object TomTomMapConfig {
             return AndroidLocationProvider(
                 context = context,
                 config = config
-            ).also { provider: AndroidLocationProvider ->
+            ).also { provider ->
                 registerLocationUpdateListener(
                     provider = provider,
                     onLocationUpdate = onLocationUpdate
@@ -67,7 +67,7 @@ object TomTomMapConfig {
             provider: AndroidLocationProvider,
             onLocationUpdate: (location: GeoLocation) -> Unit
         ): OnLocationUpdateListener {
-            val locationUpdateListener = OnLocationUpdateListener { location: GeoLocation ->
+            val locationUpdateListener = OnLocationUpdateListener { location ->
                 onLocationUpdate.invoke(location)
             }
 

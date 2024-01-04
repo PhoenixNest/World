@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.work.PeriodicWorkRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.RelicWorkerSystem
 import io.common.work.CpuWorker
@@ -21,7 +20,7 @@ class IntroViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val permissionLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val permissionLiveData = MutableLiveData(false)
 
     companion object {
         private const val TAG = "IntroViewModel"
@@ -48,7 +47,7 @@ class IntroViewModel @Inject constructor(
 
     private fun startWorkerRequest(context: Context) {
         // Cpu worker
-        val cpuWorkerRequest: PeriodicWorkRequest = CpuWorker.buildPeriodRequest()
+        val cpuWorkerRequest = CpuWorker.buildPeriodRequest()
         RelicWorkerSystem.enqueueUniquePeriodWorker(context, CpuWorker.TAG, cpuWorkerRequest)
     }
 }

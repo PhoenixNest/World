@@ -21,5 +21,4 @@ object RelicConstants {
         const val UNKNOWN_VALUE_DOUBLE = 0.0
         const val UNKNOWN_VALUE_STRING = "Unknown"
     }
-
 }

@@ -8,29 +8,28 @@ import io.common.RelicConstants.Common.UNKNOWN_VALUE_LONG
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.LogUtil
 import java.io.BufferedReader
-import java.io.InputStream
 import java.io.InputStreamReader
 
 object SystemUtil {
 
     private const val TAG = "SystemInfoUtil"
 
-    private var brandInfo: String = UNKNOWN_VALUE_STRING
-    private var modelInfo: String = UNKNOWN_VALUE_STRING
-    private var boardInfo: String = UNKNOWN_VALUE_STRING
+    private var brandInfo = UNKNOWN_VALUE_STRING
+    private var modelInfo = UNKNOWN_VALUE_STRING
+    private var boardInfo = UNKNOWN_VALUE_STRING
 
-    private var totalAvailableProcessors: Int = UNKNOWN_VALUE_INT
-    private var totalJVMMemory: Long = UNKNOWN_VALUE_LONG
+    private var totalAvailableProcessors = UNKNOWN_VALUE_INT
+    private var totalJVMMemory = UNKNOWN_VALUE_LONG
 
     fun runShell(command: String): String {
         return try {
-            val process: Process = Runtime.getRuntime().exec(command)
-            val inputStream: InputStream = process.inputStream
+            val process = Runtime.getRuntime().exec(command)
+            val inputStream = process.inputStream
             val bufferedReader = BufferedReader(
                 /* in = */ InputStreamReader(inputStream),
                 /* sz = */ 2 * 1024
             )
-            val processResult: String = bufferedReader.readLine()
+            val processResult = bufferedReader.readLine()
             bufferedReader.close()
             inputStream.close()
 
@@ -132,7 +131,5 @@ object SystemUtil {
             exception.printStackTrace()
             UNKNOWN_VALUE_LONG
         }
-
     }
-
 }

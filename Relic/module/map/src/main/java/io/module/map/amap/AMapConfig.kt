@@ -54,7 +54,7 @@ object AMapConfig {
 
         private const val TAG = "${AMapConfig.TAG}_MyLocationStyle"
 
-        val myLocationStyle: MyLocationStyle = defaultStyle()
+        val myLocationStyle = defaultStyle()
 
         fun setMyLocationType(type: Int): MyLocationStyle {
             return myLocationStyle.apply {
@@ -81,9 +81,9 @@ object AMapConfig {
         }
 
         private fun defaultStyle(): MyLocationStyle {
-            val fetchInterval: Long = readSyncData(KEY_MAP_FETCH_INTERVAL, 200L)
-            val locationType: Int = readSyncData(KEY_MAP_LOCATION_TYPE, MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
-            val isShowMyLocation: Boolean = readSyncData(KEY_IS_SHOW_MY_LOCATION, true)
+            val fetchInterval = readSyncData(KEY_MAP_FETCH_INTERVAL, 200L)
+            val locationType = readSyncData(KEY_MAP_LOCATION_TYPE, MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)
+            val isShowMyLocation = readSyncData(KEY_IS_SHOW_MY_LOCATION, true)
 
             StringBuilder().apply {
                 append("[MyLocationStyle 默认配置] 我的位置展示模式: ${locationType.convertLocationType()}")
@@ -124,7 +124,7 @@ object AMapConfig {
 
         private const val TAG = "${AMapConfig.TAG}_AMapOptions"
 
-        val options: AMapOptions = defaultConfig()
+        val options = defaultConfig()
 
         fun isEnableCompass(isEnable: Boolean): AMapOptions {
             return options.apply {
@@ -183,13 +183,13 @@ object AMapConfig {
         }
 
         private fun defaultConfig(): AMapOptions {
-            val isEnableCompress: Boolean = readSyncData(KEY_IS_ENABLE_COMPRESS, true)
-            val isEnableRotateGesture: Boolean = readSyncData(KEY_IS_ENABLE_ROTATE_GESTURE, true)
-            val isEnableScaleControl: Boolean = readSyncData(KEY_IS_ENABLE_SCALE_CONTROL_ENABLE, true)
-            val isEnableScrollGesture: Boolean = readSyncData(KEY_IS_ENABLE_SCROLL_GESTURE, true)
-            val isEnableTiltGesture: Boolean = readSyncData(KEY_IS_ENABLE_TILT_GESTURE, true)
-            val isEnableZoomControl: Boolean = readSyncData(KEY_IS_ENABLE_ZOOM_CONTROL, true)
-            val isEnableZoomGesture: Boolean = readSyncData(KEY_IS_ENABLE_ZOOM_GESTURE, true)
+            val isEnableCompress = readSyncData(KEY_IS_ENABLE_COMPRESS, true)
+            val isEnableRotateGesture = readSyncData(KEY_IS_ENABLE_ROTATE_GESTURE, true)
+            val isEnableScaleControl = readSyncData(KEY_IS_ENABLE_SCALE_CONTROL_ENABLE, true)
+            val isEnableScrollGesture = readSyncData(KEY_IS_ENABLE_SCROLL_GESTURE, true)
+            val isEnableTiltGesture = readSyncData(KEY_IS_ENABLE_TILT_GESTURE, true)
+            val isEnableZoomControl = readSyncData(KEY_IS_ENABLE_ZOOM_CONTROL, true)
+            val isEnableZoomGesture = readSyncData(KEY_IS_ENABLE_ZOOM_GESTURE, true)
 
             StringBuilder().apply {
                 append("[AMapOptions 默认配置] 是否开启指南针: $isEnableCompress")

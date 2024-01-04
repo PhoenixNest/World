@@ -44,7 +44,7 @@ class FetchHeadlineNews @Inject constructor(
         page: Int
     ): Flow<NetworkResult<NewsTopHeadlinesDTO>> {
         return flow {
-            val result: NetworkResult<NewsTopHeadlinesDTO> = newsRepository.fetchTopHeadlinesNews(
+            val result = newsRepository.fetchTopHeadlinesNews(
                 apiKey = apiKey,
                 keyWords = if (keyWords == "Trending") "" else keyWords,
                 country = country.name.lowercase(Locale.getDefault()),

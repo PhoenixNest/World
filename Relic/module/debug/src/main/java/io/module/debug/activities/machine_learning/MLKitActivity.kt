@@ -11,7 +11,7 @@ import io.module.debug.databinding.ActivityMlkitBinding
  * */
 class MLKitActivity : AbsBaseActivity() {
 
-    private val binding: ActivityMlkitBinding by lazy {
+    private val binding by lazy {
         ActivityMlkitBinding.inflate(layoutInflater)
     }
 

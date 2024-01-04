@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.activities.splash.SplashActivity
 import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
+import io.dev.relic.feature.activities.main.MainActivity
+import io.dev.relic.feature.activities.splash.SplashActivity
 
 /**
  * [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)
@@ -23,46 +23,46 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
     /**
      * [Cold start](https://developer.android.com/topic/performance/vitals/launch-time#cold)
      * */
-    var isFirstColdStart: Boolean = dataStoreAppFirstStart
+    var isFirstColdStart = dataStoreAppFirstStart
         private set
 
     /**
      * [Warm start](https://developer.android.com/topic/performance/vitals/launch-time#warm)
      * */
-    var isWarmStart: Boolean = false
+    var isWarmStart = false
         private set
 
     /**
      * [Hot start](https://developer.android.com/topic/performance/vitals/launch-time#hot)
      * */
-    var isHotStart: Boolean = false
+    var isHotStart = false
         private set
 
     /**
      * Check if the app is first open in datastore.
      * */
-    private val dataStoreAppFirstStart: Boolean
+    private val dataStoreAppFirstStart
         get() = readSyncData(KEY_IS_FIRST_COLD_START, true)
 
     /**
      * Check whether the current App is running in the foreground.
      * */
-    private var isInForeground: Boolean = false
+    private var isInForeground = false
 
     /**
      * Check whether the user has a history of entering the main unit.
      * */
-    private var hasEnterMainUnit: Boolean = false
+    private var hasEnterMainUnit = false
 
     /**
      * Check whether the user entered the App through SplashActivity.
      * */
-    private var hasEnterBySplashActivity: Boolean = false
+    private var hasEnterBySplashActivity = false
 
     /**
      * Only show splash-ad when the app has re-entered foreground.
      * */
-    private var shouldShowSplashAd: Boolean = false
+    private var shouldShowSplashAd = false
 
     /* ======================== Logical ======================== */
 

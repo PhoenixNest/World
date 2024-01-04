@@ -1,6 +1,5 @@
 package io.agent.gemini
 
-import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.Content
 import io.common.RelicResCenter
@@ -21,10 +20,10 @@ object GeminiAgent {
     /**
      * [Gemini API Key](https://makersuite.google.com/app/apikey)
      * */
-    private val GEMINI_DEV_KEY: String = RelicResCenter.getString(R.string.agent_gemini_dev_key)
+    private val GEMINI_DEV_KEY = RelicResCenter.getString(R.string.agent_gemini_dev_key)
 
     fun startChat(chatHistory: List<Content>) {
-        val chat: Chat = coreModel().startChat(chatHistory)
+        val chat = coreModel().startChat(chatHistory)
     }
 
     private fun coreModel(): GenerativeModel {

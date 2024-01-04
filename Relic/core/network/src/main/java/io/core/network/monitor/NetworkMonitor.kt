@@ -15,7 +15,7 @@ class NetworkMonitor @Inject constructor(
     @ApplicationContext private val context: Context
 ) : INetworkMonitor {
 
-    private val connectivityManger: ConnectivityManager = context.getSystemService(
+    private val connectivityManger = context.getSystemService(
         Context.CONNECTIVITY_SERVICE
     ) as ConnectivityManager
 

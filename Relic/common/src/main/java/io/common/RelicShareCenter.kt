@@ -21,12 +21,12 @@ object RelicShareCenter {
         shareContent: String?
     ) {
         LogUtil.d(TAG, "[Share - Text only] content: $shareContent")
-        val intent: Intent = Intent().apply {
+        val intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_PLAIN_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
-        val chooserIntent: Intent = Intent.createChooser(intent, SHARE_TITLE)
+        val chooserIntent = Intent.createChooser(intent, SHARE_TITLE)
         context.startActivity(chooserIntent)
     }
 
@@ -35,12 +35,12 @@ object RelicShareCenter {
         shareContent: String?
     ) {
         LogUtil.d(TAG, "[Share - RTF] content: $shareContent")
-        val intent: Intent = Intent().apply {
+        val intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_RTF_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
-        val chooserIntent: Intent = Intent.createChooser(intent, SHARE_TITLE)
+        val chooserIntent = Intent.createChooser(intent, SHARE_TITLE)
         context.startActivity(chooserIntent)
     }
 
@@ -50,13 +50,13 @@ object RelicShareCenter {
         url: String?
     ) {
         LogUtil.d(TAG, "[Share - Web Link] content: $url")
-        val intent: Intent = Intent().apply {
+        val intent = Intent().apply {
             action = Intent.ACTION_SEND
             type = SHARE_TYPE_HTML
             putExtra(Intent.EXTRA_TITLE, title ?: SHARE_TITLE)
             putExtra(Intent.EXTRA_TEXT, url ?: DEFAULT_PLACEHOLDER_URL)
         }
-        val chooserIntent: Intent = Intent.createChooser(intent, title)
+        val chooserIntent = Intent.createChooser(intent, title)
         context.startActivity(chooserIntent)
     }
 }

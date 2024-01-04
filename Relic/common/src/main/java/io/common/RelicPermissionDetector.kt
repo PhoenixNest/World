@@ -62,7 +62,7 @@ object RelicPermissionDetector {
             requestPermission: String,
             permissionListener: RelicPermissionListener
         ) {
-            val isGranted: Boolean = checkPermission(
+            val isGranted = checkPermission(
                 context = activity.applicationContext,
                 requestPermission = requestPermission
             )
@@ -76,9 +76,9 @@ object RelicPermissionDetector {
                 // system permissions dialog. Save the return value, an instance of
                 // ActivityResultLauncher. You can use either a val, as shown in this snippet,
                 // or a lateinit var in your onAttach() or onCreate() method.
-                val requestPermissionLauncher: ActivityResultLauncher<String> = activity.registerForActivityResult(
+                val requestPermissionLauncher = activity.registerForActivityResult(
                     ActivityResultContracts.RequestPermission()
-                ) { _isGranted: Boolean ->
+                ) { _isGranted ->
                     if (_isGranted) {
                         // Permission is granted. Continue the action or workflow in your app.
                         LogUtil.d(TAG, "$requestPermission Permission Granted.")

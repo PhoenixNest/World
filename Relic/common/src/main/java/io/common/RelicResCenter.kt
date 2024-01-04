@@ -24,5 +24,4 @@ object RelicResCenter {
         val context: Context = getApplicationContext()
         return context.getColor(colorResId)
     }
-
 }

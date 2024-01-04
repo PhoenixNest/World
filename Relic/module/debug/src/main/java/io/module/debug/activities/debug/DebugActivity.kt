@@ -19,7 +19,7 @@ import io.module.map.amap.AMapPrivacyCenter
 @AndroidEntryPoint
 class DebugActivity : AppCompatActivity() {
 
-    private val binding: ActivityDebugBinding by lazy {
+    private val binding by lazy {
         ActivityDebugBinding.inflate(layoutInflater)
     }
 
@@ -56,8 +56,8 @@ class DebugActivity : AppCompatActivity() {
     }
 
     private fun verifyAMapPrivacyAgreement() {
-        val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
-        val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
+        val isShowUserAgreement = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
+        val isAgreeUserPrivacy = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
         LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
         LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 

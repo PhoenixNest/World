@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.util.LogUtil
 import io.core.network.monitor.NetworkMonitor
-import io.core.network.monitor.NetworkStatus
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -57,7 +56,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
      * Active the global network monitor.
      * */
     private fun activeNetworkMonitor() {
-        networkMonitor.observe().onEach { status: NetworkStatus ->
+        networkMonitor.observe().onEach { status ->
             LogUtil.d(TAG, "Current Network status: ${status.name}")
         }.launchIn(lifecycleScope)
     }

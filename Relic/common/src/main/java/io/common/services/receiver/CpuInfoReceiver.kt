@@ -27,8 +27,8 @@ class CpuInfoReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        context?.let { ctx: Context ->
-            intent?.action?.let { action: String ->
+        context?.let { ctx ->
+            intent?.action?.let { action ->
                 if (action == FIELD_BROADCAST_ACTION) {
                     LogUtil.d(TAG, "[Cpu BroadcastReceiver] onReceive")
                     updateCpuInfo(ctx)
@@ -48,24 +48,24 @@ class CpuInfoReceiver : BroadcastReceiver() {
         try {
             runBlocking(Dispatchers.IO) {
                 // Cpu info
-                val cpuUsageInfo: List<CpuUsageInfo> = CpuUtil.getCpuUsageInfo(context)
-                val cpuTemperature: Float = CpuUtil.getHardwareTemperatureByType(
+                val cpuUsageInfo = CpuUtil.getCpuUsageInfo(context)
+                val cpuTemperature = CpuUtil.getHardwareTemperatureByType(
                     context = context,
                     type = HardwarePropertiesManager.DEVICE_TEMPERATURE_CPU
                 )
 
                 // If the device has fans
-                val fanSpeeds: List<Float> = CpuUtil.getFanSpeeds(context)
+                val fanSpeeds = CpuUtil.getFanSpeeds(context)
 
-                val cpuUsageInfoUpdateResult: Boolean = async {
+                val cpuUsageInfoUpdateResult = async {
                     updateCpuUsageInfoFlow(cpuUsageInfo)
                 }.await()
 
-                val cpuTemperatureUpdateResult: Boolean = async {
+                val cpuTemperatureUpdateResult = async {
                     updateCpuTemperatureFlow(cpuTemperature)
                 }.await()
 
-                val fanSpeedsUpdateResult: Boolean = async {
+                val fanSpeedsUpdateResult = async {
                     updateFanSpeedsFlow(fanSpeeds)
                 }.await()
 

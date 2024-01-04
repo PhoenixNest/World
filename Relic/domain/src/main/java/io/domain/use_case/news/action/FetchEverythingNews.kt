@@ -45,7 +45,7 @@ class FetchEverythingNews @Inject constructor(
         page: Int
     ): Flow<NetworkResult<NewsEverythingDTO>> {
         return flow {
-            val result: NetworkResult<NewsEverythingDTO> = newsRepository.fetchEverythingNews(
+            val result = newsRepository.fetchEverythingNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 source = source,

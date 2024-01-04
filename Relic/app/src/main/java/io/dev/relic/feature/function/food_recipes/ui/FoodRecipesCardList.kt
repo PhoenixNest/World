@@ -45,11 +45,11 @@ fun FoodRecipesCardList(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        itemsIndexed(items = modelList) { index: Int, data: FoodRecipesComplexSearchInfoModel? ->
+        itemsIndexed(items = modelList) { index, data ->
             if (data == null) {
                 //
             } else {
-                val itemDecorationModifier: Modifier = Modifier.padding(
+                val itemDecorationModifier = Modifier.padding(
                     start = if (index == 0) 16.dp else 0.dp,
                     end = if (index == modelList.size - 1) 16.dp else 0.dp
                 )

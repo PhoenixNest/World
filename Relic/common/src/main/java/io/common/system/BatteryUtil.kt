@@ -3,7 +3,6 @@ package io.common.system
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.BatteryManager
 import android.os.BatteryManager.BATTERY_PLUGGED_AC
 import android.os.BatteryManager.BATTERY_PLUGGED_USB
 import android.os.BatteryManager.BATTERY_PLUGGED_WIRELESS
@@ -27,9 +26,9 @@ object BatteryUtil {
 
     private const val TAG = "BatteryUtil"
 
-    private val chargingFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val voltageFlow: MutableStateFlow<Int> = MutableStateFlow(0)
-    private val temperatureFlow: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val chargingFlow = MutableStateFlow(false)
+    private val voltageFlow = MutableStateFlow(0)
+    private val temperatureFlow = MutableStateFlow(0)
 
     enum class ChargeType(val type: Int) {
         USB(BATTERY_PLUGGED_USB),
@@ -76,9 +75,9 @@ object BatteryUtil {
 
     fun getRemainChargeTime(context: Context): Long {
         return try {
-            var result: Long = UNKNOWN_VALUE_LONG
+            var result = UNKNOWN_VALUE_LONG
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val leftTime: Long = getBatteryManager(context)?.computeChargeTimeRemaining() ?: -1
+                val leftTime = getBatteryManager(context)?.computeChargeTimeRemaining() ?: -1
                 result = leftTime / 1000
             }
             result
@@ -91,8 +90,8 @@ object BatteryUtil {
 
     fun getBatteryChargeType(context: Context): ChargeType? {
         return try {
-            val intent: Intent = getBatteryStatusIntent(context) ?: return ChargeType.UNKNOWN
-            val chargePlug: Int = intent.getIntExtra(
+            val intent = getBatteryStatusIntent(context) ?: return ChargeType.UNKNOWN
+            val chargePlug = intent.getIntExtra(
                 /* name = */ EXTRA_PLUGGED,
                 /* defaultValue = */ ChargeType.UNKNOWN.type
             )
@@ -112,8 +111,8 @@ object BatteryUtil {
 
     fun getBatteryLevel(context: Context): Int {
         return try {
-            val manager: BatteryManager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
-            val result: Int = manager.getIntProperty(BATTERY_PROPERTY_CAPACITY)
+            val manager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
+            val result = manager.getIntProperty(BATTERY_PROPERTY_CAPACITY)
             result
         } catch (exception: Exception) {
             LogUtil.e(TAG, "[Battery Level] Error, ${exception.message}")
@@ -134,7 +133,7 @@ object BatteryUtil {
     fun getCurrentBatteryLevel(context: Context): Float {
         return try {
             var result: Float
-            val intent: Intent = getBatteryStatusIntent(context) ?: return UNKNOWN_VALUE_FLOAT
+            val intent = getBatteryStatusIntent(context) ?: return UNKNOWN_VALUE_FLOAT
             intent.apply {
                 val level: Int = getIntExtra(EXTRA_LEVEL, -1)
                 val scale: Int = getIntExtra(EXTRA_SCALE, -1)
@@ -150,8 +149,8 @@ object BatteryUtil {
 
     fun getBatteryEnergyCounter(context: Context): Int {
         return try {
-            val manager: BatteryManager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
-            val result: Int = manager.getIntProperty(BATTERY_PROPERTY_ENERGY_COUNTER)
+            val manager = getBatteryManager(context) ?: return UNKNOWN_VALUE_INT
+            val result = manager.getIntProperty(BATTERY_PROPERTY_ENERGY_COUNTER)
             result
         } catch (exception: Exception) {
             LogUtil.e(TAG, "[Battery Energy Counter] Error, ${exception.message}")

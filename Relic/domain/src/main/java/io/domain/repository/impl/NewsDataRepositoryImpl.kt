@@ -2,7 +2,6 @@ package io.domain.repository.impl
 
 import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.INewsApi
-import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 import io.data.mappers.NewsDataMapper.toNewsEverythingArticleEntity
@@ -56,7 +55,7 @@ class NewsDataRepositoryImpl @Inject constructor(
         page: Int
     ): NetworkResult<NewsEverythingDTO> {
         everythingResult = try {
-            val data: NewsEverythingDTO = newsApi.fetchEverythingNews(
+            val data = newsApi.fetchEverythingNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 source = source,
@@ -107,7 +106,7 @@ class NewsDataRepositoryImpl @Inject constructor(
         page: Int
     ): NetworkResult<NewsTopHeadlinesDTO> {
         topHeadlinesResult = try {
-            val data: NewsTopHeadlinesDTO = newsApi.fetchTopHeadlinesNews(
+            val data = newsApi.fetchTopHeadlinesNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 country = country,
@@ -129,7 +128,7 @@ class NewsDataRepositoryImpl @Inject constructor(
 
     private suspend fun insertNewsEverythingData(data: NewsEverythingDTO) {
         databaseRepository.insertNewsEverythingData(data.toNewsEverythingEntity())
-        data.articles?.forEach { articleItem: NewsArticleDTO? ->
+        data.articles?.forEach { articleItem ->
             articleItem.toNewsEverythingArticleEntity()?.let {
                 databaseRepository.insertNewsEverythingArticle(it)
             }
@@ -138,7 +137,7 @@ class NewsDataRepositoryImpl @Inject constructor(
 
     private suspend fun insertNewsTopHeadlineData(data: NewsTopHeadlinesDTO) {
         databaseRepository.insertNewsTopHeadlineData(data.toNewsTopHeadlineEntity())
-        data.articles?.forEach { articleItem: NewsArticleDTO? ->
+        data.articles?.forEach { articleItem ->
             articleItem.toNewsTopHeadlineArticleEntity()?.let {
                 databaseRepository.insertNewsTopHeadlineArticle(it)
             }

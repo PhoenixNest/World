@@ -1,11 +1,11 @@
 package io.domain.repository.impl
 
+import io.core.database.repository.RelicDatabaseRepository
+import io.core.network.api.IWeatherApi
 import io.data.dto.weather.WeatherForecastDTO
 import io.data.mappers.WeatherDataMapper.toWeatherEntity
 import io.data.model.NetworkResult
 import io.domain.repository.IWeatherDataRepository
-import io.core.database.repository.RelicDatabaseRepository
-import io.core.network.api.IWeatherApi
 import javax.inject.Inject
 
 /**
@@ -33,7 +33,7 @@ class WeatherDataRepositoryImpl @Inject constructor(
         longitude: Double
     ): NetworkResult<WeatherForecastDTO> {
         weatherForecastResult = try {
-            val data: WeatherForecastDTO = weatherApi.getWeatherData(latitude, longitude)
+            val data = weatherApi.getWeatherData(latitude, longitude)
 
             // Always save the latest weather information data to the database.
             databaseRepository.insertWeatherData(weatherEntity = data.toWeatherEntity())

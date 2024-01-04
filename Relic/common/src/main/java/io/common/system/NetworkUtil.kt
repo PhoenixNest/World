@@ -23,7 +23,7 @@ object NetworkUtil {
     private const val TAG = "NetworkUtil"
 
     private var wifiInfo: WifiInfo? = null
-    private var deviceMacAddress: String = UNKNOWN_VALUE_STRING
+    private var deviceMacAddress = UNKNOWN_VALUE_STRING
 
     private const val UNKNOWN_GATE_WAY = "0.0.0.0"
 
@@ -39,22 +39,19 @@ object NetworkUtil {
     @Suppress("DEPRECATION")
     fun getCurrentNetworkType(context: Context): NetworkType {
         return try {
-            val connectivityManager: ConnectivityManager =
-                getConnectivityManager(context) ?: return NetworkType.UNKNOWN
+            val connectivityManager = getConnectivityManager(context) ?: return NetworkType.UNKNOWN
 
             // The current network info may be none.
-            val networkInfo: NetworkInfo =
-                connectivityManager.activeNetworkInfo ?: return NetworkType.UNKNOWN
+            val networkInfo = connectivityManager.activeNetworkInfo ?: return NetworkType.UNKNOWN
 
             // Check the current network capability
             if (!networkInfo.isAvailable) {
                 return NetworkType.UNKNOWN
             }
 
-            val telephonyManager: TelephonyManager =
-                getTelephonyManager(context) ?: return NetworkType.UNKNOWN
+            val telephonyManager = getTelephonyManager(context) ?: return NetworkType.UNKNOWN
 
-            val currentNetworkType: NetworkType = checkCurrentNetworkType(
+            val currentNetworkType = checkCurrentNetworkType(
                 context = context,
                 connectivityManager = connectivityManager,
                 telephonyManager = telephonyManager
@@ -84,9 +81,9 @@ object NetworkUtil {
     fun getGateWay(): String {
         return try {
             val strings: List<String>
-            val process: Process = Runtime.getRuntime().exec("ip route list table 0")
+            val process = Runtime.getRuntime().exec("ip route list table 0")
             val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-            val string: String = bufferedReader.readLine()
+            val string = bufferedReader.readLine()
             bufferedReader.close()
             strings = string.split("\r+")
             strings[2]
@@ -109,11 +106,8 @@ object NetworkUtil {
 
             /* ======================== Wifi ======================== */
 
-            val wifiNetwork: NetworkInfo =
-                connectivityManager.getNetworkInfo(TYPE_WIFI) ?: return NetworkType.UNKNOWN
-
-            val state: NetworkInfo.State =
-                wifiNetwork.state ?: return NetworkType.UNKNOWN
+            val wifiNetwork = connectivityManager.getNetworkInfo(TYPE_WIFI) ?: return NetworkType.UNKNOWN
+            val state = wifiNetwork.state ?: return NetworkType.UNKNOWN
 
             if (state == NetworkInfo.State.CONNECTED
                 || state == NetworkInfo.State.CONNECTING
@@ -122,7 +116,7 @@ object NetworkUtil {
             /* ======================== CELLULARphone ======================== */
 
             // Check whether we already have the permission to read user's phone state.
-            val hasPermission: Boolean = checkPermission(
+            val hasPermission = checkPermission(
                 context = context,
                 requestPermission = Manifest.permission.READ_PHONE_STATE
             )

@@ -11,7 +11,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.common.util.LogUtil
@@ -25,7 +24,7 @@ import io.domain.app.AbsBaseActivity
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {
 
-    private val viewModel: IntroViewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProvider(this)[IntroViewModel::class.java]
     }
 
@@ -59,7 +58,7 @@ class IntroActivity : AbsBaseActivity() {
     }
 
     private fun checkPermission() {
-        viewModel.getPermissionLiveData().observe(this) { isGranted: Boolean ->
+        viewModel.getPermissionLiveData().observe(this) { isGranted ->
             LogUtil.d(TAG, "[Permission] isGranted: $isGranted")
             if (isGranted) onPermissionGranted()
         }
@@ -83,16 +82,15 @@ class IntroActivity : AbsBaseActivity() {
 
     override fun initUi(savedInstanceState: Bundle?) {
         setContent {
-            val multiplePermissionsState: MultiplePermissionsState =
-                rememberMultiplePermissionsState(
-                    permissions = listOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                    )
+            val multiplePermissionsState = rememberMultiplePermissionsState(
+                permissions = listOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 )
+            )
 
             LaunchedEffect(multiplePermissionsState.allPermissionsGranted) {
-                val isGranted: Boolean = multiplePermissionsState.allPermissionsGranted
+                val isGranted = multiplePermissionsState.allPermissionsGranted
                 viewModel.updatePermissionLiveData(isGranted)
             }
 

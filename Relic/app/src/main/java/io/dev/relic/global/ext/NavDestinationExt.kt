@@ -9,7 +9,7 @@ object NavDestinationExt {
     fun NavDestination?.isTopLevelDestinationInHierarchy(
         destination: MainScreenTopLevelDestination
     ): Boolean {
-        return this?.hierarchy?.any { navDestination: NavDestination ->
+        return this?.hierarchy?.any { navDestination ->
             navDestination.route?.contains(
                 other = destination.name.lowercase(),
                 ignoreCase = false

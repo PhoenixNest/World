@@ -4,6 +4,6 @@ import java.util.concurrent.TimeUnit
 
 object AdConfig {
 
-    val EXPIRED_DURATION: Long = TimeUnit.HOURS.toHours(2)
+    val EXPIRED_DURATION = TimeUnit.HOURS.toHours(2)
 
 }

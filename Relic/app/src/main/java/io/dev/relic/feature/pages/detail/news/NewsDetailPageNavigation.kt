@@ -24,12 +24,12 @@ fun NavController.navigateToNewsDetailPage(
     navOptions: NavOptions? = null,
     navigatorExtras: Navigator.Extras? = null
 ) {
-    val deepLinkRequest: NavDeepLinkRequest = NavDeepLinkRequest.Builder.fromUri(
+    val deepLinkRequest = NavDeepLinkRequest.Builder.fromUri(
         NavDestination.createRoute(DETAIL_NEWS).toUri()
     ).build()
 
-    graph.matchDeepLink(deepLinkRequest)?.let { deepLinkMatch: NavDestination.DeepLinkMatch ->
-        val bundle: Bundle = Bundle().apply {
+    graph.matchDeepLink(deepLinkRequest)?.let { deepLinkMatch ->
+        val bundle = Bundle().apply {
             putString(KEY_NEWS_TITLE, title)
             putString(KEY_NEWS_CONTENT_URL, contUrl)
         }
@@ -46,8 +46,8 @@ fun NavController.navigateToNewsDetailPage(
 fun NavGraphBuilder.pageNewsDetail(onBackClick: () -> Unit) {
     composable(route = DETAIL_NEWS) {
         it.arguments?.apply {
-            val title: String = getString(KEY_NEWS_TITLE, ANDROID)
-            val contentUrl: String = getString(KEY_NEWS_CONTENT_URL, DEFAULT_PLACEHOLDER_URL)
+            val title = getString(KEY_NEWS_TITLE, ANDROID)
+            val contentUrl = getString(KEY_NEWS_CONTENT_URL, DEFAULT_PLACEHOLDER_URL)
             NewsDetailPageRoute(
                 title = title,
                 contentUrl = contentUrl,

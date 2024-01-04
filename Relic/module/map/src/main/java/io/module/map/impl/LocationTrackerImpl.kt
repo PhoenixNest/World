@@ -26,21 +26,21 @@ class LocationTrackerImpl @Inject constructor(
 
     override suspend fun getCurrentLocation(): Location? {
 
-        val hasAccessFindLocationPermission: Boolean = checkPermission(
+        val hasAccessFindLocationPermission = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
         ).also {
             LogUtil.d(TAG, "[Permission Status] [Find Location] isGranted: $it")
         }
 
-        val hasAccessCoarseLocationPermission: Boolean = checkPermission(
+        val hasAccessCoarseLocationPermission = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
         ).also {
             LogUtil.d(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
         }
 
-        val locationManager: LocationManager = context.getSystemService(
+        val locationManager = context.getSystemService(
             Context.LOCATION_SERVICE
         ) as LocationManager
 
@@ -75,7 +75,7 @@ class LocationTrackerImpl @Inject constructor(
                     return@suspendCancellableCoroutine
                 }
 
-                addOnSuccessListener { location: Location? ->
+                addOnSuccessListener { location ->
                     LogUtil.d(TAG, "[Access Success] Data: $location")
                     continuation.resume(
                         value = location,

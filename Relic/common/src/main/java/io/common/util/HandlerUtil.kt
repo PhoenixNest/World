@@ -28,5 +28,4 @@ object HandlerUtil {
     private fun isMainLooper(): Boolean {
         return mainHandler.looper == Looper.getMainLooper()
     }
-
 }

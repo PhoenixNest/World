@@ -3,7 +3,6 @@ package io.common.util
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
-import io.common.app.BaseApplication
 import io.common.app.BaseApplication.Companion.getApplicationContext
 
 /**
@@ -48,7 +47,7 @@ object ToastUtil {
         @StringRes resId: Int,
         isLongToast: Boolean = false
     ) {
-        val content: String = getApplicationContext().getString(resId)
+        val content = getApplicationContext().getString(resId)
 
         if (toast == null) {
             toast = Toast.makeText(
@@ -74,7 +73,7 @@ object ToastUtil {
         @StringRes resId: Int,
         isLongToast: Boolean = false
     ) {
-        val content: String = this.resources.getString(resId)
+        val content = this.resources.getString(resId)
         Toast.makeText(
             /* context = */ this,
             /* text = */ content,

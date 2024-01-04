@@ -1,7 +1,6 @@
 package io.common
 
 import android.content.Context
-import android.content.pm.PackageManager
 
 /**
  * [Determine hardware availability](https://developer.android.com/training/permissions/declaring#determine-hardware-availability)
@@ -33,7 +32,7 @@ object RelicHardwareDetector {
         hardwareType: String,
         listener: RelicHardwareListener
     ) {
-        val packageManager: PackageManager = applicationContext.packageManager
+        val packageManager = applicationContext.packageManager
         if (packageManager.hasSystemFeature(hardwareType)) {
             listener.withHardware()
         } else {

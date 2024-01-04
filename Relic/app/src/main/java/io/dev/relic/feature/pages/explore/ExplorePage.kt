@@ -20,7 +20,6 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.dev.relic.feature.screens.main.MainState
 import io.module.map.tomtom.ui.TomTomMapComponent
 
 @Composable
@@ -29,13 +28,13 @@ fun ExplorePageRoute(
     mainViewModel: MainViewModel,
     exploreViewModel: ExploreViewModel = hiltViewModel()
 ) {
-    val mainState: MainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
     ExplorePage(
         currentSelectedBottomSheetTab = exploreViewModel.currentSelectedBottomSheetTab,
-        onTabItemClick = { currentSelectedTab: Int, selectedItem: String ->
+        onTabItemClick = { currentSelectedTab, selectedItem ->
             exploreViewModel.updateSelectedBottomSheetTab(currentSelectedTab)
         },
-        onLocationUpdate = { location: GeoLocation ->
+        onLocationUpdate = { location ->
             //
         }
     )
@@ -79,7 +78,7 @@ private fun ExplorePage(
 private fun ExplorePagePreview() {
     ExplorePage(
         currentSelectedBottomSheetTab = 0,
-        onTabItemClick = { _: Int, _: String -> },
-        onLocationUpdate = { _: GeoLocation -> }
+        onTabItemClick = { _, _ -> },
+        onLocationUpdate = { _ -> }
     )
 }

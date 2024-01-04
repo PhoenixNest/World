@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.theme.RelicFontFamily.ubuntu
@@ -35,8 +34,8 @@ fun ExploreBottomSheet(
     currentSelectedTab: Int,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
-    val screenHeight: Dp = LocalConfiguration.current.screenHeightDp.dp
-    val bottomSheetHeight: Dp = screenHeight - 52.dp
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val bottomSheetHeight = screenHeight - 52.dp
 
     Card(
         modifier = Modifier
@@ -131,6 +130,6 @@ private fun ExploreBottomSheetContent(
 private fun ExploreBottomSheetPreview() {
     ExploreBottomSheet(
         currentSelectedTab = 0,
-        onTabItemClick = { _: Int, _: String -> }
+        onTabItemClick = { _, _ -> }
     )
 }

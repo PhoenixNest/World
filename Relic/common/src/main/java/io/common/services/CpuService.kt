@@ -70,7 +70,7 @@ class CpuService : Service() {
     private fun initPendingIntent(context: Context) {
         Intent().apply {
             action = FIELD_BROADCAST_ACTION
-        }.let { intent: Intent ->
+        }.let { intent ->
             pendingIntent = PendingIntent.getBroadcast(
                 /* context = */ context,
                 /* requestCode = */ FIELD_BROADCAST_REQUEST_CODE,
@@ -90,8 +90,8 @@ class CpuService : Service() {
         context: Context,
         triggerTime: Long = SystemClock.elapsedRealtime()
     ) {
-        val alarmManager: AlarmManager? = getAlarmManager(context)
-        pendingIntent?.let { intent: PendingIntent ->
+        val alarmManager = getAlarmManager(context)
+        pendingIntent?.let { intent ->
             alarmManager?.setExactAndAllowWhileIdle(
                 /* type = */ AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 /* triggerAtMillis = */ triggerTime,
@@ -106,8 +106,8 @@ class CpuService : Service() {
      * @param context
      * */
     private fun reactiveCpuAlarm(context: Context) {
-        val elapsedRealtime: Long = SystemClock.elapsedRealtime()
-        val triggerTime: Long = elapsedRealtime + FIELD_BROADCAST_INTERVAL
+        val elapsedRealtime = SystemClock.elapsedRealtime()
+        val triggerTime = elapsedRealtime + FIELD_BROADCAST_INTERVAL
         activeCpuAlarm(context, triggerTime)
     }
 }

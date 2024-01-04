@@ -10,16 +10,14 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.tomtom.TomTomMapApplier
-import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 suspend inline fun MapView.awaitMap(): TomTomMap {
-    return suspendCoroutine { continuation: Continuation<TomTomMap> ->
+    return suspendCoroutine { continuation ->
         getMapAsync {
             continuation.resume(it)
         }
@@ -30,7 +28,7 @@ suspend inline fun MapView.newComposition(
     parent: CompositionContext,
     noinline content: @Composable () -> Unit
 ): Composition {
-    val map: TomTomMap = awaitMap()
+    val map = awaitMap()
     return Composition(
         applier = TomTomMapApplier(
             map = map,
@@ -45,7 +43,7 @@ suspend inline fun MapView.newComposition(
 fun MapView.lifecycleObserver(
     previousAMapState: MutableState<Lifecycle.Event>
 ): LifecycleObserver {
-    return LifecycleEventObserver { _: LifecycleOwner, event: Lifecycle.Event ->
+    return LifecycleEventObserver { _, event ->
         when (event) {
             Lifecycle.Event.ON_CREATE -> {
                 if (previousAMapState.value != Lifecycle.Event.ON_STOP) {

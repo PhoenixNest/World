@@ -13,7 +13,7 @@ import io.module.debug.databinding.FragmentIntroMachineLearningBinding
 class IntroMachineLearningFragment : AbsBaseFragment() {
 
     private var _binding: FragmentIntroMachineLearningBinding? = null
-    private val binding: FragmentIntroMachineLearningBinding get() = _binding!!
+    private val binding get() = _binding!!
 
     companion object {
         private const val TAG = "IntroMachineLearningFragment"
@@ -63,5 +63,4 @@ class IntroMachineLearningFragment : AbsBaseFragment() {
             }
         }
     }
-
 }

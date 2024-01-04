@@ -1,9 +1,9 @@
 package io.module.ad.core.provider
 
-import io.module.ad.core.AdConfig
-import io.module.ad.core.model.AdInfoWrapper
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
+import io.module.ad.core.AdConfig
+import io.module.ad.core.model.AdInfoWrapper
 import java.util.concurrent.TimeUnit
 
 abstract class AbsAdProvider : IAdProvider {
@@ -11,17 +11,17 @@ abstract class AbsAdProvider : IAdProvider {
     /**
      * Map used to store the current advertising information.
      * */
-    private val adInfoMap: MutableMap<String, AdInfoWrapper> = mutableMapOf()
+    private val adInfoMap = mutableMapOf<String, AdInfoWrapper>()
 
     /**
      * Map used to store the current Ad load listener.
      * */
-    private val adListenerMap: MutableMap<String, IAdListener> = mutableMapOf()
+    private val adListenerMap = mutableMapOf<String, IAdListener>()
 
     /**
      * Map to store the current Ad load status.
      * */
-    private val adLoadStatusMap: MutableMap<String, Boolean> = mutableMapOf()
+    private val adLoadStatusMap = mutableMapOf<String, Boolean>()
 
     companion object {
         private const val TAG = "AbsAdProvider"
@@ -148,9 +148,9 @@ abstract class AbsAdProvider : IAdProvider {
      * */
     private fun getCacheAdInfoWrapper(adUnitId: String): AdInfoWrapper? {
         return adInfoMap[adUnitId]?.let { adInfoWrapper: AdInfoWrapper ->
-            val interval: Long = (TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
-            val interval2Hours: Long = TimeUnit.MICROSECONDS.toHours(interval)
-            val hasExpired: Boolean = (interval2Hours > AdConfig.EXPIRED_DURATION)
+            val interval = (TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
+            val interval2Hours = TimeUnit.MICROSECONDS.toHours(interval)
+            val hasExpired = (interval2Hours > AdConfig.EXPIRED_DURATION)
             LogUtil.d(TAG, "[Check ad has expired] hasExpired: $hasExpired")
 
             if (hasExpired) {

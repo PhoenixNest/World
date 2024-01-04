@@ -1,10 +1,9 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.util.Properties
 
 // Dev Key
-private val localProperties: Properties = gradleLocalProperties(rootDir)
-private val aMapDevKay: String = localProperties.getProperty("AMAP_DEV_KEY")
-private val tomtomDevKey: String = localProperties.getProperty("TOMTOM_DEV_KEY")
+private val localProperties = gradleLocalProperties(rootDir)
+private val aMapDevKay = localProperties.getProperty("AMAP_DEV_KEY")
+private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -22,6 +21,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        minSdk = 24
         resValue("string", "amap_dev_key", aMapDevKay)
         resValue("string", "tomtom_dev_key", tomtomDevKey)
     }

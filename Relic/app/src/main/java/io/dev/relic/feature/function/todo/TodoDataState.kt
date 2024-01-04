@@ -1,6 +1,5 @@
 package io.dev.relic.feature.function.todo
 
-import io.data.model.news.NewsArticleModel
 import io.data.model.todo.TodoDataModel
 
 sealed class TodoDataState {

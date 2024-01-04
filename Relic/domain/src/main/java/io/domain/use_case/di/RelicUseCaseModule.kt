@@ -40,10 +40,10 @@ class RelicUseCaseModule {
         todoRepository: ITodoDataRepository
     ): TodoUseCase {
         return TodoUseCase(
-            addTodo = AddTodo(todoRepository = todoRepository),
-            deleteTodo = DeleteTodo(todoRepository = todoRepository),
-            getAllTodos = GetAllTodos(todoRepository = todoRepository),
-            updateTodo = UpdateTodo(todoRepository = todoRepository)
+            addTodo = AddTodo(todoRepository),
+            deleteTodo = DeleteTodo(todoRepository),
+            getAllTodos = GetAllTodos(todoRepository),
+            updateTodo = UpdateTodo(todoRepository)
         )
     }
 
@@ -53,7 +53,7 @@ class RelicUseCaseModule {
         locationTracker: ILocationTracker
     ): LocationUseCase {
         return LocationUseCase(
-            accessCurrentLocation = AccessCurrentLocation(locationTracker = locationTracker)
+            accessCurrentLocation = AccessCurrentLocation(locationTracker)
         )
     }
 
@@ -64,9 +64,9 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): WeatherUseCase {
         return WeatherUseCase(
-            fetchWeatherData = FetchWeatherData(weatherDataRepository = weatherDataRepository),
-            cacheWeatherData = CacheWeatherData(databaseRepository = databaseRepository),
-            readCacheWeatherData = ReadCacheWeatherData(databaseRepository = databaseRepository)
+            fetchWeatherData = FetchWeatherData(weatherDataRepository),
+            cacheWeatherData = CacheWeatherData(databaseRepository),
+            readCacheWeatherData = ReadCacheWeatherData(databaseRepository)
         )
     }
 
@@ -77,9 +77,9 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): FoodRecipesUseCase {
         return FoodRecipesUseCase(
-            fetchComplexRecipesData = FetchComplexRecipesData(foodRecipesDataRepository = recipesDataRepository),
-            cacheComplexSearchData = CacheComplexSearchData(databaseRepository = databaseRepository),
-            readCacheComplexRecipesData = ReadCacheComplexRecipesData(databaseRepository = databaseRepository)
+            fetchComplexRecipesData = FetchComplexRecipesData(recipesDataRepository),
+            cacheComplexSearchData = CacheComplexSearchData(databaseRepository),
+            readCacheComplexRecipesData = ReadCacheComplexRecipesData(databaseRepository)
         )
     }
 
@@ -89,8 +89,8 @@ class RelicUseCaseModule {
         newsRepository: INewsDataRepository
     ): NewsUseCase {
         return NewsUseCase(
-            fetchEverythingNews = FetchEverythingNews(newsRepository = newsRepository),
-            fetchTopHeadlineNews = FetchHeadlineNews(newsRepository = newsRepository)
+            fetchEverythingNews = FetchEverythingNews(newsRepository),
+            fetchTopHeadlineNews = FetchHeadlineNews(newsRepository)
         )
     }
 

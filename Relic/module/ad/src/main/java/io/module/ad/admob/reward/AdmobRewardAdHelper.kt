@@ -35,7 +35,7 @@ object AdmobRewardAdHelper {
         onAdClose: (isEarnedReward: Boolean) -> Unit
     ) {
         LogUtil.d(TAG, "[Load-Ad] Loading...")
-        val isTimeout: Boolean? = loadAd(
+        val isTimeout = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
             onAdFailed = onAdFailed,
@@ -62,7 +62,7 @@ object AdmobRewardAdHelper {
             context = context,
             ifInBackground = {
                 LogUtil.e(TAG, "[Admob | Reward-Ad] No ads are allowed in the background.")
-                val listener: IAdListener? = AdmobAdManager.getAdListener(AdmobAdUnitId.REWARD_AD)
+                val listener = AdmobAdManager.getAdListener(AdmobAdUnitId.REWARD_AD)
                 listener?.onAdFailToShow(
                     errorCode = AdErrorCode.AD_SHOW_IN_BACKGROUND,
                     errorMessage = "No ads are allowed in the background."
@@ -154,5 +154,4 @@ object AdmobRewardAdHelper {
             }
         }
     }
-
 }

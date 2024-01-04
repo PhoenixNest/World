@@ -1,7 +1,7 @@
 package io.domain.use_case.weather.action
 
-import io.data.model.NetworkResult
 import io.data.dto.weather.WeatherForecastDTO
+import io.data.model.NetworkResult
 import io.domain.repository.IWeatherDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

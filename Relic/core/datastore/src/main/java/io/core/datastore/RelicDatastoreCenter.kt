@@ -1,8 +1,5 @@
 package io.core.datastore
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.MutablePreferences
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
@@ -21,7 +18,7 @@ import java.io.IOException
 
 object RelicDatastoreCenter {
 
-    private val dataStore: DataStore<Preferences> = getApplicationContext().dataStore
+    private val dataStore = getApplicationContext().dataStore
 
     /* ======================== Sync ======================== */
 
@@ -263,8 +260,8 @@ object RelicDatastoreCenter {
         key: String,
         value: Boolean
     ) {
-        dataStore.edit { mutablePreferences: MutablePreferences ->
-            mutablePreferences[booleanPreferencesKey(key)] = value
+        dataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(key)] = value
         }
     }
 
@@ -281,8 +278,8 @@ object RelicDatastoreCenter {
         key: String,
         value: Int
     ) {
-        dataStore.edit { mutablePreferences: MutablePreferences ->
-            mutablePreferences[intPreferencesKey(key)] = value
+        dataStore.edit { preferences ->
+            preferences[intPreferencesKey(key)] = value
         }
     }
 
@@ -299,8 +296,8 @@ object RelicDatastoreCenter {
         key: String,
         value: String
     ) {
-        dataStore.edit { mutablePreferences: MutablePreferences ->
-            mutablePreferences[stringPreferencesKey(key)] = value
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(key)] = value
         }
     }
 
@@ -317,8 +314,8 @@ object RelicDatastoreCenter {
         key: String,
         value: Float
     ) {
-        dataStore.edit { mutablePreferences: MutablePreferences ->
-            mutablePreferences[floatPreferencesKey(key)] = value
+        dataStore.edit { preferences ->
+            preferences[floatPreferencesKey(key)] = value
         }
     }
 
@@ -335,8 +332,8 @@ object RelicDatastoreCenter {
         key: String,
         value: Long
     ) {
-        dataStore.edit { mutablePreferences: MutablePreferences ->
-            mutablePreferences[longPreferencesKey(key)] = value
+        dataStore.edit { preferences ->
+            preferences[longPreferencesKey(key)] = value
         }
     }
 }

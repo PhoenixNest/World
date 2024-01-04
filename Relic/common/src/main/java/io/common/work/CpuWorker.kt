@@ -76,24 +76,24 @@ class CpuWorker @AssistedInject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 // Cpu info
-                val cpuUsageInfo: List<CpuUsageInfo> = getCpuUsageInfo(context)
-                val cpuTemperature: Float = getHardwareTemperatureByType(
+                val cpuUsageInfo = getCpuUsageInfo(context)
+                val cpuTemperature = getHardwareTemperatureByType(
                     context = context,
                     type = DEVICE_TEMPERATURE_CPU
                 )
 
                 // If the device has fans
-                val fanSpeeds: List<Float> = getFanSpeeds(context)
+                val fanSpeeds = getFanSpeeds(context)
 
-                val cpuUsageInfoUpdateResult: Boolean = async {
+                val cpuUsageInfoUpdateResult = async {
                     updateCpuUsageInfoFlow(cpuUsageInfo)
                 }.await()
 
-                val cpuTemperatureUpdateResult: Boolean = async {
+                val cpuTemperatureUpdateResult = async {
                     updateCpuTemperatureFlow(cpuTemperature)
                 }.await()
 
-                val fanSpeedsUpdateResult: Boolean = async {
+                val fanSpeedsUpdateResult = async {
                     updateFanSpeedsFlow(fanSpeeds)
                 }.await()
 
@@ -118,7 +118,7 @@ class CpuWorker @AssistedInject constructor(
 
     private fun defaultWorkerNotification(context: Context): Notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel: NotificationChannel = NotificationChannel(
+            val channel = NotificationChannel(
                 /* id = */ NOTIFICATION_CHANNEL_ID,
                 /* name = */ NOTIFICATION_CHANNEL_NAME,
                 /* importance = */ NotificationManager.IMPORTANCE_DEFAULT
@@ -126,7 +126,7 @@ class CpuWorker @AssistedInject constructor(
                 description = NOTIFICATION_CHANNEL_DESC
             }
 
-            val manager: NotificationManager? = getSystemNotificationManager(context)
+            val manager = getSystemNotificationManager(context)
             manager?.createNotificationChannel(channel)
         }
 

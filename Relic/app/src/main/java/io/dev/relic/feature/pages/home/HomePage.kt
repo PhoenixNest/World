@@ -2,12 +2,12 @@ package io.dev.relic.feature.pages.home
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,21 +37,18 @@ fun HomePageRoute(
     /* ======================== Field ======================== */
 
     // Location
-    val mainState: MainState =
-        mainViewModel.mainStateFlow.collectAsStateWithLifecycle().value
+    val mainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
 
     // Weather
-    val weatherState: WeatherDataState =
-        homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle().value
+    val weatherState by homeViewModel.weatherDataStateFlow.collectAsStateWithLifecycle()
 
     // Food recipes
-    val foodRecipesState: FoodRecipesDataState =
-        homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle().value
+    val foodRecipesState by homeViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
-    val foodRecipesTabLazyListState: LazyListState = rememberLazyListState()
-    val foodRecipesContentLazyListState: LazyListState = rememberLazyListState()
+    val foodRecipesTabLazyListState = rememberLazyListState()
+    val foodRecipesContentLazyListState = rememberLazyListState()
 
     LaunchedEffect(mainState) {
         when (mainState) {
@@ -66,7 +63,8 @@ fun HomePageRoute(
             }
 
             is MainState.AccessLocationSucceed -> {
-                mainState.location?.also {
+                val state = (mainState as MainState.AccessLocationSucceed)
+                state.location?.also {
                     homeViewModel.fetchWeatherData(it.latitude, it.longitude)
                 }
             }
@@ -92,7 +90,7 @@ fun HomePageRoute(
         onFetchMoreFoodRecipesData = {
             homeViewModel.fetchFoodRecipesData(false)
         },
-        onSelectedFoodRecipesTabItem = { currentSelectedTab: Int, selectedItem: String ->
+        onSelectedFoodRecipesTabItem = { currentSelectedTab, selectedItem ->
             homeViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
                 fetchFoodRecipesData(
@@ -120,9 +118,9 @@ private fun HomePage(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
 
-    val drawerState: DrawerState = rememberDrawerState(
+    val drawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed,
-        confirmStateChange = { drawerValue: DrawerValue ->
+        confirmStateChange = { drawerValue ->
             LogUtil.d("HomePage", "[Drawer] State: ${drawerValue.name}")
             true
         }

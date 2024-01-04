@@ -2,17 +2,16 @@ package io.core.network.interceptor
 
 import io.common.util.LogUtil
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 
 open class RetryInterceptor internal constructor(builder: Builder) : Interceptor {
 
-    private var maxRetryTimes: Int = builder.maxRetryTimes
+    private var maxRetryTimes = builder.maxRetryTimes
 
     private var currentRetryTimes = 0
 
     companion object {
-        private const val TAG= "RetryInterceptor"
+        private const val TAG = "RetryInterceptor"
 
         /**
          * Because the retryOnConnectionFailure has enabled,
@@ -20,7 +19,7 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
          *
          * auto-retry + manual-retry = 1 + 2 = 3 times etc.
          * */
-        private const val DEFAULT_MAX_RETRY_TIMES: Int = 2
+        private const val DEFAULT_MAX_RETRY_TIMES = 2
     }
 
     /* ======================== constructor ======================== */
@@ -29,7 +28,7 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
 
     class Builder() {
 
-        internal var maxRetryTimes: Int = DEFAULT_MAX_RETRY_TIMES
+        internal var maxRetryTimes = DEFAULT_MAX_RETRY_TIMES
 
         internal constructor(retryInterceptor: RetryInterceptor) : this() {
             this.maxRetryTimes = retryInterceptor.maxRetryTimes
@@ -56,8 +55,8 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
     override fun intercept(chain: Interceptor.Chain): Response {
         LogUtil.w(TAG, "Checking With [$TAG]")
 
-        val request: Request = chain.request()
-        var response: Response = chain.proceed(request)
+        val request = chain.request()
+        var response = chain.proceed(request)
 
         while (!response.isSuccessful && currentRetryTimes < maxRetryTimes) {
             currentRetryTimes++

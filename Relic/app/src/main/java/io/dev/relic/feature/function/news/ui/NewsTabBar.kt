@@ -42,7 +42,7 @@ fun NewsTabBar(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        itemsIndexed(NewsTopHeadlineCategories.entries) { index: Int, item: NewsTopHeadlineCategories ->
+        itemsIndexed(NewsTopHeadlineCategories.entries) { index, item ->
             val tabLabel: String = stringResource(id = item.tabLabelResId)
             val itemDecorationModifier: Modifier = Modifier.padding(
                 start = if (index == 0) 16.dp else 0.dp,
@@ -87,7 +87,7 @@ private fun NewsTabBarItem(
 private fun NewsTabBarPreview() {
     NewsTabBar(
         currentSelectedTab = 0,
-        onTabItemClick = { _: Int, _: String -> },
+        onTabItemClick = { _, _ -> },
         lazyListState = rememberLazyListState()
     )
 }

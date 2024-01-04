@@ -13,7 +13,7 @@ import io.module.debug.databinding.FragmentIntroMapBinding
 class IntroMapFragment : AbsBaseFragment() {
 
     private var _binding: FragmentIntroMapBinding? = null
-    private val binding: FragmentIntroMapBinding get() = _binding!!
+    private val binding get() = _binding!!
 
     companion object {
         private const val TAG = "IntroMapFragment"
@@ -63,5 +63,4 @@ class IntroMapFragment : AbsBaseFragment() {
             }
         }
     }
-
 }

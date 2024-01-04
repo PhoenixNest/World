@@ -43,7 +43,7 @@ object TimeUtil {
      * Get today's zero-hour with timestamp.
      * */
     fun getTodayZero(): Long {
-        val calendar: Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.timeInMillis = getCurrentTimeInMillis()
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MINUTE, 0)
@@ -56,11 +56,11 @@ object TimeUtil {
      * Get tomorrow's zero-hour timestamp.
      * */
     fun getNextDayZero(): Long {
-        val calendar: Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.timeInMillis = getCurrentTimeInMillis()
-        val year: Int = calendar.get(Calendar.YEAR)
-        val month: Int = calendar.get(Calendar.MONTH)
-        val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
         calendar.set(
             /* year = */ year,
             /* month = */ month,

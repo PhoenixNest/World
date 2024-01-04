@@ -36,10 +36,9 @@ object WeatherDataMapper {
     }
 
     fun WeatherForecastDTO.toWeatherInfoModel(): WeatherInfoModel {
-        val weatherDataMap: Map<Int, List<WeatherDataModel?>?>? =
-            weatherHourlyDTO?.toWeatherDataMap()
-        val currentTime: LocalDateTime = getCurrentTime()
-        val currentWeatherData: WeatherDataModel? = weatherDataMap?.get(0)?.find {
+        val weatherDataMap = weatherHourlyDTO?.toWeatherDataMap()
+        val currentTime = getCurrentTime()
+        val currentWeatherData = weatherDataMap?.get(0)?.find {
             val hour: Int = if (currentTime.minute < 30) {
                 currentTime.hour
             } else {
@@ -56,13 +55,13 @@ object WeatherDataMapper {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun WeatherHourlyDTO.toWeatherDataMap(): Map<Int, List<WeatherDataModel?>?>? {
-        return times?.mapIndexed { index: Int, time: String? ->
-            val temperature: Double? = temperatures?.get(index)
-            val humidity: Int? = humidity?.get(index)
-            val weatherCode: Int? = weatherCode?.get(index)
-            val pressure: Double? = pressures?.get(index)
-            val windSpeed: Double? = winSpeeds?.get(index)
-            val isDayOrNight: Boolean = (isDay?.get(index) == 1)
+        return times?.mapIndexed { index, time ->
+            val temperature = temperatures?.get(index)
+            val humidity = humidity?.get(index)
+            val weatherCode = weatherCode?.get(index)
+            val pressure = pressures?.get(index)
+            val windSpeed = winSpeeds?.get(index)
+            val isDayOrNight = (isDay?.get(index) == 1)
             IndexedWeatherData(
                 index = index,
                 data = WeatherDataModel(
@@ -75,15 +74,14 @@ object WeatherDataMapper {
                     isDay = isDayOrNight
                 )
             )
-        }?.groupBy { groupIndexWeatherData: IndexedWeatherData ->
+        }?.groupBy { groupIndexWeatherData ->
             // Divide with 24 will spill every weather data to one day (24 hours).
             groupIndexWeatherData.index / 24
-        }?.mapValues { mapEntry: Map.Entry<Int, List<IndexedWeatherData>> ->
+        }?.mapValues { mapEntry ->
             // Load up data into the next level.
-            mapEntry.value.map { indexedWeatherData: IndexedWeatherData ->
+            mapEntry.value.map { indexedWeatherData ->
                 indexedWeatherData.data
             }
         }
     }
-
 }

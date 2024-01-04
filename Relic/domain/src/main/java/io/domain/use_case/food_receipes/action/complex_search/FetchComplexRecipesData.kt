@@ -1,9 +1,9 @@
 package io.domain.use_case.food_receipes.action.complex_search
 
+import io.core.network.NetworkParameters
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.model.NetworkResult
 import io.domain.repository.IFoodRecipesDataRepository
-import io.core.network.NetworkParameters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -38,7 +38,7 @@ class FetchComplexRecipesData @Inject constructor(
     ): Flow<NetworkResult<FoodRecipesComplexSearchDTO>> {
         return flow {
             // Fetch the latest data from remote-server.
-            val result: NetworkResult<FoodRecipesComplexSearchDTO> = foodRecipesDataRepository.getComplexSearchRecipesData(
+            val result = foodRecipesDataRepository.getComplexSearchRecipesData(
                 apiKey = apiKey,
                 query = query,
                 addRecipeInformation = addRecipeInformation,

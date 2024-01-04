@@ -2,7 +2,6 @@ package io.common.system
 
 import android.content.Context
 import android.os.CpuUsageInfo
-import android.os.HardwarePropertiesManager
 import android.os.HardwarePropertiesManager.TEMPERATURE_CURRENT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_FLOAT
 import io.common.RelicSystemServiceManager.getHardwarePropertiesManager
@@ -13,9 +12,9 @@ import kotlinx.coroutines.withContext
 
 object CpuUtil {
 
-    private val cpuUsageInfoFlow: MutableStateFlow<List<CpuUsageInfo?>?> = MutableStateFlow(null)
-    private val cpuTemperatureFlow: MutableStateFlow<Float?> = MutableStateFlow(null)
-    private val fanSpeedsFlow: MutableStateFlow<List<Float?>?> = MutableStateFlow(null)
+    private val cpuUsageInfoFlow = MutableStateFlow<List<CpuUsageInfo?>?>(null)
+    private val cpuTemperatureFlow = MutableStateFlow<Float?>(null)
+    private val fanSpeedsFlow = MutableStateFlow<List<Float?>?>(null)
 
     suspend fun emitCpuUsageInfoList(list: List<CpuUsageInfo?>?): Boolean {
         return withContext(Dispatchers.IO) {
@@ -53,8 +52,7 @@ object CpuUtil {
 
     fun getCpuUsageInfo(context: Context): List<CpuUsageInfo> {
         return try {
-            val manager: HardwarePropertiesManager =
-                getHardwarePropertiesManager(context) ?: return emptyList()
+            val manager = getHardwarePropertiesManager(context) ?: return emptyList()
             return manager.cpuUsages.toList()
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -64,8 +62,7 @@ object CpuUtil {
 
     fun getFanSpeeds(context: Context): List<Float> {
         return try {
-            val manager: HardwarePropertiesManager =
-                getHardwarePropertiesManager(context) ?: return emptyList()
+            val manager = getHardwarePropertiesManager(context) ?: return emptyList()
             manager.fanSpeeds.toList()
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -78,8 +75,7 @@ object CpuUtil {
         type: Int
     ): Float {
         return try {
-            val manager: HardwarePropertiesManager =
-                getHardwarePropertiesManager(context) ?: return UNKNOWN_VALUE_FLOAT
+            val manager = getHardwarePropertiesManager(context) ?: return UNKNOWN_VALUE_FLOAT
             manager.getDeviceTemperatures(
                 /* type = */ type,
                 /* source = */ TEMPERATURE_CURRENT

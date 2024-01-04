@@ -1,6 +1,5 @@
 package io.dev.relic.feature.screens.intro
 
-import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -28,7 +27,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -171,10 +169,10 @@ private fun IntroFeaturePanel(onClick: () -> Unit) {
 
 @Composable
 private fun IntroPrivacy() {
-    val context: Context = LocalContext.current
-    val normalTextColor: Color = mainTextColorDark
-    val highLightTextColor: Color = mainTextColorDark
-    val annotatedText: AnnotatedString = buildAnnotatedString {
+    val context = LocalContext.current
+    val normalTextColor = mainTextColorDark
+    val highLightTextColor = mainTextColorDark
+    val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.intro_agreement_part_1))
         pushStringAnnotation(
             tag = "URL",
@@ -214,12 +212,12 @@ private fun IntroPrivacy() {
             fontFamily = ubuntu,
             textAlign = TextAlign.Center
         ),
-        onClick = { offset: Int ->
+        onClick = { offset ->
             annotatedText.getStringAnnotations(
                 tag = "URL",
                 start = offset,
                 end = offset
-            ).forEach { annotatedString: AnnotatedString.Range<String> ->
+            ).forEach { annotatedString ->
                 WebActivity.redirect(
                     context = context,
                     httpUrl = annotatedString.item

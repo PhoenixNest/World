@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(
 
     var latestLocation: Location? = null
 
-    private val _mainStateFlow: MutableStateFlow<MainState> = MutableStateFlow(MainState.Init)
+    private val _mainStateFlow = MutableStateFlow<MainState>(MainState.Init)
     val mainStateFlow: StateFlow<MainState> get() = _mainStateFlow
 
     companion object {

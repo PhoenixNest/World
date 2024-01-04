@@ -8,10 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -24,7 +22,6 @@ import io.dev.relic.feature.route.RelicRoute
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -63,19 +60,19 @@ class MainScreenState(
     val navHostController: NavHostController
 ) {
 
-    val currentNetworkStatus: StateFlow<NetworkStatus> = networkMonitor.observe().stateIn(
+    val currentNetworkStatus = networkMonitor.observe().stateIn(
         scope = coroutineScope,
         started = SharingStarted.WhileSubscribed(5 * 1000),
         initialValue = NetworkStatus.Available
     )
 
-    val currentDestination: NavDestination?
+    val currentDestination
         @Composable get() = navHostController
             .currentBackStackEntryAsState()
             .value
             ?.destination
 
-    val currentTopLevelDestination: MainScreenTopLevelDestination?
+    val currentTopLevelDestination
         @Composable get() = when (currentDestination?.route) {
             RelicRoute.HOME -> MainScreenTopLevelDestination.Home
             RelicRoute.EXPLORE -> MainScreenTopLevelDestination.Explore
@@ -87,12 +84,12 @@ class MainScreenState(
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
-    val topLevelDestinations: List<MainScreenTopLevelDestination> = MainScreenTopLevelDestination.entries
+    val topLevelDestinations = MainScreenTopLevelDestination.entries
 
-    val shouldShowBottomBar: Boolean
+    val shouldShowBottomBar
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
-    val shouldShowRailBar: Boolean
+    val shouldShowRailBar
         get() = !shouldShowBottomBar
 
     /**
@@ -104,7 +101,7 @@ class MainScreenState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: MainScreenTopLevelDestination) {
 
-        val topLevelNavOptions: NavOptions = navOptions {
+        val topLevelNavOptions = navOptions {
             // Pop up to the start destination of the graph to
             // avoid building up a large stack of destinations
             // on the back stack as users select items
@@ -131,5 +128,4 @@ class MainScreenState(
             }
         }
     }
-
 }

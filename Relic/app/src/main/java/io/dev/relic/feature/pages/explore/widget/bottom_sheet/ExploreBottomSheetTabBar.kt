@@ -17,11 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.dev.relic.feature.pages.explore.util.ExploreBottomTabs
 import io.core.ui.CommonVerticalIconTextButton
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColorAccent
+import io.dev.relic.feature.pages.explore.util.ExploreBottomTabs
 
 @Composable
 fun ExploreBottomSheetTabBar(
@@ -38,9 +38,9 @@ fun ExploreBottomSheetTabBar(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        itemsIndexed(ExploreBottomTabs.entries) { index: Int, item: ExploreBottomTabs ->
-            val tabLabel: String = stringResource(id = item.tabLabelResId)
-            val itemDecorationModifier: Modifier = Modifier.padding(
+        itemsIndexed(ExploreBottomTabs.entries) { index, item ->
+            val tabLabel = stringResource(id = item.tabLabelResId)
+            val itemDecorationModifier = Modifier.padding(
                 start = if (index == 0) 16.dp else 0.dp,
                 end = if (index == ExploreBottomTabs.entries.size - 1) 16.dp else 0.dp
             )
@@ -88,6 +88,6 @@ private fun ExploreBottomSheetTabItem(
 private fun ExploreBottomSheetTabPreview() {
     ExploreBottomSheetTabBar(
         currentSelectedTab = 0,
-        onTabItemClick = { _: Int, _: String -> }
+        onTabItemClick = { _, _ -> }
     )
 }

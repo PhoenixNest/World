@@ -32,7 +32,7 @@ object AdmobSplashAdHelper {
         onAdClosed: () -> Unit
     ) {
         LogUtil.d(TAG, "[Load-Ad] Loading...")
-        val isTimeout: Boolean? = loadAd(
+        val isTimeout = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
             onAdFailed = onAdFailed,

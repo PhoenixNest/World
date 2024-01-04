@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.amap.api.maps.AMap
-import com.amap.api.maps.MapView
 import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
@@ -18,7 +17,7 @@ import io.module.map.amap.AMapPrivacyCenter
  * */
 class AMapActivity : AbsBaseActivity() {
 
-    private val binding: ActivityAmapBinding by lazy {
+    private val binding by lazy {
         ActivityAmapBinding.inflate(layoutInflater)
     }
 
@@ -79,8 +78,8 @@ class AMapActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     private fun verifyAMapPrivacyAgreement() {
-        val isShowUserAgreement: Boolean = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
-        val isAgreeUserPrivacy: Boolean = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
+        val isShowUserAgreement = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
+        val isAgreeUserPrivacy = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
         LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
         LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
@@ -97,8 +96,8 @@ class AMapActivity : AbsBaseActivity() {
         binding.aMapView.apply {
             // 此方法必须重写
             onCreate(savedInstanceState)
-        }.also { mapView: MapView ->
-            val aMap: AMap = mapView.map
+        }.also { mapView ->
+            val aMap = mapView.map
             aMap.apply {
                 // 显示实时交通状况
                 isTrafficEnabled = true

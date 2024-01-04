@@ -19,18 +19,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.core.network.monitor.NetworkMonitor
+import io.core.network.monitor.NetworkStatus
 import io.dev.relic.R
+import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
-import io.core.network.monitor.NetworkMonitor
-import io.core.network.monitor.NetworkStatus
 
 @Composable
 fun MainScreen(
     savedInstanceState: Bundle?,
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
+    mainViewModel: MainViewModel,
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -38,19 +40,19 @@ fun MainScreen(
     )
 ) {
     // Current host state of snackBar.
-    val snackBarHostState: SnackbarHostState = remember {
+    val snackBarHostState = remember {
         SnackbarHostState()
     }
 
     // Check if the current can include the bottom bar.
-    val isShowBottomBar: Boolean = (mainScreenState.shouldShowBottomBar)
+    val isShowBottomBar = (mainScreenState.shouldShowBottomBar)
             && (mainScreenState.currentTopLevelDestination != null)
 
     // Check the current network status by using networkMonitor flow.
-    val networkStatus: NetworkStatus by networkMonitor.observe()
+    val networkStatus by networkMonitor.observe()
         .collectAsStateWithLifecycle(initialValue = NetworkStatus.Available)
 
-    val noNetworkMessage: String = stringResource(id = R.string.no_network_connection_message)
+    val noNetworkMessage = stringResource(id = R.string.no_network_connection_message)
 
     LaunchedEffect(networkStatus) {
         if (networkStatus != NetworkStatus.Available) {
@@ -84,6 +86,7 @@ fun MainScreen(
                 MainFeatureNavHost(
                     mainScreenState = mainScreenState,
                     navHostController = mainScreenState.navHostController,
+                    mainViewModel = mainViewModel,
                     modifier = Modifier.fillMaxSize()
                 )
                 if (isShowBottomBar) {

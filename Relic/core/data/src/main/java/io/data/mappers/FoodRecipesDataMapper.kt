@@ -11,7 +11,7 @@ object FoodRecipesDataMapper {
     }
 
     fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchInfoModel?> {
-        val tempList: MutableList<FoodRecipesComplexSearchInfoModel?> = mutableListOf()
+        val tempList = mutableListOf<FoodRecipesComplexSearchInfoModel?>()
         this.results?.forEach {
             tempList.add(
                 FoodRecipesComplexSearchInfoModel(

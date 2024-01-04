@@ -138,7 +138,7 @@ private fun FoodRecipesTabItem(
 private fun FoodRecipesTabBarPreview() {
     FoodRecipesTabBar(
         currentSelectedTab = 0,
-        onTabItemClick = { _: Int, _: String -> },
+        onTabItemClick = { _, _ -> },
         lazyListState = rememberLazyListState()
     )
 }

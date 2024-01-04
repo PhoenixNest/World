@@ -1,9 +1,8 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.util.Properties
 
 // App config
-private val localProperties: Properties = gradleLocalProperties(rootDir)
-private val geminiDevKey: String = localProperties.getProperty("AGENT_GEMINI_DEV_KEY")
+private val localProperties = gradleLocalProperties(rootDir)
+private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)

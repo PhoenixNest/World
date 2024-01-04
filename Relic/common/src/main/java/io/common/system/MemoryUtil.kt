@@ -8,18 +8,17 @@ import io.common.RelicConstants.Common.UNKNOWN_VALUE_LONG
 import io.common.RelicSystemServiceManager.getActivityManger
 import io.common.util.LogUtil
 import java.io.BufferedReader
-import java.io.File
 import java.io.FileReader
 
 object MemoryUtil {
 
     private const val TAG = "RelicSystemInfo"
 
-    private val file: File = Environment.getDataDirectory()
+    private val file = Environment.getDataDirectory()
     private val statFs = StatFs(file.path)
 
-    private var totalROMSize: Long = UNKNOWN_VALUE_LONG
-    private var totalRAMSize: Long = UNKNOWN_VALUE_LONG
+    private var totalROMSize = UNKNOWN_VALUE_LONG
+    private var totalRAMSize = UNKNOWN_VALUE_LONG
 
     private const val RAM_FILE_DIR = "/proc/meminfo"
 
@@ -31,8 +30,8 @@ object MemoryUtil {
         }
 
         return try {
-            val blockSize: Long = statFs.blockSizeLong
-            val blockCount: Long = statFs.blockCountLong
+            val blockSize = statFs.blockSizeLong
+            val blockCount = statFs.blockCountLong
             totalROMSize = blockSize * blockCount
             totalROMSize
         } catch (exception: Exception) {
@@ -44,8 +43,8 @@ object MemoryUtil {
 
     fun getFreeROMSize(): Long {
         return try {
-            val blockSize: Long = statFs.blockSizeLong
-            val availableBlocks: Long = statFs.availableBlocksLong
+            val blockSize = statFs.blockSizeLong
+            val availableBlocks = statFs.availableBlocksLong
             blockSize * availableBlocks
         } catch (exception: Exception) {
             LogUtil.e(TAG, "[Available ROM] Error, ${exception.message}")
@@ -67,14 +66,14 @@ object MemoryUtil {
                 /* in = */ fileReader,
                 /* sz = */ 2 * 1024
             )
-            val memoryLine: String = bufferedReader.readLine()
-            val totalMemory: String = memoryLine.substring(memoryLine.indexOf("MemTotal:"))
+            val memoryLine = bufferedReader.readLine()
+            val totalMemory = memoryLine.substring(memoryLine.indexOf("MemTotal:"))
             bufferedReader.close()
 
-            for (i: Int in 0..totalMemory.length) {
+            for (i in 0..totalMemory.length) {
                 totalMemory.replace("\\D+", "")
             }
-            val result: Long = Integer.parseInt(totalMemory) * 1024L
+            val result = Integer.parseInt(totalMemory) * 1024L
             LogUtil.d(TAG, "[Total RAM] $result")
             totalRAMSize = result
             totalRAMSize
@@ -86,7 +85,7 @@ object MemoryUtil {
 
     fun getFreeRAMSize(context: Context): Long {
         return try {
-            var result: Long = UNKNOWN_VALUE_LONG
+            var result = UNKNOWN_VALUE_LONG
             getActivityManger(context)?.let {
                 val memoryInfo = ActivityManager.MemoryInfo()
                 it.getMemoryInfo(memoryInfo)
@@ -98,5 +97,4 @@ object MemoryUtil {
             UNKNOWN_VALUE_LONG
         }
     }
-
 }

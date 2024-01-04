@@ -13,11 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import io.core.ui.R
 import io.core.ui.theme.mainThemeColor
 
 @Composable
@@ -27,7 +25,7 @@ fun CommonLoadingComponent(
     iconSizeModifier: Modifier = Modifier
 ) {
 
-    val commonLoadingRes: LottieComposition? by rememberLottieComposition(
+    val commonLoadingRes by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_common_loading)
     )
 

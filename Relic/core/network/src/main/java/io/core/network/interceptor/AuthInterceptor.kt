@@ -2,7 +2,6 @@ package io.core.network.interceptor
 
 import io.common.util.LogUtil
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 
 open class AuthInterceptor internal constructor(builder: Builder) : Interceptor {
@@ -20,7 +19,7 @@ open class AuthInterceptor internal constructor(builder: Builder) : Interceptor 
 
     class Builder() {
 
-        internal var authHeaderValue: String = "relic-header"
+        internal var authHeaderValue = "relic-header"
 
         internal constructor(authInterceptor: AuthInterceptor) : this() {
             this.authHeaderValue = authInterceptor.authHeaderValue
@@ -43,13 +42,13 @@ open class AuthInterceptor internal constructor(builder: Builder) : Interceptor 
     override fun intercept(chain: Interceptor.Chain): Response {
         LogUtil.w(TAG, "Checking With [$TAG]")
 
-        val request: Request = chain.request()
+        val request = chain.request()
 
         if (authHeaderValue.isBlank() || authHeaderValue.isEmpty()) {
             return chain.proceed(request)
         }
 
-        val newRequest: Request = request
+        val newRequest = request
             .newBuilder()
             .addHeader(KEY_HEADER_AUTHORIZATION, authHeaderValue)
             .build()

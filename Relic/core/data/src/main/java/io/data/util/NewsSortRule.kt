@@ -9,7 +9,7 @@ package io.data.util
  * - popularity = articles from popular sources and publishers come first.
  * - publishedAt = newest articles come first.*/
 enum class NewsSortRule(val ruleString: String) {
-    Relevancy(ruleString = "relevancy"),
-    Popularity(ruleString = "popularity"),
-    PublishedAt(ruleString = "publishAt")
+    Relevancy("relevancy"),
+    Popularity("popularity"),
+    PublishedAt("publishAt")
 }

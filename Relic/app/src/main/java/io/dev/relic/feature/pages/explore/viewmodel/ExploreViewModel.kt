@@ -23,7 +23,7 @@ class ExploreViewModel @Inject constructor(
     /**
      * Indicate the current selected food recipes tab.
      * */
-    var currentSelectedBottomSheetTab: Int by mutableIntStateOf(0)
+    var currentSelectedBottomSheetTab by mutableIntStateOf(0)
 
     companion object {
         private const val TAG = "ExploreViewModel"

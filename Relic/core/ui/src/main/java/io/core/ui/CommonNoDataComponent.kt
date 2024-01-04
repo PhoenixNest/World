@@ -23,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -39,7 +38,7 @@ fun CommonNoDataComponent(
     isShowText: Boolean = true
 ) {
 
-    val commonLoadingRes: LottieComposition? by rememberLottieComposition(
+    val commonLoadingRes by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_no_data)
     )
 

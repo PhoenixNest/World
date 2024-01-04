@@ -39,28 +39,28 @@ class HomeViewModel @Inject constructor(
     /**
      * Indicate the current selected food recipes tab.
      * */
-    private var _currentSelectedFoodRecipesTab: Int by mutableIntStateOf(0)
+    private var _currentSelectedFoodRecipesTab by mutableIntStateOf(0)
 
     /**
      * Check whether if already fetch the recipes data for initialize.
      * */
-    private var _isFirstFetchFoodRecipes: Boolean = true
+    private var _isFirstFetchFoodRecipes = true
 
     /**
      * The number of results to skip (between 0 and 900).
      * */
-    private var _foodRecipesOffset: Int = 0
+    private var _foodRecipesOffset = 0
 
     /**
      * The data flow of weather forecast.
      * */
-    private val _weatherDataStateFlow: MutableStateFlow<WeatherDataState> = MutableStateFlow(WeatherDataState.Init)
+    private val _weatherDataStateFlow = MutableStateFlow<WeatherDataState>(WeatherDataState.Init)
     val weatherDataStateFlow: StateFlow<WeatherDataState> get() = _weatherDataStateFlow
 
     /**
      * The data flow of daily food recipes.
      * */
-    private val _foodRecipesDataStateFlow: MutableStateFlow<FoodRecipesDataState> = MutableStateFlow(FoodRecipesDataState.Init)
+    private val _foodRecipesDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
     val foodRecipesDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesDataStateFlow
 
     companion object {
@@ -91,9 +91,9 @@ class HomeViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
             )
-            .also { stateFlow: StateFlow<NetworkResult<WeatherForecastDTO>> ->
+            .also { stateFlow ->
                 viewModelScope.launch {
-                    stateFlow.collect { result: NetworkResult<WeatherForecastDTO> ->
+                    stateFlow.collect { result ->
                         handleRemoteWeatherData(result)
                     }
                 }
@@ -134,9 +134,9 @@ class HomeViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
             )
-            .also { stateFlow: StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> ->
+            .also { stateFlow ->
                 viewModelScope.launch {
-                    stateFlow.collect { result: NetworkResult<FoodRecipesComplexSearchDTO> ->
+                    stateFlow.collect { result ->
                         handleRemoteFoodRecipesData(result)
                     }
                 }
@@ -169,8 +169,8 @@ class HomeViewModel @Inject constructor(
             }
 
             is NetworkResult.Failed -> {
-                val errorCode: Int? = result.code
-                val errorMessage: String? = result.message
+                val errorCode = result.code
+                val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Weather Data] Failed, ($errorCode, $errorMessage)")
                 setState(_weatherDataStateFlow, WeatherDataState.FetchFailed(errorCode, errorMessage))
             }
@@ -195,8 +195,8 @@ class HomeViewModel @Inject constructor(
             }
 
             is NetworkResult.Failed -> {
-                val errorCode: Int? = result.code
-                val errorMessage: String? = result.message
+                val errorCode = result.code
+                val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Food Recipes Data] Failed, ($errorCode, $errorMessage)")
                 setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
             }

@@ -28,7 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.common.RelicConstants
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 
@@ -63,7 +63,7 @@ fun CommonHorizontalIconTextButton(
         ) {
             Icon(
                 painter = painterResource(id = iconResId),
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
             Spacer(modifier = modifier.width(6.dp))
@@ -107,7 +107,7 @@ fun CommonHorizontalIconTextButton(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
             Spacer(modifier = modifier.width(6.dp))
@@ -164,7 +164,7 @@ fun CommonVerticalIconTextButton(
         ) {
             Icon(
                 painter = painterResource(id = iconResId),
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
             Spacer(modifier = modifier.height(6.dp))
@@ -208,7 +208,7 @@ fun CommonVerticalIconTextButton(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
+                contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
             Spacer(modifier = modifier.height(6.dp))

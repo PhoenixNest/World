@@ -15,6 +15,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        minSdk = 24
         buildConfigField("boolean", "NO_ADS", isNoAds)
     }
 

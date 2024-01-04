@@ -17,6 +17,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        minSdk = 24
+
         // Specify the schemas saved location of Room database.
         ksp {
             arg("room.schemaLocation", "${projectDir}/room_database_schemas")

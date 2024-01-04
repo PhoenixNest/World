@@ -25,6 +25,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        minSdk = 24
         resValue("string", "spoonacular_dev_key", spoonacularDevKey)
         resValue("string", "news_dev_key", newsDevKey)
     }

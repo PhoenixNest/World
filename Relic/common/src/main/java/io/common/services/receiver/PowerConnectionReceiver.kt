@@ -46,14 +46,14 @@ class PowerConnectionReceiver : BroadcastReceiver() {
     private fun onBatteryChanged(intent: Intent) {
         try {
             runBlocking(Dispatchers.IO) {
-                val temperature: Int = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0)
-                val voltage: Int = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0)
+                val temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0)
+                val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0)
 
-                val batteryChargingVoltageUpdateResult: Boolean = async {
+                val batteryChargingVoltageUpdateResult = async {
                     updateChargingVoltageFlow(voltage)
                 }.await()
 
-                val batteryTemperatureUpdateResult: Boolean = async {
+                val batteryTemperatureUpdateResult = async {
                     updateBatteryTemperatureFlow(temperature)
                 }.await()
 

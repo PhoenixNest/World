@@ -17,9 +17,9 @@ object ScreenUtil {
 
     private const val TAG = "ScreenUtil"
 
-    private var screenInch: Double = UNKNOWN_VALUE_DOUBLE
-    private var screenWidth: Int = UNKNOWN_VALUE_INT
-    private var screenHeight: Int = UNKNOWN_VALUE_INT
+    private var screenInch = UNKNOWN_VALUE_DOUBLE
+    private var screenWidth = UNKNOWN_VALUE_INT
+    private var screenHeight = UNKNOWN_VALUE_INT
 
     @Suppress("DEPRECATION")
     fun getScreenWidth(context: Context): Int {
@@ -60,23 +60,23 @@ object ScreenUtil {
         }
 
         return try {
-            val display: Display = getScreenDisplay(context) ?: return UNKNOWN_VALUE_DOUBLE
+            val display = getScreenDisplay(context) ?: return UNKNOWN_VALUE_DOUBLE
             val displayMetrics = DisplayMetrics()
             val point = Point()
 
             display.getMetrics(displayMetrics)
             display.getRealSize(point)
 
-            val pX: Int = point.x
-            val pY: Int = point.y
+            val pX = point.x
+            val pY = point.y
 
-            val xDpi: Float = displayMetrics.xdpi
-            val yDpi: Float = displayMetrics.ydpi
+            val xDpi = displayMetrics.xdpi
+            val yDpi = displayMetrics.ydpi
 
-            val vX: Float = (pX / xDpi)
-            val vY: Float = (pY / yDpi)
+            val vX = (pX / xDpi)
+            val vY = (pY / yDpi)
 
-            val result: Double = sqrt((vX * vX + vY * vY)).toDouble()
+            val result = sqrt((vX * vX + vY * vY)).toDouble()
             screenInch = BigDecimal(result).setScale(1, RoundingMode.HALF_UP).toDouble()
             screenInch
         } catch (exception: Exception) {
@@ -99,5 +99,4 @@ object ScreenUtil {
             null
         }
     }
-
 }

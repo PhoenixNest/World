@@ -13,11 +13,10 @@ class GetAllTodos(private val todoRepository: ITodoDataRepository) {
             .catch {
 
             }
-            .map { todoEntities: List<TodoEntity> ->
-                todoEntities.sortedBy { todoEntity: TodoEntity ->
+            .map { todoEntities ->
+                todoEntities.sortedBy { todoEntity ->
                     todoEntity.title.lowercase()
                 }
             }
     }
-
 }

@@ -75,11 +75,11 @@ private fun TodoCardList(
         ),
         contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
-        itemsIndexed(items = modelList) { index: Int, data: TodoDataModel? ->
+        itemsIndexed(items = modelList) { index, data ->
             if (data == null) {
                 //
             } else {
-                val itemDecorationModifier: Modifier = Modifier.padding(
+                val itemDecorationModifier = Modifier.padding(
                     top = if (index == 0) 16.dp else 0.dp,
                     bottom = if (index == modelList.size - 1) 120.dp else 0.dp
                 )
@@ -111,9 +111,7 @@ fun TodoCardItem(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable {
-                        onCardClick.invoke()
-                    }
+                    .clickable { onCardClick.invoke() }
                     .padding(20.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start

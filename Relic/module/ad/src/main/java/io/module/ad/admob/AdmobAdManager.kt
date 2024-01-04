@@ -27,7 +27,7 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
-        val adUnitId: String = AdmobAdUnitId.OPEN_AD
+        val adUnitId = AdmobAdUnitId.OPEN_AD
         AdmobAdProvider.apply {
             setAdListener(
                 adUnitId = adUnitId,
@@ -47,7 +47,7 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
-        val adUnitId: String = AdmobAdUnitId.REWARD_AD
+        val adUnitId = AdmobAdUnitId.REWARD_AD
         AdmobAdProvider.apply {
             setAdListener(
                 adUnitId = adUnitId,
@@ -67,7 +67,7 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
-        val adUnitId: String = AdmobAdUnitId.INTERSTITIAL_AD
+        val adUnitId = AdmobAdUnitId.INTERSTITIAL_AD
         AdmobAdProvider.apply {
             setAdListener(
                 adUnitId = adUnitId,
@@ -90,7 +90,7 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
-        val adUnitId: String = AdmobAdUnitId.BANNER_AD
+        val adUnitId = AdmobAdUnitId.BANNER_AD
         AdmobAdProvider.apply {
             setAdListener(
                 adUnitId = adUnitId,
@@ -113,7 +113,7 @@ object AdmobAdManager {
         context: Context,
         listener: IAdListener
     ) {
-        val adUnitId: String = AdmobAdUnitId.NATIVE_AD
+        val adUnitId = AdmobAdUnitId.NATIVE_AD
         AdmobAdProvider.apply {
             setAdListener(
                 adUnitId = adUnitId,
@@ -132,7 +132,7 @@ object AdmobAdManager {
     /* ======================== show ======================== */
 
     fun showOpenAd(context: Context) {
-        val adUnitId: String = AdmobAdUnitId.OPEN_AD
+        val adUnitId = AdmobAdUnitId.OPEN_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId
@@ -143,7 +143,7 @@ object AdmobAdManager {
         context: Context,
         ifInBackground: (() -> Unit)? = null
     ) {
-        val adUnitId: String = AdmobAdUnitId.REWARD_AD
+        val adUnitId = AdmobAdUnitId.REWARD_AD
         // RelicLifecycleObserver.runOnForeground(
         //     foregroundAction = {
         //         AdmobAdProvider.showAd(
@@ -161,7 +161,7 @@ object AdmobAdManager {
         context: Context,
         ifInBackground: (() -> Unit)? = null
     ) {
-        val adUnitId: String = AdmobAdUnitId.INTERSTITIAL_AD
+        val adUnitId = AdmobAdUnitId.INTERSTITIAL_AD
         // RelicLifecycleObserver.runOnForeground(
         //     foregroundAction = {
         //         AdmobAdProvider.showAd(
@@ -179,7 +179,7 @@ object AdmobAdManager {
         context: Context,
         adViewContainer: ViewGroup
     ) {
-        val adUnitId: String = AdmobAdUnitId.BANNER_AD
+        val adUnitId = AdmobAdUnitId.BANNER_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId,
@@ -191,7 +191,7 @@ object AdmobAdManager {
         context: Context,
         adViewContainer: ViewGroup
     ) {
-        val adUnitId: String = AdmobAdUnitId.NATIVE_AD
+        val adUnitId = AdmobAdUnitId.NATIVE_AD
         AdmobAdProvider.showAd(
             context = context,
             adUnitId = adUnitId,

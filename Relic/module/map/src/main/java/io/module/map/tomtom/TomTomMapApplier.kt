@@ -17,7 +17,7 @@ class TomTomMapApplier(
     internal val mapView: MapView
 ) : AbstractApplier<TomTomMapNode>(TomTomMapNodeRoot) {
 
-    private val decorations: MutableList<TomTomMapNode> = mutableListOf()
+    private val decorations = mutableListOf<TomTomMapNode>()
 
     override fun insertBottomUp(index: Int, instance: TomTomMapNode) {
         decorations.add(index, instance)

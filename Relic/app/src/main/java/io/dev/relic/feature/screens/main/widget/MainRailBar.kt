@@ -8,7 +8,6 @@ import androidx.compose.material.NavigationRailItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -57,7 +56,7 @@ private fun MainRailBarItem(
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val iconSource: Painter = painterResource(
+    val iconSource = painterResource(
         id = if (isSelected) {
             selectedIconResId
         } else {

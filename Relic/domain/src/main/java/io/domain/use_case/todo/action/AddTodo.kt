@@ -26,5 +26,4 @@ class AddTodo(private val todoRepository: ITodoDataRepository) {
             LogUtil.d(TAG, "[Add Todo] todoDataModel: $entity")
         }
     }
-
 }

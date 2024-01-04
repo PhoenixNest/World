@@ -35,7 +35,7 @@ fun WeatherCard(
     weatherDataState: WeatherDataState,
     onRetryClick: () -> Unit
 ) {
-    when (val state: WeatherDataState = weatherDataState) {
+    when (weatherDataState) {
         is WeatherDataState.Init,
         is WeatherDataState.Fetching -> {
             WeatherCard(
@@ -48,7 +48,7 @@ fun WeatherCard(
         is WeatherDataState.FetchSucceed -> {
             WeatherCard(
                 isLoading = false,
-                model = state.model?.currentWeatherData,
+                model = weatherDataState.model?.currentWeatherData,
                 onRetryClick = onRetryClick
             )
         }

@@ -8,15 +8,16 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.common.system.BatteryUtil
+import io.common.system.BatteryUtil.getChargingFlow
+import io.common.system.BatteryUtil.getTemperatureFlow
 import io.common.system.MemoryUtil
 import io.common.system.NetworkUtil
 import io.common.system.ScreenUtil
@@ -28,13 +29,11 @@ import io.core.ui.theme.mainTextColor
 fun HomeDrawer() {
 
     val context = LocalContext.current
-    val screenWidth: Dp = LocalConfiguration.current.screenWidthDp.dp
-    val drawerWidth: Dp = screenWidth - 72.dp
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val drawerWidth = screenWidth - 72.dp
 
-    val currentChargingStatus: Boolean =
-        BatteryUtil.getChargingFlow().collectAsStateWithLifecycle().value
-    val currentBatteryTemperature: Int =
-        BatteryUtil.getTemperatureFlow().collectAsStateWithLifecycle().value
+    val currentChargingStatus by getChargingFlow().collectAsStateWithLifecycle()
+    val currentBatteryTemperature by getTemperatureFlow().collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

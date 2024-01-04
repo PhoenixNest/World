@@ -1,13 +1,12 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.util.Properties
 
 // App config
-private val localProperties: Properties = gradleLocalProperties(rootDir)
-private val isDebugMode: String = localProperties.getProperty("DEBUG_MODE")
-private val isNoAds: String = localProperties.getProperty("NO_ADS")
+private val localProperties = gradleLocalProperties(rootDir)
+private val isDebugMode = localProperties.getProperty("DEBUG_MODE")
+private val isNoAds = localProperties.getProperty("NO_ADS")
 
 // Dev Key
-private val admobDevKey: String = localProperties.getProperty("ADMOB_DEV_KEY")
+private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidApplication)
