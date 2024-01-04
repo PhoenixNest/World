@@ -1,9 +1,8 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.util.Properties
 
 // App config
-private val localProperties: Properties = gradleLocalProperties(rootDir)
-private val isNoAds: String = localProperties.getProperty("NO_ADS")
+private val localProperties = gradleLocalProperties(rootDir)
+private val isNoAds = localProperties.getProperty("NO_ADS")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -26,6 +25,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
