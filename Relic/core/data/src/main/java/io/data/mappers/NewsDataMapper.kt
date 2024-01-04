@@ -12,11 +12,11 @@ import io.data.model.news.NewsArticleModel
 object NewsDataMapper {
 
     fun NewsEverythingDTO.toNewsEverythingEntity(): NewsEverythingEntity {
-        return NewsEverythingEntity(datasource = this)
+        return NewsEverythingEntity(this)
     }
 
     fun NewsTopHeadlinesDTO.toNewsTopHeadlineEntity(): NewsTopHeadlinesEntity {
-        return NewsTopHeadlinesEntity(datasource = this)
+        return NewsTopHeadlinesEntity(this)
     }
 
     fun NewsArticleDTO?.toNewsEverythingArticleEntity(): NewsEverythingArticleEntity? {

@@ -2,6 +2,7 @@ package io.domain.repository.impl
 
 import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.INewsApi
+import io.data.dto.news.NewsArticleDTO
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
 import io.data.mappers.NewsDataMapper.toNewsEverythingArticleEntity
@@ -128,16 +129,24 @@ class NewsDataRepositoryImpl @Inject constructor(
 
     private suspend fun insertNewsEverythingData(data: NewsEverythingDTO) {
         databaseRepository.insertNewsEverythingData(data.toNewsEverythingEntity())
-        data.articles?.forEach { articleItem ->
+        insertNewsEverythingArticles(data.articles)
+    }
+
+    private suspend fun insertNewsTopHeadlineData(data: NewsTopHeadlinesDTO) {
+        databaseRepository.insertNewsTopHeadlineData(data.toNewsTopHeadlineEntity())
+        insertNewsTopHeadlineArticles(data.articles)
+    }
+
+    private suspend fun insertNewsEverythingArticles(articles: List<NewsArticleDTO?>?) {
+        articles?.forEach { articleItem ->
             articleItem.toNewsEverythingArticleEntity()?.let {
                 databaseRepository.insertNewsEverythingArticle(it)
             }
         }
     }
 
-    private suspend fun insertNewsTopHeadlineData(data: NewsTopHeadlinesDTO) {
-        databaseRepository.insertNewsTopHeadlineData(data.toNewsTopHeadlineEntity())
-        data.articles?.forEach { articleItem ->
+    private suspend fun insertNewsTopHeadlineArticles(articles: List<NewsArticleDTO?>?) {
+        articles?.forEach { articleItem ->
             articleItem.toNewsTopHeadlineArticleEntity()?.let {
                 databaseRepository.insertNewsTopHeadlineArticle(it)
             }

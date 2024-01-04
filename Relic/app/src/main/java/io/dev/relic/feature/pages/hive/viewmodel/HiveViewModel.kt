@@ -19,10 +19,8 @@ import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_STA
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_TIME_DURATION
 import io.data.dto.news.everything.NewsEverythingDTO
 import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
-import io.data.entity.news.NewsEverythingEntity
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList
 import io.data.model.NetworkResult
-import io.data.model.news.NewsArticleModel
 import io.data.util.NewsCategory
 import io.data.util.NewsCountryType
 import io.data.util.NewsLanguageType
@@ -39,6 +37,7 @@ import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEW
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.util.NewsDataStatus
 import io.dev.relic.feature.function.news.util.NewsDataStatus.Failed
+import io.dev.relic.feature.function.news.util.NewsDataStatus.Init
 import io.dev.relic.feature.function.news.util.NewsDataStatus.Success
 import io.dev.relic.feature.function.news.util.NewsDataStatus.SuccessWithoutData
 import io.dev.relic.feature.function.news.util.NewsType
@@ -78,7 +77,8 @@ class HiveViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "HiveViewModel"
-        private const val DEFAULT_STOP_TIMEOUT_MILLIS: Long = 5 * 1000L
+        private const val DEFAULT_STOP_TIMEOUT_MILLIS = 5 * 1000L
+        private const val DEFAULT_LAST_REFRESH_TIME = 0L
     }
 
     init {
@@ -95,9 +95,12 @@ class HiveViewModel @Inject constructor(
     }
 
     private fun checkShouldRefreshEverythingData() {
-        val lastTimeDuration = readSyncData(KEY_EVERYTHING_TIME_DURATION, 0)
-        val lastRefreshStatus = readSyncData(KEY_EVERYTHING_STATUS, Failed)
-        if ((getCurrentTimeInMillis() > lastTimeDuration) && (lastRefreshStatus == Failed)) {
+        val lastTimeDuration = readSyncData(KEY_EVERYTHING_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
+        val lastRefreshStatus = readSyncData(KEY_EVERYTHING_STATUS, Init.typeValue)
+        if (getCurrentTimeInMillis() > lastTimeDuration
+            || lastRefreshStatus == Init.typeValue
+            || lastRefreshStatus == Failed.typeValue
+        ) {
             LogUtil.d(TAG, "[Everything News Checker] Refresh data.")
             fetchEverythingNewsData()
         } else {
@@ -107,9 +110,12 @@ class HiveViewModel @Inject constructor(
     }
 
     private fun checkShouldRefreshTopHeadlineData() {
-        val lastTimeDuration = readSyncData(KEY_TOP_HEADLINE_TIME_DURATION, 0)
-        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, Failed)
-        if ((getCurrentTimeInMillis() > lastTimeDuration) && (lastRefreshStatus == Failed)) {
+        val lastTimeDuration = readSyncData(KEY_TOP_HEADLINE_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
+        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, Init.typeValue)
+        if (getCurrentTimeInMillis() > lastTimeDuration
+            || lastRefreshStatus == Init.typeValue
+            || lastRefreshStatus == Failed.typeValue
+        ) {
             LogUtil.d(TAG, "[Top-Headline News Checker] Refresh data.")
             fetchTopHeadlineNewsData()
         } else {
@@ -133,10 +139,10 @@ class HiveViewModel @Inject constructor(
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                     initialValue = emptyList()
                 )
-                .collect { entities: List<NewsEverythingEntity> ->
-                    val localDatasource: NewsEverythingDTO = entities.first().datasource
-                    val modelList: List<NewsArticleModel?>? = localDatasource.articles?.toNewsArticleModelList()
-                    modelList?.also { list: List<NewsArticleModel?> ->
+                .collect { entities ->
+                    val localDatasource = entities.first().datasource
+                    val modelList = localDatasource.articles?.toNewsArticleModelList()
+                    modelList?.also { list ->
                         setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(list))
                     } ?: {
                         setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
