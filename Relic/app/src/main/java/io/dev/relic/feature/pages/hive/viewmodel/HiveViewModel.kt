@@ -131,6 +131,10 @@ class HiveViewModel @Inject constructor(
      * */
     private fun readLocalEverythingNewsData() {
         viewModelScope.launch {
+            LogUtil.w(TAG, "[Handle Everything News Cache] Loading...")
+            setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
+
+            // Read the local cache value from the database
             setState(_everythingNewsDataStateFlow, EverythingNewsDataState.Fetching)
             databaseRepository
                 .readNewsEverythingCache()
@@ -140,11 +144,17 @@ class HiveViewModel @Inject constructor(
                     initialValue = emptyList()
                 )
                 .collect { entities ->
-                    val localDatasource = entities.first().datasource
-                    val modelList = localDatasource.articles?.toNewsArticleModelList()
-                    modelList?.also { list ->
-                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(list))
-                    } ?: {
+                    if (entities.isNotEmpty()) {
+                        val localDatasource = entities.first().datasource
+                        val modelList = localDatasource.articles?.toNewsArticleModelList()
+                        modelList?.also { list ->
+                            setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(list))
+                        } ?: {
+                            LogUtil.w(TAG, "[Handle Everything News Cache] Succeed without [Articles] data")
+                            setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                        }
+                    } else {
+                        LogUtil.e(TAG, "[Handle Everything News Cache] Succeed without data")
                         setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
                     }
                 }
@@ -155,8 +165,11 @@ class HiveViewModel @Inject constructor(
      * Read the local cache value from the database.
      * */
     private fun readLocalTopHeadlineNewsData() {
-        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
         viewModelScope.launch {
+            LogUtil.w(TAG, "[Handle Top-headline News Cache] Loading...")
+            setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
+
+            // Read the local cache value from the database
             databaseRepository
                 .readNewsTopHeadlineCache()
                 .stateIn(
@@ -165,11 +178,17 @@ class HiveViewModel @Inject constructor(
                     initialValue = emptyList()
                 )
                 .collect { entities ->
-                    val localDatasource = entities.first().datasource
-                    val modelList = localDatasource.articles?.toNewsArticleModelList()
-                    modelList?.also { list ->
-                        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(list))
-                    } ?: {
+                    if (entities.isNotEmpty()) {
+                        val localDatasource = entities.first().datasource
+                        val modelList = localDatasource.articles?.toNewsArticleModelList()
+                        modelList?.also { list ->
+                            setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(list))
+                        } ?: {
+                            LogUtil.w(TAG, "[Handle Top-headline News Cache] Succeed without [Articles] data")
+                            setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
+                        }
+                    } else {
+                        LogUtil.e(TAG, "[Handle Top-headline News Cache] Succeed without data")
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
                     }
                 }
