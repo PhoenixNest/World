@@ -5,6 +5,7 @@ import java.util.Properties
 private val localProperties: Properties = gradleLocalProperties(rootDir)
 private val spoonacularDevKey: String = localProperties.getProperty("SPOONACULAR_DEV_KEY")
 private val newsDevKey: String = localProperties.getProperty("NEWS_DEV_KEY")
+private val monknownSecretKey: String = localProperties.getProperty("MONKNOWN_SECRET_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -28,6 +29,7 @@ android {
         minSdk = 24
         resValue("string", "spoonacular_dev_key", spoonacularDevKey)
         resValue("string", "news_dev_key", newsDevKey)
+        resValue("string", "monknown_secret_key", monknownSecretKey)
     }
 
     compileOptions {
