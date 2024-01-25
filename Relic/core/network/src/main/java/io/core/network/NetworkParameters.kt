@@ -56,15 +56,15 @@ object NetworkParameters {
         const val NEWS_API_URL = "https://newsapi.org/v2/"
 
         /**
-         * [Monknown Wallpaper Api](https://www.monknow.com/en-US/)
+         * [Pixabay Api](https://pixabay.com/api/docs/)
          * */
-        const val MONKNOWN_WALLPAPER_URL = "https://dynamic-api.monknow.com"
+        const val PIXABAY_WALLPAPER_URL = "https://pixabay.com/api/"
     }
 
     object Keys {
         val FOOD_RECIPES_API_DEV_KEY = getString(R.string.spoonacular_dev_key)
         val NEWS_API_DEV_KEY = getString(R.string.news_dev_key)
-        val MONKNOWN_API_SECRET = getString(R.string.monknown_secret_key)
+        val PIXABAY_API_SECRET = getString(R.string.pixabay_secret_key)
     }
 
 }

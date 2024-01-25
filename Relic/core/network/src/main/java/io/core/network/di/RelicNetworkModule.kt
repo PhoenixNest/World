@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.core.network.NetworkParameters.BaseUrl.FOOD_RECIPES_API_URL
 import io.core.network.NetworkParameters.BaseUrl.NEWS_API_URL
+import io.core.network.NetworkParameters.BaseUrl.PIXABAY_WALLPAPER_URL
 import io.core.network.NetworkParameters.BaseUrl.WEATHER_API_URL
 import io.core.network.NetworkParameters.MAX_DISK_CACHE_SIZE
 import io.core.network.NetworkParameters.MAX_OFFLINE_CACHE_TIME
@@ -22,6 +23,7 @@ import io.core.network.NetworkParameters.MAX_TIMEOUT_READ_DURATION
 import io.core.network.NetworkParameters.MAX_TIMEOUT_WRITE_DURATION
 import io.core.network.api.IFoodRecipesApi
 import io.core.network.api.INewsApi
+import io.core.network.api.IWallpaperApi
 import io.core.network.api.IWeatherApi
 import io.core.network.interceptor.AuthInterceptor
 import io.core.network.interceptor.OfflineCacheInterceptor
@@ -184,6 +186,26 @@ object RelicNetworkModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(NEWS_API_URL)
+            .addConverterFactory(moshiConverterFactory)
+            .build()
+            .create()
+    }
+
+    /**
+     * Provide the `Wallpaper` Retrofit client instance with OkHttpClient.
+     *
+     * @param okHttpClient
+     * @param moshiConverterFactory
+     * */
+    @Provides
+    @Singleton
+    fun provideWallpaperApi(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): IWallpaperApi {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(PIXABAY_WALLPAPER_URL)
             .addConverterFactory(moshiConverterFactory)
             .build()
             .create()
