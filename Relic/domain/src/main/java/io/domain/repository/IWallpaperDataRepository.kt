@@ -1,10 +1,12 @@
-package io.core.network.api
+package io.domain.repository
 
 import io.data.dto.wallpaper.WallpaperImagesDTO
-import retrofit2.http.GET
-import retrofit2.http.Query
+import io.data.model.NetworkResult
 
-interface IWallpaperApi {
+/**
+ * @see io.domain.repository.impl.WallpaperDataRepositoryImpl
+ * */
+interface IWallpaperDataRepository {
 
     /**
      * [Search Images](https://pixabay.com/api/docs/#api_search_images)
@@ -21,19 +23,18 @@ interface IWallpaperApi {
      * @param page                  Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
-    @GET
     suspend fun searchImages(
-        @Query("key") apiKey: String,
-        @Query("q") keyWords: String,
-        @Query("lang") language: String,
-        @Query("image_type") imageType: String,
-        @Query("orientation") orientation: String,
-        @Query("category") category: String,
-        @Query("editors_choice") isEditorsChoice: Boolean,
-        @Query("safesearch") isSafeSearch: Boolean,
-        @Query("order") orderBy: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int
-    ): WallpaperImagesDTO
+        apiKey: String,
+        keyWords: String,
+        language: String,
+        imageType: String,
+        orientation: String,
+        category: String,
+        isEditorsChoice: Boolean,
+        isSafeSearch: Boolean,
+        orderBy: String,
+        page: Int,
+        perPage: Int
+    ): NetworkResult<WallpaperImagesDTO>
 
 }

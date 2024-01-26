@@ -8,6 +8,7 @@ import io.core.database.repository.RelicDatabaseRepository
 import io.domain.repository.IFoodRecipesDataRepository
 import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
+import io.domain.repository.IWallpaperDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
@@ -23,6 +24,8 @@ import io.domain.use_case.todo.action.AddTodo
 import io.domain.use_case.todo.action.DeleteTodo
 import io.domain.use_case.todo.action.GetAllTodos
 import io.domain.use_case.todo.action.UpdateTodo
+import io.domain.use_case.wallpaper.WallpaperUseCase
+import io.domain.use_case.wallpaper.action.SearchImages
 import io.domain.use_case.weather.WeatherUseCase
 import io.domain.use_case.weather.action.CacheWeatherData
 import io.domain.use_case.weather.action.FetchWeatherData
@@ -94,4 +97,13 @@ class RelicUseCaseModule {
         )
     }
 
+    @Singleton
+    @Provides
+    fun provideWallpaperUnitUseCase(
+        wallpaperRepository: IWallpaperDataRepository
+    ): WallpaperUseCase {
+        return WallpaperUseCase(
+            searchImages = SearchImages(wallpaperRepository)
+        )
+    }
 }

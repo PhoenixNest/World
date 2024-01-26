@@ -11,9 +11,11 @@ import io.core.database.dao.AgentGeminiDao
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
+import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.data.convertors.FoodRecipesDataConvertor
 import io.data.convertors.NewsDataConvertor
+import io.data.convertors.WallpaperDataConvertor
 import io.data.convertors.WeatherDataConvertor
 import io.data.entity.agent.AgentChatEntity
 import io.data.entity.agent.AgentGeminiChatEntity
@@ -23,6 +25,7 @@ import io.data.entity.news.NewsEverythingEntity
 import io.data.entity.news.NewsTopHeadlineArticleEntity
 import io.data.entity.news.NewsTopHeadlinesEntity
 import io.data.entity.todo.TodoEntity
+import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
 
 @Database(
@@ -30,6 +33,7 @@ import io.data.entity.weather.WeatherEntity
         // Feature: Home
         WeatherEntity::class,
         FoodRecipesComplexSearchEntity::class,
+        WallpaperImagesEntity::class,
         // Feature: Hive
         TodoEntity::class,
         NewsEverythingEntity::class,
@@ -47,7 +51,8 @@ import io.data.entity.weather.WeatherEntity
     value = [
         WeatherDataConvertor::class,
         FoodRecipesDataConvertor::class,
-        NewsDataConvertor::class
+        NewsDataConvertor::class,
+        WallpaperDataConvertor::class
     ],
     builtInTypeConverters = BuiltInTypeConverters()
 )
@@ -60,6 +65,8 @@ abstract class RelicDatabase : RoomDatabase() {
     abstract fun foodRecipesDao(): FoodRecipesDao
 
     abstract fun newsDao(): NewsDao
+
+    abstract fun wallpaperDao(): WallpaperDao
 
     abstract fun agentDao(): AgentDao
 

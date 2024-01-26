@@ -7,10 +7,12 @@ import dagger.hilt.components.SingletonComponent
 import io.domain.repository.IFoodRecipesDataRepository
 import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
+import io.domain.repository.IWallpaperDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.repository.impl.FoodRecipesDataRepositoryImpl
 import io.domain.repository.impl.NewsDataRepositoryImpl
 import io.domain.repository.impl.TodoDataRepositoryImpl
+import io.domain.repository.impl.WallpaperDataRepositoryImpl
 import io.domain.repository.impl.WeatherDataRepositoryImpl
 
 @Module
@@ -36,5 +38,10 @@ interface RepositoryModule {
     fun bindNewsDataRepository(
         newsDataRepositoryImpl: NewsDataRepositoryImpl
     ): INewsDataRepository
+
+    @Binds
+    fun bindWallpaperRepository(
+        wallpaperRepository: WallpaperDataRepositoryImpl
+    ): IWallpaperDataRepository
 
 }

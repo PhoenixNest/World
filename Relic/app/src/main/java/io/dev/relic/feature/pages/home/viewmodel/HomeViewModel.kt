@@ -19,6 +19,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.todo.TodoUseCase
+import io.domain.use_case.wallpaper.WallpaperUseCase
 import io.domain.use_case.weather.WeatherUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,7 +34,8 @@ class HomeViewModel @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository,
     private val todoUseCase: TodoUseCase,
     private val weatherUseCase: WeatherUseCase,
-    private val foodRecipesUseCase: FoodRecipesUseCase
+    private val foodRecipesUseCase: FoodRecipesUseCase,
+    private val wallpaperUseCase: WallpaperUseCase
 ) : AndroidViewModel(application) {
 
     /**

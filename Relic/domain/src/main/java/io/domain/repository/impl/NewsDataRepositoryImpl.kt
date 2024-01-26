@@ -68,7 +68,7 @@ class NewsDataRepositoryImpl @Inject constructor(
 
             // Always save the latest recipes data to the database.
             insertNewsEverythingData(data)
-            NetworkResult.Success(data = data)
+            NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")

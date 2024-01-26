@@ -58,7 +58,7 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
 
             // Always save the latest recipes data to the database.
             databaseRepository.insertComplexSearchRecipesData(data.toComplexSearchEntity())
-            NetworkResult.Success(data = data)
+            NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")
@@ -96,7 +96,7 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
 
             // TODO: Always save the latest recipes data to the database.
             // databaseRepository.insertRandomSearchRecipesData(data.toRandomSearchEntity())
-            NetworkResult.Success(data = data)
+            NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")

@@ -36,12 +36,13 @@ class WeatherDataRepositoryImpl @Inject constructor(
             val data = weatherApi.getWeatherData(latitude, longitude)
 
             // Always save the latest weather information data to the database.
-            databaseRepository.insertWeatherData(weatherEntity = data.toWeatherEntity())
-            NetworkResult.Success(data = data)
+            databaseRepository.insertWeatherData(data.toWeatherEntity())
+            NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")
         }
+
         return weatherForecastResult
     }
 }

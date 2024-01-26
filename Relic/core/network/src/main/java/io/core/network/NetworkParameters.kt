@@ -64,7 +64,7 @@ object NetworkParameters {
     object Keys {
         val FOOD_RECIPES_API_DEV_KEY = getString(R.string.spoonacular_dev_key)
         val NEWS_API_DEV_KEY = getString(R.string.news_dev_key)
-        val PIXABAY_API_SECRET = getString(R.string.pixabay_secret_key)
+        val PIXABAY_API_KEY = getString(R.string.pixabay_dev_key)
     }
 
 }

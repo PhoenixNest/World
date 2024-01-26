@@ -12,6 +12,7 @@ import io.core.database.dao.AgentGeminiDao
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
+import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import javax.inject.Singleton
 
@@ -57,6 +58,12 @@ class RelicDatabaseModule {
     @Singleton
     fun provideNewsDao(database: RelicDatabase): NewsDao {
         return database.newsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWallpaperDao(database: RelicDatabase): WallpaperDao {
+        return database.wallpaperDao()
     }
 
     @Provides

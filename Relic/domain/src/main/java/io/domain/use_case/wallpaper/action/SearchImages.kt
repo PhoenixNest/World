@@ -1,10 +1,12 @@
-package io.core.network.api
+package io.domain.use_case.wallpaper.action
 
-import io.data.dto.wallpaper.WallpaperImagesDTO
-import retrofit2.http.GET
-import retrofit2.http.Query
+import io.core.network.NetworkParameters
+import io.domain.repository.IWallpaperDataRepository
+import javax.inject.Inject
 
-interface IWallpaperApi {
+class SearchImages @Inject constructor(
+    private val wallpaperDataRepository: IWallpaperDataRepository
+) {
 
     /**
      * [Search Images](https://pixabay.com/api/docs/#api_search_images)
@@ -21,19 +23,32 @@ interface IWallpaperApi {
      * @param page                  Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
-    @GET
-    suspend fun searchImages(
-        @Query("key") apiKey: String,
-        @Query("q") keyWords: String,
-        @Query("lang") language: String,
-        @Query("image_type") imageType: String,
-        @Query("orientation") orientation: String,
-        @Query("category") category: String,
-        @Query("editors_choice") isEditorsChoice: Boolean,
-        @Query("safesearch") isSafeSearch: Boolean,
-        @Query("order") orderBy: String,
-        @Query("page") page: Int,
-        @Query("per_page") perPage: Int
-    ): WallpaperImagesDTO
+    suspend operator fun invoke(
+        apiKey: String = NetworkParameters.Keys.PIXABAY_API_KEY,
+        keyWords: String,
+        language: String,
+        imageType: String,
+        orientation: String,
+        category: String,
+        isEditorsChoice: Boolean,
+        isSafeSearch: Boolean,
+        orderBy: String,
+        page: Int,
+        perPage: Int
+    ) {
+        wallpaperDataRepository.searchImages(
+            apiKey = apiKey,
+            keyWords = keyWords,
+            language = language,
+            imageType = imageType,
+            orientation = orientation,
+            category = category,
+            isEditorsChoice = isEditorsChoice,
+            isSafeSearch = isSafeSearch,
+            orderBy = orderBy,
+            page = page,
+            perPage = perPage
+        )
+    }
 
 }

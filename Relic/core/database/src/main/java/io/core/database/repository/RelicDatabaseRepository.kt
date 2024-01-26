@@ -3,6 +3,7 @@ package io.core.database.repository
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
+import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import io.data.entity.news.NewsEverythingArticleEntity
@@ -10,6 +11,7 @@ import io.data.entity.news.NewsEverythingEntity
 import io.data.entity.news.NewsTopHeadlineArticleEntity
 import io.data.entity.news.NewsTopHeadlinesEntity
 import io.data.entity.todo.TodoEntity
+import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,7 +25,8 @@ class RelicDatabaseRepository @Inject constructor(
     private val todoDao: TodoDao,
     private val weatherDao: WeatherDao,
     private val foodRecipesDao: FoodRecipesDao,
-    private val newsDao: NewsDao
+    private val newsDao: NewsDao,
+    private val wallpaperDao: WallpaperDao
 ) {
 
     /* ======================== TodoList ======================== */
@@ -96,6 +99,16 @@ class RelicDatabaseRepository @Inject constructor(
 
     suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity) {
         newsDao.insertNewsTopHeadlineArticle(articleEntity)
+    }
+
+    /* ======================== Wallpaper ======================== */
+
+    fun readWallpaperImagesCache(): Flow<List<WallpaperImagesEntity>> {
+        return wallpaperDao.readAllImagesData()
+    }
+
+    suspend fun insertWallpaperImagesData(wallpaperImagesEntity: WallpaperImagesEntity) {
+        wallpaperDao.insertImagesData(wallpaperImagesEntity)
     }
 
 }

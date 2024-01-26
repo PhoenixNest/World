@@ -5,17 +5,17 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class WallpaperSearchDTO(
+data class WallpaperImagesDTO(
     @Json(name = "total")
     val total: Int?,
     @Json(name = "totalHits")
     val totalHits: Int?,
     @Json(name = "hits")
-    val results: List<WallpaperSearchResultDTO?>?
+    val results: List<WallpaperResultDTO?>?
 )
 
 @JsonClass(generateAdapter = true)
-data class WallpaperSearchResultDTO(
+data class WallpaperResultDTO(
     @Json(name = "id")
     val id: Int?,
     @Json(name = "pageURL")
