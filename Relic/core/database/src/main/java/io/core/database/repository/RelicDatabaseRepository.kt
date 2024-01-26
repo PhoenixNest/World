@@ -78,27 +78,27 @@ class RelicDatabaseRepository @Inject constructor(
     /* ======================== News ======================== */
 
     fun readNewsEverythingCache(): Flow<List<NewsEverythingEntity>> {
-        return newsDao.readAllNewsEverythingData()
+        return newsDao.readAllEverythingData()
     }
 
     suspend fun insertNewsEverythingData(newsEverythingEntity: NewsEverythingEntity) {
-        newsDao.insertNewsEverythingData(newsEverythingEntity)
+        newsDao.insertEverythingData(newsEverythingEntity)
     }
 
     suspend fun insertNewsEverythingArticle(articleEntity: NewsEverythingArticleEntity) {
-        newsDao.insertNewsEverythingArticle(articleEntity)
+        newsDao.insertEverythingArticle(articleEntity)
     }
 
     fun readNewsTopHeadlineCache(): Flow<List<NewsTopHeadlinesEntity>> {
-        return newsDao.readAllNewsTopHeadlineData()
+        return newsDao.readAllTopHeadlineData()
     }
 
     suspend fun insertNewsTopHeadlineData(newsTopHeadlinesEntity: NewsTopHeadlinesEntity) {
-        newsDao.insertNewsTopHeadlineData(newsTopHeadlinesEntity)
+        newsDao.insertTopHeadlineData(newsTopHeadlinesEntity)
     }
 
     suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity) {
-        newsDao.insertNewsTopHeadlineArticle(articleEntity)
+        newsDao.insertTopHeadlineArticle(articleEntity)
     }
 
     /* ======================== Wallpaper ======================== */

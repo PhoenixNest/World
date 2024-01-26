@@ -16,23 +16,23 @@ interface NewsDao {
     /* ======================== Everything ======================== */
 
     @Query("SELECT * FROM table_news_everything")
-    fun readAllNewsEverythingData(): Flow<List<NewsEverythingEntity>>
+    fun readAllEverythingData(): Flow<List<NewsEverythingEntity>>
 
     @Insert(entity = NewsEverythingEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewsEverythingData(newsEverythingEntity: NewsEverythingEntity)
+    suspend fun insertEverythingData(newsEverythingEntity: NewsEverythingEntity)
 
     @Insert(entity = NewsEverythingArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewsEverythingArticle(articleEntity: NewsEverythingArticleEntity)
+    suspend fun insertEverythingArticle(articleEntity: NewsEverythingArticleEntity)
 
     /* ======================== Top-Headline ======================== */
 
     @Query("SELECT * FROM table_news_headlines")
-    fun readAllNewsTopHeadlineData(): Flow<List<NewsTopHeadlinesEntity>>
+    fun readAllTopHeadlineData(): Flow<List<NewsTopHeadlinesEntity>>
 
     @Insert(entity = NewsTopHeadlinesEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewsTopHeadlineData(topHeadlinesEntity: NewsTopHeadlinesEntity)
+    suspend fun insertTopHeadlineData(topHeadlinesEntity: NewsTopHeadlinesEntity)
 
     @Insert(entity = NewsTopHeadlineArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity)
+    suspend fun insertTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity)
 
 }

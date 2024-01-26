@@ -6,8 +6,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.core.database.DatabaseParameters.dataBaseVersion
 import io.core.database.DatabaseParameters.exportSchema
-import io.core.database.dao.AgentDao
-import io.core.database.dao.AgentGeminiDao
+import io.core.database.dao.agent.AgentDao
+import io.core.database.dao.agent.AgentGeminiDao
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
