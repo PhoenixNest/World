@@ -134,7 +134,7 @@ private fun FoodRecipesTabItem(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun FoodRecipesTabBarPreview() {
     FoodRecipesTabBar(
         currentSelectedTab = 0,

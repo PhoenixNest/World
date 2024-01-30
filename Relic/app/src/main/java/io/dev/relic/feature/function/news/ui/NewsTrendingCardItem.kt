@@ -10,10 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,58 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.CommonAsyncImage
-import io.core.ui.CommonNoDataComponent
-import io.core.ui.theme.RelicFontFamily.newsReader
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
 
 @Composable
-fun NewsTrendingPanel(
-    modelList: List<NewsArticleModel?>?,
-    onCardClick: (model: NewsArticleModel) -> Unit,
-    lazyListState: LazyListState
-) {
-    if (modelList.isNullOrEmpty()) {
-        CommonNoDataComponent()
-    } else {
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            state = lazyListState,
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 16.dp,
-                alignment = Alignment.Start
-            ),
-            verticalAlignment = Alignment.Top
-        ) {
-            itemsIndexed(modelList) { index, data ->
-                if (data == null) {
-                    //
-                } else {
-                    val itemDecorationModifier = Modifier.padding(
-                        start = if (index == 0) 16.dp else 0.dp,
-                        end = if (index == modelList.size - 1) 16.dp else 0.dp
-                    )
-                    NewsTrendingCardItem(
-                        data = data,
-                        onCardClick = { onCardClick.invoke(data) },
-                        modifier = itemDecorationModifier
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun NewsTrendingCardItem(
+fun NewsTrendingCardItem(
     data: NewsArticleModel,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -120,7 +74,7 @@ private fun NewsTrendingCardItem(
                             color = mainTextColor,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = newsReader
+                            fontFamily = RelicFontFamily.newsReader
                         )
                     )
                     Text(
@@ -130,28 +84,18 @@ private fun NewsTrendingCardItem(
                         style = TextStyle(
                             color = mainTextColor,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = ubuntu
+                            fontFamily = RelicFontFamily.ubuntu
                         )
                     )
                     Text(
                         text = publishDate ?: "",
                         style = TextStyle(
                             color = mainTextColor,
-                            fontFamily = ubuntu
+                            fontFamily = RelicFontFamily.ubuntu
                         )
                     )
                 }
             }
         }
     }
-}
-
-@Composable
-@Preview
-private fun NewsTrendingPanelPreview() {
-    NewsTrendingPanel(
-        modelList = NewsArticleModel.testList(),
-        onCardClick = {},
-        lazyListState = rememberLazyListState()
-    )
 }

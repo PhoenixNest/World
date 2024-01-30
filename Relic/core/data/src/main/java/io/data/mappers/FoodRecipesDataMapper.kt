@@ -17,8 +17,11 @@ object FoodRecipesDataMapper {
                 FoodRecipesComplexSearchInfoModel(
                     id = it?.id,
                     title = it?.title,
+                    author = it?.creditsText,
                     image = it?.image,
-                    imageType = it?.imageType
+                    isVegan = it?.vegan,
+                    healthScore = it?.healthScore,
+                    cookTime = it?.readyInMinutes
                 )
             )
         }

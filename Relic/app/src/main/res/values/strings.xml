@@ -70,6 +70,7 @@
     <string name="food_recipes_label_dinner">Dinner</string>
     <string name="food_recipes_label_cookie">Cookie</string>
     <string name="food_recipes_label_snack">Snack</string>
+    <string name="food_recipes_cook_now">Cook it</string>
 
     <!-- News Unit -->
     <string name="news_title">Newspaper</string>

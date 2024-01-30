@@ -9,19 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.LogUtil
 import io.core.ui.theme.mainThemeColor
+import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.weather.WeatherDataState
-import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_FOOD_RECIPES_CARD
-import io.dev.relic.feature.pages.home.HomePageConfig.IS_SHOW_WEATHER_CARD
+import io.dev.relic.feature.pages.home.ui.HomePageContent
+import io.dev.relic.feature.pages.home.ui.widget.HomeDrawer
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
-import io.dev.relic.feature.pages.home.widget.HomeDrawer
-import io.dev.relic.feature.pages.home.widget.HomePageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.MainState
 import kotlinx.coroutines.CoroutineScope
@@ -72,24 +70,11 @@ fun HomePageRoute(
     }
 
     HomePage(
-        isShowWeatherCard = IS_SHOW_WEATHER_CARD,
-        isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
         weatherDataState = weatherState,
         foodRecipesState = foodRecipesState,
         foodRecipesTabLazyListState = foodRecipesTabLazyListState,
         foodRecipesContentLazyListState = foodRecipesContentLazyListState,
         currentSelectedFoodRecipesTab = homeViewModel.getSelectedFoodRecipesTab(),
-        onWeatherRetry = {
-            mainViewModel.latestLocation?.also {
-                homeViewModel.fetchWeatherData(it.latitude, it.longitude)
-            }
-        },
-        onFoodRecipesRetry = {
-            homeViewModel.fetchFoodRecipesData(true)
-        },
-        onFetchMoreFoodRecipesData = {
-            homeViewModel.fetchFoodRecipesData(false)
-        },
         onSelectedFoodRecipesTabItem = { currentSelectedTab, selectedItem ->
             homeViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
@@ -98,22 +83,35 @@ fun HomePageRoute(
                     query = selectedItem
                 )
             }
+        },
+        onFetchMoreFoodRecipesData = {
+            homeViewModel.fetchFoodRecipesData(false)
+        },
+        onFoodRecipesCardClick = {
+
+        },
+        onWeatherRetry = {
+            mainViewModel.latestLocation?.also {
+                homeViewModel.fetchWeatherData(it.latitude, it.longitude)
+            }
+        },
+        onFoodRecipesRetry = {
+            homeViewModel.fetchFoodRecipesData(true)
         }
     )
 }
 
 @Composable
 private fun HomePage(
-    isShowWeatherCard: Boolean,
-    isShowFoodRecipesCard: Boolean,
     weatherDataState: WeatherDataState,
     foodRecipesState: FoodRecipesDataState,
     foodRecipesTabLazyListState: LazyListState,
     foodRecipesContentLazyListState: LazyListState,
     currentSelectedFoodRecipesTab: Int,
+    onFetchMoreFoodRecipesData: () -> Unit,
+    onFoodRecipesCardClick: (recipesData: FoodRecipesComplexSearchInfoModel) -> Unit,
     onWeatherRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit,
-    onFetchMoreFoodRecipesData: () -> Unit,
     onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
@@ -134,41 +132,20 @@ private fun HomePage(
         drawerBackgroundColor = mainThemeColor,
         content = {
             HomePageContent(
-                isShowWeatherCard = isShowWeatherCard,
-                isShowFoodRecipesCard = isShowFoodRecipesCard,
                 weatherDataState = weatherDataState,
                 foodRecipesState = foodRecipesState,
                 foodRecipesTabLazyListState = foodRecipesTabLazyListState,
-                foodRecipesContentLazyListState = foodRecipesContentLazyListState,
                 currentSelectedFoodRecipesTab = currentSelectedFoodRecipesTab,
                 onOpenDrawer = {
                     coroutineScope.launch {
                         drawerState.open()
                     }
                 },
+                onSelectedFoodRecipesTabItem = onSelectedFoodRecipesTabItem,
+                onFoodRecipesCardClick = onFoodRecipesCardClick,
                 onWeatherRetry = onWeatherRetry,
-                onFoodRecipesRetry = onFoodRecipesRetry,
-                onFetchMoreFoodRecipesData = onFetchMoreFoodRecipesData,
-                onSelectedFoodRecipesTabItem = onSelectedFoodRecipesTabItem
+                onFoodRecipesRetry = onFoodRecipesRetry
             )
         }
-    )
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun HomePagePreview() {
-    HomePage(
-        isShowWeatherCard = IS_SHOW_WEATHER_CARD,
-        isShowFoodRecipesCard = IS_SHOW_FOOD_RECIPES_CARD,
-        weatherDataState = WeatherDataState.Init,
-        foodRecipesState = FoodRecipesDataState.Init,
-        foodRecipesTabLazyListState = rememberLazyListState(),
-        foodRecipesContentLazyListState = rememberLazyListState(),
-        currentSelectedFoodRecipesTab = 0,
-        onWeatherRetry = {},
-        onFoodRecipesRetry = {},
-        onFetchMoreFoodRecipesData = {},
-        onSelectedFoodRecipesTabItem = { _: Int, _: String -> }
     )
 }

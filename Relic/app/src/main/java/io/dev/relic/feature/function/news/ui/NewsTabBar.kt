@@ -27,8 +27,8 @@ import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 @Composable
 fun NewsTabBar(
     currentSelectedTab: Int,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
-    lazyListState: LazyListState
+    lazyListState: LazyListState,
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
     LazyRow(
         modifier = Modifier

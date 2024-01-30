@@ -24,6 +24,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
+        minSdk = 24
+
         resValue("string", "agent_gemini_dev_key", geminiDevKey)
     }
 

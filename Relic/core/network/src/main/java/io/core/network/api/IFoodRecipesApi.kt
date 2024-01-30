@@ -50,8 +50,8 @@ interface IFoodRecipesApi {
     suspend fun complexSearchData(
         @Query("apiKey") apiKey: String,
         @Query("query") query: String,
-        @Query("addRecipeInformation") addRecipeInformation: Boolean = true,
-        @Query("addRecipeNutrition") addRecipeNutrition: Boolean = true,
+        @Query("addRecipeInformation") addRecipeInformation: Boolean,
+        @Query("addRecipeNutrition") addRecipeNutrition: Boolean,
         @Query("offset") offset: Int
     ): FoodRecipesComplexSearchDTO
 

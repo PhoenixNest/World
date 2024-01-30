@@ -20,7 +20,7 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
 import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.module.map.tomtom.ui.TomTomMapComponent
+import io.module.map.amap.ui.AMapComponent
 
 @Composable
 fun ExplorePageRoute(
@@ -67,7 +67,7 @@ private fun ExplorePage(
                     .fillMaxSize()
                     .background(color = mainThemeColor)
             ) {
-                TomTomMapComponent(onLocationUpdate = onLocationUpdate)
+                AMapComponent()
             }
         }
     )
