@@ -30,18 +30,18 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val remoteEverythingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
+    val trendingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
 
     // Top-headline
     val topHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
-    val everythingNewsContentLazyListState = rememberLazyListState()
+    val trendingNewsLazyListState = rememberLazyListState()
     val topHeadlineNewsTabLazyListState = rememberLazyListState()
     val topHeadlineNewsContentLazyListState = rememberLazyListState()
 
-    LaunchedEffect(everythingNewsContentLazyListState) {
+    LaunchedEffect(trendingNewsLazyListState) {
         //
     }
 
@@ -50,10 +50,10 @@ fun HivePageRoute(
     }
 
     HivePageContent(
-        trendingNewsDataState = remoteEverythingNewsDataState,
+        trendingNewsDataState = trendingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
         currentSelectedCategory = hiveViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
-        trendingNewsContentLazyListState = everythingNewsContentLazyListState,
+        trendingNewsLazyListState = trendingNewsLazyListState,
         topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
         topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
         onTabItemClick = { currentSelectedTab, keyWords ->

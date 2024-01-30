@@ -26,7 +26,7 @@ fun HivePageContent(
     trendingNewsDataState: EverythingNewsDataState,
     topHeadlineNewsDataState: TopHeadlineNewsDataState,
     currentSelectedCategory: Int,
-    trendingNewsContentLazyListState: LazyListState,
+    trendingNewsLazyListState: LazyListState,
     topHeadlineNewsTabLazyListState: LazyListState,
     topHeadlineNewsContentLazyListState: LazyListState,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
@@ -52,7 +52,7 @@ fun HivePageContent(
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HiveTrendingNewsList(
                 dataState = trendingNewsDataState,
-                lazyListState = trendingNewsContentLazyListState,
+                lazyListState = trendingNewsLazyListState,
                 onCardClick = onNewsCardClick,
                 onRetryClick = onRetryTrendingClick
             )
