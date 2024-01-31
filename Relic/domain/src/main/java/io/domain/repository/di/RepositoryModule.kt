@@ -5,11 +5,13 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.domain.repository.IFoodRecipesDataRepository
+import io.domain.repository.IMaximDataRepository
 import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
 import io.domain.repository.IWallpaperDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.repository.impl.FoodRecipesDataRepositoryImpl
+import io.domain.repository.impl.MaximDataRepositoryImpl
 import io.domain.repository.impl.NewsDataRepositoryImpl
 import io.domain.repository.impl.TodoDataRepositoryImpl
 import io.domain.repository.impl.WallpaperDataRepositoryImpl
@@ -44,4 +46,8 @@ interface RepositoryModule {
         wallpaperRepository: WallpaperDataRepositoryImpl
     ): IWallpaperDataRepository
 
+    @Binds
+    fun bindMaximRepository(
+        maximDataRepository: MaximDataRepositoryImpl
+    ): IMaximDataRepository
 }

@@ -59,7 +59,7 @@ fun HivePageRoute(
         onTabItemClick = { currentSelectedTab, keyWords ->
             hiveViewModel.apply {
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
-                fetchTopHeadlineNewsData(
+                getTopHeadlineNewsData(
                     keyWords = keyWords,
                     country = DEFAULT_NEWS_COUNTRY_TYPE,
                     category = DEFAULT_NEWS_CATEGORY,
@@ -84,7 +84,7 @@ fun HivePageRoute(
                 url = it.contentUrl
             )
         },
-        onRetryTrendingClick = hiveViewModel::fetchEverythingNewsData,
-        onRetryTopHeadlineClick = hiveViewModel::fetchTopHeadlineNewsData
+        onRetryTrendingClick = hiveViewModel::getTrendingNewsData,
+        onRetryTopHeadlineClick = hiveViewModel::getTopHeadlineNewsData
     )
 }

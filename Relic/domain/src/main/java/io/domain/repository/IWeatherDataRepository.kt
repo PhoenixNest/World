@@ -14,7 +14,7 @@ interface IWeatherDataRepository {
      * @param latitude
      * @param longitude
      * */
-    suspend fun getWeatherData(
+    suspend fun getWeatherForecast(
         latitude: Double,
         longitude: Double
     ): NetworkResult<WeatherForecastDTO>

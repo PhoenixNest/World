@@ -1,30 +1,30 @@
 package io.data.mappers
 
 import io.data.dto.news.NewsArticleDTO
-import io.data.dto.news.everything.NewsEverythingDTO
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
-import io.data.entity.news.NewsEverythingArticleEntity
-import io.data.entity.news.NewsEverythingEntity
-import io.data.entity.news.NewsTopHeadlineArticleEntity
-import io.data.entity.news.NewsTopHeadlinesEntity
+import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.entity.news.TopHeadlineNewsArticleEntity
+import io.data.entity.news.TopHeadlinesNewsEntity
+import io.data.entity.news.TrendingNewsArticleEntity
+import io.data.entity.news.TrendingNewsEntity
 import io.data.model.news.NewsArticleModel
 
 object NewsDataMapper {
 
-    fun NewsEverythingDTO.toNewsEverythingEntity(): NewsEverythingEntity {
-        return NewsEverythingEntity(this)
+    fun TrendingNewsDTO.toTrendingNewsEntity(): TrendingNewsEntity {
+        return TrendingNewsEntity(this)
     }
 
-    fun NewsTopHeadlinesDTO.toNewsTopHeadlineEntity(): NewsTopHeadlinesEntity {
-        return NewsTopHeadlinesEntity(this)
+    fun TopHeadlinesNewsDTO.toTopHeadlineNewsEntity(): TopHeadlinesNewsEntity {
+        return TopHeadlinesNewsEntity(this)
     }
 
-    fun NewsArticleDTO?.toNewsEverythingArticleEntity(): NewsEverythingArticleEntity? {
+    fun NewsArticleDTO?.toTrendingNewsArticleEntity(): TrendingNewsArticleEntity? {
         if (this == null) {
             return null
         }
 
-        return NewsEverythingArticleEntity(
+        return TrendingNewsArticleEntity(
             id = source?.id ?: "article id",
             source = source?.name ?: "Unknown source",
             author = author,
@@ -37,12 +37,12 @@ object NewsDataMapper {
         )
     }
 
-    fun NewsArticleDTO?.toNewsTopHeadlineArticleEntity(): NewsTopHeadlineArticleEntity? {
+    fun NewsArticleDTO?.toTopHeadlineNewsArticleEntity(): TopHeadlineNewsArticleEntity? {
         if (this == null) {
             return null
         }
 
-        return NewsTopHeadlineArticleEntity(
+        return TopHeadlineNewsArticleEntity(
             id = source?.id ?: "article id",
             source = source?.name ?: "Unknown source",
             author = author,

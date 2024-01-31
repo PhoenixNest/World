@@ -1,9 +1,7 @@
 package io.domain.repository.impl
 
-import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.IWeatherApi
 import io.data.dto.weather.WeatherForecastDTO
-import io.data.mappers.WeatherDataMapper.toWeatherEntity
 import io.data.model.NetworkResult
 import io.domain.repository.IWeatherDataRepository
 import javax.inject.Inject
@@ -12,8 +10,7 @@ import javax.inject.Inject
  * @see IWeatherDataRepository
  * */
 class WeatherDataRepositoryImpl @Inject constructor(
-    private val weatherApi: IWeatherApi,
-    private val databaseRepository: RelicDatabaseRepository
+    private val weatherApi: IWeatherApi
 ) : IWeatherDataRepository {
 
     private var weatherForecastResult: NetworkResult<WeatherForecastDTO> = NetworkResult.Loading()
@@ -28,15 +25,16 @@ class WeatherDataRepositoryImpl @Inject constructor(
      * @param latitude
      * @param longitude
      * */
-    override suspend fun getWeatherData(
+    override suspend fun getWeatherForecast(
         latitude: Double,
         longitude: Double
     ): NetworkResult<WeatherForecastDTO> {
         weatherForecastResult = try {
-            val data = weatherApi.getWeatherData(latitude, longitude)
+            val data = weatherApi.getWeatherData(
+                latitude = latitude,
+                longitude = longitude
+            )
 
-            // Always save the latest weather information data to the database.
-            databaseRepository.insertWeatherData(data.toWeatherEntity())
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()

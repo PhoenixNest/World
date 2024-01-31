@@ -5,10 +5,10 @@ import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ReadCacheComplexRecipesData @Inject constructor(
+class QueryCachedComplexRecipesData @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) {
     operator fun invoke(): Flow<List<FoodRecipesComplexSearchEntity>> {
-        return databaseRepository.readComplexSearchRecipesCache()
+        return databaseRepository.queryAllComplexSearchRecipesData()
     }
 }

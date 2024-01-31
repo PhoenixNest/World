@@ -16,8 +16,8 @@ class TodoDataRepositoryImpl @Inject constructor(
     /**
      * Query all the current user's todo-list data from database.
      * */
-    override fun readAllTodos(): Flow<List<TodoEntity>> {
-        return databaseRepository.readAllTodos()
+    override fun queryAllTodos(): Flow<List<TodoEntity>> {
+        return databaseRepository.queryAllTodosData()
     }
 
     /**

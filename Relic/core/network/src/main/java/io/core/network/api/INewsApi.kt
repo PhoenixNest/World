@@ -1,7 +1,7 @@
 package io.core.network.api
 
-import io.data.dto.news.everything.NewsEverythingDTO
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -28,7 +28,7 @@ interface INewsApi {
      * @param page              Use this to page through the results.
      * */
     @GET("everything?")
-    suspend fun fetchEverythingNews(
+    suspend fun getTrendingNews(
         @Query("apiKey") apiKey: String,
         @Query("q") keyWords: String,
         @Query("source") source: String,
@@ -36,7 +36,7 @@ interface INewsApi {
         @Query("sortBy") sortBy: String,
         @Query("pageSize") pageSize: Int,
         @Query("page") page: Int
-    ): NewsEverythingDTO
+    ): TrendingNewsDTO
 
     /**
      * [Top headlines](https://newsapi.org/docs/endpoints/top-headlines)
@@ -60,13 +60,13 @@ interface INewsApi {
      * @param page              Use this to page through the results.
      * */
     @GET("top-headlines?")
-    suspend fun fetchTopHeadlinesNews(
+    suspend fun getTopHeadlinesNews(
         @Query("apiKey") apiKey: String,
         @Query("q") keyWords: String,
         @Query("country") country: String,
         @Query("category") category: String,
         @Query("pageSize") pageSize: Int,
         @Query("page") page: Int
-    ): NewsTopHeadlinesDTO
+    ): TopHeadlinesNewsDTO
 
 }

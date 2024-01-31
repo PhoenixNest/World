@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
      * */
     private fun accessDeviceLocation() {
         viewModelScope.launch {
-            locationUseCase.accessCurrentLocation.invoke(
+            locationUseCase.getCurrentLocation.invoke(
                 listener = object : ILocationListener {
                     override fun onAccessing() {
                         LogUtil.d(TAG, "[Access Device Location] Accessing...")

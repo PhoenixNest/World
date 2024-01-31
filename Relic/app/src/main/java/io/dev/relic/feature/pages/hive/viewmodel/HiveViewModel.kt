@@ -17,8 +17,8 @@ import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_EVERYTHING_STATU
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_EVERYTHING_TIME_DURATION
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_STATUS
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_TIME_DURATION
-import io.data.dto.news.everything.NewsEverythingDTO
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
@@ -102,10 +102,10 @@ class HiveViewModel @Inject constructor(
             || lastRefreshStatus == Failed.typeValue
         ) {
             LogUtil.d(TAG, "[Everything News Checker] Refresh data.")
-            fetchEverythingNewsData()
+            getTrendingNewsData()
         } else {
             LogUtil.w(TAG, "[Top-Headline News Checker] Read local data.")
-            readLocalEverythingNewsData()
+            queryLocalEverythingNewsData()
         }
     }
 
@@ -117,27 +117,27 @@ class HiveViewModel @Inject constructor(
             || lastRefreshStatus == Failed.typeValue
         ) {
             LogUtil.d(TAG, "[Top-Headline News Checker] Refresh data.")
-            fetchTopHeadlineNewsData()
+            getTopHeadlineNewsData()
         } else {
             LogUtil.w(TAG, "[Top-Headline News Checker] Read local data.")
-            readLocalTopHeadlineNewsData()
+            queryLocalTopHeadlineNewsData()
         }
     }
 
     /* ======================== Local ======================== */
 
     /**
-     * Read the local cache value from the database.
+     * Query the local cache data from the database.
      * */
-    private fun readLocalEverythingNewsData() {
+    private fun queryLocalEverythingNewsData() {
         viewModelScope.launch {
             LogUtil.w(TAG, "[Handle Everything News Cache] Loading...")
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
-            // Read the local cache value from the database
+            // Query the local cache data from the database
             setState(_everythingNewsDataStateFlow, EverythingNewsDataState.Fetching)
             databaseRepository
-                .readNewsEverythingCache()
+                .queryAllTrendingNewsData()
                 .stateIn(
                     scope = this,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
@@ -162,16 +162,16 @@ class HiveViewModel @Inject constructor(
     }
 
     /**
-     * Read the local cache value from the database.
+     * Query the local cache data from the database.
      * */
-    private fun readLocalTopHeadlineNewsData() {
+    private fun queryLocalTopHeadlineNewsData() {
         viewModelScope.launch {
             LogUtil.w(TAG, "[Handle Top-headline News Cache] Loading...")
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
-            // Read the local cache value from the database
+            // Query the local cache data from the database
             databaseRepository
-                .readNewsTopHeadlineCache()
+                .queryAllTopHeadlineNewsData()
                 .stateIn(
                     scope = this,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
@@ -214,16 +214,16 @@ class HiveViewModel @Inject constructor(
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    fun fetchEverythingNewsData(
+    fun getTrendingNewsData(
         keyWords: String = NewsUnitConfig.Everything.DEFAULT_SEARCH_KEYWORDS,
         source: String = DEFAULT_NEWS_SOURCE,
         language: NewsLanguageType = DEFAULT_NEWS_LANGUAGE,
         sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
-    ): StateFlow<NetworkResult<NewsEverythingDTO>> {
+    ): StateFlow<NetworkResult<TrendingNewsDTO>> {
         return newsUseCase
-            .fetchEverythingNews(
+            .getTrendingNewsData(
                 keyWords = keyWords,
                 source = source,
                 language = language,
@@ -262,15 +262,15 @@ class HiveViewModel @Inject constructor(
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    fun fetchTopHeadlineNewsData(
+    fun getTopHeadlineNewsData(
         keyWords: String = NewsUnitConfig.TopHeadline.DEFAULT_SEARCH_KEYWORDS,
         country: NewsCountryType = DEFAULT_NEWS_COUNTRY_TYPE,
         category: NewsCategory = DEFAULT_NEWS_CATEGORY,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
-    ): StateFlow<NetworkResult<NewsTopHeadlinesDTO>> {
+    ): StateFlow<NetworkResult<TopHeadlinesNewsDTO>> {
         return newsUseCase
-            .fetchTopHeadlineNews(
+            .getTopHeadlineNews(
                 keyWords = keyWords,
                 country = country,
                 category = category,
@@ -312,7 +312,7 @@ class HiveViewModel @Inject constructor(
      *
      * @param result        received DTO from the remote-server
      * */
-    private fun handleEverythingNewsData(result: NetworkResult<NewsEverythingDTO>) {
+    private fun handleEverythingNewsData(result: NetworkResult<TrendingNewsDTO>) {
         updateNewsRefreshTime(Everything)
         when (result) {
             is NetworkResult.Loading -> {
@@ -353,7 +353,7 @@ class HiveViewModel @Inject constructor(
      *
      * @param result        received DTO from the remote-server
      * */
-    private fun handleTopHeadlineNewsData(result: NetworkResult<NewsTopHeadlinesDTO>) {
+    private fun handleTopHeadlineNewsData(result: NetworkResult<TopHeadlinesNewsDTO>) {
         updateNewsRefreshTime(TopHeadline)
         when (result) {
             is NetworkResult.Loading -> {

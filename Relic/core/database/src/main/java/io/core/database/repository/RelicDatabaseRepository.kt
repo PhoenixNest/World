@@ -6,10 +6,10 @@ import io.core.database.dao.TodoDao
 import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
-import io.data.entity.news.NewsEverythingArticleEntity
-import io.data.entity.news.NewsEverythingEntity
-import io.data.entity.news.NewsTopHeadlineArticleEntity
-import io.data.entity.news.NewsTopHeadlinesEntity
+import io.data.entity.news.TopHeadlineNewsArticleEntity
+import io.data.entity.news.TopHeadlinesNewsEntity
+import io.data.entity.news.TrendingNewsArticleEntity
+import io.data.entity.news.TrendingNewsEntity
 import io.data.entity.todo.TodoEntity
 import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
@@ -31,8 +31,8 @@ class RelicDatabaseRepository @Inject constructor(
 
     /* ======================== TodoList ======================== */
 
-    fun readAllTodos(): Flow<List<TodoEntity>> {
-        return todoDao.readAllTodos()
+    fun queryAllTodosData(): Flow<List<TodoEntity>> {
+        return todoDao.queryAllTodosData()
     }
 
     fun searchTodoById(id: Int): TodoEntity {
@@ -57,54 +57,64 @@ class RelicDatabaseRepository @Inject constructor(
 
     /* ======================== Weather ======================== */
 
-    fun readWeatherDataCache(): Flow<List<WeatherEntity>> {
-        return weatherDao.readWeatherDataCache()
+    fun queryWeatherData(): Flow<List<WeatherEntity>> {
+        return weatherDao.queryWeatherData()
     }
 
     suspend fun insertWeatherData(weatherEntity: WeatherEntity) {
         weatherDao.insertWeatherData(weatherEntity)
     }
 
-    /* ======================== FoodRecipes ======================== */
+    /* ======================== Food Recipes ======================== */
 
-    fun readComplexSearchRecipesCache(): Flow<List<FoodRecipesComplexSearchEntity>> {
-        return foodRecipesDao.readCacheComplexSearchData()
+    fun queryAllComplexSearchRecipesData(): Flow<List<FoodRecipesComplexSearchEntity>> {
+        return foodRecipesDao.queryAllComplexSearchData()
     }
 
     suspend fun insertComplexSearchRecipesData(complexSearchEntity: FoodRecipesComplexSearchEntity) {
         foodRecipesDao.insertComplexSearchData(complexSearchEntity)
     }
 
-    /* ======================== News ======================== */
+    /* ======================== News - Trending ======================== */
 
-    fun readNewsEverythingCache(): Flow<List<NewsEverythingEntity>> {
-        return newsDao.readAllEverythingData()
+    fun queryAllTrendingNewsData(): Flow<List<TrendingNewsEntity>> {
+        return newsDao.queryAllTrendingNewsData()
     }
 
-    suspend fun insertNewsEverythingData(newsEverythingEntity: NewsEverythingEntity) {
-        newsDao.insertEverythingData(newsEverythingEntity)
+    fun queryAllTrendingNewsArticlesData(): Flow<List<TrendingNewsArticleEntity>> {
+        return newsDao.queryAllTrendingNewsArticlesData()
     }
 
-    suspend fun insertNewsEverythingArticle(articleEntity: NewsEverythingArticleEntity) {
-        newsDao.insertEverythingArticle(articleEntity)
+    suspend fun insertTrendingNewsData(trendingNewsEntity: TrendingNewsEntity) {
+        newsDao.insertTrendingNewsData(trendingNewsEntity)
     }
 
-    fun readNewsTopHeadlineCache(): Flow<List<NewsTopHeadlinesEntity>> {
-        return newsDao.readAllTopHeadlineData()
+    suspend fun insertNewsEverythingArticle(articleEntity: TrendingNewsArticleEntity) {
+        newsDao.insertTrendingNewsArticle(articleEntity)
     }
 
-    suspend fun insertNewsTopHeadlineData(newsTopHeadlinesEntity: NewsTopHeadlinesEntity) {
-        newsDao.insertTopHeadlineData(newsTopHeadlinesEntity)
+    /* ======================== News - Top-Headline ======================== */
+
+    fun queryAllTopHeadlineNewsData(): Flow<List<TopHeadlinesNewsEntity>> {
+        return newsDao.queryAllTopHeadlineNewsData()
     }
 
-    suspend fun insertNewsTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity) {
-        newsDao.insertTopHeadlineArticle(articleEntity)
+    fun queryAllTopHeadlineNewsArticlesData(): Flow<List<TopHeadlineNewsArticleEntity>> {
+        return newsDao.queryAllTopHeadlineNewsArticlesData()
+    }
+
+    suspend fun insertNewsTopHeadlineData(topHeadlinesNewsEntity: TopHeadlinesNewsEntity) {
+        newsDao.insertTopHeadlineNewsData(topHeadlinesNewsEntity)
+    }
+
+    suspend fun insertTopHeadlineNewsArticle(articleEntity: TopHeadlineNewsArticleEntity) {
+        newsDao.insertTopHeadlineNewsArticle(articleEntity)
     }
 
     /* ======================== Wallpaper ======================== */
 
-    fun readWallpaperImagesCache(): Flow<List<WallpaperImagesEntity>> {
-        return wallpaperDao.readAllImagesData()
+    fun queryAllImagesWallpaperData(): Flow<List<WallpaperImagesEntity>> {
+        return wallpaperDao.queryAllImagesData()
     }
 
     suspend fun insertWallpaperImagesData(wallpaperImagesEntity: WallpaperImagesEntity) {

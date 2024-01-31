@@ -1,26 +1,19 @@
 package io.domain.repository.impl
 
-import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.INewsApi
-import io.data.dto.news.NewsArticleDTO
-import io.data.dto.news.everything.NewsEverythingDTO
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
-import io.data.mappers.NewsDataMapper.toNewsEverythingArticleEntity
-import io.data.mappers.NewsDataMapper.toNewsEverythingEntity
-import io.data.mappers.NewsDataMapper.toNewsTopHeadlineArticleEntity
-import io.data.mappers.NewsDataMapper.toNewsTopHeadlineEntity
+import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.model.NetworkResult
 import io.domain.repository.INewsDataRepository
 import javax.inject.Inject
 
 class NewsDataRepositoryImpl @Inject constructor(
-    private val newsApi: INewsApi,
-    private val databaseRepository: RelicDatabaseRepository
+    private val newsApi: INewsApi
 ) : INewsDataRepository {
 
-    private var everythingResult: NetworkResult<NewsEverythingDTO> = NetworkResult.Loading()
+    private var everythingResult: NetworkResult<TrendingNewsDTO> = NetworkResult.Loading()
 
-    private var topHeadlinesResult: NetworkResult<NewsTopHeadlinesDTO> = NetworkResult.Loading()
+    private var topHeadlinesResult: NetworkResult<TopHeadlinesNewsDTO> = NetworkResult.Loading()
 
     companion object {
         private const val TAG = "NewsDataRepository"
@@ -46,7 +39,7 @@ class NewsDataRepositoryImpl @Inject constructor(
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    override suspend fun fetchEverythingNews(
+    override suspend fun getTrendingNews(
         apiKey: String,
         keyWords: String,
         source: String,
@@ -54,9 +47,9 @@ class NewsDataRepositoryImpl @Inject constructor(
         sortBy: String,
         pageSize: Int,
         page: Int
-    ): NetworkResult<NewsEverythingDTO> {
+    ): NetworkResult<TrendingNewsDTO> {
         everythingResult = try {
-            val data = newsApi.fetchEverythingNews(
+            val data = newsApi.getTrendingNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 source = source,
@@ -66,8 +59,6 @@ class NewsDataRepositoryImpl @Inject constructor(
                 page = page
             )
 
-            // Always save the latest recipes data to the database.
-            insertNewsEverythingData(data)
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -98,16 +89,16 @@ class NewsDataRepositoryImpl @Inject constructor(
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    override suspend fun fetchTopHeadlinesNews(
+    override suspend fun getTopHeadlinesNews(
         apiKey: String,
         keyWords: String,
         country: String,
         category: String,
         pageSize: Int,
         page: Int
-    ): NetworkResult<NewsTopHeadlinesDTO> {
+    ): NetworkResult<TopHeadlinesNewsDTO> {
         topHeadlinesResult = try {
-            val data = newsApi.fetchTopHeadlinesNews(
+            val data = newsApi.getTopHeadlinesNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 country = country,
@@ -116,8 +107,6 @@ class NewsDataRepositoryImpl @Inject constructor(
                 page = page
             )
 
-            // Always save the latest recipes data to the database.
-            insertNewsTopHeadlineData(data)
             NetworkResult.Success(data = data)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -125,31 +114,5 @@ class NewsDataRepositoryImpl @Inject constructor(
         }
 
         return topHeadlinesResult
-    }
-
-    private suspend fun insertNewsEverythingData(data: NewsEverythingDTO) {
-        databaseRepository.insertNewsEverythingData(data.toNewsEverythingEntity())
-        insertNewsEverythingArticles(data.articles)
-    }
-
-    private suspend fun insertNewsTopHeadlineData(data: NewsTopHeadlinesDTO) {
-        databaseRepository.insertNewsTopHeadlineData(data.toNewsTopHeadlineEntity())
-        insertNewsTopHeadlineArticles(data.articles)
-    }
-
-    private suspend fun insertNewsEverythingArticles(articles: List<NewsArticleDTO?>?) {
-        articles?.forEach { articleItem ->
-            articleItem.toNewsEverythingArticleEntity()?.let {
-                databaseRepository.insertNewsEverythingArticle(it)
-            }
-        }
-    }
-
-    private suspend fun insertNewsTopHeadlineArticles(articles: List<NewsArticleDTO?>?) {
-        articles?.forEach { articleItem ->
-            articleItem.toNewsTopHeadlineArticleEntity()?.let {
-                databaseRepository.insertNewsTopHeadlineArticle(it)
-            }
-        }
     }
 }

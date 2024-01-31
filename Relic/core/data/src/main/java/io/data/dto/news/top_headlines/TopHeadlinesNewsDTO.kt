@@ -1,12 +1,11 @@
-package io.data.dto.news.everything
-
+package io.data.dto.news.top_headlines
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.data.dto.news.NewsArticleDTO
 
 @JsonClass(generateAdapter = true)
-data class NewsEverythingDTO(
+data class TopHeadlinesNewsDTO(
     @Json(name = "status")
     val status: String?,
     @Json(name = "totalResults")

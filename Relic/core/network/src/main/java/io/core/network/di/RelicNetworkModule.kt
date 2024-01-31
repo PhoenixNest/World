@@ -10,8 +10,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.core.network.NetworkParameters.BaseUrl.FOOD_RECIPES_API_URL
+import io.core.network.NetworkParameters.BaseUrl.HITOKOTO_API_URL
 import io.core.network.NetworkParameters.BaseUrl.NEWS_API_URL
-import io.core.network.NetworkParameters.BaseUrl.PIXABAY_WALLPAPER_URL
+import io.core.network.NetworkParameters.BaseUrl.PIXABAY_WALLPAPER_API_URL
 import io.core.network.NetworkParameters.BaseUrl.WEATHER_API_URL
 import io.core.network.NetworkParameters.MAX_DISK_CACHE_SIZE
 import io.core.network.NetworkParameters.MAX_OFFLINE_CACHE_TIME
@@ -22,6 +23,7 @@ import io.core.network.NetworkParameters.MAX_TIMEOUT_CONNECT_DURATION
 import io.core.network.NetworkParameters.MAX_TIMEOUT_READ_DURATION
 import io.core.network.NetworkParameters.MAX_TIMEOUT_WRITE_DURATION
 import io.core.network.api.IFoodRecipesApi
+import io.core.network.api.IMaximApi
 import io.core.network.api.INewsApi
 import io.core.network.api.IWallpaperApi
 import io.core.network.api.IWeatherApi
@@ -205,7 +207,21 @@ object RelicNetworkModule {
     ): IWallpaperApi {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(PIXABAY_WALLPAPER_URL)
+            .baseUrl(PIXABAY_WALLPAPER_API_URL)
+            .addConverterFactory(moshiConverterFactory)
+            .build()
+            .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMaximApi(
+        okHttpClient: OkHttpClient,
+        moshiConverterFactory: MoshiConverterFactory
+    ): IMaximApi {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(HITOKOTO_API_URL)
             .addConverterFactory(moshiConverterFactory)
             .build()
             .create()

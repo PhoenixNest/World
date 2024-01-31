@@ -1,7 +1,7 @@
-package io.domain.use_case.news.action
+package io.domain.use_case.news.action.top_headline
 
-import io.core.network.NetworkParameters
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.core.network.NetworkParameters.Keys.NEWS_API_DEV_KEY
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
 import io.data.util.NewsCountryType
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 import java.util.Locale
 import javax.inject.Inject
 
-class FetchHeadlineNews @Inject constructor(
+class GetHeadlineNewsData @Inject constructor(
     private val newsRepository: INewsDataRepository
 ) {
 
@@ -36,15 +36,15 @@ class FetchHeadlineNews @Inject constructor(
      * @param page              Use this to page through the results.
      * */
     operator fun invoke(
-        apiKey: String = NetworkParameters.Keys.NEWS_API_DEV_KEY,
+        apiKey: String = NEWS_API_DEV_KEY,
         keyWords: String,
         country: NewsCountryType,
         category: NewsCategory,
         pageSize: Int,
         page: Int
-    ): Flow<NetworkResult<NewsTopHeadlinesDTO>> {
+    ): Flow<NetworkResult<TopHeadlinesNewsDTO>> {
         return flow {
-            val result = newsRepository.fetchTopHeadlinesNews(
+            val result = newsRepository.getTopHeadlinesNews(
                 apiKey = apiKey,
                 keyWords = if (keyWords == "Trending") "" else keyWords,
                 country = country.name.lowercase(Locale.getDefault()),

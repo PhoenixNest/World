@@ -13,7 +13,7 @@ interface FoodRecipesDao {
     /* ======================== Complex search ======================== */
 
     @Query("SELECT * FROM table_food_recipes")
-    fun readCacheComplexSearchData(): Flow<List<FoodRecipesComplexSearchEntity>>
+    fun queryAllComplexSearchData(): Flow<List<FoodRecipesComplexSearchEntity>>
 
     @Insert(entity = FoodRecipesComplexSearchEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComplexSearchData(complexSearchEntity: FoodRecipesComplexSearchEntity)

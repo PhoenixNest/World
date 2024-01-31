@@ -1,7 +1,7 @@
-package io.domain.use_case.news.action
+package io.domain.use_case.news.action.everything
 
-import io.core.network.NetworkParameters
-import io.data.dto.news.everything.NewsEverythingDTO
+import io.core.network.NetworkParameters.Keys.NEWS_API_DEV_KEY
+import io.data.dto.news.everything.TrendingNewsDTO
 import io.data.model.NetworkResult
 import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flowOn
 import java.util.Locale
 import javax.inject.Inject
 
-class FetchEverythingNews @Inject constructor(
+class GetTrendingNewsData @Inject constructor(
     private val newsRepository: INewsDataRepository
 ) {
 
@@ -36,16 +36,16 @@ class FetchEverythingNews @Inject constructor(
      * @param page              Use this to page through the results.
      * */
     operator fun invoke(
-        apiKey: String = NetworkParameters.Keys.NEWS_API_DEV_KEY,
+        apiKey: String = NEWS_API_DEV_KEY,
         keyWords: String,
         source: String,
         language: NewsLanguageType,
         sortBy: NewsSortRule,
         pageSize: Int,
         page: Int
-    ): Flow<NetworkResult<NewsEverythingDTO>> {
+    ): Flow<NetworkResult<TrendingNewsDTO>> {
         return flow {
-            val result = newsRepository.fetchEverythingNews(
+            val result = newsRepository.getTrendingNews(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 source = source,

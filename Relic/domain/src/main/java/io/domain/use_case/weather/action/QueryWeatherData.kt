@@ -5,10 +5,10 @@ import io.data.entity.weather.WeatherEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ReadCacheWeatherData @Inject constructor(
+class QueryWeatherData @Inject constructor(
     private val databaseRepository: RelicDatabaseRepository
 ) {
     operator fun invoke(): Flow<List<WeatherEntity>> {
-        return databaseRepository.readWeatherDataCache()
+        return databaseRepository.queryWeatherData()
     }
 }

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDao {
 
     @Query("SELECT * FROM table_todo")
-    fun readAllTodos(): Flow<List<TodoEntity>>
+    fun queryAllTodosData(): Flow<List<TodoEntity>>
 
     @Query("SELECT * FROM table_todo WHERE uid = :id")
     fun queryTodoById(id: Int): TodoEntity

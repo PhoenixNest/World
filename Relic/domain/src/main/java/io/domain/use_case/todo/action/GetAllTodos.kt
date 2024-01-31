@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 class GetAllTodos(private val todoRepository: ITodoDataRepository) {
 
     operator fun invoke(): Flow<List<TodoEntity>> {
-        return todoRepository.readAllTodos()
+        return todoRepository.queryAllTodos()
             .catch {
 
             }

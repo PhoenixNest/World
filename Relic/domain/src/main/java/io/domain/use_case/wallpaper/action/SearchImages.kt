@@ -1,6 +1,6 @@
 package io.domain.use_case.wallpaper.action
 
-import io.core.network.NetworkParameters
+import io.core.network.NetworkParameters.Keys.PIXABAY_API_KEY
 import io.domain.repository.IWallpaperDataRepository
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class SearchImages @Inject constructor(
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
     suspend operator fun invoke(
-        apiKey: String = NetworkParameters.Keys.PIXABAY_API_KEY,
+        apiKey: String = PIXABAY_API_KEY,
         keyWords: String,
         language: String,
         imageType: String,

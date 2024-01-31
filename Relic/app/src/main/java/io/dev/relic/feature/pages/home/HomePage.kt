@@ -63,7 +63,7 @@ fun HomePageRoute(
             is MainState.AccessLocationSucceed -> {
                 val state = (mainState as MainState.AccessLocationSucceed)
                 state.location?.also {
-                    homeViewModel.fetchWeatherData(it.latitude, it.longitude)
+                    homeViewModel.getWeatherData(it.latitude, it.longitude)
                 }
             }
         }
@@ -78,25 +78,25 @@ fun HomePageRoute(
         onSelectedFoodRecipesTabItem = { currentSelectedTab, selectedItem ->
             homeViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
-                fetchFoodRecipesData(
+                getFoodRecipesData(
                     isRefresh = true,
                     query = selectedItem
                 )
             }
         },
         onFetchMoreFoodRecipesData = {
-            homeViewModel.fetchFoodRecipesData(false)
+            homeViewModel.getFoodRecipesData(false)
         },
         onFoodRecipesCardClick = {
 
         },
         onWeatherRetry = {
             mainViewModel.latestLocation?.also {
-                homeViewModel.fetchWeatherData(it.latitude, it.longitude)
+                homeViewModel.getWeatherData(it.latitude, it.longitude)
             }
         },
         onFoodRecipesRetry = {
-            homeViewModel.fetchFoodRecipesData(true)
+            homeViewModel.getFoodRecipesData(true)
         }
     )
 }

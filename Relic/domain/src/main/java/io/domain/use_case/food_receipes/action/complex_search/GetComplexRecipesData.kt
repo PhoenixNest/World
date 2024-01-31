@@ -1,6 +1,6 @@
 package io.domain.use_case.food_receipes.action.complex_search
 
-import io.core.network.NetworkParameters
+import io.core.network.NetworkParameters.Keys.FOOD_RECIPES_API_DEV_KEY
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.model.NetworkResult
 import io.domain.repository.IFoodRecipesDataRepository
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class FetchComplexRecipesData @Inject constructor(
+class GetComplexRecipesData @Inject constructor(
     private val foodRecipesDataRepository: IFoodRecipesDataRepository
 ) {
 
@@ -30,7 +30,7 @@ class FetchComplexRecipesData @Inject constructor(
      * @see FoodRecipesComplexSearchDTO
      * */
     operator fun invoke(
-        apiKey: String = NetworkParameters.Keys.FOOD_RECIPES_API_DEV_KEY,
+        apiKey: String = FOOD_RECIPES_API_DEV_KEY,
         query: String,
         addRecipeInformation: Boolean,
         addRecipeNutrition: Boolean,

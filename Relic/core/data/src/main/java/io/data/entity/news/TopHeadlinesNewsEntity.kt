@@ -4,12 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.common.util.TimeUtil
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 
-@Entity(tableName = "table_news_headlines")
-data class NewsTopHeadlinesEntity(
+@Entity(tableName = "table_top_headline_news")
+data class TopHeadlinesNewsEntity(
     @ColumnInfo(name = "datasource")
-    val datasource: NewsTopHeadlinesDTO,
+    val datasource: TopHeadlinesNewsDTO,
     @ColumnInfo(name = "last_update_time")
     val lastUpdateTime: Long = TimeUtil.getCurrentTimeInMillis()
 ) {
@@ -18,8 +18,8 @@ data class NewsTopHeadlinesEntity(
     var uid: Int = 0
 }
 
-@Entity(tableName = "table_news_top_headline_articles")
-data class NewsTopHeadlineArticleEntity(
+@Entity(tableName = "table_top_headline_news_articles")
+data class TopHeadlineNewsArticleEntity(
     @ColumnInfo(name = "article_id")
     val id: String?,
     @ColumnInfo(name = "source")

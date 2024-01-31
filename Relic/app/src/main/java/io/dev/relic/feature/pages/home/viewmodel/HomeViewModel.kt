@@ -7,17 +7,21 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.core.database.repository.RelicDatabaseRepository
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.weather.WeatherForecastDTO
+import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
+import io.data.mappers.WeatherDataMapper.toWeatherEntity
 import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
+import io.domain.use_case.maxim.MaximUseCase
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.wallpaper.WallpaperUseCase
 import io.domain.use_case.weather.WeatherUseCase
@@ -35,7 +39,8 @@ class HomeViewModel @Inject constructor(
     private val todoUseCase: TodoUseCase,
     private val weatherUseCase: WeatherUseCase,
     private val foodRecipesUseCase: FoodRecipesUseCase,
-    private val wallpaperUseCase: WallpaperUseCase
+    private val wallpaperUseCase: WallpaperUseCase,
+    private val maximUseCase: MaximUseCase
 ) : AndroidViewModel(application) {
 
     /**
@@ -70,7 +75,7 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
-        fetchFoodRecipesData(isRefresh = true)
+        getFoodRecipesData(isRefresh = true)
     }
 
     /**
@@ -79,12 +84,12 @@ class HomeViewModel @Inject constructor(
      * @param latitude
      * @param longitude
      * */
-    fun fetchWeatherData(
+    fun getWeatherData(
         latitude: Double,
         longitude: Double
     ): StateFlow<NetworkResult<WeatherForecastDTO>> {
         return weatherUseCase
-            .fetchWeatherData(
+            .getWeatherData(
                 latitude = latitude,
                 longitude = longitude
             )
@@ -116,7 +121,7 @@ class HomeViewModel @Inject constructor(
      *
      * @see FoodRecipesComplexSearchDTO
      * */
-    fun fetchFoodRecipesData(
+    fun getFoodRecipesData(
         isRefresh: Boolean,
         query: String = "coffee",
         addRecipeInformation: Boolean = true,
@@ -125,7 +130,7 @@ class HomeViewModel @Inject constructor(
         _isFirstFetchFoodRecipes = isRefresh
         _foodRecipesOffset += if (isRefresh) 0 else 10
         return foodRecipesUseCase
-            .fetchComplexRecipesData(
+            .getComplexRecipesData(
                 query = query,
                 addRecipeInformation = addRecipeInformation,
                 addRecipeNutrition = addRecipeNutrition,
@@ -163,6 +168,7 @@ class HomeViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $it")
+                    operationInViewModelScope { weatherUseCase.cacheWeatherData.invoke(it.toWeatherEntity()) }
                     setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
                 } ?: {
                     LogUtil.w(TAG, "[Handle Weather Data] Succeed without data")
@@ -189,6 +195,7 @@ class HomeViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $it")
+                    operationInViewModelScope { foodRecipesUseCase.cacheComplexSearchData.invoke(it.toComplexSearchEntity()) }
                     setState(_foodRecipesDataStateFlow, FoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList()))
                 } ?: {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed without data")

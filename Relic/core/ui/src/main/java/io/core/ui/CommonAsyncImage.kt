@@ -32,8 +32,6 @@ fun CommonAsyncImage(
     imageWidth: Dp,
     imageHeight: Dp,
     modifier: Modifier = Modifier,
-    lottieViewWidth: Dp = imageWidth,
-    lottieViewHeight: Dp = imageHeight,
     imageRadius: Dp = 16.dp,
     imageShape: Shape = RoundedCornerShape(imageRadius)
 ) {

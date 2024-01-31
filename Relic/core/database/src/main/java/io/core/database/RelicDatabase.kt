@@ -20,10 +20,10 @@ import io.data.convertors.WeatherDataConvertor
 import io.data.entity.agent.AgentChatEntity
 import io.data.entity.agent.AgentGeminiChatEntity
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
-import io.data.entity.news.NewsEverythingArticleEntity
-import io.data.entity.news.NewsEverythingEntity
-import io.data.entity.news.NewsTopHeadlineArticleEntity
-import io.data.entity.news.NewsTopHeadlinesEntity
+import io.data.entity.news.TrendingNewsArticleEntity
+import io.data.entity.news.TrendingNewsEntity
+import io.data.entity.news.TopHeadlineNewsArticleEntity
+import io.data.entity.news.TopHeadlinesNewsEntity
 import io.data.entity.todo.TodoEntity
 import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
@@ -36,10 +36,10 @@ import io.data.entity.weather.WeatherEntity
         WallpaperImagesEntity::class,
         // Feature: Hive
         TodoEntity::class,
-        NewsEverythingEntity::class,
-        NewsTopHeadlinesEntity::class,
-        NewsEverythingArticleEntity::class,
-        NewsTopHeadlineArticleEntity::class,
+        TrendingNewsEntity::class,
+        TopHeadlinesNewsEntity::class,
+        TrendingNewsArticleEntity::class,
+        TopHeadlineNewsArticleEntity::class,
         // Feature: Ai
         AgentChatEntity::class,
         AgentGeminiChatEntity::class

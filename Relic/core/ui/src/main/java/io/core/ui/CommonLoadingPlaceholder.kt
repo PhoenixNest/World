@@ -28,17 +28,35 @@ import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.placeHolderHighlightColor
 
 @Composable
-fun CommonLoadingPlaceholder() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
-            alignment = Alignment.Top
-        ),
-        horizontalAlignment = Alignment.Start
-    ) {
-        repeat(3) {
-            CommonLoadingCardItem()
+fun CommonLoadingPlaceholder(
+    isVertical: Boolean = true,
+    itemCount: Int = 3
+) {
+    if (isVertical) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(
+                space = 16.dp,
+                alignment = Alignment.Top
+            ),
+            horizontalAlignment = Alignment.Start
+        ) {
+            repeat(itemCount) {
+                CommonLoadingCardItem()
+            }
+        }
+    } else {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 16.dp,
+                alignment = Alignment.Start
+            ),
+            verticalAlignment = Alignment.Top
+        ) {
+            repeat(itemCount) {
+                CommonLoadingCardItem()
+            }
         }
     }
 }
@@ -119,6 +137,6 @@ private fun CommonLoadingDescItem() {
 
 @Composable
 @Preview
-private fun NewsLoadingPlaceholderPreview() {
-    CommonLoadingPlaceholder()
+private fun CommonLoadingCardItemPreview() {
+    CommonLoadingCardItem()
 }

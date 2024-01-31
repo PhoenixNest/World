@@ -1,16 +1,13 @@
 package io.domain.repository.impl
 
-import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.IWallpaperApi
 import io.data.dto.wallpaper.WallpaperImagesDTO
-import io.data.mappers.WallpaperDataMapper.toWallpaperImagesEntity
 import io.data.model.NetworkResult
 import io.domain.repository.IWallpaperDataRepository
 import javax.inject.Inject
 
 class WallpaperDataRepositoryImpl @Inject constructor(
-    private val wallpaperApi: IWallpaperApi,
-    private val databaseRepository: RelicDatabaseRepository
+    private val wallpaperApi: IWallpaperApi
 ) : IWallpaperDataRepository {
 
     private var searchImagesResult: NetworkResult<WallpaperImagesDTO> = NetworkResult.Loading()
@@ -62,8 +59,6 @@ class WallpaperDataRepositoryImpl @Inject constructor(
                 perPage = perPage
             )
 
-            // Always save the latest wallpaper data to the database.
-            databaseRepository.insertWallpaperImagesData(data.toWallpaperImagesEntity())
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()

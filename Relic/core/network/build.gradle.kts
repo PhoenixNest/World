@@ -2,9 +2,10 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
 private val localProperties = gradleLocalProperties(rootDir)
-private val spoonacularDevKey = localProperties.getProperty("SPOONACULAR_DEV_KEY")
+private val hitokotoDevKey = localProperties.getProperty("HITOKOTO_DEV_KEY")
 private val newsDevKey = localProperties.getProperty("NEWS_DEV_KEY")
 private val pixabayDevKey = localProperties.getProperty("PIXABAY_DEV_KEY")
+private val spoonacularDevKey = localProperties.getProperty("SPOONACULAR_DEV_KEY")
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -26,9 +27,10 @@ android {
 
     defaultConfig {
         minSdk = 24
-        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
+        resValue("string", "hitokoto_dev_key", hitokotoDevKey)
         resValue("string", "news_dev_key", newsDevKey)
         resValue("string", "pixabay_dev_key", pixabayDevKey)
+        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
     }
 
     compileOptions {

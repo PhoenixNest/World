@@ -1,10 +1,8 @@
 package io.domain.repository.impl
 
-import io.core.database.repository.RelicDatabaseRepository
 import io.core.network.api.IFoodRecipesApi
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
-import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
 import io.data.model.NetworkResult
 import io.domain.repository.IFoodRecipesDataRepository
 import javax.inject.Inject
@@ -13,8 +11,7 @@ import javax.inject.Inject
  * @see IFoodRecipesDataRepository
  * */
 class FoodRecipesDataRepositoryImpl @Inject constructor(
-    private val foodRecipesApi: IFoodRecipesApi,
-    private val databaseRepository: RelicDatabaseRepository
+    private val foodRecipesApi: IFoodRecipesApi
 ) : IFoodRecipesDataRepository {
 
     private var complexSearchResult: NetworkResult<FoodRecipesComplexSearchDTO> = NetworkResult.Loading()
@@ -56,8 +53,6 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
                 offset = offset
             )
 
-            // Always save the latest recipes data to the database.
-            databaseRepository.insertComplexSearchRecipesData(data.toComplexSearchEntity())
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()

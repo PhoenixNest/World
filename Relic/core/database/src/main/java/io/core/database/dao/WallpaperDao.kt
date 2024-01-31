@@ -13,7 +13,7 @@ interface WallpaperDao {
     /* ======================== Images ======================== */
 
     @Query("SELECT * FROM table_wallpaper_images")
-    fun readAllImagesData(): Flow<List<WallpaperImagesEntity>>
+    fun queryAllImagesData(): Flow<List<WallpaperImagesEntity>>
 
     @Insert(entity = WallpaperImagesEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertImagesData(wallpaperImagesEntity: WallpaperImagesEntity)

@@ -6,19 +6,26 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.core.database.repository.RelicDatabaseRepository
 import io.domain.repository.IFoodRecipesDataRepository
+import io.domain.repository.IMaximDataRepository
 import io.domain.repository.INewsDataRepository
 import io.domain.repository.ITodoDataRepository
 import io.domain.repository.IWallpaperDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
-import io.domain.use_case.food_receipes.action.complex_search.FetchComplexRecipesData
-import io.domain.use_case.food_receipes.action.complex_search.ReadCacheComplexRecipesData
+import io.domain.use_case.food_receipes.action.complex_search.GetComplexRecipesData
+import io.domain.use_case.food_receipes.action.complex_search.QueryCachedComplexRecipesData
 import io.domain.use_case.lcoation.LocationUseCase
-import io.domain.use_case.lcoation.action.AccessCurrentLocation
+import io.domain.use_case.lcoation.action.GetCurrentLocation
+import io.domain.use_case.maxim.MaximUseCase
+import io.domain.use_case.maxim.action.GetRandomMaxim
 import io.domain.use_case.news.NewsUseCase
-import io.domain.use_case.news.action.FetchEverythingNews
-import io.domain.use_case.news.action.FetchHeadlineNews
+import io.domain.use_case.news.action.everything.CacheTrendingNewsData
+import io.domain.use_case.news.action.everything.GetTrendingNewsData
+import io.domain.use_case.news.action.everything.QueryAllTrendingNewsData
+import io.domain.use_case.news.action.top_headline.CacheTopHeadlineNewsData
+import io.domain.use_case.news.action.top_headline.GetHeadlineNewsData
+import io.domain.use_case.news.action.top_headline.QueryAllTopHeadlineNewsData
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.todo.action.AddTodo
 import io.domain.use_case.todo.action.DeleteTodo
@@ -29,13 +36,23 @@ import io.domain.use_case.wallpaper.action.SearchImages
 import io.domain.use_case.weather.WeatherUseCase
 import io.domain.use_case.weather.action.CacheWeatherData
 import io.domain.use_case.weather.action.FetchWeatherData
-import io.domain.use_case.weather.action.ReadCacheWeatherData
+import io.domain.use_case.weather.action.QueryWeatherData
 import io.module.map.ILocationTracker
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RelicUseCaseModule {
+
+    @Singleton
+    @Provides
+    fun provideLocationUnitUseCase(
+        locationTracker: ILocationTracker
+    ): LocationUseCase {
+        return LocationUseCase(
+            getCurrentLocation = GetCurrentLocation(locationTracker)
+        )
+    }
 
     @Singleton
     @Provides
@@ -52,24 +69,14 @@ class RelicUseCaseModule {
 
     @Singleton
     @Provides
-    fun provideLocationUnitUseCase(
-        locationTracker: ILocationTracker
-    ): LocationUseCase {
-        return LocationUseCase(
-            accessCurrentLocation = AccessCurrentLocation(locationTracker)
-        )
-    }
-
-    @Singleton
-    @Provides
     fun provideWeatherUnitUseCase(
         weatherDataRepository: IWeatherDataRepository,
         databaseRepository: RelicDatabaseRepository
     ): WeatherUseCase {
         return WeatherUseCase(
-            fetchWeatherData = FetchWeatherData(weatherDataRepository),
+            getWeatherData = FetchWeatherData(weatherDataRepository),
             cacheWeatherData = CacheWeatherData(databaseRepository),
-            readCacheWeatherData = ReadCacheWeatherData(databaseRepository)
+            queryWeatherData = QueryWeatherData(databaseRepository)
         )
     }
 
@@ -80,30 +87,47 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): FoodRecipesUseCase {
         return FoodRecipesUseCase(
-            fetchComplexRecipesData = FetchComplexRecipesData(recipesDataRepository),
+            getComplexRecipesData = GetComplexRecipesData(recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository),
-            readCacheComplexRecipesData = ReadCacheComplexRecipesData(databaseRepository)
+            queryCachedComplexRecipesData = QueryCachedComplexRecipesData(databaseRepository)
         )
     }
 
     @Singleton
     @Provides
     fun provideNewsUnitUseCase(
-        newsRepository: INewsDataRepository
+        newsRepository: INewsDataRepository,
+        databaseRepository: RelicDatabaseRepository
     ): NewsUseCase {
         return NewsUseCase(
-            fetchEverythingNews = FetchEverythingNews(newsRepository),
-            fetchTopHeadlineNews = FetchHeadlineNews(newsRepository)
+            getTrendingNewsData = GetTrendingNewsData(newsRepository),
+            getTopHeadlineNews = GetHeadlineNewsData(newsRepository),
+            queryAllTrendingNewsData = QueryAllTrendingNewsData(databaseRepository),
+            queryAllTopHeadlineNewsData = QueryAllTopHeadlineNewsData(databaseRepository),
+            cacheTrendingNewsData = CacheTrendingNewsData(databaseRepository),
+            cacheTopHeadlineNewsData = CacheTopHeadlineNewsData(databaseRepository)
         )
     }
 
     @Singleton
     @Provides
     fun provideWallpaperUnitUseCase(
-        wallpaperRepository: IWallpaperDataRepository
+        wallpaperRepository: IWallpaperDataRepository,
+        databaseRepository: RelicDatabaseRepository
     ): WallpaperUseCase {
         return WallpaperUseCase(
             searchImages = SearchImages(wallpaperRepository)
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideMaximUnitUseCase(
+        maximDataRepository: IMaximDataRepository,
+        databaseRepository: RelicDatabaseRepository
+    ): MaximUseCase {
+        return MaximUseCase(
+            getRandomMaxim = GetRandomMaxim(maximDataRepository)
         )
     }
 }

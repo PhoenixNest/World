@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface WeatherDao {
 
     @Query("SELECT * FROM table_weather")
-    fun readWeatherDataCache(): Flow<List<WeatherEntity>>
+    fun queryWeatherData(): Flow<List<WeatherEntity>>
 
     @Insert(entity = WeatherEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeatherData(weatherEntity: WeatherEntity)

@@ -11,7 +11,7 @@ interface ITodoDataRepository {
     /**
      * Query all the current user's todo-list data from database.
      * */
-    fun readAllTodos(): Flow<List<TodoEntity>>
+    fun queryAllTodos(): Flow<List<TodoEntity>>
 
     /**
      * Query todo task by id.

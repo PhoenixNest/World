@@ -32,7 +32,7 @@ fun LazyListScope.HiveTrendingNewsList(
         when (dataState) {
             is EverythingNewsDataState.Init,
             is EverythingNewsDataState.Fetching -> {
-                CommonLoadingPlaceholder()
+                CommonLoadingPlaceholder(false)
             }
 
             is EverythingNewsDataState.Empty,

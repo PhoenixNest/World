@@ -6,7 +6,7 @@ import io.module.map.ILocationListener
 import io.module.map.ILocationTracker
 import javax.inject.Inject
 
-class AccessCurrentLocation @Inject constructor(
+class GetCurrentLocation @Inject constructor(
     private val locationTracker: ILocationTracker
 ) {
     suspend operator fun invoke(listener: ILocationListener) {

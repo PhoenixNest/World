@@ -25,7 +25,7 @@ class FetchWeatherData @Inject constructor(
     ): Flow<NetworkResult<WeatherForecastDTO>> {
         return flow {
             // Fetch the latest data from remote-server.
-            emit(weatherDataRepository.getWeatherData(latitude, longitude))
+            emit(weatherDataRepository.getWeatherForecast(latitude, longitude))
         }.flowOn(Dispatchers.IO)
     }
 }

@@ -1,7 +1,7 @@
 package io.domain.repository
 
-import io.data.dto.news.everything.NewsEverythingDTO
-import io.data.dto.news.top_headlines.NewsTopHeadlinesDTO
+import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.model.NetworkResult
 
 /**
@@ -27,7 +27,7 @@ interface INewsDataRepository {
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    suspend fun fetchEverythingNews(
+    suspend fun getTrendingNews(
         apiKey: String,
         keyWords: String,
         source: String,
@@ -35,7 +35,7 @@ interface INewsDataRepository {
         sortBy: String,
         pageSize: Int,
         page: Int
-    ): NetworkResult<NewsEverythingDTO>
+    ): NetworkResult<TrendingNewsDTO>
 
     /**
      * This endpoint provides live top and breaking headlines for a country,
@@ -55,13 +55,13 @@ interface INewsDataRepository {
      * @param pageSize          The number of results to return per page.
      * @param page              Use this to page through the results.
      * */
-    suspend fun fetchTopHeadlinesNews(
+    suspend fun getTopHeadlinesNews(
         apiKey: String,
         keyWords: String,
         country: String,
         category: String,
         pageSize: Int,
         page: Int
-    ): NetworkResult<NewsTopHeadlinesDTO>
+    ): NetworkResult<TopHeadlinesNewsDTO>
 
 }

@@ -4,35 +4,41 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.data.entity.news.NewsEverythingArticleEntity
-import io.data.entity.news.NewsEverythingEntity
-import io.data.entity.news.NewsTopHeadlineArticleEntity
-import io.data.entity.news.NewsTopHeadlinesEntity
+import io.data.entity.news.TopHeadlineNewsArticleEntity
+import io.data.entity.news.TopHeadlinesNewsEntity
+import io.data.entity.news.TrendingNewsArticleEntity
+import io.data.entity.news.TrendingNewsEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsDao {
 
-    /* ======================== Everything ======================== */
+    /* ======================== Trending ======================== */
 
-    @Query("SELECT * FROM table_news_everything")
-    fun readAllEverythingData(): Flow<List<NewsEverythingEntity>>
+    @Query("SELECT * FROM table_trending_news")
+    fun queryAllTrendingNewsData(): Flow<List<TrendingNewsEntity>>
 
-    @Insert(entity = NewsEverythingEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEverythingData(newsEverythingEntity: NewsEverythingEntity)
+    @Query("SELECT * FROM table_trending_news_articles")
+    fun queryAllTrendingNewsArticlesData(): Flow<List<TrendingNewsArticleEntity>>
 
-    @Insert(entity = NewsEverythingArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEverythingArticle(articleEntity: NewsEverythingArticleEntity)
+    @Insert(entity = TrendingNewsEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrendingNewsData(trendingNewsEntity: TrendingNewsEntity)
+
+    @Insert(entity = TrendingNewsArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrendingNewsArticle(articleEntity: TrendingNewsArticleEntity)
 
     /* ======================== Top-Headline ======================== */
 
-    @Query("SELECT * FROM table_news_headlines")
-    fun readAllTopHeadlineData(): Flow<List<NewsTopHeadlinesEntity>>
+    @Query("SELECT * FROM table_top_headline_news")
+    fun queryAllTopHeadlineNewsData(): Flow<List<TopHeadlinesNewsEntity>>
 
-    @Insert(entity = NewsTopHeadlinesEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTopHeadlineData(topHeadlinesEntity: NewsTopHeadlinesEntity)
+    @Query("SELECT * FROM table_top_headline_news_articles")
+    fun queryAllTopHeadlineNewsArticlesData(): Flow<List<TopHeadlineNewsArticleEntity>>
 
-    @Insert(entity = NewsTopHeadlineArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTopHeadlineArticle(articleEntity: NewsTopHeadlineArticleEntity)
+    @Insert(entity = TopHeadlinesNewsEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTopHeadlineNewsData(topHeadlinesEntity: TopHeadlinesNewsEntity)
+
+    @Insert(entity = TopHeadlineNewsArticleEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTopHeadlineNewsArticle(articleEntity: TopHeadlineNewsArticleEntity)
 
 }

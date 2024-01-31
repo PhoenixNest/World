@@ -2,12 +2,12 @@ package io.domain.use_case.weather
 
 import io.domain.use_case.weather.action.CacheWeatherData
 import io.domain.use_case.weather.action.FetchWeatherData
-import io.domain.use_case.weather.action.ReadCacheWeatherData
+import io.domain.use_case.weather.action.QueryWeatherData
 
 internal const val TAG = "WeatherUnitUseCase"
 
 data class WeatherUseCase(
-    val fetchWeatherData: FetchWeatherData,
+    val getWeatherData: FetchWeatherData,
     val cacheWeatherData: CacheWeatherData,
-    val readCacheWeatherData: ReadCacheWeatherData
+    val queryWeatherData: QueryWeatherData
 )
