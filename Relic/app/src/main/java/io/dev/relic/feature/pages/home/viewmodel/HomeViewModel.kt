@@ -18,6 +18,7 @@ import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
 import io.data.mappers.WeatherDataMapper.toWeatherEntity
 import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
+import io.dev.relic.BuildConfig
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
@@ -125,7 +126,7 @@ class HomeViewModel @Inject constructor(
         isRefresh: Boolean,
         query: String = "coffee",
         addRecipeInformation: Boolean = true,
-        addRecipeNutrition: Boolean = true,
+        addRecipeNutrition: Boolean = !BuildConfig.DEBUG,
     ): StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> {
         _isFirstFetchFoodRecipes = isRefresh
         _foodRecipesOffset += if (isRefresh) 0 else 10

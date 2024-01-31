@@ -55,7 +55,7 @@ data class ResultItem(
     @Json(name = "sourceName")
     val sourceName: String?,
     @Json(name = "pricePerServing")
-    val pricePerServing: Double,
+    val pricePerServing: Double?,
     @Json(name = "id")
     val id: Int?,
     @Json(name = "title")
