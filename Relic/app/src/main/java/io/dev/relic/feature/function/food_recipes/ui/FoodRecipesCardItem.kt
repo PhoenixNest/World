@@ -74,8 +74,8 @@ fun FoodRecipesCardItem(
     }
 }
 
-@Composable
 @OptIn(ExperimentalFoundationApi::class)
+@Composable
 private fun FoodRecipesIntro(data: FoodRecipesComplexSearchInfoModel) {
     Column(
         modifier = Modifier

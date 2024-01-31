@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +25,7 @@ import io.common.RelicConstants
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainButtonColorLight
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 
 @Suppress("FunctionName")
@@ -36,7 +36,7 @@ fun LazyListScope.HomeTopBar(onOpenDrawer: () -> Unit) {
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(
-                    color = Color.Transparent,
+                    color = mainThemeColor,
                     shape = RoundedCornerShape(
                         bottomStart = 16.dp,
                         bottomEnd = 16.dp

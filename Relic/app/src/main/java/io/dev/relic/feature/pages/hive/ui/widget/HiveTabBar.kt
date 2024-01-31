@@ -5,8 +5,8 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 
-@Suppress("FunctionName")
 @OptIn(ExperimentalFoundationApi::class)
+@Suppress("FunctionName")
 fun LazyListScope.HiveTabBar(
     currentSelectedTab: Int,
     lazyListState: LazyListState,
