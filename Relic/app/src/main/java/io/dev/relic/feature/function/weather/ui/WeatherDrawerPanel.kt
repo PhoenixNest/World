@@ -42,7 +42,8 @@ import java.time.LocalDateTime
 @Composable
 fun WeatherDrawerPanel(
     weatherDataState: WeatherDataState,
-    onRetryClick: () -> Unit
+    onRetryClick: () -> Unit,
+    isGrayWeatherIcon: Boolean = false
 ) {
     when (weatherDataState) {
         is WeatherDataState.Init,
@@ -52,7 +53,10 @@ fun WeatherDrawerPanel(
 
         is WeatherDataState.FetchSucceed -> {
             weatherDataState.model?.currentWeatherData?.also {
-                WeatherDrawerPanelContent(it)
+                WeatherDrawerPanelContent(
+                    model = it,
+                    isGrayWeatherIcon = isGrayWeatherIcon
+                )
             }
         }
 
@@ -120,7 +124,10 @@ private fun WeatherDrawerPanelPlaceholder() {
 }
 
 @Composable
-private fun WeatherDrawerPanelContent(model: WeatherDataModel?) {
+private fun WeatherDrawerPanelContent(
+    model: WeatherDataModel?,
+    isGrayWeatherIcon: Boolean
+) {
     val temperature = model?.temperature ?: 0.0
     val weatherType = WeatherType.fromWMO(model?.weatherCode ?: -1)
 
@@ -149,7 +156,9 @@ private fun WeatherDrawerPanelContent(model: WeatherDataModel?) {
                 modifier = Modifier
                     .height(72.dp)
                     .width(72.dp),
-                colorFilter = ColorFilter.tint(mainTextColor.copy(0.8F))
+                colorFilter = if (isGrayWeatherIcon) {
+                    ColorFilter.tint(mainTextColor.copy(0.8F))
+                } else null
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -185,7 +194,8 @@ private fun WeatherDrawerPanelContentPreview() {
             pressure = 50.0,
             windSpeed = 24.0,
             isDay = false
-        )
+        ),
+        isGrayWeatherIcon = false
     )
 }
 

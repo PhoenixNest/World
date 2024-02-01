@@ -7,11 +7,23 @@ import java.util.Calendar
 
 object TimeUtil {
 
+    private const val CURRENT_CENTURY_VALUE = 2000
+
     /**
      * Get the current system time with date-time.
      * */
     fun getCurrentTime(): LocalDateTime {
         return LocalDateTime.now()
+    }
+
+    /**
+     * Get the current system time with formatted date-time.
+     * */
+    fun getCurrentFormattedTime(): String {
+        val year = LocalDateTime.now().year
+        val monthFormat = monthFormat(LocalDateTime.now().month.value)
+        val dayOfMonth = LocalDateTime.now().dayOfMonth
+        return "$year ${monthFormat}'${dayOfMonth}"
     }
 
     /**
@@ -71,5 +83,28 @@ object TimeUtil {
         )
         calendar.set(Calendar.MILLISECOND, 0)
         return calendar.timeInMillis
+    }
+
+    /**
+     * Formatted the month value into short-text value.
+     *
+     * @param monthValue
+     * */
+    private fun monthFormat(monthValue: Int): String {
+        return when (monthValue) {
+            1 -> "Jan"
+            2 -> "Feb"
+            3 -> "Mar"
+            4 -> "Apr"
+            5 -> "May"
+            6 -> "Jun"
+            7 -> "Jul"
+            8 -> "Aug"
+            9 -> "Sept"
+            10 -> "Oct"
+            11 -> "Nov"
+            12 -> "Dec"
+            else -> "Jan"
+        }
     }
 }

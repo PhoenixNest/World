@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.common.util.TimeUtil.getCurrentFormattedTime
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
@@ -99,7 +100,7 @@ private fun BoxScope.MainDrawerBriefPanel(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "12 July'18",
+            text = getCurrentFormattedTime(),
             fontFamily = ubuntu,
             style = TextStyle(
                 color = mainTextColor,
