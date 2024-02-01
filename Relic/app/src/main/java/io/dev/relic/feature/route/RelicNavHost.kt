@@ -1,5 +1,6 @@
 package io.dev.relic.feature.route
 
+import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -19,6 +20,7 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.Home
 @Composable
 fun MainFeatureNavHost(
     mainScreenState: MainScreenState,
+    drawerState: DrawerState,
     navHostController: NavHostController,
     mainViewModel: MainViewModel,
     modifier: Modifier = Modifier,
@@ -38,7 +40,7 @@ fun MainFeatureNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        pageHome(mainScreenState, mainViewModel)
+        pageHome(mainScreenState, drawerState, mainViewModel)
         pageExplore(mainScreenState, mainViewModel)
         pageHive(mainScreenState, mainViewModel)
         pageNewsDetail(navHostController::popBackStack)

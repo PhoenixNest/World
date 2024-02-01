@@ -12,15 +12,11 @@ import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.core.database.repository.RelicDatabaseRepository
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
-import io.data.dto.weather.WeatherForecastDTO
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
-import io.data.mappers.WeatherDataMapper.toWeatherEntity
-import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
 import io.dev.relic.BuildConfig
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.weather.WeatherDataState
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.maxim.MaximUseCase
 import io.domain.use_case.todo.TodoUseCase
@@ -60,12 +56,6 @@ class HomeViewModel @Inject constructor(
     private var _foodRecipesOffset = 0
 
     /**
-     * The data flow of weather forecast.
-     * */
-    private val _weatherDataStateFlow = MutableStateFlow<WeatherDataState>(WeatherDataState.Init)
-    val weatherDataStateFlow: StateFlow<WeatherDataState> get() = _weatherDataStateFlow
-
-    /**
      * The data flow of daily food recipes.
      * */
     private val _foodRecipesDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
@@ -77,35 +67,6 @@ class HomeViewModel @Inject constructor(
 
     init {
         getFoodRecipesData(isRefresh = true)
-    }
-
-    /**
-     * Fetch the latest weather info data from Remote-server.
-     *
-     * @param latitude
-     * @param longitude
-     * */
-    fun getWeatherData(
-        latitude: Double,
-        longitude: Double
-    ): StateFlow<NetworkResult<WeatherForecastDTO>> {
-        return weatherUseCase
-            .getWeatherData(
-                latitude = latitude,
-                longitude = longitude
-            )
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5 * 1000L),
-                initialValue = NetworkResult.Loading()
-            )
-            .also { stateFlow ->
-                viewModelScope.launch {
-                    stateFlow.collect { result ->
-                        handleRemoteWeatherData(result)
-                    }
-                }
-            }
     }
 
     /**
@@ -157,33 +118,6 @@ class HomeViewModel @Inject constructor(
 
     fun updateSelectedFoodRecipesTab(newIndex: Int) {
         _currentSelectedFoodRecipesTab = newIndex
-    }
-
-    private fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {
-        when (result) {
-            is NetworkResult.Loading -> {
-                LogUtil.d(TAG, "[Handle Weather Data] Loading...")
-                setState(_weatherDataStateFlow, WeatherDataState.Fetching)
-            }
-
-            is NetworkResult.Success -> {
-                result.data?.also {
-                    LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $it")
-                    operationInViewModelScope { weatherUseCase.cacheWeatherData.invoke(it.toWeatherEntity()) }
-                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
-                } ?: {
-                    LogUtil.w(TAG, "[Handle Weather Data] Succeed without data")
-                    setState(_weatherDataStateFlow, WeatherDataState.NoWeatherData)
-                }
-            }
-
-            is NetworkResult.Failed -> {
-                val errorCode = result.code
-                val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Weather Data] Failed, ($errorCode, $errorMessage)")
-                setState(_weatherDataStateFlow, WeatherDataState.FetchFailed(errorCode, errorMessage))
-            }
-        }
     }
 
     private fun handleRemoteFoodRecipesData(result: NetworkResult<FoodRecipesComplexSearchDTO>) {

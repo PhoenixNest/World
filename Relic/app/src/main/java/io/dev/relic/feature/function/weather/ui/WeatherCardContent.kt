@@ -33,7 +33,10 @@ fun WeatherCardContent(model: WeatherDataModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 24.dp),
+            .padding(
+                start = 16.dp,
+                end = 24.dp
+            ),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -1,31 +1,81 @@
 package io.dev.relic.feature.function.wallpaper
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import io.core.ui.CommonAsyncImage
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
+import coil.request.ImageRequest
+import com.google.accompanist.placeholder.material.placeholder
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.dev.relic.R
 
 @Composable
-fun WallpaperCover(
-    imageUrl: String,
+fun OnlineWallpaperCover(
+    url: String,
     modifier: Modifier = Modifier
 ) {
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-
-    CommonAsyncImage(
-        url = imageUrl,
-        imageWidth = screenWidth,
-        imageHeight = screenHeight,
-        imageShape = RectangleShape
+    WallpaperCover(
+        url = url,
+        modifier = modifier
     )
 }
 
 @Composable
-@Preview
-private fun WallpaperCoverPreview() {
-    WallpaperCover(imageUrl = "https://cdn.dribbble.com/users/78703/screenshots/4813446/attachments/1081953/weather_full.png")
+fun LocalWallpaperCover(
+    @DrawableRes resId: Int,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        painter = painterResource(id = resId),
+        contentDescription = DEFAULT_DESC,
+        modifier = modifier.fillMaxSize(),
+        contentScale = ContentScale.FillHeight
+    )
+}
+
+@Composable
+private fun WallpaperCover(
+    url: String,
+    modifier: Modifier = Modifier
+) {
+    SubcomposeAsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .crossfade(true)
+            .build(),
+        contentDescription = DEFAULT_DESC,
+        modifier = modifier.fillMaxSize(),
+        contentScale = ContentScale.Crop
+    ) {
+        when (painter.state) {
+            is AsyncImagePainter.State.Loading -> Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .placeholder(
+                        visible = true,
+                        color = Color.DarkGray,
+                    )
+            )
+
+            is AsyncImagePainter.State.Empty,
+            is AsyncImagePainter.State.Error -> {
+                Image(
+                    painter = painterResource(id = R.mipmap.home),
+                    contentDescription = DEFAULT_DESC,
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+        }
+    }
 }

@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,12 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.common.util.LogUtil
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
+import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
+import io.dev.relic.feature.screens.main.widget.MainDrawer
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
 
 @Composable
@@ -39,6 +45,8 @@ fun MainScreen(
         networkMonitor = networkMonitor
     )
 ) {
+    /* ======================== Common ======================== */
+
     // Current host state of snackBar.
     val snackBarHostState = remember {
         SnackbarHostState()
@@ -47,6 +55,16 @@ fun MainScreen(
     // Check if the current can include the bottom bar.
     val isShowBottomBar = (mainScreenState.shouldShowBottomBar)
             && (mainScreenState.currentTopLevelDestination != null)
+
+    val drawerState = rememberDrawerState(
+        initialValue = DrawerValue.Closed,
+        confirmStateChange = { drawerValue ->
+            LogUtil.d("Drawer", "[Drawer] State: ${drawerValue.name}")
+            true
+        }
+    )
+
+    /* ======================== Network ======================== */
 
     // Check the current network status by using networkMonitor flow.
     val networkStatus by networkMonitor.observe()
@@ -63,7 +81,36 @@ fun MainScreen(
         }
     }
 
-    // Initialization the App main page.
+    /* ======================== Main State ======================== */
+
+    // Location
+    val mainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
+
+    // Weather
+    val weatherState by mainViewModel.weatherDataStateFlow.collectAsStateWithLifecycle()
+
+    LaunchedEffect(mainState) {
+        when (mainState) {
+            is MainState.Init,
+            is MainState.AccessingLocation -> {
+                //
+            }
+
+            is MainState.Empty,
+            is MainState.AccessLocationFailed -> {
+                //
+            }
+
+            is MainState.AccessLocationSucceed -> {
+                val state = (mainState as MainState.AccessLocationSucceed)
+                state.location?.also {
+                    mainViewModel.getWeatherData(it.latitude, it.longitude)
+                }
+            }
+        }
+    }
+
+    // Initialization the App main screen.
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         snackbarHost = {
@@ -82,22 +129,40 @@ fun MainScreen(
                     currentDestination = mainScreenState.currentDestination
                 )
             }
-            Box(modifier = Modifier.fillMaxSize()) {
-                MainFeatureNavHost(
-                    mainScreenState = mainScreenState,
-                    navHostController = mainScreenState.navHostController,
-                    mainViewModel = mainViewModel,
-                    modifier = Modifier.fillMaxSize()
-                )
-                if (isShowBottomBar) {
-                    MainBottomBar(
-                        destinations = mainScreenState.topLevelDestinations,
-                        onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                        currentDestination = mainScreenState.currentDestination,
-                        modifier = Modifier.align(Alignment.BottomCenter)
+
+            ModalDrawer(
+                drawerState = drawerState,
+                drawerContent = {
+                    MainDrawer(
+                        weatherDataState = weatherState,
+                        onWeatherRetry = {
+                            mainViewModel.latestLocation?.also {
+                                mainViewModel.getWeatherData(it.latitude, it.longitude)
+                            }
+                        }
                     )
+                },
+                drawerBackgroundColor = mainThemeColor,
+                content = {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        MainFeatureNavHost(
+                            mainScreenState = mainScreenState,
+                            drawerState = drawerState,
+                            navHostController = mainScreenState.navHostController,
+                            mainViewModel = mainViewModel,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        if (isShowBottomBar) {
+                            MainBottomBar(
+                                destinations = mainScreenState.topLevelDestinations,
+                                onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
+                                currentDestination = mainScreenState.currentDestination,
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                            )
+                        }
+                    }
                 }
-            }
+            )
         }
     }
 }
