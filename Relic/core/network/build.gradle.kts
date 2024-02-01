@@ -26,7 +26,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
         resValue("string", "hitokoto_dev_key", hitokotoDevKey)
         resValue("string", "news_dev_key", newsDevKey)
         resValue("string", "pixabay_dev_key", pixabayDevKey)

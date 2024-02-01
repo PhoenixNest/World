@@ -17,7 +17,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
         // Specify the schemas saved location of Room database.
         ksp {

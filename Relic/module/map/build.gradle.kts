@@ -21,7 +21,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
         resValue("string", "amap_dev_key", aMapDevKay)
         resValue("string", "tomtom_dev_key", tomtomDevKey)
     }
