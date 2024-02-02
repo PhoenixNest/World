@@ -52,10 +52,7 @@ fun MainScreen(
         SnackbarHostState()
     }
 
-    // Check if the current can include the bottom bar.
-    val isShowBottomBar = (mainScreenState.shouldShowBottomBar)
-            && (mainScreenState.currentTopLevelDestination != null)
-
+    // Current state of drawer.
     val drawerState = rememberDrawerState(
         initialValue = DrawerValue.Closed,
         confirmStateChange = { drawerValue ->
@@ -63,6 +60,10 @@ fun MainScreen(
             true
         }
     )
+
+    // Check if the current can include the bottom bar.
+    val isShowBottomBar = (mainScreenState.shouldShowBottomBar)
+            && (mainScreenState.currentTopLevelDestination != null)
 
     /* ======================== Network ======================== */
 
@@ -109,6 +110,8 @@ fun MainScreen(
             }
         }
     }
+
+    /* ======================== Ui ======================== */
 
     // Initialization the App main screen.
     Scaffold(

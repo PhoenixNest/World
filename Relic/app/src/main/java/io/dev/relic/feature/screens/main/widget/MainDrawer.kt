@@ -32,7 +32,7 @@ import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.function.wallpaper.LocalWallpaperCover
 import io.dev.relic.feature.function.weather.WeatherDataState
-import io.dev.relic.feature.function.weather.ui.WeatherDrawerPanel
+import io.dev.relic.feature.function.weather.ui.WeatherBriefComponent
 
 @Composable
 fun MainDrawer(
@@ -115,7 +115,7 @@ private fun BoxScope.MainDrawerBriefPanel(
                 .background(color = mainTextColor)
         )
         Spacer(modifier = Modifier.height(20.dp))
-        WeatherDrawerPanel(
+        WeatherBriefComponent(
             weatherDataState = weatherDataState,
             onRetryClick = onWeatherRetry
         )

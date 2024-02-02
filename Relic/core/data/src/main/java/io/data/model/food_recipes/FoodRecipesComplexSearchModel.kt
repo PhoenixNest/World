@@ -1,6 +1,6 @@
 package io.data.model.food_recipes
 
-data class FoodRecipesComplexSearchInfoModel(
+data class FoodRecipesComplexSearchModel(
     val id: Int?,
     val title: String?,
     val author: String?,

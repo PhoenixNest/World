@@ -40,7 +40,7 @@ import io.dev.relic.feature.function.weather.WeatherDataState
 import java.time.LocalDateTime
 
 @Composable
-fun WeatherDrawerPanel(
+fun WeatherBriefComponent(
     weatherDataState: WeatherDataState,
     onRetryClick: () -> Unit,
     isGrayWeatherIcon: Boolean = false
@@ -48,12 +48,12 @@ fun WeatherDrawerPanel(
     when (weatherDataState) {
         is WeatherDataState.Init,
         is WeatherDataState.Fetching -> {
-            WeatherDrawerPanelPlaceholder()
+            WeatherBriefPlaceholder()
         }
 
         is WeatherDataState.FetchSucceed -> {
             weatherDataState.model?.currentWeatherData?.also {
-                WeatherDrawerPanelContent(
+                WeatherBriefContent(
                     model = it,
                     isGrayWeatherIcon = isGrayWeatherIcon
                 )
@@ -63,14 +63,14 @@ fun WeatherDrawerPanel(
         is WeatherDataState.Empty,
         is WeatherDataState.NoWeatherData,
         is WeatherDataState.FetchFailed -> {
-            WeatherDrawerPanelRetry(onRetryClick = onRetryClick)
+            WeatherBriefRetry(onRetryClick = onRetryClick)
         }
     }
 }
 
 @Composable
 @Preview
-private fun WeatherDrawerPanelPlaceholder() {
+private fun WeatherBriefPlaceholder() {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -124,7 +124,7 @@ private fun WeatherDrawerPanelPlaceholder() {
 }
 
 @Composable
-private fun WeatherDrawerPanelContent(
+private fun WeatherBriefContent(
     model: WeatherDataModel?,
     isGrayWeatherIcon: Boolean
 ) {
@@ -174,7 +174,7 @@ private fun WeatherDrawerPanelContent(
 }
 
 @Composable
-private fun WeatherDrawerPanelRetry(onRetryClick: () -> Unit) {
+private fun WeatherBriefRetry(onRetryClick: () -> Unit) {
     CommonRetryComponent(
         onRetryClick = onRetryClick,
         containerHeight = 96.dp,
@@ -184,8 +184,8 @@ private fun WeatherDrawerPanelRetry(onRetryClick: () -> Unit) {
 
 @Composable
 @Preview
-private fun WeatherDrawerPanelContentPreview() {
-    WeatherDrawerPanelContent(
+private fun WeatherBriefContentPreview() {
+    WeatherBriefContent(
         model = WeatherDataModel(
             time = LocalDateTime.now(),
             temperature = 24.0,
@@ -201,6 +201,6 @@ private fun WeatherDrawerPanelContentPreview() {
 
 @Composable
 @Preview
-private fun WeatherDrawerPanelRetryPreview() {
-    WeatherDrawerPanelRetry(onRetryClick = {})
+private fun WeatherBriefRetryPreview() {
+    WeatherBriefRetry(onRetryClick = {})
 }

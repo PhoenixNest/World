@@ -11,21 +11,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.common.util.TimeUtil.getCurrentTimeSection
+import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
-import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
 import io.dev.relic.feature.pages.home.ui.widget.HomeTopBar
 
 @Composable
 fun HomePageContent(
-    foodRecipesState: FoodRecipesDataState,
-    foodRecipesTabLazyListState: LazyListState,
-    currentSelectedFoodRecipesTab: Int,
     onOpenDrawer: () -> Unit,
+    foodRecipesTabLazyListState: LazyListState,
+    foodRecipesContentLazyListState: LazyListState,
+    foodRecipesTimeSectionState: FoodRecipesDataState,
+    foodRecipesState: FoodRecipesDataState,
+    currentSelectedFoodRecipesTab: Int,
     onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
-    onFoodRecipesCardClick: (recipesData: FoodRecipesComplexSearchInfoModel) -> Unit,
+    onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
+    onFoodRecipesItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
+    onFoodRecipesTimeSectionRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit
 ) {
     Surface(
@@ -34,10 +41,20 @@ fun HomePageContent(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
+            state = foodRecipesContentLazyListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HomeTopBar(onOpenDrawer = onOpenDrawer)
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            HomeFoodRecipesAutoTimeComponent(
+                currentTimeSection = getCurrentTimeSection(),
+                dataState = foodRecipesTimeSectionState,
+                onSeeMoreClick = onFoodRecipesSeeMoreClick,
+                onItemClick = onFoodRecipesItemClick,
+                onRetryClick = onFoodRecipesTimeSectionRetry
+            )
+            item { CommonItemDivider() }
             HomeFoodRecipesTabBar(
                 currentSelectedTab = currentSelectedFoodRecipesTab,
                 lazyListState = foodRecipesTabLazyListState,
@@ -47,7 +64,7 @@ fun HomePageContent(
             HomeFoodRecipesList(
                 dataState = foodRecipesState,
                 onRetryClick = onFoodRecipesRetry,
-                onCardClick = onFoodRecipesCardClick
+                onItemClick = onFoodRecipesItemClick
             )
         }
     }

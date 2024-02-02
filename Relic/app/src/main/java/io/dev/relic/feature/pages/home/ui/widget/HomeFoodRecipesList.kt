@@ -7,14 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonRetryComponent
-import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesCardItem
+import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesColumnItem
 
 @Suppress("FunctionName")
 fun LazyListScope.HomeFoodRecipesList(
     dataState: FoodRecipesDataState,
-    onCardClick: (recipesData: FoodRecipesComplexSearchInfoModel) -> Unit,
+    onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     onRetryClick: () -> Unit,
 ) {
     when (dataState) {
@@ -46,10 +46,10 @@ fun LazyListScope.HomeFoodRecipesList(
                         top = if (index == 0) 0.dp else 8.dp,
                         bottom = if (index == dataState.modelList.size - 1) 56.dp else 0.dp
                     )
-                    FoodRecipesCardItem(
+                    FoodRecipesColumnItem(
                         data = data,
-                        modifier = itemDecorationModifier,
-                        onCardClick = onCardClick
+                        onItemClick = onItemClick,
+                        modifier = itemDecorationModifier
                     )
                 }
             }

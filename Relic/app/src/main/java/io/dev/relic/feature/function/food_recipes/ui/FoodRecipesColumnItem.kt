@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -37,46 +38,45 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
-import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
 
 @Composable
-fun FoodRecipesCardItem(
-    data: FoodRecipesComplexSearchInfoModel,
-    onCardClick: (recipesData: FoodRecipesComplexSearchInfoModel) -> Unit,
+fun FoodRecipesColumnItem(
+    data: FoodRecipesComplexSearchModel,
+    onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
-    Surface(
+    Row(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = Color.Transparent
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.Top
     ) {
-        Row(
+        Surface(
             modifier = modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .clickable { onCardClick.invoke(data) },
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.Top
+                .wrapContentSize()
+                .clickable { onItemClick.invoke(data) },
+            shape = RoundedCornerShape(16.dp),
+            color = Color.Transparent
         ) {
             CommonAsyncImage(
                 url = data.image,
                 imageWidth = (screenWidth / 3),
                 imageHeight = (screenWidth / 3)
             )
-            FoodRecipesIntro(data = data)
         }
+        FoodRecipesIntro(data = data)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun FoodRecipesIntro(data: FoodRecipesComplexSearchInfoModel) {
+private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
     Column(
         modifier = Modifier
             .padding(
@@ -116,28 +116,23 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchInfoModel) {
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
-        FoodRecipesDescPanel(data = data)
-    }
-}
-
-@Composable
-private fun FoodRecipesDescPanel(data: FoodRecipesComplexSearchInfoModel) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        FoodRecipesDescItem(
-            iconResId = R.drawable.ic_cook_time,
-            content = "${data.cookTime} min",
-            modifier = Modifier.weight(1F)
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        FoodRecipesDescItem(
-            iconResId = R.drawable.ic_vegan,
-            content = "${data.healthScore}",
-            modifier = Modifier.weight(1F)
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            FoodRecipesDescItem(
+                iconResId = R.drawable.ic_cook_time,
+                content = "${data.cookTime} mins",
+                modifier = Modifier.weight(1F)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            FoodRecipesDescItem(
+                iconResId = R.drawable.ic_health_score,
+                content = "${data.healthScore}",
+                modifier = Modifier.weight(1F)
+            )
+        }
     }
 }
 
@@ -173,8 +168,8 @@ private fun FoodRecipesDescItem(
 @Composable
 @Preview
 private fun FoodRecipesCardItemPreview() {
-    FoodRecipesCardItem(
-        data = FoodRecipesComplexSearchInfoModel(
+    FoodRecipesColumnItem(
+        data = FoodRecipesComplexSearchModel(
             id = 0,
             title = "Coffee Cookies",
             author = "Foodista.com – The Cooking Encyclopedia Everyone Can Edit",
@@ -183,6 +178,6 @@ private fun FoodRecipesCardItemPreview() {
             healthScore = 10,
             cookTime = 45
         ),
-        onCardClick = {}
+        onItemClick = {}
     )
 }

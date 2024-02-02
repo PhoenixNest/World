@@ -2,7 +2,7 @@ package io.data.mappers
 
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
-import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 
 object FoodRecipesDataMapper {
 
@@ -10,11 +10,11 @@ object FoodRecipesDataMapper {
         return FoodRecipesComplexSearchEntity(datasource = this)
     }
 
-    fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchInfoModel?> {
-        val tempList = mutableListOf<FoodRecipesComplexSearchInfoModel?>()
+    fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchModel?> {
+        val tempList = mutableListOf<FoodRecipesComplexSearchModel?>()
         this.results?.forEach {
             tempList.add(
-                FoodRecipesComplexSearchInfoModel(
+                FoodRecipesComplexSearchModel(
                     id = it?.id,
                     title = it?.title,
                     author = it?.creditsText,

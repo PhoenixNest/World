@@ -63,14 +63,22 @@
     <string name="weather_card_title">Today\'s Weather</string>
 
     <!-- Food Recipes Unit -->
-    <string name="food_recipes_card_title">Eat and drink your fill</string>
-    <string name="food_recipes_label_coffee">Coffee</string>
+    <string name="food_recipes_recommend_title">Discover delicious</string>
+    <string name="food_recipes_time_section_title">What\'s for <font color="#DEB654">%s</font></string>
+    <!-- Food Recipes - Common -->
+    <string name="food_recipes_cook_now">Cook it</string>
+    <string name="food_recipes_see_more">See more</string>
+    <!-- Food Recipes - Dish Type - Time Section-->
     <string name="food_recipes_label_breakfast">Breakfast</string>
     <string name="food_recipes_label_lunch">Lunch</string>
+    <string name="food_recipes_label_teatime">Teatime</string>
     <string name="food_recipes_label_dinner">Dinner</string>
-    <string name="food_recipes_label_cookie">Cookie</string>
+    <string name="food_recipes_label_midnight_snack">Midnight Snack</string>
+    <!-- Food Recipes - Dish Type - Common -->
+    <string name="food_recipes_label_recommend">Recommend</string>
+    <string name="food_recipes_label_coffee">Coffee</string>
     <string name="food_recipes_label_snack">Snack</string>
-    <string name="food_recipes_cook_now">Cook it</string>
+    <string name="food_recipes_label_cookie">Cookie</string>
 
     <!-- News Unit -->
     <string name="news_title">Newspaper</string>

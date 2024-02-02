@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="mainThemeColor">#282C34</color>
-    <color name="mainThemeColorAccent">#0061FF</color>
+    <color name="mainThemeColorAccent">#DEB654</color>
     <color name="mainTextColor">#CCFFFFFF</color>
     <color name="mainTextColorDark">#CC282C34</color>
     <color name="mainTextColorDarkLight">#99282C34</color>

@@ -8,7 +8,7 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 val mainThemeColor = Color(0xFF282C34)
-val mainThemeColorAccent = Color(0xFF0061FF)
+val mainThemeColorAccent = Color(0xFFDEB654)
 
 val mainBackgroundColor = Color.DarkGray
 val mainBackgroundColorLight = Color.White.copy(alpha = 0.8F)

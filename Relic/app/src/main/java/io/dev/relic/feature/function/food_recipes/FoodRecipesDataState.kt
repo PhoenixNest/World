@@ -1,6 +1,6 @@
 package io.dev.relic.feature.function.food_recipes
 
-import io.data.model.food_recipes.FoodRecipesComplexSearchInfoModel
+import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 
 sealed class FoodRecipesDataState {
 
@@ -19,7 +19,7 @@ sealed class FoodRecipesDataState {
     /* Succeed */
 
     data class FetchSucceed(
-        val modelList: List<FoodRecipesComplexSearchInfoModel?>
+        val modelList: List<FoodRecipesComplexSearchModel?>
     ) : FoodRecipesDataState()
 
     /* Failed */

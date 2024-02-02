@@ -1,5 +1,11 @@
 package io.common.util
 
+import io.common.util.TimeUtil.TimeSection.Afternoon
+import io.common.util.TimeUtil.TimeSection.Day
+import io.common.util.TimeUtil.TimeSection.MidNight
+import io.common.util.TimeUtil.TimeSection.Night
+import io.common.util.TimeUtil.TimeSection.Noon
+import io.common.util.TimeUtil.TimeSection.Unknown
 import java.time.Clock
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -9,21 +15,20 @@ object TimeUtil {
 
     private const val CURRENT_CENTURY_VALUE = 2000
 
+    enum class TimeSection {
+        Day,
+        Noon,
+        Afternoon,
+        Night,
+        MidNight,
+        Unknown
+    }
+
     /**
      * Get the current system time with date-time.
      * */
     fun getCurrentTime(): LocalDateTime {
         return LocalDateTime.now()
-    }
-
-    /**
-     * Get the current system time with formatted date-time.
-     * */
-    fun getCurrentFormattedTime(): String {
-        val year = LocalDateTime.now().year
-        val monthFormat = monthFormat(LocalDateTime.now().month.value)
-        val dayOfMonth = LocalDateTime.now().dayOfMonth
-        return "$year ${monthFormat}'${dayOfMonth}"
     }
 
     /**
@@ -42,6 +47,31 @@ object TimeUtil {
      * */
     fun getCurrentTime(zone: ZoneId?): LocalDateTime {
         return LocalDateTime.now(zone ?: ZoneId.systemDefault())
+    }
+
+    /**
+     * Get the current system time with formatted date-time.
+     * */
+    fun getCurrentFormattedTime(): String {
+        val year = LocalDateTime.now().year
+        val monthFormat = monthFormat(LocalDateTime.now().month.value)
+        val dayOfMonth = LocalDateTime.now().dayOfMonth
+        return "$year ${monthFormat}'${dayOfMonth}"
+    }
+
+    /**
+     * Get the current section of local date-time.
+     * */
+    fun getCurrentTimeSection(): TimeSection {
+        val hour = LocalDateTime.now().hour
+        return when {
+            (hour in 7 until 11) -> Day
+            (hour in 11 until 14) -> Noon
+            (hour in 14 until 17) -> Afternoon
+            (hour in 17 until 24) -> Night
+            (hour in 0 until 7) -> MidNight
+            else -> Unknown
+        }
     }
 
     /**
