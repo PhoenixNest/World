@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.food_recipes.ui
+package io.dev.relic.feature.function.food_recipes.ui.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi

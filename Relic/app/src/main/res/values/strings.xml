@@ -29,6 +29,9 @@
     <string name="home_label">Home</string>
     <string name="home_title">@string/home_label</string>
     <string name="home_main_title">Beyond the World</string>
+    <string name="home_greeting_title_day">☀️ Welcome a new day</string>
+    <string name="home_greeting_title_afternoon">🍵 It\'s Teatime</string>
+    <string name="home_greeting_title_night">🌙 Take an early rest</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>
@@ -90,5 +93,8 @@
     <string name="news_label_sports">Sports</string>
     <string name="news_label_health">Health</string>
     <string name="news_label_trending">Trending</string>
+
+    <!-- Agent Unit -->
+    <string name="agent_input_area_hint">Ask your Ai assistant…</string>
 
 </resources>

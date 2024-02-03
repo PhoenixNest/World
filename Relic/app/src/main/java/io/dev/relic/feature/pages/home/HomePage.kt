@@ -6,6 +6,7 @@ import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.TimeUtil.getCurrentTimeSection
@@ -13,8 +14,8 @@ import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
+import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.home.ui.HomePageContent
-import io.dev.relic.feature.pages.home.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
@@ -109,5 +110,23 @@ private fun HomePage(
         onFoodRecipesItemClick = onFoodRecipesItemClick,
         onFoodRecipesTimeSectionRetry = onFoodRecipesTimeSectionRetry,
         onFoodRecipesRetry = onFoodRecipesRetry
+    )
+}
+
+@Composable
+@Preview
+private fun HomePagePreview() {
+    HomePage(
+        onOpenDrawer = {},
+        foodRecipesTabLazyListState = rememberLazyListState(),
+        foodRecipesContentLazyListState = rememberLazyListState(),
+        foodRecipesTimeSectionState = FoodRecipesDataState.Init,
+        foodRecipesState = FoodRecipesDataState.Init,
+        currentSelectedFoodRecipesTab = 0,
+        onSelectedFoodRecipesTabItem = { _, _ -> },
+        onFoodRecipesSeeMoreClick = {},
+        onFoodRecipesItemClick = {},
+        onFoodRecipesTimeSectionRetry = {},
+        onFoodRecipesRetry = {}
     )
 }

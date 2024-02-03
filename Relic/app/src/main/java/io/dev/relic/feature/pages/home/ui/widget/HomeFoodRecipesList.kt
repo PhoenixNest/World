@@ -9,7 +9,7 @@ import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonRetryComponent
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.food_recipes.ui.FoodRecipesColumnItem
+import io.dev.relic.feature.function.food_recipes.ui.widget.FoodRecipesColumnItem
 
 @Suppress("FunctionName")
 fun LazyListScope.HomeFoodRecipesList(

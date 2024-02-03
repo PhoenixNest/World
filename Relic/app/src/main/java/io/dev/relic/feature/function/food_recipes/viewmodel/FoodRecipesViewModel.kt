@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.home.viewmodel
+package io.dev.relic.feature.function.food_recipes.viewmodel
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -11,6 +11,13 @@ import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
+import io.common.util.TimeUtil.TimeSection.Afternoon
+import io.common.util.TimeUtil.TimeSection.Day
+import io.common.util.TimeUtil.TimeSection.MidNight
+import io.common.util.TimeUtil.TimeSection.Night
+import io.common.util.TimeUtil.TimeSection.Noon
+import io.common.util.TimeUtil.TimeSection.Unknown
+import io.common.util.TimeUtil.getCurrentTimeSection
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
@@ -38,11 +45,6 @@ class FoodRecipesViewModel @Inject constructor(
     private var currentSelectedFoodRecipesTab by mutableIntStateOf(0)
 
     /**
-     * Check whether if already fetch the recipes data for initialize.
-     * */
-    private var isFirstFetchFoodRecipes = true
-
-    /**
      * The number of results to skip (between 0 and 900).
      * */
     private var foodRecipesOffset = 0
@@ -64,7 +66,7 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     init {
-        val currentTimeSection = TimeUtil.getCurrentTimeSection()
+        val currentTimeSection = getCurrentTimeSection()
         getTimeSectionFoodRecipes(currentTimeSection)
 
         val defaultDishType = FoodRecipesCategories.Coffee.name.lowercase()
@@ -72,9 +74,17 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     fun getTimeSectionFoodRecipes(currentTimeSection: TimeUtil.TimeSection) {
+        val dishQueryParameter = when (currentTimeSection) {
+            Day -> "breakfast"
+            Noon -> "lunch"
+            Afternoon -> "teatime"
+            Night -> "dinner"
+            MidNight -> "snack"
+            Unknown -> "recommend"
+        }
         getFoodRecipesData(
             dataFlow = _foodRecipesTimeSectionDataStateFlow,
-            query = currentTimeSection.name.lowercase(),
+            query = dishQueryParameter,
             offset = 0
         )
     }

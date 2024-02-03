@@ -19,7 +19,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
-import io.dev.relic.feature.pages.home.ui.widget.HomeTopBar
+import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 
 @Composable
 fun HomePageContent(
@@ -35,6 +35,8 @@ fun HomePageContent(
     onFoodRecipesTimeSectionRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit
 ) {
+    val currentTimeSection = getCurrentTimeSection()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
@@ -45,10 +47,13 @@ fun HomePageContent(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeTopBar(onOpenDrawer = onOpenDrawer)
+            HomeTopPanel(
+                currentTimeSection = currentTimeSection,
+                onOpenDrawer = onOpenDrawer
+            )
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HomeFoodRecipesAutoTimeComponent(
-                currentTimeSection = getCurrentTimeSection(),
+                currentTimeSection = currentTimeSection,
                 dataState = foodRecipesTimeSectionState,
                 onSeeMoreClick = onFoodRecipesSeeMoreClick,
                 onItemClick = onFoodRecipesItemClick,

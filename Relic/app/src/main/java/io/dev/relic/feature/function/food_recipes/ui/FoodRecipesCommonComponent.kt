@@ -28,6 +28,7 @@ import io.core.ui.theme.mainThemeColorAccent
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.food_recipes.ui.widget.FoodRecipesRowItem
 
 @Composable
 fun FoodRecipesCommonComponent(

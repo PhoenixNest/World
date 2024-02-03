@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainTextColorDark
 
 @Composable
 fun CommonInputField(
@@ -27,7 +28,8 @@ fun CommonInputField(
     @StringRes hintResId: Int,
     onValueChange: (inputValue: String) -> Unit,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = TextStyle(),
+    contentTextStyle: TextStyle = TextStyle(),
+    hintTextStyle: TextStyle = TextStyle(),
     isEnabled: Boolean = true,
     maxLines: Int = Int.MAX_VALUE
 ) {
@@ -36,8 +38,7 @@ fun CommonInputField(
         onValueChange = onValueChange,
         modifier = modifier,
         enabled = isEnabled,
-        textStyle = textStyle.copy(
-            color = Color.DarkGray,
+        textStyle = contentTextStyle.copy(
             fontFamily = ubuntu,
             textAlign = TextAlign.Start
         ),
@@ -47,8 +48,7 @@ fun CommonInputField(
             if (content.isEmpty() || content.isBlank()) {
                 Text(
                     text = stringResource(id = hintResId),
-                    style = textStyle.copy(
-                        color = Color.LightGray,
+                    style = hintTextStyle.copy(
                         fontFamily = ubuntu,
                         textAlign = TextAlign.Start
                     )
@@ -78,7 +78,13 @@ private fun CommonInputFieldNoContentPreview() {
                     color = Color.LightGray.copy(alpha = 0.3F),
                     shape = RoundedCornerShape(16.dp)
                 )
-                .padding(20.dp)
+                .padding(20.dp),
+            contentTextStyle = TextStyle(
+                color = mainTextColorDark
+            ),
+            hintTextStyle = TextStyle(
+                color = mainTextColorDark.copy(alpha = 0.3F)
+            )
         )
     }
 }
@@ -102,7 +108,13 @@ private fun CommonInputFieldPreview() {
                     color = Color.LightGray.copy(alpha = 0.3F),
                     shape = RoundedCornerShape(16.dp)
                 )
-                .padding(20.dp)
+                .padding(20.dp),
+            contentTextStyle = TextStyle(
+                color = mainTextColorDark
+            ),
+            hintTextStyle = TextStyle(
+                color = mainTextColorDark.copy(alpha = 0.3F)
+            )
         )
     }
 }
