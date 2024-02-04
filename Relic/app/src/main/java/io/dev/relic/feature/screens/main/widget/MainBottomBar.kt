@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -45,10 +44,6 @@ fun MainBottomBar(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp
-        ),
         color = Color.Transparent
     ) {
         Row(
@@ -66,10 +61,7 @@ fun MainBottomBar(
                     unselectedIconResId = destination.unselectedIconResId,
                     labelResId = destination.labelResId,
                     onItemClick = {
-                        LogUtil.d(
-                            "RelicBottomBar",
-                            "[BottomItem] onNavigateTo -> [${destination.name}]"
-                        )
+                        LogUtil.d("RelicBottomBar", "[BottomItem] onNavigateTo -> [${destination.name}]")
                         onNavigateToDestination.invoke(destination)
                     }
                 )
