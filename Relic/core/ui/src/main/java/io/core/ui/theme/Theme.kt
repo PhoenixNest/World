@@ -7,15 +7,15 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = mainThemeColor,
+    primaryVariant = mainThemeColor,
+    secondary = mainThemeColorAccent
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = mainThemeColorLight,
+    primaryVariant = mainThemeColorLight,
+    secondary = mainThemeColorAccent
 
     /* Other default colors to override
     background = Color.White,
@@ -39,7 +39,7 @@ fun RelicAppTheme(
     }
 
     MaterialTheme(
-        colors = LightColorPalette,
+        colors = colors,
         typography = Typography,
         shapes = Shapes,
         content = content
