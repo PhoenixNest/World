@@ -57,6 +57,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Google AI client SDK for Android
-    implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
+    api("com.google.ai.client.generativeai:generativeai:0.1.2")
 
 }

@@ -7,16 +7,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.RelicResCenter.getString
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
-import io.common.util.TimeUtil.TimeSection.Afternoon
-import io.common.util.TimeUtil.TimeSection.Day
-import io.common.util.TimeUtil.TimeSection.MidNight
-import io.common.util.TimeUtil.TimeSection.Night
-import io.common.util.TimeUtil.TimeSection.Noon
-import io.common.util.TimeUtil.TimeSection.Unknown
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
@@ -24,6 +19,7 @@ import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
 import io.data.model.NetworkResult
 import io.dev.relic.BuildConfig
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.food_recipes.util.FoodRecipesAutoConvertor.convertTimeSectionToDishType
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,14 +70,9 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     fun getTimeSectionFoodRecipes(currentTimeSection: TimeUtil.TimeSection) {
-        val dishQueryParameter = when (currentTimeSection) {
-            Day -> "breakfast"
-            Noon -> "lunch"
-            Afternoon -> "teatime"
-            Night -> "dinner"
-            MidNight -> "snack"
-            Unknown -> "recommend"
-        }
+        val dishType = convertTimeSectionToDishType(currentTimeSection)
+        val dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
+
         getFoodRecipesData(
             dataFlow = _foodRecipesTimeSectionDataStateFlow,
             query = dishQueryParameter,

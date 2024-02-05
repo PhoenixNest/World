@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -43,44 +43,57 @@ import io.core.ui.theme.mainButtonColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
-import io.dev.relic.feature.function.agent.AgentSearchBar
+import io.dev.relic.feature.function.agent.ui.AgentSearchBar
 
 @Suppress("FunctionName")
 fun LazyListScope.HomeTopPanel(
     currentTimeSection: TimeSection,
+    agentSearchContent: String,
+    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    onAgentStartChat: () -> Unit,
     onOpenDrawer: () -> Unit
 ) {
     item {
         HomeTopPanelContent(
+            onOpenDrawer = onOpenDrawer,
             currentTimeSection = currentTimeSection,
-            onOpenDrawer = onOpenDrawer
+            agentSearchContent = agentSearchContent,
+            onAgentSearchPromptChange = onAgentSearchPromptChange,
+            onAgentStartChat = onAgentStartChat
         )
     }
 }
 
 @Composable
 private fun HomeTopPanelContent(
+    onOpenDrawer: () -> Unit,
     currentTimeSection: TimeSection,
-    onOpenDrawer: () -> Unit
+    agentSearchContent: String,
+    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    onAgentStartChat: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .height(320.dp)
     ) {
         HomeTopCover(currentTimeSection)
         HomeTopBar(onOpenDrawer)
         HomeAgentPanel(
             currentTimeSection = currentTimeSection,
+            agentSearchContent = agentSearchContent,
+            onAgentSearchPromptChange = onAgentSearchPromptChange,
+            onAgentStartChat = onAgentStartChat,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
 
 @Composable
-private fun HomeTopCover(currentTimeSection: TimeSection) {
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val coverHeight = screenHeight * 3 / 8
+private fun HomeTopCover(
+    currentTimeSection: TimeSection,
+    modifier: Modifier = Modifier
+) {
     val coverResId = when (currentTimeSection) {
         Day,
         Noon,
@@ -91,25 +104,17 @@ private fun HomeTopCover(currentTimeSection: TimeSection) {
         Unknown -> R.mipmap.day
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    )
-    {
+    Box(modifier = modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = coverResId),
             contentDescription = DEFAULT_DESC,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(coverHeight),
+            modifier = Modifier.fillMaxSize(),
             alignment = Alignment.Center,
             contentScale = ContentScale.FillWidth
         )
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(coverHeight)
+                .fillMaxSize()
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
@@ -123,9 +128,12 @@ private fun HomeTopCover(currentTimeSection: TimeSection) {
 }
 
 @Composable
-private fun HomeTopBar(onOpenDrawer: () -> Unit) {
+private fun HomeTopBar(
+    onOpenDrawer: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
@@ -164,6 +172,9 @@ private fun HomeTopBar(onOpenDrawer: () -> Unit) {
 @Composable
 private fun HomeAgentPanel(
     currentTimeSection: TimeSection,
+    agentSearchContent: String,
+    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    onAgentStartChat: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val greetingTextResId = when (currentTimeSection) {
@@ -194,8 +205,12 @@ private fun HomeAgentPanel(
                 textMotion = TextMotion.Animated
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        AgentSearchBar()
+        Spacer(modifier = Modifier.height(20.dp))
+        AgentSearchBar(
+            contentValue = agentSearchContent,
+            onValueChange = onAgentSearchPromptChange,
+            onAgentStartChat = onAgentStartChat
+        )
         Spacer(modifier = Modifier.height(52.dp))
     }
 }
@@ -204,8 +219,11 @@ private fun HomeAgentPanel(
 @Preview
 private fun HomeTopBarPanelDayPreview() {
     HomeTopPanelContent(
+        onOpenDrawer = {},
         currentTimeSection = Day,
-        onOpenDrawer = {}
+        agentSearchContent = "",
+        onAgentSearchPromptChange = {},
+        onAgentStartChat = {}
     )
 }
 
@@ -213,8 +231,11 @@ private fun HomeTopBarPanelDayPreview() {
 @Preview
 private fun HomeTopBarPanelNightPreview() {
     HomeTopPanelContent(
+        onOpenDrawer = {},
         currentTimeSection = Night,
-        onOpenDrawer = {}
+        agentSearchContent = "",
+        onAgentSearchPromptChange = {},
+        onAgentStartChat = {}
     )
 }
 
@@ -222,7 +243,10 @@ private fun HomeTopBarPanelNightPreview() {
 @Preview
 private fun HomeTopBarPanelMidnightPreview() {
     HomeTopPanelContent(
+        onOpenDrawer = {},
         currentTimeSection = MidNight,
-        onOpenDrawer = {}
+        agentSearchContent = "",
+        onAgentSearchPromptChange = {},
+        onAgentStartChat = {}
     )
 }

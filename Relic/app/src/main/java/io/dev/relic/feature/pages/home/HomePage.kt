@@ -6,17 +6,18 @@ import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.home.ui.HomePageContent
-import io.dev.relic.feature.pages.home.viewmodel.HomeViewModel
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,7 @@ fun HomePageRoute(
     mainScreenState: MainScreenState,
     drawerState: DrawerState,
     mainViewModel: MainViewModel,
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    geminiAgentViewModel: GeminiAgentViewModel = hiltViewModel(),
     foodReViewModel: FoodRecipesViewModel = hiltViewModel()
 ) {
 
@@ -33,6 +34,10 @@ fun HomePageRoute(
 
     val coroutineScope = rememberCoroutineScope()
     val currentTimeSection = getCurrentTimeSection()
+    val localFocusManager = LocalFocusManager.current
+
+    // Agent
+    val agentSearchContent = geminiAgentViewModel.agentSearchContent
 
     // Food recipes
     val foodRecipesTimeSectionState by foodReViewModel.foodRecipesTimeSectionDataStateFlow.collectAsStateWithLifecycle()
@@ -49,6 +54,14 @@ fun HomePageRoute(
                 drawerState.open()
             }
         },
+        agentSearchContent = agentSearchContent,
+        onAgentSearchPromptChange = {
+            geminiAgentViewModel.updateSearchPrompt(it)
+        },
+        onAgentStartChat = {
+            geminiAgentViewModel.sendTextMessage(agentSearchContent)
+            localFocusManager.clearFocus()
+        },
         foodRecipesTabLazyListState = foodRecipesTabLazyListState,
         foodRecipesContentLazyListState = foodRecipesContentLazyListState,
         foodRecipesTimeSectionState = foodRecipesTimeSectionState,
@@ -64,17 +77,19 @@ fun HomePageRoute(
             }
         },
         onFoodRecipesSeeMoreClick = {
-
+            //
         },
         onFoodRecipesItemClick = {
-
+            //
         },
         onFoodRecipesTimeSectionRetry = {
             foodReViewModel.getTimeSectionFoodRecipes(currentTimeSection)
         },
         onFoodRecipesRetry = {
             foodReViewModel.apply {
-                val currentSelectedTab = FoodRecipesCategories.entries.toList()[getSelectedFoodRecipesTab()].name.lowercase()
+                val foodRecipesCategories = FoodRecipesCategories.entries.toList()
+                val selectedFoodRecipesTab = getSelectedFoodRecipesTab()
+                val currentSelectedTab = foodRecipesCategories[selectedFoodRecipesTab].name.lowercase()
                 getRecommendFoodRecipes(
                     queryType = currentSelectedTab,
                     offset = 0
@@ -87,6 +102,9 @@ fun HomePageRoute(
 @Composable
 private fun HomePage(
     onOpenDrawer: () -> Unit,
+    agentSearchContent: String,
+    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    onAgentStartChat: () -> Unit,
     foodRecipesTabLazyListState: LazyListState,
     foodRecipesContentLazyListState: LazyListState,
     foodRecipesTimeSectionState: FoodRecipesDataState,
@@ -100,6 +118,9 @@ private fun HomePage(
 ) {
     HomePageContent(
         onOpenDrawer = onOpenDrawer,
+        agentSearchContent = agentSearchContent,
+        onAgentSearchPromptChange = onAgentSearchPromptChange,
+        onAgentStartChat = onAgentStartChat,
         foodRecipesTabLazyListState = foodRecipesTabLazyListState,
         foodRecipesContentLazyListState = foodRecipesContentLazyListState,
         foodRecipesTimeSectionState = foodRecipesTimeSectionState,
@@ -118,6 +139,9 @@ private fun HomePage(
 private fun HomePagePreview() {
     HomePage(
         onOpenDrawer = {},
+        agentSearchContent = "",
+        onAgentSearchPromptChange = {},
+        onAgentStartChat = {},
         foodRecipesTabLazyListState = rememberLazyListState(),
         foodRecipesContentLazyListState = rememberLazyListState(),
         foodRecipesTimeSectionState = FoodRecipesDataState.Init,

@@ -24,7 +24,7 @@ include(":module:map")
 include(":module:ad")
 include(":module:subscribe")
 include(":module:debug")
-// Artificial intelligence
+// Agent
 include(":agent:gemini")
 // Feature layer
 include(":app")

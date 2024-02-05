@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent
+package io.dev.relic.feature.function.agent.util
 
 object AgentUnitConfig {
 

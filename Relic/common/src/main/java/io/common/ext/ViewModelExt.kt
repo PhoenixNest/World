@@ -7,18 +7,20 @@ import kotlinx.coroutines.launch
 
 object ViewModelExt {
 
+    fun ViewModel.operationInViewModelScope(
+        operation: suspend () -> Unit
+    ) {
+        viewModelScope.launch {
+            operation.invoke()
+        }
+    }
+
     fun <T> ViewModel.setState(
         stateFlow: MutableStateFlow<T>,
         newState: T
     ) {
-        viewModelScope.launch {
+        operationInViewModelScope {
             stateFlow.emit(newState)
-        }
-    }
-
-    fun ViewModel.operationInViewModelScope(operation: suspend () -> Unit) {
-        viewModelScope.launch {
-            operation.invoke()
         }
     }
 }

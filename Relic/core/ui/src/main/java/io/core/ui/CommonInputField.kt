@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +33,69 @@ fun CommonInputField(
     contentTextStyle: TextStyle = TextStyle(),
     hintTextStyle: TextStyle = TextStyle(),
     isEnabled: Boolean = true,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    // Keyboard Action
+    onDone: () -> Unit = {},
+    onGo: () -> Unit = {},
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
+    onSearch: () -> Unit = {},
+    onSend: () -> Unit = {}
+) {
+    BasicTextField(
+        value = content,
+        onValueChange = onValueChange,
+        modifier = modifier,
+        enabled = isEnabled,
+        textStyle = contentTextStyle.copy(
+            fontFamily = ubuntu,
+            textAlign = TextAlign.Start
+        ),
+        maxLines = maxLines,
+        keyboardOptions = KeyboardOptions(
+            autoCorrect = false,
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone.invoke() },
+            onGo = { onGo.invoke() },
+            onNext = { onNext.invoke() },
+            onPrevious = { onPrevious.invoke() },
+            onSearch = { onSearch.invoke() },
+            onSend = { onSend.invoke() }
+        ),
+        decorationBox = { innerTextField ->
+            if (content.isEmpty() || content.isBlank()) {
+                Text(
+                    text = stringResource(id = hintResId),
+                    style = hintTextStyle.copy(
+                        fontFamily = ubuntu,
+                        textAlign = TextAlign.Start
+                    )
+                )
+            }
+            innerTextField()
+        }
+    )
+}
+
+@Composable
+fun CommonInputField(
+    content: TextFieldValue,
+    @StringRes hintResId: Int,
+    onValueChange: (inputValue: TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+    contentTextStyle: TextStyle = TextStyle(),
+    hintTextStyle: TextStyle = TextStyle(),
+    isEnabled: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    // Keyboard Action
+    onDone: () -> Unit = {},
+    onGo: () -> Unit = {},
+    onNext: () -> Unit = {},
+    onPrevious: () -> Unit = {},
+    onSearch: () -> Unit = {},
+    onSend: () -> Unit = {}
 ) {
     BasicTextField(
         value = content,
@@ -44,8 +108,16 @@ fun CommonInputField(
         ),
         maxLines = maxLines,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = { onDone.invoke() },
+            onGo = { onGo.invoke() },
+            onNext = { onNext.invoke() },
+            onPrevious = { onPrevious.invoke() },
+            onSearch = { onSearch.invoke() },
+            onSend = { onSend.invoke() }
+        ),
         decorationBox = { innerTextField ->
-            if (content.isEmpty() || content.isBlank()) {
+            if (content.text.isEmpty() || content.text.isBlank()) {
                 Text(
                     text = stringResource(id = hintResId),
                     style = hintTextStyle.copy(

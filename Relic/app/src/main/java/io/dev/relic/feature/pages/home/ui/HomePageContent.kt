@@ -24,6 +24,9 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 @Composable
 fun HomePageContent(
     onOpenDrawer: () -> Unit,
+    agentSearchContent: String,
+    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    onAgentStartChat: () -> Unit,
     foodRecipesTabLazyListState: LazyListState,
     foodRecipesContentLazyListState: LazyListState,
     foodRecipesTimeSectionState: FoodRecipesDataState,
@@ -49,6 +52,9 @@ fun HomePageContent(
         ) {
             HomeTopPanel(
                 currentTimeSection = currentTimeSection,
+                agentSearchContent = agentSearchContent,
+                onAgentSearchPromptChange = onAgentSearchPromptChange,
+                onAgentStartChat = onAgentStartChat,
                 onOpenDrawer = onOpenDrawer
             )
             item { Spacer(modifier = Modifier.height(16.dp)) }

@@ -40,9 +40,21 @@ fun MainFeatureNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        pageHome(mainScreenState, drawerState, mainViewModel)
-        pageExplore(mainScreenState, mainViewModel)
-        pageHive(mainScreenState, mainViewModel)
-        pageNewsDetail(navHostController::popBackStack)
+        pageHome(
+            mainScreenState = mainScreenState,
+            drawerState = drawerState,
+            mainViewModel = mainViewModel
+        )
+        pageExplore(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel
+        )
+        pageHive(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel
+        )
+        pageNewsDetail {
+            navHostController.popBackStack()
+        }
     }
 }
