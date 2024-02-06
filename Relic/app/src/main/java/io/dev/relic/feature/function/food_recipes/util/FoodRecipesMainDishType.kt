@@ -5,14 +5,14 @@ import io.dev.relic.R
 
 enum class FoodRecipesMainDishType(@StringRes val labelResId: Int) {
     // Auto recommend current type of dish with the current time section.
-    Breakfast(R.string.food_recipes_label_breakfast),
-    Lunch(R.string.food_recipes_label_lunch),
-    Teatime(R.string.food_recipes_label_teatime),
-    Dinner(R.string.food_recipes_label_dinner),
-    MidnightSnack(R.string.food_recipes_label_midnight_snack),
+    BREAKFAST(R.string.food_recipes_label_breakfast),
+    LUNCH(R.string.food_recipes_label_lunch),
+    TEATIME(R.string.food_recipes_label_teatime),
+    DINNER(R.string.food_recipes_label_dinner),
+    MIDNIGHT_SNACK(R.string.food_recipes_label_midnight_snack),
 
     // Common dish type
-    Recommend(R.string.food_recipes_label_recommend),
-    Coffee(R.string.food_recipes_label_coffee),
-    Snack(R.string.food_recipes_label_snack)
+    RECOMMEND(R.string.food_recipes_label_recommend),
+    COFFEE(R.string.food_recipes_label_coffee),
+    SNACK(R.string.food_recipes_label_snack)
 }

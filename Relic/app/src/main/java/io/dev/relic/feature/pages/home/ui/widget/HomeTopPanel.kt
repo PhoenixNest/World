@@ -32,12 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.TimeUtil.TimeSection
-import io.common.util.TimeUtil.TimeSection.Afternoon
-import io.common.util.TimeUtil.TimeSection.Day
-import io.common.util.TimeUtil.TimeSection.MidNight
-import io.common.util.TimeUtil.TimeSection.Night
-import io.common.util.TimeUtil.TimeSection.Noon
-import io.common.util.TimeUtil.TimeSection.Unknown
+import io.common.util.TimeUtil.TimeSection.AFTERNOON
+import io.common.util.TimeUtil.TimeSection.DAY
+import io.common.util.TimeUtil.TimeSection.MIDNIGHT
+import io.common.util.TimeUtil.TimeSection.NIGHT
+import io.common.util.TimeUtil.TimeSection.NOON
+import io.common.util.TimeUtil.TimeSection.UNKNOWN
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainButtonColorLight
 import io.core.ui.theme.mainTextColor
@@ -95,13 +95,13 @@ private fun HomeTopCover(
     modifier: Modifier = Modifier
 ) {
     val coverResId = when (currentTimeSection) {
-        Day,
-        Noon,
-        Afternoon -> R.mipmap.day
+        DAY,
+        NOON,
+        AFTERNOON -> R.mipmap.day
 
-        Night -> R.mipmap.night
-        MidNight -> R.mipmap.midnight
-        Unknown -> R.mipmap.day
+        NIGHT -> R.mipmap.night
+        MIDNIGHT -> R.mipmap.midnight
+        UNKNOWN -> R.mipmap.day
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -178,15 +178,15 @@ private fun HomeAgentPanel(
     modifier: Modifier = Modifier
 ) {
     val greetingTextResId = when (currentTimeSection) {
-        Day,
-        Noon -> R.string.home_greeting_title_day
+        DAY,
+        NOON -> R.string.home_greeting_title_day
 
-        Afternoon -> R.string.home_greeting_title_afternoon
+        AFTERNOON -> R.string.home_greeting_title_afternoon
 
-        Night,
-        MidNight -> R.string.home_greeting_title_night
+        NIGHT,
+        MIDNIGHT -> R.string.home_greeting_title_night
 
-        Unknown -> R.string.home_greeting_title_day
+        UNKNOWN -> R.string.home_greeting_title_day
     }
 
     Column(
@@ -220,7 +220,7 @@ private fun HomeAgentPanel(
 private fun HomeTopBarPanelDayPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        currentTimeSection = Day,
+        currentTimeSection = DAY,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {}
@@ -232,7 +232,7 @@ private fun HomeTopBarPanelDayPreview() {
 private fun HomeTopBarPanelNightPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        currentTimeSection = Night,
+        currentTimeSection = NIGHT,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {}
@@ -244,7 +244,7 @@ private fun HomeTopBarPanelNightPreview() {
 private fun HomeTopBarPanelMidnightPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        currentTimeSection = MidNight,
+        currentTimeSection = MIDNIGHT,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {}

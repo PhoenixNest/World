@@ -65,7 +65,7 @@ class FoodRecipesViewModel @Inject constructor(
         val currentTimeSection = getCurrentTimeSection()
         getTimeSectionFoodRecipes(currentTimeSection)
 
-        val defaultDishType = FoodRecipesCategories.Coffee.name.lowercase()
+        val defaultDishType = FoodRecipesCategories.COFFEE.name.lowercase()
         getRecommendFoodRecipes(defaultDishType, currentSelectedFoodRecipesTab)
     }
 

@@ -69,12 +69,12 @@ fun MainScreen(
 
     // Check the current network status by using networkMonitor flow.
     val networkStatus by networkMonitor.observe()
-        .collectAsStateWithLifecycle(initialValue = NetworkStatus.Available)
+        .collectAsStateWithLifecycle(initialValue = NetworkStatus.AVAILABLE)
 
     val noNetworkMessage = stringResource(id = R.string.no_network_connection_message)
 
     LaunchedEffect(networkStatus) {
-        if (networkStatus != NetworkStatus.Available) {
+        if (networkStatus != NetworkStatus.AVAILABLE) {
             snackBarHostState.showSnackbar(
                 message = noNetworkMessage,
                 duration = SnackbarDuration.Indefinite

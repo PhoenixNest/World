@@ -1,11 +1,11 @@
 package io.common.util
 
-import io.common.util.TimeUtil.TimeSection.Afternoon
-import io.common.util.TimeUtil.TimeSection.Day
-import io.common.util.TimeUtil.TimeSection.MidNight
-import io.common.util.TimeUtil.TimeSection.Night
-import io.common.util.TimeUtil.TimeSection.Noon
-import io.common.util.TimeUtil.TimeSection.Unknown
+import io.common.util.TimeUtil.TimeSection.AFTERNOON
+import io.common.util.TimeUtil.TimeSection.DAY
+import io.common.util.TimeUtil.TimeSection.MIDNIGHT
+import io.common.util.TimeUtil.TimeSection.NIGHT
+import io.common.util.TimeUtil.TimeSection.NOON
+import io.common.util.TimeUtil.TimeSection.UNKNOWN
 import java.time.Clock
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -16,12 +16,12 @@ object TimeUtil {
     private const val CURRENT_CENTURY_VALUE = 2000
 
     enum class TimeSection {
-        Day,
-        Noon,
-        Afternoon,
-        Night,
-        MidNight,
-        Unknown
+        DAY,
+        NOON,
+        AFTERNOON,
+        NIGHT,
+        MIDNIGHT,
+        UNKNOWN
     }
 
     /**
@@ -65,12 +65,12 @@ object TimeUtil {
     fun getCurrentTimeSection(): TimeSection {
         val hour = LocalDateTime.now().hour
         return when {
-            (hour in 7 until 11) -> Day
-            (hour in 11 until 14) -> Noon
-            (hour in 14 until 17) -> Afternoon
-            (hour in 17 until 24) -> Night
-            (hour in 0 until 7) -> MidNight
-            else -> Unknown
+            (hour in 7 until 11) -> DAY
+            (hour in 11 until 14) -> NOON
+            (hour in 14 until 17) -> AFTERNOON
+            (hour in 17 until 24) -> NIGHT
+            (hour in 0 until 7) -> MIDNIGHT
+            else -> UNKNOWN
         }
     }
 

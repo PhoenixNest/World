@@ -25,28 +25,28 @@ class NetworkMonitor @Inject constructor(
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     launch {
-                        send(NetworkStatus.Available)
+                        send(NetworkStatus.AVAILABLE)
                     }
                 }
 
                 override fun onLosing(network: Network, maxMsToLive: Int) {
                     super.onLosing(network, maxMsToLive)
                     launch {
-                        send(NetworkStatus.Losing)
+                        send(NetworkStatus.LOSING)
                     }
                 }
 
                 override fun onLost(network: Network) {
                     super.onLost(network)
                     launch {
-                        send(NetworkStatus.Lost)
+                        send(NetworkStatus.LOST)
                     }
                 }
 
                 override fun onUnavailable() {
                     super.onUnavailable()
                     launch {
-                        send(NetworkStatus.Unavailable)
+                        send(NetworkStatus.UNAVAILABLE)
                     }
                 }
             }

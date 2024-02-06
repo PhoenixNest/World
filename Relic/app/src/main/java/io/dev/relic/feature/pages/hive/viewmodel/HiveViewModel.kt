@@ -36,13 +36,13 @@ import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEW
 import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.util.NewsDataStatus
-import io.dev.relic.feature.function.news.util.NewsDataStatus.Failed
-import io.dev.relic.feature.function.news.util.NewsDataStatus.Init
-import io.dev.relic.feature.function.news.util.NewsDataStatus.Success
-import io.dev.relic.feature.function.news.util.NewsDataStatus.SuccessWithoutData
+import io.dev.relic.feature.function.news.util.NewsDataStatus.FAILED
+import io.dev.relic.feature.function.news.util.NewsDataStatus.INIT
+import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS
+import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS_WITHOUT_DATA
 import io.dev.relic.feature.function.news.util.NewsType
-import io.dev.relic.feature.function.news.util.NewsType.Everything
-import io.dev.relic.feature.function.news.util.NewsType.TopHeadline
+import io.dev.relic.feature.function.news.util.NewsType.EVERYTHING
+import io.dev.relic.feature.function.news.util.NewsType.TOP_HEADLINE
 import io.domain.use_case.news.NewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -96,10 +96,10 @@ class HiveViewModel @Inject constructor(
 
     private fun checkShouldRefreshEverythingData() {
         val lastTimeDuration = readSyncData(KEY_EVERYTHING_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
-        val lastRefreshStatus = readSyncData(KEY_EVERYTHING_STATUS, Init.typeValue)
+        val lastRefreshStatus = readSyncData(KEY_EVERYTHING_STATUS, INIT.typeValue)
         if (getCurrentTimeInMillis() > lastTimeDuration
-            || lastRefreshStatus == Init.typeValue
-            || lastRefreshStatus == Failed.typeValue
+            || lastRefreshStatus == INIT.typeValue
+            || lastRefreshStatus == FAILED.typeValue
         ) {
             LogUtil.d(TAG, "[Everything News Checker] Refresh data.")
             getTrendingNewsData()
@@ -111,10 +111,10 @@ class HiveViewModel @Inject constructor(
 
     private fun checkShouldRefreshTopHeadlineData() {
         val lastTimeDuration = readSyncData(KEY_TOP_HEADLINE_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
-        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, Init.typeValue)
+        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, INIT.typeValue)
         if (getCurrentTimeInMillis() > lastTimeDuration
-            || lastRefreshStatus == Init.typeValue
-            || lastRefreshStatus == Failed.typeValue
+            || lastRefreshStatus == INIT.typeValue
+            || lastRefreshStatus == FAILED.typeValue
         ) {
             LogUtil.d(TAG, "[Top-Headline News Checker] Refresh data.")
             getTopHeadlineNewsData()
@@ -313,7 +313,7 @@ class HiveViewModel @Inject constructor(
      * @param result        received DTO from the remote-server
      * */
     private fun handleEverythingNewsData(result: NetworkResult<TrendingNewsDTO>) {
-        updateNewsRefreshTime(Everything)
+        updateNewsRefreshTime(EVERYTHING)
         when (result) {
             is NetworkResult.Loading -> {
                 LogUtil.d(TAG, "[Handle Everything News Data] Loading...")
@@ -324,16 +324,16 @@ class HiveViewModel @Inject constructor(
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Everything News Data] Succeed, data: $dto")
                     dto.articles?.also {
-                        updateNewsRefreshStatus(Everything, Success)
+                        updateNewsRefreshStatus(EVERYTHING, SUCCESS)
                         setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
                     } ?: {
                         LogUtil.w(TAG, "[Handle Everything News Data] Succeed without [Articles] data")
-                        updateNewsRefreshStatus(Everything, SuccessWithoutData)
+                        updateNewsRefreshStatus(EVERYTHING, SUCCESS_WITHOUT_DATA)
                         setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
                     }
                 } ?: {
                     LogUtil.w(TAG, "[Handle Everything News Data] Succeed without data")
-                    updateNewsRefreshStatus(Everything, SuccessWithoutData)
+                    updateNewsRefreshStatus(EVERYTHING, SUCCESS_WITHOUT_DATA)
                     setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
                 }
             }
@@ -342,7 +342,7 @@ class HiveViewModel @Inject constructor(
                 val errorCode = result.code
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Everything News Data] Failed, ($errorCode, $errorMessage)")
-                updateNewsRefreshStatus(Everything, Failed)
+                updateNewsRefreshStatus(EVERYTHING, FAILED)
                 setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchFailed(errorCode, errorMessage))
             }
         }
@@ -354,7 +354,7 @@ class HiveViewModel @Inject constructor(
      * @param result        received DTO from the remote-server
      * */
     private fun handleTopHeadlineNewsData(result: NetworkResult<TopHeadlinesNewsDTO>) {
-        updateNewsRefreshTime(TopHeadline)
+        updateNewsRefreshTime(TOP_HEADLINE)
         when (result) {
             is NetworkResult.Loading -> {
                 LogUtil.d(TAG, "[Handle Top Headline News Data] Loading...")
@@ -365,16 +365,16 @@ class HiveViewModel @Inject constructor(
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Top Headline News Data] Succeed, data: $dto")
                     dto.articles?.also {
-                        updateNewsRefreshStatus(TopHeadline, Success)
+                        updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS)
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
                     } ?: {
                         LogUtil.w(TAG, "[Handle Top Headline News Data] Succeed without [Articles] data")
-                        updateNewsRefreshStatus(TopHeadline, SuccessWithoutData)
+                        updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS_WITHOUT_DATA)
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
                     }
                 } ?: {
                     LogUtil.w(TAG, "[Handle Top Headline News Data] Succeed without data")
-                    updateNewsRefreshStatus(TopHeadline, SuccessWithoutData)
+                    updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS_WITHOUT_DATA)
                     setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
                 }
             }
@@ -383,7 +383,7 @@ class HiveViewModel @Inject constructor(
                 val errorCode = result.code
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Top Headline News Data] Failed, ($errorCode, $errorMessage)")
-                updateNewsRefreshStatus(TopHeadline, Failed)
+                updateNewsRefreshStatus(TOP_HEADLINE, FAILED)
                 setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchFailed(errorCode, errorMessage))
             }
         }
@@ -398,8 +398,8 @@ class HiveViewModel @Inject constructor(
      * */
     private fun updateNewsRefreshTime(type: NewsType) {
         val key = when (type) {
-            Everything -> KEY_EVERYTHING_TIME_DURATION
-            TopHeadline -> KEY_TOP_HEADLINE_TIME_DURATION
+            EVERYTHING -> KEY_EVERYTHING_TIME_DURATION
+            TOP_HEADLINE -> KEY_TOP_HEADLINE_TIME_DURATION
         }
 
         writeSyncData(key, getCurrentTimeInMillis())
@@ -419,8 +419,8 @@ class HiveViewModel @Inject constructor(
         status: NewsDataStatus
     ) {
         val key = when (type) {
-            Everything -> KEY_EVERYTHING_STATUS
-            TopHeadline -> KEY_TOP_HEADLINE_STATUS
+            EVERYTHING -> KEY_EVERYTHING_STATUS
+            TOP_HEADLINE -> KEY_TOP_HEADLINE_STATUS
         }
 
         writeSyncData(key, status.typeValue)

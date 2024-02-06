@@ -13,9 +13,9 @@ import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.Explore
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.Hive
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.Home
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.EXPLORE
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HIVE
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
 
 @Composable
 fun MainFeatureNavHost(
@@ -29,9 +29,9 @@ fun MainFeatureNavHost(
     val systemUiController = rememberSystemUiController()
 
     when (mainScreenState.currentTopLevelDestination) {
-        Home -> systemUiController.updateStatusBarColor(darkIcons = false)
-        Explore -> systemUiController.updateStatusBarColor(darkIcons = true)
-        Hive -> systemUiController.updateStatusBarColor(darkIcons = false)
+        HOME -> systemUiController.updateStatusBarColor(darkIcons = false)
+        EXPLORE -> systemUiController.updateStatusBarColor(darkIcons = true)
+        HIVE -> systemUiController.updateStatusBarColor(darkIcons = false)
         else -> systemUiController.updateStatusBarColor(darkIcons = false)
     }
 

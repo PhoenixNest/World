@@ -6,11 +6,11 @@ package io.data.util
  * `Possible options: business, entertainment, general, health, science, sports, technology.`
  * */
 enum class NewsCategory {
-    Business,
-    Entertainment,
-    General,
-    Health,
-    Science,
-    Sports,
+    BUSINESS,
+    ENTERTAINMENT,
+    GENERAL,
+    HEALTH,
+    SCIENCE,
+    SPORTS,
     Technology
 }

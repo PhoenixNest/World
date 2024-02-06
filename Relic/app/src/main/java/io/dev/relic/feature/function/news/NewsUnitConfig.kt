@@ -8,7 +8,7 @@ import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
 object NewsUnitConfig {
 
-    val DEFAULT_NEWS_SORT_RULE = NewsSortRule.PublishedAt
+    val DEFAULT_NEWS_SORT_RULE = NewsSortRule.PUBLISHED_AT
     const val DEFAULT_INIT_NEWS_PAGE_SIZE = 20
     const val DEFAULT_INIT_NEWS_PAGE_INDEX = 1
 
@@ -22,7 +22,7 @@ object NewsUnitConfig {
     }
 
     object TopHeadline {
-        val DEFAULT_SEARCH_KEYWORDS = NewsTopHeadlineCategories.Trending.name
+        val DEFAULT_SEARCH_KEYWORDS = NewsTopHeadlineCategories.TRENDING.name
         val DEFAULT_NEWS_COUNTRY_TYPE = NewsCountryType.US
         val DEFAULT_NEWS_CATEGORY = NewsCategory.Technology
     }

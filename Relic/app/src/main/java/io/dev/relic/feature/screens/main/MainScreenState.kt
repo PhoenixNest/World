@@ -63,7 +63,7 @@ class MainScreenState(
     val currentNetworkStatus = networkMonitor.observe().stateIn(
         scope = coroutineScope,
         started = SharingStarted.WhileSubscribed(5 * 1000),
-        initialValue = NetworkStatus.Available
+        initialValue = NetworkStatus.AVAILABLE
     )
 
     val currentDestination
@@ -74,9 +74,9 @@ class MainScreenState(
 
     val currentTopLevelDestination
         @Composable get() = when (currentDestination?.route) {
-            RelicRoute.HOME -> MainScreenTopLevelDestination.Home
-            RelicRoute.EXPLORE -> MainScreenTopLevelDestination.Explore
-            RelicRoute.HIVE -> MainScreenTopLevelDestination.Hive
+            RelicRoute.HOME -> MainScreenTopLevelDestination.HOME
+            RelicRoute.EXPLORE -> MainScreenTopLevelDestination.EXPLORE
+            RelicRoute.HIVE -> MainScreenTopLevelDestination.HIVE
             else -> null
         }
 
@@ -115,15 +115,15 @@ class MainScreenState(
         }
 
         when (topLevelDestination) {
-            MainScreenTopLevelDestination.Home -> {
+            MainScreenTopLevelDestination.HOME -> {
                 navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
             }
 
-            MainScreenTopLevelDestination.Explore -> {
+            MainScreenTopLevelDestination.EXPLORE -> {
                 navHostController.navigateToExplorePage(navOptions = topLevelNavOptions)
             }
 
-            MainScreenTopLevelDestination.Hive -> {
+            MainScreenTopLevelDestination.HIVE -> {
                 navHostController.navigateToHivePage(navOptions = topLevelNavOptions)
             }
         }

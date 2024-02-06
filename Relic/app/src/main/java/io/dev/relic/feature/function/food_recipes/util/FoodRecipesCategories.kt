@@ -8,7 +8,7 @@ enum class FoodRecipesCategories(
     @DrawableRes val iconResId: Int,
     @StringRes val tabLabelResId: Int
 ) {
-    Coffee(R.drawable.ic_coffee, R.string.food_recipes_label_coffee),
-    Cookie(R.drawable.ic_cookie, R.string.food_recipes_label_cookie),
-    Snack(R.drawable.ic_snack, R.string.food_recipes_label_snack)
+    COFFEE(R.drawable.ic_coffee, R.string.food_recipes_label_coffee),
+    COOKIE(R.drawable.ic_cookie, R.string.food_recipes_label_cookie),
+    SNACK(R.drawable.ic_snack, R.string.food_recipes_label_snack)
 }
