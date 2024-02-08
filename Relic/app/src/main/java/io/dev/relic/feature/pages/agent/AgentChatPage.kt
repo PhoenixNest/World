@@ -65,21 +65,18 @@ private fun AgentChatPage(
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit
 ) {
-    when (agentDataState) {
+    val isAwaitingAnswer = when (agentDataState) {
         is GeminiAgentDataState.Init,
         is GeminiAgentDataState.SuccessReceivedAnswer,
-        is GeminiAgentDataState.FailedOrError -> {
+        is GeminiAgentDataState.FailedOrError -> false
 
-        }
-
-        is GeminiAgentDataState.SendingQuestion -> {
-
-        }
+        is GeminiAgentDataState.SendingQuestion -> true
     }
 
     AgentChatPageContent(
         inputMessage = inputMessage,
         isEnableSendButton = isEnableSendButton,
+        isAwaitingAnswer = isAwaitingAnswer,
         chatHistory = agentChatList,
         onMessageValueChange = onMessageValueChange,
         onSendMessage = onSendMessage,

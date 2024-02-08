@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.ui
+package io.dev.relic.feature.function.agent.gemini.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.agent.gemini.model.AbsGeminiCell
-import io.dev.relic.feature.function.agent.ui.widget.AgentMessageCell
+import io.dev.relic.feature.function.agent.gemini.ui.widget.AgentMessageCell
 
 @Composable
 fun AgentChatHistory(
@@ -32,8 +32,8 @@ fun AgentChatHistory(
     ) {
         itemsIndexed(chatHistory) { index, cell ->
             val itemDecorationModifier = Modifier.padding(
-                top = 16.dp,
-                bottom = if (index == chatHistory.size - 1) 136.dp else 0.dp
+                top = if (index == 0) 16.dp else 0.dp,
+                bottom = if (index == chatHistory.size - 1) 160.dp else 0.dp
             )
             AgentMessageCell(
                 geminiCellContent = cell,

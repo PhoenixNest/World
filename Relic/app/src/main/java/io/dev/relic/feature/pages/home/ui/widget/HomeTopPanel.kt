@@ -41,7 +41,7 @@ import io.core.ui.theme.mainButtonColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
-import io.dev.relic.feature.function.agent.ui.AgentSearchBar
+import io.dev.relic.feature.function.agent.gemini.ui.AgentSearchBar
 
 @Suppress("FunctionName")
 fun LazyListScope.HomeTopPanel(

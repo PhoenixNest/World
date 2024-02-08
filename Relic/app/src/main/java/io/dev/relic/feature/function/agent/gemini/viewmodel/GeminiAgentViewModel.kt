@@ -20,6 +20,8 @@ import io.agent.gemini.util.GeminiChatRole
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
+import io.common.util.ToastUtil
+import io.dev.relic.R
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.FailedOrError
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.Init
@@ -76,7 +78,8 @@ class GeminiAgentViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "GeminiAgentViewModel"
-        private const val EMPTY_SEARCH_PROMPT = ""
+
+        private val EMPTY_SEARCH_PROMPT = ""
     }
 
     fun updateSearchPrompt(newValue: String) {
@@ -86,6 +89,16 @@ class GeminiAgentViewModel @Inject constructor(
     /* ======================== Global Message Sender ======================== */
 
     fun sendTextMessage(message: String) {
+        if (!isAllowUserInput) {
+            ToastUtil.showToast(R.string.agent_awaiting_answer_waring)
+            return
+        }
+
+        if (message == EMPTY_SEARCH_PROMPT) {
+            ToastUtil.showToast(R.string.agent_input_waring)
+            return
+        }
+
         LogUtil.d(TAG, "[Send Message] message: $message")
         val cell = GeminiTextCell(
             roleId = GeminiChatRole.USER.roleId,

@@ -96,5 +96,10 @@
 
     <!-- Agent Unit -->
     <string name="agent_input_area_hint">Ask your Ai assistant…</string>
+    <string name="agent_awaiting_answer_label">Waiting for Gemini to answer, please be patient.</string>
+    <string name="agent_ask_next">Gemini awaits your next message.</string>
+    <!-- Agent Unit - Waring label -->
+    <string name="agent_input_waring">Please enter a valid message</string>
+    <string name="agent_awaiting_answer_waring">Please wait for Gemini\'s response</string>
 
 </resources>

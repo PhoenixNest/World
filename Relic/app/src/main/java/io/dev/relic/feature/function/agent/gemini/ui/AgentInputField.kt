@@ -1,8 +1,7 @@
-package io.dev.relic.feature.function.agent.ui
+package io.dev.relic.feature.function.agent.gemini.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +34,7 @@ import io.dev.relic.R
 fun AgentInputField(
     inputMessage: String,
     isEnableSend: Boolean,
+    isAwaitingAnswer: Boolean,
     onValueChange: (newValue: String) -> Unit,
     onSendMessage: () -> Unit,
     modifier: Modifier = Modifier
@@ -55,20 +55,7 @@ fun AgentInputField(
                 .wrapContentHeight()
                 .background(mainThemeColorLight.copy(alpha = 0.1F))
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Box(
-                    modifier = Modifier
-                        .height(4.dp)
-                        .width(96.dp)
-                        .align(Alignment.Center)
-                        .background(
-                            color = mainTextColor,
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                )
-            }
-            Spacer(modifier = Modifier.height(24.dp))
+            AgentStatusIndicator(isAwaitingAnswer = isAwaitingAnswer)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -130,6 +117,7 @@ private fun AgentInputBarNoContentPreview() {
     AgentInputField(
         inputMessage = "",
         isEnableSend = false,
+        isAwaitingAnswer = false,
         onValueChange = {},
         onSendMessage = {}
     )
@@ -141,6 +129,7 @@ private fun AgentInputBarPreview() {
     AgentInputField(
         inputMessage = "Temp input value",
         isEnableSend = true,
+        isAwaitingAnswer = true,
         onValueChange = {},
         onSendMessage = {}
     )
@@ -156,6 +145,7 @@ private fun AgentInputBarLargeContentPreview() {
     AgentInputField(
         inputMessage = stringBuilder.toString(),
         isEnableSend = true,
+        isAwaitingAnswer = true,
         onValueChange = {},
         onSendMessage = {}
     )

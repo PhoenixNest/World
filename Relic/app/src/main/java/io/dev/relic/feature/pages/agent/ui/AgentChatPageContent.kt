@@ -11,13 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.agent.gemini.model.AbsGeminiCell
 import io.core.ui.theme.mainThemeColor
-import io.dev.relic.feature.function.agent.ui.AgentChatHistory
-import io.dev.relic.feature.function.agent.ui.AgentInputField
+import io.dev.relic.feature.function.agent.gemini.ui.AgentChatHistory
+import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
 
 @Composable
 fun AgentChatPageContent(
     inputMessage: String,
     isEnableSendButton: Boolean,
+    isAwaitingAnswer: Boolean,
     chatHistory: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
@@ -43,6 +44,7 @@ fun AgentChatPageContent(
             AgentInputField(
                 inputMessage = inputMessage,
                 isEnableSend = isEnableSendButton,
+                isAwaitingAnswer = isAwaitingAnswer,
                 onValueChange = onMessageValueChange,
                 onSendMessage = onSendMessage,
                 modifier = Modifier.align(Alignment.BottomCenter)
