@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.agent.ui.widget
+package io.dev.relic.feature.function.agent.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.agent.gemini.model.AbsGeminiCell
-import io.dev.relic.feature.function.agent.ui.AgentMessageCell
+import io.dev.relic.feature.function.agent.ui.widget.AgentMessageCell
 
 @Composable
 fun AgentChatHistory(

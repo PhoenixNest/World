@@ -9,7 +9,7 @@ import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
-import io.dev.relic.feature.function.news.ui.NewsCardItem
+import io.dev.relic.feature.function.news.ui.widget.NewsCardItem
 
 @Suppress("FunctionName")
 fun LazyListScope.HiveTopHeadlineNewsList(

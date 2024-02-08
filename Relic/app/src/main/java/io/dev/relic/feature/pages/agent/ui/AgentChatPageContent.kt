@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.agent.gemini.model.AbsGeminiCell
 import io.core.ui.theme.mainThemeColor
+import io.dev.relic.feature.function.agent.ui.AgentChatHistory
 import io.dev.relic.feature.function.agent.ui.AgentInputField
-import io.dev.relic.feature.pages.agent.ui.widget.AgentChatHistory
 
 @Composable
 fun AgentChatPageContent(

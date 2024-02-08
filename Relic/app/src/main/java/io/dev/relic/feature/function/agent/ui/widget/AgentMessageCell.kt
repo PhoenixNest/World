@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.ui
+package io.dev.relic.feature.function.agent.ui.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

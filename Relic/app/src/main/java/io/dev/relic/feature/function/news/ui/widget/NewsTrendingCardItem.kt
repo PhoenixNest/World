@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.news.ui
+package io.dev.relic.feature.function.news.ui.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

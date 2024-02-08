@@ -19,7 +19,7 @@ import io.core.ui.CommonNoDataComponent
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.EverythingNewsDataState
-import io.dev.relic.feature.function.news.ui.NewsTrendingCardItem
+import io.dev.relic.feature.function.news.ui.widget.NewsTrendingCardItem
 
 @Suppress("FunctionName")
 fun LazyListScope.HiveTrendingNewsList(
