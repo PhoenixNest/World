@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
+import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
@@ -23,6 +25,7 @@ fun MainFeatureNavHost(
     drawerState: DrawerState,
     navHostController: NavHostController,
     mainViewModel: MainViewModel,
+    geminiAgentViewModel: GeminiAgentViewModel,
     modifier: Modifier = Modifier,
     startDestination: String = RelicRoute.BASE_ROUTE
 ) {
@@ -43,7 +46,8 @@ fun MainFeatureNavHost(
         pageHome(
             mainScreenState = mainScreenState,
             drawerState = drawerState,
-            mainViewModel = mainViewModel
+            mainViewModel = mainViewModel,
+            geminiAgentViewModel = geminiAgentViewModel
         )
         pageExplore(
             mainScreenState = mainScreenState,
@@ -52,6 +56,12 @@ fun MainFeatureNavHost(
         pageHive(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel
+        )
+        pageAgentChat(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel,
+            geminiAgentViewModel = geminiAgentViewModel,
+            onBackClick = { navHostController.popBackStack() }
         )
         pageNewsDetail {
             navHostController.popBackStack()

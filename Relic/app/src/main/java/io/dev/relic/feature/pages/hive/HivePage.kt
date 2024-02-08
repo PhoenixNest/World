@@ -25,6 +25,8 @@ fun HivePageRoute(
     hiveViewModel: HiveViewModel = hiltViewModel()
 ) {
 
+    /* ======================== Common ======================== */
+
     val context = LocalContext.current
 
     /* ======================== Field ======================== */

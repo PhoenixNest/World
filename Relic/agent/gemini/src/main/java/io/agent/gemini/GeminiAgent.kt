@@ -29,9 +29,12 @@ object GeminiAgent {
     private val GEMINI_DEV_KEY = RelicResCenter.getString(R.string.agent_gemini_dev_key)
 
     fun startChat(
+        isVisionModel: Boolean,
         chatHistory: List<Content> = emptyList()
     ): Chat {
-        return coreModel().startChat(chatHistory)
+        val geminiModel = chooseGeminiModel(isVisionModel)
+        LogUtil.d(TAG, "[Gemini Model] Chosen model: ${geminiModel.modelName}")
+        return geminiModel.startChat(chatHistory)
     }
 
     suspend fun <T> sendMessage(
@@ -88,10 +91,25 @@ object GeminiAgent {
         }
     }
 
-    private fun coreModel(): GenerativeModel {
+    private fun coreTextModel(): GenerativeModel {
+        return GenerativeModel(
+            modelName = GEMINI_MODEL_TEXT_ONLY,
+            apiKey = GEMINI_DEV_KEY
+        )
+    }
+
+    private fun coreHybridModel(): GenerativeModel {
         return GenerativeModel(
             modelName = GEMINI_MODEL_TEXT_VISION,
             apiKey = GEMINI_DEV_KEY
         )
+    }
+
+    private fun chooseGeminiModel(isVisionModel: Boolean = false): GenerativeModel {
+        return if (isVisionModel) {
+            coreHybridModel()
+        } else {
+            coreTextModel()
+        }
     }
 }

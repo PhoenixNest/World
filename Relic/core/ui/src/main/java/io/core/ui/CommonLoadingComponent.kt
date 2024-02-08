@@ -25,7 +25,7 @@ fun CommonLoadingComponent(
     iconSizeModifier: Modifier = Modifier
 ) {
 
-    val commonLoadingRes by rememberLottieComposition(
+    val lottieRes by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_common_loading)
     )
 
@@ -37,7 +37,7 @@ fun CommonLoadingComponent(
         contentAlignment = Alignment.Center
     ) {
         LottieAnimation(
-            composition = commonLoadingRes,
+            composition = lottieRes,
             modifier = iconSizeModifier.size(128.dp),
             restartOnPlay = true,
             iterations = Int.MAX_VALUE,

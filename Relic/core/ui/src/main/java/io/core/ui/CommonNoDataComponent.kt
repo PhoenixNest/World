@@ -38,7 +38,7 @@ fun CommonNoDataComponent(
     isShowText: Boolean = true
 ) {
 
-    val commonLoadingRes by rememberLottieComposition(
+    val lottieRes by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_no_data)
     )
 
@@ -55,7 +55,7 @@ fun CommonNoDataComponent(
             modifier = Modifier.wrapContentSize()
         ) {
             LottieAnimation(
-                composition = commonLoadingRes,
+                composition = lottieRes,
                 modifier = iconSizeModifier.size(128.dp),
                 restartOnPlay = true,
                 iterations = Int.MAX_VALUE,

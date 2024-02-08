@@ -5,7 +5,7 @@ import java.util.UUID
 
 abstract class AbsGeminiCell(
     val id: String = UUID.randomUUID().toString(),
-    val role: Int,
+    val roleId: Int,
     val cellType: Int,
     val isPending: Boolean,
     val chatCellTimeMinus: Long = Calendar.getInstance().timeInMillis

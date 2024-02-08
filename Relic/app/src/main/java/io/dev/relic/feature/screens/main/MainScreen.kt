@@ -28,6 +28,7 @@ import io.core.network.monitor.NetworkStatus
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainDrawer
@@ -39,6 +40,7 @@ fun MainScreen(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
     mainViewModel: MainViewModel,
+    geminiAgentViewModel: GeminiAgentViewModel,
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -153,6 +155,7 @@ fun MainScreen(
                             drawerState = drawerState,
                             navHostController = mainScreenState.navHostController,
                             mainViewModel = mainViewModel,
+                            geminiAgentViewModel = geminiAgentViewModel,
                             modifier = Modifier.fillMaxSize()
                         )
                         if (isShowBottomBar) {

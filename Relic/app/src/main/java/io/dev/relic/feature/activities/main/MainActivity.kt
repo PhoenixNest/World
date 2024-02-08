@@ -22,6 +22,7 @@ import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGR
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
 import io.domain.app.AbsBaseActivity
@@ -31,10 +32,17 @@ import io.module.map.amap.AMapPrivacyCenter
 class MainActivity : AbsBaseActivity() {
 
     /**
-     * VM
+     * ViewModel - Main
      * */
     private val mainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+    /**
+     * ViewModel - Agent
+     * */
+    private val geminiAgentViewModel by lazy {
+        ViewModelProvider(this)[GeminiAgentViewModel::class.java]
     }
 
     companion object {
@@ -91,7 +99,8 @@ class MainActivity : AbsBaseActivity() {
                         savedInstanceState = savedInstanceState,
                         windowSizeClass = calculateWindowSizeClass(activity = this),
                         networkMonitor = networkMonitor,
-                        mainViewModel = mainViewModel
+                        mainViewModel = mainViewModel,
+                        geminiAgentViewModel = geminiAgentViewModel
                     )
                 }
             }

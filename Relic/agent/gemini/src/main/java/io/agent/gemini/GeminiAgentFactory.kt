@@ -4,8 +4,8 @@ import com.google.ai.client.generativeai.Chat
 
 object GeminiAgentFactory {
 
-    fun provideNewChatWindow(): Chat {
-        return GeminiAgent.startChat()
+    fun provideNewChatWindow(isVisionModel: Boolean = false): Chat {
+        return GeminiAgent.startChat(isVisionModel)
     }
 
 }

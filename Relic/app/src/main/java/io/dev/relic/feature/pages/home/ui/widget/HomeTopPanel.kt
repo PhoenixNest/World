@@ -15,8 +15,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,7 +147,7 @@ private fun HomeTopBar(
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Apps,
+                    painter = painterResource(id = R.drawable.ic_apps),
                     contentDescription = DEFAULT_DESC,
                     tint = mainButtonColorLight
                 )

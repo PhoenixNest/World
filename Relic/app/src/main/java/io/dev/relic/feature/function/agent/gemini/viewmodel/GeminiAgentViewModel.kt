@@ -21,8 +21,13 @@ import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
+import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.FailedOrError
+import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.Init
+import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.SendingQuestion
+import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState.SuccessReceivedAnswer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -38,6 +43,11 @@ class GeminiAgentViewModel @Inject constructor(
     var agentSearchContent by mutableStateOf("")
 
     /**
+     * When user has sending a message to agent, set this value to false.
+     * */
+    var isAllowUserInput by mutableStateOf(false)
+
+    /**
      * Current chat window instance.
      * */
     private var agentChatWindow: Chat? = null
@@ -45,11 +55,18 @@ class GeminiAgentViewModel @Inject constructor(
     /**
      * The chat message data flow by using gemini.
      * */
-    private val _agentChatDataStateFlow = MutableStateFlow<GeminiAgentDataState>(GeminiAgentDataState.Init)
+    private val _agentChatDataStateFlow = MutableStateFlow<GeminiAgentDataState>(Init)
     val agentChatDataStateFlow: StateFlow<GeminiAgentDataState> get() = _agentChatDataStateFlow
+
+    /**
+     * Record the latest chat history.
+     * */
+    private var _agentChatHistory: MutableList<AbsGeminiCell> = mutableListOf()
+    val agentChatHistory get() = _agentChatHistory.toList()
 
     init {
         createNewChatWindow()
+        handleGeminiState()
     }
 
     override fun onCleared() {
@@ -58,7 +75,8 @@ class GeminiAgentViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "AgentViewModel"
+        private const val TAG = "GeminiAgentViewModel"
+        private const val EMPTY_SEARCH_PROMPT = ""
     }
 
     fun updateSearchPrompt(newValue: String) {
@@ -66,92 +84,125 @@ class GeminiAgentViewModel @Inject constructor(
     }
 
     fun sendTextMessage(message: String) {
+        LogUtil.d(TAG, "[Send Message] message: $message")
+        val cell = GeminiTextCell(
+            roleId = GeminiChatRole.USER.roleId,
+            cellTypeId = GeminiChatCellType.HYBRID.typeId,
+            isPending = true,
+            textContent = message
+        )
+
         operationInViewModelScope {
-            emitSendingState(
-                GeminiTextCell(
-                    role = GeminiChatRole.USER.roleId,
-                    cellType = GeminiChatCellType.HYBRID.typeId,
-                    isPending = true,
-                    textContent = message
-                )
-            )
+            updateSearchPrompt(EMPTY_SEARCH_PROMPT)
+            insertChatHistoryItem(cell)
+            setState(_agentChatDataStateFlow, SendingQuestion(cell))
             sendMessage(message)
         }
     }
 
     fun sendHybridMessage(message: Content) {
+        LogUtil.d(TAG, "[Send Content] content: $message")
+        val cell = GeminiHybridCell(
+            role = GeminiChatRole.USER.roleId,
+            cellTypeId = GeminiChatCellType.HYBRID.typeId,
+            isPending = true,
+            hybridContent = message
+        )
+
         operationInViewModelScope {
-            emitSendingState(
-                GeminiHybridCell(
-                    role = GeminiChatRole.USER.roleId,
-                    cellType = GeminiChatCellType.HYBRID.typeId,
-                    isPending = true,
-                    hybridContent = message
-                )
-            )
+            insertChatHistoryItem(cell)
+            setState(_agentChatDataStateFlow, SendingQuestion(cell))
             sendMessage(message)
         }
     }
 
+    private fun toggleInputSwitcher() {
+        isAllowUserInput = (!isAllowUserInput)
+        LogUtil.d(TAG, "[Input Manager] isAllowUserInput = $isAllowUserInput")
+    }
+
     private fun createNewChatWindow() {
-        releaseChatWindow()
+        LogUtil.w(TAG, "[Chat Window] onCreate")
+        if (agentChatWindow != null) releaseChatWindow()
         agentChatWindow = GeminiAgentFactory.provideNewChatWindow()
     }
 
     private fun releaseChatWindow() {
+        LogUtil.w(TAG, "[Chat Window] onRelease")
         agentChatWindow = null
     }
 
-    private fun emitSendingState(questionCell: AbsGeminiCell) {
-        setState(
-            stateFlow = _agentChatDataStateFlow,
-            newState = GeminiAgentDataState.SendingQuestion(questionCell)
-        )
+    private fun insertChatHistoryItem(cell: AbsGeminiCell) {
+        _agentChatHistory.add(cell)
     }
 
-    private fun emitErrorState(
-        errorCode: Int? = null,
-        errorMessage: String? = null
-    ) {
-        setState(
-            stateFlow = _agentChatDataStateFlow,
-            newState = GeminiAgentDataState.FailedOrError(
-                errorCode = errorCode,
-                errorMessage = errorMessage
-            )
-        )
+    private fun removeChatHistoryItem(): AbsGeminiCell? {
+        return _agentChatHistory.removeLastOrNull()
+    }
+
+    private fun clearChatHistory() {
+        _agentChatHistory.clear()
+    }
+
+    private fun handleGeminiState() {
+        operationInViewModelScope {
+            _agentChatDataStateFlow.onEach {
+                when (it) {
+                    is Init -> toggleInputSwitcher()
+                    is SendingQuestion -> toggleInputSwitcher()
+                    is SuccessReceivedAnswer -> toggleInputSwitcher()
+                    is FailedOrError -> toggleInputSwitcher()
+                }
+            }.stateIn(viewModelScope)
+        }
     }
 
     private suspend fun <T> sendMessage(message: T) {
         agentChatWindow?.also { chatWindow ->
             try {
                 val messageStream = GeminiAgent.sendMessageStream(chatWindow, message)
-                messageStream.onEach { response ->
+                messageStream.catch { throwable ->
+                    handleGeminiError(null, throwable.localizedMessage)
+                }.collect { response ->
                     handleGeminiResponse(response)
-                }.stateIn(viewModelScope)
-            } catch (exception: Exception) {
-                val errorMessage = exception.localizedMessage
-                emitErrorState(
-                    errorCode = null,
-                    errorMessage = errorMessage
-                ).also {
-                    LogUtil.e(TAG, "[Send Message] Error, (null, $errorMessage)")
                 }
+            } catch (exception: Exception) {
+                handleGeminiError(null, exception.localizedMessage)
             }
         }
     }
 
     private fun handleGeminiResponse(response: GenerateContentResponse) {
-        response.text?.also {
-            val newState = GeminiAgentDataState.SuccessReceivedAnswer(
-                GeminiTextCell(
-                    role = GeminiChatRole.AGENT.roleId,
-                    cellType = GeminiChatCellType.TEXT.typeId,
+        operationInViewModelScope {
+            response.text?.also {
+                LogUtil.d(TAG, "[Handle Response] response: $it")
+                val answerCell = GeminiTextCell(
+                    roleId = GeminiChatRole.AGENT.roleId,
+                    cellTypeId = GeminiChatCellType.TEXT.typeId,
                     isPending = false,
                     textContent = it
                 )
-            )
-            setState(_agentChatDataStateFlow, newState)
+
+                setState(_agentChatDataStateFlow, SuccessReceivedAnswer(answerCell))
+                insertChatHistoryItem(answerCell)
+            }
+        }
+    }
+
+    private fun handleGeminiError(
+        errorCode: Int?,
+        errorMessage: String?
+    ) {
+        LogUtil.e(TAG, "[Handle Error] Error, ($errorCode, $errorMessage)")
+        val errorCell = GeminiTextCell(
+            roleId = GeminiChatRole.ERROR.roleId,
+            isPending = false,
+            textContent = errorMessage ?: "Unknown error occurred."
+        )
+
+        operationInViewModelScope {
+            insertChatHistoryItem(errorCell)
+            setState(_agentChatDataStateFlow, FailedOrError(errorCode, errorMessage))
         }
     }
 }

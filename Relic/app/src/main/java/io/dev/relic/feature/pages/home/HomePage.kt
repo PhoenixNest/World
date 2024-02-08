@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,6 +16,7 @@ import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
@@ -26,15 +26,17 @@ fun HomePageRoute(
     mainScreenState: MainScreenState,
     drawerState: DrawerState,
     mainViewModel: MainViewModel,
-    geminiAgentViewModel: GeminiAgentViewModel = hiltViewModel(),
+    geminiAgentViewModel: GeminiAgentViewModel,
     foodReViewModel: FoodRecipesViewModel = hiltViewModel()
 ) {
 
     /* ======================== Common ======================== */
 
-    val coroutineScope = rememberCoroutineScope()
+    val coroutineScope = mainScreenState.coroutineScope
     val currentTimeSection = getCurrentTimeSection()
     val localFocusManager = LocalFocusManager.current
+
+    /* ======================== Field ======================== */
 
     // Agent
     val agentSearchContent = geminiAgentViewModel.agentSearchContent
@@ -60,7 +62,12 @@ fun HomePageRoute(
         },
         onAgentStartChat = {
             geminiAgentViewModel.sendTextMessage(agentSearchContent)
+
+            // Clear the latest input focus.
             localFocusManager.clearFocus()
+
+            // Navigate to agent chat page.
+            mainScreenState.navHostController.navigateToAgentChatPage()
         },
         foodRecipesTabLazyListState = foodRecipesTabLazyListState,
         foodRecipesContentLazyListState = foodRecipesContentLazyListState,

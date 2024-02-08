@@ -2,14 +2,11 @@ package io.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
-
 val mainThemeColor = Color(0xFF282C34)
 val mainThemeColorLight = Color(0xFFD7D3CB)
 val mainThemeColorAccent = Color(0xFFDEB654)
+
+val errorColorAccent = Color(0xFFD32F2F)
 
 val mainBackgroundColor = Color.DarkGray
 val mainBackgroundColorLight = Color.White.copy(alpha = 0.8F)

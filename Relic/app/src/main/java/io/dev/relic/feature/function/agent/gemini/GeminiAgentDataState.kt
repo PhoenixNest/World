@@ -8,8 +8,6 @@ sealed class GeminiAgentDataState {
 
     data object Init : GeminiAgentDataState()
 
-    data object NoChatHistory : GeminiAgentDataState()
-
     /* Loading */
 
     data class SendingQuestion(

@@ -1,12 +1,14 @@
 package io.agent.gemini.model
 
+import io.agent.gemini.util.GeminiChatCellType
+
 class GeminiTextCell(
-    role: Int,
-    cellType: Int,
+    roleId: Int,
     isPending: Boolean,
-    val textContent: String
+    val textContent: String,
+    cellTypeId: Int = GeminiChatCellType.TEXT.typeId
 ) : AbsGeminiCell(
-    role = role,
-    cellType = cellType,
+    roleId = roleId,
+    cellType = cellTypeId,
     isPending = isPending
 )

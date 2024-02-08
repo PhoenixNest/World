@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonInputField
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColor
+import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 
 @Composable
@@ -27,10 +27,10 @@ fun AgentSearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = mainThemeColor.copy(alpha = 0.3F),
+                color = mainThemeColorLight.copy(alpha = 0.1F),
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(20.dp),
+            .padding(16.dp),
         contentTextStyle = TextStyle(mainTextColor),
         hintTextStyle = TextStyle(mainTextColor.copy(alpha = 0.3F)),
         maxLines = 1,
