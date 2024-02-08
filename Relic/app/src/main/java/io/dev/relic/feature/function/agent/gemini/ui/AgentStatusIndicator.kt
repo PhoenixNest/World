@@ -31,10 +31,7 @@ fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(
-                top = 16.dp,
-                bottom = 24.dp
-            ),
+            .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
