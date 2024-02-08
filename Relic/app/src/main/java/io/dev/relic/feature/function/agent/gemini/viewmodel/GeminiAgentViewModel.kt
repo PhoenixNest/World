@@ -48,7 +48,7 @@ class GeminiAgentViewModel @Inject constructor(
     var isAllowUserInput by mutableStateOf(false)
 
     /**
-     * Current chat window instance.
+     * Instance value of the current chat window.
      * */
     private var agentChatWindow: Chat? = null
 
@@ -83,6 +83,8 @@ class GeminiAgentViewModel @Inject constructor(
         agentSearchContent = newValue
     }
 
+    /* ======================== Global Message Sender ======================== */
+
     fun sendTextMessage(message: String) {
         LogUtil.d(TAG, "[Send Message] message: $message")
         val cell = GeminiTextCell(
@@ -97,6 +99,7 @@ class GeminiAgentViewModel @Inject constructor(
             insertChatHistoryItem(cell)
             setState(_agentChatDataStateFlow, SendingQuestion(cell))
             sendMessage(message)
+            // sendMessageStream(message)
         }
     }
 
@@ -113,8 +116,11 @@ class GeminiAgentViewModel @Inject constructor(
             insertChatHistoryItem(cell)
             setState(_agentChatDataStateFlow, SendingQuestion(cell))
             sendMessage(message)
+            // sendMessageStream(message)
         }
     }
+
+    /* ======================== Chat Window Controller ======================== */
 
     private fun toggleInputSwitcher() {
         isAllowUserInput = (!isAllowUserInput)
@@ -132,6 +138,8 @@ class GeminiAgentViewModel @Inject constructor(
         agentChatWindow = null
     }
 
+    /* ======================== Chat History Controller ======================== */
+
     private fun insertChatHistoryItem(cell: AbsGeminiCell) {
         _agentChatHistory.add(cell)
     }
@@ -144,24 +152,68 @@ class GeminiAgentViewModel @Inject constructor(
         _agentChatHistory.clear()
     }
 
+    /* ======================== Global Gemini data state Handler ======================== */
+
+    /**
+     * Control the front state or just change some field value with the Gemini state.
+     * */
     private fun handleGeminiState() {
         operationInViewModelScope {
             _agentChatDataStateFlow.onEach {
                 when (it) {
-                    is Init -> toggleInputSwitcher()
-                    is SendingQuestion -> toggleInputSwitcher()
-                    is SuccessReceivedAnswer -> toggleInputSwitcher()
-                    is FailedOrError -> toggleInputSwitcher()
+                    is Init -> {
+                        LogUtil.d(TAG, "[Gemini State] Init")
+                        toggleInputSwitcher()
+                    }
+
+                    is SendingQuestion -> {
+                        LogUtil.d(TAG, "[Gemini State] Sending question")
+                        toggleInputSwitcher()
+                    }
+
+                    is SuccessReceivedAnswer -> {
+                        LogUtil.d(TAG, "[Gemini State] Success received answer")
+                        toggleInputSwitcher()
+                    }
+
+                    is FailedOrError -> {
+                        LogUtil.e(TAG, "[Gemini State] Failed Or Error")
+                        toggleInputSwitcher()
+                    }
                 }
             }.stateIn(viewModelScope)
         }
     }
 
+    /* ======================== Inner Message Sender with Handler ======================== */
+
+    /**
+     * Send generic message to Gemini Model by `Sync` and handle the response data.
+     *
+     * @param message
+     * */
     private suspend fun <T> sendMessage(message: T) {
         agentChatWindow?.also { chatWindow ->
             try {
-                val messageStream = GeminiAgent.sendMessageStream(chatWindow, message)
-                messageStream.catch { throwable ->
+                val messageResponse = GeminiAgent.sendMessage(chatWindow, message)
+                handleGeminiResponse(messageResponse)
+            } catch (exception: Exception) {
+                handleGeminiError(null, exception.localizedMessage)
+            }
+        }
+    }
+
+    /**
+     * Send generic message to Gemini Model by `Async` and handle
+     * its return data from the response flow.
+     *
+     * @param message
+     * */
+    private suspend fun <T> sendMessageStream(message: T) {
+        agentChatWindow?.also { chatWindow ->
+            try {
+                val messageStreamFlow = GeminiAgent.sendMessageStream(chatWindow, message)
+                messageStreamFlow.catch { throwable ->
                     handleGeminiError(null, throwable.localizedMessage)
                 }.collect { response ->
                     handleGeminiResponse(response)
@@ -172,9 +224,16 @@ class GeminiAgentViewModel @Inject constructor(
         }
     }
 
-    private fun handleGeminiResponse(response: GenerateContentResponse) {
+    /* ======================== Response Handler ======================== */
+
+    /**
+     * Handle the response data from Gemini Model.
+     *
+     * @param response
+     * */
+    private fun handleGeminiResponse(response: GenerateContentResponse?) {
         operationInViewModelScope {
-            response.text?.also {
+            response?.text?.also {
                 LogUtil.d(TAG, "[Handle Response] response: $it")
                 val answerCell = GeminiTextCell(
                     roleId = GeminiChatRole.AGENT.roleId,
@@ -189,6 +248,12 @@ class GeminiAgentViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Handle the Error status data from the Gemini Model or Android System.
+     *
+     * @param errorCode
+     * @param errorMessage
+     * */
     private fun handleGeminiError(
         errorCode: Int?,
         errorMessage: String?
