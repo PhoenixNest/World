@@ -79,7 +79,7 @@ class GeminiAgentViewModel @Inject constructor(
     companion object {
         private const val TAG = "GeminiAgentViewModel"
 
-        private val EMPTY_SEARCH_PROMPT = ""
+        private const val EMPTY_SEARCH_PROMPT = ""
     }
 
     fun updateSearchPrompt(newValue: String) {

@@ -55,7 +55,7 @@ private val endShape = RoundedCornerShape(
 @Composable
 fun AgentMessageCell(
     geminiCellContent: AbsGeminiCell,
-    onCopyTextClick: () -> Unit,
+    onCopyTextClick: (copyText: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val cellGravity = when (geminiCellContent.roleId) {

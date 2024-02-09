@@ -22,6 +22,7 @@ fun AgentChatPageContent(
     chatHistory: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
+    onCopyTextClick: (copyText: String) -> Unit,
     chatLazyListState: LazyListState
 ) {
     LaunchedEffect(chatHistory) {
@@ -39,6 +40,7 @@ fun AgentChatPageContent(
         ) {
             AgentChatHistory(
                 chatHistory = chatHistory,
+                onCopyTextClick = onCopyTextClick,
                 lazyListState = chatLazyListState
             )
             AgentInputField(
