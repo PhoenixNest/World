@@ -101,6 +101,6 @@
     <!-- Agent Unit - Waring label -->
     <string name="agent_input_waring">Please enter a valid message</string>
     <string name="agent_awaiting_answer_waring">Please wait for Gemini\'s response</string>
-    <string name="agent_unknown_cell_type_warning">"Unknown Cell Type"</string>
+    <string name="agent_unknown_cell_type_warning">Unknown Cell Type</string>
 
 </resources>
