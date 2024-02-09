@@ -11,14 +11,15 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,7 @@ private val endShape = RoundedCornerShape(
 @Composable
 fun AgentMessageCell(
     geminiCellContent: AbsGeminiCell,
+    onCopyTextClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val cellGravity = when (geminiCellContent.roleId) {
@@ -85,10 +87,10 @@ fun AgentMessageCell(
             textContent.toString()
         }
 
-        else -> "Unknown Cell Type"
+        else -> stringResource(id = R.string.agent_unknown_cell_type_warning)
     }
 
-    val cellTextColor = when (geminiCellContent.roleId) {
+    val cellContentColor = when (geminiCellContent.roleId) {
         USER.roleId,
         AGENT.roleId -> mainThemeColor
 
@@ -101,69 +103,52 @@ fun AgentMessageCell(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .wrapContentSize()
-                .align(cellGravity)
-                .background(
-                    color = cellBackgroundColor,
-                    shape = cellShape
-                )
-                .padding(16.dp)
+                .align(cellGravity),
+            verticalAlignment = Alignment.Top
         ) {
-            // if (geminiCellContent.roleId == USER.roleId) {
-            //     UserCellIntroBar(onCopyClick = {})
-            //     Spacer(modifier = Modifier.height(16.dp))
-            // }
-            Text(
-                text = cellContent,
-                style = TextStyle(
-                    color = cellTextColor,
-                    fontFamily = ubuntu
+            if (geminiCellContent.roleId == AGENT.roleId
+                || geminiCellContent.roleId == ERROR.roleId
+            ) {
+                Box(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .background(
+                            color = cellBackgroundColor,
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_agent),
+                        contentDescription = DEFAULT_DESC,
+                        modifier = Modifier.padding(16.dp),
+                        tint = cellContentColor
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier.wrapContentSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text(
+                    text = cellContent,
+                    modifier = Modifier
+                        .background(
+                            color = cellBackgroundColor,
+                            shape = cellShape
+                        )
+                        .padding(16.dp),
+                    style = TextStyle(
+                        color = cellContentColor,
+                        fontFamily = ubuntu
+                    )
                 )
-            )
-            // if (geminiCellContent.roleId == AGENT.roleId) {
-            //     Spacer(modifier = Modifier.height(16.dp))
-            //     AgentCellFunctionBar()
-            // }
+            }
         }
-    }
-}
-
-@Composable
-private fun UserCellIntroBar(
-    userName: String = "User",
-    onCopyClick: () -> Unit
-) {
-    Row(
-        modifier = Modifier.wrapContentSize(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = userName,
-            style = TextStyle(
-                color = mainTextColor,
-                fontFamily = ubuntu
-            )
-        )
-        IconButton(onClick = onCopyClick) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_copy),
-                contentDescription = DEFAULT_DESC
-            )
-        }
-    }
-}
-
-@Composable
-private fun AgentCellFunctionBar() {
-    Row(
-        modifier = Modifier.wrapContentSize(),
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        //
     }
 }
 
@@ -196,6 +181,7 @@ private fun AgentMessageCellPreview() {
             )
             AgentMessageCell(
                 geminiCellContent = cell,
+                onCopyTextClick = {},
                 modifier = itemDecorationModifier
             )
         }
