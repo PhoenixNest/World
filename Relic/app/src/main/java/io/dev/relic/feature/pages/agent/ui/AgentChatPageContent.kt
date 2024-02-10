@@ -1,6 +1,8 @@
 package io.dev.relic.feature.pages.agent.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
@@ -10,12 +12,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.agent.gemini.model.AbsGeminiCell
+import io.core.ui.CommonTopBar
+import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.function.agent.gemini.ui.AgentChatHistory
 import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
 
 @Composable
 fun AgentChatPageContent(
+    chatLazyListState: LazyListState,
     inputMessage: String,
     isEnableSendButton: Boolean,
     isAwaitingAnswer: Boolean,
@@ -23,7 +28,7 @@ fun AgentChatPageContent(
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
     onCopyTextClick: (copyText: String) -> Unit,
-    chatLazyListState: LazyListState
+    onBackClick: () -> Unit
 ) {
     LaunchedEffect(chatHistory) {
         chatLazyListState.animateScrollToItem(chatHistory.size)
@@ -33,24 +38,57 @@ fun AgentChatPageContent(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
+                .statusBarsPadding(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
         ) {
-            AgentChatHistory(
-                chatHistory = chatHistory,
-                onCopyTextClick = onCopyTextClick,
-                lazyListState = chatLazyListState
+            CommonTopBar(
+                onBackClick = onBackClick,
+                hasTitle = true,
+                title = "Greeting",
+                iconColor = mainIconColorLight
             )
-            AgentInputField(
+            AgentChatPageArea(
+                chatLazyListState = chatLazyListState,
                 inputMessage = inputMessage,
-                isEnableSend = isEnableSendButton,
+                isEnableSendButton = isEnableSendButton,
                 isAwaitingAnswer = isAwaitingAnswer,
-                onValueChange = onMessageValueChange,
+                chatHistory = chatHistory,
+                onMessageValueChange = onMessageValueChange,
                 onSendMessage = onSendMessage,
-                modifier = Modifier.align(Alignment.BottomCenter)
+                onCopyTextClick = onCopyTextClick
             )
         }
+    }
+}
+
+@Composable
+private fun AgentChatPageArea(
+    chatLazyListState: LazyListState,
+    inputMessage: String,
+    isEnableSendButton: Boolean,
+    isAwaitingAnswer: Boolean,
+    chatHistory: List<AbsGeminiCell>,
+    onMessageValueChange: (message: String) -> Unit,
+    onSendMessage: () -> Unit,
+    onCopyTextClick: (copyText: String) -> Unit
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        AgentChatHistory(
+            chatHistory = chatHistory,
+            onCopyTextClick = onCopyTextClick,
+            lazyListState = chatLazyListState
+        )
+        AgentInputField(
+            inputMessage = inputMessage,
+            isEnableSend = isEnableSendButton,
+            isAwaitingAnswer = isAwaitingAnswer,
+            onValueChange = onMessageValueChange,
+            onSendMessage = onSendMessage,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }

@@ -44,8 +44,8 @@ private fun NewsDetailPage(
         ) {
             CommonTopBar(
                 onBackClick = onBackClick,
-                title = title,
                 hasTitle = true,
+                title = title,
                 iconColor = mainIconColorLight
             )
             CommonComposeWebView(redirectUrl = contentUrl)

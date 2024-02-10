@@ -15,8 +15,13 @@ import io.agent.gemini.GeminiAgentFactory
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiHybridCell
 import io.agent.gemini.model.GeminiTextCell
-import io.agent.gemini.util.GeminiChatCellType
+import io.agent.gemini.util.GeminiChatCellType.HYBRID
+import io.agent.gemini.util.GeminiChatCellType.TEXT
 import io.agent.gemini.util.GeminiChatRole
+import io.agent.gemini.util.GeminiChatRole.AGENT
+import io.agent.gemini.util.GeminiChatRole.USER
+import io.agent.gemini.util.GeminiMessageMode.FULL
+import io.agent.gemini.util.GeminiMessageMode.STREAM
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
@@ -80,6 +85,11 @@ class GeminiAgentViewModel @Inject constructor(
         private const val TAG = "GeminiAgentViewModel"
 
         private const val EMPTY_SEARCH_PROMPT = ""
+
+        /**
+         * Chose the response type of Gemini model.
+         * */
+        private val GEMINI_GENERATE_MODE = FULL
     }
 
     fun updateSearchPrompt(newValue: String) {
@@ -100,9 +110,10 @@ class GeminiAgentViewModel @Inject constructor(
         }
 
         LogUtil.d(TAG, "[Send Message] message: $message")
+
         val cell = GeminiTextCell(
-            roleId = GeminiChatRole.USER.roleId,
-            cellTypeId = GeminiChatCellType.HYBRID.typeId,
+            roleId = USER.roleId,
+            cellTypeId = HYBRID.typeId,
             isPending = true,
             textContent = message
         )
@@ -111,16 +122,19 @@ class GeminiAgentViewModel @Inject constructor(
             updateSearchPrompt(EMPTY_SEARCH_PROMPT)
             insertChatHistoryItem(cell)
             setState(_agentChatDataStateFlow, SendingQuestion(cell))
-            sendMessage(message)
-            // sendMessageStream(message)
+            when (GEMINI_GENERATE_MODE) {
+                FULL -> sendMessage(message)
+                STREAM -> sendMessageStream(message)
+            }
         }
     }
 
     fun sendHybridMessage(message: Content) {
         LogUtil.d(TAG, "[Send Content] content: $message")
+
         val cell = GeminiHybridCell(
-            role = GeminiChatRole.USER.roleId,
-            cellTypeId = GeminiChatCellType.HYBRID.typeId,
+            role = USER.roleId,
+            cellTypeId = HYBRID.typeId,
             isPending = true,
             hybridContent = message
         )
@@ -128,8 +142,10 @@ class GeminiAgentViewModel @Inject constructor(
         operationInViewModelScope {
             insertChatHistoryItem(cell)
             setState(_agentChatDataStateFlow, SendingQuestion(cell))
-            sendMessage(message)
-            // sendMessageStream(message)
+            when (GEMINI_GENERATE_MODE) {
+                FULL -> sendMessage(message)
+                STREAM -> sendMessageStream(message)
+            }
         }
     }
 
@@ -224,12 +240,16 @@ class GeminiAgentViewModel @Inject constructor(
      * */
     private suspend fun <T> sendMessageStream(message: T) {
         agentChatWindow?.also { chatWindow ->
+            val outputMessage = StringBuilder()
             try {
-                val messageStreamFlow = GeminiAgent.sendMessageStream(chatWindow, message)
-                messageStreamFlow.catch { throwable ->
+                GeminiAgent.sendMessageStream(
+                    chatWindow = chatWindow,
+                    message = message
+                ).catch { throwable ->
                     handleGeminiError(null, throwable.localizedMessage)
                 }.collect { response ->
-                    handleGeminiResponse(response)
+                    outputMessage.append(response.text)
+                    handleGeminiStreamResponse(outputMessage.toString())
                 }
             } catch (exception: Exception) {
                 handleGeminiError(null, exception.localizedMessage)
@@ -245,20 +265,31 @@ class GeminiAgentViewModel @Inject constructor(
      * @param response
      * */
     private fun handleGeminiResponse(response: GenerateContentResponse?) {
-        operationInViewModelScope {
-            response?.text?.also {
-                LogUtil.d(TAG, "[Handle Response] response: $it")
-                val answerCell = GeminiTextCell(
-                    roleId = GeminiChatRole.AGENT.roleId,
-                    cellTypeId = GeminiChatCellType.TEXT.typeId,
-                    isPending = false,
-                    textContent = it
-                )
+        response?.text?.also {
+            LogUtil.d(TAG, "[Handle Response] response: $it")
+            val answerCell = GeminiTextCell(
+                roleId = AGENT.roleId,
+                cellTypeId = TEXT.typeId,
+                isPending = false,
+                textContent = it
+            )
 
-                setState(_agentChatDataStateFlow, SuccessReceivedAnswer(answerCell))
-                insertChatHistoryItem(answerCell)
-            }
+            setState(_agentChatDataStateFlow, SuccessReceivedAnswer(answerCell))
+            insertChatHistoryItem(answerCell)
         }
+    }
+
+    private fun handleGeminiStreamResponse(outputMassage: String) {
+        LogUtil.d(TAG, "[Handle Response Stream] response: $outputMassage")
+        val answerCell = GeminiTextCell(
+            roleId = AGENT.roleId,
+            cellTypeId = TEXT.typeId,
+            isPending = false,
+            textContent = outputMassage
+        )
+
+        setState(_agentChatDataStateFlow, SuccessReceivedAnswer(answerCell))
+        insertChatHistoryItem(answerCell)
     }
 
     /**
@@ -278,9 +309,7 @@ class GeminiAgentViewModel @Inject constructor(
             textContent = errorMessage ?: "Unknown error occurred."
         )
 
-        operationInViewModelScope {
-            insertChatHistoryItem(errorCell)
-            setState(_agentChatDataStateFlow, FailedOrError(errorCode, errorMessage))
-        }
+        setState(_agentChatDataStateFlow, FailedOrError(errorCode, errorMessage))
+        insertChatHistoryItem(errorCell)
     }
 }

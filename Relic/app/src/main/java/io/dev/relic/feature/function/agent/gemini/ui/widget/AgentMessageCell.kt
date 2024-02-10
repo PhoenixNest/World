@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.ai.client.generativeai.type.Part
 import com.google.ai.client.generativeai.type.asTextOrNull
+import io.agent.gemini.GeminiCellConvertor
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiHybridCell
 import io.agent.gemini.model.GeminiTextCell

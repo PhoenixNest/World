@@ -45,6 +45,7 @@ fun AgentChatPageRoute(
         isEnableSendButton = isEnableSendButton,
         agentDataState = agentDataState,
         agentChatList = chatHistory,
+        onBackClick = onBackClick,
         onMessageValueChange = {
             geminiAgentViewModel.updateSearchPrompt(it)
         },
@@ -67,7 +68,8 @@ private fun AgentChatPage(
     agentChatList: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
-    onCopyTextClick: (copyText: String) -> Unit
+    onCopyTextClick: (copyText: String) -> Unit,
+    onBackClick: () -> Unit
 ) {
     val isAwaitingAnswer = when (agentDataState) {
         is GeminiAgentDataState.Init,
@@ -78,6 +80,7 @@ private fun AgentChatPage(
     }
 
     AgentChatPageContent(
+        chatLazyListState = rememberLazyListState(),
         inputMessage = inputMessage,
         isEnableSendButton = isEnableSendButton,
         isAwaitingAnswer = isAwaitingAnswer,
@@ -85,7 +88,7 @@ private fun AgentChatPage(
         onMessageValueChange = onMessageValueChange,
         onSendMessage = onSendMessage,
         onCopyTextClick = onCopyTextClick,
-        chatLazyListState = rememberLazyListState()
+        onBackClick = onBackClick
     )
 }
 
@@ -116,6 +119,7 @@ private fun AgentChatPagePreview() {
         agentChatList = chatHistory,
         onMessageValueChange = {},
         onSendMessage = {},
-        onCopyTextClick = {}
+        onCopyTextClick = {},
+        onBackClick = {}
     )
 }

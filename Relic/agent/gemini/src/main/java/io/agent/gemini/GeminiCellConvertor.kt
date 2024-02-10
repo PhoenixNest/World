@@ -1,10 +1,10 @@
-package io.agent.gemini.util
+package io.agent.gemini
 
 import io.agent.gemini.util.GeminiChatCellType.HYBRID
 import io.agent.gemini.util.GeminiChatCellType.IMAGE
 import io.agent.gemini.util.GeminiChatCellType.TEXT
 
-object GeminiChatConvertor {
+object GeminiCellConvertor {
 
     fun convertCellType(typeInt: Int) {
         when (typeInt) {

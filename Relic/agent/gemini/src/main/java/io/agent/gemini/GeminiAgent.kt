@@ -28,14 +28,21 @@ object GeminiAgent {
      * */
     private val GEMINI_DEV_KEY = RelicResCenter.getString(R.string.agent_gemini_dev_key)
 
+    /**
+     * Indicate the current chosen model of Gemini.
+     * */
+    private var chosenCoreModel: GenerativeModel? = null
+
     fun startChat(
         isVisionModel: Boolean,
         chatHistory: List<Content> = emptyList()
     ): Chat {
-        val geminiModel = chooseGeminiModel(isVisionModel)
-        LogUtil.d(TAG, "[Gemini Model] Chosen model: ${geminiModel.modelName}")
-        return geminiModel.startChat(chatHistory)
+        chosenCoreModel = chooseGeminiModel(isVisionModel)
+        LogUtil.d(TAG, "[Gemini Model] Chosen model: ${chosenCoreModel!!.modelName}")
+        return chosenCoreModel!!.startChat(chatHistory)
     }
+
+    /* ======================== Sender ======================== */
 
     suspend fun <T> sendMessage(
         chatWindow: Chat,
@@ -70,26 +77,88 @@ object GeminiAgent {
     ): Flow<GenerateContentResponse> {
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Bitmap] type")
+                LogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
                 chatWindow.sendMessageStream(message)
             }
 
             is Content -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Content] type")
+                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
                 chatWindow.sendMessageStream(message)
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Send Message] Sending [String] type, messageContent: $message")
+                LogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
                 chatWindow.sendMessageStream(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Send Message] Sending [Unknown] type")
+                LogUtil.w(TAG, "[Generate Message] Sending [Unknown] type")
                 emptyFlow()
             }
         }
     }
+
+    /* ======================== Generator ======================== */
+
+    suspend fun <T> generateMessage(
+        message: T
+    ): GenerateContentResponse? {
+        val currentChosenModel = chosenCoreModel
+            ?: return null
+
+        return when (message) {
+            is Bitmap -> {
+                LogUtil.d(TAG, "[Send Message] Sending [Bitmap] type")
+                currentChosenModel.generateContent(message)
+            }
+
+            is Content -> {
+                LogUtil.d(TAG, "[Send Message] Sending [Content] type")
+                currentChosenModel.generateContent(message)
+            }
+
+            is String -> {
+                LogUtil.d(TAG, "[Send Message] Sending [String] type, messageContent: $message")
+                currentChosenModel.generateContent(message)
+            }
+
+            else -> {
+                LogUtil.w(TAG, "[Send Message] Sending [Unknown] type")
+                null
+            }
+        }
+    }
+
+    fun <T> generateMessageStream(
+        message: T
+    ): Flow<GenerateContentResponse> {
+        val currentChosenModel = chosenCoreModel
+            ?: return emptyFlow()
+
+        return when (message) {
+            is Bitmap -> {
+                LogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
+                currentChosenModel.generateContentStream(message)
+            }
+
+            is Content -> {
+                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
+                currentChosenModel.generateContentStream(message)
+            }
+
+            is String -> {
+                LogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
+                currentChosenModel.generateContentStream(message)
+            }
+
+            else -> {
+                LogUtil.w(TAG, "[Generate Message] Sending [Unknown] type")
+                emptyFlow()
+            }
+        }
+    }
+
+    /* ======================== Gemini Model ======================== */
 
     private fun coreTextModel(): GenerativeModel {
         return GenerativeModel(

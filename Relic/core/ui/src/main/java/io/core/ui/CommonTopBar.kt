@@ -100,10 +100,10 @@ fun CommonTopBar(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     containerModifier: Modifier = Modifier,
+    hasTitle: Boolean = false,
     title: String = stringResource(id = R.string.app_name),
     textColor: Color = mainTextColor,
     iconColor: Color = mainIconColorLight,
-    hasTitle: Boolean = false,
     tailContent: @Composable () -> Unit = {}
 ) {
     Row(
