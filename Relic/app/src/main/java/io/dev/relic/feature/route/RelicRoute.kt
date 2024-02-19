@@ -13,7 +13,7 @@ object RelicRoute {
     /**
      * Detail
      * */
-    const val DETAIL_FOOD_RECIPES = "route_detail_food_recipes"
+    const val DETAIL_FOOD_RECIPE = "route_detail_food_recipe"
     const val DETAIL_NEWS = "route_detail_news"
 
     const val BASE_ROUTE: String = HOME

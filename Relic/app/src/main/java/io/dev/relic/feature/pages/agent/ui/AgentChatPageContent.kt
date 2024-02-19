@@ -15,7 +15,7 @@ import io.agent.gemini.model.AbsGeminiCell
 import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
-import io.dev.relic.feature.function.agent.gemini.ui.AgentChatHistory
+import io.dev.relic.feature.function.agent.gemini.ui.AgentChatList
 import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
 
 @Composable
@@ -51,7 +51,7 @@ fun AgentChatPageContent(
                 title = "Greeting",
                 iconColor = mainIconColorLight
             )
-            AgentChatPageArea(
+            AgentChatArea(
                 chatLazyListState = chatLazyListState,
                 inputMessage = inputMessage,
                 isEnableSendButton = isEnableSendButton,
@@ -66,7 +66,7 @@ fun AgentChatPageContent(
 }
 
 @Composable
-private fun AgentChatPageArea(
+private fun AgentChatArea(
     chatLazyListState: LazyListState,
     inputMessage: String,
     isEnableSendButton: Boolean,
@@ -77,7 +77,7 @@ private fun AgentChatPageArea(
     onCopyTextClick: (copyText: String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        AgentChatHistory(
+        AgentChatList(
             chatHistory = chatHistory,
             onCopyTextClick = onCopyTextClick,
             lazyListState = chatLazyListState

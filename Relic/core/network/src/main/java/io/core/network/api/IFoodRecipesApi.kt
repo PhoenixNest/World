@@ -13,25 +13,6 @@ import retrofit2.http.Query
 interface IFoodRecipesApi {
 
     /**
-     * [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)
-     *
-     * Use a recipe id to get full information about a recipe,
-     * such as ingredients, nutrition, diet and allergen information, etc.
-     *
-     * @param apiKey                Your dev api key.
-     * @param id                    The id of the recipe.
-     * @param includeNutrition      Include nutrition data in the recipe information. Nutrition data is per serving. If you want the nutrition data for the entire recipe, just multiply by the number of servings.
-     *
-     * @see FoodRecipesInformationDTO
-     * */
-    @GET("{id}/information?")
-    suspend fun getRecipesInformationById(
-        @Query("apiKey") apiKey: String,
-        @Path("id") id: Int,
-        @Query("includeNutrition") includeNutrition: Boolean
-    ): FoodRecipesInformationDTO
-
-    /**
      * [Search Recipes](https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
      *
      * Search through thousands of recipes using advanced filtering and ranking.
@@ -76,5 +57,24 @@ interface IFoodRecipesApi {
         @Query("tags") tags: String,
         @Query("number") number: Int
     ): FoodRecipesRandomSearchDTO
+
+    /**
+     * [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)
+     *
+     * Use a recipe id to get full information about a recipe,
+     * such as ingredients, nutrition, diet and allergen information, etc.
+     *
+     * @param apiKey                Your dev api key.
+     * @param id                    The id of the recipe.
+     * @param includeNutrition      Include nutrition data in the recipe information. Nutrition data is per serving. If you want the nutrition data for the entire recipe, just multiply by the number of servings.
+     *
+     * @see FoodRecipesInformationDTO
+     * */
+    @GET("{id}/information?")
+    suspend fun getRecipesInformationById(
+        @Query("apiKey") apiKey: String,
+        @Path("id") id: Int,
+        @Query("includeNutrition") includeNutrition: Boolean
+    ): FoodRecipesInformationDTO
 
 }

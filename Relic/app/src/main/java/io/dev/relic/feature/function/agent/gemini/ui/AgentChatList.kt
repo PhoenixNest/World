@@ -15,7 +15,7 @@ import io.agent.gemini.model.AbsGeminiCell
 import io.dev.relic.feature.function.agent.gemini.ui.widget.AgentMessageCell
 
 @Composable
-fun AgentChatHistory(
+fun AgentChatList(
     chatHistory: List<AbsGeminiCell>,
     lazyListState: LazyListState,
     onCopyTextClick: (copyText: String) -> Unit,

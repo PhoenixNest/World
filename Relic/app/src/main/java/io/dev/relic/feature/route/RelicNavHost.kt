@@ -9,7 +9,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
+import io.dev.relic.feature.pages.detail.food_recipes.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
@@ -26,6 +28,7 @@ fun MainFeatureNavHost(
     navHostController: NavHostController,
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
+    foodRecipesViewModel: FoodRecipesViewModel,
     modifier: Modifier = Modifier,
     startDestination: String = RelicRoute.BASE_ROUTE
 ) {
@@ -47,7 +50,8 @@ fun MainFeatureNavHost(
             mainScreenState = mainScreenState,
             drawerState = drawerState,
             mainViewModel = mainViewModel,
-            geminiAgentViewModel = geminiAgentViewModel
+            geminiAgentViewModel = geminiAgentViewModel,
+            foodRecipesViewModel = foodRecipesViewModel
         )
         pageExplore(
             mainScreenState = mainScreenState,
@@ -61,10 +65,14 @@ fun MainFeatureNavHost(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
             geminiAgentViewModel = geminiAgentViewModel,
-            onBackClick = { navHostController.popBackStack() }
+            onBackClick = navHostController::popBackStack
         )
-        pageNewsDetail {
-            navHostController.popBackStack()
-        }
+        pageNewsDetail(
+            onBackClick = navHostController::popBackStack
+        )
+        pageFoodRecipeDetail(
+            foodRecipesViewModel = foodRecipesViewModel,
+            onBackClick = navHostController::popBackStack
+        )
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.route.RelicRoute.HOME
 import io.dev.relic.feature.screens.main.MainScreenState
 
@@ -21,14 +22,16 @@ fun NavGraphBuilder.pageHome(
     mainScreenState: MainScreenState,
     drawerState: DrawerState,
     mainViewModel: MainViewModel,
-    geminiAgentViewModel: GeminiAgentViewModel
+    geminiAgentViewModel: GeminiAgentViewModel,
+    foodRecipesViewModel: FoodRecipesViewModel
 ) {
     composable(route = HOME) {
         HomePageRoute(
             mainScreenState = mainScreenState,
             drawerState = drawerState,
             mainViewModel = mainViewModel,
-            geminiAgentViewModel = geminiAgentViewModel
+            geminiAgentViewModel = geminiAgentViewModel,
+            foodReViewModel = foodRecipesViewModel
         )
     }
 }

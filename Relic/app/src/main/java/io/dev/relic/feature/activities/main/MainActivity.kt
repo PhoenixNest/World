@@ -23,6 +23,7 @@ import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.dev.relic.global.RelicApplication
 import io.domain.app.AbsBaseActivity
@@ -43,6 +44,13 @@ class MainActivity : AbsBaseActivity() {
      * */
     private val geminiAgentViewModel by lazy {
         ViewModelProvider(this)[GeminiAgentViewModel::class.java]
+    }
+
+    /**
+     * ViewModel - Food Recipes
+     * */
+    private val foodRecipesViewModel by lazy {
+        ViewModelProvider(this)[FoodRecipesViewModel::class.java]
     }
 
     companion object {
@@ -100,7 +108,8 @@ class MainActivity : AbsBaseActivity() {
                         windowSizeClass = calculateWindowSizeClass(activity = this),
                         networkMonitor = networkMonitor,
                         mainViewModel = mainViewModel,
-                        geminiAgentViewModel = geminiAgentViewModel
+                        geminiAgentViewModel = geminiAgentViewModel,
+                        foodRecipesViewModel = foodRecipesViewModel
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.detail.news
+package io.dev.relic.feature.pages.detail.food_recipes
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,28 +10,25 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
-import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
-import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
-import io.dev.relic.feature.route.RelicRoute.DETAIL_NEWS
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
+import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.route.RelicRoute.DETAIL_FOOD_RECIPE
 
-private const val KEY_NEWS_TITLE = "keys_news_title"
-private const val KEY_NEWS_CONTENT_URL = "key_news_content_url"
+private const val KEY_FOOD_RECIPE_ID = "keys_food_recipe_id"
 
 @SuppressLint("RestrictedApi")
-fun NavController.navigateToNewsDetailPage(
-    title: String? = null,
-    contUrl: String? = null,
+fun NavController.navigateToFoodRecipeDetailPage(
+    recipeId: Int,
     navOptions: NavOptions? = null,
     navigatorExtras: Navigator.Extras? = null
 ) {
     val deepLinkRequest = NavDeepLinkRequest.Builder.fromUri(
-        NavDestination.createRoute(DETAIL_NEWS).toUri()
+        NavDestination.createRoute(DETAIL_FOOD_RECIPE).toUri()
     ).build()
 
     graph.matchDeepLink(deepLinkRequest)?.let { deepLinkMatch ->
         val bundle = Bundle().apply {
-            putString(KEY_NEWS_TITLE, title)
-            putString(KEY_NEWS_CONTENT_URL, contUrl)
+            putInt(KEY_FOOD_RECIPE_ID, recipeId)
         }
 
         this.navigate(
@@ -43,14 +40,16 @@ fun NavController.navigateToNewsDetailPage(
     }
 }
 
-fun NavGraphBuilder.pageNewsDetail(onBackClick: () -> Unit) {
-    composable(route = DETAIL_NEWS) {
+fun NavGraphBuilder.pageFoodRecipeDetail(
+    foodRecipesViewModel: FoodRecipesViewModel,
+    onBackClick: () -> Unit
+) {
+    composable(route = DETAIL_FOOD_RECIPE) {
         it.arguments?.apply {
-            val title = getString(KEY_NEWS_TITLE, UNKNOWN_VALUE_STRING)
-            val contentUrl = getString(KEY_NEWS_CONTENT_URL, DEFAULT_PLACEHOLDER_URL)
-            NewsDetailPageRoute(
-                title = title,
-                contentUrl = contentUrl,
+            val id = getInt(KEY_FOOD_RECIPE_ID, UNKNOWN_VALUE_INT)
+            FoodRecipeDetailPageRoute(
+                recipeId = id,
+                foodRecipesViewModel = foodRecipesViewModel,
                 onBackClick = onBackClick
             )
         }

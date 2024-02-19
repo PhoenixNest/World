@@ -122,13 +122,13 @@ private fun FoodRecipesComponentContent(
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                itemsIndexed(dataState.modelList) { index, data ->
+                itemsIndexed(dataState.data) { index, data ->
                     if (data == null) {
                         //
                     } else {
                         val itemDecorationModifier: Modifier = Modifier.padding(
                             start = if (index == 0) 16.dp else 0.dp,
-                            end = if (index == dataState.modelList.size - 1) 16.dp else 0.dp
+                            end = if (index == dataState.data.size - 1) 16.dp else 0.dp
                         )
                         FoodRecipesRowItem(
                             data = data,
@@ -148,7 +148,7 @@ private fun FoodRecipesCommonComponentPreview() {
     FoodRecipesCommonComponent(
         dishLabel = stringResource(id = R.string.food_recipes_label_recommend),
         dataState = FoodRecipesDataState.FetchSucceed(
-            modelList = listOf(
+            data = listOf(
                 FoodRecipesComplexSearchModel(
                     id = 0,
                     title = "Coffee Cookies",

@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.common.util.TimeUtil.getCurrentTimeSection
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
+import io.common.util.TimeUtil
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
@@ -17,6 +17,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
+import io.dev.relic.feature.pages.detail.food_recipes.navigateToFoodRecipeDetailPage
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
@@ -27,13 +28,12 @@ fun HomePageRoute(
     drawerState: DrawerState,
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
-    foodReViewModel: FoodRecipesViewModel = hiltViewModel()
+    foodReViewModel: FoodRecipesViewModel
 ) {
 
     /* ======================== Common ======================== */
 
     val coroutineScope = mainScreenState.coroutineScope
-    val currentTimeSection = getCurrentTimeSection()
     val localFocusManager = LocalFocusManager.current
 
     /* ======================== Field ======================== */
@@ -87,10 +87,13 @@ fun HomePageRoute(
             //
         },
         onFoodRecipesItemClick = {
-            //
+            val recipeId = it.id ?: UNKNOWN_VALUE_INT
+            foodReViewModel.getFoodRecipeDetails(recipeId)
+            mainScreenState.navHostController.navigateToFoodRecipeDetailPage(recipeId)
         },
         onFoodRecipesTimeSectionRetry = {
-            foodReViewModel.getTimeSectionFoodRecipes(currentTimeSection)
+            val timeSection = TimeUtil.getCurrentTimeSection()
+            foodReViewModel.getTimeSectionFoodRecipes(timeSection)
         },
         onFoodRecipesRetry = {
             foodReViewModel.apply {

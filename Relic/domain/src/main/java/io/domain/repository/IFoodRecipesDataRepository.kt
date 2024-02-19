@@ -1,6 +1,7 @@
 package io.domain.repository
 
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
+import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
 import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
 import io.data.model.NetworkResult
 
@@ -53,4 +54,21 @@ interface IFoodRecipesDataRepository {
         number: Int
     ): NetworkResult<FoodRecipesRandomSearchDTO>
 
+    /**
+     * [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)
+     *
+     * Use a recipe id to get full information about a recipe,
+     * such as ingredients, nutrition, diet and allergen information, etc.
+     *
+     * @param apiKey                Your dev api key.
+     * @param id                    The id of the recipe.
+     * @param includeNutrition      Include nutrition data in the recipe information. Nutrition data is per serving. If you want the nutrition data for the entire recipe, just multiply by the number of servings.
+     *
+     * @see FoodRecipesInformationDTO
+     * */
+    suspend fun getRecipesInformationById(
+        apiKey: String,
+        id: Int,
+        includeNutrition: Boolean
+    ): NetworkResult<FoodRecipesInformationDTO>
 }

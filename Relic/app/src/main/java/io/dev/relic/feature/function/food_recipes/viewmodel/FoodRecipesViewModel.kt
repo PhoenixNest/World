@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.RelicResCenter.getString
 import io.common.ext.ViewModelExt.operationInViewModelScope
@@ -14,8 +13,10 @@ import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
+import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
+import io.data.mappers.FoodRecipesDataMapper.toFoodRecipeInformationModel
 import io.data.model.NetworkResult
 import io.dev.relic.BuildConfig
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
@@ -26,7 +27,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,6 +57,12 @@ class FoodRecipesViewModel @Inject constructor(
     private val _foodRecipesTimeSectionDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
     val foodRecipesTimeSectionDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesTimeSectionDataStateFlow
 
+    /**
+     * The food recipe information flow.
+     * */
+    private val _foodRecipeInformationDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
+    val foodRecipeInformationDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesTimeSectionDataStateFlow
+
     companion object {
         private const val TAG = "FoodRecipesViewModel"
     }
@@ -73,22 +79,26 @@ class FoodRecipesViewModel @Inject constructor(
         val dishType = convertTimeSectionToDishType(currentTimeSection)
         val dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
 
-        getFoodRecipesData(
-            dataFlow = _foodRecipesTimeSectionDataStateFlow,
-            query = dishQueryParameter,
-            offset = 0
-        )
+        operationInViewModelScope {
+            getFoodRecipesData(
+                dataFlow = _foodRecipesTimeSectionDataStateFlow,
+                query = dishQueryParameter,
+                offset = 0
+            )
+        }
     }
 
     fun getRecommendFoodRecipes(
         queryType: String,
         offset: Int
     ) {
-        getFoodRecipesData(
-            dataFlow = _foodRecipesDataStateFlow,
-            query = queryType,
-            offset = offset
-        )
+        operationInViewModelScope {
+            getFoodRecipesData(
+                dataFlow = _foodRecipesDataStateFlow,
+                query = queryType,
+                offset = offset
+            )
+        }
     }
 
     fun getSelectedFoodRecipesTab(): Int {
@@ -97,6 +107,26 @@ class FoodRecipesViewModel @Inject constructor(
 
     fun updateSelectedFoodRecipesTab(newIndex: Int) {
         currentSelectedFoodRecipesTab = newIndex
+    }
+
+    fun getFoodRecipeDetails(
+        recipeId: Int,
+        includeNutrition: Boolean = true
+    ) {
+        operationInViewModelScope { scope ->
+            foodRecipesUseCase.getRecipeInformationById(
+                recipeId = recipeId,
+                includeNutrition = includeNutrition
+            ).stateIn(
+                scope = scope,
+                started = SharingStarted.WhileSubscribed(5 * 1000L),
+                initialValue = NetworkResult.Loading()
+            ).also { stateFlow ->
+                stateFlow.collect { result ->
+                    handleRemoteFoodRecipeInformationData(result)
+                }
+            }
+        }
     }
 
     /**
@@ -112,38 +142,35 @@ class FoodRecipesViewModel @Inject constructor(
      *
      * @see FoodRecipesComplexSearchDTO
      * */
-    private fun getFoodRecipesData(
+    private suspend fun getFoodRecipesData(
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
         query: String,
         offset: Int,
         addRecipeInformation: Boolean = true,
         addRecipeNutrition: Boolean = !BuildConfig.DEBUG,
-    ): StateFlow<NetworkResult<FoodRecipesComplexSearchDTO>> {
-        return foodRecipesUseCase
-            .getComplexRecipesData(
+    ) {
+        operationInViewModelScope { scope ->
+            foodRecipesUseCase.getComplexRecipesData(
                 query = query,
                 addRecipeInformation = addRecipeInformation,
                 addRecipeNutrition = addRecipeNutrition,
                 offset = offset
-            )
-            .stateIn(
-                scope = viewModelScope,
+            ).stateIn(
+                scope = scope,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
-            )
-            .also { stateFlow ->
-                viewModelScope.launch {
-                    stateFlow.collect { result ->
-                        handleRemoteFoodRecipesData(
-                            dataFlow = dataFlow,
-                            result = result
-                        )
-                    }
+            ).also { stateFlow ->
+                stateFlow.collect { result ->
+                    handleRemoteFoodRecipesData(
+                        dataFlow = dataFlow,
+                        result = result
+                    )
                 }
             }
+        }
     }
 
-    private fun handleRemoteFoodRecipesData(
+    private suspend fun handleRemoteFoodRecipesData(
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
         result: NetworkResult<FoodRecipesComplexSearchDTO>
     ) {
@@ -154,10 +181,12 @@ class FoodRecipesViewModel @Inject constructor(
             }
 
             is NetworkResult.Success -> {
-                result.data?.also {
-                    LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $it")
-                    operationInViewModelScope { foodRecipesUseCase.cacheComplexSearchData.invoke(it.toComplexSearchEntity()) }
-                    setState(dataFlow, FoodRecipesDataState.FetchSucceed(it.toComplexSearchModelList()))
+                result.data?.also { dto ->
+                    LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $dto")
+                    val entity = dto.toComplexSearchEntity()
+                    val modelList = dto.toComplexSearchModelList()
+                    setState(dataFlow, FoodRecipesDataState.FetchSucceed(modelList))
+                    foodRecipesUseCase.cacheComplexSearchData.invoke(entity)
                 } ?: {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed without data")
                     setState(dataFlow, FoodRecipesDataState.NoFoodRecipesData)
@@ -169,6 +198,33 @@ class FoodRecipesViewModel @Inject constructor(
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Food Recipes Data] Failed, ($errorCode, $errorMessage)")
                 setState(dataFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
+            }
+        }
+    }
+
+    private fun handleRemoteFoodRecipeInformationData(result: NetworkResult<FoodRecipesInformationDTO>) {
+        when (result) {
+            is NetworkResult.Loading -> {
+                LogUtil.d(TAG, "[Handle Food Recipe Information Data] Loading...")
+                setState(_foodRecipeInformationDataStateFlow, FoodRecipesDataState.Fetching)
+            }
+
+            is NetworkResult.Success -> {
+                result.data?.also { dto ->
+                    LogUtil.d(TAG, "[Handle Food Recipe Information Data] Succeed, data: $dto")
+                    val model = dto.toFoodRecipeInformationModel()
+                    setState(_foodRecipeInformationDataStateFlow, FoodRecipesDataState.FetchSucceed(model))
+                } ?: {
+                    LogUtil.d(TAG, "[Handle Food Recipe Information Data] Succeed without data")
+                    setState(_foodRecipeInformationDataStateFlow, FoodRecipesDataState.NoFoodRecipesData)
+                }
+            }
+
+            is NetworkResult.Failed -> {
+                val errorCode = result.code
+                val errorMessage = result.message
+                LogUtil.e(TAG, "[Handle Food Recipe Information Data] Failed, ($errorCode, $errorMessage)")
+                setState(_foodRecipeInformationDataStateFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }
