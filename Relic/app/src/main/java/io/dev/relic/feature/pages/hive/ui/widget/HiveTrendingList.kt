@@ -18,26 +18,26 @@ import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonNoDataComponent
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
-import io.dev.relic.feature.function.news.EverythingNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.ui.widget.NewsTrendingCardItem
 
 @Suppress("FunctionName")
 fun LazyListScope.HiveTrendingNewsList(
-    dataState: EverythingNewsDataState,
+    dataState: TrendingNewsDataState,
     lazyListState: LazyListState,
     onCardClick: (model: NewsArticleModel) -> Unit,
     onRetryClick: () -> Unit
 ) {
     item {
         when (dataState) {
-            is EverythingNewsDataState.Init,
-            is EverythingNewsDataState.Fetching -> {
+            is TrendingNewsDataState.Init,
+            is TrendingNewsDataState.Fetching -> {
                 CommonLoadingPlaceholder(false)
             }
 
-            is EverythingNewsDataState.Empty,
-            is EverythingNewsDataState.FetchFailed,
-            is EverythingNewsDataState.NoNewsData -> {
+            is TrendingNewsDataState.Empty,
+            is TrendingNewsDataState.FetchFailed,
+            is TrendingNewsDataState.NoNewsData -> {
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     modifier = Modifier.padding(12.dp),
@@ -45,7 +45,7 @@ fun LazyListScope.HiveTrendingNewsList(
                 )
             }
 
-            is EverythingNewsDataState.FetchSucceed -> {
+            is TrendingNewsDataState.FetchSucceed -> {
                 HiveEverythingNewsPanel(
                     modelList = dataState.modelList,
                     onCardClick = onCardClick,

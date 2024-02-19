@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import io.common.util.TimeUtil
-import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 
 @Entity(tableName = "table_trending_news")
 data class TrendingNewsEntity(

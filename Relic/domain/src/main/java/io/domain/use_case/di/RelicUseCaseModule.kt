@@ -15,6 +15,7 @@ import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
 import io.domain.use_case.food_receipes.action.complex_search.GetComplexRecipesData
 import io.domain.use_case.food_receipes.action.complex_search.QueryCachedComplexRecipesData
+import io.domain.use_case.food_receipes.action.information.GetFoodRecipeInformationById
 import io.domain.use_case.lcoation.LocationUseCase
 import io.domain.use_case.lcoation.action.GetCurrentLocation
 import io.domain.use_case.maxim.MaximUseCase
@@ -89,7 +90,8 @@ class RelicUseCaseModule {
         return FoodRecipesUseCase(
             getComplexRecipesData = GetComplexRecipesData(recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository),
-            queryCachedComplexRecipesData = QueryCachedComplexRecipesData(databaseRepository)
+            queryCachedComplexRecipesData = QueryCachedComplexRecipesData(databaseRepository),
+            getRecipeInformationById = GetFoodRecipeInformationById(recipesDataRepository)
         )
     }
 

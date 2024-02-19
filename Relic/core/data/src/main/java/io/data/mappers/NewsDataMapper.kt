@@ -1,7 +1,7 @@
 package io.data.mappers
 
 import io.data.dto.news.NewsArticleDTO
-import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.entity.news.TopHeadlineNewsArticleEntity
 import io.data.entity.news.TopHeadlinesNewsEntity

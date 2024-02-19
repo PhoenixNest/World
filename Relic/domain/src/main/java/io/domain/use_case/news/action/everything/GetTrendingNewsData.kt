@@ -1,7 +1,7 @@
 package io.domain.use_case.news.action.everything
 
 import io.core.network.NetworkParameters.Keys.NEWS_API_DEV_KEY
-import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.model.NetworkResult
 import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule

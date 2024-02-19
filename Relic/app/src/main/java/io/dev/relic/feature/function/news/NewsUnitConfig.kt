@@ -15,7 +15,7 @@ object NewsUnitConfig {
     private const val DEFAULT_KEY_WORDS = "Trending"
     private const val DEFAULT_NEWS_SOURCE = ""
 
-    object Everything {
+    object Trending {
         const val DEFAULT_SEARCH_KEYWORDS = DEFAULT_KEY_WORDS
         const val DEFAULT_NEWS_SOURCE = NewsUnitConfig.DEFAULT_NEWS_SOURCE
         val DEFAULT_NEWS_LANGUAGE = NewsLanguageType.EN

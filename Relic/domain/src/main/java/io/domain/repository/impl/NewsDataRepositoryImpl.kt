@@ -1,7 +1,7 @@
 package io.domain.repository.impl
 
 import io.core.network.api.INewsApi
-import io.data.dto.news.everything.TrendingNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.model.NetworkResult
 import io.domain.repository.INewsDataRepository

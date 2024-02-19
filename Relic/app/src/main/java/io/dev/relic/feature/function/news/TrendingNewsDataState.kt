@@ -2,31 +2,31 @@ package io.dev.relic.feature.function.news
 
 import io.data.model.news.NewsArticleModel
 
-sealed class EverythingNewsDataState {
+sealed class TrendingNewsDataState {
 
     /* Common */
 
-    data object Init : EverythingNewsDataState()
+    data object Init : TrendingNewsDataState()
 
-    data object Empty : EverythingNewsDataState()
+    data object Empty : TrendingNewsDataState()
 
-    data object NoNewsData : EverythingNewsDataState()
+    data object NoNewsData : TrendingNewsDataState()
 
     /* Loading */
 
-    data object Fetching : EverythingNewsDataState()
+    data object Fetching : TrendingNewsDataState()
 
     /* Succeed */
 
     data class FetchSucceed(
         val modelList: List<NewsArticleModel?>?
-    ) : EverythingNewsDataState()
+    ) : TrendingNewsDataState()
 
     /* Failed */
 
     data class FetchFailed(
         val errorCode: Int?,
         val errorMessage: String?
-    ) : EverythingNewsDataState()
+    ) : TrendingNewsDataState()
 
 }

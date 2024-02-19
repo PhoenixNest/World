@@ -13,36 +13,38 @@ import io.common.util.TimeUtil.getCurrentTimeInMillis
 import io.core.database.repository.RelicDatabaseRepository
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_EVERYTHING_STATUS
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_EVERYTHING_TIME_DURATION
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_STATUS
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_TIME_DURATION
-import io.data.dto.news.everything.TrendingNewsDTO
+import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_STATUS
+import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_TIME_DURATION
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList
+import io.data.mappers.NewsDataMapper.toTopHeadlineNewsEntity
+import io.data.mappers.NewsDataMapper.toTrendingNewsEntity
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
 import io.data.util.NewsCountryType
 import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
-import io.dev.relic.feature.function.news.EverythingNewsDataState
 import io.dev.relic.feature.function.news.NewsUnitConfig
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
 import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_NEWS_SORT_RULE
-import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_NEWS_LANGUAGE
-import io.dev.relic.feature.function.news.NewsUnitConfig.Everything.DEFAULT_NEWS_SOURCE
 import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_CATEGORY
 import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
+import io.dev.relic.feature.function.news.NewsUnitConfig.Trending.DEFAULT_NEWS_LANGUAGE
+import io.dev.relic.feature.function.news.NewsUnitConfig.Trending.DEFAULT_NEWS_SOURCE
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.util.NewsDataStatus
 import io.dev.relic.feature.function.news.util.NewsDataStatus.FAILED
 import io.dev.relic.feature.function.news.util.NewsDataStatus.INIT
 import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS
 import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS_WITHOUT_DATA
 import io.dev.relic.feature.function.news.util.NewsType
-import io.dev.relic.feature.function.news.util.NewsType.EVERYTHING
 import io.dev.relic.feature.function.news.util.NewsType.TOP_HEADLINE
+import io.dev.relic.feature.function.news.util.NewsType.TRENDING
 import io.domain.use_case.news.NewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -64,13 +66,13 @@ class HiveViewModel @Inject constructor(
     private var _currentSelectedTopHeadlineNewsCategories by mutableIntStateOf(0)
 
     /**
-     * The data flow of everything news.
+     * The data flow of trending news.
      * */
-    private val _everythingNewsDataStateFlow = MutableStateFlow<EverythingNewsDataState>(EverythingNewsDataState.Init)
-    val everythingNewsDataStateFlow: StateFlow<EverythingNewsDataState> get() = _everythingNewsDataStateFlow
+    private val _trendingNewsDataStateFlow = MutableStateFlow<TrendingNewsDataState>(TrendingNewsDataState.Init)
+    val trendingNewsDataStateFlow: StateFlow<TrendingNewsDataState> get() = _trendingNewsDataStateFlow
 
     /**
-     * The data flow of everything news.
+     * The data flow of top-headline news.
      * */
     private val _topHeadlineNewsDataStateFlow = MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
     val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> get() = _topHeadlineNewsDataStateFlow
@@ -90,22 +92,22 @@ class HiveViewModel @Inject constructor(
     }
 
     private fun checkShouldRefresh() {
-        checkShouldRefreshEverythingData()
+        checkShouldRefreshTrendingData()
         checkShouldRefreshTopHeadlineData()
     }
 
-    private fun checkShouldRefreshEverythingData() {
-        val lastTimeDuration = readSyncData(KEY_EVERYTHING_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
-        val lastRefreshStatus = readSyncData(KEY_EVERYTHING_STATUS, INIT.typeValue)
+    private fun checkShouldRefreshTrendingData() {
+        val lastTimeDuration = readSyncData(KEY_TRENDING_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
+        val lastRefreshStatus = readSyncData(KEY_TRENDING_STATUS, INIT.typeValue)
         if (getCurrentTimeInMillis() > lastTimeDuration
             || lastRefreshStatus == INIT.typeValue
             || lastRefreshStatus == FAILED.typeValue
         ) {
-            LogUtil.d(TAG, "[Everything News Checker] Refresh data.")
+            LogUtil.d(TAG, "[Trending News Checker] Refresh data.")
             getTrendingNewsData()
         } else {
             LogUtil.w(TAG, "[Top-Headline News Checker] Read local data.")
-            queryLocalEverythingNewsData()
+            queryLocalTrendingNewsData()
         }
     }
 
@@ -129,13 +131,13 @@ class HiveViewModel @Inject constructor(
     /**
      * Query the local cache data from the database.
      * */
-    private fun queryLocalEverythingNewsData() {
+    private fun queryLocalTrendingNewsData() {
         viewModelScope.launch {
-            LogUtil.w(TAG, "[Handle Everything News Cache] Loading...")
+            LogUtil.w(TAG, "[Handle Trending News Cache] Loading...")
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
             // Query the local cache data from the database
-            setState(_everythingNewsDataStateFlow, EverythingNewsDataState.Fetching)
+            setState(_trendingNewsDataStateFlow, TrendingNewsDataState.Fetching)
             databaseRepository
                 .queryAllTrendingNewsData()
                 .stateIn(
@@ -148,14 +150,14 @@ class HiveViewModel @Inject constructor(
                         val localDatasource = entities.first().datasource
                         val modelList = localDatasource.articles?.toNewsArticleModelList()
                         modelList?.also { list ->
-                            setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(list))
+                            setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(list))
                         } ?: {
-                            LogUtil.w(TAG, "[Handle Everything News Cache] Succeed without [Articles] data")
-                            setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                            LogUtil.w(TAG, "[Handle Trending News Cache] Succeed without [Articles] data")
+                            setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                         }
                     } else {
-                        LogUtil.e(TAG, "[Handle Everything News Cache] Succeed without data")
-                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                        LogUtil.e(TAG, "[Handle Trending News Cache] Succeed without data")
+                        setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                     }
                 }
         }
@@ -215,7 +217,7 @@ class HiveViewModel @Inject constructor(
      * @param page              Use this to page through the results.
      * */
     fun getTrendingNewsData(
-        keyWords: String = NewsUnitConfig.Everything.DEFAULT_SEARCH_KEYWORDS,
+        keyWords: String = NewsUnitConfig.Trending.DEFAULT_SEARCH_KEYWORDS,
         source: String = DEFAULT_NEWS_SOURCE,
         language: NewsLanguageType = DEFAULT_NEWS_LANGUAGE,
         sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
@@ -239,7 +241,7 @@ class HiveViewModel @Inject constructor(
             .also { stateFlow ->
                 viewModelScope.launch {
                     stateFlow.collect { result ->
-                        handleEverythingNewsData(result)
+                        handleTrendingNewsData(result)
                     }
                 }
             }
@@ -312,38 +314,39 @@ class HiveViewModel @Inject constructor(
      *
      * @param result        received DTO from the remote-server
      * */
-    private fun handleEverythingNewsData(result: NetworkResult<TrendingNewsDTO>) {
-        updateNewsRefreshTime(EVERYTHING)
+    private suspend fun handleTrendingNewsData(result: NetworkResult<TrendingNewsDTO>) {
+        updateNewsRefreshTime(TRENDING)
         when (result) {
             is NetworkResult.Loading -> {
-                LogUtil.d(TAG, "[Handle Everything News Data] Loading...")
-                setState(_everythingNewsDataStateFlow, EverythingNewsDataState.Fetching)
+                LogUtil.d(TAG, "[Handle Trending News Data] Loading...")
+                setState(_trendingNewsDataStateFlow, TrendingNewsDataState.Fetching)
             }
 
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
-                    LogUtil.d(TAG, "[Handle Everything News Data] Succeed, data: $dto")
+                    LogUtil.d(TAG, "[Handle Trending News Data] Succeed, data: $dto")
                     dto.articles?.also {
-                        updateNewsRefreshStatus(EVERYTHING, SUCCESS)
-                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                        updateNewsRefreshStatus(TRENDING, SUCCESS)
+                        setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                        newsUseCase.cacheTrendingNewsData.invoke(dto.toTrendingNewsEntity())
                     } ?: {
-                        LogUtil.w(TAG, "[Handle Everything News Data] Succeed without [Articles] data")
-                        updateNewsRefreshStatus(EVERYTHING, SUCCESS_WITHOUT_DATA)
-                        setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                        LogUtil.w(TAG, "[Handle Trending News Data] Succeed without [Articles] data")
+                        updateNewsRefreshStatus(TRENDING, SUCCESS_WITHOUT_DATA)
+                        setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                     }
                 } ?: {
-                    LogUtil.w(TAG, "[Handle Everything News Data] Succeed without data")
-                    updateNewsRefreshStatus(EVERYTHING, SUCCESS_WITHOUT_DATA)
-                    setState(_everythingNewsDataStateFlow, EverythingNewsDataState.NoNewsData)
+                    LogUtil.w(TAG, "[Handle Trending News Data] Succeed without data")
+                    updateNewsRefreshStatus(TRENDING, SUCCESS_WITHOUT_DATA)
+                    setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                 }
             }
 
             is NetworkResult.Failed -> {
                 val errorCode = result.code
                 val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Everything News Data] Failed, ($errorCode, $errorMessage)")
-                updateNewsRefreshStatus(EVERYTHING, FAILED)
-                setState(_everythingNewsDataStateFlow, EverythingNewsDataState.FetchFailed(errorCode, errorMessage))
+                LogUtil.e(TAG, "[Handle Trending News Data] Failed, ($errorCode, $errorMessage)")
+                updateNewsRefreshStatus(TRENDING, FAILED)
+                setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchFailed(errorCode, errorMessage))
             }
         }
     }
@@ -353,7 +356,7 @@ class HiveViewModel @Inject constructor(
      *
      * @param result        received DTO from the remote-server
      * */
-    private fun handleTopHeadlineNewsData(result: NetworkResult<TopHeadlinesNewsDTO>) {
+    private suspend fun handleTopHeadlineNewsData(result: NetworkResult<TopHeadlinesNewsDTO>) {
         updateNewsRefreshTime(TOP_HEADLINE)
         when (result) {
             is NetworkResult.Loading -> {
@@ -367,6 +370,7 @@ class HiveViewModel @Inject constructor(
                     dto.articles?.also {
                         updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS)
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                        newsUseCase.cacheTopHeadlineNewsData.invoke(dto.toTopHeadlineNewsEntity())
                     } ?: {
                         LogUtil.w(TAG, "[Handle Top Headline News Data] Succeed without [Articles] data")
                         updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS_WITHOUT_DATA)
@@ -398,7 +402,7 @@ class HiveViewModel @Inject constructor(
      * */
     private fun updateNewsRefreshTime(type: NewsType) {
         val key = when (type) {
-            EVERYTHING -> KEY_EVERYTHING_TIME_DURATION
+            TRENDING -> KEY_TRENDING_TIME_DURATION
             TOP_HEADLINE -> KEY_TOP_HEADLINE_TIME_DURATION
         }
 
@@ -419,7 +423,7 @@ class HiveViewModel @Inject constructor(
         status: NewsDataStatus
     ) {
         val key = when (type) {
-            EVERYTHING -> KEY_EVERYTHING_STATUS
+            TRENDING -> KEY_TRENDING_STATUS
             TOP_HEADLINE -> KEY_TOP_HEADLINE_STATUS
         }
 

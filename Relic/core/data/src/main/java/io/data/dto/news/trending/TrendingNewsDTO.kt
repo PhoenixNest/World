@@ -1,4 +1,4 @@
-package io.data.dto.news.everything
+package io.data.dto.news.trending
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

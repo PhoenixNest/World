@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
-import io.dev.relic.feature.function.news.EverythingNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.pages.hive.ui.widget.HiveNewsTitle
 import io.dev.relic.feature.pages.hive.ui.widget.HiveTabBar
@@ -23,7 +23,7 @@ import io.dev.relic.feature.pages.hive.ui.widget.HiveTrendingNewsList
 
 @Composable
 fun HivePageContent(
-    trendingNewsDataState: EverythingNewsDataState,
+    trendingNewsDataState: TrendingNewsDataState,
     topHeadlineNewsDataState: TopHeadlineNewsDataState,
     currentSelectedCategory: Int,
     trendingNewsLazyListState: LazyListState,

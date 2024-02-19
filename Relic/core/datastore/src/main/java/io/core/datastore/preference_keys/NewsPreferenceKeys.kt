@@ -5,7 +5,7 @@ object NewsPreferenceKeys {
     /**
      * Indicate the last refresh time of everything news data.
      * */
-    const val KEY_EVERYTHING_TIME_DURATION = "key_everything_time_duration"
+    const val KEY_TRENDING_TIME_DURATION = "key_everything_time_duration"
 
     /**
      * Indicate the last refresh time of top-headline news data.
@@ -21,7 +21,7 @@ object NewsPreferenceKeys {
      * - Success without data
      * - Failed
      * */
-    const val KEY_EVERYTHING_STATUS = "key_everything_status"
+    const val KEY_TRENDING_STATUS = "key_everything_status"
 
     /**
      * Indicate the last fetch status of top-headline news data.

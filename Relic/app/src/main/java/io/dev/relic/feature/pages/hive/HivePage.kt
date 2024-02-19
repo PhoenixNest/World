@@ -32,7 +32,7 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val trendingNewsDataState by hiveViewModel.everythingNewsDataStateFlow.collectAsStateWithLifecycle()
+    val trendingNewsDataState by hiveViewModel.trendingNewsDataStateFlow.collectAsStateWithLifecycle()
 
     // Top-headline
     val topHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()

@@ -5,7 +5,6 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.data.dto.weather.WeatherForecastDTO
@@ -109,7 +108,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    private fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {
+    private suspend fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {
         when (result) {
             is NetworkResult.Loading -> {
                 LogUtil.d(TAG, "[Handle Weather Data] Loading...")
@@ -117,10 +116,10 @@ class MainViewModel @Inject constructor(
             }
 
             is NetworkResult.Success -> {
-                result.data?.also {
-                    LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $it")
-                    operationInViewModelScope { weatherUseCase.cacheWeatherData.invoke(it.toWeatherEntity()) }
-                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(it.toWeatherInfoModel()))
+                result.data?.also { dto ->
+                    LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $dto")
+                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(dto.toWeatherInfoModel()))
+                    weatherUseCase.cacheWeatherData.invoke(dto.toWeatherEntity())
                 } ?: {
                     LogUtil.w(TAG, "[Handle Weather Data] Succeed without data")
                     setState(_weatherDataStateFlow, WeatherDataState.NoWeatherData)
