@@ -64,7 +64,7 @@ class FoodRecipesViewModel @Inject constructor(
      * The food recipe information flow.
      * */
     private val _foodRecipeInformationDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
-    val foodRecipeInformationDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesTimeSectionDataStateFlow
+    val foodRecipeInformationDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipeInformationDataStateFlow
 
     companion object {
         private const val TAG = "FoodRecipesViewModel"
@@ -113,7 +113,7 @@ class FoodRecipesViewModel @Inject constructor(
         currentSelectedFoodRecipesTab = newIndex
     }
 
-    fun getFoodRecipeDetails(
+    fun getRecipeInformationById(
         recipeId: Int,
         includeNutrition: Boolean = true
     ) {

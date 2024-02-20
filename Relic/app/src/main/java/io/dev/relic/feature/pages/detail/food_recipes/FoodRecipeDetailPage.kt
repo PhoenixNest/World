@@ -28,7 +28,7 @@ fun FoodRecipeDetailPageRoute(
             foodRecipesViewModel.updateLikeStatus(recipeId, isLike)
         },
         onRetryClick = {
-            foodRecipesViewModel.getFoodRecipeDetails(recipeId)
+            foodRecipesViewModel.getRecipeInformationById(recipeId)
         }
     )
 }

@@ -72,8 +72,8 @@ interface IFoodRecipesApi {
      * */
     @GET("{id}/information?")
     suspend fun getRecipesInformationById(
-        @Query("apiKey") apiKey: String,
         @Path("id") id: Int,
+        @Query("apiKey") apiKey: String,
         @Query("includeNutrition") includeNutrition: Boolean
     ): FoodRecipesInformationDTO
 

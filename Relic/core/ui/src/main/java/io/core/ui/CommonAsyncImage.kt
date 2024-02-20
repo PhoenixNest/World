@@ -33,7 +33,8 @@ fun CommonAsyncImage(
     imageHeight: Dp,
     modifier: Modifier = Modifier,
     imageRadius: Dp = 16.dp,
-    imageShape: Shape = RoundedCornerShape(imageRadius)
+    imageShape: Shape = RoundedCornerShape(imageRadius),
+    contentScale: ContentScale = ContentScale.Crop
 ) {
     Surface(
         modifier = modifier
@@ -48,7 +49,7 @@ fun CommonAsyncImage(
                 .build(),
             contentDescription = DEFAULT_DESC,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = contentScale
         ) {
             when (painter.state) {
                 is AsyncImagePainter.State.Loading -> Box(

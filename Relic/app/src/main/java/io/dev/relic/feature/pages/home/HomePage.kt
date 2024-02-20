@@ -91,7 +91,7 @@ fun HomePageRoute(
             val recipeId = it.id ?: UNKNOWN_VALUE_INT
             val recipeTitle = it.title ?: UNKNOWN_VALUE_STRING
             // Fetch the recipe details data.
-            foodReViewModel.getFoodRecipeDetails(recipeId)
+            foodReViewModel.getRecipeInformationById(recipeId)
             // Then navigate to the details page.
             mainScreenState.navHostController.navigateToFoodRecipeDetailPage(
                 recipeId = recipeId,
