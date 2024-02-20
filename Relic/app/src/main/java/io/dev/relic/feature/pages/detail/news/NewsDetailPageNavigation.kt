@@ -14,7 +14,7 @@ import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
 import io.dev.relic.feature.route.RelicRoute.DETAIL_NEWS
 
-private const val KEY_NEWS_TITLE = "keys_news_title"
+private const val KEY_NEWS_TITLE = "key_news_title"
 private const val KEY_NEWS_CONTENT_URL = "key_news_content_url"
 
 @SuppressLint("RestrictedApi")

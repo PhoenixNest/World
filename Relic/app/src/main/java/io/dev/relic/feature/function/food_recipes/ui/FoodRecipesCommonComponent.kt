@@ -111,7 +111,7 @@ private fun FoodRecipesComponentContent(
             )
         }
 
-        is FoodRecipesDataState.FetchSucceed -> {
+        is FoodRecipesDataState.FetchSucceed<*> -> {
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -122,7 +122,7 @@ private fun FoodRecipesComponentContent(
                 ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                itemsIndexed(dataState.data) { index, data ->
+                itemsIndexed(dataState.data as List<*>) { index, data ->
                     if (data == null) {
                         //
                     } else {
@@ -131,7 +131,7 @@ private fun FoodRecipesComponentContent(
                             end = if (index == dataState.data.size - 1) 16.dp else 0.dp
                         )
                         FoodRecipesRowItem(
-                            data = data,
+                            data = data as FoodRecipesComplexSearchModel,
                             onItemClick = onItemClick,
                             modifier = itemDecorationModifier
                         )

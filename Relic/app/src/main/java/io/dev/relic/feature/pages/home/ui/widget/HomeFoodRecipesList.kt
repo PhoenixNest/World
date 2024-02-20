@@ -37,8 +37,8 @@ fun LazyListScope.HomeFoodRecipesList(
             }
         }
 
-        is FoodRecipesDataState.FetchSucceed -> {
-            itemsIndexed(dataState.data) { index, data ->
+        is FoodRecipesDataState.FetchSucceed<*> -> {
+            itemsIndexed(dataState.data as List<Any?>) { index, data ->
                 if (data == null) {
                     //
                 } else {
@@ -47,7 +47,7 @@ fun LazyListScope.HomeFoodRecipesList(
                         bottom = if (index == dataState.data.size - 1) 56.dp else 0.dp
                     )
                     FoodRecipesColumnItem(
-                        data = data,
+                        data = data as FoodRecipesComplexSearchModel,
                         onItemClick = onItemClick,
                         modifier = itemDecorationModifier
                     )

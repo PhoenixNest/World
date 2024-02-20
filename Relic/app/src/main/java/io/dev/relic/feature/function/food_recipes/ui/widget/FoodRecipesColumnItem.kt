@@ -38,6 +38,8 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
+import io.core.ui.utils.RelicUiUtil
+import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
 
@@ -47,7 +49,7 @@ fun FoodRecipesColumnItem(
     onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val screenWidth = getCurrentScreenWidthDp()
 
     Row(
         modifier = modifier

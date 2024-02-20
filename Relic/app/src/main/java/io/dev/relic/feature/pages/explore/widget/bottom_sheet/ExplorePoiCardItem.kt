@@ -28,6 +28,9 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
+import io.core.ui.utils.RelicUiUtil
+import io.core.ui.utils.RelicUiUtil.getCurrentScreenHeightDp
+import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -35,8 +38,8 @@ fun ExplorePoiCardItem(
     poiItem: PoiItem,
     onItemClick: () -> Unit
 ) {
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val screenWidth = getCurrentScreenWidthDp()
+    val screenHeight = getCurrentScreenHeightDp()
     val containerWidth = screenWidth / 2
     val containerHeight = screenHeight / 3
 

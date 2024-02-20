@@ -3,6 +3,7 @@ package io.core.ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,7 +40,7 @@ fun CommonTopBar(
     textColor: Color = mainTextColor,
     iconColor: Color = mainIconColorLight,
     hasTitle: Boolean = (titleResId != -1),
-    tailContent: @Composable () -> Unit = {}
+    tailContent: @Composable BoxScope.() -> Unit = {}
 ) {
     Row(
         modifier = containerModifier
@@ -90,7 +91,7 @@ fun CommonTopBar(
                 .weight(1F),
             contentAlignment = Alignment.Center
         ) {
-            tailContent.invoke()
+            tailContent.invoke(this@Box)
         }
     }
 }
@@ -104,7 +105,7 @@ fun CommonTopBar(
     title: String = stringResource(id = R.string.app_name),
     textColor: Color = mainTextColor,
     iconColor: Color = mainIconColorLight,
-    tailContent: @Composable () -> Unit = {}
+    tailContent: @Composable BoxScope.() -> Unit = {}
 ) {
     Row(
         modifier = containerModifier
@@ -155,7 +156,7 @@ fun CommonTopBar(
                 .weight(1F),
             contentAlignment = Alignment.Center
         ) {
-            tailContent.invoke()
+            tailContent.invoke(this@Box)
         }
     }
 }

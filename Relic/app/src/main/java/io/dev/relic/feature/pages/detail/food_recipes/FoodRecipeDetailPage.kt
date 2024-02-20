@@ -11,31 +11,56 @@ import io.dev.relic.feature.pages.detail.food_recipes.ui.FoodRecipeDetailContent
 @Composable
 fun FoodRecipeDetailPageRoute(
     recipeId: Int,
+    recipeTitle: String,
     foodRecipesViewModel: FoodRecipesViewModel,
     onBackClick: () -> Unit
 ) {
 
+    val isLike by foodRecipesViewModel.isLikeRecipe(recipeId).collectAsStateWithLifecycle(initialValue = false)
     val recipesDataState by foodRecipesViewModel.foodRecipeInformationDataStateFlow.collectAsStateWithLifecycle()
 
     FoodRecipeDetailPage(
+        isLike = isLike,
+        recipeTitle = recipeTitle,
         dataState = recipesDataState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onLikeClick = {
+            foodRecipesViewModel.updateLikeStatus(recipeId, isLike)
+        },
+        onRetryClick = {
+            foodRecipesViewModel.getFoodRecipeDetails(recipeId)
+        }
     )
 }
 
 @Composable
 private fun FoodRecipeDetailPage(
+    isLike: Boolean,
+    recipeTitle: String,
     dataState: FoodRecipesDataState,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onLikeClick: () -> Unit,
+    onRetryClick: () -> Unit
 ) {
     FoodRecipeDetailContent(
+        isLike = isLike,
+        recipeTitle = recipeTitle,
         dataState = dataState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onLikeClick = onLikeClick,
+        onRetryClick = onRetryClick
     )
 }
 
 @Composable
 @Preview
 private fun FoodRecipeDetailPagePreview() {
-
+    FoodRecipeDetailPage(
+        isLike = false,
+        recipeTitle = "Juice",
+        dataState = FoodRecipesDataState.Init,
+        onBackClick = {},
+        onLikeClick = {},
+        onRetryClick = {}
+    )
 }

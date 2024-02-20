@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainThemeColor"
+    android:background="@color/main_theme_color"
     android:fitsSystemWindows="true"
     tools:context="io.module.debug.fragments.IntroMapFragment">
 
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/debug_title_map"
-        android:textColor="@color/mainTextColor"
+        android:textColor="@color/main_text_color"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@+id/cardView_AMap"
         app:layout_constraintEnd_toEndOf="parent"

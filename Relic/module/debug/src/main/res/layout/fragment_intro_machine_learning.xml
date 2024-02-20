@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainThemeColor"
+    android:background="@color/main_theme_color"
     android:fitsSystemWindows="true"
     tools:context="io.module.debug.fragments.IntroMachineLearningFragment">
 
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/debug_title_machine_learning"
-        android:textColor="@color/mainTextColor"
+        android:textColor="@color/main_text_color"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@+id/cardView_MLKit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
         android:layout_width="300dp"
         android:layout_height="160dp"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="@color/mainThemeColorAccent"
+        app:cardBackgroundColor="@color/main_theme_color_accent"
         app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

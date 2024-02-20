@@ -12,6 +12,8 @@ import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.common.util.TimeUtil.getCurrentTimeSection
+import io.core.datastore.RelicDatastoreCenter.readAsyncData
+import io.core.datastore.RelicDatastoreCenter.writeAsyncData
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
 import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
@@ -23,6 +25,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesAutoConvertor.convertTimeSectionToDishType
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FoodRecipesViewModel @Inject constructor(
     application: Application,
-    private val foodRecipesUseCase: FoodRecipesUseCase,
+    private val foodRecipesUseCase: FoodRecipesUseCase
 ) : AndroidViewModel(application) {
 
     /**
@@ -65,6 +68,7 @@ class FoodRecipesViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "FoodRecipesViewModel"
+        private const val KEY_FOOD_RECIPE_ID = "key_food_recipe_id"
     }
 
     init {
@@ -130,6 +134,29 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     /**
+     * Check the like status of selected recipe.
+     *
+     * @param recipeId
+     * */
+    fun isLikeRecipe(recipeId: Int): Flow<Boolean> {
+        return readAsyncData("${KEY_FOOD_RECIPE_ID}_$recipeId", false)
+    }
+
+    /**
+     * Update the like status of the selected recipe.
+     *
+     * @param recipeId
+     * */
+    fun updateLikeStatus(
+        recipeId: Int,
+        isLike: Boolean
+    ) {
+        operationInViewModelScope {
+            writeAsyncData("${KEY_FOOD_RECIPE_ID}_$recipeId", isLike)
+        }
+    }
+
+    /**
      * [Search Recipes](https://spoonacular.com/food-api/docs#Search-Recipes-Complex)
      *
      * Search through thousands of recipes using advanced filtering and ranking.
@@ -170,6 +197,12 @@ class FoodRecipesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Handle the remote-data of food recipes.
+     *
+     * @param dataFlow
+     * @param result
+     * */
     private suspend fun handleRemoteFoodRecipesData(
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
         result: NetworkResult<FoodRecipesComplexSearchDTO>
@@ -202,6 +235,11 @@ class FoodRecipesViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Handle the remote-data of food recipe information.
+     *
+     * @param result
+     * */
     private fun handleRemoteFoodRecipeInformationData(result: NetworkResult<FoodRecipesInformationDTO>) {
         when (result) {
             is NetworkResult.Loading -> {

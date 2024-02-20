@@ -27,6 +27,8 @@ import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
+import io.core.ui.utils.RelicUiUtil
+import io.core.ui.utils.RelicUiUtil.getCurrentScreenHeightDp
 import io.dev.relic.R
 
 @Composable
@@ -34,7 +36,7 @@ fun ExploreBottomSheet(
     currentSelectedTab: Int,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val screenHeight = getCurrentScreenHeightDp()
     val bottomSheetHeight = screenHeight - 52.dp
 
     Card(

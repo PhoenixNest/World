@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.TimeUtil
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -88,8 +89,14 @@ fun HomePageRoute(
         },
         onFoodRecipesItemClick = {
             val recipeId = it.id ?: UNKNOWN_VALUE_INT
+            val recipeTitle = it.title ?: UNKNOWN_VALUE_STRING
+            // Fetch the recipe details data.
             foodReViewModel.getFoodRecipeDetails(recipeId)
-            mainScreenState.navHostController.navigateToFoodRecipeDetailPage(recipeId)
+            // Then navigate to the details page.
+            mainScreenState.navHostController.navigateToFoodRecipeDetailPage(
+                recipeId = recipeId,
+                recipeTitle = recipeTitle
+            )
         },
         onFoodRecipesTimeSectionRetry = {
             val timeSection = TimeUtil.getCurrentTimeSection()

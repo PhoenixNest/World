@@ -11,14 +11,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.route.RelicRoute.DETAIL_FOOD_RECIPE
 
-private const val KEY_FOOD_RECIPE_ID = "keys_food_recipe_id"
+private const val KEY_FOOD_RECIPE_ID = "key_food_recipe_id"
+private const val KEY_FOOD_RECIPE_TITLE = "key_food_recipe_title"
 
 @SuppressLint("RestrictedApi")
 fun NavController.navigateToFoodRecipeDetailPage(
     recipeId: Int,
+    recipeTitle: String?,
     navOptions: NavOptions? = null,
     navigatorExtras: Navigator.Extras? = null
 ) {
@@ -29,6 +32,7 @@ fun NavController.navigateToFoodRecipeDetailPage(
     graph.matchDeepLink(deepLinkRequest)?.let { deepLinkMatch ->
         val bundle = Bundle().apply {
             putInt(KEY_FOOD_RECIPE_ID, recipeId)
+            putString(KEY_FOOD_RECIPE_TITLE, recipeTitle)
         }
 
         this.navigate(
@@ -47,8 +51,10 @@ fun NavGraphBuilder.pageFoodRecipeDetail(
     composable(route = DETAIL_FOOD_RECIPE) {
         it.arguments?.apply {
             val id = getInt(KEY_FOOD_RECIPE_ID, UNKNOWN_VALUE_INT)
+            val title = getString(KEY_FOOD_RECIPE_TITLE, UNKNOWN_VALUE_STRING)
             FoodRecipeDetailPageRoute(
                 recipeId = id,
+                recipeTitle = title,
                 foodRecipesViewModel = foodRecipesViewModel,
                 onBackClick = onBackClick
             )
