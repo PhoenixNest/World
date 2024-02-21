@@ -47,6 +47,7 @@ fun FoodRecipeDetailPanel(model: FoodRecipeInformationModel) {
         horizontalAlignment = Alignment.Start
     ) {
         model.apply {
+            Spacer(modifier = Modifier.height(16.dp))
             FoodRecipeTitleBar(
                 title = title ?: UNKNOWN_VALUE_STRING,
                 cookTime = readyInMinutes ?: UNKNOWN_VALUE_INT,
@@ -143,10 +144,11 @@ private fun FoodRecipeIngredientRowItem(
     ) {
         CommonAsyncImage(
             url = item.image,
-            imageWidth = 56.dp,
-            imageHeight = 56.dp
+            imageWidth = 64.dp,
+            imageHeight = 64.dp,
+            imageRadius = 12.dp
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = item.name ?: UNKNOWN_VALUE_STRING,
             style = TextStyle(
@@ -158,7 +160,7 @@ private fun FoodRecipeIngredientRowItem(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF282C34)
 private fun FoodRecipeDetailPanelPreview() {
     FoodRecipeDetailPanel(
         model = FoodRecipeInformationModel(

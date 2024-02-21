@@ -3,9 +3,7 @@ package io.dev.relic.feature.pages.detail.food_recipes.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -118,7 +116,6 @@ private fun FoodRecipeDataDetailContent(model: FoodRecipeInformationModel) {
                 bottomEnd = 16.dp
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
         FoodRecipeDetailPanel(model)
     }
 }
