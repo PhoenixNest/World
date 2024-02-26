@@ -24,15 +24,14 @@ object RelicDatastoreCenter {
 
     @Suppress("UNCHECKED_CAST")
     fun <T> readSyncData(key: String, default: T): T {
-        val res = when (default) {
+        return when (default) {
             is Long -> readLongData(key, default)
             is String -> readStringData(key, default)
             is Int -> readIntData(key, default)
             is Boolean -> readBooleanData(key, default)
             is Float -> readFloatData(key, default)
             else -> throw IllegalArgumentException("This type can't be saved into DataStore")
-        }
-        return res as T
+        } as T
     }
 
     fun <T> writeSyncData(key: String, value: T) {
@@ -50,15 +49,14 @@ object RelicDatastoreCenter {
 
     @Suppress("UNCHECKED_CAST")
     fun <T> readAsyncData(key: String, default: T): Flow<T> {
-        val data = when (default) {
+        return when (default) {
             is Long -> readLongFlow(key, default)
             is String -> readStringFlow(key, default)
             is Int -> readIntFlow(key, default)
             is Boolean -> readBooleanFlow(key, default)
             is Float -> readFloatFlow(key, default)
             else -> throw IllegalArgumentException("This type can't be saved into DataStore")
-        }
-        return data as Flow<T>
+        } as Flow<T>
     }
 
     suspend fun <T> writeAsyncData(key: String, value: T) {

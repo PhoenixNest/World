@@ -2,6 +2,7 @@ package io.module.ad.admob
 
 import android.content.Context
 import android.view.ViewGroup
+import io.module.ad.AdLifecycleObserver
 import io.module.ad.admob.utils.AdmobAdType
 import io.module.ad.admob.utils.AdmobAdUnitId
 import io.module.ad.core.provider.IAdListener
@@ -144,17 +145,17 @@ object AdmobAdManager {
         ifInBackground: (() -> Unit)? = null
     ) {
         val adUnitId = AdmobAdUnitId.REWARD_AD
-        // RelicLifecycleObserver.runOnForeground(
-        //     foregroundAction = {
-        //         AdmobAdProvider.showAd(
-        //             context = context,
-        //             adUnitId = adUnitId
-        //         )
-        //     },
-        //     backgroundAction = {
-        //         ifInBackground?.invoke()
-        //     }
-        // )
+        AdLifecycleObserver.runOnForeground(
+            foregroundAction = {
+                AdmobAdProvider.showAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
+            },
+            backgroundAction = {
+                ifInBackground?.invoke()
+            }
+        )
     }
 
     fun showInterstitialAd(
@@ -162,17 +163,17 @@ object AdmobAdManager {
         ifInBackground: (() -> Unit)? = null
     ) {
         val adUnitId = AdmobAdUnitId.INTERSTITIAL_AD
-        // RelicLifecycleObserver.runOnForeground(
-        //     foregroundAction = {
-        //         AdmobAdProvider.showAd(
-        //             context = context,
-        //             adUnitId = adUnitId
-        //         )
-        //     },
-        //     backgroundAction = {
-        //         ifInBackground?.invoke()
-        //     }
-        // )
+        AdLifecycleObserver.runOnForeground(
+            foregroundAction = {
+                AdmobAdProvider.showAd(
+                    context = context,
+                    adUnitId = adUnitId
+                )
+            },
+            backgroundAction = {
+                ifInBackground?.invoke()
+            }
+        )
     }
 
     private fun showBannerAd(

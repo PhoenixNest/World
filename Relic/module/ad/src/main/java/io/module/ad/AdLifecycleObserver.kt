@@ -1,29 +1,24 @@
-package io.dev.relic.global
+package io.module.ad
 
 import android.app.Activity
-import android.app.Application.ActivityLifecycleCallbacks
+import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.common.util.LogUtil
-import io.core.datastore.RelicDatastoreCenter.readSyncData
-import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
-import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.activities.splash.SplashActivity
+import io.module.ad.core.AdKeys.KEY_IS_FIRST_COLD_START
+import io.module.ad.core.AdSharePreference.readData
+import io.module.ad.core.AdSharePreference.writeData
 
-/**
- * [App startup time](https://developer.android.com/topic/performance/vitals/launch-time)
- * */
-object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallbacks {
+object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifecycleCallbacks {
 
     private const val TAG = "RelicLifecycleObserver"
 
     /**
      * [Cold start](https://developer.android.com/topic/performance/vitals/launch-time#cold)
      * */
-    var isFirstColdStart = dataStoreAppFirstStart
+    var isFirstColdStart = true
         private set
 
     /**
@@ -37,12 +32,6 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * */
     var isHotStart = false
         private set
-
-    /**
-     * Check if the app is first open in datastore.
-     * */
-    private val dataStoreAppFirstStart
-        get() = readSyncData(KEY_IS_FIRST_COLD_START, true)
 
     /**
      * Check whether the current App is running in the foreground.
@@ -59,14 +48,20 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * */
     private var hasEnterBySplashActivity = false
 
+    /**
+     * Only show splash-ad when the app has re-entered foreground.
+     * */
+    private var shouldShowSplashAd = false
+
     /* ======================== Logical ======================== */
 
     /**
      * Initializing observer
      * */
-    fun init() {
-        RelicApplication.relicApplication.registerActivityLifecycleCallbacks(this)
+    fun init(application: Application) {
+        application.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        checkSharePreferenceData(application)
     }
 
     /**
@@ -106,6 +101,28 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
         }
     }
 
+    private fun checkSharePreferenceData(application: Application) {
+        isFirstColdStart = readData(application, KEY_IS_FIRST_COLD_START, true)
+    }
+
+    /**
+     * Trying to show the splash-ad when hot start.
+     *
+     * @param activity      Host of the AdActivity.
+     * */
+    private fun tryShowHotSplashAd(activity: Activity) {
+        // TODO
+    }
+
+    /**
+     * Get the name of passing Activity
+     *
+     * @param activity      The java class of Activity, such as: MainActivity::class.java
+     * */
+    private fun getActivityName(activity: Activity): String {
+        return activity::class.java.name
+    }
+
     /* ======================== override: Activity lifecycle callback ======================== */
 
     /**
@@ -138,7 +155,8 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
 
         // Only display the splash-ad when user has entered the main unit.
         if (hasEnterMainUnit) {
-            isFirstColdStart = dataStoreAppFirstStart
+            shouldShowSplashAd = true
+            isFirstColdStart = false
         }
     }
 
@@ -157,6 +175,11 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
     override fun onActivityStarted(activity: Activity) {
         LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
 
+        val checkIsSplashActivity = getActivityName(activity)
+            .lowercase()
+            .trim()
+            .contains("splash")
+
         // Update parameter
         hasEnterBySplashActivity = when {
 
@@ -167,7 +190,7 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
             !isHotStart -> true
 
             // User has stay in SplashActivity, skip
-            activity is SplashActivity -> true
+            checkIsSplashActivity -> true
 
             // User has stay in AdActivity, skip
             // activity is AdActivity -> true
@@ -183,17 +206,29 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
     override fun onActivityResumed(activity: Activity) {
         LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityResumed")
 
+        val application = activity.application
+        val checkIsMainActivity = getActivityName(activity)
+            .lowercase()
+            .trim()
+            .contains("main")
+
         // If you have not entered the main unit and the current Activity is MainActivity,
         // it is marked as having entered the home unit.
-        if (!hasEnterMainUnit && (activity is MainActivity)) {
+        if (!hasEnterMainUnit && checkIsMainActivity) {
             hasEnterMainUnit = true
-            writeSyncData(KEY_IS_FIRST_COLD_START, false)
+            writeData(application, KEY_IS_FIRST_COLD_START, false)
         }
 
         // After entering the home page, the subsequent return to
         // the foreground is considered as a hot start.
         if (hasEnterMainUnit) {
             isHotStart = true
+        }
+
+        // Whether hot start splash-ad need to be displayed.
+        if (shouldShowSplashAd) {
+            shouldShowSplashAd = false
+            tryShowHotSplashAd(activity = activity)
         }
     }
 
