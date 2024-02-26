@@ -58,6 +58,8 @@ fun AgentMessageCell(
     onCopyTextClick: (copyText: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val isAgentCell = (geminiCellContent.roleId == AGENT.roleId)
+
     val cellGravity = when (geminiCellContent.roleId) {
         USER.roleId -> Alignment.CenterEnd
         ERROR.roleId, AGENT.roleId -> Alignment.CenterStart
@@ -135,7 +137,11 @@ fun AgentMessageCell(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = cellContent,
+                    text = cellContent
+                    /*messageFormatter(
+                        text = cellContent,
+                        primary = isAgentCell
+                    )*/,
                     modifier = Modifier
                         .background(
                             color = cellBackgroundColor,
