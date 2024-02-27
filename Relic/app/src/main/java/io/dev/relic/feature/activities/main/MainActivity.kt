@@ -2,6 +2,7 @@ package io.dev.relic.feature.activities.main
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -68,6 +69,13 @@ class MainActivity : AbsBaseActivity() {
         }
     }
 
+    /* ======================== Lifecycle ======================== */
+
+    override fun onStart() {
+        super.onStart()
+        parseDeeplink()
+    }
+
     /* ======================== Logical ======================== */
 
     override fun initialization(savedInstanceState: Bundle?) {
@@ -85,6 +93,27 @@ class MainActivity : AbsBaseActivity() {
             isShowUserAgreement = isShowUserAgreement,
             isAgreeUserPrivacy = isAgreeUserPrivacy
         )
+    }
+
+    private fun parseDeeplink() {
+        if (intent == null) {
+            LogUtil.e(TAG, "[Parse Deeplink] Parse failed, normal start.")
+            return
+        }
+
+        intent.data?.parseData()
+    }
+
+    private fun Uri.parseData() {
+        LogUtil.apply {
+            d(TAG, "[Parse Uri Data] scheme: $scheme")
+            d(TAG, "[Parse Uri Data] host: $host")
+            d(TAG, "[Parse Uri Data] path: $path")
+            d(TAG, "[Parse Uri Data] port: $port")
+            for (parameter: String in queryParameterNames) {
+                d(TAG, "[Parse Uri Data] parameter: $parameter")
+            }
+        }
     }
 
     /* ======================== Ui ======================== */

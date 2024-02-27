@@ -63,8 +63,42 @@
 
         <activity
             android:name=".feature.activities.main.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Relic">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${applicationId}" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".feature.activities.web.WebActivity"
