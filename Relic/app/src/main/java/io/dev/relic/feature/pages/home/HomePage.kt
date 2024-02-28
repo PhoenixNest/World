@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,6 +21,7 @@ import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailPage
 import io.dev.relic.feature.pages.home.ui.HomePageContent
+import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
 
@@ -34,8 +36,11 @@ fun HomePageRoute(
 
     /* ======================== Common ======================== */
 
-    val coroutineScope = mainScreenState.coroutineScope
+    val context = LocalContext.current
     val localFocusManager = LocalFocusManager.current
+
+    val coroutineScope = mainScreenState.coroutineScope
+    val navController = mainScreenState.navHostController
 
     /* ======================== Field ======================== */
 
@@ -54,8 +59,18 @@ fun HomePageRoute(
     HomePage(
         onOpenDrawer = {
             coroutineScope.launch {
-                drawerState.open()
+                if (drawerState.isOpen || drawerState.isAnimationRunning) {
+                    return@launch
+                }
+
+                if (drawerState.isClosed) {
+                    drawerState.open()
+                }
             }
+        },
+        onOpenSetting = {
+            // Navigate to settings page.
+            navController.navigateToSettingsPage()
         },
         agentSearchContent = agentSearchContent,
         onAgentSearchPromptChange = {
@@ -63,12 +78,10 @@ fun HomePageRoute(
         },
         onAgentStartChat = {
             geminiAgentViewModel.sendTextMessage(agentSearchContent)
-
             // Clear the latest input focus.
             localFocusManager.clearFocus()
-
             // Navigate to agent chat page.
-            mainScreenState.navHostController.navigateToAgentChatPage()
+            navController.navigateToAgentChatPage()
         },
         foodRecipesTabLazyListState = foodRecipesTabLazyListState,
         foodRecipesContentLazyListState = foodRecipesContentLazyListState,
@@ -119,6 +132,7 @@ fun HomePageRoute(
 @Composable
 private fun HomePage(
     onOpenDrawer: () -> Unit,
+    onOpenSetting: () -> Unit,
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
@@ -135,6 +149,7 @@ private fun HomePage(
 ) {
     HomePageContent(
         onOpenDrawer = onOpenDrawer,
+        onOpenSetting = onOpenSetting,
         agentSearchContent = agentSearchContent,
         onAgentSearchPromptChange = onAgentSearchPromptChange,
         onAgentStartChat = onAgentStartChat,
@@ -156,6 +171,7 @@ private fun HomePage(
 private fun HomePagePreview() {
     HomePage(
         onOpenDrawer = {},
+        onOpenSetting = {},
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {},

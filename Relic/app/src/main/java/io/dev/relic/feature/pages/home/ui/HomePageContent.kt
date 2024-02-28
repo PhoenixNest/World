@@ -24,6 +24,7 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 @Composable
 fun HomePageContent(
     onOpenDrawer: () -> Unit,
+    onOpenSetting: () -> Unit,
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
@@ -55,7 +56,8 @@ fun HomePageContent(
                 agentSearchContent = agentSearchContent,
                 onAgentSearchPromptChange = onAgentSearchPromptChange,
                 onAgentStartChat = onAgentStartChat,
-                onOpenDrawer = onOpenDrawer
+                onOpenDrawer = onOpenDrawer,
+                onOpenSetting = onOpenSetting
             )
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HomeFoodRecipesAutoTimeComponent(

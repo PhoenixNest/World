@@ -16,6 +16,7 @@ import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
+import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.EXPLORE
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HIVE
@@ -60,6 +61,11 @@ fun MainFeatureNavHost(
         pageHive(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel
+        )
+        pageSettings(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel,
+            onBackClick = navHostController::popBackStack
         )
         pageAgentChat(
             mainScreenState = mainScreenState,

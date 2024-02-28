@@ -97,7 +97,7 @@ object AdmobSplashAdHelper {
                          * @param errorMessage
                          * */
                         override fun onAdFailToShow(errorCode: Int, errorMessage: String) {
-                            LogUtil.e(TAG, "[Load-Ad] onAdFailToLoad($errorCode, $errorMessage)")
+                            LogUtil.e(TAG, "[Load-Ad] onAdFailToShow($errorCode, $errorMessage)")
                             onAdFailed.invoke(errorCode, errorMessage)
                             it.resume(false)
                         }
