@@ -18,7 +18,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
-import io.dev.relic.feature.pages.detail.food_recipes.navigateToFoodRecipeDetailPage
+import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailPage
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch

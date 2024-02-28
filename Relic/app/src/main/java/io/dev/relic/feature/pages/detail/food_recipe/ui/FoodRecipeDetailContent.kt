@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.detail.food_recipes.ui
+package io.dev.relic.feature.pages.detail.food_recipe.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,8 +22,8 @@ import io.core.ui.theme.mainThemeColor
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipeInformationModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.pages.detail.food_recipes.ui.widget.FoodRecipeDetailPanel
-import io.dev.relic.feature.pages.detail.food_recipes.ui.widget.FoodRecipeLikeButton
+import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeDetailPanel
+import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeLikeButton
 
 @Composable
 fun FoodRecipeDetailContent(

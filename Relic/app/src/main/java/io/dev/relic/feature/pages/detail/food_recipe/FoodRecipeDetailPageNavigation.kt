@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.detail.food_recipes
+package io.dev.relic.feature.pages.detail.food_recipe
 
 import android.annotation.SuppressLint
 import android.os.Bundle

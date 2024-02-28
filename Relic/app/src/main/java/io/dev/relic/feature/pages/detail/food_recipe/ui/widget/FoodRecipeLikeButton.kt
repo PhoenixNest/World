@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.detail.food_recipes.ui.widget
+package io.dev.relic.feature.pages.detail.food_recipe.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
