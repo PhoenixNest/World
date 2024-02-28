@@ -12,6 +12,8 @@ dependencyResolutionManagement {
         jcenter()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
+
+        // TomTom Map
         maven { url = uri("https://repositories.tomtom.com/artifactory/maven") }
 
         // Lottie
