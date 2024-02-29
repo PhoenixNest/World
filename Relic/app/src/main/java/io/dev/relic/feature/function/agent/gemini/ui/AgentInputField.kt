@@ -25,6 +25,7 @@ import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonInputField
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
@@ -78,7 +79,7 @@ fun AgentInputField(
                         )
                         .padding(16.dp),
                     contentTextStyle = TextStyle(mainTextColor),
-                    hintTextStyle = TextStyle(mainTextColor.copy(alpha = 0.3F)),
+                    hintTextStyle = TextStyle(mainTextColor30),
                     onDone = onSendMessage
                 )
                 Spacer(modifier = Modifier.width(20.dp))

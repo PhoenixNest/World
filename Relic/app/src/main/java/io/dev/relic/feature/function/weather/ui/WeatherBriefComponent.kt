@@ -32,6 +32,8 @@ import io.common.RelicConstants
 import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor30
+import io.core.ui.theme.mainTextColor80
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.placeHolderHighlightColor
 import io.data.model.weather.WeatherDataModel
@@ -86,7 +88,7 @@ private fun WeatherBriefPlaceholder() {
                     .height(120.dp)
                     .placeholder(
                         visible = true,
-                        color = mainTextColor.copy(alpha = 0.3F),
+                        color = mainTextColor30,
                         shape = RoundedCornerShape(16.dp),
                         highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                     )
@@ -112,7 +114,7 @@ private fun WeatherBriefPlaceholder() {
                             .fillMaxSize()
                             .placeholder(
                                 visible = true,
-                                color = mainTextColor.copy(alpha = 0.3F),
+                                color = mainTextColor30,
                                 shape = RoundedCornerShape(8.dp),
                                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                             )
@@ -157,7 +159,7 @@ private fun WeatherBriefContent(
                     .height(72.dp)
                     .width(72.dp),
                 colorFilter = if (isGrayWeatherIcon) {
-                    ColorFilter.tint(mainTextColor.copy(0.8F))
+                    ColorFilter.tint(mainTextColor80)
                 } else null
             )
             Spacer(modifier = Modifier.height(8.dp))

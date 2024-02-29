@@ -31,6 +31,7 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor50
 import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColorLight
 import io.data.dto.food_recipes.get_recipes_information_by_id.ExtendedIngredientItem
@@ -73,7 +74,7 @@ private fun FoodRecipeSummary(summary: String) {
         text = annotatedString,
         modifier = Modifier.padding(horizontal = 16.dp),
         style = TextStyle(
-            color = mainTextColor.copy(alpha = 0.5F),
+            color = mainTextColor50,
             fontSize = 14.sp,
             fontFamily = ubuntu,
             lineHeight = TextUnit(

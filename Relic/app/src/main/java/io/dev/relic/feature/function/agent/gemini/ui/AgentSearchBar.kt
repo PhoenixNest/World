@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonInputField
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 
@@ -32,7 +33,7 @@ fun AgentSearchBar(
             )
             .padding(16.dp),
         contentTextStyle = TextStyle(mainTextColor),
-        hintTextStyle = TextStyle(mainTextColor.copy(alpha = 0.3F)),
+        hintTextStyle = TextStyle(mainTextColor30),
         maxLines = 1,
         onDone = onAgentStartChat
     )

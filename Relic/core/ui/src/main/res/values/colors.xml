@@ -15,6 +15,7 @@
     <color name="main_text_color_dark">#CC282C34</color>
     <color name="main_text_color_dark_light">#99282C34</color>
     <color name="main_button_color">#282C34</color>
+    <color name="main_icon_color">#CCFFFFFF</color>
 
     <color name="color_dislike">@color/main_theme_color</color>
     <color name="color_like">#FF1744</color>

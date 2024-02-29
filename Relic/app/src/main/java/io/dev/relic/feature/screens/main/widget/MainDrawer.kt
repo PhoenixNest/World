@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import io.common.util.TimeUtil.getCurrentFormattedTime
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor50
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.function.wallpaper.LocalWallpaperCover
@@ -139,7 +140,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
         Text(
             text = "EARTH",
             style = TextStyle(
-                color = mainTextColor.copy(alpha = 0.5F),
+                color = mainTextColor50,
                 fontSize = 16.sp,
                 fontFamily = ubuntu
             )
@@ -158,7 +159,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
         Text(
             text = "I'd love to tell you that the sun will come out tomorrow, but it might not. I'm no miracle worker.",
             style = TextStyle(
-                color = mainTextColor.copy(alpha = 0.5F),
+                color = mainTextColor50,
                 fontSize = 16.sp,
                 fontFamily = ubuntu,
                 lineHeight = TextUnit(

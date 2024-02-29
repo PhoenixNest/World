@@ -39,6 +39,7 @@ import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainButtonColorLightDark
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor50
 import io.data.model.news.NewsArticleModel
 
 @Composable
@@ -167,7 +168,7 @@ private fun NewsCardItemDesc(
             overflow = TextOverflow.Ellipsis,
             maxLines = 5,
             style = TextStyle(
-                color = mainTextColor.copy(alpha = 0.5F),
+                color = mainTextColor50,
                 fontFamily = ubuntu,
                 lineHeight = TextUnit(
                     value = 1.6F,

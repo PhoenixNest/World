@@ -108,7 +108,7 @@
         <activity
             android:name="io.module.debug.activities.debug.DebugActivity"
             android:exported="false"
-            android:theme="@style/Theme.Relic.Debug" />
+            android:theme="@style/Theme.Relic" />
 
         <activity
             android:name="io.module.debug.activities.map.amap.AMapActivity"

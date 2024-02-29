@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -38,7 +37,7 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
-import io.core.ui.utils.RelicUiUtil
+import io.core.ui.theme.mainTextColor50
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
@@ -113,7 +112,7 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
                 .fillMaxWidth()
                 .basicMarquee(),
             style = TextStyle(
-                color = mainTextColor.copy(alpha = 0.5F),
+                color = mainTextColor50,
                 fontFamily = ubuntu
             )
         )

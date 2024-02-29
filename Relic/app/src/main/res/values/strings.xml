@@ -51,8 +51,15 @@
     <!-- Mine Page -->
     <string name="mine_title">Me</string>
 
-    <!-- Setting Page -->
-    <string name="setting_title">Setting</string>
+    <!-- Settings Page -->
+    <string name="settings_title">Settings</string>
+    <!-- Settings Page - Terms -->
+    <string name="settings_title_terms">TERMS</string>
+    <string name="settings_terms_user_agreement">User Agreement</string>
+    <string name="settings_terms_privacy_agreement">Privacy Agreement</string>
+    <!-- Settings - Debug -->
+    <string name="settings_title_debug">DEBUG</string>
+    <string name="settings_debug_admob">Admob</string>
 
     <!-- Todo Unit -->
     <string name="todo_card_title">Check out your todo tasks</string>

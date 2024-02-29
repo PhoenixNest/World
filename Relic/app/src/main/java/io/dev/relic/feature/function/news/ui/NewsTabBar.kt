@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
@@ -75,7 +76,7 @@ private fun NewsTabBarItem(
             textColor = if (isSelected) {
                 mainTextColor
             } else {
-                mainTextColor.copy(alpha = 0.3F)
+                mainTextColor30
             },
             shape = RoundedCornerShape(16.dp)
         )
