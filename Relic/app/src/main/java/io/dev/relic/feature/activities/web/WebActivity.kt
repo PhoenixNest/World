@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebSettings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +27,8 @@ class WebActivity : AppCompatActivity() {
     }
 
     companion object {
+
+        private const val TAG = "WebActivity"
 
         /**
          * Redirect to the specified http url.
@@ -87,15 +90,28 @@ class WebActivity : AppCompatActivity() {
     private fun handleWebProgress() {
         lifecycleScope.launch(Dispatchers.IO) {
             webViewModel.webDataStateFlow.collect {
-                when (it) {
-                    is WebDataState.Init,
-                    is WebDataState.Empty,
-                    is WebDataState.NoWebData -> {
+                when (val dataState = it) {
+                    is WebDataState.Init -> {
+                        showLoadingView()
                     }
 
-                    is WebDataState.Fetching -> {}
-                    is WebDataState.FetchFailed -> {}
-                    is WebDataState.FetchSucceed -> {}
+                    is WebDataState.Empty,
+                    is WebDataState.NoWebData,
+                    is WebDataState.FetchFailed -> {
+                        hideLoadingView()
+                        showEmptyView()
+                    }
+
+                    is WebDataState.Fetching -> {
+                        if (dataState.latestProgress >= 30) {
+                            hideLoadingView()
+                            showWebView()
+                        }
+                    }
+
+                    is WebDataState.FetchSucceed -> {
+                        hideLoadingView()
+                    }
                 }
             }
         }
@@ -110,7 +126,7 @@ class WebActivity : AppCompatActivity() {
 
     private fun setupListener() {
         binding.apply {
-            imageButtonClose.setOnClickListener {
+            imageViewClose.setOnClickListener {
                 finish()
             }
         }
@@ -118,9 +134,6 @@ class WebActivity : AppCompatActivity() {
 
     private fun setupWebView() {
         binding.webView.apply {
-            // Load the url from passing string
-            loadUrl(intent.getStringExtra("http_url") ?: "https://www.bing.com")
-
             // Web client
             setupWebClient()
 
@@ -128,6 +141,22 @@ class WebActivity : AppCompatActivity() {
             settings.apply {
                 cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
             }
-        }
+        }.loadUrl(intent.getStringExtra("http_url") ?: "https://www.bing.com")
+    }
+
+    private fun showLoadingView() {
+        binding.lottieAnimationViewLoading.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingView() {
+        binding.lottieAnimationViewLoading.visibility = View.GONE
+    }
+
+    private fun showWebView() {
+        binding.webView.visibility = View.VISIBLE
+    }
+
+    private fun showEmptyView() {
+        binding.linearLayoutNoData.visibility = View.VISIBLE
     }
 }

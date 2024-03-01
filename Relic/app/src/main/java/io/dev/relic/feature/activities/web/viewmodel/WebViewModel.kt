@@ -27,9 +27,6 @@ class WebViewModel @Inject constructor(
     var mWebChromeClient: WebChromeClient? = null
         private set
 
-    /**
-     * The web data flow of current open url.
-     * */
     private val _webDataStateFlow = MutableStateFlow<WebDataState>(WebDataState.Init)
     val webDataStateFlow: StateFlow<WebDataState> get() = _webDataStateFlow
 
@@ -43,11 +40,18 @@ class WebViewModel @Inject constructor(
         initWebChromeClient()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        mWebViewClient = null
+        mWebChromeClient = null
+    }
+
     private fun initWebClient() {
         mWebViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 operationInViewModelScope {
+                    LogUtil.d(TAG, "[Web Data State] Fetching")
                     setState(_webDataStateFlow, WebDataState.Fetching(DEFAULT_REQUEST_PROGRESS))
                 }
             }
@@ -55,6 +59,7 @@ class WebViewModel @Inject constructor(
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 operationInViewModelScope {
+                    LogUtil.d(TAG, "[Web Data State] Fetch succeed.")
                     setState(_webDataStateFlow, WebDataState.FetchSucceed)
                 }
             }
@@ -76,10 +81,10 @@ class WebViewModel @Inject constructor(
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 operationInViewModelScope {
+                    LogUtil.d(TAG, "[Web Data State] Fetching, latest progress: $newProgress")
                     setState(_webDataStateFlow, WebDataState.Fetching(newProgress))
                 }
             }
         }
     }
-
 }

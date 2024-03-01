@@ -5,4 +5,5 @@
     <string name="common_input_field_hint">Hint</string>
     <string name="common_no_data">No data…</string>
     <string name="common_retry">Retry</string>
+    <string name="common_back">Back</string>
 </resources>
