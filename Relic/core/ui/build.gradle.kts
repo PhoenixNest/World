@@ -1,3 +1,6 @@
+// Library config
+private val composeCompilerVersion = "1.5.7"
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
@@ -26,7 +29,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 
@@ -44,27 +47,27 @@ dependencies {
     api(libs.androidx.recyclerview)
 
     // Compose Ui
-    val composeBom: Dependency = platform("androidx.compose:compose-bom:2023.10.00")
+    val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.02.01")
     api(composeBom)
     androidTestApi(composeBom)
     // Material Design
-    api("androidx.compose.material:material")
+    api(libs.androidx.compose.material)
     // Android Studio Preview support
-    api("androidx.compose.ui:ui-tooling-preview")
-    debugApi("androidx.compose.ui:ui-tooling")
+    api(libs.androidx.compose.ui.tooling.preview)
+    debugApi(libs.androidx.compose.ui.tooling)
     // UI Tests
-    androidTestApi("androidx.compose.ui:ui-test-junit4")
-    debugApi("androidx.compose.ui:ui-test-manifest")
+    androidTestApi(libs.androidx.compose.ui.test.junit4)
+    debugApi(libs.androidx.compose.ui.test.manifest)
     // Optional - Included automatically by material, only add when you need
     // the icons but not the material library (e.g. when using Material3 or a
     // custom design system based on Foundation)
-    api("androidx.compose.material:material-icons-core")
+    api(libs.androidx.compose.material.icons.core)
     // Optional - Add full set of material icons
-    api("androidx.compose.material:material-icons-extended")
+    api(libs.androidx.compose.material.icons.extended)
     // Optional - Add window size utils
-    api("androidx.compose.material3:material3-window-size-class")
+    api(libs.androidx.compose.material3.window.size)
     // Optional - Integration with LiveData
-    api("androidx.compose.runtime:runtime-livedata")
+    api(libs.androidx.compose.runtime.livedata)
     // Optional - Integration with activities
     api(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
@@ -82,5 +85,6 @@ dependencies {
     api(libs.coil.compose)
 
     // Lottie
+    api(libs.lottie)
     api(libs.lottie.compose)
 }

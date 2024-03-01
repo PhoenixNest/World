@@ -5,6 +5,9 @@ private val localProperties = gradleLocalProperties(rootDir)
 private val aMapDevKay = localProperties.getProperty("AMAP_DEV_KEY")
 private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY")
 
+// Library config
+private val composeCompilerVersion = "1.5.7"
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
@@ -41,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 

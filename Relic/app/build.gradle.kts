@@ -8,6 +8,9 @@ private val isNoAds = localProperties.getProperty("NO_ADS")
 // Dev Key
 private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY")
 
+// Library config
+private val composeCompilerVersion = "1.5.7"
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
@@ -86,7 +89,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     packaging {
@@ -122,10 +125,10 @@ dependencies {
     val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.0.0")
     implementation(firebaseBom)
     // Add the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.analytics.ktx)
     // Add the dependency for the Performance Monitoring library
-    implementation("com.google.firebase:firebase-perf-ktx")
+    implementation(libs.firebase.perf.ktx)
 
     // Hilt
     implementation(libs.hilt.android)
