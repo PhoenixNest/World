@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.View
 import android.webkit.WebSettings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import io.common.util.LogUtil
+import io.core.ui.utils.RelicUiUtil.toggleUiGone
+import io.core.ui.utils.RelicUiUtil.toggleUiVisibility
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityWebBinding
 import io.dev.relic.feature.activities.web.viewmodel.WebDataState
@@ -64,6 +66,7 @@ class WebActivity : AppCompatActivity() {
 
         // Intercept the BACK key from system.
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            LogUtil.d(TAG, "[Event: onKeyDown] Intercept the BACK key from system.")
             webView.goBack()
             return true
         }
@@ -145,18 +148,18 @@ class WebActivity : AppCompatActivity() {
     }
 
     private fun showLoadingView() {
-        binding.lottieAnimationViewLoading.visibility = View.VISIBLE
+        binding.lottieAnimationViewLoading.toggleUiVisibility(true)
     }
 
     private fun hideLoadingView() {
-        binding.lottieAnimationViewLoading.visibility = View.GONE
+        binding.lottieAnimationViewLoading.toggleUiGone(true)
     }
 
     private fun showWebView() {
-        binding.webView.visibility = View.VISIBLE
+        binding.webView.toggleUiVisibility(true)
     }
 
     private fun showEmptyView() {
-        binding.linearLayoutNoData.visibility = View.VISIBLE
+        binding.linearLayoutNoData.toggleUiVisibility(true)
     }
 }

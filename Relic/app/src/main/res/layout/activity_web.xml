@@ -10,12 +10,11 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout_no_data"
@@ -59,18 +58,20 @@
         app:lottie_autoPlay="true"
         app:lottie_cacheComposition="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_common_loading" />
+        app:lottie_rawRes="@raw/lottie_common_loading"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageView_close"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
+        android:clickable="true"
         android:contentDescription="@string/common_back"
         android:cropToPadding="true"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_back"
