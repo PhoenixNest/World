@@ -12,7 +12,9 @@ sealed class WebDataState {
 
     /* Loading */
 
-    data object Fetching : WebDataState()
+    data class Fetching(
+        val latestProgress: Int
+    ) : WebDataState()
 
     /* Succeed */
 
@@ -20,6 +22,9 @@ sealed class WebDataState {
 
     /* Failed */
 
-    data object FetchFailed : WebDataState()
+    data class FetchFailed(
+        val errorCode: Int?,
+        val errorMessage: String?
+    ) : WebDataState()
 
 }

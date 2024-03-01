@@ -7,9 +7,13 @@ import android.view.KeyEvent
 import android.webkit.WebSettings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityWebBinding
+import io.dev.relic.feature.activities.web.viewmodel.WebDataState
 import io.dev.relic.feature.activities.web.viewmodel.WebViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WebActivity : AppCompatActivity() {
 
@@ -68,6 +72,7 @@ class WebActivity : AppCompatActivity() {
 
     private fun initialization() {
         setupUi()
+        handleWebProgress()
     }
 
     private fun setupWebClient() {
@@ -76,6 +81,23 @@ class WebActivity : AppCompatActivity() {
         webViewModel.apply {
             mWebViewClient?.also { webView.webViewClient = it }
             mWebChromeClient?.also { webView.webChromeClient = it }
+        }
+    }
+
+    private fun handleWebProgress() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            webViewModel.webDataStateFlow.collect {
+                when (it) {
+                    is WebDataState.Init,
+                    is WebDataState.Empty,
+                    is WebDataState.NoWebData -> {
+                    }
+
+                    is WebDataState.Fetching -> {}
+                    is WebDataState.FetchFailed -> {}
+                    is WebDataState.FetchSucceed -> {}
+                }
+            }
         }
     }
 
@@ -108,5 +130,4 @@ class WebActivity : AppCompatActivity() {
             }
         }
     }
-
 }

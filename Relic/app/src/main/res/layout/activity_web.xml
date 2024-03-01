@@ -26,9 +26,9 @@
         android:background="@null"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_back"
         android:tint="@color/main_button_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
