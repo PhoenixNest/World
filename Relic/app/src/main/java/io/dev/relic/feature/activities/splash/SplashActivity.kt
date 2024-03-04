@@ -67,7 +67,7 @@ class SplashActivity : AbsBaseActivity() {
             context = this,
             onSplashProcessEnd = {
                 LogUtil.d(TAG, "[Splash-Process] Finished, start main logic.")
-                checkAndNavigate()
+                checkAndNavigate().also { finish() }
             }
         )
     }
@@ -77,18 +77,21 @@ class SplashActivity : AbsBaseActivity() {
             RelicLifecycleObserver.isFirstColdStart -> navigateToIntroActivity()
             isDebugMode -> navigateToDebugActivity()
             else -> navigateToMainActivity()
-        }.also { finish() }
+        }
     }
 
     private fun navigateToIntroActivity() {
+        LogUtil.d(TAG, "[Splash Navigator] Navigate to IntroActivity")
         IntroActivity.start(this)
     }
 
     private fun navigateToDebugActivity() {
+        LogUtil.d(TAG, "[Splash Navigator] Navigate to DebugActivity")
         DebugActivity.start(this)
     }
 
     private fun navigateToMainActivity() {
+        LogUtil.d(TAG, "[Splash Navigator] Navigate to MainActivity")
         MainActivity.start(this)
     }
 

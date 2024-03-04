@@ -10,6 +10,7 @@ import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.core.datastore.preference_keys.SystemPreferenceKeys.KEY_IS_FIRST_COLD_START
+import io.dev.relic.feature.activities.deeplink.DeepLinkActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
 
@@ -58,6 +59,11 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      * Check whether the user entered the App through SplashActivity.
      * */
     private var hasEnterBySplashActivity = false
+
+    /**
+     * Check whether the user entered the App through DeeplinkActivity.
+     * */
+    private var hasEnterByDeeplinkActivity = false
 
     /* ======================== Logical ======================== */
 
@@ -156,24 +162,9 @@ object RelicLifecycleObserver : DefaultLifecycleObserver, ActivityLifecycleCallb
      */
     override fun onActivityStarted(activity: Activity) {
         LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
-
-        // Update parameter
-        hasEnterBySplashActivity = when {
-
-            // Because the mark: isHotStart will only be updated when entered main unit,
-            // so the user may stay in:
-            // - SplashActivity
-            // - AdActivity
-            !isHotStart -> true
-
-            // User has stay in SplashActivity, skip
-            activity is SplashActivity -> true
-
-            // User has stay in AdActivity, skip
-            // activity is AdActivity -> true
-
-            // Otherwise, try to show the hot start splash-ad
-            else -> false
+        when (activity) {
+            is DeepLinkActivity -> hasEnterByDeeplinkActivity = true
+            is SplashActivity -> hasEnterBySplashActivity = true
         }
     }
 

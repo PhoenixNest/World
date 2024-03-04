@@ -65,7 +65,18 @@
             android:name=".feature.activities.main.MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.web.WebActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Relic" />
+
+        <activity
+            android:name=".feature.activities.deeplink.DeepLinkActivity"
+            android:exported="true"
             android:theme="@style/Theme.Relic">
+
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -99,11 +110,6 @@
                 <data android:path="/open" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".feature.activities.web.WebActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
 
         <activity
             android:name="io.module.debug.activities.debug.DebugActivity"
