@@ -8,6 +8,7 @@ import android.webkit.WebSettings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.core.ui.utils.RelicUiUtil.toggleUiGone
 import io.core.ui.utils.RelicUiUtil.toggleUiVisibility
@@ -20,10 +21,16 @@ import kotlinx.coroutines.launch
 
 class WebActivity : AppCompatActivity() {
 
+    /**
+     * View binding
+     * */
     private val binding by lazy {
         ActivityWebBinding.inflate(layoutInflater)
     }
 
+    /**
+     * ViewModel
+     * */
     private val webViewModel by lazy {
         ViewModelProvider(this)[WebViewModel::class.java]
     }
@@ -32,20 +39,22 @@ class WebActivity : AppCompatActivity() {
 
         private const val TAG = "WebActivity"
 
+        private const val ARG_REQUEST_URL = "arg_request_url"
+
         /**
-         * Redirect to the specified http url.
+         * Redirect to the specified http/https url.
          *
          * @param context
-         * @param httpUrl
+         * @param url
          * */
-        fun redirect(context: Context, httpUrl: String) {
+        fun redirect(context: Context, url: String) {
             context.startActivity(
                 Intent(
                     /* packageContext = */ context,
                     /* cls = */ WebActivity::class.java
                 ).apply {
-                    action = "[Activity] Web"
-                    putExtra("http_url", httpUrl)
+                    action = INTENT_ACTION_VIEW
+                    putExtra(ARG_REQUEST_URL, url)
                 }
             )
         }

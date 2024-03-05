@@ -220,7 +220,7 @@ private fun IntroPrivacy() {
             ).forEach { annotatedString ->
                 WebActivity.redirect(
                     context = context,
-                    httpUrl = annotatedString.item
+                    url = annotatedString.item
                 )
             }
         }

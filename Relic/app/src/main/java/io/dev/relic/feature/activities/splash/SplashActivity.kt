@@ -10,6 +10,8 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
+import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
@@ -23,10 +25,11 @@ import io.domain.app.AbsBaseActivity
 import io.module.debug.activities.debug.DebugActivity
 
 @SuppressLint("CustomSplashScreen")
+@AndroidEntryPoint
 class SplashActivity : AbsBaseActivity() {
 
     /**
-     * VM
+     * ViewModel
      * */
     private val splashViewModel by lazy {
         ViewModelProvider(this)[SplashViewModel::class.java]
@@ -46,7 +49,7 @@ class SplashActivity : AbsBaseActivity() {
                     /* packageContext = */ context,
                     /* cls = */ SplashActivity::class.java
                 ).apply {
-                    action = "[Activity] Splash"
+                    action = INTENT_ACTION_VIEW
                 }
             )
         }

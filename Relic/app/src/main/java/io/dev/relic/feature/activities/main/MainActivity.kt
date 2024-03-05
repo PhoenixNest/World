@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dagger.hilt.android.AndroidEntryPoint
+import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
@@ -30,6 +32,7 @@ import io.domain.app.AbsBaseActivity
 import io.module.map.amap.AMapPrivacyCenter
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@AndroidEntryPoint
 class MainActivity : AbsBaseActivity() {
 
     /**
@@ -62,7 +65,7 @@ class MainActivity : AbsBaseActivity() {
                     /* packageContext = */ context,
                     /* cls = */ MainActivity::class.java
                 ).apply {
-                    action = "[Activity] Main"
+                    action = INTENT_ACTION_VIEW
                 }
             )
         }

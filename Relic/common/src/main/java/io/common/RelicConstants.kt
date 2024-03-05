@@ -21,4 +21,9 @@ object RelicConstants {
         const val UNKNOWN_VALUE_DOUBLE = 0.0
         const val UNKNOWN_VALUE_STRING = "Unknown"
     }
+
+    object IntentAction {
+        const val INTENT_ACTION_VIEW = "ACTION_VIEW"
+        const val INTENT_ACTION_SEND = "ACTION_SEND"
+    }
 }

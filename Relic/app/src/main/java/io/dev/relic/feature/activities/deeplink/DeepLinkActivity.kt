@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import io.common.util.LogUtil
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.SplashActivity
@@ -11,6 +12,7 @@ import io.domain.app.AbsBaseActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DeepLinkActivity : AbsBaseActivity() {
 
     companion object {
@@ -33,10 +35,16 @@ class DeepLinkActivity : AbsBaseActivity() {
             return
         }
 
-        intent.data?.parseData()
+        val intentData = intent.data
+        if (intentData == null) {
+            LogUtil.e(TAG, "[Parse Deeplink] Parse failed, intent data is null.")
+            return
+        }
+
+        intentData.printIntentDataLogcat()
     }
 
-    private fun Uri.parseData() {
+    private fun Uri.printIntentDataLogcat() {
         val originalUri = this
         LogUtil.apply {
             d(TAG, "[Parse Uri Data] Original Uri: $originalUri")

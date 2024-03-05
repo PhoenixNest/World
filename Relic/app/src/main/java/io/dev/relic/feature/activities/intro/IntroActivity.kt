@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
@@ -37,7 +38,7 @@ class IntroActivity : AbsBaseActivity() {
                     /* packageContext = */ context,
                     /* cls = */ IntroActivity::class.java
                 ).apply {
-                    action = "[Activity] Intro"
+                    action = INTENT_ACTION_VIEW
                 }
             )
         }

@@ -2,6 +2,7 @@ package io.common
 
 import android.content.Context
 import android.content.Intent
+import io.common.RelicConstants.IntentAction.INTENT_ACTION_SEND
 import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
 import io.common.util.LogUtil
 
@@ -22,7 +23,7 @@ object RelicShareCenter {
     ) {
         LogUtil.d(TAG, "[Share - Text only] content: $shareContent")
         val intent = Intent().apply {
-            action = Intent.ACTION_SEND
+            action = INTENT_ACTION_SEND
             type = SHARE_TYPE_PLAIN_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
@@ -36,7 +37,7 @@ object RelicShareCenter {
     ) {
         LogUtil.d(TAG, "[Share - RTF] content: $shareContent")
         val intent = Intent().apply {
-            action = Intent.ACTION_SEND
+            action = INTENT_ACTION_SEND
             type = SHARE_TYPE_RTF_TEXT
             putExtra(Intent.EXTRA_TEXT, shareContent ?: DEFAULT_PLACEHOLDER_URL)
         }
@@ -51,7 +52,7 @@ object RelicShareCenter {
     ) {
         LogUtil.d(TAG, "[Share - Web Link] content: $url")
         val intent = Intent().apply {
-            action = Intent.ACTION_SEND
+            action = INTENT_ACTION_SEND
             type = SHARE_TYPE_HTML
             putExtra(Intent.EXTRA_TITLE, title ?: SHARE_TITLE)
             putExtra(Intent.EXTRA_TEXT, url ?: DEFAULT_PLACEHOLDER_URL)
