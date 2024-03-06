@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import io.agent.gemini.model.AbsGeminiCell
 import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
+import io.dev.relic.R
 import io.dev.relic.feature.function.agent.gemini.ui.AgentChatList
 import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
 
@@ -47,8 +49,8 @@ fun AgentChatPageContent(
         ) {
             CommonTopBar(
                 onBackClick = onBackClick,
-                hasTitle = true,
-                title = "Greeting",
+                hasTitle = false,
+                title = stringResource(R.string.title_greeting),
                 iconColor = mainIconColorLight
             )
             AgentChatArea(
