@@ -1,5 +1,6 @@
 package io.core.ui
 
+import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,10 @@ fun CommonComposeWebView(redirectUrl: String) {
         factory = {
             val webView = WebView(it)
             webView.apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
                 loadUrl(redirectUrl)
             }
         },
