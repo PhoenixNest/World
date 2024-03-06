@@ -1,7 +1,8 @@
 package io.dev.relic.feature.activities.web.viewmodel
 
 import android.app.Application
-import android.graphics.Bitmap
+import android.net.http.SslError
+import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -9,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.AndroidViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.RelicConstants
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
@@ -32,7 +34,6 @@ class WebViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "WebViewModel"
-        private const val DEFAULT_REQUEST_PROGRESS = 0
     }
 
     init {
@@ -48,24 +49,24 @@ class WebViewModel @Inject constructor(
 
     private fun initWebClient() {
         mWebViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                operationInViewModelScope {
-                    LogUtil.d(TAG, "[Web Data State] Fetching")
-                    setState(_webDataStateFlow, WebDataState.Fetching(DEFAULT_REQUEST_PROGRESS))
-                }
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                val urlString = (request?.url ?: RelicConstants.URL.DEFAULT_PLACEHOLDER_URL).toString()
+                view?.loadUrl(urlString)
+                return true
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
                 operationInViewModelScope {
                     LogUtil.d(TAG, "[Web Data State] Fetch succeed.")
                     setState(_webDataStateFlow, WebDataState.FetchSucceed)
                 }
             }
 
+            override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+                handler?.cancel()
+            }
+
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-                super.onReceivedError(view, request, error)
                 val errorCode = error?.errorCode
                 val errorMessage = error?.description.toString()
                 operationInViewModelScope {
@@ -79,7 +80,6 @@ class WebViewModel @Inject constructor(
     private fun initWebChromeClient() {
         mWebChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                super.onProgressChanged(view, newProgress)
                 operationInViewModelScope {
                     LogUtil.d(TAG, "[Web Data State] Fetching, latest progress: $newProgress")
                     setState(_webDataStateFlow, WebDataState.Fetching(newProgress))

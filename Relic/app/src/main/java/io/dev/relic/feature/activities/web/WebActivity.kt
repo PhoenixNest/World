@@ -4,19 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.webkit.WebSettings
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
-import io.core.ui.utils.RelicUiUtil.toggleUiGone
-import io.core.ui.utils.RelicUiUtil.toggleUiVisibility
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityWebBinding
 import io.dev.relic.feature.activities.web.viewmodel.WebDataState
 import io.dev.relic.feature.activities.web.viewmodel.WebViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class WebActivity : AppCompatActivity() {
@@ -68,6 +66,26 @@ class WebActivity : AppCompatActivity() {
         initialization()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.webView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.webView.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Avoid OOM
+        binding.apply {
+            root.removeAllViews()
+            webView.destroy()
+        }
+    }
+
     /* ======================== override ======================== */
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -90,18 +108,9 @@ class WebActivity : AppCompatActivity() {
         handleWebProgress()
     }
 
-    private fun setupWebClient() {
-        val webView = binding.webView
-
-        webViewModel.apply {
-            mWebViewClient?.also { webView.webViewClient = it }
-            mWebChromeClient?.also { webView.webChromeClient = it }
-        }
-    }
-
     private fun handleWebProgress() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            webViewModel.webDataStateFlow.collect {
+        lifecycleScope.launch {
+            webViewModel.webDataStateFlow.onEach {
                 when (val dataState = it) {
                     is WebDataState.Init -> {
                         showLoadingView()
@@ -147,28 +156,44 @@ class WebActivity : AppCompatActivity() {
     private fun setupWebView() {
         binding.webView.apply {
             // Web client
-            setupWebClient()
+            webViewModel.mWebViewClient?.also { webViewClient = it }
+            webViewModel.mWebChromeClient?.also { webChromeClient = it }
 
             // Web Settings
             settings.apply {
-                cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                // JavaScript support
+                javaScriptEnabled = true
+
+                // Auto-size content
+                useWideViewPort = true          // Resize the picture content to adjust with system screen
+                loadWithOverviewMode = true     // Resize the content to adjust with system screen
+
+                // Zoom-in/out
+                setSupportZoom(true)
+                builtInZoomControls = true
+                displayZoomControls = false     // Hide the system zoom-in/out ui component
+
+                // Other setting
+                allowFileAccess = true          // Allow the webView to access the phone file
+                loadsImagesAutomatically = true
+                defaultTextEncodingName = "utf-8"
             }
-        }.loadUrl(intent.getStringExtra("http_url") ?: "https://www.bing.com")
+        }.loadUrl(intent.getStringExtra(ARG_REQUEST_URL) ?: "https://www.bing.com")
     }
 
     private fun showLoadingView() {
-        binding.lottieAnimationViewLoading.toggleUiVisibility(true)
+        binding.lottieAnimationViewLoading.visibility = View.VISIBLE
     }
 
     private fun hideLoadingView() {
-        binding.lottieAnimationViewLoading.toggleUiGone(true)
+        binding.lottieAnimationViewLoading.visibility = View.GONE
     }
 
     private fun showWebView() {
-        binding.webView.toggleUiVisibility(true)
+        binding.webView.visibility = View.VISIBLE
     }
 
     private fun showEmptyView() {
-        binding.linearLayoutNoData.toggleUiVisibility(true)
+        binding.linearLayoutNoData.visibility = View.VISIBLE
     }
 }
