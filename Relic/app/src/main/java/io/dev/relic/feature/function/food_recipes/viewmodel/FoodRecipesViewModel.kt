@@ -21,6 +21,7 @@ import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
 import io.data.mappers.FoodRecipesDataMapper.toFoodRecipeInformationModel
 import io.data.model.NetworkResult
 import io.dev.relic.BuildConfig
+import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesAutoConvertor.convertTimeSectionToDishType
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
@@ -81,7 +82,11 @@ class FoodRecipesViewModel @Inject constructor(
 
     fun getTimeSectionFoodRecipes(currentTimeSection: TimeUtil.TimeSection) {
         val dishType = convertTimeSectionToDishType(currentTimeSection)
-        val dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
+        var dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
+
+        if (dishQueryParameter == getString(R.string.food_recipes_label_teatime).lowercase().trim()) {
+            dishQueryParameter = "tea"
+        }
 
         operationInViewModelScope {
             getFoodRecipesData(
