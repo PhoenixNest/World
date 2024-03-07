@@ -17,9 +17,7 @@ import io.dev.relic.feature.pages.settings.ui.widget.SettingsPanelTitle
 @Composable
 fun SettingsDebugPanel() {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {

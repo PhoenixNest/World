@@ -1,28 +1,32 @@
 package io.dev.relic.feature.pages.hive
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicShareCenter.shareWebLink
+import io.data.model.news.NewsArticleModel
+import io.data.util.NewsCategory
+import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
+import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
+import io.data.util.NewsConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
-import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
-import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_CATEGORY
-import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
+import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
+import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
 import io.dev.relic.feature.pages.hive.ui.HivePageContent
-import io.dev.relic.feature.pages.hive.viewmodel.HiveViewModel
 import io.dev.relic.feature.screens.main.MainScreenState
 
 @Composable
 fun HivePageRoute(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
-    hiveViewModel: HiveViewModel = hiltViewModel()
+    newsViewModel: NewsViewModel
 ) {
 
     /* ======================== Common ======================== */
@@ -32,10 +36,10 @@ fun HivePageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val trendingNewsDataState by hiveViewModel.trendingNewsDataStateFlow.collectAsStateWithLifecycle()
+    val trendingNewsDataState by newsViewModel.trendingNewsDataStateFlow.collectAsStateWithLifecycle()
 
     // Top-headline
-    val topHeadlineNewsDataState by hiveViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
+    val topHeadlineNewsDataState by newsViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
@@ -51,20 +55,24 @@ fun HivePageRoute(
         //
     }
 
-    HivePageContent(
+    HivePage(
         trendingNewsDataState = trendingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
-        currentSelectedCategory = hiveViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
+        currentSelectedCategory = newsViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
         trendingNewsLazyListState = trendingNewsLazyListState,
         topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
         topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
-        onTabItemClick = { currentSelectedTab, keyWords ->
-            hiveViewModel.apply {
+        onResortClick = {
+            //
+        },
+        onTabItemClick = { currentSelectedTab, _ ->
+            val newsCategories = NewsCategory.entries
+            newsViewModel.apply {
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
                 getTopHeadlineNewsData(
-                    keyWords = keyWords,
+                    keyWords = "",
                     country = DEFAULT_NEWS_COUNTRY_TYPE,
-                    category = DEFAULT_NEWS_CATEGORY,
+                    category = newsCategories[currentSelectedTab],
                     pageSize = DEFAULT_INIT_NEWS_PAGE_SIZE,
                     page = DEFAULT_INIT_NEWS_PAGE_INDEX
                 )
@@ -86,7 +94,60 @@ fun HivePageRoute(
                 url = it.contentUrl
             )
         },
-        onRetryTrendingClick = hiveViewModel::getTrendingNewsData,
-        onRetryTopHeadlineClick = hiveViewModel::getTopHeadlineNewsData
+        onRetryTrendingClick = newsViewModel::getTrendingNewsData,
+        onRetryTopHeadlineClick = newsViewModel::getTopHeadlineNewsData
+    )
+}
+
+@Composable
+private fun HivePage(
+    trendingNewsDataState: TrendingNewsDataState,
+    topHeadlineNewsDataState: TopHeadlineNewsDataState,
+    currentSelectedCategory: Int,
+    trendingNewsLazyListState: LazyListState,
+    topHeadlineNewsTabLazyListState: LazyListState,
+    topHeadlineNewsContentLazyListState: LazyListState,
+    onResortClick: () -> Unit,
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    onNewsCardClick: (model: NewsArticleModel) -> Unit,
+    onLikeClick: (model: NewsArticleModel) -> Unit,
+    onShareClick: (model: NewsArticleModel) -> Unit,
+    onRetryTrendingClick: () -> Unit,
+    onRetryTopHeadlineClick: () -> Unit
+) {
+    HivePageContent(
+        trendingNewsDataState = trendingNewsDataState,
+        topHeadlineNewsDataState = topHeadlineNewsDataState,
+        currentSelectedCategory = currentSelectedCategory,
+        trendingNewsLazyListState = trendingNewsLazyListState,
+        topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
+        topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
+        onResortClick = onResortClick,
+        onTabItemClick = onTabItemClick,
+        onNewsCardClick = onNewsCardClick,
+        onLikeClick = onLikeClick,
+        onShareClick = onShareClick,
+        onRetryTrendingClick = onRetryTrendingClick,
+        onRetryTopHeadlineClick = onRetryTopHeadlineClick
+    )
+}
+
+@Composable
+@Preview
+private fun HivePagePreview() {
+    HivePage(
+        trendingNewsDataState = TrendingNewsDataState.Init,
+        topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
+        currentSelectedCategory = 0,
+        trendingNewsLazyListState = rememberLazyListState(),
+        topHeadlineNewsTabLazyListState = rememberLazyListState(),
+        topHeadlineNewsContentLazyListState = rememberLazyListState(),
+        onResortClick = {},
+        onTabItemClick = { _, _ -> },
+        onNewsCardClick = {},
+        onLikeClick = {},
+        onShareClick = {},
+        onRetryTrendingClick = { },
+        onRetryTopHeadlineClick = {}
     )
 }

@@ -53,7 +53,6 @@ fun FoodRecipesColumnItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.Top
@@ -80,12 +79,11 @@ fun FoodRecipesColumnItem(
 private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
             .padding(
                 start = 12.dp,
                 top = 12.dp
-            )
-            .fillMaxWidth()
-            .wrapContentHeight(),
+            ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {

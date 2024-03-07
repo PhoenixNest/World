@@ -66,7 +66,6 @@ private fun CommonLoadingCardItem(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
         color = mainBackgroundColor.copy(alpha = 0.3F)
@@ -74,7 +73,6 @@ private fun CommonLoadingCardItem(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .background(color = mainBackgroundColor.copy(alpha = 0.3F))
                 .padding(20.dp)
         ) {

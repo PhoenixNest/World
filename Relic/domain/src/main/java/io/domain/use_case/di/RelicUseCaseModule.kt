@@ -25,7 +25,7 @@ import io.domain.use_case.news.action.everything.CacheTrendingNewsData
 import io.domain.use_case.news.action.everything.GetTrendingNewsData
 import io.domain.use_case.news.action.everything.QueryAllTrendingNewsData
 import io.domain.use_case.news.action.top_headline.CacheTopHeadlineNewsData
-import io.domain.use_case.news.action.top_headline.GetHeadlineNewsData
+import io.domain.use_case.news.action.top_headline.GetTopHeadlineNewsData
 import io.domain.use_case.news.action.top_headline.QueryAllTopHeadlineNewsData
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.todo.action.AddTodo
@@ -103,7 +103,7 @@ class RelicUseCaseModule {
     ): NewsUseCase {
         return NewsUseCase(
             getTrendingNewsData = GetTrendingNewsData(newsRepository),
-            getTopHeadlineNews = GetHeadlineNewsData(newsRepository),
+            getTopHeadlineNews = GetTopHeadlineNewsData(newsRepository),
             queryAllTrendingNewsData = QueryAllTrendingNewsData(databaseRepository),
             queryAllTopHeadlineNewsData = QueryAllTopHeadlineNewsData(databaseRepository),
             cacheTrendingNewsData = CacheTrendingNewsData(databaseRepository),

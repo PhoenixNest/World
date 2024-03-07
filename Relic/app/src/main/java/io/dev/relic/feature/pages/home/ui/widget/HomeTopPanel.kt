@@ -2,6 +2,7 @@ package io.dev.relic.feature.pages.home.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -138,15 +139,14 @@ private fun HomeTopBar(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
         Box(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .systemBarsPadding()
         ) {
             IconButton(
@@ -207,7 +207,6 @@ private fun HomeAgentPanel(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(horizontal = 12.dp)
     ) {
         Text(

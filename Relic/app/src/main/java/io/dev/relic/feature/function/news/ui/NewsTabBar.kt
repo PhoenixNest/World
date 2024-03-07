@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -34,7 +33,6 @@ fun NewsTabBar(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .background(color = mainThemeColor),
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(

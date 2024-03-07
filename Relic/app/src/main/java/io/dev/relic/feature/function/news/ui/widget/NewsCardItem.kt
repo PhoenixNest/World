@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -54,7 +53,6 @@ fun NewsCardItem(
         Surface(
             modifier = modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
             color = mainBackgroundColor.copy(alpha = 0.3F)
@@ -62,7 +60,6 @@ fun NewsCardItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
                     .background(color = mainBackgroundColor.copy(alpha = 0.3F))
                     .clickable { onCardClick.invoke() }
                     .padding(20.dp),
@@ -112,7 +109,9 @@ private fun NewsCardItemIntro(
             Spacer(modifier = Modifier.width(12.dp))
         }
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = publishDate,

@@ -10,6 +10,7 @@ import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
@@ -17,6 +18,7 @@ import io.dev.relic.feature.pages.explore.pageExplore
 import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
+import io.dev.relic.feature.route.RelicRoute.BASE_ROUTE
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.EXPLORE
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HIVE
@@ -30,8 +32,9 @@ fun MainFeatureNavHost(
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel,
+    newsViewModel: NewsViewModel,
     modifier: Modifier = Modifier,
-    startDestination: String = RelicRoute.BASE_ROUTE
+    startDestination: String = BASE_ROUTE
 ) {
     val systemUiController = rememberSystemUiController()
 
@@ -60,7 +63,8 @@ fun MainFeatureNavHost(
         )
         pageHive(
             mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel
+            mainViewModel = mainViewModel,
+            newsViewModel = newsViewModel
         )
         pageSettings(
             mainScreenState = mainScreenState,

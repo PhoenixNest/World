@@ -41,9 +41,7 @@ import io.dev.relic.R
 @Composable
 fun FoodRecipeDetailPanel(model: FoodRecipeInformationModel) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -101,9 +99,7 @@ private fun FoodRecipeIngredientTitle() {
 @Composable
 private fun FoodRecipeIngredientRow(ingredientList: List<ExtendedIngredientItem?>) {
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(
             space = 16.dp,
             alignment = Alignment.Start

@@ -39,9 +39,7 @@ fun FoodRecipesCommonComponent(
     onRetryClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -66,7 +64,6 @@ private fun FoodRecipesComponentTitle(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -113,9 +110,7 @@ private fun FoodRecipesComponentContent(
 
         is FoodRecipesDataState.FetchSucceed<*> -> {
             LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
                     alignment = Alignment.Start

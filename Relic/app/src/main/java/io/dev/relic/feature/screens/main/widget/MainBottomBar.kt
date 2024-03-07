@@ -49,7 +49,6 @@ fun MainBottomBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .background(color = mainThemeColor),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically

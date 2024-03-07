@@ -12,5 +12,5 @@ enum class NewsCategory {
     HEALTH,
     SCIENCE,
     SPORTS,
-    Technology
+    TECHNOLOGY
 }

@@ -100,11 +100,7 @@ fun AgentMessageCell(
         else -> errorColorAccent
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-    ) {
+    Box(modifier = modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .wrapContentSize()

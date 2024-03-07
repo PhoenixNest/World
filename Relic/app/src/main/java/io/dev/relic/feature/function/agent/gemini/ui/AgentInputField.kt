@@ -41,9 +41,7 @@ fun AgentInputField(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = modifier.fillMaxWidth(),
         color = mainThemeColor,
         shape = RoundedCornerShape(
             topStart = 16.dp,
@@ -53,14 +51,12 @@ fun AgentInputField(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
                 .background(mainThemeColorLight.copy(alpha = 0.1F))
         ) {
             AgentStatusIndicator(isAwaitingAnswer = isAwaitingAnswer)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
                     .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
@@ -71,7 +67,6 @@ fun AgentInputField(
                     onValueChange = onValueChange,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
                         .weight(4F)
                         .background(
                             color = mainThemeColorLight.copy(alpha = 0.1F),

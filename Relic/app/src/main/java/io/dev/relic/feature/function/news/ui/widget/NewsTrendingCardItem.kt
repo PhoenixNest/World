@@ -36,8 +36,7 @@ fun NewsTrendingCardItem(
     data.apply {
         Surface(
             modifier = modifier
-                .width(300.dp)
-                .wrapContentHeight(),
+                .width(300.dp),
             shape = RoundedCornerShape(16.dp),
             color = mainBackgroundColor.copy(alpha = 0.3F)
         ) {
@@ -57,7 +56,6 @@ fun NewsTrendingCardItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
                         .background(color = mainBackgroundColor.copy(alpha = 0.8F))
                         .padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(

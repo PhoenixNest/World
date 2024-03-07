@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.hive.viewmodel
+package io.dev.relic.feature.function.news.viewmodel
 
 import android.app.Application
 import androidx.compose.runtime.getValue
@@ -9,39 +9,34 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
-import io.common.util.TimeUtil.getCurrentTimeInMillis
-import io.core.database.repository.RelicDatabaseRepository
+import io.common.util.TimeUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_STATUS
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_TIME_DURATION
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_STATUS
 import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_TIME_DURATION
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList
 import io.data.mappers.NewsDataMapper.toTopHeadlineNewsEntity
 import io.data.mappers.NewsDataMapper.toTrendingNewsEntity
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
+import io.data.util.NewsConfig
+import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
+import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
+import io.data.util.NewsConfig.DEFAULT_NEWS_SORT_RULE
+import io.data.util.NewsConfig.TopHeadline.DEFAULT_NEWS_CATEGORY
+import io.data.util.NewsConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
+import io.data.util.NewsConfig.Trending.DEFAULT_NEWS_LANGUAGE
+import io.data.util.NewsConfig.Trending.DEFAULT_NEWS_SOURCE
 import io.data.util.NewsCountryType
 import io.data.util.NewsLanguageType
 import io.data.util.NewsSortRule
-import io.dev.relic.feature.function.news.NewsUnitConfig
-import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
-import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
-import io.dev.relic.feature.function.news.NewsUnitConfig.DEFAULT_NEWS_SORT_RULE
-import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_CATEGORY
-import io.dev.relic.feature.function.news.NewsUnitConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
-import io.dev.relic.feature.function.news.NewsUnitConfig.Trending.DEFAULT_NEWS_LANGUAGE
-import io.dev.relic.feature.function.news.NewsUnitConfig.Trending.DEFAULT_NEWS_SOURCE
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.util.NewsDataStatus
-import io.dev.relic.feature.function.news.util.NewsDataStatus.FAILED
-import io.dev.relic.feature.function.news.util.NewsDataStatus.INIT
-import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS
-import io.dev.relic.feature.function.news.util.NewsDataStatus.SUCCESS_WITHOUT_DATA
 import io.dev.relic.feature.function.news.util.NewsType
 import io.dev.relic.feature.function.news.util.NewsType.TOP_HEADLINE
 import io.dev.relic.feature.function.news.util.NewsType.TRENDING
@@ -54,9 +49,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HiveViewModel @Inject constructor(
+class NewsViewModel @Inject constructor(
     application: Application,
-    private val databaseRepository: RelicDatabaseRepository,
     private val newsUseCase: NewsUseCase
 ) : AndroidViewModel(application) {
 
@@ -78,7 +72,7 @@ class HiveViewModel @Inject constructor(
     val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> get() = _topHeadlineNewsDataStateFlow
 
     companion object {
-        private const val TAG = "HiveViewModel"
+        private const val TAG = "NewsViewModel"
         private const val DEFAULT_STOP_TIMEOUT_MILLIS = 5 * 1000L
         private const val DEFAULT_LAST_REFRESH_TIME = 0L
     }
@@ -98,10 +92,10 @@ class HiveViewModel @Inject constructor(
 
     private fun checkShouldRefreshTrendingData() {
         val lastTimeDuration = readSyncData(KEY_TRENDING_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
-        val lastRefreshStatus = readSyncData(KEY_TRENDING_STATUS, INIT.typeValue)
-        if (getCurrentTimeInMillis() > lastTimeDuration
-            || lastRefreshStatus == INIT.typeValue
-            || lastRefreshStatus == FAILED.typeValue
+        val lastRefreshStatus = readSyncData(KEY_TRENDING_STATUS, NewsDataStatus.INIT.typeValue)
+        if (TimeUtil.getCurrentTimeInMillis() > lastTimeDuration
+            || lastRefreshStatus == NewsDataStatus.INIT.typeValue
+            || lastRefreshStatus == NewsDataStatus.FAILED.typeValue
         ) {
             LogUtil.d(TAG, "[Trending News Checker] Refresh data.")
             getTrendingNewsData()
@@ -113,10 +107,10 @@ class HiveViewModel @Inject constructor(
 
     private fun checkShouldRefreshTopHeadlineData() {
         val lastTimeDuration = readSyncData(KEY_TOP_HEADLINE_TIME_DURATION, DEFAULT_LAST_REFRESH_TIME)
-        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, INIT.typeValue)
-        if (getCurrentTimeInMillis() > lastTimeDuration
-            || lastRefreshStatus == INIT.typeValue
-            || lastRefreshStatus == FAILED.typeValue
+        val lastRefreshStatus = readSyncData(KEY_TOP_HEADLINE_STATUS, NewsDataStatus.INIT.typeValue)
+        if (TimeUtil.getCurrentTimeInMillis() > lastTimeDuration
+            || lastRefreshStatus == NewsDataStatus.INIT.typeValue
+            || lastRefreshStatus == NewsDataStatus.FAILED.typeValue
         ) {
             LogUtil.d(TAG, "[Top-Headline News Checker] Refresh data.")
             getTopHeadlineNewsData()
@@ -138,8 +132,7 @@ class HiveViewModel @Inject constructor(
 
             // Query the local cache data from the database
             setState(_trendingNewsDataStateFlow, TrendingNewsDataState.Fetching)
-            databaseRepository
-                .queryAllTrendingNewsData()
+            newsUseCase.queryAllTrendingNewsData()
                 .stateIn(
                     scope = this,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
@@ -172,8 +165,7 @@ class HiveViewModel @Inject constructor(
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
             // Query the local cache data from the database
-            databaseRepository
-                .queryAllTopHeadlineNewsData()
+            newsUseCase.queryAllTopHeadlineNewsData()
                 .stateIn(
                     scope = this,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
@@ -217,7 +209,7 @@ class HiveViewModel @Inject constructor(
      * @param page              Use this to page through the results.
      * */
     fun getTrendingNewsData(
-        keyWords: String = NewsUnitConfig.Trending.DEFAULT_SEARCH_KEYWORDS,
+        keyWords: String = NewsConfig.Trending.DEFAULT_SEARCH_KEYWORDS,
         source: String = DEFAULT_NEWS_SOURCE,
         language: NewsLanguageType = DEFAULT_NEWS_LANGUAGE,
         sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
@@ -265,7 +257,7 @@ class HiveViewModel @Inject constructor(
      * @param page              Use this to page through the results.
      * */
     fun getTopHeadlineNewsData(
-        keyWords: String = NewsUnitConfig.TopHeadline.DEFAULT_SEARCH_KEYWORDS,
+        keyWords: String = NewsConfig.TopHeadline.DEFAULT_SEARCH_KEYWORDS,
         country: NewsCountryType = DEFAULT_NEWS_COUNTRY_TYPE,
         category: NewsCategory = DEFAULT_NEWS_CATEGORY,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
@@ -326,17 +318,17 @@ class HiveViewModel @Inject constructor(
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Trending News Data] Succeed, data: $dto")
                     dto.articles?.also {
-                        updateNewsRefreshStatus(TRENDING, SUCCESS)
+                        updateNewsRefreshStatus(TRENDING, NewsDataStatus.SUCCESS)
                         setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
                         newsUseCase.cacheTrendingNewsData.invoke(dto.toTrendingNewsEntity())
                     } ?: {
                         LogUtil.w(TAG, "[Handle Trending News Data] Succeed without [Articles] data")
-                        updateNewsRefreshStatus(TRENDING, SUCCESS_WITHOUT_DATA)
+                        updateNewsRefreshStatus(TRENDING, NewsDataStatus.SUCCESS_WITHOUT_DATA)
                         setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                     }
                 } ?: {
                     LogUtil.w(TAG, "[Handle Trending News Data] Succeed without data")
-                    updateNewsRefreshStatus(TRENDING, SUCCESS_WITHOUT_DATA)
+                    updateNewsRefreshStatus(TRENDING, NewsDataStatus.SUCCESS_WITHOUT_DATA)
                     setState(_trendingNewsDataStateFlow, TrendingNewsDataState.NoNewsData)
                 }
             }
@@ -345,7 +337,7 @@ class HiveViewModel @Inject constructor(
                 val errorCode = result.code
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Trending News Data] Failed, ($errorCode, $errorMessage)")
-                updateNewsRefreshStatus(TRENDING, FAILED)
+                updateNewsRefreshStatus(TRENDING, NewsDataStatus.FAILED)
                 setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchFailed(errorCode, errorMessage))
             }
         }
@@ -360,25 +352,25 @@ class HiveViewModel @Inject constructor(
         updateNewsRefreshTime(TOP_HEADLINE)
         when (result) {
             is NetworkResult.Loading -> {
-                LogUtil.d(TAG, "[Handle Top Headline News Data] Loading...")
+                LogUtil.d(TAG, "[Handle Top-Headline News Data] Loading...")
                 setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
             }
 
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
-                    LogUtil.d(TAG, "[Handle Top Headline News Data] Succeed, data: $dto")
+                    LogUtil.d(TAG, "[Handle Top-Headline News Data] Succeed, data: $dto")
                     dto.articles?.also {
-                        updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS)
+                        updateNewsRefreshStatus(TOP_HEADLINE, NewsDataStatus.SUCCESS)
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
                         newsUseCase.cacheTopHeadlineNewsData.invoke(dto.toTopHeadlineNewsEntity())
                     } ?: {
-                        LogUtil.w(TAG, "[Handle Top Headline News Data] Succeed without [Articles] data")
-                        updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS_WITHOUT_DATA)
+                        LogUtil.w(TAG, "[Handle Top-Headline News Data] Succeed without [Articles] data")
+                        updateNewsRefreshStatus(TOP_HEADLINE, NewsDataStatus.SUCCESS_WITHOUT_DATA)
                         setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
                     }
                 } ?: {
-                    LogUtil.w(TAG, "[Handle Top Headline News Data] Succeed without data")
-                    updateNewsRefreshStatus(TOP_HEADLINE, SUCCESS_WITHOUT_DATA)
+                    LogUtil.w(TAG, "[Handle Top-Headline News Data] Succeed without data")
+                    updateNewsRefreshStatus(TOP_HEADLINE, NewsDataStatus.SUCCESS_WITHOUT_DATA)
                     setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.NoNewsData)
                 }
             }
@@ -386,8 +378,8 @@ class HiveViewModel @Inject constructor(
             is NetworkResult.Failed -> {
                 val errorCode = result.code
                 val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Top Headline News Data] Failed, ($errorCode, $errorMessage)")
-                updateNewsRefreshStatus(TOP_HEADLINE, FAILED)
+                LogUtil.e(TAG, "[Handle Top-Headline News Data] Failed, ($errorCode, $errorMessage)")
+                updateNewsRefreshStatus(TOP_HEADLINE, NewsDataStatus.FAILED)
                 setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchFailed(errorCode, errorMessage))
             }
         }
@@ -406,7 +398,7 @@ class HiveViewModel @Inject constructor(
             TOP_HEADLINE -> KEY_TOP_HEADLINE_TIME_DURATION
         }
 
-        writeSyncData(key, getCurrentTimeInMillis())
+        writeSyncData(key, TimeUtil.getCurrentTimeInMillis())
     }
 
     /**
@@ -429,4 +421,5 @@ class HiveViewModel @Inject constructor(
 
         writeSyncData(key, status.typeValue)
     }
+
 }

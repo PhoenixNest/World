@@ -4,6 +4,7 @@ import io.core.network.NetworkParameters.Keys.NEWS_API_DEV_KEY
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.model.NetworkResult
 import io.data.util.NewsCategory
+import io.data.util.NewsConfig.DEFAULT_KEY_WORDS
 import io.data.util.NewsCountryType
 import io.domain.repository.INewsDataRepository
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import java.util.Locale
 import javax.inject.Inject
 
-class GetHeadlineNewsData @Inject constructor(
+class GetTopHeadlineNewsData @Inject constructor(
     private val newsRepository: INewsDataRepository
 ) {
 
@@ -46,7 +47,7 @@ class GetHeadlineNewsData @Inject constructor(
         return flow {
             val result = newsRepository.getTopHeadlinesNews(
                 apiKey = apiKey,
-                keyWords = if (keyWords == "Trending") "" else keyWords,
+                keyWords = if (keyWords == DEFAULT_KEY_WORDS) "" else keyWords,
                 country = country.name.lowercase(Locale.getDefault()),
                 category = category.name.lowercase(Locale.getDefault()),
                 pageSize = pageSize,

@@ -29,9 +29,7 @@ fun ExploreBottomSheetTabBar(
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
 ) {
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(
             space = 12.dp,
             alignment = Alignment.CenterHorizontally

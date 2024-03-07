@@ -30,6 +30,7 @@ import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainDrawer
@@ -43,6 +44,7 @@ fun MainScreen(
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel,
+    newsViewModel: NewsViewModel,
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -159,6 +161,7 @@ fun MainScreen(
                             mainViewModel = mainViewModel,
                             geminiAgentViewModel = geminiAgentViewModel,
                             foodRecipesViewModel = foodRecipesViewModel,
+                            newsViewModel = newsViewModel,
                             modifier = Modifier.fillMaxSize()
                         )
                         if (isShowBottomBar) {

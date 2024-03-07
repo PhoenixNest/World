@@ -47,9 +47,7 @@ fun FoodRecipesRowItem(
     val imageSize = screenWidth / 2
 
     Column(
-        modifier = modifier
-            .width(containerWidth)
-            .wrapContentHeight(),
+        modifier = modifier.width(containerWidth),
         verticalArrangement = Arrangement.spacedBy(
             space = 16.dp,
             alignment = Alignment.Top

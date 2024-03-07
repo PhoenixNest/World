@@ -3,7 +3,6 @@ package io.dev.relic.feature.pages.hive.ui.widget
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -66,9 +65,7 @@ private fun HiveEverythingNewsPanel(
         CommonNoDataComponent()
     } else {
         LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
+            modifier = Modifier.fillMaxWidth(),
             state = lazyListState,
             horizontalArrangement = Arrangement.spacedBy(
                 space = 16.dp,

@@ -90,7 +90,6 @@ private fun BoxScope.MainDrawerBriefPanel(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .align(Alignment.TopStart)
             .padding(
                 start = 16.dp,
@@ -129,7 +128,6 @@ private fun BoxScope.MainDrawerMaximPanel() {
         modifier = Modifier
             .align(Alignment.BottomStart)
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp

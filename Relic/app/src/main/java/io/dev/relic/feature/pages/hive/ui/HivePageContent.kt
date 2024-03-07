@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
-import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.pages.hive.ui.widget.HiveNewsTitle
 import io.dev.relic.feature.pages.hive.ui.widget.HiveTabBar
 import io.dev.relic.feature.pages.hive.ui.widget.HiveTopHeadlineNewsList
@@ -29,6 +29,7 @@ fun HivePageContent(
     trendingNewsLazyListState: LazyListState,
     topHeadlineNewsTabLazyListState: LazyListState,
     topHeadlineNewsContentLazyListState: LazyListState,
+    onResortClick: () -> Unit,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onNewsCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
@@ -48,7 +49,7 @@ fun HivePageContent(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            HiveNewsTitle()
+            HiveNewsTitle(onResortClick = onResortClick)
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HiveTrendingNewsList(
                 dataState = trendingNewsDataState,

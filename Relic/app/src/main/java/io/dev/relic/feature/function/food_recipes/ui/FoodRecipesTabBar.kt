@@ -57,8 +57,7 @@ fun FoodRecipesTabBar(
             LazyRow(
                 modifier = Modifier
                     .padding(top = 24.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                    .fillMaxWidth(),
                 state = lazyListState,
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
