@@ -17,8 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomtom.sdk.location.GeoLocation
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.pages.explore.ui.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.pages.explore.viewmodel.ExploreViewModel
-import io.dev.relic.feature.pages.explore.widget.bottom_sheet.ExploreBottomSheet
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.module.map.amap.ui.AMapComponent
 

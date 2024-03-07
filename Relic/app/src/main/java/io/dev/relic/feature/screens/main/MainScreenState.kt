@@ -16,8 +16,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.dev.relic.feature.pages.explore.navigateToExplorePage
-import io.dev.relic.feature.pages.hive.navigateToHivePage
 import io.dev.relic.feature.pages.home.navigateToHomePage
+import io.dev.relic.feature.pages.studio.navigateToStudioPage
 import io.dev.relic.feature.route.RelicRoute
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +76,7 @@ class MainScreenState(
         @Composable get() = when (currentDestination?.route) {
             RelicRoute.HOME -> MainScreenTopLevelDestination.HOME
             RelicRoute.EXPLORE -> MainScreenTopLevelDestination.EXPLORE
-            RelicRoute.HIVE -> MainScreenTopLevelDestination.HIVE
+            RelicRoute.STUDIO -> MainScreenTopLevelDestination.STUDIO
             else -> null
         }
 
@@ -115,17 +115,9 @@ class MainScreenState(
         }
 
         when (topLevelDestination) {
-            MainScreenTopLevelDestination.HOME -> {
-                navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
-            }
-
-            MainScreenTopLevelDestination.EXPLORE -> {
-                navHostController.navigateToExplorePage(navOptions = topLevelNavOptions)
-            }
-
-            MainScreenTopLevelDestination.HIVE -> {
-                navHostController.navigateToHivePage(navOptions = topLevelNavOptions)
-            }
+            MainScreenTopLevelDestination.HOME -> navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
+            MainScreenTopLevelDestination.EXPLORE -> navHostController.navigateToExplorePage(navOptions = topLevelNavOptions)
+            MainScreenTopLevelDestination.STUDIO -> navHostController.navigateToStudioPage(navOptions = topLevelNavOptions)
         }
     }
 }

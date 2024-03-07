@@ -15,14 +15,14 @@ import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.explore.pageExplore
-import io.dev.relic.feature.pages.hive.pageHive
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
+import io.dev.relic.feature.pages.studio.pageStudio
 import io.dev.relic.feature.route.RelicRoute.BASE_ROUTE
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.EXPLORE
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HIVE
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
+import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUDIO
 
 @Composable
 fun MainFeatureNavHost(
@@ -40,8 +40,8 @@ fun MainFeatureNavHost(
 
     when (mainScreenState.currentTopLevelDestination) {
         HOME -> systemUiController.updateStatusBarColor(darkIcons = false)
+        STUDIO -> systemUiController.updateStatusBarColor(darkIcons = false)
         EXPLORE -> systemUiController.updateStatusBarColor(darkIcons = true)
-        HIVE -> systemUiController.updateStatusBarColor(darkIcons = false)
         else -> systemUiController.updateStatusBarColor(darkIcons = false)
     }
 
@@ -61,7 +61,7 @@ fun MainFeatureNavHost(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel
         )
-        pageHive(
+        pageStudio(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
             newsViewModel = newsViewModel

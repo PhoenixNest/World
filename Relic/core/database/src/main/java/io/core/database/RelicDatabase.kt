@@ -6,13 +6,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.core.database.DatabaseParameters.dataBaseVersion
 import io.core.database.DatabaseParameters.exportSchema
-import io.core.database.dao.agent.AgentDao
-import io.core.database.dao.agent.AgentGeminiDao
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
 import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
+import io.core.database.dao.agent.AgentDao
+import io.core.database.dao.agent.AgentGeminiDao
 import io.data.convertors.FoodRecipesDataConvertor
 import io.data.convertors.NewsDataConvertor
 import io.data.convertors.WallpaperDataConvertor
@@ -20,10 +20,10 @@ import io.data.convertors.WeatherDataConvertor
 import io.data.entity.agent.AgentChatEntity
 import io.data.entity.agent.AgentGeminiChatEntity
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
-import io.data.entity.news.TrendingNewsArticleEntity
-import io.data.entity.news.TrendingNewsEntity
 import io.data.entity.news.TopHeadlineNewsArticleEntity
 import io.data.entity.news.TopHeadlinesNewsEntity
+import io.data.entity.news.TrendingNewsArticleEntity
+import io.data.entity.news.TrendingNewsEntity
 import io.data.entity.todo.TodoEntity
 import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
@@ -34,7 +34,7 @@ import io.data.entity.weather.WeatherEntity
         WeatherEntity::class,
         FoodRecipesComplexSearchEntity::class,
         WallpaperImagesEntity::class,
-        // Feature: Hive
+        // Feature: Studio
         TodoEntity::class,
         TrendingNewsEntity::class,
         TopHeadlinesNewsEntity::class,

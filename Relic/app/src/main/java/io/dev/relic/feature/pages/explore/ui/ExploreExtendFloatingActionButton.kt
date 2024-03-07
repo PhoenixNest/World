@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.explore.widget
+package io.dev.relic.feature.pages.explore.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

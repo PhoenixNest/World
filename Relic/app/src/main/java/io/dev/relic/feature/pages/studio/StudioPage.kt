@@ -1,14 +1,20 @@
-package io.dev.relic.feature.pages.hive
+package io.dev.relic.feature.pages.studio
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicShareCenter.shareWebLink
+import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
 import io.data.util.NewsCategory
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
@@ -19,11 +25,13 @@ import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
-import io.dev.relic.feature.pages.hive.ui.HivePageContent
+import io.dev.relic.feature.pages.studio.ui.StudioPageContent
+import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioBottomSheet
 import io.dev.relic.feature.screens.main.MainScreenState
+import kotlinx.coroutines.launch
 
 @Composable
-fun HivePageRoute(
+fun StudioPageRoute(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
     newsViewModel: NewsViewModel
@@ -32,6 +40,7 @@ fun HivePageRoute(
     /* ======================== Common ======================== */
 
     val context = LocalContext.current
+    val coroutineScope = mainScreenState.coroutineScope
 
     /* ======================== Field ======================== */
 
@@ -55,7 +64,7 @@ fun HivePageRoute(
         //
     }
 
-    HivePage(
+    StudioPage(
         trendingNewsDataState = trendingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
         currentSelectedCategory = newsViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
@@ -76,6 +85,9 @@ fun HivePageRoute(
                     pageSize = DEFAULT_INIT_NEWS_PAGE_SIZE,
                     page = DEFAULT_INIT_NEWS_PAGE_INDEX
                 )
+                coroutineScope.launch {
+                    topHeadlineNewsContentLazyListState.scrollToItem(3)
+                }
             }
         },
         onNewsCardClick = {
@@ -99,8 +111,9 @@ fun HivePageRoute(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun HivePage(
+private fun StudioPage(
     trendingNewsDataState: TrendingNewsDataState,
     topHeadlineNewsDataState: TopHeadlineNewsDataState,
     currentSelectedCategory: Int,
@@ -115,27 +128,40 @@ private fun HivePage(
     onRetryTrendingClick: () -> Unit,
     onRetryTopHeadlineClick: () -> Unit
 ) {
-    HivePageContent(
-        trendingNewsDataState = trendingNewsDataState,
-        topHeadlineNewsDataState = topHeadlineNewsDataState,
-        currentSelectedCategory = currentSelectedCategory,
-        trendingNewsLazyListState = trendingNewsLazyListState,
-        topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
-        topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
-        onResortClick = onResortClick,
-        onTabItemClick = onTabItemClick,
-        onNewsCardClick = onNewsCardClick,
-        onLikeClick = onLikeClick,
-        onShareClick = onShareClick,
-        onRetryTrendingClick = onRetryTrendingClick,
-        onRetryTopHeadlineClick = onRetryTopHeadlineClick
-    )
+    BottomSheetScaffold(
+        sheetContent = {
+            StudioBottomSheet(
+                trendingNewsDataState = trendingNewsDataState,
+                topHeadlineNewsDataState = topHeadlineNewsDataState,
+                currentSelectedCategory = currentSelectedCategory,
+                trendingNewsLazyListState = trendingNewsLazyListState,
+                topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
+                topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
+                onResortClick = onResortClick,
+                onTabItemClick = onTabItemClick,
+                onNewsCardClick = onNewsCardClick,
+                onLikeClick = onLikeClick,
+                onShareClick = onShareClick,
+                onRetryTrendingClick = onRetryTrendingClick,
+                onRetryTopHeadlineClick = onRetryTopHeadlineClick
+            )
+        },
+        scaffoldState = rememberBottomSheetScaffoldState(),
+        sheetShape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp
+        ),
+        sheetBackgroundColor = mainThemeColor,
+        sheetPeekHeight = 140.dp,
+    ) {
+        StudioPageContent()
+    }
 }
 
 @Composable
 @Preview
-private fun HivePagePreview() {
-    HivePage(
+private fun StudioPagePreview() {
+    StudioPage(
         trendingNewsDataState = TrendingNewsDataState.Init,
         topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
         currentSelectedCategory = 0,

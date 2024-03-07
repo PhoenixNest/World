@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.hive.ui.widget
+package io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -12,7 +12,7 @@ import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.ui.widget.NewsCardItem
 
 @Suppress("FunctionName")
-fun LazyListScope.HiveTopHeadlineNewsList(
+fun LazyListScope.StudioTopHeadlineNewsList(
     dataState: TopHeadlineNewsDataState,
     onCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,

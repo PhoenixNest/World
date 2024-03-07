@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -28,7 +27,7 @@ import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
 
 @Composable
-fun NewsTrendingCardItem(
+fun StudioTrendingCardItem(
     data: NewsArticleModel,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier

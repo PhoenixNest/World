@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.explore.widget.bottom_sheet
+package io.dev.relic.feature.pages.explore.ui.bottom_sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,24 +12,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
-import io.core.ui.utils.RelicUiUtil
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenHeightDp
 import io.dev.relic.R
+import io.dev.relic.feature.pages.explore.ui.bottom_sheet.widget.ExploreBottomSheetTabBar
 
 @Composable
 fun ExploreBottomSheet(
@@ -39,27 +36,18 @@ fun ExploreBottomSheet(
     val screenHeight = getCurrentScreenHeightDp()
     val bottomSheetHeight = screenHeight - 52.dp
 
-    Card(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .height(bottomSheetHeight),
-        shape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp
-        ),
-        backgroundColor = mainBackgroundColor
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            ExploreBottomSheetHeader()
-            ExploreBottomSheetContent(
-                currentSelectedTab = currentSelectedTab,
-                onTabItemClick = onTabItemClick
-            )
-        }
+        ExploreBottomSheetHeader()
+        ExploreBottomSheetContent(
+            currentSelectedTab = currentSelectedTab,
+            onTabItemClick = onTabItemClick
+        )
     }
 }
 
@@ -128,7 +116,7 @@ private fun ExploreBottomSheetContent(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF282C34)
 private fun ExploreBottomSheetPreview() {
     ExploreBottomSheet(
         currentSelectedTab = 0,

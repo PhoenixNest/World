@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.explore.widget.bottom_sheet
+package io.dev.relic.feature.pages.explore.ui.bottom_sheet.widget
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape

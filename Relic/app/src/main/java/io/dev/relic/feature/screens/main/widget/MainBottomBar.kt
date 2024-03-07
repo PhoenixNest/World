@@ -2,7 +2,6 @@ package io.dev.relic.feature.screens.main.widget
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,8 +10,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -29,6 +28,7 @@ import androidx.navigation.NavDestination
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
@@ -54,6 +54,11 @@ fun MainBottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             destinations.forEach { destination: MainScreenTopLevelDestination ->
+                // TODO: Hide the explore page temporarily.
+                if (destination == MainScreenTopLevelDestination.EXPLORE) {
+                    return@Row
+                }
+
                 MainBottomBarItem(
                     isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination),
                     selectedIconResId = destination.selectedIconResId,
@@ -98,9 +103,14 @@ private fun RowScope.MainBottomBarItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
+            Icon(
                 painter = iconSource,
-                contentDescription = DEFAULT_DESC
+                contentDescription = DEFAULT_DESC,
+                tint = if (isSelected) {
+                    mainThemeColorAccent
+                } else {
+                    mainIconColorLight
+                }
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(

@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
@@ -45,7 +45,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -126,7 +125,7 @@ class NewsViewModel @Inject constructor(
      * Query the local cache data from the database.
      * */
     private fun queryLocalTrendingNewsData() {
-        viewModelScope.launch {
+        operationInViewModelScope { scope ->
             LogUtil.w(TAG, "[Handle Trending News Cache] Loading...")
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
@@ -134,7 +133,7 @@ class NewsViewModel @Inject constructor(
             setState(_trendingNewsDataStateFlow, TrendingNewsDataState.Fetching)
             newsUseCase.queryAllTrendingNewsData()
                 .stateIn(
-                    scope = this,
+                    scope = scope,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                     initialValue = emptyList()
                 )
@@ -160,14 +159,14 @@ class NewsViewModel @Inject constructor(
      * Query the local cache data from the database.
      * */
     private fun queryLocalTopHeadlineNewsData() {
-        viewModelScope.launch {
+        operationInViewModelScope {
             LogUtil.w(TAG, "[Handle Top-headline News Cache] Loading...")
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
             // Query the local cache data from the database
             newsUseCase.queryAllTopHeadlineNewsData()
                 .stateIn(
-                    scope = this,
+                    scope = it,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                     initialValue = emptyList()
                 )
@@ -215,28 +214,25 @@ class NewsViewModel @Inject constructor(
         sortBy: NewsSortRule = DEFAULT_NEWS_SORT_RULE,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
-    ): StateFlow<NetworkResult<TrendingNewsDTO>> {
-        return newsUseCase
-            .getTrendingNewsData(
+    ) {
+        operationInViewModelScope { scope ->
+            newsUseCase.getTrendingNewsData(
                 keyWords = keyWords,
                 source = source,
                 language = language,
                 sortBy = sortBy,
                 pageSize = pageSize,
                 page = page
-            )
-            .stateIn(
-                scope = viewModelScope,
+            ).stateIn(
+                scope = scope,
                 started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                 initialValue = NetworkResult.Loading()
-            )
-            .also { stateFlow ->
-                viewModelScope.launch {
-                    stateFlow.collect { result ->
-                        handleTrendingNewsData(result)
-                    }
+            ).also { stateFlow ->
+                stateFlow.collect { result ->
+                    handleTrendingNewsData(result)
                 }
             }
+        }
     }
 
     /**
@@ -262,27 +258,24 @@ class NewsViewModel @Inject constructor(
         category: NewsCategory = DEFAULT_NEWS_CATEGORY,
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
-    ): StateFlow<NetworkResult<TopHeadlinesNewsDTO>> {
-        return newsUseCase
-            .getTopHeadlineNews(
+    ) {
+        operationInViewModelScope { scope ->
+            newsUseCase.getTopHeadlineNews(
                 keyWords = keyWords,
                 country = country,
                 category = category,
                 pageSize = pageSize,
                 page = page
-            )
-            .stateIn(
-                scope = viewModelScope,
+            ).stateIn(
+                scope = scope,
                 started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                 initialValue = NetworkResult.Loading()
-            )
-            .also { stateFlow ->
-                viewModelScope.launch {
-                    stateFlow.collect { result ->
-                        handleTopHeadlineNewsData(result)
-                    }
+            ).also { stateFlow ->
+                stateFlow.collect { result ->
+                    handleTopHeadlineNewsData(result)
                 }
             }
+        }
     }
 
     /**

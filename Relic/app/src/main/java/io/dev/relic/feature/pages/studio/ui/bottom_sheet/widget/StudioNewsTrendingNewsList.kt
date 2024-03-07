@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.hive.ui.widget
+package io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,10 +18,10 @@ import io.core.ui.CommonNoDataComponent
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TrendingNewsDataState
-import io.dev.relic.feature.function.news.ui.widget.NewsTrendingCardItem
+import io.dev.relic.feature.function.news.ui.widget.StudioTrendingCardItem
 
 @Suppress("FunctionName")
-fun LazyListScope.HiveTrendingNewsList(
+fun LazyListScope.StudioTrendingNewsList(
     dataState: TrendingNewsDataState,
     lazyListState: LazyListState,
     onCardClick: (model: NewsArticleModel) -> Unit,
@@ -45,7 +45,7 @@ fun LazyListScope.HiveTrendingNewsList(
             }
 
             is TrendingNewsDataState.FetchSucceed -> {
-                HiveEverythingNewsPanel(
+                StudioTrendingNewsPanel(
                     modelList = dataState.modelList,
                     onCardClick = onCardClick,
                     lazyListState = lazyListState
@@ -56,7 +56,7 @@ fun LazyListScope.HiveTrendingNewsList(
 }
 
 @Composable
-private fun HiveEverythingNewsPanel(
+private fun StudioTrendingNewsPanel(
     modelList: List<NewsArticleModel?>?,
     onCardClick: (model: NewsArticleModel) -> Unit,
     lazyListState: LazyListState
@@ -81,7 +81,7 @@ private fun HiveEverythingNewsPanel(
                         start = if (index == 0) 16.dp else 0.dp,
                         end = if (index == modelList.size - 1) 16.dp else 0.dp
                     )
-                    NewsTrendingCardItem(
+                    StudioTrendingCardItem(
                         data = data,
                         onCardClick = { onCardClick.invoke(data) },
                         modifier = itemDecorationModifier
@@ -94,8 +94,8 @@ private fun HiveEverythingNewsPanel(
 
 @Composable
 @Preview
-private fun HiveTrendingPanelPreview() {
-    HiveEverythingNewsPanel(
+private fun StudioTrendingPanelPreview() {
+    StudioTrendingNewsPanel(
         modelList = listOf(
             NewsArticleModel(
                 title = "Just this... and WoW will be perfect for me.",

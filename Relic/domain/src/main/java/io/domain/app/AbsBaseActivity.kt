@@ -25,6 +25,7 @@ abstract class AbsBaseActivity : ComponentActivity() {
     /* ======================== Lifecycle ======================== */
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        activeImmersiveMode()
         super.onCreate(savedInstanceState)
 
         preInitialization(
@@ -67,12 +68,12 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
     private fun preInitUi(doOnFinish: () -> Unit) {
         lifecycleScope.launch {
-            activeImmersiveStatusBar()
+            //
             doOnFinish.invoke()
         }
     }
 
-    private fun activeImmersiveStatusBar() {
+    private fun activeImmersiveMode() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 

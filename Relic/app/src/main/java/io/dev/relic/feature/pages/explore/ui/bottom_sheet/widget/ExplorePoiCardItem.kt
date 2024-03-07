@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.explore.widget.bottom_sheet
+package io.dev.relic.feature.pages.explore.ui.bottom_sheet.widget
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
@@ -16,7 +16,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +27,6 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
-import io.core.ui.utils.RelicUiUtil
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenHeightDp
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 

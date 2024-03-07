@@ -46,8 +46,8 @@
     <string name="explore_bottom_sheet_tab_health_title">Health</string>
     <string name="explore_bottom_sheet_tab_traffic_service_title">Services</string>
 
-    <!-- Hive Page -->
-    <string name="hive_label">Hive</string>
+    <!-- Studio Page -->
+    <string name="studio_label">Studio</string>
 
     <!-- Mine Page -->
     <string name="mine_title">Me</string>

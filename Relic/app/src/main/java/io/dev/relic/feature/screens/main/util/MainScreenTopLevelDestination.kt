@@ -16,16 +16,16 @@ enum class MainScreenTopLevelDestination(
         selectedIconResId = R.drawable.ic_bottom_tab_home_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_home_unselected,
     ),
+    STUDIO(
+        titleResId = R.string.studio_label,
+        labelResId = R.string.studio_label,
+        selectedIconResId = R.drawable.ic_bottom_tab_studio_selected,
+        unselectedIconResId = R.drawable.ic_bottom_tab_studio_unselected,
+    ),
     EXPLORE(
         titleResId = R.string.explore_label,
         labelResId = R.string.explore_label,
         selectedIconResId = R.drawable.ic_bottom_tab_explore_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_explore_unselected,
-    ),
-    HIVE(
-        titleResId = R.string.hive_label,
-        labelResId = R.string.hive_label,
-        selectedIconResId = R.drawable.ic_bottom_tab_hive_selected,
-        unselectedIconResId = R.drawable.ic_bottom_tab_hive_unselected,
     )
 }
