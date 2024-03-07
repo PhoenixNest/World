@@ -1,24 +1,26 @@
 package io.dev.relic.feature.pages.agent.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import io.agent.gemini.model.AbsGeminiCell
+import io.agent.gemini.model.GeminiTextCell
+import io.agent.gemini.util.GeminiChatRole
 import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
-import io.dev.relic.feature.function.agent.gemini.ui.AgentChatList
-import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
+import io.dev.relic.feature.pages.agent.ui.widget.AgentChatArea
 
 @Composable
 fun AgentChatPageContent(
@@ -68,29 +70,34 @@ fun AgentChatPageContent(
 }
 
 @Composable
-private fun AgentChatArea(
-    chatLazyListState: LazyListState,
-    inputMessage: String,
-    isEnableSendButton: Boolean,
-    isAwaitingAnswer: Boolean,
-    chatHistory: List<AbsGeminiCell>,
-    onMessageValueChange: (message: String) -> Unit,
-    onSendMessage: () -> Unit,
-    onCopyTextClick: (copyText: String) -> Unit
-) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        AgentChatList(
-            chatHistory = chatHistory,
-            onCopyTextClick = onCopyTextClick,
-            lazyListState = chatLazyListState
+@Preview
+private fun AgentChatPageContentPreview() {
+    val chatHistory = listOf<AbsGeminiCell>(
+        GeminiTextCell(
+            roleId = GeminiChatRole.AGENT.roleId,
+            isPending = false,
+            textContent = "I'm Gemini, you personal Ai assistant."
+        ),
+        GeminiTextCell(
+            roleId = GeminiChatRole.USER.roleId,
+            isPending = false,
+            textContent = "Hello, i am Peter."
+        ),
+        GeminiTextCell(
+            roleId = GeminiChatRole.ERROR.roleId,
+            isPending = false,
+            textContent = "This is an test error message."
         )
-        AgentInputField(
-            inputMessage = inputMessage,
-            isEnableSend = isEnableSendButton,
-            isAwaitingAnswer = isAwaitingAnswer,
-            onValueChange = onMessageValueChange,
-            onSendMessage = onSendMessage,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
-    }
+    )
+    AgentChatPageContent(
+        chatLazyListState = rememberLazyListState(),
+        inputMessage = "Hello World",
+        isEnableSendButton = true,
+        isAwaitingAnswer = false,
+        chatHistory = chatHistory,
+        onMessageValueChange = {},
+        onSendMessage = {},
+        onCopyTextClick = {},
+        onBackClick = {}
+    )
 }

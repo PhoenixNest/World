@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.core.ui.dialog.CommonItemDivider
@@ -81,4 +83,26 @@ fun HomePageContent(
             )
         }
     }
+}
+
+@Composable
+@Preview
+private fun HomePageContentPreview() {
+    HomePageContent(
+        onOpenDrawer = {},
+        onOpenSetting = {},
+        agentSearchContent = "",
+        onAgentSearchPromptChange = {},
+        onAgentStartChat = {},
+        foodRecipesTabLazyListState = rememberLazyListState(),
+        foodRecipesContentLazyListState = rememberLazyListState(),
+        foodRecipesTimeSectionState = FoodRecipesDataState.Init,
+        foodRecipesState = FoodRecipesDataState.Init,
+        currentSelectedFoodRecipesTab = 0,
+        onSelectedFoodRecipesTabItem = { _, _ -> },
+        onFoodRecipesSeeMoreClick = {},
+        onFoodRecipesItemClick = {},
+        onFoodRecipesTimeSectionRetry = {},
+        onFoodRecipesRetry = {}
+    )
 }

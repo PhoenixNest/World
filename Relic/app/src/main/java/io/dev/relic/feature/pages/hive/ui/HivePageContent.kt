@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
@@ -73,4 +75,24 @@ fun HivePageContent(
             )
         }
     }
+}
+
+@Composable
+@Preview
+private fun HivePageContentPreview() {
+    HivePageContent(
+        trendingNewsDataState = TrendingNewsDataState.Init,
+        topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
+        currentSelectedCategory = 0,
+        trendingNewsLazyListState = rememberLazyListState(),
+        topHeadlineNewsTabLazyListState = rememberLazyListState(),
+        topHeadlineNewsContentLazyListState = rememberLazyListState(),
+        onResortClick = {},
+        onTabItemClick = { _, _ -> },
+        onNewsCardClick = {},
+        onLikeClick = {},
+        onShareClick = {},
+        onRetryTrendingClick = { },
+        onRetryTopHeadlineClick = {}
+    )
 }
