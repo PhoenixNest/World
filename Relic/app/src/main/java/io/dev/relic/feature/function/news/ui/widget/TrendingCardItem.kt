@@ -27,7 +27,7 @@ import io.core.ui.theme.mainTextColor
 import io.data.model.news.NewsArticleModel
 
 @Composable
-fun StudioTrendingCardItem(
+fun TrendingCardItem(
     data: NewsArticleModel,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier

@@ -18,7 +18,7 @@ import io.core.ui.CommonNoDataComponent
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TrendingNewsDataState
-import io.dev.relic.feature.function.news.ui.widget.StudioTrendingCardItem
+import io.dev.relic.feature.function.news.ui.widget.TrendingCardItem
 
 @Suppress("FunctionName")
 fun LazyListScope.StudioTrendingNewsList(
@@ -81,7 +81,7 @@ private fun StudioTrendingNewsPanel(
                         start = if (index == 0) 16.dp else 0.dp,
                         end = if (index == modelList.size - 1) 16.dp else 0.dp
                     )
-                    StudioTrendingCardItem(
+                    TrendingCardItem(
                         data = data,
                         onCardClick = { onCardClick.invoke(data) },
                         modifier = itemDecorationModifier
