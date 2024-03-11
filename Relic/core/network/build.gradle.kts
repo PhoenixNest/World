@@ -33,6 +33,20 @@ android {
         resValue("string", "spoonacular_dev_key", spoonacularDevKey)
     }
 
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                "proguard-rules.pro",
+                "proguard-rules/coroutines.pro",
+                "proguard-rules/gson-android.pro",
+                "proguard-rules/retrofit2-android.pro",
+                "proguard-rules/okhttp3-android.pro",
+                getDefaultProguardFile("proguard-android-optimize.txt")
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
