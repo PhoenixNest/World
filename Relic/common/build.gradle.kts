@@ -34,8 +34,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
 
     kotlinOptions {
@@ -63,12 +63,12 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Legacy-Navigation
-    api("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    api("androidx.navigation:navigation-ui-ktx:2.7.4")
+    api("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    api("androidx.navigation:navigation-ui-ktx:2.7.7")
     // Optional - Feature module Support
-    api("androidx.navigation:navigation-dynamic-features-fragment:2.7.4")
+    api("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
     // Optional - Jetpack Compose Integration
-    api("androidx.navigation:navigation-compose:2.7.4")
+    api("androidx.navigation:navigation-compose:2.7.7")
 
     // Navigation
     api(libs.navigation.compose)

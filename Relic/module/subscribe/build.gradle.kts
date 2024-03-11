@@ -1,5 +1,5 @@
 // Library config
-private val composeCompilerVersion = "1.5.7"
+private val composeCompilerVersion = "1.5.10"
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -31,8 +31,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
 
     kotlinOptions {

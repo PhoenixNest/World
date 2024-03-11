@@ -9,7 +9,7 @@ private val isNoAds = localProperties.getProperty("NO_ADS")
 private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY")
 
 // Library config
-private val composeCompilerVersion = "1.5.7"
+private val composeCompilerVersion = "1.5.10"
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -76,8 +76,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
 
     kotlinOptions {
@@ -124,7 +124,7 @@ dependencies {
     /* ======================== Google Official Extension ======================== */
 
     // Firebase BOM
-    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.0.0")
+    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.7.4")
     implementation(firebaseBom)
     // Add the dependencies for the Crashlytics and Analytics libraries
     implementation(libs.firebase.crashlytics.ktx)

@@ -40,8 +40,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
 
     kotlinOptions {
@@ -67,6 +67,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Google AI client SDK for Android
-    api("com.google.ai.client.generativeai:generativeai:0.1.2")
+    api("com.google.ai.client.generativeai:generativeai:0.2.1")
 
 }
