@@ -38,7 +38,6 @@ android {
             isMinifyEnabled = true
             proguardFiles(
                 "proguard-rules.pro",
-                "proguard-rules/coroutines.pro",
                 "proguard-rules/gson-android.pro",
                 "proguard-rules/retrofit2-android.pro",
                 "proguard-rules/okhttp3-android.pro",

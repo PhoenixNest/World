@@ -69,6 +69,7 @@ android {
             isShrinkResources = true
             proguardFiles(
                 "proguard-rules.pro",
+                "proguard-rules/coroutines.pro",
                 getDefaultProguardFile("proguard-android-optimize.txt")
             )
         }
