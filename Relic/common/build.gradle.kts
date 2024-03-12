@@ -63,12 +63,12 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Legacy-Navigation
-    api("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    api("androidx.navigation:navigation-ui-ktx:2.7.7")
+    api(libs.androidx.navigation.fragment.ktx)
+    api(libs.androidx.navigation.ui.ktx)
     // Optional - Feature module Support
-    api("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
+    api(libs.androidx.navigation.dynamic.features.fragment)
     // Optional - Jetpack Compose Integration
-    api("androidx.navigation:navigation-compose:2.7.7")
+    api(libs.navigation.compose)
 
     // Navigation
     api(libs.navigation.compose)

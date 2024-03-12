@@ -14,7 +14,6 @@ plugins {
     // Parcelize Models
     id("kotlin-parcelize")
 
-
     // Hilt
     alias(libs.plugins.hiltAndroid)
 }
@@ -67,6 +66,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Google AI client SDK for Android
-    api("com.google.ai.client.generativeai:generativeai:0.2.1")
+    api(libs.gemini.ai)
 
 }
