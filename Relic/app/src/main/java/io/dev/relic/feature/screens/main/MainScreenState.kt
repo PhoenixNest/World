@@ -1,7 +1,6 @@
 package io.dev.relic.feature.screens.main
 
 import android.os.Bundle
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -11,8 +10,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.dev.relic.feature.pages.explore.navigateToExplorePage
@@ -24,14 +23,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun rememberMainScreenState(
     savedInstanceState: Bundle?,
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navHostController: NavHostController = rememberAnimatedNavController()
+    navHostController: NavHostController = rememberNavController()
 ): MainScreenState {
     return remember(
         keys = arrayOf(

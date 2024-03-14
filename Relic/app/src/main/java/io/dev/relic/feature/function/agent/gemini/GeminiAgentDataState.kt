@@ -2,29 +2,29 @@ package io.dev.relic.feature.function.agent.gemini
 
 import io.agent.gemini.model.AbsGeminiCell
 
-sealed class GeminiAgentDataState {
+sealed interface GeminiAgentDataState {
 
     /* Common */
 
-    data object Init : GeminiAgentDataState()
+    data object Init : GeminiAgentDataState
 
     /* Loading */
 
     data class SendingQuestion(
         private val questionCell: AbsGeminiCell
-    ) : GeminiAgentDataState()
+    ) : GeminiAgentDataState
 
     /* Succeed */
 
     data class SuccessReceivedAnswer(
         private val answerCell: AbsGeminiCell
-    ) : GeminiAgentDataState()
+    ) : GeminiAgentDataState
 
     /* Failed */
 
     data class FailedOrError(
         val errorCode: Int?,
         val errorMessage: String?
-    ) : GeminiAgentDataState()
+    ) : GeminiAgentDataState
 
 }
