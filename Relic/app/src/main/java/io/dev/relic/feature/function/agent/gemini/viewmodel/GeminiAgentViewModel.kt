@@ -266,7 +266,7 @@ class GeminiAgentViewModel @Inject constructor(
      * */
     private fun handleGeminiResponse(response: GenerateContentResponse?) {
         response?.text?.also {
-            LogUtil.d(TAG, "[Handle Response] response: $it")
+            LogUtil.d(TAG, "[Handle Gemini Response] response: $it")
             val answerCell = GeminiTextCell(
                 roleId = AGENT.roleId,
                 cellTypeId = TEXT.typeId,
@@ -280,7 +280,7 @@ class GeminiAgentViewModel @Inject constructor(
     }
 
     private fun handleGeminiStreamResponse(outputMassage: String) {
-        LogUtil.d(TAG, "[Handle Response Stream] response: $outputMassage")
+        LogUtil.d(TAG, "[Handle Gemini Response Stream] response: $outputMassage")
         val answerCell = GeminiTextCell(
             roleId = AGENT.roleId,
             cellTypeId = TEXT.typeId,
@@ -302,7 +302,7 @@ class GeminiAgentViewModel @Inject constructor(
         errorCode: Int?,
         errorMessage: String?
     ) {
-        LogUtil.e(TAG, "[Handle Error] Error, ($errorCode, $errorMessage)")
+        LogUtil.e(TAG, "[Handle Gemini Error] Error, ($errorCode, $errorMessage)")
         val errorCell = GeminiTextCell(
             roleId = GeminiChatRole.ERROR.roleId,
             isPending = false,

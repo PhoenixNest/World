@@ -5,6 +5,9 @@ import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.GenerateContentResponse
+import com.google.ai.client.generativeai.type.content
+import io.agent.gemini.util.GeminiChatRole
+import io.agent.gemini.util.GeminiChatRole.USER
 import io.common.RelicResCenter
 import io.common.util.LogUtil
 import kotlinx.coroutines.flow.Flow
@@ -44,55 +47,97 @@ object GeminiAgent {
 
     /* ======================== Sender ======================== */
 
+    /**
+     * Send the message to chat window and gets the full answer.
+     *
+     * @param chatWindow    The current open chat window.
+     * @param message       The message will be auto translate to the Content type.
+     *
+     * @see Content
+     * */
     suspend fun <T> sendMessage(
         chatWindow: Chat,
-        message: T
+        message: T,
+        chatRole: GeminiChatRole = USER
     ): GenerateContentResponse? {
+        val realRole = chatRole.name.lowercase().trim()
+        LogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
+
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Bitmap] type")
-                chatWindow.sendMessage(message)
-            }
-
-            is Content -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Content] type")
-                chatWindow.sendMessage(message)
+                LogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
+                val content = content {
+                    role = chatRole.name.lowercase().trim()
+                    image(message)
+                }
+                chatWindow.sendMessage(content)
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Send Message] Sending [String] type, messageContent: $message")
+                LogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
+                val content = content {
+                    role = chatRole.name.lowercase().trim()
+                    text(message)
+                }
+                chatWindow.sendMessage(content)
+            }
+
+            is Content -> {
+                // TODO: This type needs to specify the chat role such as "user"
+                LogUtil.d(TAG, "[Message Sender] Send [Content] type")
                 chatWindow.sendMessage(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Send Message] Sending [Unknown] type")
+                LogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
                 null
             }
         }
     }
 
+    /**
+     * Send the message to chat window and gets the flow type answer.
+     *
+     * @param chatWindow    The current open chat window.
+     * @param message       The message will be auto translate to the Content type.
+     *
+     * @see Content
+     * */
     fun <T> sendMessageStream(
         chatWindow: Chat,
-        message: T
+        message: T,
+        chatRole: GeminiChatRole = USER
     ): Flow<GenerateContentResponse> {
+        val realRole = chatRole.name.lowercase().trim()
+        LogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
+
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
-                chatWindow.sendMessageStream(message)
-            }
-
-            is Content -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
-                chatWindow.sendMessageStream(message)
+                LogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
+                val content = content {
+                    role = realRole
+                    image(message)
+                }
+                chatWindow.sendMessageStream(content)
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
+                LogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
+                val content = content {
+                    role = realRole
+                    text(message)
+                }
+                chatWindow.sendMessageStream(content)
+            }
+
+            is Content -> {
+                // TODO: This type needs to specify the chat role such as "user"
+                LogUtil.d(TAG, "[Message Sender] Send [Content] type")
                 chatWindow.sendMessageStream(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Generate Message] Sending [Unknown] type")
+                LogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
                 emptyFlow()
             }
         }
@@ -101,53 +146,71 @@ object GeminiAgent {
     /* ======================== Generator ======================== */
 
     suspend fun <T> generateMessage(
-        message: T
+        message: T,
+        chatRole: GeminiChatRole = USER
     ): GenerateContentResponse? {
+        val realRole = chatRole.name.lowercase().trim()
+        LogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
+
         val currentChosenModel = chosenCoreModel
             ?: return null
 
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Bitmap] type")
-                currentChosenModel.generateContent(message)
-            }
-
-            is Content -> {
-                LogUtil.d(TAG, "[Send Message] Sending [Content] type")
+                LogUtil.d(TAG, "[Message Generator] Generate [Bitmap] type")
                 currentChosenModel.generateContent(message)
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Send Message] Sending [String] type, messageContent: $message")
+                LogUtil.d(TAG, "[Message Generator] Generate [String] type, messageContent: $message")
+                currentChosenModel.generateContent(message)
+            }
+
+            is Content -> {
+                // TODO: This type needs to specify the chat role such as "user"
+                LogUtil.d(TAG, "[Message Generator] Generate [Content] type")
                 currentChosenModel.generateContent(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Send Message] Sending [Unknown] type")
+                LogUtil.w(TAG, "[Message Generator] Generate [Unknown] type")
                 null
             }
         }
     }
 
     fun <T> generateMessageStream(
-        message: T
+        message: T,
+        chatRole: GeminiChatRole = USER
     ): Flow<GenerateContentResponse> {
+        val realRole = chatRole.name.lowercase().trim()
+        LogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
+
         val currentChosenModel = chosenCoreModel
             ?: return emptyFlow()
 
         return when (message) {
             is Bitmap -> {
                 LogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
-                currentChosenModel.generateContentStream(message)
-            }
-
-            is Content -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
-                currentChosenModel.generateContentStream(message)
+                val content = content {
+                    role = realRole
+                    image(message)
+                }
+                currentChosenModel.generateContentStream(content)
             }
 
             is String -> {
                 LogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
+                val content = content {
+                    role = realRole
+                    text(message)
+                }
+                currentChosenModel.generateContentStream(content)
+            }
+
+            is Content -> {
+                // TODO: This type needs to specify the chat role such as "user"
+                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
                 currentChosenModel.generateContentStream(message)
             }
 
