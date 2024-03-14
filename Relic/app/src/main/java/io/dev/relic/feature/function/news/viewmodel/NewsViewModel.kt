@@ -215,6 +215,11 @@ class NewsViewModel @Inject constructor(
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
     ) {
+        if (trendingNewsDataStateFlow.value == TrendingNewsDataState.Fetching) {
+            LogUtil.e(TAG, "[Trending News] Loading, no need request the data twice.")
+            return
+        }
+
         operationInViewModelScope { scope ->
             newsUseCase.getTrendingNewsData(
                 keyWords = keyWords,
@@ -259,6 +264,11 @@ class NewsViewModel @Inject constructor(
         pageSize: Int = DEFAULT_INIT_NEWS_PAGE_SIZE,
         page: Int = DEFAULT_INIT_NEWS_PAGE_INDEX
     ) {
+        if (topHeadlineNewsDataStateFlow.value == TopHeadlineNewsDataState.Fetching) {
+            LogUtil.e(TAG, "[Top-headline News] Loading, no need request the data twice.")
+            return
+        }
+
         operationInViewModelScope { scope ->
             newsUseCase.getTopHeadlineNews(
                 keyWords = keyWords,
