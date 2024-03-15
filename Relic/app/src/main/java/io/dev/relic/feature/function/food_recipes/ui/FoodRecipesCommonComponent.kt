@@ -7,9 +7,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +34,7 @@ import io.dev.relic.feature.function.food_recipes.ui.widget.FoodRecipesRowItem
 @Composable
 fun FoodRecipesCommonComponent(
     dishLabel: String,
+    listState: LazyListState,
     dataState: FoodRecipesDataState,
     onSeeMoreClick: () -> Unit,
     onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
@@ -49,6 +51,7 @@ fun FoodRecipesCommonComponent(
         )
         Spacer(modifier = Modifier.height(16.dp))
         FoodRecipesComponentContent(
+            listState = listState,
             dataState = dataState,
             onItemClick = onItemClick,
             onRetryClick = onRetryClick
@@ -88,6 +91,7 @@ private fun FoodRecipesComponentTitle(
 
 @Composable
 private fun FoodRecipesComponentContent(
+    listState: LazyListState,
     dataState: FoodRecipesDataState,
     onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     onRetryClick: () -> Unit
@@ -111,6 +115,7 @@ private fun FoodRecipesComponentContent(
         is FoodRecipesDataState.FetchSucceed<*> -> {
             LazyRow(
                 modifier = Modifier.fillMaxWidth(),
+                state = listState,
                 horizontalArrangement = Arrangement.spacedBy(
                     space = 16.dp,
                     alignment = Alignment.Start
@@ -142,6 +147,7 @@ private fun FoodRecipesComponentContent(
 private fun FoodRecipesCommonComponentPreview() {
     FoodRecipesCommonComponent(
         dishLabel = stringResource(id = R.string.food_recipes_label_recommend),
+        listState = rememberLazyListState(),
         dataState = FoodRecipesDataState.FetchSucceed(
             data = listOf(
                 FoodRecipesComplexSearchModel(

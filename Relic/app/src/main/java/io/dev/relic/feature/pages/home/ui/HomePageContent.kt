@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +16,9 @@ import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.pages.home.HomeFoodRecipesState
+import io.dev.relic.feature.pages.home.rememberHomeFoodRecipesListState
+import io.dev.relic.feature.pages.home.rememberHomeFoodRecipesState
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
@@ -30,10 +31,7 @@ fun HomePageContent(
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
-    foodRecipesTabLazyListState: LazyListState,
-    foodRecipesContentLazyListState: LazyListState,
-    foodRecipesTimeSectionState: FoodRecipesDataState,
-    foodRecipesState: FoodRecipesDataState,
+    foodRecipesState: HomeFoodRecipesState,
     currentSelectedFoodRecipesTab: Int,
     onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
@@ -43,13 +41,20 @@ fun HomePageContent(
 ) {
     val currentTimeSection = getCurrentTimeSection()
 
+    val foodRecipesTimeSectionDataState = foodRecipesState.timeSectionDataState
+    val foodRecipesRecommendDataState = foodRecipesState.recommendDataState
+
+    val foodRecipesTimeSectionListState = foodRecipesState.listState.timeSectionListState
+    val foodRecipesRecommendListState = foodRecipesState.listState.recommendListState
+    val foodRecipesRecommendTabListState = foodRecipesState.listState.tabListState
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = mainThemeColor
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            state = foodRecipesContentLazyListState,
+            state = foodRecipesRecommendListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -64,7 +69,8 @@ fun HomePageContent(
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HomeFoodRecipesAutoTimeComponent(
                 currentTimeSection = currentTimeSection,
-                dataState = foodRecipesTimeSectionState,
+                listState = foodRecipesTimeSectionListState,
+                dataState = foodRecipesTimeSectionDataState,
                 onSeeMoreClick = onFoodRecipesSeeMoreClick,
                 onItemClick = onFoodRecipesItemClick,
                 onRetryClick = onFoodRecipesTimeSectionRetry
@@ -72,12 +78,12 @@ fun HomePageContent(
             item { CommonItemDivider() }
             HomeFoodRecipesTabBar(
                 currentSelectedTab = currentSelectedFoodRecipesTab,
-                lazyListState = foodRecipesTabLazyListState,
+                lazyListState = foodRecipesRecommendTabListState,
                 onTabItemClick = onSelectedFoodRecipesTabItem
             )
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HomeFoodRecipesList(
-                dataState = foodRecipesState,
+                dataState = foodRecipesRecommendDataState,
                 onRetryClick = onFoodRecipesRetry,
                 onItemClick = onFoodRecipesItemClick
             )
@@ -94,10 +100,11 @@ private fun HomePageContentPreview() {
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {},
-        foodRecipesTabLazyListState = rememberLazyListState(),
-        foodRecipesContentLazyListState = rememberLazyListState(),
-        foodRecipesTimeSectionState = FoodRecipesDataState.Init,
-        foodRecipesState = FoodRecipesDataState.Init,
+        foodRecipesState = rememberHomeFoodRecipesState(
+            timeSectionDataState = FoodRecipesDataState.Init,
+            recommendDataState = FoodRecipesDataState.Init,
+            listState = rememberHomeFoodRecipesListState()
+        ),
         currentSelectedFoodRecipesTab = 0,
         onSelectedFoodRecipesTabItem = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},

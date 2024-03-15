@@ -1,6 +1,5 @@
 package io.dev.relic.feature.pages.home
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
@@ -48,13 +47,24 @@ fun HomePageRoute(
     val agentSearchContent = geminiAgentViewModel.agentSearchContent
 
     // Food recipes
-    val foodRecipesTimeSectionState by foodReViewModel.foodRecipesTimeSectionDataStateFlow.collectAsStateWithLifecycle()
-    val foodRecipesState by foodReViewModel.foodRecipesDataStateFlow.collectAsStateWithLifecycle()
+    val foodRecipesTimeSectionDataState by foodReViewModel.foodRecipesTimeSectionDataStateFlow.collectAsStateWithLifecycle()
+    val foodRecipesRecommendDataState by foodReViewModel.foodRecipesRecommendDataStateFlow.collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
-    val foodRecipesTabLazyListState = rememberLazyListState()
-    val foodRecipesContentLazyListState = rememberLazyListState()
+    val foodRecipesTimeSectionListState = rememberLazyListState()
+    val foodRecipesRecommendTabListState = rememberLazyListState()
+    val foodRecipesRecommendListState = rememberLazyListState()
+
+    val homeFoodRecipesState = rememberHomeFoodRecipesState(
+        timeSectionDataState = foodRecipesTimeSectionDataState,
+        recommendDataState = foodRecipesRecommendDataState,
+        listState = rememberHomeFoodRecipesListState(
+            timeSectionListState = foodRecipesTimeSectionListState,
+            trendingTabListState = foodRecipesRecommendTabListState,
+            trendingListState = foodRecipesRecommendListState
+        )
+    )
 
     HomePage(
         onOpenDrawer = {
@@ -83,10 +93,7 @@ fun HomePageRoute(
             // Navigate to agent chat page.
             navController.navigateToAgentChatPage()
         },
-        foodRecipesTabLazyListState = foodRecipesTabLazyListState,
-        foodRecipesContentLazyListState = foodRecipesContentLazyListState,
-        foodRecipesTimeSectionState = foodRecipesTimeSectionState,
-        foodRecipesState = foodRecipesState,
+        foodRecipesState = homeFoodRecipesState,
         currentSelectedFoodRecipesTab = foodReViewModel.getSelectedFoodRecipesTab(),
         onSelectedFoodRecipesTabItem = { currentSelectedTab, selectedItem ->
             foodReViewModel.apply {
@@ -119,7 +126,8 @@ fun HomePageRoute(
             foodReViewModel.apply {
                 val foodRecipesCategories = FoodRecipesCategories.entries.toList()
                 val selectedFoodRecipesTab = getSelectedFoodRecipesTab()
-                val currentSelectedTab = foodRecipesCategories[selectedFoodRecipesTab].name.lowercase()
+                val currentSelectedTab =
+                    foodRecipesCategories[selectedFoodRecipesTab].name.lowercase()
                 getRecommendFoodRecipes(
                     queryType = currentSelectedTab,
                     offset = 0
@@ -136,10 +144,7 @@ private fun HomePage(
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
-    foodRecipesTabLazyListState: LazyListState,
-    foodRecipesContentLazyListState: LazyListState,
-    foodRecipesTimeSectionState: FoodRecipesDataState,
-    foodRecipesState: FoodRecipesDataState,
+    foodRecipesState: HomeFoodRecipesState,
     currentSelectedFoodRecipesTab: Int,
     onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
@@ -153,9 +158,6 @@ private fun HomePage(
         agentSearchContent = agentSearchContent,
         onAgentSearchPromptChange = onAgentSearchPromptChange,
         onAgentStartChat = onAgentStartChat,
-        foodRecipesTabLazyListState = foodRecipesTabLazyListState,
-        foodRecipesContentLazyListState = foodRecipesContentLazyListState,
-        foodRecipesTimeSectionState = foodRecipesTimeSectionState,
         foodRecipesState = foodRecipesState,
         currentSelectedFoodRecipesTab = currentSelectedFoodRecipesTab,
         onSelectedFoodRecipesTabItem = onSelectedFoodRecipesTabItem,
@@ -175,10 +177,11 @@ private fun HomePagePreview() {
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {},
-        foodRecipesTabLazyListState = rememberLazyListState(),
-        foodRecipesContentLazyListState = rememberLazyListState(),
-        foodRecipesTimeSectionState = FoodRecipesDataState.Init,
-        foodRecipesState = FoodRecipesDataState.Init,
+        foodRecipesState = HomeFoodRecipesState(
+            timeSectionDataState = FoodRecipesDataState.Init,
+            recommendDataState = FoodRecipesDataState.Init,
+            listState = rememberHomeFoodRecipesListState()
+        ),
         currentSelectedFoodRecipesTab = 0,
         onSelectedFoodRecipesTabItem = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},

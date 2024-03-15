@@ -52,8 +52,8 @@ class FoodRecipesViewModel @Inject constructor(
     /**
      * The food recipes data flow of daily recommend.
      * */
-    private val _foodRecipesDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
-    val foodRecipesDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesDataStateFlow
+    private val _foodRecipesRecommendDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
+    val foodRecipesRecommendDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesRecommendDataStateFlow
 
     /**
      * The food recipes data flow of time section.
@@ -103,7 +103,7 @@ class FoodRecipesViewModel @Inject constructor(
     ) {
         operationInViewModelScope {
             getFoodRecipesData(
-                dataFlow = _foodRecipesDataStateFlow,
+                dataFlow = _foodRecipesRecommendDataStateFlow,
                 query = queryType,
                 offset = offset
             )

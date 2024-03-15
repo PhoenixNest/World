@@ -9,13 +9,13 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 @Composable
 fun rememberHomeFoodRecipesState(
     timeSectionDataState: FoodRecipesDataState,
-    mainDataState: FoodRecipesDataState,
+    recommendDataState: FoodRecipesDataState,
     listState: HomeFoodRecipesListState,
 ): HomeFoodRecipesState {
     return remember(keys = arrayOf(listState)) {
         HomeFoodRecipesState(
             timeSectionDataState = timeSectionDataState,
-            mainDataState = mainDataState,
+            recommendDataState = recommendDataState,
             listState = listState
         )
     }
@@ -24,20 +24,20 @@ fun rememberHomeFoodRecipesState(
 @Composable
 fun rememberHomeFoodRecipesListState(
     timeSectionListState: LazyListState = rememberLazyListState(),
-    tabListState: LazyListState = rememberLazyListState(),
-    mainListState: LazyListState = rememberLazyListState()
+    trendingTabListState: LazyListState = rememberLazyListState(),
+    trendingListState: LazyListState = rememberLazyListState()
 ): HomeFoodRecipesListState {
     return remember(
         keys = arrayOf(
             timeSectionListState,
-            tabListState,
-            mainListState
+            trendingTabListState,
+            trendingListState
         )
     ) {
         HomeFoodRecipesListState(
             timeSectionListState = timeSectionListState,
-            tabListState = tabListState,
-            mainListState = mainListState
+            tabListState = trendingTabListState,
+            recommendListState = trendingListState
         )
     }
 }
@@ -46,14 +46,14 @@ fun rememberHomeFoodRecipesListState(
  * Data state for home page.
  *
  * @param timeSectionDataState      For time-section list (horizontal).
- * @param mainDataState             For food Recipes main list (vertical).
+ * @param recommendDataState             For food Recipes main list (vertical).
  * @param listState                 Ui state of list.
  *
  * @see HomeFoodRecipesListState
  * */
 data class HomeFoodRecipesState(
     val timeSectionDataState: FoodRecipesDataState,
-    val mainDataState: FoodRecipesDataState,
+    val recommendDataState: FoodRecipesDataState,
     val listState: HomeFoodRecipesListState
 )
 
@@ -62,10 +62,10 @@ data class HomeFoodRecipesState(
  *
  * @param timeSectionListState      For time-section list (horizontal).
  * @param tabListState              For food Recipes tab panel.
- * @param mainListState             For food Recipes main list (vertical).
+ * @param recommendListState             For food Recipes main list (vertical).
  * */
 data class HomeFoodRecipesListState(
     val timeSectionListState: LazyListState,
     val tabListState: LazyListState,
-    val mainListState: LazyListState
+    val recommendListState: LazyListState
 )
