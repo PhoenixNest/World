@@ -158,12 +158,20 @@ object GeminiAgent {
         return when (message) {
             is Bitmap -> {
                 LogUtil.d(TAG, "[Message Generator] Generate [Bitmap] type")
-                currentChosenModel.generateContent(message)
+                val content = content {
+                    role = realRole
+                    image(message)
+                }
+                currentChosenModel.generateContent(content)
             }
 
             is String -> {
                 LogUtil.d(TAG, "[Message Generator] Generate [String] type, messageContent: $message")
-                currentChosenModel.generateContent(message)
+                val content = content {
+                    role = realRole
+                    text(message)
+                }
+                currentChosenModel.generateContent(content)
             }
 
             is Content -> {
