@@ -28,7 +28,8 @@ fun AgentChatPageRoute(
 
     /* ======================== Field ======================== */
 
-    val agentDataState by geminiAgentViewModel.agentChatDataStateFlow.collectAsStateWithLifecycle()
+    val agentDataState by geminiAgentViewModel.agentChatDataStateFlow
+        .collectAsStateWithLifecycle()
 
     val inputMessage = geminiAgentViewModel.agentSearchContent
 

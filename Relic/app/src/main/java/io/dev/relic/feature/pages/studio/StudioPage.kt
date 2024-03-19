@@ -44,10 +44,14 @@ fun StudioPageRoute(
     /* ======================== Field ======================== */
 
     // Trending
-    val trendingNewsDataState by newsViewModel.trendingNewsDataStateFlow.collectAsStateWithLifecycle()
+    val trendingNewsDataState by newsViewModel
+        .trendingNewsDataStateFlow
+        .collectAsStateWithLifecycle()
 
     // Top-headline
-    val topHeadlineNewsDataState by newsViewModel.topHeadlineNewsDataStateFlow.collectAsStateWithLifecycle()
+    val topHeadlineNewsDataState by newsViewModel
+        .topHeadlineNewsDataStateFlow
+        .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 

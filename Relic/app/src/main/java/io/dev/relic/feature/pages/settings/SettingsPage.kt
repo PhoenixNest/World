@@ -30,7 +30,6 @@ fun SettingsPageRoute(
     /* ======================== Common ======================== */
 
     val context = LocalContext.current
-    val navController = mainScreenState.navHostController
 
     SettingsPage(
         onBackClick = onBackClick,

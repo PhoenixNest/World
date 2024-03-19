@@ -46,9 +46,13 @@ fun HomePageRoute(
     // Agent
     val agentSearchContent = geminiAgentViewModel.agentSearchContent
 
-    // Food recipes
-    val foodRecipesTimeSectionDataState by foodReViewModel.foodRecipesTimeSectionDataStateFlow.collectAsStateWithLifecycle()
-    val foodRecipesRecommendDataState by foodReViewModel.foodRecipesRecommendDataStateFlow.collectAsStateWithLifecycle()
+    // Time-section Food Recipes
+    val foodRecipesTimeSectionDataState by foodReViewModel.foodRecipesTimeSectionDataStateFlow
+        .collectAsStateWithLifecycle()
+
+    // Recommend Food Recipes
+    val foodRecipesRecommendDataState by foodReViewModel.foodRecipesRecommendDataStateFlow
+        .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
