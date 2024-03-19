@@ -291,7 +291,7 @@ class NewsViewModel @Inject constructor(
     /**
      * Return the latest index value of tab.
      * */
-    fun getSelectedTopHeadlineNewsCategoriesTab(): Int {
+    fun getSelectedNewsTab(): Int {
         return _currentSelectedTopHeadlineNewsCategories
     }
 

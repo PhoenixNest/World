@@ -1,12 +1,9 @@
-package io.dev.relic.feature.pages.studio.ui.bottom_sheet
+package io.dev.relic.feature.pages.studio.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,20 +13,16 @@ import io.core.ui.utils.RelicUiUtil
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
-import io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget.StudioNewsTitle
-import io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget.StudioTabBar
-import io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget.StudioTopHeadlineNewsList
-import io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget.StudioTrendingNewsList
+import io.dev.relic.feature.pages.studio.StudioBottomSheetState
+import io.dev.relic.feature.pages.studio.rememberStudioNewsListState
+import io.dev.relic.feature.pages.studio.ui.widget.StudioNewsTitle
+import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
+import io.dev.relic.feature.pages.studio.ui.widget.StudioTopHeadlineNewsList
+import io.dev.relic.feature.pages.studio.ui.widget.StudioTrendingNewsList
 
 @Composable
 fun StudioBottomSheet(
-    trendingNewsDataState: TrendingNewsDataState,
-    topHeadlineNewsDataState: TopHeadlineNewsDataState,
-    currentSelectedCategory: Int,
-    trendingNewsLazyListState: LazyListState,
-    topHeadlineNewsTabLazyListState: LazyListState,
-    topHeadlineNewsContentLazyListState: LazyListState,
-    onResortClick: () -> Unit,
+    bottomSheetState: StudioBottomSheetState,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onNewsCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
@@ -41,24 +34,32 @@ fun StudioBottomSheet(
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
     val bottomSheetHeight = screenHeight - 52.dp
 
+    val currentSelectedCategory = bottomSheetState.currentSelectTab
+    val trendingNewsDataState = bottomSheetState.trendingNewsDataState
+    val topHeadlineNewsDataState = bottomSheetState.topHeadlineNewsDataState
+
+    val trendingNewsListState = bottomSheetState.listState.trendingNewsListState
+    val topHeadlineNewsTabListState = bottomSheetState.listState.topHeadlineNewsTabListState
+    val topHeadlineNewsListState = bottomSheetState.listState.topHeadlineNewsListState
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .height(bottomSheetHeight),
-        state = topHeadlineNewsContentLazyListState,
+        state = topHeadlineNewsListState,
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        StudioNewsTitle(onResortClick = onResortClick)
+        StudioNewsTitle()
         StudioTrendingNewsList(
             dataState = trendingNewsDataState,
-            lazyListState = trendingNewsLazyListState,
+            lazyListState = trendingNewsListState,
             onCardClick = onNewsCardClick,
             onRetryClick = onRetryTrendingClick
         )
         StudioTabBar(
             currentSelectedTab = currentSelectedCategory,
-            lazyListState = topHeadlineNewsTabLazyListState,
+            lazyListState = topHeadlineNewsTabListState,
             onTabItemClick = onTabItemClick
         )
         StudioTopHeadlineNewsList(
@@ -75,13 +76,12 @@ fun StudioBottomSheet(
 @Preview(showBackground = true, backgroundColor = 0xFF282C34)
 private fun StudioBottomSheetPreview() {
     StudioBottomSheet(
-        trendingNewsDataState = TrendingNewsDataState.Init,
-        topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
-        currentSelectedCategory = 0,
-        trendingNewsLazyListState = rememberLazyListState(),
-        topHeadlineNewsTabLazyListState = rememberLazyListState(),
-        topHeadlineNewsContentLazyListState = rememberLazyListState(),
-        onResortClick = {},
+        bottomSheetState = StudioBottomSheetState(
+            currentSelectTab = 0,
+            trendingNewsDataState = TrendingNewsDataState.Init,
+            topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
+            listState = rememberStudioNewsListState()
+        ),
         onTabItemClick = { _, _ -> },
         onNewsCardClick = {},
         onLikeClick = {},

@@ -7,21 +7,6 @@ import androidx.compose.runtime.remember
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 
 @Composable
-fun rememberHomeFoodRecipesState(
-    timeSectionDataState: FoodRecipesDataState,
-    recommendDataState: FoodRecipesDataState,
-    listState: HomeFoodRecipesListState,
-): HomeFoodRecipesState {
-    return remember(keys = arrayOf(listState)) {
-        HomeFoodRecipesState(
-            timeSectionDataState = timeSectionDataState,
-            recommendDataState = recommendDataState,
-            listState = listState
-        )
-    }
-}
-
-@Composable
 fun rememberHomeFoodRecipesListState(
     timeSectionListState: LazyListState = rememberLazyListState(),
     trendingTabListState: LazyListState = rememberLazyListState(),
@@ -52,6 +37,7 @@ fun rememberHomeFoodRecipesListState(
  * @see HomeFoodRecipesListState
  * */
 data class HomeFoodRecipesState(
+    val currentSelectTab: Int,
     val timeSectionDataState: FoodRecipesDataState,
     val recommendDataState: FoodRecipesDataState,
     val listState: HomeFoodRecipesListState

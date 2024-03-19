@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget
+package io.dev.relic.feature.pages.studio.ui.widget
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,14 +26,14 @@ import io.dev.relic.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Suppress("FunctionName")
-fun LazyListScope.StudioNewsTitle(onResortClick: () -> Unit) {
+fun LazyListScope.StudioNewsTitle() {
     stickyHeader {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = mainThemeColor),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -50,33 +49,15 @@ fun LazyListScope.StudioNewsTitle(onResortClick: () -> Unit) {
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-            ) {
-                Text(
-                    text = stringResource(R.string.news_title),
-                    modifier = Modifier.align(Alignment.Center),
-                    maxLines = 1,
-                    style = TextStyle(
-                        color = mainTextColor,
-                        fontSize = 32.sp,
-                        fontFamily = newsReader,
-                    )
+            Text(
+                text = stringResource(R.string.news_title),
+                maxLines = 1,
+                style = TextStyle(
+                    color = mainTextColor,
+                    fontSize = 32.sp,
+                    fontFamily = newsReader,
                 )
-                // TODO: Hide the resort button temporarily.
-                // IconButton(
-                //     onClick = onResortClick,
-                //     modifier = Modifier.align(Alignment.CenterEnd)
-                // ) {
-                //     Icon(
-                //         painter = painterResource(id = R.drawable.ic_sort),
-                //         contentDescription = DEFAULT_DESC,
-                //         tint = mainIconColorLight
-                //     )
-                // }
-            }
+            )
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

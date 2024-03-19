@@ -1,13 +1,11 @@
 package io.dev.relic.feature.pages.studio
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,8 +23,8 @@ import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
+import io.dev.relic.feature.pages.studio.ui.StudioBottomSheet
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
-import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioBottomSheet
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
 
@@ -52,29 +50,24 @@ fun StudioPageRoute(
 
     /* ======================== Ui ======================== */
 
-    val trendingNewsLazyListState = rememberLazyListState()
-    val topHeadlineNewsTabLazyListState = rememberLazyListState()
-    val topHeadlineNewsContentLazyListState = rememberLazyListState()
+    // List state
+    val newListState = rememberStudioNewsListState(
+        trendingNewsListState = rememberLazyListState(),
+        topHeadlineNewsTabListState = rememberLazyListState(),
+        topHeadlineNewsListState = rememberLazyListState()
+    )
 
-    LaunchedEffect(trendingNewsLazyListState) {
-        //
-    }
-
-    LaunchedEffect(topHeadlineNewsContentLazyListState) {
-        //
-    }
-
-    StudioPage(
+    // Data state
+    val bottomSheetState = StudioBottomSheetState(
+        currentSelectTab = newsViewModel.getSelectedNewsTab(),
         trendingNewsDataState = trendingNewsDataState,
         topHeadlineNewsDataState = topHeadlineNewsDataState,
-        currentSelectedCategory = newsViewModel.getSelectedTopHeadlineNewsCategoriesTab(),
-        trendingNewsLazyListState = trendingNewsLazyListState,
-        topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
-        topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
-        onResortClick = {
-            //
-        },
-        onTabItemClick = { currentSelectedTab, _ ->
+        listState = newListState
+    )
+
+    StudioPage(
+        bottomSheetState = bottomSheetState,
+        onNewsTabItemClick = { currentSelectedTab, _ ->
             val newsCategories = NewsCategory.entries
             newsViewModel.apply {
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
@@ -86,7 +79,7 @@ fun StudioPageRoute(
                     page = DEFAULT_INIT_NEWS_PAGE_INDEX
                 )
                 coroutineScope.launch {
-                    topHeadlineNewsContentLazyListState.scrollToItem(3)
+                    newListState.topHeadlineNewsListState.scrollToItem(3)
                 }
             }
         },
@@ -96,54 +89,44 @@ fun StudioPageRoute(
                 contUrl = it.contentUrl
             )
         },
-        onLikeClick = {
+        onLikeNewsClick = {
             //
         },
-        onShareClick = {
+        onShareNewsClick = {
             shareWebLink(
                 context = context,
                 title = it.title,
                 url = it.contentUrl
             )
         },
-        onRetryTrendingClick = newsViewModel::getTrendingNewsData,
-        onRetryTopHeadlineClick = newsViewModel::getTopHeadlineNewsData
+        onTrendingNewsRetryClick = newsViewModel::getTrendingNewsData,
+        onTopHeadlineNewsRetryClick = newsViewModel::getTopHeadlineNewsData
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun StudioPage(
-    trendingNewsDataState: TrendingNewsDataState,
-    topHeadlineNewsDataState: TopHeadlineNewsDataState,
-    currentSelectedCategory: Int,
-    trendingNewsLazyListState: LazyListState,
-    topHeadlineNewsTabLazyListState: LazyListState,
-    topHeadlineNewsContentLazyListState: LazyListState,
-    onResortClick: () -> Unit,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    // Data state
+    bottomSheetState: StudioBottomSheetState,
+    // Click handler
+    onNewsTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onNewsCardClick: (model: NewsArticleModel) -> Unit,
-    onLikeClick: (model: NewsArticleModel) -> Unit,
-    onShareClick: (model: NewsArticleModel) -> Unit,
-    onRetryTrendingClick: () -> Unit,
-    onRetryTopHeadlineClick: () -> Unit
+    onLikeNewsClick: (model: NewsArticleModel) -> Unit,
+    onShareNewsClick: (model: NewsArticleModel) -> Unit,
+    onTrendingNewsRetryClick: () -> Unit,
+    onTopHeadlineNewsRetryClick: () -> Unit
 ) {
     BottomSheetScaffold(
         sheetContent = {
             StudioBottomSheet(
-                trendingNewsDataState = trendingNewsDataState,
-                topHeadlineNewsDataState = topHeadlineNewsDataState,
-                currentSelectedCategory = currentSelectedCategory,
-                trendingNewsLazyListState = trendingNewsLazyListState,
-                topHeadlineNewsTabLazyListState = topHeadlineNewsTabLazyListState,
-                topHeadlineNewsContentLazyListState = topHeadlineNewsContentLazyListState,
-                onResortClick = onResortClick,
-                onTabItemClick = onTabItemClick,
+                bottomSheetState = bottomSheetState,
+                onTabItemClick = onNewsTabItemClick,
                 onNewsCardClick = onNewsCardClick,
-                onLikeClick = onLikeClick,
-                onShareClick = onShareClick,
-                onRetryTrendingClick = onRetryTrendingClick,
-                onRetryTopHeadlineClick = onRetryTopHeadlineClick
+                onLikeClick = onLikeNewsClick,
+                onShareClick = onShareNewsClick,
+                onRetryTrendingClick = onTrendingNewsRetryClick,
+                onRetryTopHeadlineClick = onTopHeadlineNewsRetryClick
             )
         },
         scaffoldState = rememberBottomSheetScaffoldState(),
@@ -162,18 +145,17 @@ private fun StudioPage(
 @Preview
 private fun StudioPagePreview() {
     StudioPage(
-        trendingNewsDataState = TrendingNewsDataState.Init,
-        topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
-        currentSelectedCategory = 0,
-        trendingNewsLazyListState = rememberLazyListState(),
-        topHeadlineNewsTabLazyListState = rememberLazyListState(),
-        topHeadlineNewsContentLazyListState = rememberLazyListState(),
-        onResortClick = {},
-        onTabItemClick = { _, _ -> },
+        bottomSheetState = StudioBottomSheetState(
+            currentSelectTab = 0,
+            trendingNewsDataState = TrendingNewsDataState.Init,
+            topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
+            listState = rememberStudioNewsListState()
+        ),
+        onNewsTabItemClick = { _, _ -> },
         onNewsCardClick = {},
-        onLikeClick = {},
-        onShareClick = {},
-        onRetryTrendingClick = { },
-        onRetryTopHeadlineClick = {}
+        onLikeNewsClick = {},
+        onShareNewsClick = {},
+        onTrendingNewsRetryClick = { },
+        onTopHeadlineNewsRetryClick = {},
     )
 }

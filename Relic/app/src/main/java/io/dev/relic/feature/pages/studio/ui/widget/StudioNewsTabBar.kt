@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.studio.ui.bottom_sheet.widget
+package io.dev.relic.feature.pages.studio.ui.widget
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

@@ -18,7 +18,6 @@ import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.pages.home.HomeFoodRecipesState
 import io.dev.relic.feature.pages.home.rememberHomeFoodRecipesListState
-import io.dev.relic.feature.pages.home.rememberHomeFoodRecipesState
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
@@ -32,7 +31,6 @@ fun HomePageContent(
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
     foodRecipesState: HomeFoodRecipesState,
-    currentSelectedFoodRecipesTab: Int,
     onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
     onFoodRecipesItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
@@ -41,6 +39,7 @@ fun HomePageContent(
 ) {
     val currentTimeSection = getCurrentTimeSection()
 
+    val currentSelectedFoodRecipesTab = foodRecipesState.currentSelectTab
     val foodRecipesTimeSectionDataState = foodRecipesState.timeSectionDataState
     val foodRecipesRecommendDataState = foodRecipesState.recommendDataState
 
@@ -100,12 +99,12 @@ private fun HomePageContentPreview() {
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
         onAgentStartChat = {},
-        foodRecipesState = rememberHomeFoodRecipesState(
+        foodRecipesState = HomeFoodRecipesState(
+            currentSelectTab = 0,
             timeSectionDataState = FoodRecipesDataState.Init,
             recommendDataState = FoodRecipesDataState.Init,
             listState = rememberHomeFoodRecipesListState()
         ),
-        currentSelectedFoodRecipesTab = 0,
         onSelectedFoodRecipesTabItem = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},
         onFoodRecipesItemClick = {},

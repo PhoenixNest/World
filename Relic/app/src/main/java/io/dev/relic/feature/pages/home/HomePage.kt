@@ -52,18 +52,19 @@ fun HomePageRoute(
 
     /* ======================== Ui ======================== */
 
-    val foodRecipesTimeSectionListState = rememberLazyListState()
-    val foodRecipesRecommendTabListState = rememberLazyListState()
-    val foodRecipesRecommendListState = rememberLazyListState()
+    // List state
+    val foodRecipesListState = rememberHomeFoodRecipesListState(
+        timeSectionListState = rememberLazyListState(),
+        trendingTabListState = rememberLazyListState(),
+        trendingListState = rememberLazyListState()
+    )
 
-    val homeFoodRecipesState = rememberHomeFoodRecipesState(
+    // Data state
+    val foodRecipesState = HomeFoodRecipesState(
+        currentSelectTab = foodReViewModel.getSelectedFoodRecipesTab(),
         timeSectionDataState = foodRecipesTimeSectionDataState,
         recommendDataState = foodRecipesRecommendDataState,
-        listState = rememberHomeFoodRecipesListState(
-            timeSectionListState = foodRecipesTimeSectionListState,
-            trendingTabListState = foodRecipesRecommendTabListState,
-            trendingListState = foodRecipesRecommendListState
-        )
+        listState = foodRecipesListState
     )
 
     HomePage(
@@ -93,9 +94,8 @@ fun HomePageRoute(
             // Navigate to agent chat page.
             navController.navigateToAgentChatPage()
         },
-        foodRecipesState = homeFoodRecipesState,
-        currentSelectedFoodRecipesTab = foodReViewModel.getSelectedFoodRecipesTab(),
-        onSelectedFoodRecipesTabItem = { currentSelectedTab, selectedItem ->
+        foodRecipesState = foodRecipesState,
+        onFoodRecipesTabItemClick = { currentSelectedTab, selectedItem ->
             foodReViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
                 getRecommendFoodRecipes(
@@ -144,9 +144,10 @@ private fun HomePage(
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
+    // Data state
     foodRecipesState: HomeFoodRecipesState,
-    currentSelectedFoodRecipesTab: Int,
-    onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    // Click handler
+    onFoodRecipesTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
     onFoodRecipesItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     onFoodRecipesTimeSectionRetry: () -> Unit,
@@ -159,8 +160,7 @@ private fun HomePage(
         onAgentSearchPromptChange = onAgentSearchPromptChange,
         onAgentStartChat = onAgentStartChat,
         foodRecipesState = foodRecipesState,
-        currentSelectedFoodRecipesTab = currentSelectedFoodRecipesTab,
-        onSelectedFoodRecipesTabItem = onSelectedFoodRecipesTabItem,
+        onSelectedFoodRecipesTabItem = onFoodRecipesTabItemClick,
         onFoodRecipesSeeMoreClick = onFoodRecipesSeeMoreClick,
         onFoodRecipesItemClick = onFoodRecipesItemClick,
         onFoodRecipesTimeSectionRetry = onFoodRecipesTimeSectionRetry,
@@ -178,12 +178,12 @@ private fun HomePagePreview() {
         onAgentSearchPromptChange = {},
         onAgentStartChat = {},
         foodRecipesState = HomeFoodRecipesState(
+            currentSelectTab = 0,
             timeSectionDataState = FoodRecipesDataState.Init,
             recommendDataState = FoodRecipesDataState.Init,
             listState = rememberHomeFoodRecipesListState()
         ),
-        currentSelectedFoodRecipesTab = 0,
-        onSelectedFoodRecipesTabItem = { _, _ -> },
+        onFoodRecipesTabItemClick = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},
         onFoodRecipesItemClick = {},
         onFoodRecipesTimeSectionRetry = {},
