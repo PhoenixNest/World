@@ -30,45 +30,38 @@ fun StudioBottomSheet(
     onRetryTrendingClick: () -> Unit,
     onRetryTopHeadlineClick: () -> Unit
 ) {
-
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
     val bottomSheetHeight = screenHeight - 52.dp
 
-    val currentSelectedCategory = bottomSheetState.currentSelectTab
-    val trendingNewsDataState = bottomSheetState.trendingNewsDataState
-    val topHeadlineNewsDataState = bottomSheetState.topHeadlineNewsDataState
-
-    val trendingNewsListState = bottomSheetState.listState.trendingNewsListState
-    val topHeadlineNewsTabListState = bottomSheetState.listState.topHeadlineNewsTabListState
-    val topHeadlineNewsListState = bottomSheetState.listState.topHeadlineNewsListState
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(bottomSheetHeight),
-        state = topHeadlineNewsListState,
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
-        StudioNewsTitle()
-        StudioTrendingNewsList(
-            dataState = trendingNewsDataState,
-            lazyListState = trendingNewsListState,
-            onCardClick = onNewsCardClick,
-            onRetryClick = onRetryTrendingClick
-        )
-        StudioTabBar(
-            currentSelectedTab = currentSelectedCategory,
-            lazyListState = topHeadlineNewsTabListState,
-            onTabItemClick = onTabItemClick
-        )
-        StudioTopHeadlineNewsList(
-            dataState = topHeadlineNewsDataState,
-            onCardClick = onNewsCardClick,
-            onLikeClick = onLikeClick,
-            onShareClick = onShareClick,
-            onRetryClick = onRetryTopHeadlineClick
-        )
+    bottomSheetState.apply {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(bottomSheetHeight),
+            state = listState.topHeadlineNewsTabListState,
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ) {
+            StudioNewsTitle()
+            StudioTrendingNewsList(
+                dataState = trendingNewsDataState,
+                lazyListState = listState.trendingNewsListState,
+                onCardClick = onNewsCardClick,
+                onRetryClick = onRetryTrendingClick
+            )
+            StudioTabBar(
+                currentSelectedTab = currentSelectTab,
+                lazyListState = listState.topHeadlineNewsTabListState,
+                onTabItemClick = onTabItemClick
+            )
+            StudioTopHeadlineNewsList(
+                dataState = topHeadlineNewsDataState,
+                onCardClick = onNewsCardClick,
+                onLikeClick = onLikeClick,
+                onShareClick = onShareClick,
+                onRetryClick = onRetryTopHeadlineClick
+            )
+        }
     }
 }
 

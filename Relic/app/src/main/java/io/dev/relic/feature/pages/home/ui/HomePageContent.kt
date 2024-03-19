@@ -37,55 +37,47 @@ fun HomePageContent(
     onFoodRecipesTimeSectionRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit
 ) {
-    val currentTimeSection = getCurrentTimeSection()
-
-    val currentSelectedFoodRecipesTab = foodRecipesState.currentSelectTab
-    val foodRecipesTimeSectionDataState = foodRecipesState.timeSectionDataState
-    val foodRecipesRecommendDataState = foodRecipesState.recommendDataState
-
-    val foodRecipesTimeSectionListState = foodRecipesState.listState.timeSectionListState
-    val foodRecipesRecommendListState = foodRecipesState.listState.recommendListState
-    val foodRecipesRecommendTabListState = foodRecipesState.listState.tabListState
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = mainThemeColor
-    ) {
-        LazyColumn(
+    foodRecipesState.apply {
+        Surface(
             modifier = Modifier.fillMaxSize(),
-            state = foodRecipesRecommendListState,
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            color = mainThemeColor
         ) {
-            HomeTopPanel(
-                currentTimeSection = currentTimeSection,
-                agentSearchContent = agentSearchContent,
-                onAgentSearchPromptChange = onAgentSearchPromptChange,
-                onAgentStartChat = onAgentStartChat,
-                onOpenDrawer = onOpenDrawer,
-                onOpenSetting = onOpenSetting
-            )
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            HomeFoodRecipesAutoTimeComponent(
-                currentTimeSection = currentTimeSection,
-                listState = foodRecipesTimeSectionListState,
-                dataState = foodRecipesTimeSectionDataState,
-                onSeeMoreClick = onFoodRecipesSeeMoreClick,
-                onItemClick = onFoodRecipesItemClick,
-                onRetryClick = onFoodRecipesTimeSectionRetry
-            )
-            item { CommonItemDivider() }
-            HomeFoodRecipesTabBar(
-                currentSelectedTab = currentSelectedFoodRecipesTab,
-                lazyListState = foodRecipesRecommendTabListState,
-                onTabItemClick = onSelectedFoodRecipesTabItem
-            )
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            HomeFoodRecipesList(
-                dataState = foodRecipesRecommendDataState,
-                onRetryClick = onFoodRecipesRetry,
-                onItemClick = onFoodRecipesItemClick
-            )
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState.recommendListState,
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                HomeTopPanel(
+                    currentTimeSection = getCurrentTimeSection(),
+                    agentSearchContent = agentSearchContent,
+                    onAgentSearchPromptChange = onAgentSearchPromptChange,
+                    onAgentStartChat = onAgentStartChat,
+                    onOpenDrawer = onOpenDrawer,
+                    onOpenSetting = onOpenSetting
+                )
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                HomeFoodRecipesAutoTimeComponent(
+                    currentTimeSection = getCurrentTimeSection(),
+                    listState = listState.timeSectionListState,
+                    dataState = timeSectionDataState,
+                    onSeeMoreClick = onFoodRecipesSeeMoreClick,
+                    onItemClick = onFoodRecipesItemClick,
+                    onRetryClick = onFoodRecipesTimeSectionRetry
+                )
+                item { CommonItemDivider() }
+                HomeFoodRecipesTabBar(
+                    currentSelectedTab = currentSelectTab,
+                    lazyListState = listState.recommendListState,
+                    onTabItemClick = onSelectedFoodRecipesTabItem
+                )
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                HomeFoodRecipesList(
+                    dataState = recommendDataState,
+                    onRetryClick = onFoodRecipesRetry,
+                    onItemClick = onFoodRecipesItemClick
+                )
+            }
         }
     }
 }

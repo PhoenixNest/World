@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.common.RelicConstants.Common.EMPTY_STRING
 import io.common.RelicShareCenter.shareWebLink
 import io.core.ui.theme.mainThemeColor
 import io.data.model.news.NewsArticleModel
@@ -68,13 +69,12 @@ fun StudioPageRoute(
     StudioPage(
         bottomSheetState = bottomSheetState,
         onNewsTabItemClick = { currentSelectedTab, _ ->
-            val newsCategories = NewsCategory.entries
             newsViewModel.apply {
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
                 getTopHeadlineNewsData(
-                    keyWords = "",
+                    keyWords = EMPTY_STRING,
                     country = DEFAULT_NEWS_COUNTRY_TYPE,
-                    category = newsCategories[currentSelectedTab],
+                    category = NewsCategory.entries[currentSelectedTab],
                     pageSize = DEFAULT_INIT_NEWS_PAGE_SIZE,
                     page = DEFAULT_INIT_NEWS_PAGE_INDEX
                 )
