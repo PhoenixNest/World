@@ -1,12 +1,13 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
 private val localProperties = gradleLocalProperties(rootDir)
-private val isDebugMode = localProperties.getProperty("DEBUG_MODE")
-private val isNoAds = localProperties.getProperty("NO_ADS")
+private val isDebugMode = localProperties.getProperty("DEBUG_MODE") ?: "false"
+private val isNoAds = localProperties.getProperty("NO_ADS") ?: "true"
 
 // Dev Key
-private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY")
+private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY") ?: "-1"
 
 // Library config
 private val composeCompilerVersion = "1.5.10"
@@ -64,14 +65,52 @@ android {
     }
 
     buildTypes {
-        release {
+
+        /**
+         * [Shrink, obfuscate, and optimize your app](https://developer.android.com/build/shrink-code)
+         * */
+        val releaseBuildType = release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type. Make sure to use a build
+            // variant with `isDebuggable=false`.
             isMinifyEnabled = true
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
             isShrinkResources = true
+
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
             proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+
+                // List additional ProGuard rules for the given build type here. By default,
+                // Android Studio creates and includes an empty rules file for you (located
+                // at the root directory of each module).
                 "proguard-rules.pro",
                 "proguard-rules/coroutines.pro",
-                getDefaultProguardFile("proguard-android-optimize.txt")
+                "proguard-rules/gson-android.pro",
+                "proguard-rules/retrofit2-android.pro",
+                "proguard-rules/okhttp3-android.pro",
+                "proguard-rules/amap.pro",
+                "proguard-rules/tomtom-map.pro"
             )
+        }
+
+        // Rename the output file
+        applicationVariants.forEach { variant ->
+            variant.outputs.all {
+                if (outputFile != null && outputFile.endsWith("apk")) {
+                    val outputFilePrefix = when (variant.buildType.name) {
+                        "debug" -> "relic_debug"
+                        "release" -> "relic_release"
+                        else -> "unknown"
+                    }
+
+                    (this as BaseVariantOutputImpl).outputFileName = "${outputFilePrefix}.apk"
+                }
+            }
         }
     }
 
@@ -108,12 +147,6 @@ dependencies {
 
     // Ad Module
     implementation(project(":module:ad"))
-
-    // Subscribe Module
-    implementation(project(":module:subscribe"))
-
-    // Debug Module
-    implementation(project(":module:debug"))
 
     // Agent Module
     implementation(project(":agent:gemini"))

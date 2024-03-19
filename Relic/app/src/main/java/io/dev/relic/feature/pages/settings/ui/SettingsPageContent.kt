@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import io.dev.relic.BuildConfig
 
 @Composable
 fun SettingsPageContent(
@@ -23,6 +24,8 @@ fun SettingsPageContent(
             onUserAgreementClick = onUserAgreementClick,
             onPrivacyClick = onPrivacyClick
         )
-        SettingsDebugPanel()
+        if (BuildConfig.DEBUG_MODE) {
+            SettingsDebugPanel()
+        }
     }
 }

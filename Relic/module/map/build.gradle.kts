@@ -2,8 +2,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
 private val localProperties = gradleLocalProperties(rootDir)
-private val aMapDevKay = localProperties.getProperty("AMAP_DEV_KEY")
-private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY")
+private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY") ?: "-1"
 
 // Library config
 private val composeCompilerVersion = "1.5.10"
@@ -25,20 +24,7 @@ android {
 
     defaultConfig {
         minSdk = 26
-        resValue("string", "amap_dev_key", aMapDevKay)
         resValue("string", "tomtom_dev_key", tomtomDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                "proguard-rules.pro",
-                "proguard-rules/amap.pro",
-                "proguard-rules/tomtom-map.pro",
-                getDefaultProguardFile("proguard-android-optimize.txt")
-            )
-        }
     }
 
     compileOptions {
@@ -80,10 +66,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     /* ======================== Third-party Extension ======================== */
-
-    // AMap
-    api(libs.amap.navi)
-    api(libs.amap.search)
 
     // TomTom
     api(libs.tomtom.map.display) {

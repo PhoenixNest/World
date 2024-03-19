@@ -22,7 +22,6 @@ import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicLifecycleObserver
 import io.domain.app.AbsBaseActivity
-import io.module.debug.activities.debug.DebugActivity
 
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
@@ -78,7 +77,6 @@ class SplashActivity : AbsBaseActivity() {
     private fun checkAndNavigate() {
         when {
             RelicLifecycleObserver.isFirstColdStart -> navigateToIntroActivity()
-            isDebugMode -> navigateToDebugActivity()
             else -> navigateToMainActivity()
         }
     }
@@ -86,11 +84,6 @@ class SplashActivity : AbsBaseActivity() {
     private fun navigateToIntroActivity() {
         LogUtil.d(TAG, "[Splash Navigator] Navigate to IntroActivity")
         IntroActivity.start(this)
-    }
-
-    private fun navigateToDebugActivity() {
-        LogUtil.d(TAG, "[Splash Navigator] Navigate to DebugActivity")
-        DebugActivity.start(this)
     }
 
     private fun navigateToMainActivity() {

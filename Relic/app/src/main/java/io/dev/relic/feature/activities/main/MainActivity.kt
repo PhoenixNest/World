@@ -28,9 +28,7 @@ import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.screens.main.MainScreen
-import io.dev.relic.global.RelicApplication
 import io.domain.app.AbsBaseActivity
-import io.module.map.amap.AMapPrivacyCenter
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
@@ -91,11 +89,11 @@ class MainActivity : AbsBaseActivity() {
         LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
         LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
 
-        AMapPrivacyCenter.verifyAMapPrivacyAgreement(
-            context = RelicApplication.getApplicationContext(),
-            isShowUserAgreement = isShowUserAgreement,
-            isAgreeUserPrivacy = isAgreeUserPrivacy
-        )
+        // AMapPrivacyCenter.verifyAMapPrivacyAgreement(
+        //     context = RelicApplication.getApplicationContext(),
+        //     isShowUserAgreement = isShowUserAgreement,
+        //     isAgreeUserPrivacy = isAgreeUserPrivacy
+        // )
     }
 
     /* ======================== Ui ======================== */

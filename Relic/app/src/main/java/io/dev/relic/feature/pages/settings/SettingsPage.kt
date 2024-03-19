@@ -19,7 +19,6 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.activities.web.WebActivity
 import io.dev.relic.feature.pages.settings.ui.SettingsPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.module.debug.activities.debug.DebugActivity
 
 @Composable
 fun SettingsPageRoute(
@@ -35,10 +34,10 @@ fun SettingsPageRoute(
 
     SettingsPage(
         onBackClick = onBackClick,
-        onToggleThemeClick = { },
+        onToggleThemeClick = {},
         onUserAgreementClick = { WebActivity.redirect(context, USER_TERMS) },
         onPrivacyClick = { WebActivity.redirect(context, USER_PRIVACY) },
-        onDebugClick = { DebugActivity.start(context) }
+        onDebugClick = {}
     )
 }
 

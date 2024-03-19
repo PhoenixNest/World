@@ -2,7 +2,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
 private val localProperties = gradleLocalProperties(rootDir)
-private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY")
+private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY") ?: "-1"
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -26,16 +26,6 @@ android {
         minSdk = 26
 
         resValue("string", "agent_gemini_dev_key", geminiDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                "proguard-rules.pro",
-                getDefaultProguardFile("proguard-android-optimize.txt")
-            )
-        }
     }
 
     compileOptions {

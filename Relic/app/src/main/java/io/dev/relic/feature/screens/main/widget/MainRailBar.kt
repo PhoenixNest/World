@@ -50,11 +50,6 @@ fun MainRailAppBar(
 
     ) {
         destinations.forEach { destination: MainScreenTopLevelDestination ->
-            // TODO: Hide the explore page temporarily.
-            if (destination == MainScreenTopLevelDestination.EXPLORE) {
-                return@Column
-            }
-
             MainRailBarItem(
                 isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination),
                 selectedIconResId = destination.selectedIconResId,

@@ -1,8 +1,8 @@
 package io.domain.repository.impl
 
 import io.core.network.api.INewsApi
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.model.NetworkResult
 import io.domain.repository.INewsDataRepository
 import javax.inject.Inject
@@ -28,7 +28,7 @@ class NewsDataRepositoryImpl @Inject constructor(
      *
      * @param apiKey            `Your API key.` Alternatively you can provide this via the X-Api-Key HTTP header.
      * @param keyWords          Keywords or phrases to search for in the article title and body. `Max length: 500 chars.`
-     * @param source            A comma-seperated string of identifiers (maximum 20) for the news sources or blogs you want headlines from.
+     * @param source            A comma-separated string of identifiers (maximum 20) for the news sources or blogs you want headlines from.
      *                          Use the /sources endpoint to locate these programmatically or look at the [sources index](https://newsapi.org/sources).
      * @param language          The 2-letter ISO-639-1 code of the language you want to get headlines for.
      *                          `Possible options: ar, de, en, es, fr, he, it, nl, no, pt, ru, sv, ud, zh.`

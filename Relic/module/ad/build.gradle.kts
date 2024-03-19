@@ -18,16 +18,6 @@ android {
         buildConfigField("boolean", "NO_ADS", isNoAds)
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                "proguard-rules.pro",
-                getDefaultProguardFile("proguard-android-optimize.txt")
-            )
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

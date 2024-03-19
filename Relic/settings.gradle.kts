@@ -22,10 +22,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Relic"
 // Third-party module
-include(":module:map")
 include(":module:ad")
-include(":module:subscribe")
-include(":module:debug")
+include(":module:map")
 // Agent
 include(":agent:gemini")
 // Feature layer

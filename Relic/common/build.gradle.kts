@@ -1,3 +1,6 @@
+// Utils Config
+private val logMode = (project.property("LOG_MODE") ?: "false").toString()
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
@@ -21,6 +24,8 @@ android {
 
     defaultConfig {
         minSdk = 26
+
+        buildConfigField("boolean", "LOG_MODE", logMode)
     }
 
     compileOptions {

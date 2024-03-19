@@ -54,11 +54,6 @@ fun MainBottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             destinations.forEach { destination: MainScreenTopLevelDestination ->
-                // TODO: Hide the explore page temporarily.
-                if (destination == MainScreenTopLevelDestination.EXPLORE) {
-                    return@Row
-                }
-
                 MainBottomBarItem(
                     isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination),
                     selectedIconResId = destination.selectedIconResId,

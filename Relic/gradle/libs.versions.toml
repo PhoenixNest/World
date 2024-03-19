@@ -84,6 +84,8 @@ accompanist-navigation-material = { module = "com.google.accompanist:accompanist
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+amap-location = { module = "com.amap.api:location", version.ref = "amapVersion" }
+amap-map = { module = "com.amap.api:3dmap", version.ref = "amapVersion" }
 amap-navi = { module = "com.amap.api:navi-3dmap", version.ref = "amapVersion" }
 amap-search = { module = "com.amap.api:search", version.ref = "amapVersion" }
 android-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
