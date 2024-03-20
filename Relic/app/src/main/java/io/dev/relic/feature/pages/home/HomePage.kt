@@ -57,10 +57,10 @@ fun HomePageRoute(
     /* ======================== Ui ======================== */
 
     // List state
-    val foodRecipesListState = rememberHomeFoodRecipesListState(
+    val foodRecipesListState = HomeFoodRecipesListState(
         timeSectionListState = rememberLazyListState(),
-        trendingTabListState = rememberLazyListState(),
-        trendingListState = rememberLazyListState()
+        recommendTabListState = rememberLazyListState(),
+        recommendListState = rememberLazyListState()
     )
 
     // Data state
@@ -127,16 +127,12 @@ fun HomePageRoute(
             foodReViewModel.getTimeSectionFoodRecipes(timeSection)
         },
         onFoodRecipesRetry = {
-            foodReViewModel.apply {
-                val foodRecipesCategories = FoodRecipesCategories.entries.toList()
-                val selectedFoodRecipesTab = getSelectedFoodRecipesTab()
-                val currentSelectedTab =
-                    foodRecipesCategories[selectedFoodRecipesTab].name.lowercase()
-                getRecommendFoodRecipes(
-                    queryType = currentSelectedTab,
-                    offset = 0
-                )
-            }
+            val foodRecipesCategories = FoodRecipesCategories.entries.toList()
+            val currentTab = foodReViewModel.getSelectedFoodRecipesTab()
+            foodReViewModel.getRecommendFoodRecipes(
+                queryType = foodRecipesCategories[currentTab].name.lowercase(),
+                offset = 0
+            )
         }
     )
 }
@@ -185,7 +181,11 @@ private fun HomePagePreview() {
             currentSelectTab = 0,
             timeSectionDataState = FoodRecipesDataState.Init,
             recommendDataState = FoodRecipesDataState.Init,
-            listState = rememberHomeFoodRecipesListState()
+            listState = HomeFoodRecipesListState(
+                timeSectionListState = rememberLazyListState(),
+                recommendTabListState = rememberLazyListState(),
+                recommendListState = rememberLazyListState()
+            )
         ),
         onFoodRecipesTabItemClick = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},

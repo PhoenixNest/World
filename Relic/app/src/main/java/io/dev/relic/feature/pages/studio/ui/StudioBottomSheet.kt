@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +15,7 @@ import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.pages.studio.StudioBottomSheetState
-import io.dev.relic.feature.pages.studio.rememberStudioNewsListState
+import io.dev.relic.feature.pages.studio.StudioNewsListState
 import io.dev.relic.feature.pages.studio.ui.widget.StudioNewsTitle
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTopHeadlineNewsList
@@ -38,7 +39,7 @@ fun StudioBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(bottomSheetHeight),
-            state = listState.topHeadlineNewsTabListState,
+            state = listState.topHeadlineNewsListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
@@ -73,7 +74,11 @@ private fun StudioBottomSheetPreview() {
             currentSelectTab = 0,
             trendingNewsDataState = TrendingNewsDataState.Init,
             topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
-            listState = rememberStudioNewsListState()
+            listState = StudioNewsListState(
+                trendingNewsListState = rememberLazyListState(),
+                topHeadlineNewsTabListState = rememberLazyListState(),
+                topHeadlineNewsListState = rememberLazyListState()
+            )
         ),
         onTabItemClick = { _, _ -> },
         onNewsCardClick = {},

@@ -56,7 +56,7 @@ fun StudioPageRoute(
     /* ======================== Ui ======================== */
 
     // List state
-    val newListState = rememberStudioNewsListState(
+    val newListState = StudioNewsListState(
         trendingNewsListState = rememberLazyListState(),
         topHeadlineNewsTabListState = rememberLazyListState(),
         topHeadlineNewsListState = rememberLazyListState()
@@ -153,7 +153,11 @@ private fun StudioPagePreview() {
             currentSelectTab = 0,
             trendingNewsDataState = TrendingNewsDataState.Init,
             topHeadlineNewsDataState = TopHeadlineNewsDataState.Init,
-            listState = rememberStudioNewsListState()
+            listState = StudioNewsListState(
+                trendingNewsListState = rememberLazyListState(),
+                topHeadlineNewsTabListState = rememberLazyListState(),
+                topHeadlineNewsListState = rememberLazyListState()
+            )
         ),
         onNewsTabItemClick = { _, _ -> },
         onNewsCardClick = {},

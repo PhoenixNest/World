@@ -23,7 +23,7 @@
         <!-- Battery Receiver Start -->
         <receiver
             android:name="io.common.services.receiver.PowerConnectionReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
@@ -31,7 +31,7 @@
         </receiver>
         <receiver
             android:name="io.common.services.receiver.BatteryLevelReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BATTERY_CHANGED" />
@@ -42,8 +42,6 @@
 
         <activity
             android:name=".feature.activities.splash.SplashActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,18 +51,14 @@
 
         <activity
             android:name=".feature.activities.intro.IntroActivity"
-            android:exported="false"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.main.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.web.WebActivity"
-            android:exported="false"
             android:theme="@style/Theme.Relic" />
 
         <activity

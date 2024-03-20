@@ -25,7 +25,7 @@ import io.domain.app.AbsBaseActivity
 @OptIn(ExperimentalPermissionsApi::class)
 class IntroActivity : AbsBaseActivity() {
 
-    private val viewModel by lazy {
+    private val introViewModel by lazy {
         ViewModelProvider(this)[IntroViewModel::class.java]
     }
 
@@ -59,14 +59,14 @@ class IntroActivity : AbsBaseActivity() {
     }
 
     private fun checkPermission() {
-        viewModel.getPermissionLiveData().observe(this) { isGranted ->
+        introViewModel.getPermissionLiveData().observe(this) { isGranted ->
             LogUtil.d(TAG, "[Permission] isGranted: $isGranted")
             if (isGranted) onPermissionGranted()
         }
     }
 
     private fun onPermissionGranted() {
-        viewModel.apply {
+        introViewModel.apply {
             updateUserAgreementMarker()
             initRequiredAppComponent(applicationContext)
         }
@@ -92,7 +92,7 @@ class IntroActivity : AbsBaseActivity() {
 
             LaunchedEffect(multiplePermissionsState.allPermissionsGranted) {
                 val isGranted = multiplePermissionsState.allPermissionsGranted
-                viewModel.updatePermissionLiveData(isGranted)
+                introViewModel.updatePermissionLiveData(isGranted)
             }
 
             // Setup immersive mode.

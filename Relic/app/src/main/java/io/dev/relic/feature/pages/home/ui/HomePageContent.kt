@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +17,8 @@ import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.pages.home.HomeFoodRecipesListState
 import io.dev.relic.feature.pages.home.HomeFoodRecipesState
-import io.dev.relic.feature.pages.home.rememberHomeFoodRecipesListState
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
@@ -68,7 +69,7 @@ fun HomePageContent(
                 item { CommonItemDivider() }
                 HomeFoodRecipesTabBar(
                     currentSelectedTab = currentSelectTab,
-                    lazyListState = listState.recommendListState,
+                    lazyListState = listState.recommendTabListState,
                     onTabItemClick = onSelectedFoodRecipesTabItem
                 )
                 item { Spacer(modifier = Modifier.height(16.dp)) }
@@ -95,7 +96,11 @@ private fun HomePageContentPreview() {
             currentSelectTab = 0,
             timeSectionDataState = FoodRecipesDataState.Init,
             recommendDataState = FoodRecipesDataState.Init,
-            listState = rememberHomeFoodRecipesListState()
+            listState = HomeFoodRecipesListState(
+                timeSectionListState = rememberLazyListState(),
+                recommendTabListState = rememberLazyListState(),
+                recommendListState = rememberLazyListState()
+            )
         ),
         onSelectedFoodRecipesTabItem = { _, _ -> },
         onFoodRecipesSeeMoreClick = {},

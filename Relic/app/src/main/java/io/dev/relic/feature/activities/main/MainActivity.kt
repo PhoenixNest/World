@@ -17,10 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
-import io.common.util.LogUtil
-import io.core.datastore.RelicDatastoreCenter.readSyncData
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -80,20 +76,7 @@ class MainActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     override fun initialization(savedInstanceState: Bundle?) {
-        verifyAMapPrivacyAgreement()
-    }
-
-    private fun verifyAMapPrivacyAgreement() {
-        val isShowUserAgreement = readSyncData(KEY_IS_SHOW_USER_AGREEMENT, false)
-        val isAgreeUserPrivacy = readSyncData(KEY_IS_AGREE_USER_PRIVACY, false)
-        LogUtil.d(TAG, "[UserAgreement] 是否同意用户协议: $isShowUserAgreement")
-        LogUtil.d(TAG, "[UserPrivacy] 是够同意用户隐私协议: $isAgreeUserPrivacy")
-
-        // AMapPrivacyCenter.verifyAMapPrivacyAgreement(
-        //     context = RelicApplication.getApplicationContext(),
-        //     isShowUserAgreement = isShowUserAgreement,
-        //     isAgreeUserPrivacy = isAgreeUserPrivacy
-        // )
+        //
     }
 
     /* ======================== Ui ======================== */
