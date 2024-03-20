@@ -2,6 +2,7 @@ package io.dev.relic.feature.function.agent.gemini.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,16 +10,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.dev.relic.R
-import io.dev.relic.feature.function.agent.gemini.ui.widget.AgentAwaitAnswerCell
 
 @Composable
 fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
@@ -36,7 +40,7 @@ fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AnimatedVisibility(visible = isAwaitingAnswer) {
-            AgentAwaitAnswerCell()
+            AgentAwaitAnswerLottie()
             Spacer(modifier = Modifier.height(8.dp))
         }
         Text(
@@ -45,6 +49,27 @@ fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
                 color = mainTextColor,
                 fontFamily = ubuntu
             )
+        )
+    }
+}
+
+@Composable
+private fun AgentAwaitAnswerLottie() {
+    val lottieRes by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.lottie_awaiting_answer)
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(32.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        LottieAnimation(
+            composition = lottieRes,
+            restartOnPlay = true,
+            iterations = Int.MAX_VALUE,
+            alignment = Alignment.Center
         )
     }
 }
