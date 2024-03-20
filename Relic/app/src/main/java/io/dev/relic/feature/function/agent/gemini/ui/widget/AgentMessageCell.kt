@@ -40,6 +40,8 @@ import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 
+private const val IS_SHOW_AVATAR = false
+
 private val startShape = RoundedCornerShape(
     topEnd = 16.dp,
     bottomStart = 16.dp,
@@ -51,8 +53,6 @@ private val endShape = RoundedCornerShape(
     bottomStart = 16.dp,
     bottomEnd = 16.dp
 )
-
-private val isShowGeminiAvatar = false
 
 @Composable
 fun AgentMessageCell(
@@ -109,7 +109,7 @@ fun AgentMessageCell(
                 .align(cellGravity),
             verticalAlignment = Alignment.Top
         ) {
-            if (isShowGeminiAvatar) {
+            if (IS_SHOW_AVATAR) {
                 if (geminiCellContent.roleId == AGENT.roleId
                     || geminiCellContent.roleId == ERROR.roleId
                 ) {
