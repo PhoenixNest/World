@@ -31,7 +31,7 @@ fun NavGraphBuilder.pageHome(
             drawerState = drawerState,
             mainViewModel = mainViewModel,
             geminiAgentViewModel = geminiAgentViewModel,
-            foodReViewModel = foodRecipesViewModel
+            foodRecipesViewModel = foodRecipesViewModel
         )
     }
 }

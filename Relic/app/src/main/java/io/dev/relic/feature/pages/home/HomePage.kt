@@ -30,14 +30,13 @@ fun HomePageRoute(
     drawerState: DrawerState,
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
-    foodReViewModel: FoodRecipesViewModel
+    foodRecipesViewModel: FoodRecipesViewModel
 ) {
 
     /* ======================== Common ======================== */
 
     val context = LocalContext.current
     val localFocusManager = LocalFocusManager.current
-
     val coroutineScope = mainScreenState.coroutineScope
     val navController = mainScreenState.navHostController
 
@@ -47,11 +46,11 @@ fun HomePageRoute(
     val agentSearchContent = geminiAgentViewModel.agentSearchContent
 
     // Time-section Food Recipes
-    val foodRecipesTimeSectionDataState by foodReViewModel.foodRecipesTimeSectionDataStateFlow
+    val foodRecipesTimeSectionDataState by foodRecipesViewModel.foodRecipesTimeSectionDataStateFlow
         .collectAsStateWithLifecycle()
 
     // Recommend Food Recipes
-    val foodRecipesRecommendDataState by foodReViewModel.foodRecipesRecommendDataStateFlow
+    val foodRecipesRecommendDataState by foodRecipesViewModel.foodRecipesRecommendDataStateFlow
         .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
@@ -65,7 +64,7 @@ fun HomePageRoute(
 
     // Data state
     val foodRecipesState = HomeFoodRecipesState(
-        currentSelectTab = foodReViewModel.getSelectedFoodRecipesTab(),
+        currentSelectTab = foodRecipesViewModel.getSelectedFoodRecipesTab(),
         timeSectionDataState = foodRecipesTimeSectionDataState,
         recommendDataState = foodRecipesRecommendDataState,
         listState = foodRecipesListState
@@ -100,7 +99,7 @@ fun HomePageRoute(
         },
         foodRecipesState = foodRecipesState,
         onFoodRecipesTabItemClick = { currentSelectedTab, selectedItem ->
-            foodReViewModel.apply {
+            foodRecipesViewModel.apply {
                 updateSelectedFoodRecipesTab(currentSelectedTab)
                 getRecommendFoodRecipes(
                     queryType = selectedItem,
@@ -115,7 +114,7 @@ fun HomePageRoute(
             val recipeId = it.id ?: UNKNOWN_VALUE_INT
             val recipeTitle = it.title ?: UNKNOWN_VALUE_STRING
             // Fetch the recipe details data.
-            foodReViewModel.getRecipeInformationById(recipeId)
+            foodRecipesViewModel.getRecipeInformationById(recipeId)
             // Then navigate to the details page.
             mainScreenState.navHostController.navigateToFoodRecipeDetailPage(
                 recipeId = recipeId,
@@ -124,12 +123,12 @@ fun HomePageRoute(
         },
         onFoodRecipesTimeSectionRetry = {
             val timeSection = TimeUtil.getCurrentTimeSection()
-            foodReViewModel.getTimeSectionFoodRecipes(timeSection)
+            foodRecipesViewModel.getTimeSectionFoodRecipes(timeSection)
         },
         onFoodRecipesRetry = {
             val foodRecipesCategories = FoodRecipesCategories.entries.toList()
-            val currentTab = foodReViewModel.getSelectedFoodRecipesTab()
-            foodReViewModel.getRecommendFoodRecipes(
+            val currentTab = foodRecipesViewModel.getSelectedFoodRecipesTab()
+            foodRecipesViewModel.getRecommendFoodRecipes(
                 queryType = foodRecipesCategories[currentTab].name.lowercase(),
                 offset = 0
             )

@@ -71,11 +71,11 @@ fun MainFeatureNavHost(
             geminiAgentViewModel = geminiAgentViewModel,
             onBackClick = navHostController::popBackStack
         )
-        pageNewsDetail(
-            onBackClick = navHostController::popBackStack
-        )
         pageFoodRecipeDetail(
             foodRecipesViewModel = foodRecipesViewModel,
+            onBackClick = navHostController::popBackStack
+        )
+        pageNewsDetail(
             onBackClick = navHostController::popBackStack
         )
     }
