@@ -55,7 +55,8 @@
 
         <activity
             android:name=".feature.activities.main.MainActivity"
-            android:theme="@style/Theme.Relic" />
+            android:theme="@style/Theme.Relic"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".feature.activities.web.WebActivity"
