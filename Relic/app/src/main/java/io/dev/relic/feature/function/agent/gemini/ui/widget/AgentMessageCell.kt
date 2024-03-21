@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.ai.client.generativeai.type.Part
 import com.google.ai.client.generativeai.type.asTextOrNull
+import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiHybridCell
 import io.agent.gemini.model.GeminiTextCell
@@ -124,12 +124,8 @@ fun AgentMessageCell(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(
-                    text = cellContent
-                    /*messageFormatter(
-                        text = cellContent,
-                        primary = isAgentCell
-                    )*/,
+                MarkdownText(
+                    markdown = cellContent,
                     modifier = Modifier
                         .background(
                             color = cellBackgroundColor,

@@ -176,4 +176,7 @@ dependencies {
     // LeakCanary
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation(libs.leakcanary.android)
+
+    // Compose Markdown
+    implementation(libs.compose.markdown)
 }
