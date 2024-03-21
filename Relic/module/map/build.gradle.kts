@@ -68,8 +68,5 @@ dependencies {
     /* ======================== Third-party Extension ======================== */
 
     // TomTom
-    api(libs.tomtom.map.display) {
-        exclude(group = "androidx.compose", module = "androidx")
-    }
-    api(libs.tomtom.map.provider.android)
+    api(libs.tomtom.map.display)
 }

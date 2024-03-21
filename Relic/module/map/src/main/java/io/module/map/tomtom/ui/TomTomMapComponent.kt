@@ -1,5 +1,6 @@
 package io.module.map.tomtom.ui
 
+// import io.module.map.tomtom.TomTomMapConfig.MapLocationProviderConfig.defaultLocationProvider
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +36,7 @@ import io.module.map.tomtom.kit.lifecycleObserver
  * */
 @Composable
 fun TomTomMapComponent(
-    onLocationUpdate: (location: GeoLocation) -> Unit,
+    onLocationUpdate: (location: GeoLocation?) -> Unit,
     modifier: Modifier = Modifier,
     mapOptionsFactory: () -> MapOptions = { MapOptions(TomTomMapConfig.mapDevKey) },
     contentDescription: String? = null,
@@ -105,13 +106,12 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
 @Composable
 private fun TomTomMapLocationProviderBinder(
     mapView: MapView,
-    onLocationUpdate: (location: GeoLocation) -> Unit
+    onLocationUpdate: (location: GeoLocation?) -> Unit
 ) {
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         val locationProvider = defaultLocationProvider(
-            context = context,
             onLocationUpdate = onLocationUpdate
         )
 

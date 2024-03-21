@@ -141,6 +141,7 @@ fun MainScreen(
 
             ModalDrawer(
                 drawerState = drawerState,
+                gesturesEnabled = mainScreenState.isEnableDrawerGesture,
                 drawerContent = {
                     MainDrawer(
                         weatherDataState = weatherState,

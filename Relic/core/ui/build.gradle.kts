@@ -45,6 +45,8 @@ dependencies {
     // Legacy
     api(libs.material)
     api(libs.androidx.recyclerview)
+    api(libs.constraintlayout)
+    api(libs.androidx.cardview)
 
     // Compose Ui
     val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.02.02")
@@ -72,12 +74,8 @@ dependencies {
     api(libs.androidx.activity.compose)
     // Optional - Integration with ViewModels
     api(libs.androidx.lifecycle.viewmodel.compose)
-
-    // ConstraintLayout
-    api(libs.constraintlayout)
-
-    // CardView
-    api(libs.androidx.cardview)
+    // Optional - Compose View Binding
+    api("androidx.compose.ui:ui-viewbinding:1.6.4")
 
     /* ======================== Third-party Extension ======================== */
 

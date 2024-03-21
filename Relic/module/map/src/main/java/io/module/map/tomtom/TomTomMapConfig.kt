@@ -1,12 +1,9 @@
 package io.module.map.tomtom
 
-import android.content.Context
 import android.net.Uri
-import com.tomtom.quantity.Distance
 import com.tomtom.sdk.location.GeoLocation
+import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.OnLocationUpdateListener
-import com.tomtom.sdk.location.android.AndroidLocationProvider
-import com.tomtom.sdk.location.android.AndroidLocationProviderConfig
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.common.screen.Padding
@@ -16,7 +13,6 @@ import com.tomtom.sdk.map.display.style.StyleDescriptor
 import com.tomtom.sdk.map.display.style.StyleMode
 import io.common.RelicResCenter
 import io.module.map.R
-import kotlin.time.Duration.Companion.milliseconds
 
 object TomTomMapConfig {
 
@@ -46,14 +42,32 @@ object TomTomMapConfig {
          * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
          * */
         fun defaultLocationProvider(
-            context: Context,
-            config: AndroidLocationProviderConfig = defaultLocationProviderConfig(),
-            onLocationUpdate: (location: GeoLocation) -> Unit
-        ): AndroidLocationProvider {
-            return AndroidLocationProvider(
-                context = context,
-                config = config
-            ).also { provider ->
+            onLocationUpdate: (location: GeoLocation?) -> Unit
+        ): LocationProvider {
+            return object : LocationProvider {
+
+                override val lastKnownLocation: GeoLocation? = null
+
+                override fun addOnLocationUpdateListener(listener: OnLocationUpdateListener) {
+                    //
+                }
+
+                override fun close() {
+                    //
+                }
+
+                override fun disable() {
+                    //
+                }
+
+                override fun enable() {
+                    //
+                }
+
+                override fun removeOnLocationUpdateListener(listener: OnLocationUpdateListener) {
+                    //
+                }
+            }.also { provider ->
                 registerLocationUpdateListener(
                     provider = provider,
                     onLocationUpdate = onLocationUpdate
@@ -64,7 +78,7 @@ object TomTomMapConfig {
         }
 
         private fun registerLocationUpdateListener(
-            provider: AndroidLocationProvider,
+            provider: LocationProvider,
             onLocationUpdate: (location: GeoLocation) -> Unit
         ): OnLocationUpdateListener {
             val locationUpdateListener = OnLocationUpdateListener { location ->
@@ -77,17 +91,10 @@ object TomTomMapConfig {
         }
 
         private fun unregisterLocationUpdateListener(
-            provider: AndroidLocationProvider,
+            provider: LocationProvider,
             listener: OnLocationUpdateListener
         ) {
             provider.removeOnLocationUpdateListener(listener)
-        }
-
-        private fun defaultLocationProviderConfig(): AndroidLocationProviderConfig {
-            return AndroidLocationProviderConfig(
-                minTimeInterval = 250L.milliseconds,
-                minDistance = Distance.meters(20.0)
-            )
         }
     }
 

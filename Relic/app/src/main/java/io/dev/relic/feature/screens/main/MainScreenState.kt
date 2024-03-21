@@ -89,6 +89,9 @@ class MainScreenState(
     val shouldShowRailBar
         get() = !shouldShowBottomBar
 
+    val isEnableDrawerGesture
+        @Composable get() = (currentTopLevelDestination == MainScreenTopLevelDestination.HOME)
+
     /**
      * UI logic for navigating to a top level destination in the app. Top level destinations have
      * only one copy of the destination of the back stack, and save and restore state whenever you
