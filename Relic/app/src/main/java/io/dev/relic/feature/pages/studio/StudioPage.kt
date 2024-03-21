@@ -39,18 +39,17 @@ fun StudioPageRoute(
     /* ======================== Common ======================== */
 
     val context = LocalContext.current
+    val navHostController = mainScreenState.navHostController
     val coroutineScope = mainScreenState.coroutineScope
 
     /* ======================== Field ======================== */
 
     // Trending
-    val trendingNewsDataState by newsViewModel
-        .trendingNewsDataStateFlow
+    val trendingNewsDataState by newsViewModel.trendingNewsDataStateFlow
         .collectAsStateWithLifecycle()
 
     // Top-headline
-    val topHeadlineNewsDataState by newsViewModel
-        .topHeadlineNewsDataStateFlow
+    val topHeadlineNewsDataState by newsViewModel.topHeadlineNewsDataStateFlow
         .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
@@ -88,7 +87,7 @@ fun StudioPageRoute(
             }
         },
         onNewsCardClick = {
-            mainScreenState.navHostController.navigateToNewsDetailPage(
+            navHostController.navigateToNewsDetailPage(
                 title = it.title,
                 contUrl = it.contentUrl
             )
