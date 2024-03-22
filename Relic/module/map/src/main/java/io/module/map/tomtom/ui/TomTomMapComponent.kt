@@ -1,6 +1,5 @@
 package io.module.map.tomtom.ui
 
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,6 +13,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
+import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapView
@@ -34,7 +34,8 @@ private const val TAG = "TomTomMapComponent"
 fun TomTomMapComponent(
     modifier: Modifier = Modifier,
     mapOptions: MapOptions = TomTomMapConfig.mapOptions,
-    locationMarkerOptions: LocationMarkerOptions = TomTomMapConfig.locationMarkerOptions
+    markerOptions: LocationMarkerOptions = TomTomMapConfig.locationMarkerOptions,
+    locationProvider: LocationProvider? = TomTomMapConfig.getLocationProvider()
 ) {
 
     if (LocalInspectionMode.current) {
@@ -48,12 +49,7 @@ fun TomTomMapComponent(
         MapView(
             context = context,
             mapOptions = mapOptions
-        ).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        )
     }
 
     AndroidView(
@@ -62,10 +58,10 @@ fun TomTomMapComponent(
     )
 
     TomTomMapLifecycleBinder(mapView)
-    TomTomMapLocationProviderBinder(mapView)
-    TomTomMapLocationMarkerBinder(
+    TomTomMapLocationBinder(
         mapView = mapView,
-        markerOptions = locationMarkerOptions
+        markerOptions = markerOptions,
+        locationProvider = locationProvider
     )
 }
 
@@ -87,6 +83,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         val mapComponentCallback = mapView.componentCallback()
         val mapLifecycleObserver = mapView.lifecycleObserver(previousMapState)
 
+        LogUtil.d(TAG, "[Lifecycle] Binds the lifecycle with mapView")
         lifecycle.addObserver(mapLifecycleObserver)
         context.registerComponentCallbacks(mapComponentCallback)
 
@@ -106,22 +103,15 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
 }
 
 @Composable
-private fun TomTomMapLocationProviderBinder(mapView: MapView) {
-    LaunchedEffect(Unit) {
-        mapView.getMapAsync {
-            TomTomMapConfig.registerLocationProvider(it)
-        }
-    }
-}
-
-@Composable
-private fun TomTomMapLocationMarkerBinder(
+private fun TomTomMapLocationBinder(
     mapView: MapView,
-    markerOptions: LocationMarkerOptions
+    markerOptions: LocationMarkerOptions,
+    locationProvider: LocationProvider?
 ) {
     LaunchedEffect(Unit) {
-        mapView.getMapAsync {
-            it.enableLocationMarker(markerOptions)
+        mapView.getMapAsync { tomTomMap ->
+            tomTomMap.setLocationProvider(locationProvider)
+            tomTomMap.enableLocationMarker(markerOptions)
         }
     }
 }

@@ -1,14 +1,10 @@
 package io.module.map.tomtom
 
 import android.net.Uri
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import com.tomtom.sdk.location.GeoLocation
 import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.map.display.MapOptions
-import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.common.screen.Padding
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
@@ -48,20 +44,22 @@ object TomTomMapConfig {
     /**
      * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
      * */
-    private var locationProvider: LocationProvider? by mutableStateOf(null)
+    private var locationProvider: LocationProvider? = null
 
     /**
      * [TomTomMap • Location Provider • OnLocationUpdateListener](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
      * */
-    private var onLocationUpdateListener: OnLocationUpdateListener? by mutableStateOf(null)
+    private var onLocationUpdateListener: OnLocationUpdateListener? = null
 
-    fun registerLocationProvider(tomTomMap: TomTomMap) {
+    fun getLocationProvider(): LocationProvider? {
         if (locationProvider != null) {
             LogUtil.w(TAG, "[Location Provider] Already registered the location provider.")
-            return
+            return locationProvider
         }
 
+        LogUtil.d(TAG, "[Location Provider] Register the location provider.")
         locationProvider = object : LocationProvider {
+
             override val lastKnownLocation: GeoLocation? = null
 
             override fun addOnLocationUpdateListener(listener: OnLocationUpdateListener) {
@@ -91,17 +89,18 @@ object TomTomMapConfig {
             }
         }
 
-        locationProvider?.enable()
-        tomTomMap.setLocationProvider(locationProvider)
+        return locationProvider
     }
 
     fun registerOnLocationUpdateListener(provider: LocationProvider) {
+        LogUtil.d(TAG, "[Location Update Listener] Register the location provider.")
         onLocationUpdateListener?.let {
             provider.addOnLocationUpdateListener(it)
         }
     }
 
     fun unregisterOnLocationUpdateListener(provider: LocationProvider) {
+        LogUtil.d(TAG, "[Location Update Listener] Register the location provider.")
         onLocationUpdateListener?.let {
             provider.removeOnLocationUpdateListener(it)
         }
