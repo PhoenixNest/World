@@ -1,6 +1,5 @@
 package io.dev.relic.feature.pages.home
 
-import androidx.compose.material.DrawerState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -20,7 +19,6 @@ fun NavController.navigateToHomePage(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.pageHome(
     mainScreenState: MainScreenState,
-    drawerState: DrawerState,
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel
@@ -28,7 +26,6 @@ fun NavGraphBuilder.pageHome(
     composable(route = HOME) {
         HomePageRoute(
             mainScreenState = mainScreenState,
-            drawerState = drawerState,
             mainViewModel = mainViewModel,
             geminiAgentViewModel = geminiAgentViewModel,
             foodRecipesViewModel = foodRecipesViewModel

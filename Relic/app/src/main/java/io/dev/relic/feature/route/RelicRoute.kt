@@ -6,6 +6,7 @@ object RelicRoute {
      * Main Unit
      * */
     const val HOME = "route_home"
+    const val EXPLORE = "route_explore"
     const val STUDIO = "route_studio"
     const val AGENT_CHAT = "route_agent_chat"
     const val SETTINGS = "route_settings"

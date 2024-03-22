@@ -1,6 +1,9 @@
 package io.dev.relic.feature.screens.main
 
 import android.os.Bundle
+import androidx.compose.material.DrawerState
+import androidx.compose.material.DrawerValue
+import androidx.compose.material.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -14,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
+import io.dev.relic.feature.pages.explore.navigateToExplorePage
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.pages.studio.navigateToStudioPage
 import io.dev.relic.feature.route.RelicRoute
@@ -28,14 +32,16 @@ fun rememberMainScreenState(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navHostController: NavHostController = rememberNavController()
+    navHostController: NavHostController = rememberNavController(),
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 ): MainScreenState {
     return remember(
         keys = arrayOf(
             windowSizeClass,
             networkMonitor,
             coroutineScope,
-            navHostController
+            navHostController,
+            drawerState
         )
     ) {
         MainScreenState(
@@ -43,36 +49,56 @@ fun rememberMainScreenState(
             windowSizeClass = windowSizeClass,
             networkMonitor = networkMonitor,
             coroutineScope = coroutineScope,
-            navHostController = navHostController
+            navHostController = navHostController,
+            drawerState = drawerState
         )
     }
 }
 
+/**
+ * Indicate the current state of main screen.
+ *
+ * @param saveInstanceState
+ * @param windowSizeClass
+ * @param networkMonitor
+ * @param navHostController
+ * @param drawerState
+ * */
 @Stable
 class MainScreenState(
     val saveInstanceState: Bundle?,
     val windowSizeClass: WindowSizeClass,
     val networkMonitor: NetworkMonitor,
     val coroutineScope: CoroutineScope,
-    val navHostController: NavHostController
+    val navHostController: NavHostController,
+    val drawerState: DrawerState
 ) {
 
+    /**
+     * Indicate the current network status of device.
+     * */
     val currentNetworkStatus = networkMonitor.observe().stateIn(
         scope = coroutineScope,
         started = SharingStarted.WhileSubscribed(5 * 1000),
         initialValue = NetworkStatus.AVAILABLE
     )
 
+    /**
+     * Indicate the current destination of nav host.
+     * */
     val currentDestination
         @Composable get() = navHostController
             .currentBackStackEntryAsState()
             .value
             ?.destination
 
+    /**
+     * Indicate the current destination of nav host.
+     * */
     val currentTopLevelDestination
         @Composable get() = when (currentDestination?.route) {
             RelicRoute.HOME -> MainScreenTopLevelDestination.HOME
-            // RelicRoute.EXPLORE -> MainScreenTopLevelDestination.EXPLORE
+            RelicRoute.EXPLORE -> MainScreenTopLevelDestination.EXPLORE
             RelicRoute.STUDIO -> MainScreenTopLevelDestination.STUDIO
             else -> null
         }
@@ -83,12 +109,21 @@ class MainScreenState(
      */
     val topLevelDestinations = MainScreenTopLevelDestination.entries
 
+    /**
+     * Check the current screen size and toggle the visibility of bottom bar.
+     * */
     val shouldShowBottomBar
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
+    /**
+     * Check the current screen size and toggle the visibility of rail bar.
+     * */
     val shouldShowRailBar
         get() = !shouldShowBottomBar
 
+    /**
+     * Check the current destination of nav host and toggle the gesture of main screen drawer.
+     * */
     val isEnableDrawerGesture
         @Composable get() = (currentTopLevelDestination == MainScreenTopLevelDestination.HOME)
 
@@ -115,9 +150,9 @@ class MainScreenState(
         }
 
         when (topLevelDestination) {
-            MainScreenTopLevelDestination.HOME -> navHostController.navigateToHomePage(navOptions = topLevelNavOptions)
-            // MainScreenTopLevelDestination.EXPLORE -> navHostController.navigateToExplorePage(navOptions = topLevelNavOptions)
-            MainScreenTopLevelDestination.STUDIO -> navHostController.navigateToStudioPage(navOptions = topLevelNavOptions)
+            MainScreenTopLevelDestination.HOME -> navHostController.navigateToHomePage(topLevelNavOptions)
+            MainScreenTopLevelDestination.STUDIO -> navHostController.navigateToStudioPage(topLevelNavOptions)
+            MainScreenTopLevelDestination.EXPLORE -> navHostController.navigateToExplorePage(topLevelNavOptions)
         }
     }
 }

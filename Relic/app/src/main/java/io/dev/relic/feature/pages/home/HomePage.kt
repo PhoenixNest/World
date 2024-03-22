@@ -1,7 +1,6 @@
 package io.dev.relic.feature.pages.home
 
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -10,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
+import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -27,7 +27,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomePageRoute(
     mainScreenState: MainScreenState,
-    drawerState: DrawerState,
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel
@@ -55,6 +54,8 @@ fun HomePageRoute(
 
     /* ======================== Ui ======================== */
 
+    val drawerState = mainScreenState.drawerState
+
     // List state
     val foodRecipesListState = HomeFoodRecipesListState(
         timeSectionListState = rememberLazyListState(),
@@ -74,10 +75,12 @@ fun HomePageRoute(
         onOpenDrawer = {
             coroutineScope.launch {
                 if (drawerState.isOpen || drawerState.isAnimationRunning) {
+                    LogUtil.d("MainScreenDrawer", "[Drawer] Can't open drawer")
                     return@launch
                 }
 
                 if (drawerState.isClosed) {
+                    LogUtil.d("MainScreenDrawer", "[Drawer] Open drawer")
                     drawerState.open()
                 }
             }

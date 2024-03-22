@@ -20,6 +20,7 @@ import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
+import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.RelicLifecycleObserver
 import io.domain.app.AbsBaseActivity
 
@@ -66,7 +67,7 @@ class SplashActivity : AbsBaseActivity() {
 
     override fun initialization(savedInstanceState: Bundle?) {
         splashViewModel.execute(
-            context = this,
+            context = RelicApplication.getApplicationContext(),
             onSplashProcessEnd = {
                 LogUtil.d(TAG, "[Splash-Process] Finished, start main logic.")
                 checkAndNavigate().also { finish() }

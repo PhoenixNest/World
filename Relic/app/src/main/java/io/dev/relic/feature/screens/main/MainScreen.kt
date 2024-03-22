@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.common.util.LogUtil
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.core.ui.theme.mainThemeColor
@@ -38,13 +35,16 @@ import io.dev.relic.feature.screens.main.widget.MainRailAppBar
 
 @Composable
 fun MainScreen(
+    // Common
     savedInstanceState: Bundle?,
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
+    // Data & ViewModel
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel,
     newsViewModel: NewsViewModel,
+    // Main Screen State
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -57,15 +57,6 @@ fun MainScreen(
     val snackBarHostState = remember {
         SnackbarHostState()
     }
-
-    // Current state of drawer.
-    val drawerState = rememberDrawerState(
-        initialValue = DrawerValue.Closed,
-        confirmStateChange = { drawerValue ->
-            LogUtil.d("Drawer", "[Drawer] State: ${drawerValue.name}")
-            true
-        }
-    )
 
     // Check if the current can include the bottom bar.
     val isShowBottomBar = (mainScreenState.shouldShowBottomBar)
@@ -140,7 +131,7 @@ fun MainScreen(
             }
 
             ModalDrawer(
-                drawerState = drawerState,
+                drawerState = mainScreenState.drawerState,
                 gesturesEnabled = mainScreenState.isEnableDrawerGesture,
                 drawerContent = {
                     MainDrawer(
@@ -157,7 +148,6 @@ fun MainScreen(
                     Box(modifier = Modifier.fillMaxSize()) {
                         MainFeatureNavHost(
                             mainScreenState = mainScreenState,
-                            drawerState = drawerState,
                             navHostController = mainScreenState.navHostController,
                             mainViewModel = mainViewModel,
                             geminiAgentViewModel = geminiAgentViewModel,
