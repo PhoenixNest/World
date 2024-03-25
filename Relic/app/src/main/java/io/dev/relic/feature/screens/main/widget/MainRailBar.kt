@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -47,18 +48,25 @@ fun MainRailAppBar(
             space = 8.dp,
             alignment = Alignment.Top
         ),
-
+        horizontalAlignment = Alignment.Start
     ) {
-        destinations.forEach { destination: MainScreenTopLevelDestination ->
-            MainRailBarItem(
-                isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination),
-                selectedIconResId = destination.selectedIconResId,
-                unselectedIconResId = destination.unselectedIconResId,
-                labelResId = destination.labelResId
-            ) {
-                LogUtil.d("RelicRailBar", "[RailItem] onNavigateTo -> [${destination.name}]")
-                onNavigateToDestination(destination)
+        destinations.forEach {
+            val itemDecorationModifier = if (it.ordinal == 0) {
+                Modifier.statusBarsPadding()
+            } else {
+                Modifier
             }
+            MainRailBarItem(
+                isSelected = currentDestination.isTopLevelDestinationInHierarchy(it),
+                selectedIconResId = it.selectedIconResId,
+                unselectedIconResId = it.unselectedIconResId,
+                labelResId = it.labelResId,
+                onItemClick = {
+                    LogUtil.d("RelicRailBar", "[RailItem] onNavigateTo -> [${it.name}]")
+                    onNavigateToDestination(it)
+                },
+                modifier = itemDecorationModifier
+            )
         }
     }
 }
@@ -69,7 +77,8 @@ private fun MainRailBarItem(
     @DrawableRes selectedIconResId: Int,
     @DrawableRes unselectedIconResId: Int,
     @StringRes labelResId: Int,
-    onItemClick: () -> Unit
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val iconSource = painterResource(
         id = if (isSelected) {
@@ -81,6 +90,7 @@ private fun MainRailBarItem(
 
     TextButton(
         onClick = onItemClick,
+        modifier = modifier,
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = Color.Transparent,
             contentColor = Color.LightGray

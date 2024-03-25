@@ -1,8 +1,8 @@
 package io.dev.relic.feature.screens.main
 
 import android.os.Bundle
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -116,11 +116,13 @@ fun MainScreen(
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState)
         }
-    ) { paddingValues: PaddingValues ->
+    ) { paddingValues ->
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(paddingValues),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.Top
         ) {
             if (mainScreenState.shouldShowRailBar) {
                 MainRailAppBar(
