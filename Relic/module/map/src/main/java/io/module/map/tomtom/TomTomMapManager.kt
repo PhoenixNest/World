@@ -15,7 +15,7 @@ import io.common.RelicResCenter
 import io.common.util.LogUtil
 import io.module.map.R
 
-object TomTomMapConfig {
+object TomTomMapManager {
 
     private const val TAG = "TomTomMapConfig"
 
@@ -24,7 +24,30 @@ object TomTomMapConfig {
     /**
      * [TomTomMap • MapOptions](https://developer.tomtom.com/assets/downloads/tomtom-sdks/android/api-reference/0.33.1/maps/display-common/com.tomtom.sdk.map.display/-map-options/index.html)
      * */
-    val mapOptions = MapOptions(
+    var mapOptions: MapOptions? = null
+
+    /**
+     * [TomTomMap • Location Marker](https://developer.tomtom.com/maps/android/guides/map-display/markers)
+     * */
+    var locationMarkerOptions: LocationMarkerOptions? = null
+
+    /**
+     * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
+     * */
+    var locationProvider: LocationProvider? = null
+
+    /**
+     * [TomTomMap • Location Provider • OnLocationUpdateListener](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
+     * */
+    private var onLocationUpdateListener: OnLocationUpdateListener? = null
+
+    fun initTomTomMapComponent() {
+        initMapOptions()
+        initLocationMarkerOptions()
+        initLocationProvider()
+    }
+
+    val defaultMapOptions = MapOptions(
         mapKey = mapDevKey,
         cameraOptions = CameraOptions(),
         padding = Padding(),
@@ -34,27 +57,41 @@ object TomTomMapConfig {
         renderToTexture = true
     )
 
-    /**
-     * [TomTomMap • Location Marker](https://developer.tomtom.com/maps/android/guides/map-display/markers)
-     * */
-    val locationMarkerOptions = LocationMarkerOptions(
+    val defaultLocationMarkerOptions = LocationMarkerOptions(
         type = LocationMarkerOptions.Type.Pointer
     )
 
-    /**
-     * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
-     * */
-    private var locationProvider: LocationProvider? = null
+    private fun initMapOptions(
+        newOptions: MapOptions? = null
+    ): MapOptions? {
+        if (mapOptions != null) {
+            LogUtil.w(TAG, "[Map options] Already created.")
+            return mapOptions
+        }
 
-    /**
-     * [TomTomMap • Location Provider • OnLocationUpdateListener](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
-     * */
-    private var onLocationUpdateListener: OnLocationUpdateListener? = null
+        LogUtil.d(TAG, "[Map options] Create new options config for map.")
+        mapOptions = newOptions ?: defaultMapOptions
+        return mapOptions
+    }
 
-    fun getLocationProvider(): LocationProvider? {
+    private fun initLocationMarkerOptions(
+        newOptions: LocationMarkerOptions? = null
+    ): LocationMarkerOptions? {
+        if (locationMarkerOptions != null) {
+            LogUtil.w(TAG, "[Location Marker Options] Already created.")
+            return locationMarkerOptions
+        }
+
+        LogUtil.d(TAG, "[Location Marker Options] Create new options config for map marker.")
+        locationMarkerOptions = newOptions ?: defaultLocationMarkerOptions
+
+        return locationMarkerOptions
+    }
+
+    private fun initLocationProvider() {
         if (locationProvider != null) {
-            LogUtil.w(TAG, "[Location Provider] Already registered the location provider.")
-            return locationProvider
+            LogUtil.w(TAG, "[Location Provider] Already registered.")
+            return
         }
 
         LogUtil.d(TAG, "[Location Provider] Register the location provider.")
@@ -88,18 +125,16 @@ object TomTomMapConfig {
                 LogUtil.w(TAG, "[Location Provider] removeOnLocationUpdateListener")
             }
         }
-
-        return locationProvider
     }
 
-    fun registerOnLocationUpdateListener(provider: LocationProvider) {
+    private fun registerOnLocationUpdateListener(provider: LocationProvider) {
         LogUtil.d(TAG, "[Location Update Listener] Register the location provider.")
         onLocationUpdateListener?.let {
             provider.addOnLocationUpdateListener(it)
         }
     }
 
-    fun unregisterOnLocationUpdateListener(provider: LocationProvider) {
+    private fun unregisterOnLocationUpdateListener(provider: LocationProvider) {
         LogUtil.d(TAG, "[Location Update Listener] Register the location provider.")
         onLocationUpdateListener?.let {
             provider.removeOnLocationUpdateListener(it)

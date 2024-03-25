@@ -2,6 +2,7 @@ package io.dev.relic.global
 
 import android.content.Context
 import io.module.ad.admob.AdmobAdManager
+import io.module.map.tomtom.TomTomMapManager
 
 object RelicSdkManager {
 
@@ -10,6 +11,7 @@ object RelicSdkManager {
      * */
     fun initSdk(context: Context) {
         initAdmob(context)
+        initMapComponent()
     }
 
     /**
@@ -19,6 +21,13 @@ object RelicSdkManager {
      * */
     private fun initAdmob(context: Context) {
         AdmobAdManager.init(context)
+    }
+
+    /**
+     * Initialize the map component.
+     * */
+    private fun initMapComponent() {
+        TomTomMapManager.initTomTomMapComponent()
     }
 
 }

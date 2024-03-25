@@ -18,7 +18,8 @@ import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapView
 import io.common.util.LogUtil
-import io.module.map.tomtom.TomTomMapConfig
+import io.module.map.tomtom.TomTomMapManager.defaultLocationMarkerOptions
+import io.module.map.tomtom.TomTomMapManager.defaultMapOptions
 import io.module.map.tomtom.kit.componentCallback
 import io.module.map.tomtom.kit.lifecycleObserver
 
@@ -33,13 +34,13 @@ private const val TAG = "TomTomMapComponent"
 @Composable
 fun TomTomMapComponent(
     modifier: Modifier = Modifier,
-    mapOptions: MapOptions = TomTomMapConfig.mapOptions,
-    markerOptions: LocationMarkerOptions = TomTomMapConfig.locationMarkerOptions,
-    locationProvider: LocationProvider? = TomTomMapConfig.getLocationProvider()
+    mapOptions: MapOptions? = defaultMapOptions,
+    markerOptions: LocationMarkerOptions? = defaultLocationMarkerOptions,
+    locationProvider: LocationProvider? = null
 ) {
 
     if (LocalInspectionMode.current) {
-        LogUtil.e(TAG, "[Compose] Inspection Mode, skip map rending")
+        LogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
         Box(modifier = modifier)
         return
     }
@@ -48,7 +49,7 @@ fun TomTomMapComponent(
     val mapView = remember {
         MapView(
             context = context,
-            mapOptions = mapOptions
+            mapOptions = mapOptions ?: defaultMapOptions
         )
     }
 
@@ -105,13 +106,13 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
 @Composable
 private fun TomTomMapLocationBinder(
     mapView: MapView,
-    markerOptions: LocationMarkerOptions,
+    markerOptions: LocationMarkerOptions?,
     locationProvider: LocationProvider?
 ) {
     LaunchedEffect(Unit) {
         mapView.getMapAsync { tomTomMap ->
             tomTomMap.setLocationProvider(locationProvider)
-            tomTomMap.enableLocationMarker(markerOptions)
+            tomTomMap.enableLocationMarker(markerOptions ?: defaultLocationMarkerOptions)
         }
     }
 }
