@@ -13,8 +13,18 @@ import androidx.lifecycle.LifecycleObserver
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.tomtom.TomTomMapApplier
+import kotlinx.coroutines.awaitCancellation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+suspend inline fun disposingComposition(factory: () -> Composition) {
+    val composition = factory()
+    try {
+        awaitCancellation()
+    } finally {
+        composition.dispose()
+    }
+}
 
 suspend inline fun MapView.awaitMap(): TomTomMap {
     return suspendCoroutine { continuation ->

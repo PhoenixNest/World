@@ -7,37 +7,35 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle.Event.ON_CREATE
-import com.tomtom.sdk.location.LocationProvider
-import com.tomtom.sdk.map.display.MapOptions
-import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapView
 import io.common.util.LogUtil
 import io.module.map.tomtom.TomTomMapManager.defaultLocationMarkerOptions
+import io.module.map.tomtom.TomTomMapManager.defaultLocationProvider
 import io.module.map.tomtom.TomTomMapManager.defaultMapOptions
+import io.module.map.tomtom.TomTomMapManager.locationMarkerOptions
+import io.module.map.tomtom.TomTomMapManager.locationProvider
+import io.module.map.tomtom.TomTomMapManager.mapOptions
 import io.module.map.tomtom.kit.componentCallback
+import io.module.map.tomtom.kit.disposingComposition
 import io.module.map.tomtom.kit.lifecycleObserver
+import io.module.map.tomtom.kit.newComposition
 
 private const val TAG = "TomTomMapComponent"
 
 /**
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
  *
- * @param mapOptions
  * @param modifier
  * */
 @Composable
-fun TomTomMapComponent(
-    modifier: Modifier = Modifier,
-    mapOptions: MapOptions? = defaultMapOptions,
-    markerOptions: LocationMarkerOptions? = defaultLocationMarkerOptions,
-    locationProvider: LocationProvider? = null
-) {
+fun TomTomMapComponent(modifier: Modifier = Modifier) {
 
     if (LocalInspectionMode.current) {
         LogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
@@ -59,11 +57,20 @@ fun TomTomMapComponent(
     )
 
     TomTomMapLifecycleBinder(mapView)
-    TomTomMapLocationBinder(
-        mapView = mapView,
-        markerOptions = markerOptions,
-        locationProvider = locationProvider
-    )
+
+    val parentComposition = rememberCompositionContext()
+    LaunchedEffect(Unit) {
+        disposingComposition {
+            mapView.newComposition(parentComposition) {
+                mapView.getMapAsync {
+                    val provider = locationProvider ?: defaultLocationProvider
+                    val options = locationMarkerOptions ?: defaultLocationMarkerOptions
+                    it.setLocationProvider(provider)
+                    it.enableLocationMarker(options)
+                }
+            }
+        }
+    }
 }
 
 /* ======================== Util ======================== */
@@ -99,20 +106,6 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
             // Avoid OOM
             mapView.onDestroy()
             mapView.removeAllViews()
-        }
-    }
-}
-
-@Composable
-private fun TomTomMapLocationBinder(
-    mapView: MapView,
-    markerOptions: LocationMarkerOptions?,
-    locationProvider: LocationProvider?
-) {
-    LaunchedEffect(Unit) {
-        mapView.getMapAsync { tomTomMap ->
-            tomTomMap.setLocationProvider(locationProvider)
-            tomTomMap.enableLocationMarker(markerOptions ?: defaultLocationMarkerOptions)
         }
     }
 }
