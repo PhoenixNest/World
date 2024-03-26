@@ -45,9 +45,6 @@ dependencies {
     // Common Module
     api(project(":common"))
 
-    // Map Module
-    implementation(project(":module:map"))
-
     /* ======================== Google Official Extension ======================== */
 
     // Hilt

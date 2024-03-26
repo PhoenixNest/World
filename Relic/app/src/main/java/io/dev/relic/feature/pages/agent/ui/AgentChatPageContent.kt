@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
-import io.agent.gemini.util.GeminiChatRole
+import io.agent.gemini.utils.GeminiChatRole
 import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor

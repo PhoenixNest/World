@@ -1,7 +1,7 @@
 package io.agent.gemini.model
 
 import com.google.ai.client.generativeai.type.Content
-import io.agent.gemini.util.GeminiChatCellType
+import io.agent.gemini.utils.GeminiChatCellType
 
 class GeminiHybridCell(
     role: Int,

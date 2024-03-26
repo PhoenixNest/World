@@ -5,17 +5,8 @@ private val localProperties = gradleLocalProperties(rootDir)
 private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY") ?: "-1"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
-
-    // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
-
-    // Parcelize Models
-    id("kotlin-parcelize")
-
-    // Hilt
-    alias(libs.plugins.hiltAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -36,26 +27,22 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
 
-    /* ======================== Module ======================== */
-
-    implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:ui"))
-
-    // Common Module
-    implementation(project(":common"))
-
     /* ======================== Google Official Extension ======================== */
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
 
     // Google AI client SDK for Android
-    api(libs.gemini.ai)
+    api("com.google.ai.client.generativeai:generativeai:0.2.2")
 
 }

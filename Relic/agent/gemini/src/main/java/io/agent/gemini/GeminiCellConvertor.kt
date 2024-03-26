@@ -1,8 +1,8 @@
 package io.agent.gemini
 
-import io.agent.gemini.util.GeminiChatCellType.HYBRID
-import io.agent.gemini.util.GeminiChatCellType.IMAGE
-import io.agent.gemini.util.GeminiChatCellType.TEXT
+import io.agent.gemini.utils.GeminiChatCellType.HYBRID
+import io.agent.gemini.utils.GeminiChatCellType.IMAGE
+import io.agent.gemini.utils.GeminiChatCellType.TEXT
 
 object GeminiCellConvertor {
 

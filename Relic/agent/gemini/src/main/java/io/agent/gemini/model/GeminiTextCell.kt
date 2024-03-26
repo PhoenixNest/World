@@ -1,6 +1,6 @@
 package io.agent.gemini.model
 
-import io.agent.gemini.util.GeminiChatCellType
+import io.agent.gemini.utils.GeminiChatCellType
 
 class GeminiTextCell(
     roleId: Int,

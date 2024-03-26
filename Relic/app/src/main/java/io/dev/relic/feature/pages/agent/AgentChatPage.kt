@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
-import io.agent.gemini.util.GeminiChatRole
+import io.agent.gemini.utils.GeminiChatRole
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel

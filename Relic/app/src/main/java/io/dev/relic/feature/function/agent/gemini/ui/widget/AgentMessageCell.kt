@@ -28,9 +28,9 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiHybridCell
 import io.agent.gemini.model.GeminiTextCell
-import io.agent.gemini.util.GeminiChatRole.AGENT
-import io.agent.gemini.util.GeminiChatRole.ERROR
-import io.agent.gemini.util.GeminiChatRole.USER
+import io.agent.gemini.utils.GeminiChatRole.AGENT
+import io.agent.gemini.utils.GeminiChatRole.ERROR
+import io.agent.gemini.utils.GeminiChatRole.USER
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.errorColorAccent

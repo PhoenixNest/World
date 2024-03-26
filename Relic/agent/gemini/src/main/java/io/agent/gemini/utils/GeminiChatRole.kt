@@ -1,4 +1,4 @@
-package io.agent.gemini.util
+package io.agent.gemini.utils
 
 enum class GeminiChatRole(val roleId: Int) {
     ERROR(-1),

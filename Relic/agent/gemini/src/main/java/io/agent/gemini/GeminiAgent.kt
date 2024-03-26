@@ -6,10 +6,9 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.GenerateContentResponse
 import com.google.ai.client.generativeai.type.content
-import io.agent.gemini.util.GeminiChatRole
-import io.agent.gemini.util.GeminiChatRole.USER
-import io.common.RelicResCenter
-import io.common.util.LogUtil
+import io.agent.gemini.utils.GeminiChatRole
+import io.agent.gemini.utils.GeminiChatRole.USER
+import io.agent.gemini.utils.GeminiLogUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -29,19 +28,23 @@ object GeminiAgent {
     /**
      * [Gemini API Key](https://makersuite.google.com/app/apikey)
      * */
-    private val GEMINI_DEV_KEY = RelicResCenter.getString(R.string.agent_gemini_dev_key)
+    private var GEMINI_DEV_KEY = "YOUR API KEY"
 
     /**
      * Indicate the current chosen model of Gemini.
      * */
     private var chosenCoreModel: GenerativeModel? = null
 
+    fun initGeminiComponent(apiKey: String) {
+        GEMINI_DEV_KEY = apiKey
+    }
+
     fun startChat(
         isVisionModel: Boolean,
         chatHistory: List<Content> = emptyList()
     ): Chat {
         chosenCoreModel = chooseGeminiModel(isVisionModel)
-        LogUtil.d(TAG, "[Gemini Model] Chosen model: ${chosenCoreModel!!.modelName}")
+        GeminiLogUtil.d(TAG, "[Gemini Model] Chosen model: ${chosenCoreModel!!.modelName}")
         return chosenCoreModel!!.startChat(chatHistory)
     }
 
@@ -61,11 +64,11 @@ object GeminiAgent {
         chatRole: GeminiChatRole = USER
     ): GenerateContentResponse? {
         val realRole = chatRole.name.lowercase().trim()
-        LogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
+        GeminiLogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
 
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
                 val content = content {
                     role = chatRole.name.lowercase().trim()
                     image(message)
@@ -74,7 +77,7 @@ object GeminiAgent {
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
                 val content = content {
                     role = chatRole.name.lowercase().trim()
                     text(message)
@@ -84,12 +87,12 @@ object GeminiAgent {
 
             is Content -> {
                 // TODO: This type needs to specify the chat role such as "user"
-                LogUtil.d(TAG, "[Message Sender] Send [Content] type")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [Content] type")
                 chatWindow.sendMessage(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
+                GeminiLogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
                 null
             }
         }
@@ -109,11 +112,11 @@ object GeminiAgent {
         chatRole: GeminiChatRole = USER
     ): Flow<GenerateContentResponse> {
         val realRole = chatRole.name.lowercase().trim()
-        LogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
+        GeminiLogUtil.w(TAG, "[Message Sender] Locked chat role to: $realRole")
 
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [Bitmap] type")
                 val content = content {
                     role = realRole
                     image(message)
@@ -122,7 +125,7 @@ object GeminiAgent {
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [String] type, messageContent: $message")
                 val content = content {
                     role = realRole
                     text(message)
@@ -132,12 +135,12 @@ object GeminiAgent {
 
             is Content -> {
                 // TODO: This type needs to specify the chat role such as "user"
-                LogUtil.d(TAG, "[Message Sender] Send [Content] type")
+                GeminiLogUtil.d(TAG, "[Message Sender] Send [Content] type")
                 chatWindow.sendMessageStream(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
+                GeminiLogUtil.w(TAG, "[Message Sender] Send [Unknown] type")
                 emptyFlow()
             }
         }
@@ -150,14 +153,14 @@ object GeminiAgent {
         chatRole: GeminiChatRole = USER
     ): GenerateContentResponse? {
         val realRole = chatRole.name.lowercase().trim()
-        LogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
+        GeminiLogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
 
         val currentChosenModel = chosenCoreModel
             ?: return null
 
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Message Generator] Generate [Bitmap] type")
+                GeminiLogUtil.d(TAG, "[Message Generator] Generate [Bitmap] type")
                 val content = content {
                     role = realRole
                     image(message)
@@ -166,7 +169,7 @@ object GeminiAgent {
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Message Generator] Generate [String] type, messageContent: $message")
+                GeminiLogUtil.d(TAG, "[Message Generator] Generate [String] type, messageContent: $message")
                 val content = content {
                     role = realRole
                     text(message)
@@ -176,12 +179,12 @@ object GeminiAgent {
 
             is Content -> {
                 // TODO: This type needs to specify the chat role such as "user"
-                LogUtil.d(TAG, "[Message Generator] Generate [Content] type")
+                GeminiLogUtil.d(TAG, "[Message Generator] Generate [Content] type")
                 currentChosenModel.generateContent(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Message Generator] Generate [Unknown] type")
+                GeminiLogUtil.w(TAG, "[Message Generator] Generate [Unknown] type")
                 null
             }
         }
@@ -192,14 +195,14 @@ object GeminiAgent {
         chatRole: GeminiChatRole = USER
     ): Flow<GenerateContentResponse> {
         val realRole = chatRole.name.lowercase().trim()
-        LogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
+        GeminiLogUtil.w(TAG, "[Message Generator] Locked chat role to: $realRole")
 
         val currentChosenModel = chosenCoreModel
             ?: return emptyFlow()
 
         return when (message) {
             is Bitmap -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
+                GeminiLogUtil.d(TAG, "[Generate Message] Sending [Bitmap] type")
                 val content = content {
                     role = realRole
                     image(message)
@@ -208,7 +211,7 @@ object GeminiAgent {
             }
 
             is String -> {
-                LogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
+                GeminiLogUtil.d(TAG, "[Generate Message] Sending [String] type, messageContent: $message")
                 val content = content {
                     role = realRole
                     text(message)
@@ -218,12 +221,12 @@ object GeminiAgent {
 
             is Content -> {
                 // TODO: This type needs to specify the chat role such as "user"
-                LogUtil.d(TAG, "[Generate Message] Sending [Content] type")
+                GeminiLogUtil.d(TAG, "[Generate Message] Sending [Content] type")
                 currentChosenModel.generateContentStream(message)
             }
 
             else -> {
-                LogUtil.w(TAG, "[Generate Message] Sending [Unknown] type")
+                GeminiLogUtil.w(TAG, "[Generate Message] Sending [Unknown] type")
                 emptyFlow()
             }
         }

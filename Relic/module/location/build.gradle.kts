@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    id("com.google.devtools.ksp")
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -15,9 +15,6 @@ android {
 
     defaultConfig {
         minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     compileOptions {

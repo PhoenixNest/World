@@ -21,10 +21,11 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Relic"
-// Third-party module
+// Extension module
 include(":module:ad")
 include(":module:map")
-// Agent
+include(":module:location")
+// Agent module
 include(":agent:gemini")
 // Feature layer
 include(":app")
@@ -37,4 +38,3 @@ include(":core:datastore")
 include(":core:network")
 include(":core:data")
 include(":core:ui")
-include(":module:location")

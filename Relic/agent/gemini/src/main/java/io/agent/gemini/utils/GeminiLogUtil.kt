@@ -1,12 +1,12 @@
-package io.module.map.tomtom.utils
+package io.agent.gemini.utils
 
 import android.util.Log
-import io.module.map.BuildConfig
+import io.agent.gemini.BuildConfig
 
 @Suppress("LocalVariableName")
-object MapLogUtil {
+object GeminiLogUtil {
 
-    private const val DEFAULT_TAG = "Map - LogUtil"
+    private const val DEFAULT_TAG = "Ad - LogUtil"
 
     /**
      * Verbose level logging.

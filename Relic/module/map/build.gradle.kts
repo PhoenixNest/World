@@ -10,12 +10,6 @@ private val composeCompilerVersion = "1.5.10"
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-
-    // KSP
-    id("com.google.devtools.ksp")
-
-    // Hilt
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -81,17 +75,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
-    // Optional - Integration with View Binding
-    implementation("androidx.compose.ui:ui-viewbinding:1.6.4")
-
-    // Hilt
-    implementation("com.google.dagger:hilt-android:2.51")
-    ksp("com.google.dagger:hilt-compiler:2.51")
 
     /* ======================== Third-party Extension ======================== */
 
     // TomTom
     implementation("com.tomtom.sdk.maps:map-display:0.50.3") {
-        exclude(group = "androidx.compose", module = "androidx")
+        exclude(group = "com.google.protobuf")
     }
 }
