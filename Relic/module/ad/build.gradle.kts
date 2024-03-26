@@ -2,7 +2,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
 private val localProperties = gradleLocalProperties(rootDir)
-private val isNoAds = localProperties.getProperty("NO_ADS")
+private val isNoAds = localProperties.getProperty("NO_ADS") ?: "false"
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -34,13 +34,12 @@ android {
 
 dependencies {
 
-    /* ======================== Module ======================== */
-
-    // Common Module
-    implementation(project(":common"))
-
     /* ======================== Google Official Extension ======================== */
 
+    // Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
+
     // Admob
-    implementation(libs.play.services.ads)
+    implementation("com.google.android.gms:play-services-ads:23.0.0")
 }

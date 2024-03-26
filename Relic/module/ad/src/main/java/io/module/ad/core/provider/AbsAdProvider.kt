@@ -1,7 +1,7 @@
 package io.module.ad.core.provider
 
-import io.common.util.LogUtil
-import io.common.util.TimeUtil
+import io.module.ad.admob.utils.AdLogUtil
+import io.module.ad.admob.utils.AdTimeUtil
 import io.module.ad.core.AdConfig
 import io.module.ad.core.model.AdInfoWrapper
 import java.util.concurrent.TimeUnit
@@ -114,7 +114,7 @@ abstract class AbsAdProvider : IAdProvider {
         adUnitId: String,
         adInfoWrapper: AdInfoWrapper
     ) {
-        LogUtil.d(TAG, "[Save ad info] AdInfoWrapper: $adInfoWrapper")
+        AdLogUtil.d(TAG, "[Save ad info] AdInfoWrapper: $adInfoWrapper")
         adInfoMap[adUnitId] = adInfoWrapper
     }
 
@@ -124,7 +124,7 @@ abstract class AbsAdProvider : IAdProvider {
      * @param adUnitId
      * */
     fun removeAdInfo(adUnitId: String) {
-        LogUtil.d(TAG, "[Remove ad info] adUnitId: $adUnitId")
+        AdLogUtil.d(TAG, "[Remove ad info] adUnitId: $adUnitId")
         adInfoMap.remove(adUnitId)
     }
 
@@ -148,10 +148,10 @@ abstract class AbsAdProvider : IAdProvider {
      * */
     private fun getCacheAdInfoWrapper(adUnitId: String): AdInfoWrapper? {
         return adInfoMap[adUnitId]?.let { adInfoWrapper: AdInfoWrapper ->
-            val interval = (TimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
+            val interval = (AdTimeUtil.getCurrentTimeInMillis() - adInfoWrapper.timeStamp)
             val interval2Hours = TimeUnit.MICROSECONDS.toHours(interval)
             val hasExpired = (interval2Hours > AdConfig.EXPIRED_DURATION)
-            LogUtil.d(TAG, "[Check ad has expired] hasExpired: $hasExpired")
+            AdLogUtil.d(TAG, "[Check ad has expired] hasExpired: $hasExpired")
 
             if (hasExpired) {
                 removeAdInfo(adUnitId)

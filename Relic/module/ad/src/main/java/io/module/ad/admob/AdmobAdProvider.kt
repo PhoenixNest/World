@@ -20,8 +20,8 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import io.common.util.LogUtil
 import io.module.ad.BuildConfig
+import io.module.ad.admob.utils.AdLogUtil
 import io.module.ad.admob.utils.AdmobAdType
 import io.module.ad.admob.utils.AdmobAdUnitId
 import io.module.ad.core.model.AdInfoWrapper
@@ -30,8 +30,6 @@ import io.module.ad.core.provider.IAdListener
 
 /**
  * Provide the core function of ad load and show.
- *
- * @see io.dev.relic.core.sdk.ad.core.AdmobAdManager
  * */
 object AdmobAdProvider : AbsAdProvider() {
 
@@ -61,7 +59,7 @@ object AdmobAdProvider : AbsAdProvider() {
         adViewContainer: ViewGroup?
     ) {
         val targetAdUnitId = if (BuildConfig.NO_ADS) {
-            LogUtil.w(TAG, "[Load Ad] Enable No-Ads mode.")
+            AdLogUtil.w(TAG, "[Load Ad] Enable No-Ads mode.")
             AdmobAdUnitId.NO_AD
         } else {
             adUnitId

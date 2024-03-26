@@ -69,7 +69,7 @@ android {
         /**
          * [Shrink, obfuscate, and optimize your app](https://developer.android.com/build/shrink-code)
          * */
-        val releaseBuildType = release {
+        release {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type. Make sure to use a build
             // variant with `isDebuggable=false`.
@@ -156,7 +156,7 @@ dependencies {
     /* ======================== Google Official Extension ======================== */
 
     // Firebase BOM
-    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.7.4")
+    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.8.0")
     implementation(firebaseBom)
     // Add the dependencies for the Crashlytics and Analytics libraries
     implementation(libs.firebase.crashlytics.ktx)
