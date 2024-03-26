@@ -1,7 +1,7 @@
 package io.module.ad.core.provider
 
-import io.module.ad.admob.utils.AdLogUtil
-import io.module.ad.admob.utils.AdTimeUtil
+import io.module.ad.utils.AdLogUtil
+import io.module.ad.utils.AdTimeUtil
 import io.module.ad.core.AdConfig
 import io.module.ad.core.model.AdInfoWrapper
 import java.util.concurrent.TimeUnit

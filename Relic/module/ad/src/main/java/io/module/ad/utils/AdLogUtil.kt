@@ -1,4 +1,4 @@
-package io.module.ad.admob.utils
+package io.module.ad.utils
 
 import android.util.Log
 import io.module.ad.BuildConfig
@@ -6,7 +6,7 @@ import io.module.ad.BuildConfig
 @Suppress("LocalVariableName")
 object AdLogUtil {
 
-    private const val DEFAULT_TAG = "Ad - AdLogUtil"
+    private const val DEFAULT_TAG = "Ad - LogUtil"
 
     /**
      * Verbose level logging.

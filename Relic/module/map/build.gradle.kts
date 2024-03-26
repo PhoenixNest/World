@@ -39,6 +39,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
 
     composeOptions {
@@ -77,7 +78,7 @@ dependencies {
     // Optional - Integration with activities
     implementation("androidx.activity:activity-compose:1.8.2")
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
     // Optional - Integration with View Binding
@@ -90,5 +91,7 @@ dependencies {
     /* ======================== Third-party Extension ======================== */
 
     // TomTom
-    implementation("com.tomtom.sdk.maps:map-display:0.31.1")
+    implementation("com.tomtom.sdk.maps:map-display:0.50.3") {
+        exclude(group = "androidx.compose", module = "androidx")
+    }
 }

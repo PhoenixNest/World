@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import com.tomtom.sdk.map.display.ui.MapView
-import io.common.util.LogUtil
 import io.module.map.tomtom.TomTomMapManager.defaultLocationMarkerOptions
 import io.module.map.tomtom.TomTomMapManager.defaultLocationProvider
 import io.module.map.tomtom.TomTomMapManager.defaultMapOptions
@@ -26,6 +25,7 @@ import io.module.map.tomtom.kit.componentCallback
 import io.module.map.tomtom.kit.disposingComposition
 import io.module.map.tomtom.kit.lifecycleObserver
 import io.module.map.tomtom.kit.newComposition
+import io.module.map.tomtom.utils.MapLogUtil
 
 private const val TAG = "TomTomMapComponent"
 
@@ -38,7 +38,7 @@ private const val TAG = "TomTomMapComponent"
 fun TomTomMapComponent(modifier: Modifier = Modifier) {
 
     if (LocalInspectionMode.current) {
-        LogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
+        MapLogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
         Box(modifier = modifier)
         return
     }
@@ -93,12 +93,12 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         val mapComponentCallback = mapView.componentCallback()
         val mapLifecycleObserver = mapView.lifecycleObserver(previousMapState)
 
-        LogUtil.d(TAG, "[Lifecycle] Binds the lifecycle with mapView")
+        MapLogUtil.d(TAG, "[Lifecycle] Binds the lifecycle with mapView")
         lifecycle.addObserver(mapLifecycleObserver)
         context.registerComponentCallbacks(mapComponentCallback)
 
         onDispose {
-            LogUtil.w(TAG, "[Lifecycle] Compose onDispose, free memory")
+            MapLogUtil.w(TAG, "[Lifecycle] Compose onDispose, free memory")
             lifecycle.removeObserver(mapLifecycleObserver)
             context.unregisterComponentCallbacks(mapComponentCallback)
         }
@@ -107,7 +107,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
-            LogUtil.w(TAG, "[Lifecycle] mapView onDispose, free memory")
+            MapLogUtil.w(TAG, "[Lifecycle] mapView onDispose, free memory")
             mapView.onDestroy()
             mapView.removeAllViews()
         }

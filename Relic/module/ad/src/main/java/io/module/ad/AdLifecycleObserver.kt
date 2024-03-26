@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import io.module.ad.admob.utils.AdLogUtil
+import io.module.ad.utils.AdLogUtil
 import io.module.ad.core.AdKeys.KEY_IS_FIRST_COLD_START
 import io.module.ad.core.AdSharePreference.readData
 import io.module.ad.core.AdSharePreference.writeData

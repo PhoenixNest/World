@@ -1,11 +1,11 @@
-package io.module.ad.admob.utils
+package io.module.ad.utils
 
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.AFTERNOON
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.DAY
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.MIDNIGHT
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.NIGHT
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.NOON
-import io.module.ad.admob.utils.AdTimeUtil.TimeSection.UNKNOWN
+import io.module.ad.utils.AdTimeUtil.TimeSection.AFTERNOON
+import io.module.ad.utils.AdTimeUtil.TimeSection.DAY
+import io.module.ad.utils.AdTimeUtil.TimeSection.MIDNIGHT
+import io.module.ad.utils.AdTimeUtil.TimeSection.NIGHT
+import io.module.ad.utils.AdTimeUtil.TimeSection.NOON
+import io.module.ad.utils.AdTimeUtil.TimeSection.UNKNOWN
 import java.time.Clock
 import java.time.LocalDateTime
 import java.time.ZoneId

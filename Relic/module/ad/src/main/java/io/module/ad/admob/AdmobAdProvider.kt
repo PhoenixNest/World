@@ -21,7 +21,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import io.module.ad.BuildConfig
-import io.module.ad.admob.utils.AdLogUtil
+import io.module.ad.utils.AdLogUtil
 import io.module.ad.admob.utils.AdmobAdType
 import io.module.ad.admob.utils.AdmobAdUnitId
 import io.module.ad.core.model.AdInfoWrapper
