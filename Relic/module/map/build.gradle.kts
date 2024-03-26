@@ -8,14 +8,14 @@ private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY") ?: "-1"
 private val composeCompilerVersion = "1.5.10"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    id("com.google.devtools.ksp")
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -48,25 +48,47 @@ android {
 
 dependencies {
 
-    /* ======================== Module ======================== */
-
-    implementation(project(":core:datastore"))
-    implementation(project(":core:ui"))
-
-    // Common Module
-    implementation(project(":common"))
-
     /* ======================== Google Official Extension ======================== */
 
-    // Location Services
-    api(libs.play.services.location)
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+
+    val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    // Choose one of the following:
+    implementation("androidx.compose.material:material")
+    // Android Studio Preview support
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    // UI Tests
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Optional - Included automatically by material, only add when you need
+    // the icons but not the material library (e.g. when using Material3 or a
+    // custom design system based on Foundation)
+    implementation("androidx.compose.material:material-icons-core")
+    // Optional - Add full set of material icons
+    implementation("androidx.compose.material:material-icons-extended")
+    // Optional - Add window size utils
+    implementation("androidx.compose.material3:material3-window-size-class")
+    // Optional - Integration with activities
+    implementation("androidx.activity:activity-compose:1.8.2")
+    // Optional - Integration with ViewModels
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    // Optional - Integration with LiveData
+    implementation("androidx.compose.runtime:runtime-livedata")
+    // Optional - Integration with View Binding
+    implementation("androidx.compose.ui:ui-viewbinding:1.6.4")
 
     // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    implementation("com.google.dagger:hilt-android:2.51")
+    ksp("com.google.dagger:hilt-compiler:2.51")
 
     /* ======================== Third-party Extension ======================== */
 
     // TomTom
-    api(libs.tomtom.map.display)
+    implementation("com.tomtom.sdk.maps:map-display:0.31.1")
 }

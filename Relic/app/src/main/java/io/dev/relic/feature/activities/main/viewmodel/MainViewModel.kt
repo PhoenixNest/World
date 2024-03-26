@@ -13,9 +13,9 @@ import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.dev.relic.feature.screens.main.MainState
-import io.domain.use_case.lcoation.LocationUseCase
 import io.domain.use_case.weather.WeatherUseCase
-import io.module.map.ILocationListener
+import io.module.location.ILocationListener
+import io.module.location.use_case.LocationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

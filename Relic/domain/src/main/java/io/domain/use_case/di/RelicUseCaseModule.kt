@@ -16,8 +16,8 @@ import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearch
 import io.domain.use_case.food_receipes.action.complex_search.GetComplexRecipesData
 import io.domain.use_case.food_receipes.action.complex_search.QueryCachedComplexRecipesData
 import io.domain.use_case.food_receipes.action.information.GetFoodRecipeInformationById
-import io.domain.use_case.lcoation.LocationUseCase
-import io.domain.use_case.lcoation.action.GetCurrentLocation
+import io.module.location.use_case.LocationUseCase
+import io.module.location.use_case.action.GetCurrentLocation
 import io.domain.use_case.maxim.MaximUseCase
 import io.domain.use_case.maxim.action.GetRandomMaxim
 import io.domain.use_case.news.NewsUseCase
@@ -38,7 +38,7 @@ import io.domain.use_case.weather.WeatherUseCase
 import io.domain.use_case.weather.action.CacheWeatherData
 import io.domain.use_case.weather.action.FetchWeatherData
 import io.domain.use_case.weather.action.QueryWeatherData
-import io.module.map.ILocationTracker
+import io.module.location.ILocationTracker
 import javax.inject.Singleton
 
 @Module
@@ -48,10 +48,12 @@ class RelicUseCaseModule {
     @Singleton
     @Provides
     fun provideLocationUnitUseCase(
-        locationTracker: ILocationTracker
-    ): LocationUseCase {
-        return LocationUseCase(
-            getCurrentLocation = GetCurrentLocation(locationTracker)
+        locationTracker: io.module.location.ILocationTracker
+    ): io.module.location.use_case.LocationUseCase {
+        return io.module.location.use_case.LocationUseCase(
+            getCurrentLocation = io.module.location.use_case.action.GetCurrentLocation(
+                locationTracker
+            )
         )
     }
 

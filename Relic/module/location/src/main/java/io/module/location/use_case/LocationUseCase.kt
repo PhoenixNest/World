@@ -1,6 +1,6 @@
-package io.domain.use_case.lcoation
+package io.module.location.use_case
 
-import io.domain.use_case.lcoation.action.GetCurrentLocation
+import io.module.location.use_case.action.GetCurrentLocation
 
 internal const val TAG = "LocationUnitUseCase"
 

@@ -1,4 +1,4 @@
-package io.module.map
+package io.module.location
 
 import android.location.Location
 

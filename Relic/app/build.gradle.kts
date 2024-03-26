@@ -150,6 +150,9 @@ dependencies {
     // Agent Module
     implementation(project(":agent:gemini"))
 
+    // Location Module
+    implementation(project(":module:location"))
+
     // Map Module
     implementation(project(":module:map"))
 
@@ -167,9 +170,6 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-
-    // Google sign-in
-    implementation(libs.play.services.auth)
 
     /* ======================== Third-party Extension ======================== */
 

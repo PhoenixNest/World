@@ -1,11 +1,11 @@
-package io.module.map.di
+package io.module.location.di
 
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.module.map.ILocationTracker
-import io.module.map.impl.LocationTrackerImpl
+import io.module.location.ILocationTracker
+import io.module.location.impl.LocationTrackerImpl
 import javax.inject.Singleton
 
 

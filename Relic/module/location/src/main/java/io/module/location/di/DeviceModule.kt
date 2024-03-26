@@ -1,4 +1,4 @@
-package io.module.map.di
+package io.module.location.di
 
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient

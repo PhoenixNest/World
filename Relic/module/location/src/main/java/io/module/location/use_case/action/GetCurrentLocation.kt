@@ -1,25 +1,25 @@
-package io.domain.use_case.lcoation.action
+package io.module.location.use_case.action
 
-import io.common.util.LogUtil
-import io.domain.use_case.lcoation.TAG
-import io.module.map.ILocationListener
-import io.module.map.ILocationTracker
+import android.util.Log
+import io.module.location.ILocationListener
+import io.module.location.ILocationTracker
+import io.module.location.use_case.TAG
 import javax.inject.Inject
 
 class GetCurrentLocation @Inject constructor(
     private val locationTracker: ILocationTracker
 ) {
     suspend operator fun invoke(listener: ILocationListener) {
-        LogUtil.v(TAG, "[LocationTracker] Attempts to get the current device location.")
+        Log.v(TAG, "[LocationTracker] Attempts to get the current device location.")
         listener.onAccessing()
 
         // Try to access the current location of the device.
         locationTracker.getCurrentLocation()?.run {
-            LogUtil.d(TAG, "[LocationTracker] Get the location information succeeded.")
+            Log.d(TAG, "[LocationTracker] Get the location information succeeded.")
             listener.onAccessSucceed(this)
         } ?: run {
             val errorMessage = "Couldn't retrieve the location of the current device."
-            LogUtil.e(TAG, "[LocationTracker] $errorMessage")
+            Log.e(TAG, "[LocationTracker] $errorMessage")
             listener.onAccessFailed(errorMessage = errorMessage)
         }
     }

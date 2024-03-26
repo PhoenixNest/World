@@ -71,11 +71,11 @@ dependencies {
     // Optional - Integration with LiveData
     api(libs.androidx.compose.runtime.livedata)
     // Optional - Integration with activities
-    api(libs.androidx.activity.compose)
+    api(libs.androidx.compose.activity)
     // Optional - Integration with ViewModels
-    api(libs.androidx.lifecycle.viewmodel.compose)
-    // Optional - Compose View Binding
-    api("androidx.compose.ui:ui-viewbinding:1.6.4")
+    api(libs.androidx.compose.viewmodel)
+    // Optional - Integration with View Binding
+    api(libs.androidx.compose.ui.viewbinding)
 
     /* ======================== Third-party Extension ======================== */
 

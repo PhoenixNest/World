@@ -5,8 +5,8 @@ private val localProperties = gradleLocalProperties(rootDir)
 private val isNoAds = localProperties.getProperty("NO_ADS") ?: "false"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {

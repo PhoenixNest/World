@@ -1,14 +1,15 @@
-package io.module.map.impl
+package io.module.location.impl
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.util.Log
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.common.RelicPermissionDetector.Native.checkPermission
-import io.common.util.LogUtil
-import io.module.map.ILocationTracker
+import io.module.location.ILocationTracker
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -30,24 +31,27 @@ class LocationTrackerImpl @Inject constructor(
             context = context,
             requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
         ).also {
-            LogUtil.d(TAG, "[Permission Status] [Find Location] isGranted: $it")
+            Log.d(TAG, "[Permission Status] [Find Location] isGranted: $it")
         }
 
         val hasAccessCoarseLocationPermission = checkPermission(
             context = context,
             requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
         ).also {
-            LogUtil.d(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
+            Log.d(TAG, "[Permission Status] [Access Coarse Location] isGranted: $it")
         }
 
         val locationManager = context.getSystemService(
             Context.LOCATION_SERVICE
         ) as LocationManager
 
-        val isGpsEnabled: Boolean = (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-                || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        val isEnableNetworkProvider =
+            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        val isEnableGPSProvider =
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isGpsEnabled: Boolean = (isEnableNetworkProvider || isEnableGPSProvider)
             .also {
-                LogUtil.d(TAG, "[GPS Status] isEnabled: $it")
+                Log.d(TAG, "[GPS Status] isEnabled: $it")
             }
 
         if (!hasAccessFindLocationPermission
@@ -76,7 +80,7 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnSuccessListener { location ->
-                    LogUtil.d(TAG, "[Access Success] Data: $location")
+                    Log.d(TAG, "[Access Success] Data: $location")
                     continuation.resume(
                         value = location,
                         onCancellation = null
@@ -84,7 +88,7 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnFailureListener {
-                    LogUtil.e(TAG, "[Access Failed] Message: ${it.message}")
+                    Log.e(TAG, "[Access Failed] Message: ${it.message}")
                     continuation.resume(
                         value = null,
                         onCancellation = null
@@ -92,10 +96,26 @@ class LocationTrackerImpl @Inject constructor(
                 }
 
                 addOnCanceledListener {
-                    LogUtil.d(TAG, "[Access Canceled]")
+                    Log.d(TAG, "[Access Canceled]")
                     continuation.cancel()
                 }
             }
         }
+    }
+
+    /**
+     * Check is the request permission is already granted.
+     *
+     * @param context
+     * @param requestPermission
+     * */
+    private fun checkPermission(
+        context: Context,
+        requestPermission: String
+    ): Boolean {
+        return ContextCompat.checkSelfPermission(
+            /* context = */ context,
+            /* permission = */ requestPermission
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }
