@@ -68,7 +68,6 @@ roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
 roomTesting = "2.6.1"
 tomtomMapDisplay = "0.31.1"
-tomtomMapProviderAndroid = "0.33.1"
 workGcm = "2.9.0"
 workMultiprocess = "2.9.0"
 workRuntime = "2.9.0"
@@ -168,7 +167,6 @@ play-services-ads = { module = "com.google.android.gms:play-services-ads", versi
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 prettyLoggingInterceptor = { module = "com.github.ihsanbal:LoggingInterceptor", version.ref = "prettyLoggingInterceptor" }
-tomtom-map-provider-android = { module = "com.tomtom.sdk.location:provider-android", version.ref = "tomtomMapProviderAndroid" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshi" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
