@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.Lifecycle.Event.ON_CREATE
+import androidx.lifecycle.Lifecycle
 import com.tomtom.sdk.map.display.ui.MapView
 import io.common.util.LogUtil
 import io.module.map.tomtom.TomTomMapManager.defaultLocationMarkerOptions
@@ -80,13 +80,15 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val previousMapState = remember {
-        mutableStateOf(ON_CREATE)
+        mutableStateOf(Lifecycle.Event.ON_CREATE)
     }
 
     DisposableEffect(
-        key1 = context,
-        key2 = lifecycle,
-        key3 = mapView
+        keys = arrayOf(
+            context,
+            lifecycle,
+            mapView
+        )
     ) {
         val mapComponentCallback = mapView.componentCallback()
         val mapLifecycleObserver = mapView.lifecycleObserver(previousMapState)
@@ -96,6 +98,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         context.registerComponentCallbacks(mapComponentCallback)
 
         onDispose {
+            LogUtil.w(TAG, "[Lifecycle] Compose onDispose, free memory")
             lifecycle.removeObserver(mapLifecycleObserver)
             context.unregisterComponentCallbacks(mapComponentCallback)
         }
@@ -104,6 +107,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
+            LogUtil.w(TAG, "[Lifecycle] mapView onDispose, free memory")
             mapView.onDestroy()
             mapView.removeAllViews()
         }
