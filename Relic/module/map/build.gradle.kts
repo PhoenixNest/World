@@ -78,8 +78,11 @@ dependencies {
 
     /* ======================== Third-party Extension ======================== */
 
-    // TomTom
+    // TomTom - Map display
     implementation("com.tomtom.sdk.maps:map-display:0.50.3") {
         exclude(group = "com.google.protobuf")
     }
+
+    // TomTom - Location provider
+    implementation("com.tomtom.sdk.location:provider-android:0.50.3")
 }

@@ -17,7 +17,7 @@ object TomTomMapManager {
 
     private const val TAG = "TomTomMapConfig"
 
-    private val mapDevKey = "RelicResCenter.getString(R.string.tomtom_dev_key)"
+    private var MAP_DEV_KEY = "YOUR DEV KEY"
 
     /**
      * [TomTomMap • MapOptions](https://developer.tomtom.com/assets/downloads/tomtom-sdks/android/api-reference/0.33.1/maps/display-common/com.tomtom.sdk.map.display/-map-options/index.html)
@@ -25,6 +25,7 @@ object TomTomMapManager {
      * @see defaultMapOptions
      * */
     var mapOptions: MapOptions? = null
+        get() = field?: defaultMapOptions
 
     /**
      * [TomTomMap • Location Marker](https://developer.tomtom.com/maps/android/guides/map-display/markers)
@@ -32,6 +33,7 @@ object TomTomMapManager {
      * @see defaultLocationMarkerOptions
      * */
     var locationMarkerOptions: LocationMarkerOptions? = null
+        get() = field ?: defaultLocationMarkerOptions
 
     /**
      * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
@@ -39,6 +41,8 @@ object TomTomMapManager {
      * @see defaultLocationProvider
      * */
     var locationProvider: LocationProvider? = null
+        get() = field ?: defaultLocationProvider
+
 
     /**
      * [TomTomMap • Location Provider • OnLocationUpdateListener](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
@@ -49,7 +53,7 @@ object TomTomMapManager {
      * @see mapOptions
      * */
     val defaultMapOptions = MapOptions(
-        mapKey = mapDevKey,
+        mapKey = MAP_DEV_KEY,
         cameraOptions = CameraOptions(),
         padding = Padding(),
         mapStyle = StyleDescriptor(Uri.EMPTY),
@@ -99,7 +103,8 @@ object TomTomMapManager {
         }
     }
 
-    fun initTomTomMapComponent() {
+    fun initTomTomMapComponent(mapDevKey: String) {
+        MAP_DEV_KEY = mapDevKey
         initDefaultMapOptions()
         initDefaultLocationMarkerOptions()
         initDefaultLocationProvider()

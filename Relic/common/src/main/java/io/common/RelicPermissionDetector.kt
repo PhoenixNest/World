@@ -19,7 +19,7 @@ object RelicPermissionDetector {
 
     interface RelicPermissionListener {
 
-        fun onPermissionGrant()
+        fun onPermissionGranted()
 
         fun onPermissionDenied()
 
@@ -69,7 +69,7 @@ object RelicPermissionDetector {
 
             if (isGranted) {
                 LogUtil.d(TAG, "$requestPermission Permission has already granted.")
-                permissionListener.onPermissionGrant()
+                permissionListener.onPermissionGranted()
                 return
             } else {
                 // Register the permissions callback, which handles the user's response to the
@@ -78,11 +78,11 @@ object RelicPermissionDetector {
                 // or a lateinit var in your onAttach() or onCreate() method.
                 val requestPermissionLauncher = activity.registerForActivityResult(
                     ActivityResultContracts.RequestPermission()
-                ) { _isGranted ->
-                    if (_isGranted) {
+                ) { isSuccess ->
+                    if (isSuccess) {
                         // Permission is granted. Continue the action or workflow in your app.
                         LogUtil.d(TAG, "$requestPermission Permission Granted.")
-                        permissionListener.onPermissionGrant()
+                        permissionListener.onPermissionGranted()
                     } else {
                         // Explain to the user that the feature is unavailable because the
                         // feature requires a permission that the user has denied. At the
