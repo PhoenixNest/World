@@ -22,6 +22,7 @@ import io.module.map.R
 import io.module.map.databinding.ActivityTomtomMapBinding
 import io.module.map.tomtom.permission.MapPermissionCenter
 import io.module.map.tomtom.permission.MapPermissionListener
+import io.module.map.tomtom.utils.MapLogUtil
 
 class TomTomMapActivity : AppCompatActivity() {
 
@@ -131,16 +132,17 @@ class TomTomMapActivity : AppCompatActivity() {
             .commit()
 
         mapFragment.getMapAsync {
+            MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
             setupMapView(it)
         }
     }
 
     private fun setupMapView(map: TomTomMap) {
         tomtomMap = map
-        enableUserLocation(map)
+        enableUserLocation()
     }
 
-    private fun enableUserLocation(map: TomTomMap) {
+    private fun enableUserLocation() {
         val isAccessFineLocation = MapPermissionCenter.checkPermission(
             context = this@TomTomMapActivity,
             requestPermission = ACCESS_FINE_LOCATION
@@ -153,21 +155,21 @@ class TomTomMapActivity : AppCompatActivity() {
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
             mapLocationProvider.enable()
-            showUserLocation(map)
+            showUserLocation()
         } else {
             val permissionList = listOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
             requestRuntimePermission(permissionList)
         }
     }
 
-    private fun showUserLocation(map: TomTomMap) {
-        map.setLocationProvider(mapLocationProvider)
-        map.enableLocationMarker(mapLocationMarkerOptions)
-        registerLocationUpdateListener(map)
+    private fun showUserLocation() {
+        tomtomMap.setLocationProvider(mapLocationProvider)
+        tomtomMap.enableLocationMarker(mapLocationMarkerOptions)
+        registerLocationUpdateListener()
     }
 
-    private fun registerLocationUpdateListener(map: TomTomMap) {
-        createMapLocationUpdateListener(map)
+    private fun registerLocationUpdateListener() {
+        createMapLocationUpdateListener(tomtomMap)
         mapLocationProvider.addOnLocationUpdateListener(mapLocationUpdateListener)
     }
 
@@ -182,7 +184,7 @@ class TomTomMapActivity : AppCompatActivity() {
                 requestPermission = permission,
                 permissionListener = object : MapPermissionListener {
                     override fun onPermissionGranted() {
-                        enableUserLocation(tomtomMap)
+                        enableUserLocation()
                     }
 
                     override fun onPermissionDenied() {
