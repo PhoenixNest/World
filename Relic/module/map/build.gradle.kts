@@ -49,11 +49,11 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
 
+    // Compose Ui
     val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
-
-    // Choose one of the following:
+    // Material Design
     implementation("androidx.compose.material:material")
     // Android Studio Preview support
     implementation("androidx.compose.ui:ui-tooling-preview")
