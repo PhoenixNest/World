@@ -76,6 +76,9 @@ dependencies {
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
 
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+
     /* ======================== Third-party Extension ======================== */
 
     // TomTom - Map display
@@ -85,4 +88,8 @@ dependencies {
 
     // TomTom - Location provider
     implementation("com.tomtom.sdk.location:provider-android:0.50.3")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.4.0")
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
 }

@@ -1,22 +1,14 @@
 package io.module.map.tomtom
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.tomtom.sdk.location.OnLocationUpdateListener
-import com.tomtom.sdk.location.android.AndroidLocationProvider
-import com.tomtom.sdk.map.display.MapOptions
+import androidx.core.view.WindowCompat
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
-import com.tomtom.sdk.map.display.common.screen.Padding
-import com.tomtom.sdk.map.display.location.LocationMarkerOptions
-import com.tomtom.sdk.map.display.map.OnlineCachePolicy
-import com.tomtom.sdk.map.display.style.StyleDescriptor
-import com.tomtom.sdk.map.display.style.StyleMode
 import com.tomtom.sdk.map.display.ui.MapFragment
 import io.module.map.R
 import io.module.map.databinding.ActivityTomtomMapBinding
@@ -33,16 +25,32 @@ class TomTomMapActivity : AppCompatActivity() {
     private lateinit var mapFragment: MapFragment
     private lateinit var tomtomMap: TomTomMap
 
-    private lateinit var mapOptions: MapOptions
-    private lateinit var mapLocationProvider: AndroidLocationProvider
-    private lateinit var mapLocationMarkerOptions: LocationMarkerOptions
-    private lateinit var mapLocationUpdateListener: OnLocationUpdateListener
+    /**
+     * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
+     * */
+    private val mapLocationProvider by lazy {
+        TomTomMapManager.mapLocationProvider
+    }
+
+    /**
+     * [TomTomMap • MapOptions](https://developer.tomtom.com/assets/downloads/tomtom-sdks/android/api-reference/0.33.1/maps/display-common/com.tomtom.sdk.map.display/-map-options/index.html)
+     * */
+    private val mapOptions by lazy {
+        TomTomMapManager.mapOptions
+    }
+
+    /**
+     * [TomTomMap • Location Marker](https://developer.tomtom.com/maps/android/guides/map-display/markers)
+     * */
+    private val mapLocationMarkerOptions by lazy {
+        TomTomMapManager.mapLocationMarkerOptions
+    }
 
     companion object {
         private const val TAG = "TomTomMapActivity"
 
         private const val KEY_MAP_FRAGMENT = "TomTomMapFragment"
-        private const val DEFAULT_ZOOM_VALUE = 0.8
+        private const val DEFAULT_ZOOM_VALUE = 8.0
 
         fun start(context: Context) {
             context.startActivity(
@@ -59,6 +67,7 @@ class TomTomMapActivity : AppCompatActivity() {
     /* ======================== Lifecycle ======================== */
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        activeImmersiveMode()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initialization()
@@ -78,7 +87,7 @@ class TomTomMapActivity : AppCompatActivity() {
         super.onDestroy()
 
         // Avoid OOM
-        unregisterLocationUpdateLocation()
+        TomTomMapManager.unregisterLocationUpdateListener()
         mapFragment.onDestroyView()
         mapFragment.onDestroy()
     }
@@ -86,45 +95,35 @@ class TomTomMapActivity : AppCompatActivity() {
     /* ======================== Logical ======================== */
 
     private fun initialization() {
-        createMapParams()
+        initMapComponent()
         setupMapFragment()
     }
 
-    private fun createMapParams() {
-        createMapOptions()
-        createLocationProvider()
-        createMapLocationMarkerOptions()
-    }
-
-    private fun createMapOptions() {
-        mapOptions = MapOptions(
-            mapKey = getString(R.string.tomtom_dev_key),
-            cameraOptions = CameraOptions(),
-            padding = Padding(),
-            mapStyle = StyleDescriptor(Uri.EMPTY),
-            styleMode = StyleMode.DARK,
-            onlineCachePolicy = OnlineCachePolicy.Default,
-            renderToTexture = true
+    private fun initMapComponent() {
+        val mapDevKey = getString(R.string.tomtom_dev_key)
+        TomTomMapManager.initTomTomMapComponent(
+            context = this,
+            mapDevKey = mapDevKey
         )
     }
 
-    private fun createLocationProvider() {
-        mapLocationProvider = AndroidLocationProvider(context = this)
-    }
-
-    private fun createMapLocationMarkerOptions() {
-        mapLocationMarkerOptions = LocationMarkerOptions(type = LocationMarkerOptions.Type.Chevron)
-    }
-
-    private fun createMapLocationUpdateListener(map: TomTomMap) {
-        mapLocationUpdateListener = OnLocationUpdateListener {
-            map.moveCamera(CameraOptions(position = it.position, zoom = DEFAULT_ZOOM_VALUE))
-        }
-    }
 
     /* ======================== Ui ======================== */
 
+    private fun activeImmersiveMode() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
+    private fun toggleLoadingView(isShow: Boolean) {
+        binding.linearLayoutLoading.visibility = if (isShow) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
     private fun setupMapFragment() {
+        toggleLoadingView(true)
         mapFragment = MapFragment.newInstance(mapOptions)
 
         supportFragmentManager.beginTransaction()
@@ -133,6 +132,7 @@ class TomTomMapActivity : AppCompatActivity() {
 
         mapFragment.getMapAsync {
             MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
+            toggleLoadingView(false)
             setupMapView(it)
         }
     }
@@ -143,38 +143,42 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun enableUserLocation() {
+        MapLogUtil.d(TAG, "[Map View] Enable user location.")
+
         val isAccessFineLocation = MapPermissionCenter.checkPermission(
             context = this@TomTomMapActivity,
-            requestPermission = ACCESS_FINE_LOCATION
+            requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
         )
 
         val isAccessCoarseLocation = MapPermissionCenter.checkPermission(
             context = this@TomTomMapActivity,
-            requestPermission = ACCESS_COARSE_LOCATION
+            requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
         )
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
-            mapLocationProvider.enable()
             showUserLocation()
         } else {
-            val permissionList = listOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
+            val permissionList = listOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
             requestRuntimePermission(permissionList)
         }
     }
 
     private fun showUserLocation() {
+        // Enable user location.
+        mapLocationProvider.enable()
+        // Binds the location provider.
         tomtomMap.setLocationProvider(mapLocationProvider)
+        // Enable the location marker.
         tomtomMap.enableLocationMarker(mapLocationMarkerOptions)
-        registerLocationUpdateListener()
-    }
-
-    private fun registerLocationUpdateListener() {
-        createMapLocationUpdateListener(tomtomMap)
-        mapLocationProvider.addOnLocationUpdateListener(mapLocationUpdateListener)
-    }
-
-    private fun unregisterLocationUpdateLocation() {
-        mapLocationProvider.removeOnLocationUpdateListener(mapLocationUpdateListener)
+        // Register the location update listener to access the latest user location.
+        TomTomMapManager.registerLocationUpdateListener {
+            MapLogUtil.d(TAG, "[User Location] Latest location: ${it.position}")
+            tomtomMap.animateCamera(CameraOptions(it.position, DEFAULT_ZOOM_VALUE))
+            TomTomMapManager.unregisterLocationUpdateListener()
+        }
     }
 
     private fun requestRuntimePermission(permissionList: List<String>) {
@@ -194,5 +198,4 @@ class TomTomMapActivity : AppCompatActivity() {
             )
         }
     }
-
 }

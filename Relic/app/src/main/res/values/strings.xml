@@ -33,6 +33,7 @@
     <string name="home_greeting_title_day">☀️ Welcome a new day</string>
     <string name="home_greeting_title_afternoon">🍵 It\'s Teatime</string>
     <string name="home_greeting_title_night">🌙 Take an early rest</string>
+    <string name="home_navigate_to_explore">EXPLORE MODE</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>

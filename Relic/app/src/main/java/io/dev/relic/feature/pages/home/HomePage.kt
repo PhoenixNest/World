@@ -1,17 +1,44 @@
 package io.dev.relic.feature.pages.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
+import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainIconColor
+import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainThemeColorAccent
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
+import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
@@ -22,6 +49,7 @@ import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailP
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
+import io.module.map.tomtom.TomTomMapActivity
 import kotlinx.coroutines.launch
 
 @Composable
@@ -155,19 +183,63 @@ private fun HomePage(
     onFoodRecipesTimeSectionRetry: () -> Unit,
     onFoodRecipesRetry: () -> Unit
 ) {
-    HomePageContent(
-        onOpenDrawer = onOpenDrawer,
-        onOpenSetting = onOpenSetting,
-        agentSearchContent = agentSearchContent,
-        onAgentSearchPromptChange = onAgentSearchPromptChange,
-        onAgentStartChat = onAgentStartChat,
-        foodRecipesState = foodRecipesState,
-        onSelectedFoodRecipesTabItem = onFoodRecipesTabItemClick,
-        onFoodRecipesSeeMoreClick = onFoodRecipesSeeMoreClick,
-        onFoodRecipesItemClick = onFoodRecipesItemClick,
-        onFoodRecipesTimeSectionRetry = onFoodRecipesTimeSectionRetry,
-        onFoodRecipesRetry = onFoodRecipesRetry
-    )
+    Box(modifier = Modifier.fillMaxWidth()) {
+        HomePageContent(
+            onOpenDrawer = onOpenDrawer,
+            onOpenSetting = onOpenSetting,
+            agentSearchContent = agentSearchContent,
+            onAgentSearchPromptChange = onAgentSearchPromptChange,
+            onAgentStartChat = onAgentStartChat,
+            foodRecipesState = foodRecipesState,
+            onSelectedFoodRecipesTabItem = onFoodRecipesTabItemClick,
+            onFoodRecipesSeeMoreClick = onFoodRecipesSeeMoreClick,
+            onFoodRecipesItemClick = onFoodRecipesItemClick,
+            onFoodRecipesTimeSectionRetry = onFoodRecipesTimeSectionRetry,
+            onFoodRecipesRetry = onFoodRecipesRetry
+        )
+        ExploreComponent(modifier = Modifier.align(Alignment.BottomCenter))
+    }
+}
+
+@Composable
+private fun ExploreComponent(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+    Surface(
+        modifier = modifier
+            .padding(bottom = 52.dp)
+            .fillMaxWidth()
+            .height(64.dp)
+            .clickable {
+                TomTomMapActivity.start(context)
+            },
+        shape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp
+        ),
+        color = mainThemeColorAccent
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_bottom_tab_explore_unselected),
+                contentDescription = DEFAULT_DESC,
+                tint = mainIconColor
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = stringResource(id = R.string.home_navigate_to_explore),
+                style = TextStyle(
+                    color = mainTextColorDark,
+                    fontSize = 16.sp,
+                    fontFamily = ubuntu,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+    }
 }
 
 @Composable

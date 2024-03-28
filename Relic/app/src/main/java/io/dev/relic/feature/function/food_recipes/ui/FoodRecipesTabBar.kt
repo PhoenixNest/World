@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,9 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonVerticalIconTextButton
 import io.core.ui.theme.RelicFontFamily
-import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
@@ -46,12 +44,12 @@ fun FoodRecipesTabBar(
             .fillMaxWidth()
             .height(120.dp)
     ) {
-        Card(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(104.dp)
                 .align(Alignment.BottomCenter),
-            backgroundColor = mainBackgroundColorLight,
+            color = Color.Black.copy(0.3F),
             shape = RoundedCornerShape(16.dp)
         ) {
             LazyRow(
@@ -122,11 +120,7 @@ private fun FoodRecipesTabItem(
             } else {
                 Color.Transparent
             },
-            textColor = if (isSelected) {
-                mainTextColor
-            } else {
-                mainTextColorDark
-            },
+            textColor = mainTextColor,
             shape = RoundedCornerShape(16.dp)
         )
     }

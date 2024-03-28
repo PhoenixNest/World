@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_theme_color">#282C34</color>
+    <color name="main_theme_color_light">#D7D3CB</color>
+    <color name="main_theme_color_accent">#DEB654</color>
+    <color name="main_text_color">#CCFFFFFF</color>
+    <color name="main_text_color_dark">#CC282C34</color>
+    <color name="main_text_color_dark_light">#99282C34</color>
+    <color name="main_button_color">#282C34</color>
+    <color name="main_icon_color">#CCFFFFFF</color>
+    <color name="main_icon_color_background">#33FFFFFF</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

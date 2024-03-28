@@ -20,7 +20,7 @@ val mainTextColor80 = mainTextColor.copy(alpha = 0.8F)
 
 val mainTextColorDark = mainThemeColor.copy(alpha = 0.8F)
 
-val mainIconColor = mainThemeColor
+val mainIconColor = mainThemeColor.copy(alpha = 0.8F)
 val mainIconColorLight = Color.White.copy(alpha = 0.8F)
 
 val mainButtonColor = mainThemeColor
