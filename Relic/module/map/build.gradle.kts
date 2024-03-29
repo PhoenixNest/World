@@ -33,6 +33,7 @@ android {
     }
 
     kotlinOptions {
+        allWarningsAsErrors = true
         jvmTarget = "17"
     }
 
@@ -89,7 +90,9 @@ dependencies {
     /* ======================== Third-party Extension ======================== */
 
     // TomTom - Map display
-    implementation("com.tomtom.sdk.maps:map-display:0.50.6")
+    implementation("com.tomtom.sdk.maps:map-display:0.50.6"){
+        exclude(group = "com.google.protobuf")
+    }
     // TomTom - Location provider
     implementation("com.tomtom.sdk.location:provider-android:0.50.6")
     // TomTom - Map search online services
