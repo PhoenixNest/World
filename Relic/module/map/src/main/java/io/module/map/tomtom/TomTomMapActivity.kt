@@ -7,50 +7,43 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModelProvider
+import com.tomtom.sdk.common.measures.UnitSystem
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
+import com.tomtom.sdk.map.display.ui.currentlocation.CurrentLocationButton
 import io.module.map.R
 import io.module.map.databinding.ActivityTomtomMapBinding
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_VIEW_TILE
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_ZOOM_VALUE
 import io.module.map.tomtom.permission.MapPermissionCenter
 import io.module.map.tomtom.permission.MapPermissionListener
 import io.module.map.tomtom.utils.MapLogUtil
 
 class TomTomMapActivity : AppCompatActivity() {
 
+    /**
+     * View binding
+     * */
     private val binding by lazy {
         ActivityTomtomMapBinding.inflate(layoutInflater)
+    }
+
+    /**
+     * ViewModel
+     * */
+    private val mapViewModel by lazy {
+        ViewModelProvider(this)[TomTomMapViewModel::class.java]
     }
 
     private lateinit var mapFragment: MapFragment
     private lateinit var tomtomMap: TomTomMap
 
-    /**
-     * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
-     * */
-    private val mapLocationProvider by lazy {
-        TomTomMapManager.mapLocationProvider
-    }
-
-    /**
-     * [TomTomMap • MapOptions](https://developer.tomtom.com/assets/downloads/tomtom-sdks/android/api-reference/0.33.1/maps/display-common/com.tomtom.sdk.map.display/-map-options/index.html)
-     * */
-    private val mapOptions by lazy {
-        TomTomMapManager.mapOptions
-    }
-
-    /**
-     * [TomTomMap • Location Marker](https://developer.tomtom.com/maps/android/guides/map-display/markers)
-     * */
-    private val mapLocationMarkerOptions by lazy {
-        TomTomMapManager.mapLocationMarkerOptions
-    }
-
     companion object {
         private const val TAG = "TomTomMapActivity"
-
         private const val KEY_MAP_FRAGMENT = "TomTomMapFragment"
-        private const val DEFAULT_ZOOM_VALUE = 8.0
 
         fun start(context: Context) {
             context.startActivity(
@@ -87,7 +80,6 @@ class TomTomMapActivity : AppCompatActivity() {
         super.onDestroy()
 
         // Avoid OOM
-        TomTomMapManager.unregisterLocationUpdateListener()
         mapFragment.onDestroyView()
         mapFragment.onDestroy()
     }
@@ -101,45 +93,10 @@ class TomTomMapActivity : AppCompatActivity() {
 
     private fun initMapComponent() {
         val mapDevKey = getString(R.string.tomtom_dev_key)
-        TomTomMapManager.initTomTomMapComponent(
+        mapViewModel.initTomTomMapComponent(
             context = this,
             mapDevKey = mapDevKey
         )
-    }
-
-
-    /* ======================== Ui ======================== */
-
-    private fun activeImmersiveMode() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-    }
-
-    private fun toggleLoadingView(isShow: Boolean) {
-        binding.linearLayoutLoading.visibility = if (isShow) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-    }
-
-    private fun setupMapFragment() {
-        toggleLoadingView(true)
-        mapFragment = MapFragment.newInstance(mapOptions)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.map_container, mapFragment, KEY_MAP_FRAGMENT)
-            .commit()
-
-        mapFragment.getMapAsync {
-            MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
-            toggleLoadingView(false)
-            setupMapView(it)
-        }
-    }
-
-    private fun setupMapView(map: TomTomMap) {
-        tomtomMap = map
-        enableUserLocation()
     }
 
     private fun enableUserLocation() {
@@ -168,16 +125,26 @@ class TomTomMapActivity : AppCompatActivity() {
 
     private fun showUserLocation() {
         // Enable user location.
-        mapLocationProvider.enable()
+        mapViewModel.mapLocationProvider.enable()
         // Binds the location provider.
-        tomtomMap.setLocationProvider(mapLocationProvider)
+        tomtomMap.setLocationProvider(mapViewModel.mapLocationProvider)
         // Enable the location marker.
-        tomtomMap.enableLocationMarker(mapLocationMarkerOptions)
+        tomtomMap.enableLocationMarker(mapViewModel.mapLocationMarkerOptions)
         // Register the location update listener to access the latest user location.
-        TomTomMapManager.registerLocationUpdateListener {
-            MapLogUtil.d(TAG, "[User Location] Latest location: ${it.position}")
-            tomtomMap.animateCamera(CameraOptions(it.position, DEFAULT_ZOOM_VALUE))
-            TomTomMapManager.unregisterLocationUpdateListener()
+        mapViewModel.registerLocationUpdateListener {
+            val geoPoint = it.position
+            val latitude = geoPoint.latitude
+            val longitude = geoPoint.longitude
+            MapLogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
+            mapViewModel.unregisterLocationUpdateListener()
+            // Smooth animation to the new position.
+            tomtomMap.animateCamera(
+                CameraOptions(
+                    position = geoPoint,
+                    zoom = DEFAULT_ZOOM_VALUE,
+                    tilt = DEFAULT_VIEW_TILE
+                )
+            )
         }
     }
 
@@ -196,6 +163,56 @@ class TomTomMapActivity : AppCompatActivity() {
                     }
                 }
             )
+        }
+    }
+
+    /* ======================== Ui ======================== */
+
+    private fun activeImmersiveMode() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
+    private fun toggleLoadingView(isShow: Boolean) {
+        binding.linearLayoutLoading.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    private fun setupMapFragment() {
+        toggleLoadingView(true)
+        mapFragment = MapFragment.newInstance(mapViewModel.mapOptions)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.map_container, mapFragment, KEY_MAP_FRAGMENT)
+            .commit()
+
+        mapFragment.getMapAsync {
+            MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
+            toggleLoadingView(false)
+            setupMapView(it)
+        }
+    }
+
+    private fun setupMapView(map: TomTomMap) {
+        tomtomMap = map
+        enableUserLocation()
+
+        // Customize the ui style of map
+        customMapStyle()
+        customMapFragment()
+    }
+
+    private fun customMapFragment() {
+        mapFragment.apply {
+            zoomControlsView.isVisible = true
+            scaleView.units = UnitSystem.Metric
+            scaleView.isVisible = true
+            currentLocationButton.visibilityPolicy = CurrentLocationButton.VisibilityPolicy.Visible
+        }
+    }
+
+    private fun customMapStyle() {
+        tomtomMap.apply {
+            showHillShading()
+            cameraTrackingMode = DEFAULT_TRACKING_MODE
         }
     }
 }

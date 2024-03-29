@@ -1,17 +1,22 @@
 package io.module.map.tomtom
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import com.tomtom.sdk.location.GeoLocation
 import com.tomtom.sdk.location.LocationProvider
 import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.module.map.tomtom.utils.MapLogUtil
+import javax.inject.Inject
 
-object TomTomMapManager {
-
-    private const val TAG = "TomTomMapConfig"
+@HiltViewModel
+class TomTomMapViewModel @Inject constructor(
+    application: Application
+) : AndroidViewModel(application) {
 
     /**
      * [TomTomMap • Location Provider](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
@@ -32,6 +37,17 @@ object TomTomMapManager {
      * [TomTomMap • Location Provider • OnLocationUpdateListener](https://developer.tomtom.com/android/maps/documentation/guides/location/built-in-location-provider)
      * */
     private lateinit var mapLocationUpdateListener: OnLocationUpdateListener
+
+    companion object {
+        private const val TAG = "TomTomMapConfig"
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        // Avoid OOM
+        unregisterLocationUpdateListener()
+    }
 
     fun initTomTomMapComponent(
         context: Context,

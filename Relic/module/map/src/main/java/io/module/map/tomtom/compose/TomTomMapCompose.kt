@@ -15,14 +15,11 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
+import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
-import com.tomtom.sdk.map.display.camera.CameraOptions
-import com.tomtom.sdk.map.display.common.screen.Padding
-import com.tomtom.sdk.map.display.style.StyleMode
+import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.R
-import io.module.map.tomtom.TomTomMapManager.mapLocationMarkerOptions
-import io.module.map.tomtom.TomTomMapManager.mapLocationProvider
 import io.module.map.tomtom.utils.MapLogUtil
 
 private const val TAG = "TomTomMapComponent"
@@ -31,9 +28,15 @@ private const val TAG = "TomTomMapComponent"
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
  *
  * @param modifier
+ * @param mapLocationProvider
+ * @param mapLocationMarkerOptions
  * */
 @Composable
-fun TomTomMapComponent(modifier: Modifier = Modifier) {
+fun TomTomMapComponent(
+    modifier: Modifier = Modifier,
+    mapLocationProvider: AndroidLocationProvider,
+    mapLocationMarkerOptions: LocationMarkerOptions
+) {
 
     if (LocalInspectionMode.current) {
         MapLogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
@@ -45,16 +48,7 @@ fun TomTomMapComponent(modifier: Modifier = Modifier) {
 
     val devKey = stringResource(id = R.string.tomtom_dev_key)
     val mapView = remember {
-        MapView(
-            context = context,
-            mapOptions = MapOptions(
-                mapKey = devKey,
-                cameraOptions = CameraOptions(),
-                padding = Padding(),
-                styleMode = StyleMode.DARK,
-                renderToTexture = true
-            )
-        )
+        MapView(context, MapOptions(devKey))
     }
 
     AndroidView(
@@ -69,10 +63,8 @@ fun TomTomMapComponent(modifier: Modifier = Modifier) {
         disposingComposition {
             mapView.newComposition(parentComposition) {
                 mapView.getMapAsync {
-                    val provider = mapLocationProvider
-                    val options = mapLocationMarkerOptions
-                    it.setLocationProvider(provider)
-                    it.enableLocationMarker(options)
+                    it.setLocationProvider(mapLocationProvider)
+                    it.enableLocationMarker(mapLocationMarkerOptions)
                 }
             }
         }

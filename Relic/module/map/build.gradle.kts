@@ -10,6 +10,12 @@ private val composeCompilerVersion = "1.5.10"
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+
+    // KSP
+    id("com.google.devtools.ksp")
+
+    // Hilt
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -76,18 +82,18 @@ dependencies {
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
 
-    // Location Services
-    implementation("com.google.android.gms:play-services-location:21.2.0")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    ksp("com.google.dagger:hilt-compiler:2.51")
 
     /* ======================== Third-party Extension ======================== */
 
     // TomTom - Map display
-    implementation("com.tomtom.sdk.maps:map-display:0.50.3") {
-        exclude(group = "com.google.protobuf")
-    }
-
+    implementation("com.tomtom.sdk.maps:map-display:0.50.6")
     // TomTom - Location provider
-    implementation("com.tomtom.sdk.location:provider-android:0.50.3")
+    implementation("com.tomtom.sdk.location:provider-android:0.50.6")
+    // TomTom - Map search online services
+    implementation("com.tomtom.sdk.search:search-online:0.50.6")
 
     // Lottie
     implementation("com.airbnb.android:lottie:6.4.0")

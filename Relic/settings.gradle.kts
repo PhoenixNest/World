@@ -25,7 +25,6 @@ rootProject.name = "Relic"
 include(":module:ad")
 include(":module:map")
 include(":module:location")
-// Agent module
 include(":agent:gemini")
 // Feature layer
 include(":app")
