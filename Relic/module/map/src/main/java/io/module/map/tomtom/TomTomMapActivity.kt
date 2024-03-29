@@ -94,7 +94,7 @@ class TomTomMapActivity : AppCompatActivity() {
     private fun initMapComponent() {
         val mapDevKey = getString(R.string.tomtom_dev_key)
         mapViewModel.initTomTomMapComponent(
-            context = this,
+            context = this@TomTomMapActivity,
             mapDevKey = mapDevKey
         )
     }
