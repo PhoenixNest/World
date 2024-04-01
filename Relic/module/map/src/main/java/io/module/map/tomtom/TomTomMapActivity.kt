@@ -68,16 +68,19 @@ class TomTomMapActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
         mapFragment.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        MapLogUtil.d(TAG, "[Map Lifecycle] onPause")
         mapFragment.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        MapLogUtil.d(TAG, "[Map Lifecycle] onDestroy")
 
         // Avoid OOM
         mapFragment.onDestroyView()
@@ -113,8 +116,10 @@ class TomTomMapActivity : AppCompatActivity() {
         )
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
+            MapLogUtil.d(TAG, "[Map Permission] Permission granted")
             showUserLocation()
         } else {
+            MapLogUtil.w(TAG, "[Map Permission] Request runtime permission")
             val permissionList = listOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -124,6 +129,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun showUserLocation() {
+        MapLogUtil.d(TAG, "[User Location] Get the latest location info of user")
         // Enable user location.
         mapViewModel.mapLocationProvider.enable()
         // Binds the location provider.
@@ -155,11 +161,12 @@ class TomTomMapActivity : AppCompatActivity() {
                 requestPermission = permission,
                 permissionListener = object : MapPermissionListener {
                     override fun onPermissionGranted() {
+                        MapLogUtil.d(TAG, "[Map Permission] Permission Granted")
                         enableUserLocation()
                     }
 
                     override fun onPermissionDenied() {
-                        //
+                        MapLogUtil.e(TAG, "[Map Permission] Permission Denied")
                     }
                 }
             )
