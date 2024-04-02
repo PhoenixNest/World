@@ -1,5 +1,7 @@
 package io.module.map.tomtom.compose
 
+import android.Manifest
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -15,11 +17,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
+import com.tomtom.sdk.location.LocationProvider
+import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.R
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_LOCATION_MARKER_TYPE
+import io.module.map.tomtom.permission.MapPermissionCenter
 import io.module.map.tomtom.utils.MapLogUtil
 
 private const val TAG = "TomTomMapComponent"
@@ -27,15 +33,13 @@ private const val TAG = "TomTomMapComponent"
 /**
  * The Compose component of [TomTomMap](https://developer.tomtom.com/android/maps/documentation/overview/introduction)
  *
+ * @param context
  * @param modifier
- * @param mapLocationProvider
- * @param mapLocationMarkerOptions
  * */
 @Composable
 fun TomTomMapComponent(
-    modifier: Modifier = Modifier,
-    mapLocationProvider: AndroidLocationProvider,
-    mapLocationMarkerOptions: LocationMarkerOptions
+    context: Context,
+    modifier: Modifier = Modifier
 ) {
 
     if (LocalInspectionMode.current) {
@@ -43,8 +47,6 @@ fun TomTomMapComponent(
         Box(modifier = modifier)
         return
     }
-
-    val context = LocalContext.current
 
     val devKey = stringResource(id = R.string.tomtom_dev_key)
     val mapView = remember {
@@ -63,8 +65,19 @@ fun TomTomMapComponent(
         disposingComposition {
             mapView.newComposition(parentComposition) {
                 mapView.getMapAsync {
-                    it.setLocationProvider(mapLocationProvider)
-                    it.enableLocationMarker(mapLocationMarkerOptions)
+                    // Enable location marker to indicate the current user location.
+                    val locationMarkerOptions = LocationMarkerOptions(DEFAULT_LOCATION_MARKER_TYPE)
+                    it.enableLocationMarker(locationMarkerOptions)
+
+                    // Binds the location provider to TomTomMap to fetch the latest user location.
+                    val provider = TomTomMapLocationProviderFactory(context)
+                    it.setLocationProvider(provider)
+
+                    // Binds the update listener to gets the callback when fetch the latest location info.
+                    val locationUpdateListener = OnLocationUpdateListener {
+                        // Use the latest location info
+                    }
+                    provider.addOnLocationUpdateListener(locationUpdateListener)
                 }
             }
         }
@@ -110,4 +123,23 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
             mapView.removeAllViews()
         }
     }
+}
+
+@Suppress("FunctionName")
+private fun TomTomMapLocationProviderFactory(context: Context): LocationProvider {
+    val locationProvider = AndroidLocationProvider(context)
+
+    val isAccessCoarseLocation = MapPermissionCenter.checkPermission(
+        context = context,
+        requestPermission = Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+    val isAccessFineLocation = MapPermissionCenter.checkPermission(
+        context = context,
+        requestPermission = Manifest.permission.ACCESS_FINE_LOCATION
+    )
+    if (isAccessCoarseLocation && isAccessFineLocation) {
+        locationProvider.enable()
+    }
+
+    return locationProvider
 }

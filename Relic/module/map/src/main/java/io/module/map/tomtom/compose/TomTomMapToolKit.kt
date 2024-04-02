@@ -1,3 +1,5 @@
+@file:JvmName("TomTomMapComposeKt")
+
 package io.module.map.tomtom.compose
 
 import android.content.ComponentCallbacks
@@ -12,9 +14,12 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
+import io.module.map.tomtom.utils.MapLogUtil
 import kotlinx.coroutines.awaitCancellation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
+private const val TAG = "TomTomMapToolKit"
 
 suspend inline fun disposingComposition(factory: () -> Composition) {
     val composition = factory()
@@ -50,21 +55,49 @@ suspend inline fun MapView.newComposition(
 }
 
 fun MapView.lifecycleObserver(
-    previousAMapState: MutableState<Lifecycle.Event>
+    previousAMapState: MutableState<Lifecycle.Event>,
+    onCreate: () -> Unit = {},
+    onStart: () -> Unit = {},
+    onResume: () -> Unit = {},
+    onPause: () -> Unit = {},
+    onStop: () -> Unit = {}
 ): LifecycleObserver {
     return LifecycleEventObserver { _, event ->
         when (event) {
             Lifecycle.Event.ON_CREATE -> {
+                MapLogUtil.d(TAG, "[Map Lifecycle] onCreate")
                 if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
                     this.onCreate(Bundle())
+                    onCreate.invoke()
                 }
             }
 
-            Lifecycle.Event.ON_START -> this.onStart()
-            Lifecycle.Event.ON_RESUME -> this.onResume()
-            Lifecycle.Event.ON_PAUSE -> this.onPause()
-            Lifecycle.Event.ON_STOP -> this.onStop()
+            Lifecycle.Event.ON_START -> {
+                MapLogUtil.d(TAG, "[Map Lifecycle] onStart")
+                this.onStart()
+                onStart.invoke()
+            }
+
+            Lifecycle.Event.ON_RESUME -> {
+                MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
+                this.onResume()
+                onResume.invoke()
+            }
+
+            Lifecycle.Event.ON_PAUSE -> {
+                MapLogUtil.w(TAG, "[Map Lifecycle] onPause")
+                this.onPause()
+                onPause.invoke()
+            }
+
+            Lifecycle.Event.ON_STOP -> {
+                MapLogUtil.w(TAG, "[Map Lifecycle] onStop")
+                this.onStop()
+                onStop.invoke()
+            }
+
             Lifecycle.Event.ON_DESTROY -> {
+                MapLogUtil.e(TAG, "[Map Lifecycle] onDestroy")
                 // Handled in onDispose.
             }
 

@@ -8,19 +8,22 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
-import com.tomtom.sdk.common.measures.UnitSystem
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
-import com.tomtom.sdk.map.display.ui.currentlocation.CurrentLocationButton
 import io.module.map.R
 import io.module.map.databinding.ActivityTomtomMapBinding
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_SHOW_SCALE_VIEW
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_LOCATION_BUTTON_POLICY
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_SCALE_VIEW_UNIT
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_VIEW_TILE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_ZOOM_VALUE
 import io.module.map.tomtom.permission.MapPermissionCenter
 import io.module.map.tomtom.permission.MapPermissionListener
 import io.module.map.tomtom.utils.MapLogUtil
+import io.module.map.tomtom.viewmodel.TomTomMapViewModel
 
 class TomTomMapActivity : AppCompatActivity() {
 
@@ -209,10 +212,10 @@ class TomTomMapActivity : AppCompatActivity() {
 
     private fun customMapFragment() {
         mapFragment.apply {
-            zoomControlsView.isVisible = true
-            scaleView.units = UnitSystem.Metric
-            scaleView.isVisible = true
-            currentLocationButton.visibilityPolicy = CurrentLocationButton.VisibilityPolicy.Visible
+            zoomControlsView.isVisible = DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW
+            scaleView.units = DEFAULT_SCALE_VIEW_UNIT
+            scaleView.isVisible = DEFAULT_IS_SHOW_SCALE_VIEW
+            currentLocationButton.visibilityPolicy = DEFAULT_LOCATION_BUTTON_POLICY
         }
     }
 

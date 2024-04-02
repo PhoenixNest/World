@@ -3,7 +3,9 @@ package io.module.map.tomtom
 import com.tomtom.sdk.common.measures.UnitSystem
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraTrackingMode
+import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
+import com.tomtom.sdk.map.display.ui.currentlocation.CurrentLocationButton
 
 object TomTomMapCustomizer {
 
@@ -42,7 +44,7 @@ object TomTomMapCustomizer {
      *
      * `The scale range is 10 m to 1000 km (metric) / 30 ft to 620 mi (imperial).`
      * */
-    private const val DEFAULT_IS_SHOW_SCALE_VIEW = true
+    const val DEFAULT_IS_SHOW_SCALE_VIEW = true
 
     /**
      * [Zoom Control](https://developer.tomtom.com/maps/android/guides/map-display/ui-controls#zoom-controls)
@@ -50,7 +52,7 @@ object TomTomMapCustomizer {
      * When visible, the zoom control is in the middle of the right-hand side of the map.
      * It is invisible by default, but you can change it using the isVisible flag on the ZoomControlsView.
      * */
-    private const val DEFAULT_IS_ENABLE_ZOOM_CONTROL = true
+    const val DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW = false
 
     /**
      * [UnitSystem](https://developer.tomtom.com/assets/downloads/tomtom-sdks/android/api-reference/0.50.6/common/core/com.tomtom.sdk.common.measures/-unit-system/index.html)
@@ -58,7 +60,24 @@ object TomTomMapCustomizer {
      * Preferred system of measurement. Choose UnitSystem.Metric for the metric system (meters, kilometers),
      * or, for the imperial system, UnitSystem.UK (miles, yards) or UnitSystem.US (miles, feet).
      * */
-    private val DEFAULT_SCALE_VIEW_UNIT = UnitSystem.Metric
+    val DEFAULT_SCALE_VIEW_UNIT = UnitSystem.Metric
+
+    /**
+     * [Location Marker Type](https://developer.tomtom.com/maps/android/guides/map-display/user-location#locationmarkertype)
+     *
+     * This parameter specifies the type of the marker. It is required. The Map Display module provides two default markers:
+     *
+     * - LocationMarkerType.Pointer - Location marker rendered as a point.
+     * - LocationMarkerType.Chevron - Location marker rendered as a chevron.
+     * */
+    val DEFAULT_LOCATION_MARKER_TYPE = LocationMarkerOptions.Type.Pointer
+
+    /**
+     * [Current location button](https://developer.tomtom.com/maps/android/guides/map-display/ui-controls#current-location-button)
+     *
+     * Users can click the current location button to re-center the camera on the device location.
+     * */
+    val DEFAULT_LOCATION_BUTTON_POLICY = CurrentLocationButton.VisibilityPolicy.Visible
 
     /* ======================== Map camera ======================== */
 
@@ -99,7 +118,7 @@ object TomTomMapCustomizer {
 
     /* ======================== Map customizer ======================== */
 
-    fun MapFragment.toggleZoomControl(isShowUi: Boolean = DEFAULT_IS_ENABLE_ZOOM_CONTROL) {
+    fun MapFragment.toggleZoomControl(isShowUi: Boolean = DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW) {
         zoomControlsView.isVisible = isShowUi
     }
 
