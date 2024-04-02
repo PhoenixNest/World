@@ -8,7 +8,6 @@ plugins {
     // Parcelize Models
     id("kotlin-parcelize")
 
-
     // Hilt
     alias(libs.plugins.hiltAndroid)
 }
