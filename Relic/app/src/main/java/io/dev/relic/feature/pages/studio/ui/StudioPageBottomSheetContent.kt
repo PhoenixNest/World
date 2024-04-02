@@ -22,7 +22,7 @@ import io.dev.relic.feature.pages.studio.ui.widget.StudioTopHeadlineNewsList
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTrendingNewsList
 
 @Composable
-fun StudioBottomSheet(
+fun StudioPageBottomSheetContent(
     bottomSheetState: StudioBottomSheetState,
     onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
     onNewsCardClick: (model: NewsArticleModel) -> Unit,
@@ -68,8 +68,8 @@ fun StudioBottomSheet(
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF282C34)
-private fun StudioBottomSheetPreview() {
-    StudioBottomSheet(
+private fun StudioBottomSheetContentPreview() {
+    StudioPageBottomSheetContent(
         bottomSheetState = StudioBottomSheetState(
             currentSelectTab = 0,
             trendingNewsDataState = TrendingNewsDataState.Init,

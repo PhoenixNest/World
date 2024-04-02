@@ -44,7 +44,7 @@ fun LazyListScope.HomeFoodRecipesList(
                 } else {
                     val itemDecorationModifier = Modifier.padding(
                         top = if (index == 0) 0.dp else 8.dp,
-                        bottom = if (index == dataState.data.size - 1) 56.dp else 0.dp
+                        bottom = if (index == dataState.data.size - 1) 72.dp else 0.dp
                     )
                     FoodRecipesColumnItem(
                         data = data as FoodRecipesComplexSearchModel,
