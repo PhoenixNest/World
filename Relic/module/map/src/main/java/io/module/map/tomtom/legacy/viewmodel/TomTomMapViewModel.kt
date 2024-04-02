@@ -1,4 +1,4 @@
-package io.module.map.tomtom.legacy
+package io.module.map.tomtom.legacy.viewmodel
 
 import android.app.Application
 import android.content.Context

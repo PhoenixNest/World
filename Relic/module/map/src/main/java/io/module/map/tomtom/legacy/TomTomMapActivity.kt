@@ -22,6 +22,7 @@ import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_SCALE_VIEW_UNIT
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_VIEW_TILE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_ZOOM_VALUE
+import io.module.map.tomtom.legacy.viewmodel.TomTomMapViewModel
 import io.module.map.utils.MapLogUtil
 
 class TomTomMapActivity : AppCompatActivity() {
