@@ -4,7 +4,7 @@ import android.util.Log
 import io.module.ad.BuildConfig
 
 @Suppress("LocalVariableName")
-object AdLogUtil {
+internal object LogUtil {
 
     private const val DEFAULT_TAG = "Ad - LogUtil"
 
