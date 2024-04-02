@@ -49,7 +49,7 @@ import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailP
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.module.map.tomtom.TomTomMapActivity
+import io.module.map.tomtom.legacy.TomTomMapActivity
 import kotlinx.coroutines.launch
 
 @Composable

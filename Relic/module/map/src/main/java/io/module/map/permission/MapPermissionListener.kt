@@ -1,4 +1,4 @@
-package io.module.map.tomtom.permission
+package io.module.map.permission
 
 interface MapPermissionListener {
 

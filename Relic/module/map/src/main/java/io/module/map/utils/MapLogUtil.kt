@@ -1,4 +1,4 @@
-package io.module.map.tomtom.utils
+package io.module.map.utils
 
 import android.util.Log
 import io.module.map.BuildConfig

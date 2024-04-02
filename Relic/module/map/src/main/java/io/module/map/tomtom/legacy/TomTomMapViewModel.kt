@@ -1,4 +1,4 @@
-package io.module.map.tomtom.viewmodel
+package io.module.map.tomtom.legacy
 
 import android.app.Application
 import android.content.Context
@@ -10,7 +10,7 @@ import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.module.map.tomtom.utils.MapLogUtil
+import io.module.map.utils.MapLogUtil
 import javax.inject.Inject
 
 @HiltViewModel

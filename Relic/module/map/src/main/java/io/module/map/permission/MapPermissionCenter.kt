@@ -1,4 +1,4 @@
-package io.module.map.tomtom.permission
+package io.module.map.permission
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import io.module.map.tomtom.utils.MapLogUtil
+import io.module.map.utils.MapLogUtil
 
 object MapPermissionCenter {
 
