@@ -14,7 +14,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
-import io.module.map.utils.MapLogUtil
+import io.module.map.utils.LogUtil
 import kotlinx.coroutines.awaitCancellation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -65,7 +65,7 @@ fun MapView.lifecycleObserver(
     return LifecycleEventObserver { _, event ->
         when (event) {
             Lifecycle.Event.ON_CREATE -> {
-                MapLogUtil.d(TAG, "[Map Lifecycle] onCreate")
+                LogUtil.d(TAG, "[Map Lifecycle] onCreate")
                 if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
                     this.onCreate(Bundle())
                     onCreate.invoke()
@@ -73,31 +73,31 @@ fun MapView.lifecycleObserver(
             }
 
             Lifecycle.Event.ON_START -> {
-                MapLogUtil.d(TAG, "[Map Lifecycle] onStart")
+                LogUtil.d(TAG, "[Map Lifecycle] onStart")
                 this.onStart()
                 onStart.invoke()
             }
 
             Lifecycle.Event.ON_RESUME -> {
-                MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
+                LogUtil.d(TAG, "[Map Lifecycle] onResume")
                 this.onResume()
                 onResume.invoke()
             }
 
             Lifecycle.Event.ON_PAUSE -> {
-                MapLogUtil.w(TAG, "[Map Lifecycle] onPause")
+                LogUtil.w(TAG, "[Map Lifecycle] onPause")
                 this.onPause()
                 onPause.invoke()
             }
 
             Lifecycle.Event.ON_STOP -> {
-                MapLogUtil.w(TAG, "[Map Lifecycle] onStop")
+                LogUtil.w(TAG, "[Map Lifecycle] onStop")
                 this.onStop()
                 onStop.invoke()
             }
 
             Lifecycle.Event.ON_DESTROY -> {
-                MapLogUtil.e(TAG, "[Map Lifecycle] onDestroy")
+                LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
                 // Handled in onDispose.
             }
 

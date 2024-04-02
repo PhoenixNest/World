@@ -23,7 +23,7 @@ import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_VIEW_TILE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_ZOOM_VALUE
 import io.module.map.tomtom.legacy.viewmodel.TomTomMapViewModel
-import io.module.map.utils.MapLogUtil
+import io.module.map.utils.LogUtil
 
 class TomTomMapActivity : AppCompatActivity() {
 
@@ -71,19 +71,19 @@ class TomTomMapActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
+        LogUtil.d(TAG, "[Map Lifecycle] onResume")
         mapFragment.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        MapLogUtil.d(TAG, "[Map Lifecycle] onPause")
+        LogUtil.d(TAG, "[Map Lifecycle] onPause")
         mapFragment.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        MapLogUtil.d(TAG, "[Map Lifecycle] onDestroy")
+        LogUtil.d(TAG, "[Map Lifecycle] onDestroy")
 
         // Avoid OOM
         mapFragment.onDestroyView()
@@ -98,15 +98,15 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun initMapComponent() {
-        val mapDevKey = getString(R.string.tomtom_dev_key)
-        mapViewModel.initTomTomMapComponent(
-            context = this@TomTomMapActivity,
-            mapDevKey = mapDevKey
-        )
+        mapViewModel.apply {
+            val devKey = getString(R.string.tomtom_dev_key)
+            initTomTomMapComponent(this@TomTomMapActivity, devKey)
+            initOnlineSearchService(this@TomTomMapActivity, devKey)
+        }
     }
 
     private fun enableUserLocation() {
-        MapLogUtil.d(TAG, "[Map View] Enable user location.")
+        LogUtil.d(TAG, "[Map View] Enable user location.")
 
         val isAccessFineLocation = MapPermissionCenter.checkPermission(
             context = this@TomTomMapActivity,
@@ -119,10 +119,10 @@ class TomTomMapActivity : AppCompatActivity() {
         )
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
-            MapLogUtil.d(TAG, "[Map Permission] Permission granted")
+            LogUtil.d(TAG, "[Map Permission] Permission granted")
             showUserLocation()
         } else {
-            MapLogUtil.w(TAG, "[Map Permission] Request runtime permission")
+            LogUtil.w(TAG, "[Map Permission] Request runtime permission")
             val permissionList = listOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -132,7 +132,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun showUserLocation() {
-        MapLogUtil.d(TAG, "[User Location] Get the latest location info of user")
+        LogUtil.d(TAG, "[User Location] Get the latest location info of user")
         // Enable user location.
         mapViewModel.mapLocationProvider.enable()
         // Binds the location provider.
@@ -144,7 +144,7 @@ class TomTomMapActivity : AppCompatActivity() {
             val geoPoint = it.position
             val latitude = geoPoint.latitude
             val longitude = geoPoint.longitude
-            MapLogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
+            LogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
             mapViewModel.unregisterLocationUpdateListener()
             // Smooth animation to the new position.
             tomtomMap.animateCamera(
@@ -164,12 +164,12 @@ class TomTomMapActivity : AppCompatActivity() {
                 requestPermission = permission,
                 permissionListener = object : MapPermissionListener {
                     override fun onPermissionGranted() {
-                        MapLogUtil.d(TAG, "[Map Permission] Permission Granted")
+                        LogUtil.d(TAG, "[Map Permission] Permission Granted")
                         enableUserLocation()
                     }
 
                     override fun onPermissionDenied() {
-                        MapLogUtil.e(TAG, "[Map Permission] Permission Denied")
+                        LogUtil.e(TAG, "[Map Permission] Permission Denied")
                     }
                 }
             )
@@ -195,7 +195,7 @@ class TomTomMapActivity : AppCompatActivity() {
             .commit()
 
         mapFragment.getMapAsync {
-            MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
+            LogUtil.d(TAG, "[TomTomMap] Get map async successful.")
             toggleLoadingView(false)
             setupMapView(it)
         }

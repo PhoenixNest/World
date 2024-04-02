@@ -26,7 +26,7 @@ import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.R
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_LOCATION_MARKER_TYPE
 import io.module.map.permission.MapPermissionCenter
-import io.module.map.utils.MapLogUtil
+import io.module.map.utils.LogUtil
 
 private const val TAG = "TomTomMapComponent"
 
@@ -43,7 +43,7 @@ fun TomTomMapComponent(
 ) {
 
     if (LocalInspectionMode.current) {
-        MapLogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
+        LogUtil.e(TAG, "[Render] Compose inspection Mode, skip rending")
         Box(modifier = modifier)
         return
     }
@@ -104,12 +104,12 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
         val mapComponentCallback = mapView.componentCallback()
         val mapLifecycleObserver = mapView.lifecycleObserver(previousMapState)
 
-        MapLogUtil.d(TAG, "[Lifecycle] Binds the lifecycle with mapView")
+        LogUtil.d(TAG, "[Lifecycle] Binds the lifecycle with mapView")
         lifecycle.addObserver(mapLifecycleObserver)
         context.registerComponentCallbacks(mapComponentCallback)
 
         onDispose {
-            MapLogUtil.w(TAG, "[Lifecycle] Compose onDispose, free memory")
+            LogUtil.w(TAG, "[Lifecycle] Compose onDispose, free memory")
             lifecycle.removeObserver(mapLifecycleObserver)
             context.unregisterComponentCallbacks(mapComponentCallback)
         }
@@ -118,7 +118,7 @@ private fun TomTomMapLifecycleBinder(mapView: MapView) {
     DisposableEffect(mapView) {
         onDispose {
             // Avoid OOM
-            MapLogUtil.w(TAG, "[Lifecycle] mapView onDispose, free memory")
+            LogUtil.w(TAG, "[Lifecycle] mapView onDispose, free memory")
             mapView.onDestroy()
             mapView.removeAllViews()
         }
