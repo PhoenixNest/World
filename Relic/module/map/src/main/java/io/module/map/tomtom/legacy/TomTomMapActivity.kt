@@ -159,6 +159,16 @@ class TomTomMapActivity : AppCompatActivity() {
 
     private fun requestRuntimePermission(permissionList: List<String>) {
         permissionList.forEach { permission ->
+            val checkPermission = MapPermissionCenter.checkPermission(
+                context = this@TomTomMapActivity,
+                requestPermission = permission
+            )
+
+            if (checkPermission) {
+                LogUtil.w(TAG, "[Request Runtime Permission] Already granted, skip...")
+                return
+            }
+
             MapPermissionCenter.requestRuntimePermission(
                 activity = this@TomTomMapActivity,
                 requestPermission = permission,
