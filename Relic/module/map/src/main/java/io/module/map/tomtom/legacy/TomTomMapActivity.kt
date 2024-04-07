@@ -82,12 +82,12 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         LogUtil.d(TAG, "[Map Lifecycle] onDestroy")
+        tomtomMap.setLocationProvider(null)
+        super.onDestroy()
 
         // Avoid OOM
-        mapFragment.onDestroyView()
-        mapFragment.onDestroy()
+        mapViewModel.mapLocationProvider.close()
     }
 
     /* ======================== Logical ======================== */
