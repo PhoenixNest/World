@@ -1,5 +1,3 @@
-@file:JvmName("TomTomMapComposeKt")
-
 package io.module.map.tomtom.compose
 
 import android.content.ComponentCallbacks
