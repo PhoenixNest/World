@@ -19,7 +19,7 @@ sealed interface TodoDataState {
     /* Succeed */
 
     data class QuerySucceed(
-        val modelList: List<TodoDataModel?>?
+        val modelList: List<TodoDataModel?>
     ) : TodoDataState
 
     /* Failed */

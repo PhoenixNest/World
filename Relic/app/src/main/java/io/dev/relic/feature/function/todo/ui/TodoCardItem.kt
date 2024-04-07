@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,9 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -34,64 +30,11 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.util.TimeUtil
-import io.core.ui.CommonNoDataComponent
 import io.core.ui.dialog.CommonItemDivider
-import io.core.ui.theme.RelicFontFamily.newsReader
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainBackgroundColor
+import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainThemeColorLight
 import io.data.model.todo.TodoDataModel
-
-@Composable
-fun TodoCardPanel(
-    modelList: List<TodoDataModel?>?,
-    onCardClick: (data: TodoDataModel) -> Unit,
-    lazyListState: LazyListState
-) {
-    if (modelList.isNullOrEmpty()) {
-        CommonNoDataComponent()
-    } else {
-        TodoCardList(
-            modelList = modelList,
-            onCardClick = onCardClick,
-            lazyListState = lazyListState
-        )
-    }
-}
-
-@Composable
-private fun TodoCardList(
-    modelList: List<TodoDataModel?>,
-    onCardClick: (data: TodoDataModel) -> Unit,
-    lazyListState: LazyListState
-) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = lazyListState,
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
-            alignment = Alignment.Top
-        ),
-        contentPadding = PaddingValues(horizontal = 8.dp)
-    ) {
-        itemsIndexed(items = modelList) { index, data ->
-            if (data == null) {
-                //
-            } else {
-                val itemDecorationModifier = Modifier.padding(
-                    top = if (index == 0) 16.dp else 0.dp,
-                    bottom = if (index == modelList.size - 1) 120.dp else 0.dp
-                )
-                TodoCardItem(
-                    data = data,
-                    onCardClick = { onCardClick.invoke(data) },
-                    modifier = itemDecorationModifier
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun TodoCardItem(
@@ -101,12 +44,11 @@ fun TodoCardItem(
 ) {
     data.apply {
         Surface(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
+            modifier = modifier
+                .width(320.dp)
                 .height(240.dp),
             shape = RoundedCornerShape(16.dp),
-            color = mainBackgroundColor.copy(alpha = 0.3F)
+            color = mainThemeColorLight.copy(alpha = 0.1F)
         ) {
             Column(
                 modifier = Modifier
@@ -130,7 +72,7 @@ fun TodoCardItem(
                     style = TextStyle(
                         color = mainTextColor,
                         fontSize = 16.sp,
-                        fontFamily = ubuntu,
+                        fontFamily = RelicFontFamily.ubuntu,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -141,7 +83,7 @@ fun TodoCardItem(
                     overflow = TextOverflow.Ellipsis,
                     style = TextStyle(
                         color = mainTextColor,
-                        fontFamily = ubuntu,
+                        fontFamily = RelicFontFamily.ubuntu,
                         lineHeight = TextUnit(
                             value = 1.6F,
                             type = TextUnitType.Em
@@ -181,7 +123,7 @@ private fun TodoIntro(
                 maxLines = 1,
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = ubuntu
+                    fontFamily = RelicFontFamily.ubuntu
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -192,7 +134,7 @@ private fun TodoIntro(
                 style = TextStyle(
                     color = mainTextColor,
                     fontSize = 24.sp,
-                    fontFamily = newsReader
+                    fontFamily = RelicFontFamily.newsReader
                 )
             )
         }
@@ -201,14 +143,14 @@ private fun TodoIntro(
 
 @Composable
 @Preview
-private fun TodoCardPreview() {
+private fun TodoCardItemPreview() {
     TodoCardItem(
         data = TodoDataModel(
             title = "Todo Task Title",
             subtitle = "Subtitle",
             content = "Material 3 is the latest version of Google’s open-source design system. Design and build beautiful, usable products with Material 3.",
             priority = 0,
-            color = 0xFF000000,
+            color = 0xFFDEB654,
             updateTime = TimeUtil.getCurrentTime().toString(),
             isFinish = true
         ),

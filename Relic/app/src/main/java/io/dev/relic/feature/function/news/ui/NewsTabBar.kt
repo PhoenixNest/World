@@ -2,7 +2,6 @@ package io.dev.relic.feature.function.news.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,19 +20,17 @@ import androidx.compose.ui.unit.dp
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor30
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
 @Composable
 fun NewsTabBar(
     currentSelectedTab: Int,
     lazyListState: LazyListState,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = mainThemeColor),
+        modifier = modifier.fillMaxWidth(),
         state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(
             space = 16.dp,
@@ -82,7 +79,7 @@ private fun NewsTabBarItem(
 }
 
 @Composable
-@Preview(showBackground = true, backgroundColor = 0xFF282C34)
+@Preview
 private fun NewsTabBarPreview() {
     NewsTabBar(
         currentSelectedTab = 0,

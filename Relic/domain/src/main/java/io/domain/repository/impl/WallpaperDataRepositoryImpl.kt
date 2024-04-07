@@ -6,6 +6,9 @@ import io.data.model.NetworkResult
 import io.domain.repository.IWallpaperDataRepository
 import javax.inject.Inject
 
+/**
+ * @see IWallpaperDataRepository
+ * */
 class WallpaperDataRepositoryImpl @Inject constructor(
     private val wallpaperApi: IWallpaperApi
 ) : IWallpaperDataRepository {

@@ -5,11 +5,12 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.data.dto.weather.WeatherForecastDTO
+import io.data.mappers.WeatherDataMapper.toModel
 import io.data.mappers.WeatherDataMapper.toWeatherEntity
-import io.data.mappers.WeatherDataMapper.toWeatherInfoModel
 import io.data.model.NetworkResult
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.dev.relic.feature.screens.main.MainState
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,7 +56,7 @@ class MainViewModel @Inject constructor(
      * Try to access the current location of the device first
      * */
     private fun accessDeviceLocation() {
-        viewModelScope.launch {
+        operationInViewModelScope {
             locationUseCase.getCurrentLocation.invoke(
                 listener = object : ILocationListener {
                     override fun onAccessing() {
@@ -88,24 +88,19 @@ class MainViewModel @Inject constructor(
     fun getWeatherData(
         latitude: Double,
         longitude: Double
-    ): StateFlow<NetworkResult<WeatherForecastDTO>> {
-        return weatherUseCase
-            .getWeatherData(
+    ) {
+        operationInViewModelScope {
+            weatherUseCase.getWeatherData.invoke(
                 latitude = latitude,
                 longitude = longitude
-            )
-            .stateIn(
+            ).stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
-            )
-            .also { stateFlow ->
-                viewModelScope.launch {
-                    stateFlow.collect { result ->
-                        handleRemoteWeatherData(result)
-                    }
-                }
+            ).collect { result ->
+                handleRemoteWeatherData(result)
             }
+        }
     }
 
     private suspend fun handleRemoteWeatherData(result: NetworkResult<WeatherForecastDTO>) {
@@ -118,7 +113,7 @@ class MainViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Weather Data] Succeed, data: $dto")
-                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(dto.toWeatherInfoModel()))
+                    setState(_weatherDataStateFlow, WeatherDataState.FetchSucceed(dto.toModel()))
                     weatherUseCase.cacheWeatherData.invoke(dto.toWeatherEntity())
                 } ?: {
                     LogUtil.w(TAG, "[Handle Weather Data] Succeed without data")

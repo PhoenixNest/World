@@ -28,23 +28,35 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainDrawer
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
 
+/**
+ * Main Screen entrance
+ *
+ * @param savedInstanceState
+ * @param windowSizeClass
+ * @param networkMonitor
+ * @param mainViewModel                 Global ViewModel
+ * @param geminiAgentViewModel          Provide the Ai Chat feature to Home page
+ * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
+ * @param todoViewModel                 Provide the todo feature to Studio page
+ * @param newsViewModel                 Provide the News feature to Studio page
+ * @param mainScreenState
+ * */
 @Composable
 fun MainScreen(
-    // Common
     savedInstanceState: Bundle?,
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
-    // Data & ViewModel
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel,
+    todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
-    // Main Screen State
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -154,6 +166,7 @@ fun MainScreen(
                             mainViewModel = mainViewModel,
                             geminiAgentViewModel = geminiAgentViewModel,
                             foodRecipesViewModel = foodRecipesViewModel,
+                            todoViewModel = todoViewModel,
                             newsViewModel = newsViewModel,
                             modifier = Modifier.fillMaxSize()
                         )

@@ -23,6 +23,7 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.domain.app.AbsBaseActivity
 
@@ -49,6 +50,13 @@ class MainActivity : AbsBaseActivity() {
      * */
     private val foodRecipesViewModel by lazy {
         ViewModelProvider(this)[FoodRecipesViewModel::class.java]
+    }
+
+    /**
+     * ViewModel - Todo
+     * */
+    private val todoViewModel by lazy {
+        ViewModelProvider(this)[TodoViewModel::class.java]
     }
 
     /**
@@ -102,6 +110,7 @@ class MainActivity : AbsBaseActivity() {
                         mainViewModel = mainViewModel,
                         geminiAgentViewModel = geminiAgentViewModel,
                         foodRecipesViewModel = foodRecipesViewModel,
+                        todoViewModel = todoViewModel,
                         newsViewModel = newsViewModel
                     )
                 }

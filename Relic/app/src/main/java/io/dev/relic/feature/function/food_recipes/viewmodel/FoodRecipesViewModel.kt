@@ -17,9 +17,9 @@ import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeAsyncData
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
-import io.data.mappers.FoodRecipesDataMapper.toComplexSearchEntity
-import io.data.mappers.FoodRecipesDataMapper.toComplexSearchModelList
-import io.data.mappers.FoodRecipesDataMapper.toFoodRecipeInformationModel
+import io.data.mappers.FoodRecipesDataMapper.toEntity
+import io.data.mappers.FoodRecipesDataMapper.toModel
+import io.data.mappers.FoodRecipesDataMapper.toModelList
 import io.data.model.NetworkResult
 import io.dev.relic.BuildConfig
 import io.dev.relic.R
@@ -117,7 +117,8 @@ class FoodRecipesViewModel @Inject constructor(
                 query = queryType,
                 offset = offset
             )
-            // foodRecipesUseCase.queryCachedComplexRecipesData.invoke()
+            // foodRecipesUseCase.queryCachedComplexRecipesData()
+            //     .stateIn(it)
             //     .collect { entityList ->
             //         if (entityList.isNotEmpty()) {
             //             val entity = entityList.first()
@@ -155,17 +156,15 @@ class FoodRecipesViewModel @Inject constructor(
         includeNutrition: Boolean = true
     ) {
         operationInViewModelScope { scope ->
-            foodRecipesUseCase.getRecipeInformationById(
+            foodRecipesUseCase.getRecipeInformationById.invoke(
                 recipeId = recipeId,
                 includeNutrition = includeNutrition
             ).stateIn(
                 scope = scope,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
-            ).also { stateFlow ->
-                stateFlow.collect { result ->
-                    handleRemoteFoodRecipeInformationData(result)
-                }
+            ).collect { result ->
+                handleRemoteFoodRecipeInformationData(result)
             }
         }
     }
@@ -214,7 +213,7 @@ class FoodRecipesViewModel @Inject constructor(
         addRecipeNutrition: Boolean = !BuildConfig.DEBUG,
     ) {
         operationInViewModelScope { scope ->
-            foodRecipesUseCase.getComplexRecipesData(
+            foodRecipesUseCase.getComplexRecipesData.invoke(
                 query = query,
                 addRecipeInformation = addRecipeInformation,
                 addRecipeNutrition = addRecipeNutrition,
@@ -223,13 +222,11 @@ class FoodRecipesViewModel @Inject constructor(
                 scope = scope,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
-            ).also { stateFlow ->
-                stateFlow.collect { result ->
-                    handleRemoteFoodRecipesData(
-                        dataFlow = dataFlow,
-                        result = result
-                    )
-                }
+            ).collect { result ->
+                handleRemoteFoodRecipesData(
+                    dataFlow = dataFlow,
+                    result = result
+                )
             }
         }
     }
@@ -253,8 +250,8 @@ class FoodRecipesViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $dto")
-                    val entity = dto.toComplexSearchEntity()
-                    val modelList = dto.toComplexSearchModelList()
+                    val entity = dto.toEntity()
+                    val modelList = dto.toModelList()
                     setState(dataFlow, FoodRecipesDataState.FetchSucceed(modelList))
                     foodRecipesUseCase.cacheComplexSearchData.invoke(entity)
                 } ?: {
@@ -287,7 +284,7 @@ class FoodRecipesViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Food Recipe Information Data] Succeed, data: $dto")
-                    val model = dto.toFoodRecipeInformationModel()
+                    val model = dto.toModel()
                     setState(_informationDataStateFlow, FoodRecipesDataState.FetchSucceed(model))
                 } ?: {
                     LogUtil.d(TAG, "[Handle Food Recipe Information Data] Succeed without data")

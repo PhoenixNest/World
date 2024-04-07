@@ -25,7 +25,9 @@ val mainIconColorLight = Color.White.copy(alpha = 0.8F)
 
 val mainButtonColor = mainThemeColor
 val mainButtonColorLight = mainTextColor
-val mainButtonColorLightDark = mainButtonColorLight.copy(alpha = 0.8F)
+val mainButtonColorLightDim = mainButtonColorLight.copy(alpha = 0.8F)
 
 val dividerColor = Color.White.copy(alpha = 0.1F)
 val dividerColorDark = Color.Black.copy(alpha = 0.1F)
+
+val bottomSheetBackgroundColor = mainThemeColor

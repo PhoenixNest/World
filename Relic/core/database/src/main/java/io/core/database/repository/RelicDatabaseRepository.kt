@@ -1,5 +1,6 @@
 package io.core.database.repository
 
+import io.core.database.RelicDatabase
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
 import io.core.database.dao.TodoDao
@@ -18,7 +19,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * @see io.core.database.RelicDatabase
+ * @see RelicDatabase
  * */
 @Singleton
 class RelicDatabaseRepository @Inject constructor(

@@ -2,9 +2,10 @@ package io.domain.repository
 
 import io.data.dto.weather.WeatherForecastDTO
 import io.data.model.NetworkResult
+import io.domain.repository.impl.WeatherDataRepositoryImpl
 
 /**
- * @see io.domain.repository.impl.WeatherDataRepositoryImpl
+ * @see WeatherDataRepositoryImpl
  * */
 interface IWeatherDataRepository {
 

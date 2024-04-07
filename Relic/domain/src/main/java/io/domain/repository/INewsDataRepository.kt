@@ -1,11 +1,12 @@
 package io.domain.repository
 
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.model.NetworkResult
+import io.domain.repository.impl.NewsDataRepositoryImpl
 
 /**
- * @see io.domain.repository.impl.NewsDataRepositoryImpl
+ * @see NewsDataRepositoryImpl
  * */
 interface INewsDataRepository {
 

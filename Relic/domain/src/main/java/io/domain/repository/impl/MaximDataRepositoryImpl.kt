@@ -6,6 +6,9 @@ import io.data.model.NetworkResult
 import io.domain.repository.IMaximDataRepository
 import javax.inject.Inject
 
+/**
+ * @see IMaximDataRepository
+ * */
 class MaximDataRepositoryImpl @Inject constructor(
     private val maximApi: IMaximApi
 ) : IMaximDataRepository {

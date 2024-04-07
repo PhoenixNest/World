@@ -36,7 +36,7 @@ import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
-import io.core.ui.theme.mainButtonColorLightDark
+import io.core.ui.theme.mainButtonColorLightDim
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor50
 import io.data.model.news.NewsArticleModel
@@ -192,21 +192,21 @@ private fun NewsCardFunctionBar(
             Icon(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDark
+                tint = mainButtonColorLightDim
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDark
+                tint = mainButtonColorLightDim
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDark
+                tint = mainButtonColorLightDim
             )
         }
     }

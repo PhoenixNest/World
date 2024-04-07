@@ -10,6 +10,7 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
@@ -21,17 +22,28 @@ import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUDIO
 
+/**
+ * Main Screen navigation route host
+ *
+ * @param mainScreenState
+ * @param navHostController
+ * @param mainViewModel                 Global ViewModel
+ * @param geminiAgentViewModel          Provide the Ai Chat feature to Home page
+ * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
+ * @param todoViewModel                 Provide the todo feature to Studio page
+ * @param newsViewModel                 Provide the News feature to Studio page
+ * @param modifier
+ * @param startDestination              The journey begins from here
+ * */
 @Composable
 fun MainFeatureNavHost(
-    // Screen State
     mainScreenState: MainScreenState,
     navHostController: NavHostController,
-    // Data & ViewModel
     mainViewModel: MainViewModel,
     geminiAgentViewModel: GeminiAgentViewModel,
     foodRecipesViewModel: FoodRecipesViewModel,
+    todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
-    // Common
     modifier: Modifier = Modifier,
     startDestination: String = BASE_ROUTE
 ) {
@@ -57,6 +69,7 @@ fun MainFeatureNavHost(
         pageStudio(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
+            todoViewModel = todoViewModel,
             newsViewModel = newsViewModel
         )
         pageSettings(

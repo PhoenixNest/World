@@ -2,7 +2,6 @@ package io.dev.relic.feature.pages.home.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -138,48 +136,42 @@ private fun HomeTopBar(
     onOpenSetting: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+    Box(
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .systemBarsPadding()
     ) {
-        Box(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .systemBarsPadding()
+        IconButton(
+            onClick = onOpenDrawer,
+            modifier = Modifier.align(Alignment.CenterStart)
         ) {
-            IconButton(
-                onClick = onOpenDrawer,
-                modifier = Modifier.align(Alignment.CenterStart)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_apps),
-                    contentDescription = DEFAULT_DESC,
-                    tint = mainButtonColorLight
-                )
-            }
-            Text(
-                text = stringResource(R.string.home_title),
-                modifier = Modifier.align(Alignment.Center),
-                style = TextStyle(
-                    color = mainTextColor,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = ubuntu,
-                    textMotion = TextMotion.Animated
-                )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_apps),
+                contentDescription = DEFAULT_DESC,
+                tint = mainButtonColorLight
             )
-            IconButton(
-                onClick = onOpenSetting,
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_settings),
-                    contentDescription = DEFAULT_DESC,
-                    tint = mainButtonColorLight
-                )
-            }
+        }
+        Text(
+            text = stringResource(R.string.home_title),
+            modifier = Modifier.align(Alignment.Center),
+            style = TextStyle(
+                color = mainTextColor,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = ubuntu,
+                textMotion = TextMotion.Animated
+            )
+        )
+        IconButton(
+            onClick = onOpenSetting,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_settings),
+                contentDescription = DEFAULT_DESC,
+                tint = mainButtonColorLight
+            )
         }
     }
 }

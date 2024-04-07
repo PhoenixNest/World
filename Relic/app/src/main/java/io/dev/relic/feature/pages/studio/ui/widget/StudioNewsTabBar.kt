@@ -1,7 +1,6 @@
 package io.dev.relic.feature.pages.studio.ui.widget
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -20,13 +18,12 @@ import io.dev.relic.feature.function.news.ui.NewsTabBar
 fun LazyListScope.StudioTabBar(
     currentSelectedTab: Int,
     lazyListState: LazyListState,
-    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit
+    onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     stickyHeader {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = mainThemeColor),
+            modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

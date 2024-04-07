@@ -8,11 +8,11 @@ import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 
 object FoodRecipesDataMapper {
 
-    fun FoodRecipesComplexSearchDTO.toComplexSearchEntity(): FoodRecipesComplexSearchEntity {
+    fun FoodRecipesComplexSearchDTO.toEntity(): FoodRecipesComplexSearchEntity {
         return FoodRecipesComplexSearchEntity(datasource = this)
     }
 
-    fun FoodRecipesComplexSearchDTO.toComplexSearchModelList(): List<FoodRecipesComplexSearchModel?> {
+    fun FoodRecipesComplexSearchDTO.toModelList(): List<FoodRecipesComplexSearchModel?> {
         val tempList = mutableListOf<FoodRecipesComplexSearchModel?>()
         this.results?.forEach {
             tempList.add(
@@ -30,7 +30,7 @@ object FoodRecipesDataMapper {
         return tempList
     }
 
-    fun FoodRecipesInformationDTO.toFoodRecipeInformationModel(): FoodRecipeInformationModel {
+    fun FoodRecipesInformationDTO.toModel(): FoodRecipeInformationModel {
         return FoodRecipeInformationModel(
             id = id,
             title = title,

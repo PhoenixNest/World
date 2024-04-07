@@ -1,5 +1,6 @@
 package io.dev.relic.feature.pages.studio.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.mainThemeColor
 import io.core.ui.utils.RelicUiUtil
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
@@ -32,7 +34,7 @@ fun StudioPageBottomSheetContent(
     onRetryTopHeadlineClick: () -> Unit
 ) {
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
-    val bottomSheetHeight = screenHeight - 52.dp
+    val bottomSheetHeight = screenHeight - 56.dp
 
     bottomSheetState.apply {
         LazyColumn(
@@ -43,17 +45,18 @@ fun StudioPageBottomSheetContent(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            StudioNewsTitle()
+            StudioNewsTitle(modifier = Modifier.background(color = mainThemeColor))
             StudioTrendingNewsList(
                 dataState = trendingNewsDataState,
                 lazyListState = listState.trendingNewsListState,
                 onCardClick = onNewsCardClick,
-                onRetryClick = onRetryTrendingClick
+                onRetryClick = onRetryTrendingClick,
             )
             StudioTabBar(
                 currentSelectedTab = currentSelectTab,
                 lazyListState = listState.topHeadlineNewsTabListState,
-                onTabItemClick = onTabItemClick
+                onTabItemClick = onTabItemClick,
+                modifier = Modifier.background(color = mainThemeColor)
             )
             StudioTopHeadlineNewsList(
                 dataState = topHeadlineNewsDataState,
@@ -67,7 +70,7 @@ fun StudioPageBottomSheetContent(
 }
 
 @Composable
-@Preview(showBackground = true, backgroundColor = 0xFF282C34)
+@Preview
 private fun StudioBottomSheetContentPreview() {
     StudioPageBottomSheetContent(
         bottomSheetState = StudioBottomSheetState(

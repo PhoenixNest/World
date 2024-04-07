@@ -1,8 +1,8 @@
 package io.data.mappers
 
 import io.data.dto.news.NewsArticleDTO
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.entity.news.TopHeadlineNewsArticleEntity
 import io.data.entity.news.TopHeadlinesNewsEntity
 import io.data.entity.news.TrendingNewsArticleEntity
@@ -55,7 +55,7 @@ object NewsDataMapper {
         )
     }
 
-    fun List<NewsArticleDTO?>.toNewsArticleModelList(): List<NewsArticleModel?> {
+    fun List<NewsArticleDTO?>.toModelList(): List<NewsArticleModel?> {
         val tempList = mutableListOf<NewsArticleModel?>()
         this.forEach {
             tempList.add(

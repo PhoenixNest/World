@@ -1,10 +1,11 @@
 package io.domain.repository
 
 import io.data.entity.todo.TodoEntity
+import io.domain.repository.impl.TodoDataRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 
 /**
- * @see io.domain.repository.impl.TodoDataRepositoryImpl
+ * @see TodoDataRepositoryImpl
  * */
 interface ITodoDataRepository {
 

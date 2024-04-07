@@ -1,14 +1,18 @@
 package io.dev.relic.feature.pages.studio
 
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.mainThemeColor
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.core.ui.theme.bottomSheetBackgroundColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 
@@ -17,8 +21,30 @@ import io.dev.relic.feature.screens.main.MainScreenState
 fun StudioPageRoute(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
+    todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel
 ) {
+
+    /* ======================== Field ======================== */
+
+    val todoDataState by todoViewModel.todoDataStateFlow
+        .collectAsStateWithLifecycle()
+
+    /* ======================== Ui ======================== */
+
+    val todoRowListState = rememberLazyListState()
+
+    // List state
+    val todoListState = StudioTodoListState(
+        todoListState = todoRowListState
+    )
+
+    // Data state
+    val todoState = StudioTotoState(
+        todoDataState = todoDataState,
+        listState = todoListState
+    )
+
     BottomSheetScaffold(
         sheetContent = {
             StudioPageBottomSheet(
@@ -31,9 +57,11 @@ fun StudioPageRoute(
             topStart = 16.dp,
             topEnd = 16.dp
         ),
-        sheetBackgroundColor = mainThemeColor,
-        sheetPeekHeight = 140.dp,
+        sheetBackgroundColor = bottomSheetBackgroundColor,
+        sheetPeekHeight = 140.dp
     ) {
-        StudioPageContent()
+        StudioPageContent(
+            todoState = todoState,
+        )
     }
 }

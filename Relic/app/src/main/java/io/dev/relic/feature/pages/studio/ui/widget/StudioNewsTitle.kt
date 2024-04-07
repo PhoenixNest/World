@@ -21,17 +21,14 @@ import androidx.compose.ui.unit.sp
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.mainBackgroundColorLight
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Suppress("FunctionName")
-fun LazyListScope.StudioNewsTitle() {
+fun LazyListScope.StudioNewsTitle(modifier: Modifier = Modifier) {
     stickyHeader {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = mainThemeColor),
+            modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

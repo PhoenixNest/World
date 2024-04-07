@@ -1,9 +1,10 @@
 package io.module.location
 
 import android.location.Location
+import io.module.location.impl.LocationTrackerImpl
 
 /**
- * @see io.module.map.impl.LocationTrackerImpl
+ * @see LocationTrackerImpl
  * */
 interface ILocationTracker {
 

@@ -2,9 +2,10 @@ package io.domain.repository
 
 import io.data.dto.wallpaper.WallpaperImagesDTO
 import io.data.model.NetworkResult
+import io.domain.repository.impl.WallpaperDataRepositoryImpl
 
 /**
- * @see io.domain.repository.impl.WallpaperDataRepositoryImpl
+ * @see WallpaperDataRepositoryImpl
  * */
 interface IWallpaperDataRepository {
 

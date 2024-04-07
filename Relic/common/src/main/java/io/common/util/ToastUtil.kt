@@ -87,8 +87,6 @@ object ToastUtil {
 
     /**
      * Show toast with context.
-     *
-     * @see io.dev.relic.global.utils.ext.ContextExt
      * */
     fun Context.showToast(
         content: String,

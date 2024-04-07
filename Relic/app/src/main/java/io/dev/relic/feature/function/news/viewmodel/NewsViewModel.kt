@@ -12,13 +12,9 @@ import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_STATUS
-import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_TIME_DURATION
-import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_STATUS
-import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_TIME_DURATION
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.dto.news.trending.TrendingNewsDTO
-import io.data.mappers.NewsDataMapper.toNewsArticleModelList
+import io.data.mappers.NewsDataMapper.toModelList
 import io.data.mappers.NewsDataMapper.toTopHeadlineNewsEntity
 import io.data.mappers.NewsDataMapper.toTrendingNewsEntity
 import io.data.model.NetworkResult
@@ -40,6 +36,10 @@ import io.dev.relic.feature.function.news.util.NewsDataStatus
 import io.dev.relic.feature.function.news.util.NewsType
 import io.dev.relic.feature.function.news.util.NewsType.TOP_HEADLINE
 import io.dev.relic.feature.function.news.util.NewsType.TRENDING
+import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_STATUS
+import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_TIME_DURATION
+import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_STATUS
+import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_TIME_DURATION
 import io.domain.use_case.news.NewsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -67,7 +67,8 @@ class NewsViewModel @Inject constructor(
     /**
      * The data flow of top-headline news.
      * */
-    private val _topHeadlineNewsDataStateFlow = MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
+    private val _topHeadlineNewsDataStateFlow =
+        MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
     val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> get() = _topHeadlineNewsDataStateFlow
 
     companion object {
@@ -131,7 +132,7 @@ class NewsViewModel @Inject constructor(
 
             // Query the local cache data from the database
             setState(_trendingNewsDataStateFlow, TrendingNewsDataState.Fetching)
-            newsUseCase.queryAllTrendingNewsData()
+            newsUseCase.queryAllTrendingNewsData.invoke()
                 .stateIn(
                     scope = scope,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
@@ -140,7 +141,7 @@ class NewsViewModel @Inject constructor(
                 .collect { entities ->
                     if (entities.isNotEmpty()) {
                         val localDatasource = entities.first().datasource
-                        val modelList = localDatasource.articles?.toNewsArticleModelList()
+                        val modelList = localDatasource.articles?.toModelList()
                         modelList?.also { list ->
                             setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(list))
                         } ?: {
@@ -164,16 +165,15 @@ class NewsViewModel @Inject constructor(
             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.Fetching)
 
             // Query the local cache data from the database
-            newsUseCase.queryAllTopHeadlineNewsData()
+            newsUseCase.queryAllTopHeadlineNewsData.invoke()
                 .stateIn(
                     scope = it,
                     started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                     initialValue = emptyList()
-                )
-                .collect { entities ->
+                ).collect { entities ->
                     if (entities.isNotEmpty()) {
                         val localDatasource = entities.first().datasource
-                        val modelList = localDatasource.articles?.toNewsArticleModelList()
+                        val modelList = localDatasource.articles?.toModelList()
                         modelList?.also { list ->
                             setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(list))
                         } ?: {
@@ -221,7 +221,7 @@ class NewsViewModel @Inject constructor(
         }
 
         operationInViewModelScope { scope ->
-            newsUseCase.getTrendingNewsData(
+            newsUseCase.getTrendingNewsData.invoke(
                 keyWords = keyWords,
                 source = source,
                 language = language,
@@ -232,10 +232,8 @@ class NewsViewModel @Inject constructor(
                 scope = scope,
                 started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                 initialValue = NetworkResult.Loading()
-            ).also { stateFlow ->
-                stateFlow.collect { result ->
-                    handleTrendingNewsData(result)
-                }
+            ).collect { result ->
+                handleTrendingNewsData(result)
             }
         }
     }
@@ -270,7 +268,7 @@ class NewsViewModel @Inject constructor(
         }
 
         operationInViewModelScope { scope ->
-            newsUseCase.getTopHeadlineNews(
+            newsUseCase.getTopHeadlineNews.invoke(
                 keyWords = keyWords,
                 country = country,
                 category = category,
@@ -280,10 +278,8 @@ class NewsViewModel @Inject constructor(
                 scope = scope,
                 started = SharingStarted.WhileSubscribed(DEFAULT_STOP_TIMEOUT_MILLIS),
                 initialValue = NetworkResult.Loading()
-            ).also { stateFlow ->
-                stateFlow.collect { result ->
-                    handleTopHeadlineNewsData(result)
-                }
+            ).collect { result ->
+                handleTopHeadlineNewsData(result)
             }
         }
     }
@@ -322,7 +318,7 @@ class NewsViewModel @Inject constructor(
                     LogUtil.d(TAG, "[Handle Trending News Data] Succeed, data: $dto")
                     dto.articles?.also {
                         updateNewsRefreshStatus(TRENDING, NewsDataStatus.SUCCESS)
-                        setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                        setState(_trendingNewsDataStateFlow, TrendingNewsDataState.FetchSucceed(it.toModelList()))
                         newsUseCase.cacheTrendingNewsData.invoke(dto.toTrendingNewsEntity())
                     } ?: {
                         LogUtil.w(TAG, "[Handle Trending News Data] Succeed without [Articles] data")
@@ -364,7 +360,7 @@ class NewsViewModel @Inject constructor(
                     LogUtil.d(TAG, "[Handle Top-Headline News Data] Succeed, data: $dto")
                     dto.articles?.also {
                         updateNewsRefreshStatus(TOP_HEADLINE, NewsDataStatus.SUCCESS)
-                        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toNewsArticleModelList()))
+                        setState(_topHeadlineNewsDataStateFlow, TopHeadlineNewsDataState.FetchSucceed(it.toModelList()))
                         newsUseCase.cacheTopHeadlineNewsData.invoke(dto.toTopHeadlineNewsEntity())
                     } ?: {
                         LogUtil.w(TAG, "[Handle Top-Headline News Data] Succeed without [Articles] data")

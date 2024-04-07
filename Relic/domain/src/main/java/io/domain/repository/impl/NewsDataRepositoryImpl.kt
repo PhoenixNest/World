@@ -7,6 +7,9 @@ import io.data.model.NetworkResult
 import io.domain.repository.INewsDataRepository
 import javax.inject.Inject
 
+/**
+ * @see INewsDataRepository
+ * */
 class NewsDataRepositoryImpl @Inject constructor(
     private val newsApi: INewsApi
 ) : INewsDataRepository {

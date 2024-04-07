@@ -4,9 +4,10 @@ import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
 import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
 import io.data.model.NetworkResult
+import io.domain.repository.impl.FoodRecipesDataRepositoryImpl
 
 /**
- * @see io.domain.repository.impl.FoodRecipesDataRepositoryImpl
+ * @see FoodRecipesDataRepositoryImpl
  * */
 interface IFoodRecipesDataRepository {
 

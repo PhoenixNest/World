@@ -6,11 +6,11 @@ import io.data.model.wallpaper.WallpaperImagesDataModel
 
 object WallpaperDataMapper {
 
-    fun WallpaperImagesDTO.toWallpaperImagesEntity(): WallpaperImagesEntity {
+    fun WallpaperImagesDTO.toEntity(): WallpaperImagesEntity {
         return WallpaperImagesEntity(datasource = this)
     }
 
-    fun WallpaperImagesDTO.toWallpaperImagesModelList(): List<WallpaperImagesDataModel?> {
+    fun WallpaperImagesDTO.toModelList(): List<WallpaperImagesDataModel?> {
         val tempList = mutableListOf<WallpaperImagesDataModel?>()
         this.results?.forEach {
             tempList.add(

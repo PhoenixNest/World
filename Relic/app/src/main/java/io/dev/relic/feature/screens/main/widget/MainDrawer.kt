@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -136,7 +136,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "EARTH",
+            text = stringResource(R.string.main_drawer_subtitle),
             style = TextStyle(
                 color = mainTextColor50,
                 fontSize = 16.sp,
@@ -145,7 +145,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "WE'RE \nIN THE MIDDLE \nOF NOWHERE.",
+            text = stringResource(R.string.main_drawer_title),
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 32.sp,
@@ -153,9 +153,9 @@ private fun BoxScope.MainDrawerMaximPanel() {
                 fontFamily = ubuntu
             )
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "I'd love to tell you that the sun will come out tomorrow, but it might not. I'm no miracle worker.",
+            text = stringResource(R.string.main_drawer_desc),
             style = TextStyle(
                 color = mainTextColor50,
                 fontSize = 16.sp,

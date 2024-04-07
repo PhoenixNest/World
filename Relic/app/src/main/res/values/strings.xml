@@ -34,6 +34,9 @@
     <string name="home_greeting_title_afternoon">🍵 It\'s Teatime</string>
     <string name="home_greeting_title_night">🌙 Take an early rest</string>
     <string name="home_navigate_to_explore">EXPLORE MODE</string>
+    <string name="main_drawer_title">THE NIGHTS</string>
+    <string name="main_drawer_subtitle">AVICII</string>
+    <string name="main_drawer_desc">He said one day you\'ll leave this world behind,\nSo live a life you will remember,\nMy father told me when I was just a child,\nThese are the nights that never die</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>
