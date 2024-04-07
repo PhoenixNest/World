@@ -17,7 +17,7 @@ fun FoodRecipeDetailPageRoute(
 ) {
 
     val isLike by foodRecipesViewModel.isLikeRecipe(recipeId).collectAsStateWithLifecycle(initialValue = false)
-    val recipesDataState by foodRecipesViewModel.foodRecipeInformationDataStateFlow.collectAsStateWithLifecycle()
+    val recipesDataState by foodRecipesViewModel.informationDataStateFlow.collectAsStateWithLifecycle()
 
     FoodRecipeDetailPage(
         isLike = isLike,
