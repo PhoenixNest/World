@@ -1,6 +1,6 @@
-package io.core.datastore.preference_keys
+package io.domain.preference_key
 
-object UserPreferenceKeys {
+object UserPreferenceKey {
 
     /**
      * A tag that identifies whether the App has shown what the user needs to know.

@@ -13,6 +13,7 @@ import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.core.datastore.RelicDatastoreCenter.readAsyncData
+import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeAsyncData
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
@@ -25,6 +26,7 @@ import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesAutoConvertor.convertTimeSectionToDishType
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
+import io.domain.preference_key.FoodRecipesPreferenceKey.KEY_LAST_TIME_SECTION
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +34,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class FoodRecipesViewModel @Inject constructor(
@@ -52,19 +55,22 @@ class FoodRecipesViewModel @Inject constructor(
     /**
      * The food recipes data flow of daily recommend.
      * */
-    private val _foodRecipesRecommendDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
+    private val _foodRecipesRecommendDataStateFlow =
+        MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
     val foodRecipesRecommendDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesRecommendDataStateFlow
 
     /**
      * The food recipes data flow of time section.
      * */
-    private val _foodRecipesTimeSectionDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
+    private val _foodRecipesTimeSectionDataStateFlow =
+        MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
     val foodRecipesTimeSectionDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipesTimeSectionDataStateFlow
 
     /**
      * The food recipe information flow.
      * */
-    private val _foodRecipeInformationDataStateFlow = MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
+    private val _foodRecipeInformationDataStateFlow =
+        MutableStateFlow<FoodRecipesDataState>(FoodRecipesDataState.Init)
     val foodRecipeInformationDataStateFlow: StateFlow<FoodRecipesDataState> get() = _foodRecipeInformationDataStateFlow
 
     companion object {
@@ -81,6 +87,11 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     fun getTimeSectionFoodRecipes(currentTimeSection: TimeUtil.TimeSection) {
+        val lastTimeSectionData = readSyncData(KEY_LAST_TIME_SECTION, getCurrentTimeSection())
+        if (currentTimeSection.name == lastTimeSectionData.name) {
+            // TODO: Query the cache data of time-section food recipes
+        }
+
         val dishType = convertTimeSectionToDishType(currentTimeSection)
         var dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
 
@@ -89,10 +100,11 @@ class FoodRecipesViewModel @Inject constructor(
         }
 
         operationInViewModelScope {
+            writeAsyncData(KEY_LAST_TIME_SECTION, currentTimeSection.name)
             getFoodRecipesData(
                 dataFlow = _foodRecipesTimeSectionDataStateFlow,
                 query = dishQueryParameter,
-                offset = 0
+                offset = Random.nextInt(0, 10)
             )
         }
     }
@@ -102,11 +114,28 @@ class FoodRecipesViewModel @Inject constructor(
         offset: Int
     ) {
         operationInViewModelScope {
-            getFoodRecipesData(
-                dataFlow = _foodRecipesRecommendDataStateFlow,
-                query = queryType,
-                offset = offset
-            )
+            foodRecipesUseCase.queryCachedComplexRecipesData.invoke()
+                .collect { entityList ->
+                    if (entityList.isNotEmpty()) {
+                        val entity = entityList.first()
+                        val modelList = entity.datasource.toComplexSearchModelList()
+                        if (modelList.isNotEmpty()) {
+                            setState(_foodRecipesRecommendDataStateFlow, FoodRecipesDataState.FetchSucceed(modelList))
+                        } else {
+                            getFoodRecipesData(
+                                dataFlow = _foodRecipesRecommendDataStateFlow,
+                                query = queryType,
+                                offset = offset
+                            )
+                        }
+                    } else {
+                        getFoodRecipesData(
+                            dataFlow = _foodRecipesRecommendDataStateFlow,
+                            query = queryType,
+                            offset = offset
+                        )
+                    }
+                }
         }
     }
 
@@ -266,8 +295,14 @@ class FoodRecipesViewModel @Inject constructor(
             is NetworkResult.Failed -> {
                 val errorCode = result.code
                 val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Food Recipe Information Data] Failed, ($errorCode, $errorMessage)")
-                setState(_foodRecipeInformationDataStateFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
+                LogUtil.e(
+                    TAG,
+                    "[Handle Food Recipe Information Data] Failed, ($errorCode, $errorMessage)"
+                )
+                setState(
+                    _foodRecipeInformationDataStateFlow,
+                    FoodRecipesDataState.FetchFailed(errorCode, errorMessage)
+                )
             }
         }
     }

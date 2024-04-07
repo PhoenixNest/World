@@ -1,6 +1,6 @@
-package io.core.datastore.preference_keys
+package io.domain.preference_key
 
-object NewsPreferenceKeys {
+object NewsPreferenceKey {
 
     /**
      * Indicate the last refresh time of everything news data.

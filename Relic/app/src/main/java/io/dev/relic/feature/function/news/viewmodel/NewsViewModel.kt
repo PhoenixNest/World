@@ -12,10 +12,10 @@ import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_STATUS
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TOP_HEADLINE_TIME_DURATION
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_STATUS
-import io.core.datastore.preference_keys.NewsPreferenceKeys.KEY_TRENDING_TIME_DURATION
+import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_STATUS
+import io.domain.preference_key.NewsPreferenceKey.KEY_TOP_HEADLINE_TIME_DURATION
+import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_STATUS
+import io.domain.preference_key.NewsPreferenceKey.KEY_TRENDING_TIME_DURATION
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
 import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.mappers.NewsDataMapper.toNewsArticleModelList

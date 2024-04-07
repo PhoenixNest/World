@@ -9,9 +9,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.RelicWorkerSystem
 import io.common.work.CpuWorker
 import io.core.datastore.RelicDatastoreCenter.writeSyncData
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_PRIVACY
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_AGREE_USER_TERMS
-import io.core.datastore.preference_keys.UserPreferenceKeys.KEY_IS_SHOW_USER_AGREEMENT
+import io.domain.preference_key.UserPreferenceKey.KEY_IS_AGREE_USER_PRIVACY
+import io.domain.preference_key.UserPreferenceKey.KEY_IS_AGREE_USER_TERMS
+import io.domain.preference_key.UserPreferenceKey.KEY_IS_SHOW_USER_AGREEMENT
 import io.dev.relic.global.RelicSdkManager.initSdk
 import javax.inject.Inject
 
