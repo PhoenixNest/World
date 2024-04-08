@@ -25,6 +25,10 @@ fun StudioPageRoute(
     newsViewModel: NewsViewModel
 ) {
 
+    /* ======================== Common ======================== */
+
+    val navController = mainScreenState.navHostController
+
     /* ======================== Field ======================== */
 
     val todoDataState by todoViewModel.todoDataStateFlow
@@ -62,6 +66,10 @@ fun StudioPageRoute(
     ) {
         StudioPageContent(
             todoState = todoState,
+            onUserClick = {},
+            onTodoCreateClick = {},
+            onTodoItemClick = {},
+            onTodoTailClick = {}
         )
     }
 }

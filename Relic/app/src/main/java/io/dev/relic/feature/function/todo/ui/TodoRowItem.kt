@@ -37,7 +37,7 @@ import io.core.ui.theme.mainThemeColorLight
 import io.data.model.todo.TodoDataModel
 
 @Composable
-fun TodoCardItem(
+fun TodoRowItem(
     data: TodoDataModel,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -48,7 +48,7 @@ fun TodoCardItem(
                 .width(320.dp)
                 .height(240.dp),
             shape = RoundedCornerShape(16.dp),
-            color = mainThemeColorLight.copy(alpha = 0.1F)
+            color = mainThemeColorLight.copy(alpha = 0.2F)
         ) {
             Column(
                 modifier = Modifier
@@ -58,7 +58,7 @@ fun TodoCardItem(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
-                TodoIntro(
+                TodoItemIntro(
                     title = title,
                     priority = priority,
                     colorHex = color,
@@ -97,7 +97,7 @@ fun TodoCardItem(
 }
 
 @Composable
-private fun TodoIntro(
+private fun TodoItemIntro(
     title: String,
     priority: Int,
     colorHex: Long,
@@ -143,8 +143,8 @@ private fun TodoIntro(
 
 @Composable
 @Preview
-private fun TodoCardItemPreview() {
-    TodoCardItem(
+private fun TodoRowItemPreview() {
+    TodoRowItem(
         data = TodoDataModel(
             title = "Todo Task Title",
             subtitle = "Subtitle",

@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.studio.ui.widget
+package io.dev.relic.feature.pages.studio.ui.bottom_sheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,37 +1,78 @@
 package io.dev.relic.feature.function.todo.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.common.util.TimeUtil
+import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainTextColor
 import io.data.model.todo.TodoDataModel
 
 @Composable
-fun TodoPanel(
+fun TodoCommonComponent(
     modelList: List<TodoDataModel?>,
     onItemClick: (data: TodoDataModel) -> Unit,
+    onTailClick: () -> Unit,
     lazyListState: LazyListState
 ) {
-    TodoCardList(
-        modelList = modelList,
-        onCardClick = onItemClick,
-        lazyListState = lazyListState
-    )
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
+    ) {
+        TodoComponentTitle()
+        Spacer(modifier = Modifier.height(16.dp))
+        TodoComponentRowList(
+            modelList = modelList,
+            onItemClick = onItemClick,
+            onTailClick = onTailClick,
+            lazyListState = lazyListState
+        )
+    }
 }
 
 @Composable
-private fun TodoCardList(
+private fun TodoComponentTitle(title: String = "🚀 My Task") {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            text = title,
+            modifier = Modifier.align(Alignment.CenterStart),
+            style = TextStyle(
+                color = mainTextColor,
+                fontFamily = ubuntu,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    }
+}
+
+@Composable
+private fun TodoComponentRowList(
     modelList: List<TodoDataModel?>,
-    onCardClick: (data: TodoDataModel) -> Unit,
+    onItemClick: (data: TodoDataModel) -> Unit,
+    onTailClick: () -> Unit,
     lazyListState: LazyListState
 ) {
     LazyRow(
@@ -45,15 +86,21 @@ private fun TodoCardList(
     ) {
         itemsIndexed(items = modelList) { index, data ->
             if (data != null) {
+                val isReachTheEnd = (index == modelList.size - 1)
                 val itemDecorationModifier = Modifier.padding(
-                    start = if (index == 0) 16.dp else 0.dp,
-                    end = if (index == modelList.size - 1) 16.dp else 0.dp
+                    start = if (index == 0) 16.dp else 0.dp
                 )
-                TodoCardItem(
+                TodoRowItem(
                     data = data,
-                    onCardClick = { onCardClick.invoke(data) },
+                    onCardClick = { onItemClick.invoke(data) },
                     modifier = itemDecorationModifier
                 )
+                if (isReachTheEnd) {
+                    TodoTailItem(
+                        onItemClick = onTailClick,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
             }
         }
     }
@@ -61,7 +108,7 @@ private fun TodoCardList(
 
 @Composable
 @Preview
-private fun TodoPanelPreview() {
+private fun TodoCommonComponentPreview() {
     val tempList = mutableListOf<TodoDataModel>()
     repeat(10) {
         tempList.add(
@@ -77,9 +124,10 @@ private fun TodoPanelPreview() {
         )
     }
 
-    TodoPanel(
+    TodoCommonComponent(
         modelList = tempList,
         onItemClick = {},
+        onTailClick = {},
         lazyListState = rememberLazyListState()
     )
 }

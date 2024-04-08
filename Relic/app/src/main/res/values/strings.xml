@@ -67,8 +67,14 @@
     <string name="settings_debug_admob">Admob</string>
 
     <!-- Todo Unit -->
-    <string name="todo_card_title">Check out your todo tasks</string>
-    <string name="todo_title">Todo</string>
+    <string name="todo_intro_title">🚀 Let\'s set goals</string>
+    <string name="todo_intro_goal_title">MY MISSION</string>
+    <string name="todo_intro_goal_1">1. Come on and grow up</string>
+    <string name="todo_intro_goal_2">2. Become an astronaut</string>
+    <string name="todo_intro_goal_3">3. Explore the galaxy</string>
+    <string name="todo_intro_goal_more">…</string>
+    <string name="todo_intro_create">Set Your Tasks</string>
+    <string name="todo_title">🚀 Todo</string>
     <string name="todo_ext_fab_label">Make a plan</string>
     <string name="todo_create_title_hint">Title</string>
     <string name="todo_create_subtitle_hint">Subtitle</string>

@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.studio.ui.widget
+package io.dev.relic.feature.pages.studio.ui.bottom_sheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +56,7 @@ fun LazyListScope.StudioTopHeadlineNewsList(
                         //
                     } else {
                         if (isAvailableContent(data)) {
-                            val isReachTheEnd = index == dataState.modelList.size - 1
+                            val isReachTheEnd = (index == dataState.modelList.size - 1)
                             val itemDecorationModifier = Modifier.padding(
                                 top = if (index == 0) 0.dp else 16.dp,
                             )

@@ -23,6 +23,8 @@ fun StudioPageBottomSheet(
     mainScreenState: MainScreenState
 ) {
 
+    /* ======================== Common ======================== */
+
     val context = LocalContext.current
     val navHostController = mainScreenState.navHostController
     val coroutineScope = mainScreenState.coroutineScope

@@ -2,6 +2,7 @@ package io.dev.relic.feature.pages.studio.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,10 +19,10 @@ import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.pages.studio.StudioBottomSheetState
 import io.dev.relic.feature.pages.studio.StudioNewsListState
-import io.dev.relic.feature.pages.studio.ui.widget.StudioNewsTitle
-import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
-import io.dev.relic.feature.pages.studio.ui.widget.StudioTopHeadlineNewsList
-import io.dev.relic.feature.pages.studio.ui.widget.StudioTrendingNewsList
+import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioNewsTabBar
+import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioNewsTitle
+import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioTopHeadlineNewsList
+import io.dev.relic.feature.pages.studio.ui.bottom_sheet.StudioTrendingNewsList
 
 @Composable
 fun StudioPageBottomSheetContent(
@@ -34,7 +35,8 @@ fun StudioPageBottomSheetContent(
     onRetryTopHeadlineClick: () -> Unit
 ) {
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
-    val bottomSheetHeight = screenHeight - 64.dp
+    val studioPageTopBarHeight = 64.dp
+    val bottomSheetHeight = screenHeight - studioPageTopBarHeight
 
     bottomSheetState.apply {
         LazyColumn(
@@ -53,12 +55,14 @@ fun StudioPageBottomSheetContent(
                 onCardClick = onNewsCardClick,
                 onRetryClick = onRetryTrendingClick,
             )
-            StudioTabBar(
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            StudioNewsTabBar(
                 currentSelectedTab = currentSelectTab,
                 lazyListState = listState.topHeadlineNewsTabListState,
                 onTabItemClick = onTabItemClick,
                 modifier = Modifier.background(color = mainThemeColor)
             )
+            item { Spacer(modifier = Modifier.height(8.dp)) }
             StudioTopHeadlineNewsList(
                 dataState = topHeadlineNewsDataState,
                 onCardClick = onNewsCardClick,
