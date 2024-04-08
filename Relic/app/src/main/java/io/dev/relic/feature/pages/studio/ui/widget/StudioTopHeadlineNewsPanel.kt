@@ -1,11 +1,17 @@
 package io.dev.relic.feature.pages.studio.ui.widget
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonLoadingPlaceholder
+import io.core.ui.CommonReachTheEndComponent
 import io.core.ui.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
@@ -41,22 +47,43 @@ fun LazyListScope.StudioTopHeadlineNewsList(
 
         is TopHeadlineNewsDataState.FetchSucceed -> {
             itemsIndexed(dataState.modelList) { index, data ->
-                if (data == null) {
-                    //
-                } else {
-                    val itemDecorationModifier = Modifier.padding(
-                        top = if (index == 0) 0.dp else 16.dp,
-                        bottom = if (index == dataState.modelList.size - 1) 120.dp else 0.dp
-                    )
-                    NewsCardItem(
-                        data = data,
-                        onCardClick = { onCardClick.invoke(data) },
-                        onLikeClick = { onLikeClick.invoke(data) },
-                        onShareClick = { onShareClick.invoke(data) },
-                        modifier = itemDecorationModifier
-                    )
+                Column(
+                    modifier = Modifier.wrapContentSize(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    if (data == null) {
+                        //
+                    } else {
+                        if (isAvailableContent(data)) {
+                            val isReachTheEnd = index == dataState.modelList.size - 1
+                            val itemDecorationModifier = Modifier.padding(
+                                top = if (index == 0) 0.dp else 16.dp,
+                            )
+                            NewsCardItem(
+                                data = data,
+                                onCardClick = { onCardClick.invoke(data) },
+                                onLikeClick = { onLikeClick.invoke(data) },
+                                onShareClick = { onShareClick.invoke(data) },
+                                modifier = itemDecorationModifier
+                            )
+                            if (isReachTheEnd) {
+                                CommonReachTheEndComponent()
+                                Spacer(modifier = Modifier.padding(bottom = 72.dp))
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+/**
+ * If the content title is not tagged by "Remove", then we think the content itself is available.
+ *
+ * @param data      Original news article data.
+ * */
+private fun isAvailableContent(data: NewsArticleModel): Boolean {
+    return data.title.toString().lowercase().trim().contains("remove").not()
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +25,7 @@ import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
@@ -83,8 +85,10 @@ private fun FoodRecipesComponentTitle(
             iconResId = R.drawable.ic_see_more,
             labelResId = R.string.food_recipes_see_more,
             onClick = onSeeMoreClick,
-            textColor = mainThemeColorAccent,
-            iconColor = mainThemeColorAccent
+            backgroundColor = mainThemeColorAccent,
+            textColor = mainTextColor,
+            iconColor = mainIconColorLight,
+            shape = RoundedCornerShape(12.dp)
         )
     }
 }

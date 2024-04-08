@@ -34,8 +34,8 @@ import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainIconColor
-import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainIconColorLight
+import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
@@ -226,13 +226,13 @@ private fun ExploreComponent(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottom_tab_explore_unselected),
                 contentDescription = DEFAULT_DESC,
-                tint = mainIconColor
+                tint = mainIconColorLight
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = stringResource(id = R.string.home_navigate_to_explore),
                 style = TextStyle(
-                    color = mainTextColorDark,
+                    color = mainTextColor,
                     fontSize = 16.sp,
                     fontFamily = ubuntu,
                     fontWeight = FontWeight.Bold

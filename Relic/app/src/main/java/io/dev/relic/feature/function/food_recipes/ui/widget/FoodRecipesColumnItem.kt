@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -58,16 +57,15 @@ fun FoodRecipesColumnItem(
         verticalAlignment = Alignment.Top
     ) {
         Surface(
-            modifier = modifier
-                .wrapContentSize()
-                .clickable { onItemClick.invoke(data) },
+            modifier = modifier.wrapContentSize(),
             shape = RoundedCornerShape(16.dp),
             color = Color.Transparent
         ) {
             CommonAsyncImage(
                 url = data.image,
                 imageWidth = (screenWidth / 3),
-                imageHeight = (screenWidth / 3)
+                imageHeight = (screenWidth / 3),
+                modifier = Modifier.clickable { onItemClick.invoke(data) }
             )
         }
         FoodRecipesIntro(data = data)

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -55,16 +54,15 @@ fun FoodRecipesRowItem(
         horizontalAlignment = Alignment.Start
     ) {
         Surface(
-            modifier = Modifier
-                .wrapContentSize()
-                .clickable { onItemClick.invoke(data) },
+            modifier = Modifier.wrapContentSize(),
             shape = RoundedCornerShape(16.dp),
             color = Color.Transparent
         ) {
             CommonAsyncImage(
                 url = data.image,
                 imageWidth = imageSize,
-                imageHeight = imageSize
+                imageHeight = imageSize,
+                modifier = Modifier.clickable { onItemClick.invoke(data) }
             )
         }
         Text(
@@ -121,7 +119,7 @@ private fun FoodRecipesDesc(
         Text(
             text = content,
             style = TextStyle(
-                color = mainThemeColorAccent,
+                color = mainTextColor,
                 fontFamily = ubuntu
             )
         )

@@ -34,13 +34,14 @@ fun StudioPageBottomSheetContent(
     onRetryTopHeadlineClick: () -> Unit
 ) {
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
-    val bottomSheetHeight = screenHeight - 56.dp
+    val bottomSheetHeight = screenHeight - 64.dp
 
     bottomSheetState.apply {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(bottomSheetHeight),
+                .height(bottomSheetHeight)
+                .background(color = mainThemeColor),
             state = listState.topHeadlineNewsListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
