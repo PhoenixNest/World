@@ -6,9 +6,9 @@ import android.os.health.HealthStats
 import io.common.RelicSystemServiceManager.getSystemHealthManager
 import io.common.util.LogUtil
 
-object HeathUtil {
+object HealthUtil {
 
-    private const val TAG = "HeathUtil"
+    private const val TAG = "HealthUtil"
 
     private var healthStats: HealthStats? = null
 

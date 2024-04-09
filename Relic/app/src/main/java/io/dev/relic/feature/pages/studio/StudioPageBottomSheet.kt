@@ -69,7 +69,7 @@ fun StudioPageBottomSheet(
                     page = DEFAULT_INIT_NEWS_PAGE_INDEX
                 )
                 coroutineScope.launch {
-                    newListState.topHeadlineNewsListState.scrollToItem(3)
+                    newListState.topHeadlineNewsListState.animateScrollToItem(3)
                 }
             }
         },
@@ -90,6 +90,11 @@ fun StudioPageBottomSheet(
             )
         },
         onRetryTrendingClick = newsViewModel::getTrendingNewsData,
-        onRetryTopHeadlineClick = newsViewModel::getTopHeadlineNewsData
+        onRetryTopHeadlineClick = newsViewModel::getTopHeadlineNewsData,
+        onScrollToTopClick = {
+            coroutineScope.launch {
+                newListState.topHeadlineNewsListState.animateScrollToItem(0)
+            }
+        }
     )
 }

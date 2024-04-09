@@ -24,6 +24,7 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.placeHolderHighlightColor
 
 @Composable
@@ -57,7 +58,7 @@ fun CommonAsyncImage(
                         .fillMaxSize()
                         .placeholder(
                             visible = true,
-                            color = Color.DarkGray,
+                            color = mainBackgroundColor,
                             highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                         )
                 )

@@ -61,7 +61,7 @@ private fun StudioPageContent(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = mainThemeColorLight.copy(alpha = 0.1F),
+                color = mainThemeColorLight.copy(alpha = 0.16F),
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp

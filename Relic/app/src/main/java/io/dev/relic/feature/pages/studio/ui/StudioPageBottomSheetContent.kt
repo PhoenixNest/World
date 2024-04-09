@@ -32,7 +32,8 @@ fun StudioPageBottomSheetContent(
     onLikeClick: (model: NewsArticleModel) -> Unit,
     onShareClick: (model: NewsArticleModel) -> Unit,
     onRetryTrendingClick: () -> Unit,
-    onRetryTopHeadlineClick: () -> Unit
+    onRetryTopHeadlineClick: () -> Unit,
+    onScrollToTopClick: () -> Unit
 ) {
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
     val studioPageTopBarHeight = 64.dp
@@ -68,7 +69,8 @@ fun StudioPageBottomSheetContent(
                 onCardClick = onNewsCardClick,
                 onLikeClick = onLikeClick,
                 onShareClick = onShareClick,
-                onRetryClick = onRetryTopHeadlineClick
+                onRetryClick = onRetryTopHeadlineClick,
+                onScrollToTopClick = onScrollToTopClick
             )
         }
     }
@@ -92,7 +94,8 @@ private fun StudioBottomSheetContentPreview() {
         onNewsCardClick = {},
         onLikeClick = {},
         onShareClick = {},
-        onRetryTrendingClick = { },
-        onRetryTopHeadlineClick = {}
+        onRetryTrendingClick = {},
+        onRetryTopHeadlineClick = {},
+        onScrollToTopClick = {}
     )
 }

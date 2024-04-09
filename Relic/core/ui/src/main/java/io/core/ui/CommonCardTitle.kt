@@ -13,13 +13,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 
 @Composable
@@ -37,7 +37,7 @@ fun CommonCardTitle(
                 .width(8.dp)
                 .height(16.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = mainBackgroundColor,
                     shape = RoundedCornerShape(16.dp)
                 )
         )
@@ -54,7 +54,7 @@ fun CommonCardTitle(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun CommonCardTitlePreview() {
     CommonCardTitle(titleResId = R.string.app_name)
 }

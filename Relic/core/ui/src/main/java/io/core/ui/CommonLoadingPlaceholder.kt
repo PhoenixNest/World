@@ -17,7 +17,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -97,7 +96,7 @@ private fun CommonLoadingIntroItem() {
                 .height(96.dp)
                 .placeholder(
                     visible = true,
-                    color = Color.DarkGray,
+                    color = mainBackgroundColor,
                     shape = RoundedCornerShape(16.dp),
                     highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 )
@@ -109,7 +108,7 @@ private fun CommonLoadingIntroItem() {
                 .fillMaxHeight()
                 .placeholder(
                     visible = true,
-                    color = Color.DarkGray,
+                    color = mainBackgroundColor,
                     shape = RoundedCornerShape(16.dp),
                     highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 )
@@ -125,7 +124,7 @@ private fun CommonLoadingDescItem() {
             .height(96.dp)
             .placeholder(
                 visible = true,
-                color = Color.DarkGray,
+                color = mainBackgroundColor,
                 shape = RoundedCornerShape(16.dp),
                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
             )

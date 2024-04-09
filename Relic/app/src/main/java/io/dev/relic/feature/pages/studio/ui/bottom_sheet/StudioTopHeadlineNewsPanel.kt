@@ -23,7 +23,8 @@ fun LazyListScope.StudioTopHeadlineNewsList(
     onCardClick: (model: NewsArticleModel) -> Unit,
     onLikeClick: (model: NewsArticleModel) -> Unit,
     onShareClick: (model: NewsArticleModel) -> Unit,
-    onRetryClick: () -> Unit
+    onRetryClick: () -> Unit,
+    onScrollToTopClick: () -> Unit
 ) {
     when (dataState) {
         is TopHeadlineNewsDataState.Init,
@@ -68,7 +69,7 @@ fun LazyListScope.StudioTopHeadlineNewsList(
                                 modifier = itemDecorationModifier
                             )
                             if (isReachTheEnd) {
-                                CommonReachTheEndComponent()
+                                CommonReachTheEndComponent(onScrollToTopClick = onScrollToTopClick)
                                 Spacer(modifier = Modifier.padding(bottom = 72.dp))
                             }
                         }

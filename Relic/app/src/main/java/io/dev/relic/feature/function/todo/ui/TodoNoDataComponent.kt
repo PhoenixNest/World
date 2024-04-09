@@ -2,7 +2,6 @@ package io.dev.relic.feature.function.todo.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -93,17 +92,14 @@ fun TodoNoDataComponent(onCreateClick: () -> Unit) {
                 verticalAlignment = Alignment.Top
             ) {
                 TodoNoDataComponentIntro(
-                    modifier = Modifier
-                        .weight(2F)
-                        .clickable { onCreateClick.invoke() },
+                    modifier = Modifier.weight(2F),
                     onCreateClick = onCreateClick
                 )
                 LottieAnimation(
                     composition = lottieRes,
                     modifier = Modifier
                         .weight(1F)
-                        .fillMaxHeight()
-                        .clickable { onCreateClick.invoke() },
+                        .fillMaxHeight(),
                     restartOnPlay = true,
                     iterations = Int.MAX_VALUE,
                     alignment = Alignment.Center,
