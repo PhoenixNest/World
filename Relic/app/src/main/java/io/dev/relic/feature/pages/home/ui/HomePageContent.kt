@@ -15,10 +15,15 @@ import androidx.compose.ui.unit.dp
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.mainThemeColor
-import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.pages.home.HomeAgentAction
+import io.dev.relic.feature.pages.home.HomeAgentState
+import io.dev.relic.feature.pages.home.HomeFoodRecipesAction
+import io.dev.relic.feature.pages.home.HomeFoodRecipesDataState
 import io.dev.relic.feature.pages.home.HomeFoodRecipesListState
+import io.dev.relic.feature.pages.home.HomeFoodRecipesRecommendAction
 import io.dev.relic.feature.pages.home.HomeFoodRecipesState
+import io.dev.relic.feature.pages.home.HomeFoodRecipesTimeSectionAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
@@ -28,58 +33,51 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 fun HomePageContent(
     onOpenDrawer: () -> Unit,
     onOpenSetting: () -> Unit,
-    agentSearchContent: String,
-    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
-    onAgentStartChat: () -> Unit,
-    foodRecipesState: HomeFoodRecipesState,
-    onSelectedFoodRecipesTabItem: (currentSelectedTab: Int, selectedItem: String) -> Unit,
-    onFoodRecipesSeeMoreClick: (dishType: String) -> Unit,
-    onFoodRecipesItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
-    onFoodRecipesTimeSectionRetry: () -> Unit,
-    onFoodRecipesRetry: () -> Unit
+    agentState: HomeAgentState,
+    foodRecipesState: HomeFoodRecipesState
 ) {
-    foodRecipesState.apply {
-        Surface(
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = mainThemeColor
+    ) {
+        LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            color = mainThemeColor
+            state = foodRecipesState.listState.recommendListState,
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                state = listState.recommendListState,
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                HomeTopPanel(
-                    currentTimeSection = getCurrentTimeSection(),
-                    agentSearchContent = agentSearchContent,
-                    onAgentSearchPromptChange = onAgentSearchPromptChange,
-                    onAgentStartChat = onAgentStartChat,
-                    onOpenDrawer = onOpenDrawer,
-                    onOpenSetting = onOpenSetting
-                )
-                item { Spacer(modifier = Modifier.height(16.dp)) }
-                HomeFoodRecipesAutoTimeComponent(
-                    currentTimeSection = getCurrentTimeSection(),
-                    listState = listState.timeSectionListState,
-                    dataState = timeSectionDataState,
-                    onSeeMoreClick = onFoodRecipesSeeMoreClick,
-                    onItemClick = onFoodRecipesItemClick,
-                    onRetryClick = onFoodRecipesTimeSectionRetry
-                )
-                item { CommonItemDivider() }
-                HomeFoodRecipesTabBar(
-                    currentSelectedTab = currentSelectTab,
-                    lazyListState = listState.recommendTabListState,
-                    onTabItemClick = onSelectedFoodRecipesTabItem
-                )
-                item { Spacer(modifier = Modifier.height(16.dp)) }
-                HomeFoodRecipesList(
-                    dataState = recommendDataState,
-                    onRetryClick = onFoodRecipesRetry,
-                    onItemClick = onFoodRecipesItemClick
-                )
-            }
+            HomeTopPanel(
+                currentTimeSection = getCurrentTimeSection(),
+                agnetPrompt = agentState.prompt,
+                onAgentPromptChange = agentState.action.onPromptChange,
+                onAgentStartChat = agentState.action.onStartChat,
+                onOpenDrawer = onOpenDrawer,
+                onOpenSetting = onOpenSetting
+            )
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            HomeFoodRecipesAutoTimeComponent(
+                currentTimeSection = getCurrentTimeSection(),
+                listState = foodRecipesState.listState.timeSectionListState,
+                dataState = foodRecipesState.dataState.timeSectionDataState,
+                onSeeMoreClick = foodRecipesState.action.timeSectionAction.onSeeMoreClick,
+                onItemClick = foodRecipesState.action.timeSectionAction.onItemClick,
+                onRetryClick = foodRecipesState.action.timeSectionAction.onRetryClick
+            )
+            item { CommonItemDivider() }
+            HomeFoodRecipesTabBar(
+                currentSelectedTab = foodRecipesState.currentSelectTab,
+                lazyListState = foodRecipesState.listState.recommendTabListState,
+                onTabItemClick = foodRecipesState.action.recommendAction.onTabItemClick
+            )
+            item { Spacer(modifier = Modifier.height(16.dp)) }
+            HomeFoodRecipesList(
+                dataState = foodRecipesState.dataState.recommendDataState,
+                onItemClick = foodRecipesState.action.recommendAction.onItemClick,
+                onRetryClick = foodRecipesState.action.recommendAction.onRetryClick
+            )
         }
+    }
+    foodRecipesState.apply {
     }
 }
 
@@ -89,23 +87,36 @@ private fun HomePageContentPreview() {
     HomePageContent(
         onOpenDrawer = {},
         onOpenSetting = {},
-        agentSearchContent = "",
-        onAgentSearchPromptChange = {},
-        onAgentStartChat = {},
+        agentState = HomeAgentState(
+            prompt = "",
+            action = HomeAgentAction(
+                onPromptChange = {},
+                onStartChat = {}
+            )
+        ),
         foodRecipesState = HomeFoodRecipesState(
             currentSelectTab = 0,
-            timeSectionDataState = FoodRecipesDataState.Init,
-            recommendDataState = FoodRecipesDataState.Init,
+            dataState = HomeFoodRecipesDataState(
+                timeSectionDataState = FoodRecipesDataState.Init,
+                recommendDataState = FoodRecipesDataState.Init
+            ),
+            action = HomeFoodRecipesAction(
+                timeSectionAction = HomeFoodRecipesTimeSectionAction(
+                    onItemClick = {},
+                    onSeeMoreClick = {},
+                    onRetryClick = {}
+                ),
+                recommendAction = HomeFoodRecipesRecommendAction(
+                    onTabItemClick = { _, _ -> },
+                    onItemClick = {},
+                    onRetryClick = {}
+                )
+            ),
             listState = HomeFoodRecipesListState(
                 timeSectionListState = rememberLazyListState(),
                 recommendTabListState = rememberLazyListState(),
                 recommendListState = rememberLazyListState()
             )
-        ),
-        onSelectedFoodRecipesTabItem = { _, _ -> },
-        onFoodRecipesSeeMoreClick = {},
-        onFoodRecipesItemClick = {},
-        onFoodRecipesTimeSectionRetry = {},
-        onFoodRecipesRetry = {}
+        )
     )
 }

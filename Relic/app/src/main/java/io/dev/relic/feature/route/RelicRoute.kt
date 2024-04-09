@@ -16,5 +16,5 @@ object RelicRoute {
     const val DETAIL_FOOD_RECIPE = "route_detail_food_recipe"
     const val DETAIL_NEWS = "route_detail_news"
 
-    const val BASE_ROUTE = STUDIO
+    const val BASE_ROUTE = HOME
 }

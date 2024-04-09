@@ -45,8 +45,8 @@ import io.dev.relic.feature.function.agent.gemini.ui.AgentSearchBar
 @Suppress("FunctionName")
 fun LazyListScope.HomeTopPanel(
     currentTimeSection: TimeSection,
-    agentSearchContent: String,
-    onAgentSearchPromptChange: (newPrompt: String) -> Unit,
+    agnetPrompt: String,
+    onAgentPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit,
     onOpenDrawer: () -> Unit,
     onOpenSetting: () -> Unit
@@ -56,8 +56,8 @@ fun LazyListScope.HomeTopPanel(
             onOpenDrawer = onOpenDrawer,
             onOpenSetting = onOpenSetting,
             currentTimeSection = currentTimeSection,
-            agentSearchContent = agentSearchContent,
-            onAgentSearchPromptChange = onAgentSearchPromptChange,
+            agentSearchContent = agnetPrompt,
+            onAgentSearchPromptChange = onAgentPromptChange,
             onAgentStartChat = onAgentStartChat
         )
     }
