@@ -165,16 +165,20 @@ class WebActivity : AppCompatActivity() {
                 javaScriptEnabled = true
 
                 // Auto-size content
-                useWideViewPort = true          // Resize the picture content to adjust with system screen
-                loadWithOverviewMode = true     // Resize the content to adjust with system screen
+                // Resize the picture content to adjust with system screen
+                useWideViewPort = true
+                // Resize the content to adjust with system screen
+                loadWithOverviewMode = true
 
                 // Zoom-in/out
                 setSupportZoom(true)
                 builtInZoomControls = true
-                displayZoomControls = false     // Hide the system zoom-in/out ui component
+                // Hide the system zoom-in/out ui component
+                displayZoomControls = false
 
                 // Other setting
-                allowFileAccess = true          // Allow the webView to access the phome file
+                // Allow the webView to access the phone file
+                allowFileAccess = true
                 loadsImagesAutomatically = true
                 defaultTextEncodingName = "utf-8"
             }
