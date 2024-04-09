@@ -9,6 +9,7 @@ import io.data.model.todo.TodoDataModel
 import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.function.todo.ui.TodoCommonComponent
 import io.dev.relic.feature.function.todo.ui.TodoNoDataComponent
+import io.dev.relic.feature.pages.studio.StudioTodoAction
 import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
 
@@ -68,6 +69,11 @@ private fun StudioTodoPanelWithoutDataPreview() {
     StudioTodoPanelContent(
         todoState = StudioTotoState(
             dataState = TodoDataState.NoTodoData,
+            action = StudioTodoAction(
+                onAddClick = {},
+                onItemClick = {},
+                onTailClick = {}
+            ),
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )
@@ -99,6 +105,11 @@ private fun StudioTodoPanelWithDataPreview() {
     StudioTodoPanelContent(
         todoState = StudioTotoState(
             dataState = TodoDataState.QuerySucceed(modelList = tempList),
+            action = StudioTodoAction(
+                onAddClick = {},
+                onItemClick = {},
+                onTailClick = {}
+            ),
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )
