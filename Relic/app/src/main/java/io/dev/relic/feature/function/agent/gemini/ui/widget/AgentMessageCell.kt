@@ -95,9 +95,8 @@ fun AgentMessageCell(
     }
 
     val cellContentColor = when (geminiCellContent.roleId) {
-        USER.roleId,
+        USER.roleId -> mainTextColor
         AGENT.roleId -> mainThemeColor
-
         ERROR.roleId -> mainTextColor
         else -> errorColorAccent
     }

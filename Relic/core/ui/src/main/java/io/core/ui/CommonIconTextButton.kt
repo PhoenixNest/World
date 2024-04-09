@@ -66,7 +66,7 @@ fun CommonHorizontalIconTextButton(
                 contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
-            Spacer(modifier = modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = stringResource(id = labelResId),
                 style = TextStyle(
@@ -110,7 +110,7 @@ fun CommonHorizontalIconTextButton(
                 contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
-            Spacer(modifier = modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = stringResource(id = labelResId),
                 style = TextStyle(
@@ -167,7 +167,7 @@ fun CommonVerticalIconTextButton(
                 contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
-            Spacer(modifier = modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = stringResource(id = labelResId),
                 style = TextStyle(
@@ -211,7 +211,7 @@ fun CommonVerticalIconTextButton(
                 contentDescription = DEFAULT_DESC,
                 tint = iconColor
             )
-            Spacer(modifier = modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = stringResource(id = labelResId),
                 style = TextStyle(

@@ -1,9 +1,7 @@
-package io.dev.relic.feature.function.todo.ui
+package io.dev.relic.feature.function.agent.gemini.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -38,15 +36,14 @@ import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor80
-import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 
 @Composable
-fun TodoNoDataComponent(onCreateClick: () -> Unit) {
+fun AgentComponent(onStartChat: () -> Unit) {
 
     val lottieRes by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.lottie_rocket)
+        spec = LottieCompositionSpec.RawRes(R.raw.lottie_chat_with_ai)
     )
 
     Column(
@@ -55,7 +52,7 @@ fun TodoNoDataComponent(onCreateClick: () -> Unit) {
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = stringResource(R.string.todo_intro_title),
+            text = stringResource(R.string.agent_intro_title),
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 24.sp,
@@ -72,28 +69,28 @@ fun TodoNoDataComponent(onCreateClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp),
-            shape = RoundedCornerShape(16.dp),
-            color = Color.Transparent
+            color = Color.Transparent,
+            shape = RoundedCornerShape(16.dp)
         ) {
-            TodoNoDataComponentCover()
+            AgentCardCover()
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                TodoNoDataComponentIntro(
-                    modifier = Modifier.weight(2F),
-                    onCreateClick = onCreateClick
-                )
                 LottieAnimation(
                     composition = lottieRes,
                     modifier = Modifier
-                        .weight(1F)
+                        .weight(2F)
                         .fillMaxHeight(),
                     restartOnPlay = true,
                     iterations = Int.MAX_VALUE,
                     alignment = Alignment.Center,
-                    contentScale = ContentScale.FillHeight
+                    contentScale = ContentScale.Inside
+                )
+                AgentComponentDesc(
+                    onStartChat = onStartChat,
+                    modifier = Modifier.weight(3F)
                 )
             }
         }
@@ -101,37 +98,20 @@ fun TodoNoDataComponent(onCreateClick: () -> Unit) {
 }
 
 @Composable
-private fun TodoNoDataComponentCover() {
+private fun AgentCardCover() {
     Image(
-        painter = painterResource(id = R.mipmap.astrology),
+        painter = painterResource(id = R.mipmap.gradient_cover),
         contentDescription = DEFAULT_DESC,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop
     )
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = mainThemeColor.copy(alpha = 0.3F))
-    )
 }
 
 @Composable
-private fun TodoNoDataComponentIntro(
-    modifier: Modifier = Modifier,
-    onCreateClick: () -> Unit
+private fun AgentComponentDesc(
+    onStartChat: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-
-    val titleTextStyle = TextStyle(
-        color = mainTextColor,
-        fontSize = 18.sp,
-        fontFamily = ubuntu,
-        fontWeight = FontWeight.Bold,
-        lineHeight = TextUnit(
-            value = 1.6F,
-            type = TextUnitType.Em
-        )
-    )
-
     val listTextStyle = TextStyle(
         color = mainTextColor80,
         fontSize = 13.sp,
@@ -147,15 +127,15 @@ private fun TodoNoDataComponentIntro(
         ),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(text = stringResource(R.string.todo_intro_goal_title), style = titleTextStyle)
-        Text(text = stringResource(R.string.todo_intro_goal_1), style = listTextStyle)
-        Text(text = stringResource(R.string.todo_intro_goal_2), style = listTextStyle)
-        Text(text = stringResource(R.string.todo_intro_goal_3), style = listTextStyle)
+        Text(text = stringResource(R.string.agent_intro_question_1), style = listTextStyle)
+        Text(text = stringResource(R.string.agent_intro_question_2), style = listTextStyle)
+        Text(text = stringResource(R.string.agent_intro_question_3), style = listTextStyle)
         Text(text = stringResource(R.string.todo_intro_goal_more), style = listTextStyle)
         CommonHorizontalIconTextButton(
-            iconResId = R.drawable.ic_add,
-            labelResId = R.string.todo_intro_create,
-            onClick = onCreateClick,
+            iconResId = R.drawable.ic_agent_craft,
+            labelResId = R.string.agent_intro_start_chat,
+            onClick = onStartChat,
+            modifier = Modifier.fillMaxWidth(),
             backgroundColor = mainThemeColorAccent.copy(alpha = 0.9F),
             shape = RoundedCornerShape(12.dp)
         )
@@ -164,6 +144,6 @@ private fun TodoNoDataComponentIntro(
 
 @Composable
 @Preview
-private fun TodoNoDataComponentPreview() {
-    TodoNoDataComponent(onCreateClick = {})
+private fun AgentComponentPreview() {
+    AgentComponent(onStartChat = {})
 }

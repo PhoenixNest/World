@@ -22,6 +22,7 @@ import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.pages.studio.StudioTodoAction
 import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
+import io.dev.relic.feature.pages.studio.ui.widget.StudioAgentPanel
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTodoPanel
 
@@ -77,7 +78,9 @@ private fun StudioPageContent(
             onTodoItemClick = onItemClick,
             onTodoTailClick = onTailClick
         )
-        item { Spacer(modifier = Modifier.height(16.dp)) }
+        item { Spacer(modifier = Modifier.height(32.dp)) }
+        StudioAgentPanel(onStartChat = {})
+        item { Spacer(modifier = Modifier.height(300.dp)) }
     }
 }
 
