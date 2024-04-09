@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.ui.theme.bottomSheetBackgroundColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
@@ -44,8 +45,8 @@ fun StudioPageRoute(
     )
 
     // Data state
-    val todoState = StudioTotoState(
-        todoDataState = todoDataState,
+    val todoState = buildTodoState(
+        dataState = todoDataState,
         listState = todoListState
     )
 
@@ -65,11 +66,29 @@ fun StudioPageRoute(
         sheetPeekHeight = 140.dp
     ) {
         StudioPageContent(
-            todoState = todoState,
             onUserClick = {},
-            onTodoCreateClick = {},
-            onTodoItemClick = {},
-            onTodoTailClick = {}
+            todoState = todoState
         )
     }
+}
+
+/**
+ * Build state to power the Todo unit of studio page
+ *
+ * @param dataState     Data state flow of todo.
+ * @param listState     List state for row and column.
+ * */
+private fun buildTodoState(
+    dataState: TodoDataState,
+    listState: StudioTodoListState
+): StudioTotoState {
+    return StudioTotoState(
+        dataState = dataState,
+        action = StudioTodoAction(
+            onAddClick = {},
+            onItemClick = {},
+            onTailClick = {}
+        ),
+        listState = listState
+    )
 }

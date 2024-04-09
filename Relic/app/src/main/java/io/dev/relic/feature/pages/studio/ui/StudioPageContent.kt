@@ -19,6 +19,7 @@ import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
 import io.data.model.todo.TodoDataModel
 import io.dev.relic.feature.function.todo.TodoDataState
+import io.dev.relic.feature.pages.studio.StudioTodoAction
 import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
@@ -26,11 +27,8 @@ import io.dev.relic.feature.pages.studio.ui.widget.StudioTodoPanel
 
 @Composable
 fun StudioPageContent(
-    todoState: StudioTotoState,
     onUserClick: () -> Unit,
-    onTodoCreateClick: () -> Unit,
-    onTodoItemClick: (data: TodoDataModel) -> Unit,
-    onTodoTailClick: () -> Unit
+    todoState: StudioTotoState,
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -44,9 +42,9 @@ fun StudioPageContent(
             StudioTabBar(onUserClick = onUserClick)
             StudioPageContent(
                 todoState = todoState,
-                onTodoCreateClick = onTodoCreateClick,
-                onTodoItemClick = onTodoItemClick,
-                onTodoTailClick = onTodoTailClick
+                onAddClick = todoState.action.onAddClick,
+                onItemClick = todoState.action.onItemClick,
+                onTailClick = todoState.action.onTailClick
             )
         }
     }
@@ -55,9 +53,9 @@ fun StudioPageContent(
 @Composable
 private fun StudioPageContent(
     todoState: StudioTotoState,
-    onTodoCreateClick: () -> Unit,
-    onTodoItemClick: (data: TodoDataModel) -> Unit,
-    onTodoTailClick: () -> Unit
+    onAddClick: () -> Unit,
+    onItemClick: (data: TodoDataModel) -> Unit,
+    onTailClick: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -75,9 +73,9 @@ private fun StudioPageContent(
         item { Spacer(modifier = Modifier.height(16.dp)) }
         StudioTodoPanel(
             todoState = todoState,
-            onTodoCreateClick = onTodoCreateClick,
-            onTodoItemClick = onTodoItemClick,
-            onTodoTailClick = onTodoTailClick
+            onTodoCreateClick = onAddClick,
+            onTodoItemClick = onItemClick,
+            onTodoTailClick = onTailClick
         )
         item { Spacer(modifier = Modifier.height(16.dp)) }
     }
@@ -87,15 +85,17 @@ private fun StudioPageContent(
 @Preview
 private fun StudioPageContentPreview() {
     StudioPageContent(
+        onUserClick = {},
         todoState = StudioTotoState(
-            todoDataState = TodoDataState.NoTodoData,
+            dataState = TodoDataState.NoTodoData,
+            action = StudioTodoAction(
+                onAddClick = {},
+                onItemClick = {},
+                onTailClick = {}
+            ),
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )
-        ),
-        onUserClick = {},
-        onTodoCreateClick = {},
-        onTodoItemClick = {},
-        onTodoTailClick = {}
+        )
     )
 }

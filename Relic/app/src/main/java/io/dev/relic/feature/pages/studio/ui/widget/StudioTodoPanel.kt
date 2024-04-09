@@ -36,7 +36,7 @@ private fun StudioTodoPanelContent(
     onTodoItemClick: (data: TodoDataModel) -> Unit,
     onTodoTailClick: () -> Unit
 ) {
-    when (val state = todoState.todoDataState) {
+    when (val state = todoState.dataState) {
         is TodoDataState.Init,
         is TodoDataState.Querying -> {
             //
@@ -67,7 +67,7 @@ private fun StudioTodoPanelContent(
 private fun StudioTodoPanelWithoutDataPreview() {
     StudioTodoPanelContent(
         todoState = StudioTotoState(
-            todoDataState = TodoDataState.NoTodoData,
+            dataState = TodoDataState.NoTodoData,
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )
@@ -98,7 +98,7 @@ private fun StudioTodoPanelWithDataPreview() {
 
     StudioTodoPanelContent(
         todoState = StudioTotoState(
-            todoDataState = TodoDataState.QuerySucceed(modelList = tempList),
+            dataState = TodoDataState.QuerySucceed(modelList = tempList),
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )

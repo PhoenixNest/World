@@ -174,7 +174,7 @@ class WebActivity : AppCompatActivity() {
                 displayZoomControls = false     // Hide the system zoom-in/out ui component
 
                 // Other setting
-                allowFileAccess = true          // Allow the webView to access the phone file
+                allowFileAccess = true          // Allow the webView to access the phome file
                 loadsImagesAutomatically = true
                 defaultTextEncodingName = "utf-8"
             }

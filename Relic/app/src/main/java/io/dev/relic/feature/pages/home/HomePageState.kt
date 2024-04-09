@@ -10,7 +10,7 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
  * Ui and Data state for Agent unit in home page.
  *
  * @param prompt
- * @param action
+ * @param action        Ui action handler for Food Recipes unit in home page.
  * */
 data class HomeAgentState(
     val prompt: String,
@@ -34,11 +34,12 @@ data class HomeAgentAction(
  * Ui and Data state for food recipes unit in home page.
  *
  * @param currentSelectTab          Current selected category of recommend panel.
- * @param dataState                 Data for Food Recipes unit in hone page.
- * @param action                    Ui action handler for Food Recipes unit in hone page.
+ * @param dataState                 Data for Food Recipes unit in home page.
+ * @param action                    Ui action handler for Food Recipes unit in home page.
  * @param listState                 Compose list state for Food Recipes unit in home page.
  *
- * @see FoodRecipesDataState
+ * @see HomeFoodRecipesDataState
+ * @see HomeFoodRecipesAction
  * @see HomeFoodRecipesListState
  * */
 data class HomeFoodRecipesState(
@@ -99,8 +100,8 @@ data class HomeFoodRecipesRecommendAction(
 /**
  * According to the page ui, the order of list state will be:
  *
- * @param timeSectionListState      For time-section list (horizontal).
- * @param recommendTabListState              For food Recipes tab panel.
+ * @param timeSectionListState           For time-section list (horizontal).
+ * @param recommendTabListState          For food Recipes tab panel.
  * @param recommendListState             For food Recipes main list (vertical).
  * */
 data class HomeFoodRecipesListState(
