@@ -11,7 +11,6 @@ import com.google.ai.client.generativeai.type.Content
 import com.google.ai.client.generativeai.type.GenerateContentResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.agent.gemini.GeminiAgent
-import io.agent.gemini.GeminiAgentFactory
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiHybridCell
 import io.agent.gemini.model.GeminiTextCell
@@ -159,7 +158,7 @@ class GeminiAgentViewModel @Inject constructor(
     private fun createNewChatWindow() {
         LogUtil.w(TAG, "[Chat Window] onCreate")
         if (agentChatWindow != null) releaseChatWindow()
-        agentChatWindow = GeminiAgentFactory.provideNewChatWindow()
+        agentChatWindow = GeminiAgent.startChat()
     }
 
     private fun releaseChatWindow() {

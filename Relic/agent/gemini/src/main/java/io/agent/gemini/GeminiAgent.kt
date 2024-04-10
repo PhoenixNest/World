@@ -35,12 +35,23 @@ object GeminiAgent {
      * */
     private var chosenCoreModel: GenerativeModel? = null
 
+    /**
+     * Initialize the core parameters of Gemini.
+     *
+     * @param apiKey        Your dev key for Gemini.
+     * */
     fun initGeminiComponent(apiKey: String) {
         GEMINI_DEV_KEY = apiKey
     }
 
+    /**
+     * Create a new chat window of Gemini.
+     *
+     * @param isVisionModel     Set is enable vision feature of Gemini.
+     * @param chatHistory       You can pass the previous chat history for Gemini to continue the last conversation quickly.
+     * */
     fun startChat(
-        isVisionModel: Boolean,
+        isVisionModel: Boolean = false,
         chatHistory: List<Content> = emptyList()
     ): Chat {
         chosenCoreModel = chooseGeminiModel(isVisionModel)
