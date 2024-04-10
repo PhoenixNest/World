@@ -33,6 +33,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor80
 import io.core.ui.theme.mainThemeColorAccent
@@ -135,7 +136,7 @@ private fun AgentComponentDesc(
             labelResId = R.string.agent_intro_start_chat,
             onClick = onStartChat,
             modifier = Modifier.fillMaxWidth(),
-            backgroundColor = mainThemeColorAccent,
+            backgroundColor = mainBackgroundColor,
             shape = RoundedCornerShape(12.dp)
         )
     }
