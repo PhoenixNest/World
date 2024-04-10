@@ -14,6 +14,7 @@ import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
+import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 
@@ -44,10 +45,15 @@ fun StudioPageRoute(
         todoListState = todoRowListState
     )
 
-    // Data state
+    // Todo Data state
     val todoState = buildTodoState(
         dataState = todoDataState,
         listState = todoListState
+    )
+
+    // Agent Data State
+    val agentState = buildAgentState(
+        onNavigateToChatPage = navController::navigateToAgentChatPage
     )
 
     BottomSheetScaffold(
@@ -67,7 +73,8 @@ fun StudioPageRoute(
     ) {
         StudioPageContent(
             onUserClick = {},
-            todoState = todoState
+            todoState = todoState,
+            agentState = agentState
         )
     }
 }
@@ -90,5 +97,16 @@ private fun buildTodoState(
             onTailClick = {}
         ),
         listState = listState
+    )
+}
+
+/**
+ * Build state to power the Agent unit of studio page.
+ *
+ * @param onNavigateToChatPage      Navigate to the next page to continue chat with your Agent.
+ * */
+private fun buildAgentState(onNavigateToChatPage: () -> Unit): StudioAgentState {
+    return StudioAgentState(
+        action = StudioAgentAction(onStartChatClick = onNavigateToChatPage)
     )
 }

@@ -156,7 +156,7 @@ private fun TodoNoDataComponentIntro(
             iconResId = R.drawable.ic_add,
             labelResId = R.string.todo_intro_create,
             onClick = onCreateClick,
-            backgroundColor = mainThemeColorAccent.copy(alpha = 0.9F),
+            backgroundColor = mainThemeColorAccent,
             shape = RoundedCornerShape(12.dp)
         )
     }

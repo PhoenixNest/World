@@ -15,10 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.mainThemeColorAccent
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainThemeColorLight
-import io.data.model.todo.TodoDataModel
 import io.dev.relic.feature.function.todo.TodoDataState
+import io.dev.relic.feature.pages.studio.StudioAgentAction
+import io.dev.relic.feature.pages.studio.StudioAgentState
 import io.dev.relic.feature.pages.studio.StudioTodoAction
 import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
@@ -30,10 +31,11 @@ import io.dev.relic.feature.pages.studio.ui.widget.StudioTodoPanel
 fun StudioPageContent(
     onUserClick: () -> Unit,
     todoState: StudioTotoState,
+    agentState: StudioAgentState
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = mainThemeColorAccent
+        color = mainBackgroundColor
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -43,9 +45,7 @@ fun StudioPageContent(
             StudioTabBar(onUserClick = onUserClick)
             StudioPageContent(
                 todoState = todoState,
-                onAddClick = todoState.action.onAddClick,
-                onItemClick = todoState.action.onItemClick,
-                onTailClick = todoState.action.onTailClick
+                agentState = agentState
             )
         }
     }
@@ -54,15 +54,13 @@ fun StudioPageContent(
 @Composable
 private fun StudioPageContent(
     todoState: StudioTotoState,
-    onAddClick: () -> Unit,
-    onItemClick: (data: TodoDataModel) -> Unit,
-    onTailClick: () -> Unit
+    agentState: StudioAgentState
 ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = mainThemeColorLight.copy(alpha = 0.16F),
+                color = mainThemeColorLight.copy(alpha = 0.1F),
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp
@@ -74,12 +72,12 @@ private fun StudioPageContent(
         item { Spacer(modifier = Modifier.height(16.dp)) }
         StudioTodoPanel(
             todoState = todoState,
-            onTodoCreateClick = onAddClick,
-            onTodoItemClick = onItemClick,
-            onTodoTailClick = onTailClick
+            onAddClick = todoState.action.onAddClick,
+            onItemClick = todoState.action.onItemClick,
+            onTailClick = todoState.action.onTailClick
         )
         item { Spacer(modifier = Modifier.height(32.dp)) }
-        StudioAgentPanel(onStartChat = {})
+        StudioAgentPanel(onStartChat = agentState.action.onStartChatClick)
         item { Spacer(modifier = Modifier.height(300.dp)) }
     }
 }
@@ -99,6 +97,7 @@ private fun StudioPageContentPreview() {
             listState = StudioTodoListState(
                 todoListState = rememberLazyListState()
             )
-        )
+        ),
+        agentState = StudioAgentState(action = StudioAgentAction(onStartChatClick = {}))
     )
 }

@@ -1,7 +1,8 @@
 package io.dev.relic.feature.function.agent.gemini.ui
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
@@ -81,8 +80,9 @@ fun AgentComponent(onStartChat: () -> Unit) {
                 LottieAnimation(
                     composition = lottieRes,
                     modifier = Modifier
-                        .weight(2F)
-                        .fillMaxHeight(),
+                        .weight(1F)
+                        .fillMaxHeight()
+                        .padding(start = 16.dp),
                     restartOnPlay = true,
                     iterations = Int.MAX_VALUE,
                     alignment = Alignment.Center,
@@ -90,7 +90,7 @@ fun AgentComponent(onStartChat: () -> Unit) {
                 )
                 AgentComponentDesc(
                     onStartChat = onStartChat,
-                    modifier = Modifier.weight(3F)
+                    modifier = Modifier.weight(2F)
                 )
             }
         }
@@ -99,11 +99,10 @@ fun AgentComponent(onStartChat: () -> Unit) {
 
 @Composable
 private fun AgentCardCover() {
-    Image(
-        painter = painterResource(id = R.mipmap.gradient_cover),
-        contentDescription = DEFAULT_DESC,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = mainThemeColorAccent.copy(alpha = 0.6F))
     )
 }
 
@@ -136,7 +135,7 @@ private fun AgentComponentDesc(
             labelResId = R.string.agent_intro_start_chat,
             onClick = onStartChat,
             modifier = Modifier.fillMaxWidth(),
-            backgroundColor = mainThemeColorAccent.copy(alpha = 0.9F),
+            backgroundColor = mainThemeColorAccent,
             shape = RoundedCornerShape(12.dp)
         )
     }

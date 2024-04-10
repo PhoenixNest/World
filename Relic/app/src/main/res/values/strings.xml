@@ -119,7 +119,7 @@
     <string name="agent_ask_next">Gemini awaits your next message.</string>
     <string name="agent_intro_title">🤖 Ask your Ai assistant</string>
     <string name="agent_intro_question_1">• What\'s the best coffee in the world?</string>
-    <string name="agent_intro_question_2">• Write the "Hello World" code by using C++.</string>
+    <string name="agent_intro_question_2">• Write the \"Hello World\" code by using C++.</string>
     <string name="agent_intro_question_3">• How to become a good programmer?</string>
     <string name="agent_intro_more">…</string>
     <string name="agent_intro_start_chat">Start Chat</string>

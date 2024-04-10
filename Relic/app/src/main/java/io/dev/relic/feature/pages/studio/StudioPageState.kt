@@ -40,3 +40,21 @@ data class StudioTodoAction(
 data class StudioTodoListState(
     val todoListState: LazyListState
 )
+
+/**
+ * Ui and Data state for Agent unit in studio page.
+ *
+ * @param action         Ui action handler for Agent unit in studio page.
+ * */
+data class StudioAgentState(
+    val action: StudioAgentAction
+)
+
+/**
+ * According to the page ui, the class is use for handle the ui action in Todo unit.
+ *
+ * @param onStartChatClick       Click the tail "Start Chat" card to add new todo task.
+ * */
+data class StudioAgentAction(
+    val onStartChatClick: () -> Unit
+)

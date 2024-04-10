@@ -16,16 +16,16 @@ import io.dev.relic.feature.pages.studio.StudioTotoState
 @Suppress("FunctionName")
 fun LazyListScope.StudioTodoPanel(
     todoState: StudioTotoState,
-    onTodoCreateClick: () -> Unit,
-    onTodoItemClick: (data: TodoDataModel) -> Unit,
-    onTodoTailClick: () -> Unit
+    onAddClick: () -> Unit,
+    onItemClick: (data: TodoDataModel) -> Unit,
+    onTailClick: () -> Unit
 ) {
     item {
         StudioTodoPanelContent(
             todoState = todoState,
-            onTodoCreateClick = onTodoCreateClick,
-            onTodoItemClick = onTodoItemClick,
-            onTodoTailClick = onTodoTailClick
+            onTodoCreateClick = onAddClick,
+            onTodoItemClick = onItemClick,
+            onTodoTailClick = onTailClick
         )
     }
 }
