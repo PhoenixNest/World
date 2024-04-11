@@ -102,6 +102,7 @@ class TomTomMapActivity : AppCompatActivity() {
             val devKey = getString(R.string.tomtom_dev_key)
             initTomTomMapComponent(this@TomTomMapActivity, devKey)
             initOnlineSearchService(this@TomTomMapActivity, devKey)
+            initOrbisMapFeature(this@TomTomMapActivity)
         }
     }
 

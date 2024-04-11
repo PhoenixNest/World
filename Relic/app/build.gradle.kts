@@ -135,6 +135,13 @@ android {
     packaging {
         jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
+
+    configurations {
+        implementation.configure {
+            exclude(module = "protobuf-javalite")
+            exclude(module = "protolite-well-known-types")
+        }
+    }
 }
 
 dependencies {
