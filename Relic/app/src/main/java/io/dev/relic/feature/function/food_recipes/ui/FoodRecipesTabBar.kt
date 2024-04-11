@@ -27,9 +27,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonVerticalIconTextButton
 import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
-import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 
@@ -50,7 +50,7 @@ fun FoodRecipesTabBar(
                 .fillMaxWidth()
                 .height(104.dp)
                 .align(Alignment.BottomCenter),
-            color = mainThemeColorLight.copy(alpha = 0.1F),
+            color = mainBackgroundColor,
             shape = RoundedCornerShape(16.dp)
         ) {
             LazyRow(
