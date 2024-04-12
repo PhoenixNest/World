@@ -92,7 +92,6 @@ dependencies {
     // TomTom - Map display
     val tomtomMapVersion = "0.50.6"
     implementation("com.tomtom.sdk.maps:map-display:$tomtomMapVersion")
-    implementation("com.tomtom.sdk:feature-toggle:$tomtomMapVersion")
     implementation("com.tomtom.sdk.location:provider-android:$tomtomMapVersion")
     implementation("com.tomtom.sdk.search:search-online:$tomtomMapVersion")
 

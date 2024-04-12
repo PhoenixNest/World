@@ -32,7 +32,8 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 @Composable
 fun HomePageContent(
     onOpenDrawer: () -> Unit,
-    onOpenSetting: () -> Unit,
+    onNavigateToExplore: () -> Unit,
+    onNavigateToSetting: () -> Unit,
     agentState: HomeAgentState,
     foodRecipesState: HomeFoodRecipesState
 ) {
@@ -52,7 +53,8 @@ fun HomePageContent(
                 onAgentPromptChange = agentState.action.onPromptChange,
                 onAgentStartChat = agentState.action.onStartChat,
                 onOpenDrawer = onOpenDrawer,
-                onOpenSetting = onOpenSetting
+                onNavigateToExplore = onNavigateToExplore,
+                onNavigateToSetting = onNavigateToSetting
             )
             item { Spacer(modifier = Modifier.height(16.dp)) }
             HomeFoodRecipesAutoTimeComponent(
@@ -86,7 +88,8 @@ fun HomePageContent(
 private fun HomePageContentPreview() {
     HomePageContent(
         onOpenDrawer = {},
-        onOpenSetting = {},
+        onNavigateToExplore = {},
+        onNavigateToSetting = {},
         agentState = HomeAgentState(
             prompt = "",
             action = HomeAgentAction(

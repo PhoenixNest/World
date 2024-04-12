@@ -3,6 +3,7 @@ package io.dev.relic.feature.pages.home
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,6 +21,7 @@ import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailP
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
+import io.module.map.tomtom.legacy.TomTomMapActivity
 import kotlinx.coroutines.launch
 
 @Composable
@@ -32,6 +34,7 @@ fun HomePageRoute(
 
     /* ======================== Common ======================== */
 
+    val context = LocalContext.current
     val localFocusManager = LocalFocusManager.current
     val coroutineScope = mainScreenState.coroutineScope
     val navController = mainScreenState.navHostController
@@ -103,7 +106,8 @@ fun HomePageRoute(
                 }
             }
         },
-        onOpenSetting = navController::navigateToSettingsPage,
+        onNavigateToExplore = { TomTomMapActivity.start(context) },
+        onNavigateToSetting = navController::navigateToSettingsPage,
         agentState = agentState,
         foodRecipesState = foodRecipesState
     )
@@ -112,13 +116,15 @@ fun HomePageRoute(
 @Composable
 private fun HomePage(
     onOpenDrawer: () -> Unit,
-    onOpenSetting: () -> Unit,
+    onNavigateToExplore: () -> Unit,
+    onNavigateToSetting: () -> Unit,
     agentState: HomeAgentState,
     foodRecipesState: HomeFoodRecipesState,
 ) {
     HomePageContent(
         onOpenDrawer = onOpenDrawer,
-        onOpenSetting = onOpenSetting,
+        onNavigateToExplore = onNavigateToExplore,
+        onNavigateToSetting = onNavigateToSetting,
         agentState = agentState,
         foodRecipesState = foodRecipesState
     )
@@ -129,7 +135,8 @@ private fun HomePage(
 private fun HomePagePreview() {
     HomePage(
         onOpenDrawer = {},
-        onOpenSetting = {},
+        onNavigateToExplore = {},
+        onNavigateToSetting = {},
         agentState = HomeAgentState(
             prompt = "",
             action = HomeAgentAction(

@@ -19,10 +19,11 @@ import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.pages.studio.pageStudio
-import io.dev.relic.feature.route.RelicRoute.BASE_ROUTE
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUDIO
+
+private const val START_DESTINATION = RelicRoute.HOME
 
 /**
  * Main Screen navigation route host
@@ -47,7 +48,7 @@ fun MainFeatureNavHost(
     todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
     modifier: Modifier = Modifier,
-    startDestination: String = BASE_ROUTE
+    startDestination: String = START_DESTINATION
 ) {
     val systemUiController = rememberSystemUiController()
 

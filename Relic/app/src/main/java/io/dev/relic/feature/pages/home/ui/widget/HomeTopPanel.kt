@@ -2,8 +2,10 @@ package io.dev.relic.feature.pages.home.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,17 +46,19 @@ import io.dev.relic.feature.function.agent.gemini.ui.AgentSearchBar
 
 @Suppress("FunctionName")
 fun LazyListScope.HomeTopPanel(
+    onOpenDrawer: () -> Unit,
+    onNavigateToExplore: () -> Unit,
+    onNavigateToSetting: () -> Unit,
     currentTimeSection: TimeSection,
     agnetPrompt: String,
     onAgentPromptChange: (newPrompt: String) -> Unit,
-    onAgentStartChat: () -> Unit,
-    onOpenDrawer: () -> Unit,
-    onOpenSetting: () -> Unit
+    onAgentStartChat: () -> Unit
 ) {
     item {
         HomeTopPanelContent(
             onOpenDrawer = onOpenDrawer,
-            onOpenSetting = onOpenSetting,
+            onNavigateToExplore = onNavigateToExplore,
+            onNavigateToSetting = onNavigateToSetting,
             currentTimeSection = currentTimeSection,
             agentSearchContent = agnetPrompt,
             onAgentSearchPromptChange = onAgentPromptChange,
@@ -66,7 +70,8 @@ fun LazyListScope.HomeTopPanel(
 @Composable
 private fun HomeTopPanelContent(
     onOpenDrawer: () -> Unit,
-    onOpenSetting: () -> Unit,
+    onNavigateToExplore: () -> Unit,
+    onNavigateToSetting: () -> Unit,
     currentTimeSection: TimeSection,
     agentSearchContent: String,
     onAgentSearchPromptChange: (newPrompt: String) -> Unit,
@@ -80,7 +85,8 @@ private fun HomeTopPanelContent(
         HomeTopCover(currentTimeSection)
         HomeTopBar(
             onOpenDrawer = onOpenDrawer,
-            onOpenSetting = onOpenSetting
+            onNavigateToExplore = onNavigateToExplore,
+            onNavigateToSetting = onNavigateToSetting
         )
         HomeAgentPanel(
             currentTimeSection = currentTimeSection,
@@ -133,7 +139,8 @@ private fun HomeTopCover(
 @Composable
 private fun HomeTopBar(
     onOpenDrawer: () -> Unit,
-    onOpenSetting: () -> Unit,
+    onNavigateToExplore: () -> Unit,
+    onNavigateToSetting: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -163,15 +170,25 @@ private fun HomeTopBar(
                 textMotion = TextMotion.Animated
             )
         )
-        IconButton(
-            onClick = onOpenSetting,
-            modifier = Modifier.align(Alignment.CenterEnd)
+        Row(
+            Modifier.align(Alignment.CenterEnd),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_settings),
-                contentDescription = DEFAULT_DESC,
-                tint = mainButtonColorLight
-            )
+            IconButton(onClick = onNavigateToExplore) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_explore),
+                    contentDescription = DEFAULT_DESC,
+                    tint = mainButtonColorLight
+                )
+            }
+            IconButton(onClick = onNavigateToSetting) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_settings),
+                    contentDescription = DEFAULT_DESC,
+                    tint = mainButtonColorLight
+                )
+            }
         }
     }
 }
@@ -226,7 +243,8 @@ private fun HomeAgentPanel(
 private fun HomeTopBarPanelDayPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        onOpenSetting = {},
+        onNavigateToExplore = {},
+        onNavigateToSetting = {},
         currentTimeSection = DAY,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
@@ -239,7 +257,8 @@ private fun HomeTopBarPanelDayPreview() {
 private fun HomeTopBarPanelNightPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        onOpenSetting = {},
+        onNavigateToExplore = {},
+        onNavigateToSetting = {},
         currentTimeSection = NIGHT,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},
@@ -252,7 +271,8 @@ private fun HomeTopBarPanelNightPreview() {
 private fun HomeTopBarPanelMidnightPreview() {
     HomeTopPanelContent(
         onOpenDrawer = {},
-        onOpenSetting = {},
+        onNavigateToExplore = {},
+        onNavigateToSetting = {},
         currentTimeSection = MIDNIGHT,
         agentSearchContent = "",
         onAgentSearchPromptChange = {},

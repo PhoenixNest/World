@@ -72,11 +72,6 @@ class TomTomMapViewModel @Inject constructor(
         createOnlineSearchApi(context, devKey)
     }
 
-    fun initOrbisMapFeature(context: Context) {
-        FeatureToggleController.initialize(context)
-        FeatureToggleController.enable(TomTomOrbisMapFeature)
-    }
-
     fun registerLocationUpdateListener(onLocationUpdate: (latestLocationInfo: GeoLocation) -> Unit) {
         LogUtil.d(TAG, "[Location Update Listener] Register the location update listener.")
         mapLocationUpdateListener = OnLocationUpdateListener { onLocationUpdate.invoke(it) }
