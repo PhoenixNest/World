@@ -3,8 +3,6 @@ package io.module.map.tomtom.legacy.viewmodel
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import com.tomtom.sdk.featuretoggle.FeatureToggleController
-import com.tomtom.sdk.featuretoggle.TomTomOrbisMapFeature
 import com.tomtom.sdk.location.GeoLocation
 import com.tomtom.sdk.location.GeoPoint
 import com.tomtom.sdk.location.LocationProvider
