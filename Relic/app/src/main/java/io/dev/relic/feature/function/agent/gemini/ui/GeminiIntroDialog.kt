@@ -80,8 +80,7 @@ fun GeminiIntroDialog(
                 border = BorderStroke(
                     width = 2.dp,
                     brush = geminiBrush
-                ),
-                elevation = 8.dp
+                )
             ) {
                 Column(
                     modifier = Modifier
@@ -115,14 +114,6 @@ private fun GeminiIntroDialogDesc(onStartChatClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color(0xFF060606),
-                        Color.White.copy(alpha = 0.12F)
-                    )
-                )
-            )
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp
@@ -165,8 +156,8 @@ private fun GeminiIntroDialogStartChatButton(onClick: () -> Unit) {
                         )
                     )
                 )
-                .padding(vertical = 12.dp)
-                .clickable { onClick.invoke() },
+                .clickable { onClick.invoke() }
+                .padding(vertical = 12.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
