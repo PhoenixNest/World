@@ -131,6 +131,7 @@ fun AgentMessageCell(
                             shape = cellShape
                         )
                         .padding(16.dp),
+                    isTextSelectable = true,
                     style = TextStyle(
                         color = cellContentColor,
                         fontFamily = ubuntu

@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -36,7 +37,6 @@ import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor80
-import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 
 @Composable
@@ -103,7 +103,14 @@ private fun AgentCardCover() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = mainThemeColorAccent.copy(alpha = 0.6F))
+            .background(
+                brush = Brush.linearGradient(
+                    listOf(
+                        Color(0xFF0250C5),
+                        Color(0xFFD43F8D)
+                    )
+                )
+            )
     )
 }
 
