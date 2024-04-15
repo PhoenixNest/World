@@ -42,7 +42,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private lateinit var mapFragment: MapFragment
-    private lateinit var tomtomMap: TomTomMap
+    private var tomtomMap: TomTomMap? = null
 
     companion object {
         private const val TAG = "TomTomMapActivity"
@@ -77,16 +77,20 @@ class TomTomMapActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        LogUtil.d(TAG, "[Map Lifecycle] onPause")
+        LogUtil.w(TAG, "[Map Lifecycle] onPause")
         mapFragment.onPause()
     }
 
     override fun onDestroy() {
-        LogUtil.d(TAG, "[Map Lifecycle] onDestroy")
-        tomtomMap.setLocationProvider(null)
+        LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
+        tomtomMap?.setLocationProvider(null)
+        tomtomMap = null
+
+        LogUtil.e(TAG, "[Map Host Activity Lifecycle] onDestroy")
         super.onDestroy()
 
         // Avoid OOM
+        LogUtil.e(TAG, "[Map Component] Free component memory.")
         mapViewModel.mapLocationProvider.close()
     }
 
@@ -136,9 +140,9 @@ class TomTomMapActivity : AppCompatActivity() {
         // Enable user location.
         mapViewModel.mapLocationProvider.enable()
         // Binds the location provider.
-        tomtomMap.setLocationProvider(mapViewModel.mapLocationProvider)
+        tomtomMap?.setLocationProvider(mapViewModel.mapLocationProvider)
         // Enable the location marker.
-        tomtomMap.enableLocationMarker(mapViewModel.mapLocationMarkerOptions)
+        tomtomMap?.enableLocationMarker(mapViewModel.mapLocationMarkerOptions)
         // Register the location update listener to access the latest user location.
         mapViewModel.registerLocationUpdateListener {
             val geoPoint = it.position
@@ -147,7 +151,7 @@ class TomTomMapActivity : AppCompatActivity() {
             LogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
             mapViewModel.unregisterLocationUpdateListener()
             // Smooth animation to the new position.
-            tomtomMap.animateCamera(
+            tomtomMap?.animateCamera(
                 CameraOptions(
                     position = geoPoint,
                     zoom = DEFAULT_ZOOM_VALUE,
@@ -200,9 +204,9 @@ class TomTomMapActivity : AppCompatActivity() {
         toggleLoadingView(true)
         mapFragment = MapFragment.newInstance(mapViewModel.mapOptions)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.map_container, mapFragment, KEY_MAP_FRAGMENT)
-            .commit()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.map_container, mapFragment, KEY_MAP_FRAGMENT)
+        fragmentTransaction.commitAllowingStateLoss()
 
         mapFragment.getMapAsync {
             LogUtil.d(TAG, "[TomTomMap] Get map async successful.")
@@ -230,7 +234,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun customMapStyle() {
-        tomtomMap.apply {
+        tomtomMap?.apply {
             showHillShading()
             cameraTrackingMode = DEFAULT_TRACKING_MODE
         }
