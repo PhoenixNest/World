@@ -8,6 +8,14 @@ import io.core.ui.R
 
 object RelicFontFamily {
 
+    val googleSansDisplay = FontFamily(
+        Font(R.font.google_sans_display_regular, FontWeight.Normal)
+    )
+
+    val googleProductSans = FontFamily(
+        Font(R.font.google_product_sans, FontWeight.Normal)
+    )
+
     /**
      * [Google fonts > Ubuntu](https://fonts.google.com/specimen/Ubuntu)
      * */

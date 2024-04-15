@@ -115,7 +115,6 @@
 
     <!-- Agent Unit -->
     <string name="agent_input_area_hint">Ask your Ai assistant…</string>
-    <string name="agent_awaiting_answer_label">Waiting for Gemini to answer, please be patient.</string>
     <string name="agent_ask_next">Gemini awaits your next message.</string>
     <string name="agent_intro_title">🤖 Ask your Ai assistant</string>
     <string name="agent_intro_question_1">• What\'s the best coffee in the world?</string>
@@ -123,7 +122,14 @@
     <string name="agent_intro_question_3">• How to become a good programmer?</string>
     <string name="agent_intro_more">…</string>
     <string name="agent_intro_start_chat">Start Chat</string>
-    <!-- Agent Unit - Waring label -->
+    <!-- Agent Unit - Gemini - Intro -->
+    <string name="gemini">Gemini</string>
+    <string name="gemini_intro_title">The Gemini ecosystem represents Google\'s most capable AI.</string>
+    <string name="gemini_intro_content">- Reasoning about vast amounts of information\n - Better understanding across modalities\n - Problem-solving with longer blocks of code</string>
+    <string name="gemini_link_1">Visit the official site of</string>
+    <string name="gemini_link_2">Google DeepMind • Gemini</string>
+    <!-- Agent Unit - Gemini - Waring label -->
+    <string name="agent_awaiting_answer_label">Waiting for Gemini to answer, please be patient.</string>
     <string name="agent_input_waring">Please enter a valid message</string>
     <string name="agent_awaiting_answer_waring">Please wait for Gemini\'s response</string>
     <string name="agent_unknown_cell_type_warning">Unknown Cell Type</string>

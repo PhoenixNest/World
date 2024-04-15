@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.gemini.ui.widget
+package io.dev.relic.feature.function.agent.ui.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,7 +32,6 @@ import io.agent.gemini.utils.GeminiChatRole.AGENT
 import io.agent.gemini.utils.GeminiChatRole.ERROR
 import io.agent.gemini.utils.GeminiChatRole.USER
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.errorColorAccent
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
@@ -112,7 +111,7 @@ fun AgentMessageCell(
                 if (geminiCellContent.roleId == AGENT.roleId
                     || geminiCellContent.roleId == ERROR.roleId
                 ) {
-                    GeminiAvatar(
+                    AgentAvatar(
                         avatarBackgroundColor = cellBackgroundColor,
                         avatarColor = cellContentColor
                     )
@@ -125,6 +124,7 @@ fun AgentMessageCell(
             ) {
                 MarkdownText(
                     markdown = cellContent,
+                    fontResource = io.core.ui.R.font.ubuntu_regular,
                     modifier = Modifier
                         .background(
                             color = cellBackgroundColor,
@@ -133,8 +133,7 @@ fun AgentMessageCell(
                         .padding(16.dp),
                     isTextSelectable = true,
                     style = TextStyle(
-                        color = cellContentColor,
-                        fontFamily = ubuntu
+                        color = cellContentColor
                     )
                 )
             }
@@ -143,7 +142,7 @@ fun AgentMessageCell(
 }
 
 @Composable
-private fun GeminiAvatar(
+private fun AgentAvatar(
     avatarBackgroundColor: Color,
     avatarColor: Color
 ) {

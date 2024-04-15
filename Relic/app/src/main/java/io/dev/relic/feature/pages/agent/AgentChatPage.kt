@@ -3,6 +3,9 @@ package io.dev.relic.feature.pages.agent
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.agent.gemini.model.AbsGeminiCell
@@ -10,6 +13,7 @@ import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
+import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.pages.agent.ui.AgentChatPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
@@ -39,6 +43,10 @@ fun AgentChatPageRoute(
             && inputMessage.isNotEmpty()
             && inputMessage.isNotBlank()
 
+    var isShowHelpDialog by remember {
+        mutableStateOf(false)
+    }
+
     /* ======================== Ui ======================== */
 
     AgentChatPage(
@@ -57,8 +65,18 @@ fun AgentChatPageRoute(
         },
         onCopyTextClick = {
             //
+        },
+        onInfoClick = {
+            isShowHelpDialog = true
         }
     )
+
+    if (isShowHelpDialog) {
+        GeminiIntroDialog(
+            onStartChatClick = { isShowHelpDialog = false },
+            onDismiss = {}
+        )
+    }
 }
 
 @Composable
@@ -70,7 +88,8 @@ private fun AgentChatPage(
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
     onCopyTextClick: (copyText: String) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onInfoClick: () -> Unit
 ) {
     val isAwaitingAnswer = when (agentDataState) {
         is GeminiAgentDataState.Init,
@@ -89,7 +108,8 @@ private fun AgentChatPage(
         onMessageValueChange = onMessageValueChange,
         onSendMessage = onSendMessage,
         onCopyTextClick = onCopyTextClick,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onInfoClick = onInfoClick
     )
 }
 
@@ -121,6 +141,7 @@ private fun AgentChatPagePreview() {
         onMessageValueChange = {},
         onSendMessage = {},
         onCopyTextClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        onInfoClick = {}
     )
 }

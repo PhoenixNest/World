@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.gemini.ui
+package io.dev.relic.feature.function.agent.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement

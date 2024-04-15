@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import io.agent.gemini.model.AbsGeminiCell
-import io.dev.relic.feature.function.agent.gemini.ui.AgentChatList
-import io.dev.relic.feature.function.agent.gemini.ui.AgentInputField
+import io.dev.relic.feature.function.agent.ui.AgentChatList
+import io.dev.relic.feature.function.agent.ui.AgentInputField
 
 @Composable
 fun AgentChatArea(

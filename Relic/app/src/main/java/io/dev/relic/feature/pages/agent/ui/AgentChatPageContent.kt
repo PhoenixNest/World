@@ -6,16 +6,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
@@ -32,7 +36,8 @@ fun AgentChatPageContent(
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
     onCopyTextClick: (copyText: String) -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onInfoClick: () -> Unit
 ) {
     LaunchedEffect(chatHistory) {
         chatLazyListState.animateScrollToItem(chatHistory.size)
@@ -53,7 +58,16 @@ fun AgentChatPageContent(
                 onBackClick = onBackClick,
                 hasTitle = false,
                 title = stringResource(R.string.title_greeting),
-                iconColor = mainIconColorLight
+                iconColor = mainIconColorLight,
+                tailContent = {
+                    IconButton(onClick = onInfoClick) {
+                        Icon(
+                            painter = painterResource(id = io.core.ui.R.drawable.ic_info),
+                            contentDescription = DEFAULT_DESC,
+                            tint = mainIconColorLight
+                        )
+                    }
+                }
             )
             AgentChatArea(
                 chatLazyListState = chatLazyListState,
@@ -98,6 +112,7 @@ private fun AgentChatPageContentPreview() {
         onMessageValueChange = {},
         onSendMessage = {},
         onCopyTextClick = {},
-        onBackClick = {}
+        onBackClick = {},
+        onInfoClick = {}
     )
 }

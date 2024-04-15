@@ -171,7 +171,7 @@ private fun IntroFeaturePanel(onClick: () -> Unit) {
 private fun IntroPrivacy() {
     val context = LocalContext.current
     val normalTextColor = mainTextColorDark
-    val highLightTextColor = mainTextColorDark
+    val highLightTextColor = mainTextColor
     val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.intro_agreement_part_1))
         pushStringAnnotation(

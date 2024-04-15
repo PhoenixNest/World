@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.gemini.ui
+package io.dev.relic.feature.function.agent.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,9 +34,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor80
+import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 
 @Composable
@@ -139,11 +139,11 @@ private fun AgentComponentDesc(
         Text(text = stringResource(R.string.agent_intro_question_3), style = listTextStyle)
         Text(text = stringResource(R.string.todo_intro_goal_more), style = listTextStyle)
         CommonHorizontalIconTextButton(
-            iconResId = R.drawable.ic_agent_craft,
+            iconResId = R.drawable.ic_agent_start_chat,
             labelResId = R.string.agent_intro_start_chat,
             onClick = onStartChat,
             modifier = Modifier.fillMaxWidth(),
-            backgroundColor = mainBackgroundColor,
+            backgroundColor = mainThemeColorAccent,
             shape = RoundedCornerShape(12.dp)
         )
     }
