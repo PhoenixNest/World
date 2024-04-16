@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.dev.relic.R
 
 @Composable
 fun FoodRecipeLikeButton(
@@ -16,9 +15,9 @@ fun FoodRecipeLikeButton(
 ) {
     val iconSource = painterResource(
         id = if (isLike) {
-            R.drawable.ic_like
+            io.core.ui.R.drawable.ic_like
         } else {
-            R.drawable.ic_dislike
+            io.core.ui.R.drawable.ic_dislike
         }
     )
 

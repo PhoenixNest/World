@@ -1,28 +1,23 @@
 package io.dev.relic.feature.function.agent.ui.widget
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.ai.client.generativeai.type.Part
 import com.google.ai.client.generativeai.type.asTextOrNull
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.agent.gemini.model.AbsGeminiCell
@@ -31,15 +26,13 @@ import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole.AGENT
 import io.agent.gemini.utils.GeminiChatRole.ERROR
 import io.agent.gemini.utils.GeminiChatRole.USER
-import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.common.util.ToastUtil
 import io.core.ui.theme.errorColorAccent
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
-
-private const val IS_SHOW_AVATAR = false
 
 private val startShape = RoundedCornerShape(
     topEnd = 16.dp,
@@ -53,13 +46,14 @@ private val endShape = RoundedCornerShape(
     bottomEnd = 16.dp
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AgentMessageCell(
     geminiCellContent: AbsGeminiCell,
-    onCopyTextClick: (copyText: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val isAgentCell = (geminiCellContent.roleId == AGENT.roleId)
+
+    val clipboardManager = LocalClipboardManager.current
 
     val cellGravity = when (geminiCellContent.roleId) {
         USER.roleId -> Alignment.CenterEnd
@@ -84,7 +78,7 @@ fun AgentMessageCell(
         is GeminiTextCell -> geminiCellContent.textContent
         is GeminiHybridCell -> {
             val textContent = StringBuilder()
-            for (part: Part in geminiCellContent.hybridContent.parts) {
+            for (part in geminiCellContent.hybridContent.parts) {
                 textContent.append(part.asTextOrNull())
             }
             textContent.toString()
@@ -101,65 +95,28 @@ fun AgentMessageCell(
     }
 
     Box(modifier = modifier.fillMaxWidth()) {
-        Row(
+        MarkdownText(
+            markdown = cellContent,
+            fontResource = io.core.ui.R.font.ubuntu_regular,
             modifier = Modifier
-                .wrapContentSize()
-                .align(cellGravity),
-            verticalAlignment = Alignment.Top
-        ) {
-            if (IS_SHOW_AVATAR) {
-                if (geminiCellContent.roleId == AGENT.roleId
-                    || geminiCellContent.roleId == ERROR.roleId
-                ) {
-                    AgentAvatar(
-                        avatarBackgroundColor = cellBackgroundColor,
-                        avatarColor = cellContentColor
-                    )
-                }
-            }
-            Column(
-                modifier = Modifier.wrapContentSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
-                MarkdownText(
-                    markdown = cellContent,
-                    fontResource = io.core.ui.R.font.ubuntu_regular,
-                    modifier = Modifier
-                        .background(
-                            color = cellBackgroundColor,
-                            shape = cellShape
-                        )
-                        .padding(16.dp),
-                    isTextSelectable = true,
-                    style = TextStyle(
-                        color = cellContentColor
-                    )
+                .align(cellGravity)
+                .background(
+                    color = cellBackgroundColor,
+                    shape = cellShape
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun AgentAvatar(
-    avatarBackgroundColor: Color,
-    avatarColor: Color
-) {
-    Box(
-        modifier = Modifier
-            .padding(end = 8.dp)
-            .background(
-                color = avatarBackgroundColor,
-                shape = CircleShape
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_agent),
-            contentDescription = DEFAULT_DESC,
-            modifier = Modifier.padding(12.dp),
-            tint = avatarColor
+                .combinedClickable(
+                    onLongClick = {
+                        clipboardManager.setText(AnnotatedString(cellContent))
+                        ToastUtil.showToast("Copied to clipboard")
+                    },
+                    onClick = {
+                        //
+                    }
+                )
+                .padding(16.dp),
+            style = TextStyle(
+                color = cellContentColor
+            )
         )
     }
 }
@@ -193,7 +150,6 @@ private fun AgentMessageCellPreview() {
             )
             AgentMessageCell(
                 geminiCellContent = cell,
-                onCopyTextClick = {},
                 modifier = itemDecorationModifier
             )
         }

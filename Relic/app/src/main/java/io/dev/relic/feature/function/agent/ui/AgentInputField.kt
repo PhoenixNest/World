@@ -1,6 +1,7 @@
 package io.dev.relic.feature.function.agent.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,10 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonInputField
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor30
-import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
@@ -44,16 +44,16 @@ fun AgentInputField(
         modifier = modifier
             .fillMaxWidth()
             .imePadding(),
-        color = mainThemeColor,
+        color = mainBackgroundColor,
         shape = RoundedCornerShape(
             topStart = 16.dp,
             topEnd = 16.dp
         )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(mainThemeColorLight.copy(alpha = 0.1F))
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AgentStatusIndicator(isAwaitingAnswer = isAwaitingAnswer)
             Row(
@@ -88,20 +88,19 @@ fun AgentInputField(
                     },
                     shape = RoundedCornerShape(16.dp)
                 ) {
-                    IconButton(
-                        onClick = onSendMessage,
-                        modifier = Modifier.weight(1F)
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_send),
-                            contentDescription = DEFAULT_DESC,
-                            tint = if (isEnableSend) {
-                                mainIconColorLight
-                            } else {
-                                mainIconColorLight.copy(alpha = 0.3F)
-                            }
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = io.core.ui.R.drawable.ic_send),
+                        contentDescription = DEFAULT_DESC,
+                        modifier = Modifier
+                            .weight(1F)
+                            .clickable { onSendMessage.invoke() }
+                            .padding(12.dp),
+                        tint = if (isEnableSend) {
+                            mainIconColorLight
+                        } else {
+                            mainIconColorLight.copy(alpha = 0.3F)
+                        }
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

@@ -29,7 +29,7 @@ fun SettingsTermsPanel(
         Spacer(modifier = Modifier.height(16.dp))
         SettingsPanelItem(
             labelResId = R.string.settings_terms_user_agreement,
-            iconResId = R.drawable.ic_user_agreement,
+            iconResId = io.core.ui.R.drawable.ic_user_agreement,
             onItemClick = onUserAgreementClick
         )
         SettingsPanelItem(

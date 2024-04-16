@@ -35,7 +35,6 @@ fun AgentChatPageContent(
     chatHistory: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
-    onCopyTextClick: (copyText: String) -> Unit,
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit
 ) {
@@ -77,7 +76,6 @@ fun AgentChatPageContent(
                 chatHistory = chatHistory,
                 onMessageValueChange = onMessageValueChange,
                 onSendMessage = onSendMessage,
-                onCopyTextClick = onCopyTextClick
             )
         }
     }
@@ -111,7 +109,6 @@ private fun AgentChatPageContentPreview() {
         chatHistory = chatHistory,
         onMessageValueChange = {},
         onSendMessage = {},
-        onCopyTextClick = {},
         onBackClick = {},
         onInfoClick = {}
     )

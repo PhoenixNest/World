@@ -39,7 +39,7 @@ fun StudioTabBar(
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_user),
+                painter = painterResource(id = io.core.ui.R.drawable.ic_user),
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
                 tint = mainButtonColorLight
             )

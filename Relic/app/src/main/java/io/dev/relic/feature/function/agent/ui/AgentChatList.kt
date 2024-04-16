@@ -18,7 +18,6 @@ import io.dev.relic.feature.function.agent.ui.widget.AgentMessageCell
 fun AgentChatList(
     chatHistory: List<AbsGeminiCell>,
     lazyListState: LazyListState,
-    onCopyTextClick: (copyText: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -38,7 +37,6 @@ fun AgentChatList(
             )
             AgentMessageCell(
                 geminiCellContent = cell,
-                onCopyTextClick = onCopyTextClick,
                 modifier = itemDecorationModifier
             )
         }

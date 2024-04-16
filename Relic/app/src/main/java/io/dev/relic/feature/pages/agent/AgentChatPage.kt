@@ -63,9 +63,6 @@ fun AgentChatPageRoute(
                 sendTextMessage(agentSearchContent)
             }
         },
-        onCopyTextClick = {
-            //
-        },
         onInfoClick = {
             isShowHelpDialog = true
         }
@@ -88,7 +85,6 @@ private fun AgentChatPage(
     agentChatList: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
-    onCopyTextClick: (copyText: String) -> Unit,
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit
 ) {
@@ -108,7 +104,6 @@ private fun AgentChatPage(
         chatHistory = agentChatList,
         onMessageValueChange = onMessageValueChange,
         onSendMessage = onSendMessage,
-        onCopyTextClick = onCopyTextClick,
         onBackClick = onBackClick,
         onInfoClick = onInfoClick
     )
@@ -141,7 +136,6 @@ private fun AgentChatPagePreview() {
         agentChatList = chatHistory,
         onMessageValueChange = {},
         onSendMessage = {},
-        onCopyTextClick = {},
         onBackClick = {},
         onInfoClick = {}
     )

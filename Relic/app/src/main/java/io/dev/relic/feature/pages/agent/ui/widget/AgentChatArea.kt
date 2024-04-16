@@ -19,12 +19,10 @@ fun AgentChatArea(
     chatHistory: List<AbsGeminiCell>,
     onMessageValueChange: (message: String) -> Unit,
     onSendMessage: () -> Unit,
-    onCopyTextClick: (copyText: String) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         AgentChatList(
             chatHistory = chatHistory,
-            onCopyTextClick = onCopyTextClick,
             lazyListState = chatLazyListState
         )
         AgentInputField(
