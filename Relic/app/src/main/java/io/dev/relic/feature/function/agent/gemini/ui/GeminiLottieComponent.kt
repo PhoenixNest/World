@@ -41,7 +41,7 @@ fun GeminiLottieComponent() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .height(200.dp)
     ) {
         Image(
             painter = painterResource(id = R.mipmap.gemini_mind),
