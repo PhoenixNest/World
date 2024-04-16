@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ import androidx.compose.ui.window.DialogProperties
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.googleSansDisplay
+import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
@@ -59,6 +61,7 @@ private val geminiBrush = Brush.linearGradient(
 
 @Composable
 fun GeminiIntroDialog(
+    onCloseClick: () -> Unit,
     onStartChatClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -74,26 +77,51 @@ fun GeminiIntroDialog(
                 dismissOnClickOutside = true
             )
         ) {
-            Surface(
-                color = Color(0xFF060606),
-                shape = RoundedCornerShape(16.dp),
-                border = BorderStroke(
-                    width = 2.dp,
-                    brush = geminiBrush
-                )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+            Box {
+                Surface(
+                    color = Color(0xFF060606),
+                    shape = RoundedCornerShape(16.dp),
+                    border = BorderStroke(
+                        width = 2.dp,
+                        brush = geminiBrush
+                    )
                 ) {
-                    GeminiLottieComponent()
-                    GeminiIntroDialogDesc(onStartChatClick = onStartChatClick)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        GeminiLottieComponent()
+                        GeminiIntroDialogDesc(onStartChatClick = onStartChatClick)
+                    }
                 }
+                GeminiIntroDialogCloseButton(
+                    onClick = onCloseClick,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.TopEnd)
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun GeminiIntroDialogCloseButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Icon(
+            painter = painterResource(id = io.core.ui.R.drawable.ic_close),
+            contentDescription = DEFAULT_DESC,
+            tint = mainIconColorLight.copy(alpha = 0.5F)
+        )
     }
 }
 
@@ -229,6 +257,7 @@ private fun GeminiIntroDialogSiteText() {
 @Preview
 private fun GeminiIntroDialogPreview() {
     GeminiIntroDialog(
+        onCloseClick = {},
         onStartChatClick = {},
         onDismiss = {}
     )

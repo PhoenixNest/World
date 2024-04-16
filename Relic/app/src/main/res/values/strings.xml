@@ -124,8 +124,8 @@
     <string name="agent_intro_start_chat">Start Chat</string>
     <!-- Agent Unit - Gemini - Intro -->
     <string name="gemini">Gemini</string>
-    <string name="gemini_intro_title">The Gemini ecosystem represents Google\'s most capable AI.</string>
-    <string name="gemini_intro_content">- Reasoning about vast amounts of information\n - Better understanding across modalities\n - Problem-solving with longer blocks of code</string>
+    <string name="gemini_intro_title">The Gemini ecosystem represents Google\'s most capable AI</string>
+    <string name="gemini_intro_content">- Reasoning about vast amounts of information.\n - Better understanding across modalities.\n - Problem-solving with longer blocks of code.</string>
     <string name="gemini_link_1">Visit the official site of</string>
     <string name="gemini_link_2">Google DeepMind • Gemini</string>
     <!-- Agent Unit - Gemini - Waring label -->

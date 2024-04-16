@@ -73,6 +73,7 @@ fun AgentChatPageRoute(
 
     if (isShowHelpDialog) {
         GeminiIntroDialog(
+            onCloseClick = { isShowHelpDialog = false },
             onStartChatClick = { isShowHelpDialog = false },
             onDismiss = {}
         )
