@@ -19,6 +19,8 @@ object GeminiAgent {
 
     private const val TAG = "GeminiAgent"
 
+    const val GEMINI_OFFICIAL_SITE = "https://deepmind.google/technologies/gemini/#introduction"
+
     /**
      * [Gemini models](https://ai.google.dev/models/gemini?hl=en)
      * */

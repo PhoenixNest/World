@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.jeziellago.compose.markdowntext.MarkdownText
+import io.agent.gemini.GeminiAgent.GEMINI_OFFICIAL_SITE
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.googleSansDisplay
 import io.core.ui.theme.mainIconColorLight
@@ -49,8 +50,6 @@ import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 import io.dev.relic.feature.activities.web.WebActivity
-
-private const val GEMINI_OFFICIAL_SITE = "https://deepmind.google/technologies/gemini/#introduction"
 
 private val geminiBrush = Brush.linearGradient(
     listOf(

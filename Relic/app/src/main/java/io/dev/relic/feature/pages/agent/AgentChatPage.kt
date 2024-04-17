@@ -11,6 +11,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
+import io.common.RelicResCenter.getString
+import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
@@ -70,8 +72,16 @@ fun AgentChatPageRoute(
 
     if (isShowHelpDialog) {
         GeminiIntroDialog(
-            onCloseClick = { isShowHelpDialog = false },
-            onStartChatClick = { isShowHelpDialog = false },
+            onCloseClick = {
+                isShowHelpDialog = false
+            },
+            onStartChatClick = {
+                isShowHelpDialog = false
+
+                // Send a greeting message to gemini.
+                val greetingMessage = getString(R.string.gemini_hello_world)
+                geminiAgentViewModel.sendTextMessage(greetingMessage)
+            },
             onDismiss = {}
         )
     }
