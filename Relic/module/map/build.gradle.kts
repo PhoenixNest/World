@@ -95,11 +95,6 @@ dependencies {
     implementation("com.tomtom.sdk.location:provider-android:$tomtomMapVersion")
     implementation("com.tomtom.sdk.search:search-online:$tomtomMapVersion")
 
-    // AMap
-    val aMapVersion = "latest.integration"
-    implementation("com.amap.api:navi-3dmap:${aMapVersion}")
-    implementation("com.amap.api:search:${aMapVersion}")
-
     // Lottie
     val lottieVersion = "6.4.0"
     implementation("com.airbnb.android:lottie:$lottieVersion")
