@@ -93,6 +93,7 @@ android {
                 "proguard-rules/gson-android.pro",
                 "proguard-rules/retrofit2-android.pro",
                 "proguard-rules/okhttp3-android.pro",
+                "proguard-rules/amap.pro",
                 "proguard-rules/tomtom-map.pro"
             )
         }

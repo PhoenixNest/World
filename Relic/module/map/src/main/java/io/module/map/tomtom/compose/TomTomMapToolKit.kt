@@ -17,102 +17,105 @@ import kotlinx.coroutines.awaitCancellation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-private const val TAG = "TomTomMapToolKit"
+object TomTomMapToolKit {
 
-suspend inline fun disposingComposition(factory: () -> Composition) {
-    val composition = factory()
-    try {
-        awaitCancellation()
-    } finally {
-        composition.dispose()
-    }
-}
+    private const val TAG = "TomTomMapToolKit"
 
-suspend inline fun MapView.awaitMap(): TomTomMap {
-    return suspendCoroutine { continuation ->
-        getMapAsync {
-            continuation.resume(it)
+    suspend inline fun disposingComposition(factory: () -> Composition) {
+        val composition = factory()
+        try {
+            awaitCancellation()
+        } finally {
+            composition.dispose()
         }
     }
-}
 
-suspend inline fun MapView.newComposition(
-    parent: CompositionContext,
-    noinline content: @Composable () -> Unit
-): Composition {
-    val map = awaitMap()
-    return Composition(
-        applier = TomTomMapApplier(
-            map = map,
-            mapView = this
-        ),
-        parent = parent
-    ).apply {
-        setContent(content)
+    suspend inline fun MapView.awaitMap(): TomTomMap {
+        return suspendCoroutine { continuation ->
+            getMapAsync {
+                continuation.resume(it)
+            }
+        }
     }
-}
 
-fun MapView.lifecycleObserver(
-    previousAMapState: MutableState<Lifecycle.Event>,
-    onCreate: () -> Unit = {},
-    onStart: () -> Unit = {},
-    onResume: () -> Unit = {},
-    onPause: () -> Unit = {},
-    onStop: () -> Unit = {}
-): LifecycleObserver {
-    return LifecycleEventObserver { _, event ->
-        when (event) {
-            Lifecycle.Event.ON_CREATE -> {
-                LogUtil.d(TAG, "[Map Lifecycle] onCreate")
-                if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
-                    this.onCreate(Bundle())
-                    onCreate.invoke()
+    suspend inline fun MapView.newComposition(
+        parent: CompositionContext,
+        noinline content: @Composable () -> Unit
+    ): Composition {
+        val map = awaitMap()
+        return Composition(
+            applier = TomTomMapApplier(
+                map = map,
+                mapView = this
+            ),
+            parent = parent
+        ).apply {
+            setContent(content)
+        }
+    }
+
+    fun MapView.lifecycleObserver(
+        previousAMapState: MutableState<Lifecycle.Event>,
+        onCreate: () -> Unit = {},
+        onStart: () -> Unit = {},
+        onResume: () -> Unit = {},
+        onPause: () -> Unit = {},
+        onStop: () -> Unit = {}
+    ): LifecycleObserver {
+        return LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_CREATE -> {
+                    LogUtil.d(TAG, "[Map Lifecycle] onCreate")
+                    if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
+                        this.onCreate(Bundle())
+                        onCreate.invoke()
+                    }
                 }
-            }
 
-            Lifecycle.Event.ON_START -> {
-                LogUtil.d(TAG, "[Map Lifecycle] onStart")
-                this.onStart()
-                onStart.invoke()
-            }
+                Lifecycle.Event.ON_START -> {
+                    LogUtil.d(TAG, "[Map Lifecycle] onStart")
+                    this.onStart()
+                    onStart.invoke()
+                }
 
-            Lifecycle.Event.ON_RESUME -> {
-                LogUtil.d(TAG, "[Map Lifecycle] onResume")
-                this.onResume()
-                onResume.invoke()
-            }
+                Lifecycle.Event.ON_RESUME -> {
+                    LogUtil.d(TAG, "[Map Lifecycle] onResume")
+                    this.onResume()
+                    onResume.invoke()
+                }
 
-            Lifecycle.Event.ON_PAUSE -> {
-                LogUtil.w(TAG, "[Map Lifecycle] onPause")
-                this.onPause()
-                onPause.invoke()
-            }
+                Lifecycle.Event.ON_PAUSE -> {
+                    LogUtil.w(TAG, "[Map Lifecycle] onPause")
+                    this.onPause()
+                    onPause.invoke()
+                }
 
-            Lifecycle.Event.ON_STOP -> {
-                LogUtil.w(TAG, "[Map Lifecycle] onStop")
-                this.onStop()
-                onStop.invoke()
-            }
+                Lifecycle.Event.ON_STOP -> {
+                    LogUtil.w(TAG, "[Map Lifecycle] onStop")
+                    this.onStop()
+                    onStop.invoke()
+                }
 
-            Lifecycle.Event.ON_DESTROY -> {
-                LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
-                // Handled in onDispose.
-            }
+                Lifecycle.Event.ON_DESTROY -> {
+                    LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
+                    // Handled in onDispose.
+                }
 
-            else -> throw IllegalStateException()
+                else -> throw IllegalStateException()
+            }
+            previousAMapState.value = event
         }
-        previousAMapState.value = event
     }
-}
 
-fun MapView.componentCallback(): ComponentCallbacks {
-    return object : ComponentCallbacks {
-        override fun onConfigurationChanged(newConfig: Configuration) {
-            //
-        }
+    fun MapView.componentCallback(): ComponentCallbacks {
+        return object : ComponentCallbacks {
+            override fun onConfigurationChanged(newConfig: Configuration) {
+                //
+            }
 
-        override fun onLowMemory() {
-            this@componentCallback.onPause()
+            override fun onLowMemory() {
+                this@componentCallback.onPause()
+            }
         }
     }
 }

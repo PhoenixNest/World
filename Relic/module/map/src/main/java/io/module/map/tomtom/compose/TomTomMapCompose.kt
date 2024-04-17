@@ -26,6 +26,10 @@ import com.tomtom.sdk.map.display.ui.MapView
 import io.module.map.R
 import io.module.map.permission.MapPermissionCenter
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_LOCATION_MARKER_TYPE
+import io.module.map.tomtom.compose.TomTomMapToolKit.componentCallback
+import io.module.map.tomtom.compose.TomTomMapToolKit.disposingComposition
+import io.module.map.tomtom.compose.TomTomMapToolKit.lifecycleObserver
+import io.module.map.tomtom.compose.TomTomMapToolKit.newComposition
 import io.module.map.utils.LogUtil
 
 private const val TAG = "TomTomMapComponent"

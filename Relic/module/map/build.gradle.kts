@@ -89,11 +89,16 @@ dependencies {
 
     /* ======================== Third-party Extension ======================== */
 
-    // TomTom - Map display
+    // TomTom
     val tomtomMapVersion = "0.50.6"
     implementation("com.tomtom.sdk.maps:map-display:$tomtomMapVersion")
     implementation("com.tomtom.sdk.location:provider-android:$tomtomMapVersion")
     implementation("com.tomtom.sdk.search:search-online:$tomtomMapVersion")
+
+    // AMap
+    val aMapVersion = "latest.integration"
+    implementation("com.amap.api:navi-3dmap:${aMapVersion}")
+    implementation("com.amap.api:search:${aMapVersion}")
 
     // Lottie
     val lottieVersion = "6.4.0"
