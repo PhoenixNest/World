@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.wallpaper
+package io.dev.relic.feature.function.gallery
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

@@ -62,7 +62,8 @@ fun FoodRecipesRowItem(
                 url = data.image,
                 imageWidth = imageSize,
                 imageHeight = imageSize,
-                modifier = Modifier.clickable { onItemClick.invoke(data) }
+                modifier = Modifier.clickable { onItemClick.invoke(data) },
+                imageRadius = 16.dp
             )
         }
         Text(

@@ -50,7 +50,8 @@ fun TrendingCardItem(
                 CommonAsyncImage(
                     url = thumbnailImageUrl,
                     imageWidth = 300.dp,
-                    imageHeight = 240.dp
+                    imageHeight = 240.dp,
+                    imageRadius = 16.dp
                 )
                 Column(
                     modifier = Modifier

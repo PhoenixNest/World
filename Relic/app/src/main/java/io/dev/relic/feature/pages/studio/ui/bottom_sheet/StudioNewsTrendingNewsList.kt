@@ -73,20 +73,17 @@ private fun StudioTrendingNewsPanel(
             ),
             verticalAlignment = Alignment.Top
         ) {
-            itemsIndexed(modelList) { index, data ->
-                if (data == null) {
-                    //
-                } else {
-                    val itemDecorationModifier = Modifier.padding(
-                        start = if (index == 0) 16.dp else 0.dp,
-                        end = if (index == modelList.size - 1) 16.dp else 0.dp
-                    )
-                    TrendingCardItem(
-                        data = data,
-                        onCardClick = { onCardClick.invoke(data) },
-                        modifier = itemDecorationModifier
-                    )
-                }
+            val dataList = modelList.filterNotNull()
+            itemsIndexed(dataList) { index, data ->
+                val itemDecorationModifier = Modifier.padding(
+                    start = if (index == 0) 16.dp else 0.dp,
+                    end = if (index == modelList.size - 1) 16.dp else 0.dp
+                )
+                TrendingCardItem(
+                    data = data,
+                    onCardClick = { onCardClick.invoke(data) },
+                    modifier = itemDecorationModifier
+                )
             }
         }
     }

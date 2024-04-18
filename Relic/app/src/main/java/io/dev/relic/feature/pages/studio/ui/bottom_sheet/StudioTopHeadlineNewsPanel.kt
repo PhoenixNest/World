@@ -47,31 +47,28 @@ fun LazyListScope.StudioTopHeadlineNewsList(
         }
 
         is TopHeadlineNewsDataState.FetchSucceed -> {
-            itemsIndexed(dataState.modelList) { index, data ->
+            val dataList = dataState.modelList.filterNotNull()
+            itemsIndexed(dataList) { index, data ->
                 Column(
                     modifier = Modifier.wrapContentSize(),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.Start
                 ) {
-                    if (data == null) {
-                        //
-                    } else {
-                        if (isAvailableContent(data)) {
-                            val isReachTheEnd = (index == dataState.modelList.size - 1)
-                            val itemDecorationModifier = Modifier.padding(
-                                top = if (index == 0) 0.dp else 16.dp,
-                            )
-                            NewsCardItem(
-                                data = data,
-                                onCardClick = { onCardClick.invoke(data) },
-                                onLikeClick = { onLikeClick.invoke(data) },
-                                onShareClick = { onShareClick.invoke(data) },
-                                modifier = itemDecorationModifier
-                            )
-                            if (isReachTheEnd) {
-                                CommonReachTheEndComponent(onScrollToTopClick = onScrollToTopClick)
-                                Spacer(modifier = Modifier.padding(bottom = 72.dp))
-                            }
+                    if (isAvailableContent(data)) {
+                        val isReachTheEnd = (index == dataState.modelList.size - 1)
+                        val itemDecorationModifier = Modifier.padding(
+                            top = if (index == 0) 0.dp else 16.dp,
+                        )
+                        NewsCardItem(
+                            data = data,
+                            onCardClick = { onCardClick.invoke(data) },
+                            onLikeClick = { onLikeClick.invoke(data) },
+                            onShareClick = { onShareClick.invoke(data) },
+                            modifier = itemDecorationModifier
+                        )
+                        if (isReachTheEnd) {
+                            CommonReachTheEndComponent(onScrollToTopClick = onScrollToTopClick)
+                            Spacer(modifier = Modifier.padding(bottom = 72.dp))
                         }
                     }
                 }

@@ -104,7 +104,8 @@ private fun NewsCardItemIntro(
             CommonAsyncImage(
                 url = thumbnailImageUrl,
                 imageWidth = 96.dp,
-                imageHeight = 96.dp
+                imageHeight = 96.dp,
+                imageRadius = 16.dp
             )
             Spacer(modifier = Modifier.width(12.dp))
         }

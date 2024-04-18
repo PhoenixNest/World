@@ -114,7 +114,8 @@ private fun FoodRecipeDataDetailContent(model: FoodRecipeInformationModel) {
             imageShape = RoundedCornerShape(
                 bottomStart = 16.dp,
                 bottomEnd = 16.dp
-            )
+            ),
+            imageRadius = 16.dp
         )
         FoodRecipeDetailPanel(model)
     }

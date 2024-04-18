@@ -65,7 +65,8 @@ fun FoodRecipesColumnItem(
                 url = data.image,
                 imageWidth = (screenWidth / 3),
                 imageHeight = (screenWidth / 3),
-                modifier = Modifier.clickable { onItemClick.invoke(data) }
+                modifier = Modifier.clickable { onItemClick.invoke(data) },
+                imageRadius = 16.dp
             )
         }
         FoodRecipesIntro(data = data)
