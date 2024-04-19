@@ -87,12 +87,13 @@ class FoodRecipesViewModel @Inject constructor(
         val defaultTimeSection = getCurrentTimeSection().toString().lowercase().trim()
         val lastTimeSectionData = readSyncData(KEY_LAST_TIME_SECTION, defaultTimeSection)
         if (currentTimeSection.name.lowercase().trim() == lastTimeSectionData) {
-            // TODO: Query the cache data of time-section food recipes
+            // TODO: Query and use the cache data of time-section food recipes
         }
 
         val dishType = convertTimeSectionToDishType(currentTimeSection)
         var dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
 
+        // Special treatment for the "Teatime" type
         if (dishQueryParameter == getString(R.string.food_recipes_label_teatime).lowercase().trim()) {
             dishQueryParameter = "tea"
         }
