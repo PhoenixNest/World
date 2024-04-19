@@ -92,6 +92,30 @@ fun HomePageRoute(
         }
     )
 
+    // LaunchedEffect(foodRecipesListState.recommendListState) {
+    //     snapshotFlow {
+    //         foodRecipesListState.recommendListState.firstVisibleItemIndex
+    //     }.filter {
+    //         it >= (foodRecipesViewModel.getRecommendDataList().size / 2)
+    //     }.collect {
+    //         val recommendDataState = foodRecipesState.dataState.recommendDataState
+    //         if (recommendDataState == FoodRecipesDataState.Fetching
+    //             || recommendDataState == FoodRecipesDataState.FetchingMore
+    //         ) return@collect
+    //         // Fetch more recommend data.
+    //         foodRecipesViewModel.apply {
+    //             val currentTab = getSelectedFoodRecipesTab()
+    //             val queryType = FoodRecipesCategories.entries[currentTab]
+    //             updateRecommendFoodRecipesOffset()
+    //             getRecommendFoodRecipes(
+    //                 queryType = queryType.name.lowercase(),
+    //                 offset = getRecommendFoodRecipesOffset(),
+    //                 isFetchMore = true
+    //             )
+    //         }
+    //     }
+    // }
+
     HomePage(
         onOpenDrawer = {
             coroutineScope.launch {

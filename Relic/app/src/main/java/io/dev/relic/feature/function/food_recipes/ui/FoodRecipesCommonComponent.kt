@@ -106,6 +106,10 @@ private fun FoodRecipesComponentContent(
             CommonLoadingPlaceholder(false)
         }
 
+        FoodRecipesDataState.FetchingMore -> {
+            //
+        }
+
         is FoodRecipesDataState.Empty,
         is FoodRecipesDataState.NoFoodRecipesData,
         is FoodRecipesDataState.FetchFailed -> {
@@ -143,6 +147,7 @@ private fun FoodRecipesComponentContent(
                 }
             }
         }
+
     }
 }
 

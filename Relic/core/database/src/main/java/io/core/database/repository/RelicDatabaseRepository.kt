@@ -30,7 +30,7 @@ class RelicDatabaseRepository @Inject constructor(
     private val wallpaperDao: WallpaperDao
 ) {
 
-    /* ======================== TodoList ======================== */
+    /* ======================== Todo ======================== */
 
     fun queryAllTodosData(): Flow<List<TodoEntity>> {
         return todoDao.queryAllTodosData()
@@ -74,6 +74,10 @@ class RelicDatabaseRepository @Inject constructor(
 
     suspend fun insertComplexSearchRecipesData(complexSearchEntity: FoodRecipesComplexSearchEntity) {
         foodRecipesDao.insertComplexSearchData(complexSearchEntity)
+    }
+
+    suspend fun deleteAllComplexSearchData() {
+        foodRecipesDao.deleteAllComplexSearchData()
     }
 
     /* ======================== News - Trending ======================== */

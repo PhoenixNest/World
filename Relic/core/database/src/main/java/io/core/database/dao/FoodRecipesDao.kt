@@ -18,4 +18,7 @@ interface FoodRecipesDao {
     @Insert(entity = FoodRecipesComplexSearchEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComplexSearchData(complexSearchEntity: FoodRecipesComplexSearchEntity)
 
+    @Query("DELETE FROM table_food_recipes")
+    suspend fun deleteAllComplexSearchData()
+
 }

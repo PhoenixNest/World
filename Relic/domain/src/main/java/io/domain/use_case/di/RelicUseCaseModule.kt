@@ -15,6 +15,7 @@ import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
 import io.domain.use_case.food_receipes.action.complex_search.GetComplexRecipesData
 import io.domain.use_case.food_receipes.action.complex_search.QueryCachedComplexRecipesData
+import io.domain.use_case.food_receipes.action.complex_search.RemoveComplexSearchData
 import io.domain.use_case.food_receipes.action.information.GetFoodRecipeInformationById
 import io.domain.use_case.maxim.MaximUseCase
 import io.domain.use_case.maxim.action.GetRandomMaxim
@@ -77,6 +78,7 @@ class RelicUseCaseModule {
         return FoodRecipesUseCase(
             getComplexRecipesData = GetComplexRecipesData(recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository),
+            deleteAllComplexSearchData = RemoveComplexSearchData(databaseRepository),
             queryCachedComplexRecipesData = QueryCachedComplexRecipesData(databaseRepository),
             getRecipeInformationById = GetFoodRecipeInformationById(recipesDataRepository)
         )

@@ -14,19 +14,21 @@ object FoodRecipesDataMapper {
 
     fun FoodRecipesComplexSearchDTO.toModelList(): List<FoodRecipesComplexSearchModel?> {
         val tempList = mutableListOf<FoodRecipesComplexSearchModel?>()
-        this.results?.forEach {
-            tempList.add(
-                FoodRecipesComplexSearchModel(
-                    id = it?.id,
-                    title = it?.title,
-                    author = it?.creditsText,
-                    image = it?.image,
-                    isVegan = it?.vegan,
-                    healthScore = it?.healthScore,
-                    cookTime = it?.readyInMinutes
+        this.results
+            ?.filterNotNull()
+            ?.forEach {
+                tempList.add(
+                    FoodRecipesComplexSearchModel(
+                        id = it.id,
+                        title = it.title,
+                        author = it.creditsText,
+                        image = it.image,
+                        isVegan = it.vegan,
+                        healthScore = it.healthScore,
+                        cookTime = it.readyInMinutes
+                    )
                 )
-            )
-        }
+            }
         return tempList
     }
 
