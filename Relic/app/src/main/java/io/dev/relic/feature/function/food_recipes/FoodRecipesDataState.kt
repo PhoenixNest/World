@@ -14,8 +14,6 @@ sealed interface FoodRecipesDataState {
 
     data object Fetching : FoodRecipesDataState
 
-    data object FetchingMore : FoodRecipesDataState
-
     /* Succeed */
 
     data class FetchSucceed<T>(

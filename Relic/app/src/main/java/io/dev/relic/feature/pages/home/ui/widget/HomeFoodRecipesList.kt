@@ -25,10 +25,6 @@ fun LazyListScope.HomeFoodRecipesList(
             }
         }
 
-        FoodRecipesDataState.FetchingMore -> {
-            //
-        }
-
         is FoodRecipesDataState.Empty,
         is FoodRecipesDataState.NoFoodRecipesData,
         is FoodRecipesDataState.FetchFailed -> {

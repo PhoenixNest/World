@@ -287,7 +287,7 @@ class FoodRecipesViewModel @Inject constructor(
             is NetworkResult.Loading -> {
                 if (isFetchMore) {
                     LogUtil.d(TAG, "[Handle Food Recipes Data - Fetch more] Loading...")
-                    setState(dataFlow, FoodRecipesDataState.FetchingMore)
+                    // setState(dataFlow, FoodRecipesDataState.FetchingMore)
                 } else {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Loading...")
                     setState(dataFlow, FoodRecipesDataState.Fetching)
