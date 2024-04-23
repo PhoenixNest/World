@@ -2,7 +2,9 @@ package io.dev.relic.feature.pages.home
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +24,7 @@ import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.module.map.tomtom.legacy.TomTomMapActivity
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @Composable
@@ -92,29 +95,30 @@ fun HomePageRoute(
         }
     )
 
-    // LaunchedEffect(foodRecipesListState.recommendListState) {
-    //     snapshotFlow {
-    //         foodRecipesListState.recommendListState.firstVisibleItemIndex
-    //     }.filter {
-    //         it >= (foodRecipesViewModel.getRecommendDataList().size / 2)
-    //     }.collect {
-    //         val recommendDataState = foodRecipesState.dataState.recommendDataState
-    //         if (recommendDataState == FoodRecipesDataState.Fetching
-    //             || recommendDataState == FoodRecipesDataState.FetchingMore
-    //         ) return@collect
-    //         // Fetch more recommend data.
-    //         foodRecipesViewModel.apply {
-    //             val currentTab = getSelectedFoodRecipesTab()
-    //             val queryType = FoodRecipesCategories.entries[currentTab]
-    //             updateRecommendFoodRecipesOffset()
-    //             getRecommendFoodRecipes(
-    //                 queryType = queryType.name.lowercase(),
-    //                 offset = getRecommendFoodRecipesOffset(),
-    //                 isFetchMore = true
-    //             )
-    //         }
-    //     }
-    // }
+    LaunchedEffect(foodRecipesListState.recommendListState) {
+        snapshotFlow {
+            foodRecipesListState.recommendListState.firstVisibleItemIndex
+        }.filter {
+            it >= (foodRecipesViewModel.getRecommendDataList().size / 2)
+        }.collect {
+            val currentState = foodRecipesState.dataState.recommendDataState
+            if (currentState == FoodRecipesDataState.Fetching) {
+                return@collect
+            }
+
+            // Fetch more recommend data.
+            foodRecipesViewModel.apply {
+                val currentTab = getSelectedFoodRecipesTab()
+                val queryType = FoodRecipesCategories.entries[currentTab]
+                updateRecommendFoodRecipesOffset()
+                getRecommendFoodRecipes(
+                    queryType = queryType.name.lowercase(),
+                    offset = getRecommendFoodRecipesOffset(),
+                    isFetchMore = true
+                )
+            }
+        }
+    }
 
     HomePage(
         onOpenDrawer = {

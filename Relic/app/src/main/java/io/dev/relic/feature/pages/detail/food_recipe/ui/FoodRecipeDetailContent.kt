@@ -72,10 +72,6 @@ private fun FoodRecipeDataDetailContent(
             CommonLoadingComponent()
         }
 
-        FoodRecipesDataState.FetchingMore -> {
-            //
-        }
-
         is FoodRecipesDataState.FetchFailed -> {
             CommonRetryComponent(onRetryClick = onRetryClick)
         }
