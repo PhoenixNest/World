@@ -13,11 +13,9 @@ import io.common.util.LogUtil
 import io.common.util.TimeUtil
 import io.common.util.TimeUtil.getCurrentTimeSection
 import io.core.datastore.RelicDatastoreCenter.readAsyncData
-import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.core.datastore.RelicDatastoreCenter.writeAsyncData
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
-import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import io.data.mappers.FoodRecipesDataMapper.toEntity
 import io.data.mappers.FoodRecipesDataMapper.toModel
 import io.data.mappers.FoodRecipesDataMapper.toModelList
@@ -46,6 +44,16 @@ class FoodRecipesViewModel @Inject constructor(
     application: Application,
     private val foodRecipesUseCase: FoodRecipesUseCase
 ) : AndroidViewModel(application) {
+
+    /**
+     * Indicate the status of fetch more.
+     * */
+    var isFetchingMore = false
+
+    /**
+     * Indicate the available status of fetch more.
+     * */
+    var canFetchMore = true
 
     /**
      * Indicate the current selected food recipes tab.
@@ -99,12 +107,6 @@ class FoodRecipesViewModel @Inject constructor(
     }
 
     fun getTimeSectionFoodRecipes(currentTimeSection: TimeUtil.TimeSection) {
-        val defaultTimeSection = getCurrentTimeSection().toString().lowercase().trim()
-        val lastTimeSectionData = readSyncData(KEY_LAST_TIME_SECTION, defaultTimeSection)
-        if (currentTimeSection.name.lowercase().trim() == lastTimeSectionData) {
-            // TODO: Query and use the cache data of time-section food recipes
-        }
-
         val dishType = convertTimeSectionToDishType(currentTimeSection)
         var dishQueryParameter = getString(dishType.labelResId).lowercase().trim()
 
@@ -137,29 +139,28 @@ class FoodRecipesViewModel @Inject constructor(
                 offset = offset,
                 isFetchMore = isFetchMore
             )
-            // foodRecipesUseCase.queryCachedComplexRecipesData()
-            //     .stateIn(it)
-            //     .collect { entityList ->
-            //         if (entityList.isNotEmpty()) {
-            //             val entity = entityList.first()
-            //             val modelList = entity.datasource.toComplexSearchModelList()
-            //             if (modelList.isNotEmpty()) {
-            //                 setState(_recommendDataStateFlow, FoodRecipesDataState.FetchSucceed(modelList))
-            //             } else {
-            //                 getFoodRecipesData(
-            //                     dataFlow = _recommendDataStateFlow,
-            //                     query = queryType,
-            //                     offset = offset
-            //                 )
-            //             }
-            //         } else {
-            //             getFoodRecipesData(
-            //                 dataFlow = _recommendDataStateFlow,
-            //                 query = queryType,
-            //                 offset = offset
-            //             )
-            //         }
-            //     }
+        }
+    }
+
+    fun fetchMoreRecommendData(
+        queryType: String,
+        offset: Int,
+        isFetchMore: Boolean = false
+    ) {
+        if (!canFetchMore) {
+            LogUtil.w(TAG, "[Fetch More Recommend Data] Can't get more data from server, skip.")
+            return
+        }
+
+        operationInViewModelScope {
+            isFetchingMore = true
+            getFoodRecipesData(
+                type = RECOMMEND,
+                dataFlow = _recommendDataStateFlow,
+                query = queryType,
+                offset = offset,
+                isFetchMore = isFetchMore
+            )
         }
     }
 
@@ -183,8 +184,16 @@ class FoodRecipesViewModel @Inject constructor(
         return currentRecommendFoodRecipesOffset
     }
 
-    fun updateRecommendFoodRecipesOffset() {
-        currentRecommendFoodRecipesOffset += 10
+    fun updateRecommendFoodRecipesOffset(newOffset: Int) {
+        currentRecommendFoodRecipesOffset = newOffset
+    }
+
+    fun resetRecommendFoodRecipesOffset() {
+        currentRecommendFoodRecipesOffset = 0
+    }
+
+    fun resetCanFetchMoreStatus() {
+        canFetchMore = true
     }
 
     fun getRecipeInformationById(
@@ -300,15 +309,24 @@ class FoodRecipesViewModel @Inject constructor(
                     val entity = dto.toEntity()
                     val modelList = dto.toModelList()
                     val filteredModelList = modelList.filterNotNull()
+
+                    if (isFetchMore && filteredModelList.isEmpty()) {
+                        LogUtil.w(TAG, "[Fetch More Recommend Data] Server data is depleted, we can't get anymore sir.")
+                        currentRecommendFoodRecipesOffset -= 10
+                        isFetchingMore = false
+                        canFetchMore = false
+                        return
+                    }
+
                     handleSuccessComplexData(
                         type = type,
                         dataFlow = dataFlow,
-                        entity = entity,
                         modelList = filteredModelList
-                    )
+                    ).also { isFetchingMore = false }
                 } ?: {
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed without data")
                     setState(dataFlow, FoodRecipesDataState.NoFoodRecipesData)
+                    isFetchingMore = false
                 }
             }
 
@@ -317,6 +335,7 @@ class FoodRecipesViewModel @Inject constructor(
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Food Recipes Data] Failed, ($errorCode, $errorMessage)")
                 setState(dataFlow, FoodRecipesDataState.FetchFailed(errorCode, errorMessage))
+                isFetchingMore = false
             }
         }
     }
@@ -353,28 +372,22 @@ class FoodRecipesViewModel @Inject constructor(
         }
     }
 
-    private suspend fun handleSuccessComplexData(
+    private fun handleSuccessComplexData(
         type: FoodRecipesType,
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
-        entity: FoodRecipesComplexSearchEntity,
         modelList: List<FoodRecipesComplexSearchModel>
     ) {
         when (type) {
             RECOMMEND -> {
-                recommendDataList.addAll(modelList).also { isSuccess ->
-                    if (isSuccess) {
-                        setState(dataFlow, FoodRecipesDataState.FetchSucceed(recommendDataList))
-                        foodRecipesUseCase.cacheComplexSearchData.invoke(entity)
-                    } else {
-                        setState(dataFlow, FoodRecipesDataState.FetchSucceed(recommendDataList))
-                    }
-                }
+                recommendDataList.addAll(modelList)
+                val dataList = recommendDataList.toList()
+                setState(dataFlow, FoodRecipesDataState.FetchSucceed(dataList))
             }
 
             TIME_SECTION -> {
-                timeSectionDataList.addAll(modelList).also {
-                    setState(dataFlow, FoodRecipesDataState.FetchSucceed(timeSectionDataList))
-                }
+                timeSectionDataList.addAll(modelList)
+                val newList = timeSectionDataList.toList()
+                setState(dataFlow, FoodRecipesDataState.FetchSucceed(newList))
             }
         }
     }
