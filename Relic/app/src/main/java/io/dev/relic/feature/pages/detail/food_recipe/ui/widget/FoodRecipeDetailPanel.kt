@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -29,10 +30,9 @@ import io.common.util.StringUtil.formatHTML
 import io.core.ui.CommonAsyncImage
 import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor50
-import io.core.ui.theme.mainTextColorDark
-import io.core.ui.theme.mainThemeColorLight
 import io.data.dto.food_recipes.get_recipes_information_by_id.ExtendedIngredientItem
 import io.data.model.food_recipes.FoodRecipeInformationModel
 import io.dev.relic.R
@@ -131,7 +131,7 @@ private fun FoodRecipeIngredientRowItem(
         modifier = modifier
             .wrapContentSize()
             .background(
-                color = mainThemeColorLight,
+                color = mainBackgroundColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .padding(16.dp),
@@ -148,8 +148,9 @@ private fun FoodRecipeIngredientRowItem(
         Text(
             text = item.name ?: UNKNOWN_VALUE_STRING,
             style = TextStyle(
-                color = mainTextColorDark,
-                fontFamily = ubuntu
+                color = mainTextColor,
+                fontFamily = ubuntu,
+                fontWeight = FontWeight.Bold
             )
         )
     }

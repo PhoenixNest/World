@@ -86,7 +86,7 @@
     <!-- Food Recipes Unit -->
     <string name="food_recipes_recommend_title">Discover delicious</string>
     <string name="food_recipes_time_section_title">What\'s for <font color="#DEB654">%s</font></string>
-    <string name="food_recipes_ingredient_title">Ingredient</string>
+    <string name="food_recipes_ingredient_title">Ingredients</string>
     <!-- Food Recipes - Common -->
     <string name="food_recipes_cook_now">Cook it</string>
     <string name="food_recipes_see_more">See more</string>
