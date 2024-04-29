@@ -92,7 +92,7 @@ data class HomeFoodRecipesTimeSectionAction(
  * @param onRetryClick          Click the retry button when failed to fetch the latest recipes' data.
  * */
 data class HomeFoodRecipesRecommendAction(
-    val onTabItemClick: (currentSelectedTab: Int, selectedItem: String) -> Unit,
+    val onTabItemClick: (selectedTab: Int, selectedItem: String) -> Unit,
     val onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     val onRetryClick: () -> Unit
 )

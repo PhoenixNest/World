@@ -21,8 +21,8 @@ fun FoodRecipesAutoTimeComponent(
     val dishType = FoodRecipesAutoConvertor.convertTimeSectionToDishType(currentTimeSection)
     val dishLabel = stringResource(id = dishType.labelResId)
 
-    FoodRecipesCommonComponent(
-        dishLabel = stringResource(id = R.string.food_recipes_time_section_title, dishLabel),
+    FoodRecipesLazyRow(
+        title = stringResource(id = R.string.food_recipes_time_section_title, dishLabel),
         listState = listState,
         dataState = dataState,
         onSeeMoreClick = { onSeeMoreClick.invoke(dishLabel) },

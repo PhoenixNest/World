@@ -24,6 +24,7 @@ import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.module.map.tomtom.legacy.TomTomMapActivity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
@@ -82,6 +83,7 @@ fun HomePageRoute(
 
     // Food Recipes Data State
     val foodRecipesState = buildFoodRecipesState(
+        coroutineScope = coroutineScope,
         timeSectionDataState = foodRecipesTimeSectionDataState,
         recommendDataState = foodRecipesRecommendDataState,
         viewModel = foodRecipesViewModel,
@@ -242,6 +244,7 @@ private fun buildAgentState(
  * @see HomeFoodRecipesState
  * */
 private fun buildFoodRecipesState(
+    coroutineScope: CoroutineScope,
     timeSectionDataState: FoodRecipesDataState,
     recommendDataState: FoodRecipesDataState,
     viewModel: FoodRecipesViewModel,
@@ -273,15 +276,26 @@ private fun buildFoodRecipesState(
                 },
             ),
             recommendAction = HomeFoodRecipesRecommendAction(
-                onTabItemClick = { currentSelectedTab, selectedItem ->
+                onTabItemClick = { selectedTab, selectedItem ->
+                    // Avoid duplicate click from user.
+                    val currentSelectedTab = viewModel.getSelectedFoodRecipesTab()
+                    if (currentSelectedTab == selectedTab) {
+                        return@HomeFoodRecipesRecommendAction
+                    }
+
                     viewModel.apply {
                         resetRecommendFoodRecipesOffset()
                         resetCanFetchMoreStatus()
-                        updateSelectedFoodRecipesTab(currentSelectedTab)
+                        updateSelectedFoodRecipesTab(selectedTab)
                         getRecommendFoodRecipes(
                             queryType = selectedItem,
                             offset = 0
                         )
+
+                        // Scroll to TOP.
+                        coroutineScope.launch {
+                            listState.recommendListState.animateScrollToItem(4)
+                        }
                     }
                 },
                 onItemClick = {

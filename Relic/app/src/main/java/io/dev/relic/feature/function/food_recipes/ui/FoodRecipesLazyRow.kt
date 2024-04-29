@@ -30,8 +30,8 @@ import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.ui.widget.FoodRecipesRowItem
 
 @Composable
-fun FoodRecipesCommonComponent(
-    dishLabel: String,
+fun FoodRecipesLazyRow(
+    title: String,
     listState: LazyListState,
     dataState: FoodRecipesDataState,
     onSeeMoreClick: () -> Unit,
@@ -44,11 +44,11 @@ fun FoodRecipesCommonComponent(
         horizontalAlignment = Alignment.Start
     ) {
         FoodRecipesComponentTitle(
-            dishLabel = dishLabel,
+            dishLabel = title,
             onSeeMoreClick = onSeeMoreClick
         )
         Spacer(modifier = Modifier.height(16.dp))
-        FoodRecipesComponentContent(
+        FoodRecipesLazyRowContent(
             listState = listState,
             dataState = dataState,
             onItemClick = onItemClick,
@@ -90,7 +90,7 @@ private fun FoodRecipesComponentTitle(
 }
 
 @Composable
-private fun FoodRecipesComponentContent(
+private fun FoodRecipesLazyRowContent(
     listState: LazyListState,
     dataState: FoodRecipesDataState,
     onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
@@ -145,9 +145,9 @@ private fun FoodRecipesComponentContent(
 
 @Composable
 @Preview
-private fun FoodRecipesCommonComponentPreview() {
-    FoodRecipesCommonComponent(
-        dishLabel = stringResource(id = R.string.food_recipes_label_recommend),
+private fun FoodRecipesLazyRowPreview() {
+    FoodRecipesLazyRow(
+        title = stringResource(id = R.string.food_recipes_label_recommend),
         listState = rememberLazyListState(),
         dataState = FoodRecipesDataState.FetchSucceed(
             data = listOf(
