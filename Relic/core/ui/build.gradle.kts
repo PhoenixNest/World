@@ -49,7 +49,7 @@ dependencies {
     api(libs.androidx.cardview)
 
     // Compose Ui
-    val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.03.00")
+    val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.05.00")
     api(composeBom)
     androidTestApi(composeBom)
     // Material Design
