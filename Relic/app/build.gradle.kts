@@ -2,7 +2,7 @@ import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
-private val localProperties = gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
 private val isDebugMode = localProperties.getProperty("DEBUG_MODE") ?: "false"
 private val isNoAds = localProperties.getProperty("NO_ADS") ?: "true"
 
@@ -10,7 +10,7 @@ private val isNoAds = localProperties.getProperty("NO_ADS") ?: "true"
 private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY") ?: "-1"
 
 // Library config
-private val composeCompilerVersion = "1.5.10"
+private val composeCompilerVersion = "1.5.14"
 
 plugins {
     alias(libs.plugins.androidApplication)

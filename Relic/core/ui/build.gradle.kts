@@ -1,5 +1,5 @@
 // Library config
-private val composeCompilerVersion = "1.5.10"
+private val composeCompilerVersion = "1.5.14"
 
 plugins {
     alias(libs.plugins.androidLibrary)

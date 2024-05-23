@@ -2,12 +2,12 @@ package io.dev.relic.feature.pages.agent
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
@@ -35,7 +35,7 @@ fun AgentChatPageRoute(
     /* ======================== Field ======================== */
 
     val agentDataState by geminiAgentViewModel.agentChatDataStateFlow
-        .collectAsStateWithLifecycle()
+        .collectAsState()
 
     val inputMessage = geminiAgentViewModel.agentSearchContent
 

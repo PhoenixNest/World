@@ -1,7 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
-private val localProperties = gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
 private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY") ?: "-1"
 
 plugins {
@@ -43,6 +43,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
 
     // Google AI client SDK for Android
-    api("com.google.ai.client.generativeai:generativeai:0.2.2")
+    api("com.google.ai.client.generativeai:generativeai:0.6.0")
 
 }

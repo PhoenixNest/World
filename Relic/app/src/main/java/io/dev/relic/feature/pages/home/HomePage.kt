@@ -3,12 +3,12 @@ package io.dev.relic.feature.pages.home
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.LogUtil
@@ -50,11 +50,11 @@ fun HomePageRoute(
 
     // Time-section Food Recipes
     val foodRecipesTimeSectionDataState by foodRecipesViewModel.timeSectionDataStateFlow
-        .collectAsStateWithLifecycle()
+        .collectAsState()
 
     // Recommend Food Recipes
     val foodRecipesRecommendDataState by foodRecipesViewModel.recommendDataStateFlow
-        .collectAsStateWithLifecycle()
+        .collectAsState()
 
     /* ======================== Ui ======================== */
 

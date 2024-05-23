@@ -6,9 +6,9 @@ import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.ui.theme.bottomSheetBackgroundColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
@@ -34,7 +34,7 @@ fun StudioPageRoute(
     /* ======================== Field ======================== */
 
     val todoDataState by todoViewModel.todoDataStateFlow
-        .collectAsStateWithLifecycle()
+        .collectAsState()
 
     /* ======================== Ui ======================== */
 

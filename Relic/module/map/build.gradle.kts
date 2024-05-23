@@ -1,11 +1,11 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
-private val localProperties = gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
 private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY") ?: "-1"
 
 // Library config
-private val composeCompilerVersion = "1.5.10"
+private val composeCompilerVersion = "1.5.14"
 
 plugins {
     id("com.android.library")
@@ -52,9 +52,9 @@ dependencies {
 
     /* ======================== Google Official Extension ======================== */
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
 
     // Compose Ui
     val composeBom = platform("androidx.compose:compose-bom:2024.03.00")
@@ -77,9 +77,9 @@ dependencies {
     // Optional - Add window size utils
     implementation("androidx.compose.material3:material3-window-size-class")
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation("androidx.activity:activity-compose:1.9.0")
     // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
 
@@ -90,7 +90,7 @@ dependencies {
     /* ======================== Third-party Extension ======================== */
 
     // TomTom
-    val tomtomMapVersion = "0.50.6"
+    val tomtomMapVersion = "1.3.0"
     implementation("com.tomtom.sdk.maps:map-display:$tomtomMapVersion")
     implementation("com.tomtom.sdk.location:provider-android:$tomtomMapVersion")
     implementation("com.tomtom.sdk.search:search-online:$tomtomMapVersion")

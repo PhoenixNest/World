@@ -2,7 +2,7 @@
 
 [versions]
 accompanist = "0.34.0"
-androidGradlePlugin = "8.2.2"
+androidGradlePlugin = "8.4.1"
 appcompat = "1.6.1"
 cardview = "1.0.0"
 coilCompose = "2.6.0"
@@ -59,9 +59,9 @@ workMultiprocess = "2.9.0"
 workRuntime = "2.9.0"
 workRuntimeKtx = "2.9.0"
 workTesting = "2.9.0"
-kotlin = "1.9.21"
-ksp = "1.9.22-1.0.18"
-org-jetbrains-kotlin-jvm = "1.9.22"
+kotlin = "1.9.24"
+ksp = "1.9.24-1.0.20"
+org-jetbrains-kotlin-jvm = "1.9.24"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }

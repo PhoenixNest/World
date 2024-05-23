@@ -1,7 +1,7 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
-private val localProperties = gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
 private val hitokotoDevKey = localProperties.getProperty("HITOKOTO_DEV_KEY") ?: "-1"
 private val newsDevKey = localProperties.getProperty("NEWS_DEV_KEY") ?: "-1"
 private val pixabayDevKey = localProperties.getProperty("PIXABAY_DEV_KEY") ?: "-1"

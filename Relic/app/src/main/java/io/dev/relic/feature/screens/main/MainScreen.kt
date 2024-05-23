@@ -14,12 +14,12 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.core.ui.theme.mainThemeColor
@@ -77,8 +77,8 @@ fun MainScreen(
     /* ======================== Network ======================== */
 
     // Check the current network status by using networkMonitor flow.
-    val networkStatus by networkMonitor.observe()
-        .collectAsStateWithLifecycle(initialValue = NetworkStatus.AVAILABLE)
+    val networkStatus by mainScreenState.currentNetworkStatus
+        .collectAsState(initial = NetworkStatus.AVAILABLE)
 
     val noNetworkMessage = stringResource(id = R.string.no_network_connection_message)
 
@@ -94,10 +94,12 @@ fun MainScreen(
     /* ======================== Main State ======================== */
 
     // Location
-    val mainState by mainViewModel.mainStateFlow.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.mainStateFlow
+        .collectAsState()
 
     // Weather
-    val weatherState by mainViewModel.weatherDataStateFlow.collectAsStateWithLifecycle()
+    val weatherState by mainViewModel.weatherDataStateFlow
+        .collectAsState()
 
     LaunchedEffect(mainState) {
         when (mainState) {
