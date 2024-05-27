@@ -26,30 +26,16 @@ import io.dev.relic.R
 
 @Composable
 fun SettingsPanelTitle(@StringRes titleResId: Int) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = stringResource(id = titleResId),
-            style = TextStyle(
-                color = mainTextColor50,
-                fontSize = 16.sp,
-                fontFamily = ubuntu,
-                fontWeight = FontWeight.Bold
-            )
+    Text(
+        text = stringResource(id = titleResId),
+        modifier = Modifier.padding(horizontal = 16.dp),
+        style = TextStyle(
+            color = mainTextColor50,
+            fontSize = 16.sp,
+            fontFamily = ubuntu,
+            fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(1.dp)
-                .background(color = mainTextColor50)
-        )
-    }
+    )
 }
 
 @Composable

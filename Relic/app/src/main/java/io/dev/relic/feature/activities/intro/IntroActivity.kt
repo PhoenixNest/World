@@ -118,7 +118,7 @@ class IntroActivity : AbsBaseActivity() {
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    IntroScreen(onClick = multiplePermissionsState::launchMultiplePermissionRequest)
+                    IntroScreen(onNavigateClick = multiplePermissionsState::launchMultiplePermissionRequest)
                 }
             }
         }
