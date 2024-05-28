@@ -1,16 +1,17 @@
 package io.dev.relic.feature.screens.intro
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import io.dev.relic.feature.pages.intro.IntroPage
+import io.dev.relic.feature.pages.intro.IntroPageLarge
 
 @Composable
-fun IntroScreen(onNavigateClick: () -> Unit) {
-    IntroPage(onNavigateClick = onNavigateClick)
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun IntroScreenPreview() {
-    IntroScreen(onNavigateClick = {})
+fun IntroScreen(
+    isLargeScreen: Boolean,
+    onNavigateClick: () -> Unit
+) {
+    if (isLargeScreen) {
+        IntroPageLarge(onNavigateClick = onNavigateClick)
+    } else {
+        IntroPage(onNavigateClick = onNavigateClick)
+    }
 }

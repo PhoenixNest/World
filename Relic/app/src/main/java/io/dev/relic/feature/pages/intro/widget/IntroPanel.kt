@@ -28,16 +28,17 @@ import io.core.ui.dialog.CommonItemDivider
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.dev.relic.R
 
 @Composable
 fun IntroPanel(
+    isLargeMode: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .fillMaxWidth()
             .background(
                 color = mainThemeColorAccent.copy(alpha = 0.9F),
                 shape = RoundedCornerShape(
@@ -49,13 +50,20 @@ fun IntroPanel(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.Start
     ) {
-        IntroTitlePanel()
-        IntroFeaturePanel(onClick = onClick)
+        IntroTitlePanel(isLargeMode = isLargeMode)
+        IntroFeaturePanel(
+            isLargeMode = isLargeMode,
+            onClick = onClick
+        )
     }
 }
 
 @Composable
-private fun IntroTitlePanel() {
+private fun IntroTitlePanel(isLargeMode: Boolean) {
+
+    val titleTextSize = if (isLargeMode) 32.sp else 52.sp
+    val subTitleTextSize = if (isLargeMode) 16.sp else 20.sp
+
     Spacer(modifier = Modifier.height(16.dp))
     Box(modifier = Modifier.fillMaxWidth()) {
         Box(
@@ -79,7 +87,7 @@ private fun IntroTitlePanel() {
             text = stringResource(id = R.string.intro_title),
             style = TextStyle(
                 color = mainTextColor,
-                fontSize = 52.sp,
+                fontSize = titleTextSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = RelicFontFamily.ubuntu
             )
@@ -91,7 +99,7 @@ private fun IntroTitlePanel() {
         modifier = Modifier.padding(horizontal = 24.dp),
         style = TextStyle(
             color = mainTextColor,
-            fontSize = 20.sp,
+            fontSize = subTitleTextSize,
             fontFamily = RelicFontFamily.ubuntu
         )
     )
@@ -99,7 +107,10 @@ private fun IntroTitlePanel() {
 }
 
 @Composable
-private fun IntroFeaturePanel(onClick: () -> Unit) {
+private fun IntroFeaturePanel(
+    isLargeMode: Boolean,
+    onClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -115,16 +126,19 @@ private fun IntroFeaturePanel(onClick: () -> Unit) {
         horizontalAlignment = Alignment.Start
     ) {
         IntroFeatureItem(
+            isLargeMode = isLargeMode,
             iconResId = R.drawable.ic_route,
             textResId = R.string.intro_feature_route
         )
         CommonItemDivider()
         IntroFeatureItem(
+            isLargeMode = isLargeMode,
             iconResId = R.drawable.ic_coffee,
             textResId = R.string.intro_feature_coffee
         )
         CommonItemDivider()
         IntroFeatureItem(
+            isLargeMode = isLargeMode,
             iconResId = R.drawable.ic_weather,
             textResId = R.string.intro_feature_weather
         )
@@ -141,5 +155,21 @@ private fun IntroFeaturePanel(onClick: () -> Unit) {
 @Composable
 @Preview
 private fun IntroPanelPreview() {
-    IntroPanel(onClick = {})
+    IntroPanel(
+        isLargeMode = false,
+        onClick = {}
+    )
 }
+
+@Composable
+@Preview(device = "spec:width=673dp,height=841dp,orientation=landscape")
+private fun IntroPanelLargeModePreview() {
+    val screenWidth = getCurrentScreenWidthDp()
+    val panelWidth = screenWidth / 3
+    IntroPanel(
+        isLargeMode = true,
+        onClick = {},
+        modifier = Modifier.width(panelWidth)
+    )
+}
+

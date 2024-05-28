@@ -21,9 +21,11 @@ import io.core.ui.theme.mainTextColorDark
 
 @Composable
 fun IntroFeatureItem(
+    isLargeMode: Boolean,
     @DrawableRes iconResId: Int,
     @StringRes textResId: Int
 ) {
+    val textSize = if (isLargeMode) 14.sp else 16.sp
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start,
@@ -35,7 +37,7 @@ fun IntroFeatureItem(
             stringResource(textResId),
             style = TextStyle(
                 color = mainTextColorDark,
-                fontSize = 16.sp,
+                fontSize = textSize,
                 fontFamily = RelicFontFamily.ubuntu
             )
         )

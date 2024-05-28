@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -101,11 +104,12 @@ class IntroActivity : AbsBaseActivity() {
 
     /* ======================== Ui ======================== */
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun initUi(savedInstanceState: Bundle?) {
         setContent {
-            val multiplePermissionsState = rememberMultiplePermissionsState(
-                permissions = RelicSdkManager.permissionList
-            )
+            val multiplePermissionsState = rememberMultiplePermissionsState(RelicSdkManager.permissionList)
+            val windowSizeClass = calculateWindowSizeClass(activity = this)
+            val isLargeScreen = (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded)
 
             LaunchedEffect(multiplePermissionsState.allPermissionsGranted) {
                 val isGranted = multiplePermissionsState.allPermissionsGranted
@@ -118,7 +122,10 @@ class IntroActivity : AbsBaseActivity() {
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    IntroScreen(onNavigateClick = multiplePermissionsState::launchMultiplePermissionRequest)
+                    IntroScreen(
+                        isLargeScreen = isLargeScreen,
+                        onNavigateClick = multiplePermissionsState::launchMultiplePermissionRequest
+                    )
                 }
             }
         }

@@ -19,11 +19,10 @@ import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.pages.studio.pageStudio
+import io.dev.relic.feature.route.RelicRoute.START_DESTINATION
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
 import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUDIO
-
-private const val START_DESTINATION = RelicRoute.HOME
 
 /**
  * Main Screen navigation route host

@@ -27,7 +27,6 @@ import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.domain.app.AbsBaseActivity
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : AbsBaseActivity() {
 
@@ -89,6 +88,7 @@ class MainActivity : AbsBaseActivity() {
 
     /* ======================== Ui ======================== */
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun initUi(savedInstanceState: Bundle?) {
         setContent {
             // Setup immersive mode.
