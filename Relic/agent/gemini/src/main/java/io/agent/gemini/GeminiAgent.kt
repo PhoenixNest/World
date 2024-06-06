@@ -24,8 +24,14 @@ object GeminiAgent {
     /**
      * [Gemini models](https://ai.google.dev/models/gemini?hl=en)
      * */
-    private const val GEMINI_MODEL_TEXT_ONLY = "gemini-pro"
-    private const val GEMINI_MODEL_TEXT_VISION = "gemini-pro-vision"
+    private const val GEMINI_MODEL_TEXT_ONLY = "gemini-1.5-flash"
+
+    /**
+     * The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
+     *
+     * @see GEMINI_MODEL_TEXT_ONLY
+     * */
+    private const val GEMINI_MODEL_TEXT_VISION = "gemini-1.5-flash"
 
     /**
      * [Gemini API Key](https://makersuite.google.com/app/apikey)
