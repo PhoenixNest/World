@@ -2,6 +2,7 @@ package io.dev.relic.feature.route
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -34,7 +35,6 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUD
  * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
  * @param todoViewModel                 Provide the todo feature to Studio page
  * @param newsViewModel                 Provide the News feature to Studio page
- * @param modifier
  * @param startDestination              The journey begins from here
  * */
 @Composable
@@ -46,7 +46,6 @@ fun MainFeatureNavHost(
     foodRecipesViewModel: FoodRecipesViewModel,
     todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
-    modifier: Modifier = Modifier,
     startDestination: String = START_DESTINATION
 ) {
     val systemUiController = rememberSystemUiController()
@@ -60,7 +59,7 @@ fun MainFeatureNavHost(
     NavHost(
         navController = navHostController,
         startDestination = startDestination,
-        modifier = modifier,
+        modifier = Modifier.fillMaxSize(),
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Left,

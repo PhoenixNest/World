@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -127,9 +127,10 @@ fun MainScreen(
     // Initialization the App main screen.
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        snackbarHost = {
-            SnackbarHost(hostState = snackBarHostState)
-        }
+        scaffoldState = rememberScaffoldState(
+            drawerState = mainScreenState.drawerState,
+            snackbarHostState = snackBarHostState
+        )
     ) { paddingValues ->
         Row(
             modifier = Modifier
@@ -169,8 +170,7 @@ fun MainScreen(
                             geminiAgentViewModel = geminiAgentViewModel,
                             foodRecipesViewModel = foodRecipesViewModel,
                             todoViewModel = todoViewModel,
-                            newsViewModel = newsViewModel,
-                            modifier = Modifier.fillMaxSize()
+                            newsViewModel = newsViewModel
                         )
                         if (isShowBottomBar) {
                             MainBottomBar(

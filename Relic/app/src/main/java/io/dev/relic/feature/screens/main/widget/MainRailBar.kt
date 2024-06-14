@@ -5,27 +5,17 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.CommonVerticalIconTextButton
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
@@ -80,54 +70,37 @@ private fun MainRailBarItem(
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val iconSource = painterResource(
-        id = if (isSelected) {
-            selectedIconResId
-        } else {
-            unselectedIconResId
-        }
-    )
-
-    TextButton(
-        onClick = onItemClick,
-        modifier = modifier,
-        colors = ButtonDefaults.textButtonColors(
-            backgroundColor = Color.Transparent,
-            contentColor = Color.LightGray
-        )
-    ) {
-        Column(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = iconSource,
-                contentDescription = DEFAULT_DESC,
-                tint = if (isSelected) {
-                    mainThemeColorAccent
-                } else {
-                    mainIconColorLight
-                }
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = stringResource(id = labelResId),
-                style = TextStyle(
-                    color = if (isSelected) {
-                        mainThemeColorAccent
-                    } else {
-                        mainTextColor
-                    },
-                    fontFamily = ubuntu
-                )
-            )
-        }
+    val iconResId = if (isSelected) {
+        selectedIconResId
+    } else {
+        unselectedIconResId
     }
+
+    val iconColor = if (isSelected) {
+        mainThemeColorAccent
+    } else {
+        mainIconColorLight
+    }
+
+    val textColor = if (isSelected) {
+        mainThemeColorAccent
+    } else {
+        mainTextColor
+    }
+
+    CommonVerticalIconTextButton(
+        iconResId = iconResId,
+        labelResId = labelResId,
+        onClick = onItemClick,
+        containerModifier = modifier,
+        iconColor = iconColor,
+        textColor = textColor,
+        shape = RoundedCornerShape(0.dp)
+    )
 }
 
 @Composable
-@Preview
+@Preview(showSystemUi = true)
 private fun MainRailPreview() {
     MainRailAppBar(
         destinations = MainScreenTopLevelDestination.entries,
