@@ -38,11 +38,12 @@ dependencies {
     /* ======================== Google Official Extension ======================== */
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+    val coroutinesVersion = "1.8.0"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 
     // Google AI client SDK for Android
-    api("com.google.ai.client.generativeai:generativeai:0.6.0")
+    api("com.google.ai.client.generativeai:generativeai:0.9.0")
 
 }
