@@ -9,7 +9,7 @@ private val spoonacularDevKey = localProperties.getProperty("SPOONACULAR_DEV_KEY
 
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
     alias(libs.plugins.kotlinSymbolProcessingAndroid)

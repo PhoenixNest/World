@@ -9,21 +9,21 @@ private val isNoAds = localProperties.getProperty("NO_ADS") ?: "true"
 // Dev Key
 private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY") ?: "-1"
 
-// Library config
-private val composeCompilerVersion = "1.5.14"
-
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
     alias(libs.plugins.kotlinSymbolProcessingAndroid)
 
-    // Parcelize Models
-    id("kotlin-parcelize")
-
     // Hilt
     alias(libs.plugins.hiltAndroid)
+
+    // Compose
+    alias(libs.plugins.compose.compiler)
+
+    // Parcelize Models
+    id("kotlin-parcelize")
 
     // Firebase
     // Add the Google services Gradle plugin
@@ -65,6 +65,13 @@ android {
     }
 
     buildTypes {
+
+        /**
+         * [Configure build types ](https://developer.android.com/build/build-variants#build-types)
+         * */
+        debug {
+            isDebuggable = true
+        }
 
         /**
          * [Shrink, obfuscate, and optimize your app](https://developer.android.com/build/shrink-code)
@@ -122,14 +129,16 @@ android {
         jvmTarget = "17"
     }
 
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of("17"))
+        }
+    }
+
     buildFeatures {
         compose = true
         viewBinding = true
         buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 
     packaging {
@@ -166,7 +175,7 @@ dependencies {
     /* ======================== Google Official Extension ======================== */
 
     // Firebase BOM
-    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:32.8.0")
+    val firebaseBom: Dependency = platform("com.google.firebase:firebase-bom:33.1.2")
     implementation(firebaseBom)
     // Add the dependencies for the Crashlytics and Analytics libraries
     implementation(libs.firebase.crashlytics.ktx)

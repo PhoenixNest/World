@@ -4,12 +4,12 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 private val localProperties = gradleLocalProperties(rootDir, project.providers)
 private val tomtomDevKey = localProperties.getProperty("TOMTOM_DEV_KEY") ?: "-1"
 
-// Library config
-private val composeCompilerVersion = "1.5.14"
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+
+    // Compose
+    id("org.jetbrains.kotlin.plugin.compose")
 
     // KSP
     id("com.google.devtools.ksp")
@@ -42,10 +42,6 @@ android {
         viewBinding = true
         buildConfig = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
-    }
 }
 
 dependencies {
@@ -53,7 +49,7 @@ dependencies {
     /* ======================== Google Official Extension ======================== */
 
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
 
     // Compose Ui

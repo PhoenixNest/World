@@ -20,9 +20,17 @@ buildscript {
 }
 
 plugins {
+
+    /**
+     * Use `apply false` in the top-level build.gradle file to add a Gradle
+     * plugin as a build dependency but not apply it to the current (root)
+     * project. Don't use `apply false` in sub-projects. For more information,
+     * see Applying external plugins with same version to subprojects.
+     */
+
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.android) apply false
 
     // Hilt
     alias(libs.plugins.hiltAndroid) apply false
@@ -30,4 +38,7 @@ plugins {
     // [Migrate from kapt to KSP](https://developer.android.com/build/migrate-to-ksp#groovy)
     alias(libs.plugins.kotlinSymbolProcessingAndroid) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+
+    // Compose Compiler
+    alias(libs.plugins.compose.compiler) apply false
 }

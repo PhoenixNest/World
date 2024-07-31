@@ -1,9 +1,9 @@
-// Library config
-private val composeCompilerVersion = "1.5.14"
-
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
+
+    // Compose
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -26,10 +26,6 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
 }
 

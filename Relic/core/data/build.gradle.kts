@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
     alias(libs.plugins.kotlinSymbolProcessingAndroid)
