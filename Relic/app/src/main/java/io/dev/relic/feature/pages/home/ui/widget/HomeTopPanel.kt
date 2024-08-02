@@ -50,7 +50,7 @@ fun LazyListScope.HomeTopPanel(
     onNavigateToExplore: () -> Unit,
     onNavigateToSetting: () -> Unit,
     currentTimeSection: TimeSection,
-    agnetPrompt: String,
+    agentPrompt: String,
     onAgentPromptChange: (newPrompt: String) -> Unit,
     onAgentStartChat: () -> Unit
 ) {
@@ -60,7 +60,7 @@ fun LazyListScope.HomeTopPanel(
             onNavigateToExplore = onNavigateToExplore,
             onNavigateToSetting = onNavigateToSetting,
             currentTimeSection = currentTimeSection,
-            agentSearchContent = agnetPrompt,
+            agentSearchContent = agentPrompt,
             onAgentSearchPromptChange = onAgentPromptChange,
             onAgentStartChat = onAgentStartChat
         )
@@ -127,7 +127,7 @@ private fun HomeTopCover(
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
-                            mainThemeColor.copy(alpha = 0.2F),
+                            mainThemeColor.copy(alpha = 0.1F),
                             mainThemeColor
                         )
                     )

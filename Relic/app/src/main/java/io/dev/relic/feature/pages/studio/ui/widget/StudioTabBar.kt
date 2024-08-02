@@ -50,7 +50,7 @@ fun StudioTabBar(
             style = TextStyle(
                 color = mainTextColor,
                 fontFamily = RelicFontFamily.ubuntu,
-                fontSize = 32.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         )

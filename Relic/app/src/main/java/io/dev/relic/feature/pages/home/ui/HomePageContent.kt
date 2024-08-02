@@ -49,7 +49,7 @@ fun HomePageContent(
         ) {
             HomeTopPanel(
                 currentTimeSection = getCurrentTimeSection(),
-                agnetPrompt = agentState.prompt,
+                agentPrompt = agentState.prompt,
                 onAgentPromptChange = agentState.action.onPromptChange,
                 onAgentStartChat = agentState.action.onStartChat,
                 onOpenDrawer = onOpenDrawer,

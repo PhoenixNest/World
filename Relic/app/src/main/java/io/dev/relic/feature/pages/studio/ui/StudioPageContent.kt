@@ -3,9 +3,7 @@ package io.dev.relic.feature.pages.studio.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,9 +21,7 @@ import io.dev.relic.feature.pages.studio.StudioAgentState
 import io.dev.relic.feature.pages.studio.StudioTodoAction
 import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
-import io.dev.relic.feature.pages.studio.ui.widget.StudioAgentPanel
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
-import io.dev.relic.feature.pages.studio.ui.widget.StudioTodoPanel
 
 @Composable
 fun StudioPageContent(
@@ -69,16 +65,7 @@ private fun StudioPageContent(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
-        item { Spacer(modifier = Modifier.height(16.dp)) }
-        StudioTodoPanel(
-            todoState = todoState,
-            onAddClick = todoState.action.onAddClick,
-            onItemClick = todoState.action.onItemClick,
-            onTailClick = todoState.action.onTailClick
-        )
-        item { Spacer(modifier = Modifier.height(32.dp)) }
-        StudioAgentPanel(onStartChat = agentState.action.onStartChatClick)
-        item { Spacer(modifier = Modifier.height(300.dp)) }
+        //
     }
 }
 
