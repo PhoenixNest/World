@@ -29,7 +29,7 @@ fun AgentSearchBar(
             .fillMaxWidth()
             .background(
                 color = mainThemeColorLight.copy(alpha = 0.1F),
-                shape = RoundedCornerShape(16.dp)
+                shape = RoundedCornerShape(12.dp)
             )
             .padding(16.dp),
         contentTextStyle = TextStyle(mainTextColor),

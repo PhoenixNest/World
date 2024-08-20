@@ -2,7 +2,7 @@
 
 [versions]
 accompanist = "0.34.0"
-androidGradlePlugin = "8.4.1"
+androidGradlePlugin = "8.5.2"
 appcompat = "1.7.0"
 cardview = "1.0.0"
 coilCompose = "2.6.0"

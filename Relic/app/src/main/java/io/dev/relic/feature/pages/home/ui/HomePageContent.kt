@@ -47,39 +47,41 @@ fun HomePageContent(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeTopPanel(
-                currentTimeSection = getCurrentTimeSection(),
-                agentPrompt = agentState.prompt,
-                onAgentPromptChange = agentState.action.onPromptChange,
-                onAgentStartChat = agentState.action.onStartChat,
-                onOpenDrawer = onOpenDrawer,
-                onNavigateToExplore = onNavigateToExplore,
-                onNavigateToSetting = onNavigateToSetting
-            )
+            agentState.apply {
+                HomeTopPanel(
+                    currentTimeSection = getCurrentTimeSection(),
+                    agentPrompt = prompt,
+                    onAgentPromptChange = action.onPromptChange,
+                    onAgentStartChat = action.onStartChat,
+                    onOpenDrawer = onOpenDrawer,
+                    onNavigateToExplore = onNavigateToExplore,
+                    onNavigateToSetting = onNavigateToSetting
+                )
+            }
             item { Spacer(modifier = Modifier.height(16.dp)) }
-            HomeFoodRecipesAutoTimeComponent(
-                currentTimeSection = getCurrentTimeSection(),
-                listState = foodRecipesState.listState.timeSectionListState,
-                dataState = foodRecipesState.dataState.timeSectionDataState,
-                onSeeMoreClick = foodRecipesState.action.timeSectionAction.onSeeMoreClick,
-                onItemClick = foodRecipesState.action.timeSectionAction.onItemClick,
-                onRetryClick = foodRecipesState.action.timeSectionAction.onRetryClick
-            )
-            item { CommonItemDivider() }
-            HomeFoodRecipesTabBar(
-                currentSelectedTab = foodRecipesState.currentSelectTab,
-                lazyListState = foodRecipesState.listState.recommendTabListState,
-                onTabItemClick = foodRecipesState.action.recommendAction.onTabItemClick
-            )
-            item { Spacer(modifier = Modifier.height(16.dp)) }
-            HomeFoodRecipesList(
-                dataState = foodRecipesState.dataState.recommendDataState,
-                onItemClick = foodRecipesState.action.recommendAction.onItemClick,
-                onRetryClick = foodRecipesState.action.recommendAction.onRetryClick
-            )
+            foodRecipesState.apply {
+                HomeFoodRecipesAutoTimeComponent(
+                    currentTimeSection = getCurrentTimeSection(),
+                    listState = listState.timeSectionListState,
+                    dataState = dataState.timeSectionDataState,
+                    onSeeMoreClick = action.timeSectionAction.onSeeMoreClick,
+                    onItemClick = action.timeSectionAction.onItemClick,
+                    onRetryClick = action.timeSectionAction.onRetryClick
+                )
+                item { CommonItemDivider() }
+                HomeFoodRecipesTabBar(
+                    currentSelectedTab = currentSelectTab,
+                    lazyListState = listState.recommendTabListState,
+                    onTabItemClick = action.recommendAction.onTabItemClick
+                )
+                item { Spacer(modifier = Modifier.height(16.dp)) }
+                HomeFoodRecipesList(
+                    dataState = dataState.recommendDataState,
+                    onItemClick = action.recommendAction.onItemClick,
+                    onRetryClick = action.recommendAction.onRetryClick
+                )
+            }
         }
-    }
-    foodRecipesState.apply {
     }
 }
 

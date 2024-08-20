@@ -4,6 +4,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import io.common.RelicConstants.Common.EMPTY_STRING
 import io.common.RelicShareCenter
@@ -56,10 +59,20 @@ fun StudioPageBottomSheet(
         listState = newListState
     )
 
+    // Record the previous selected tab index
+    var lastSelectedTab by remember {
+        mutableIntStateOf(0)
+    }
+
     StudioPageBottomSheetContent(
         bottomSheetState = bottomSheetState,
         onTabItemClick = { currentSelectedTab, _ ->
             newsViewModel.apply {
+                if (currentSelectedTab == lastSelectedTab) {
+                    return@apply
+                }
+
+                lastSelectedTab = currentSelectedTab
                 updateSelectedTopHeadlineCategoriesTab(currentSelectedTab)
                 getTopHeadlineNewsData(
                     keyWords = EMPTY_STRING,

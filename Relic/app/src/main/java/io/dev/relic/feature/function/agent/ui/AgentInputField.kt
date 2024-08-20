@@ -72,7 +72,7 @@ fun AgentInputField(
                         .weight(4F)
                         .background(
                             color = mainThemeColorLight.copy(alpha = 0.1F),
-                            shape = RoundedCornerShape(16.dp)
+                            shape = RoundedCornerShape(12.dp)
                         )
                         .padding(16.dp),
                     contentTextStyle = TextStyle(mainTextColor),
@@ -86,7 +86,7 @@ fun AgentInputField(
                     } else {
                         mainIconColorLight.copy(alpha = 0.3F)
                     },
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = io.core.ui.R.drawable.ic_send),

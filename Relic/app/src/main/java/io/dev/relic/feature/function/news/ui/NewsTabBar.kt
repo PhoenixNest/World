@@ -14,12 +14,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonHorizontalIconTextButton
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor30
+import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
 @Composable
@@ -73,7 +75,12 @@ private fun NewsTabBarItem(
             } else {
                 mainTextColor30
             },
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            backgroundColor = if (isSelected) {
+                mainThemeColorAccent
+            } else {
+                Color.Transparent
+            }
         )
     }
 }

@@ -2,13 +2,13 @@ package io.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val mainThemeColor = Color(0xFF282C34)
+val mainThemeColor = Color(0xFF22232A)
 val mainThemeColorLight = Color(0xFFFFFFFF)
-val mainThemeColorAccent = Color(0xFF3C79E6)
+val mainThemeColorAccent = Color(0xFF2975CF)
 
 val errorColorAccent = Color(0xFFD32F2F)
 
-val mainBackgroundColor = Color(0xFF3F4553)
+val mainBackgroundColor = Color(0xFF303037)
 val mainBackgroundColorLight = mainThemeColorLight.copy(alpha = 0.8F)
 
 val placeHolderHighlightColor = mainBackgroundColorLight

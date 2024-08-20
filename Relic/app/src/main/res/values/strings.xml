@@ -74,7 +74,7 @@
     <string name="todo_intro_goal_3">3. Explore the galaxy</string>
     <string name="todo_intro_goal_more">…</string>
     <string name="todo_intro_create">Set Your Tasks</string>
-    <string name="todo_title">🚀 Todo</string>
+    <string name="todo_title">Todo</string>
     <string name="todo_ext_fab_label">Make a plan</string>
     <string name="todo_create_title_hint">Title</string>
     <string name="todo_create_subtitle_hint">Subtitle</string>

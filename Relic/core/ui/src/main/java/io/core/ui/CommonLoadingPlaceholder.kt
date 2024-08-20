@@ -17,6 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -66,7 +67,7 @@ private fun CommonLoadingCardItem(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(16.dp),
-        color = mainBackgroundColor.copy(alpha = 0.3F)
+        color = Color.Transparent
     ) {
         Column(
             modifier = Modifier

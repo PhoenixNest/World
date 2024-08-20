@@ -21,12 +21,12 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import io.module.ad.BuildConfig
-import io.module.ad.utils.LogUtil
 import io.module.ad.admob.utils.AdmobAdType
 import io.module.ad.admob.utils.AdmobAdUnitId
 import io.module.ad.core.model.AdInfoWrapper
 import io.module.ad.core.provider.AbsAdProvider
 import io.module.ad.core.provider.IAdListener
+import io.module.ad.utils.LogUtil
 
 /**
  * Provide the core function of ad load and show.
@@ -55,7 +55,7 @@ object AdmobAdProvider : AbsAdProvider() {
     override fun loadAd(
         context: Context,
         adUnitId: String,
-        adType: String,
+        @AdmobAdType adType: String,
         adViewContainer: ViewGroup?
     ) {
         val targetAdUnitId = if (BuildConfig.NO_ADS) {
