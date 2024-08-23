@@ -12,11 +12,13 @@ import com.tomtom.sdk.featuretoggle.FeatureToggleController
 import com.tomtom.sdk.featuretoggle.TomTomOrbisMapFeature
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
+import com.tomtom.sdk.map.display.style.StyleMode
 import com.tomtom.sdk.map.display.ui.MapFragment
 import io.module.map.R
 import io.module.map.databinding.ActivityTomtomMapBinding
 import io.module.map.permission.MapPermissionCenter
 import io.module.map.permission.MapPermissionListener
+import io.module.map.tomtom.TomTomMapCustomizer
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_SHOW_SCALE_VIEW
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_SHOW_TOMTOM_LOGO
@@ -244,7 +246,11 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun customMapStyle() {
+        val isDarkTheme = TomTomMapCustomizer.isDarkTheme(this)
+        val styleMode = if (isDarkTheme) StyleMode.DARK else StyleMode.MAIN
+
         tomtomMap?.apply {
+            setStyleMode(styleMode)
             showHillShading()
             cameraTrackingMode = DEFAULT_TRACKING_MODE
         }

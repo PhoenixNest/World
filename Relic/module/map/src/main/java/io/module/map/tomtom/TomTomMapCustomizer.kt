@@ -1,5 +1,7 @@
 package io.module.map.tomtom
 
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatActivity
 import com.tomtom.sdk.common.measures.UnitSystem
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraTrackingMode
@@ -150,5 +152,10 @@ object TomTomMapCustomizer {
         if (isShowVehicleRestrictionsInfo) {
             showVehicleRestrictions()
         }
+    }
+
+    fun isDarkTheme(activity: AppCompatActivity): Boolean {
+        val uiMode = activity.resources.configuration.uiMode
+        return (uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
     }
 }
