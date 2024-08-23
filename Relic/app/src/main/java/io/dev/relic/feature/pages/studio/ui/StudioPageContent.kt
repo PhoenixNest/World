@@ -29,7 +29,8 @@ import io.dev.relic.feature.pages.studio.ui.widget.StudioToolsPanel
 fun StudioPageContent(
     onUserClick: () -> Unit,
     todoState: StudioTotoState,
-    agentState: StudioAgentState
+    agentState: StudioAgentState,
+    onMapClick: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -43,7 +44,8 @@ fun StudioPageContent(
             StudioTabBar(onUserClick = onUserClick)
             StudioPageContent(
                 todoState = todoState,
-                agentState = agentState
+                agentState = agentState,
+                onMapClick = {}
             )
         }
     }
@@ -52,7 +54,8 @@ fun StudioPageContent(
 @Composable
 private fun StudioPageContent(
     todoState: StudioTotoState,
-    agentState: StudioAgentState
+    agentState: StudioAgentState,
+    onMapClick: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -100,6 +103,7 @@ private fun StudioPageContentPreview() {
             action = StudioAgentAction(
                 onStartChatClick = {}
             )
-        )
+        ),
+        onMapClick = {}
     )
 }

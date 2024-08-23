@@ -8,6 +8,7 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import io.core.ui.theme.bottomSheetBackgroundColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -17,6 +18,7 @@ import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
+import io.module.map.tomtom.legacy.TomTomMapActivity
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -29,6 +31,7 @@ fun StudioPageRoute(
 
     /* ======================== Common ======================== */
 
+    val context = LocalContext.current
     val navController = mainScreenState.navHostController
 
     /* ======================== Field ======================== */
@@ -74,7 +77,8 @@ fun StudioPageRoute(
         StudioPageContent(
             onUserClick = {},
             todoState = todoState,
-            agentState = agentState
+            agentState = agentState,
+            onMapClick = { TomTomMapActivity.start(context) }
         )
     }
 }

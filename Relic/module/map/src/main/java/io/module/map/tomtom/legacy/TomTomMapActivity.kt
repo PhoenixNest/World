@@ -8,6 +8,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
+import com.tomtom.sdk.featuretoggle.FeatureToggleController
+import com.tomtom.sdk.featuretoggle.TomTomOrbisMapFeature
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.camera.CameraOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
@@ -17,6 +19,7 @@ import io.module.map.permission.MapPermissionCenter
 import io.module.map.permission.MapPermissionListener
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_ENABLE_ZOOM_CONTROL_VIEW
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_SHOW_SCALE_VIEW
+import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_IS_SHOW_TOMTOM_LOGO
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_LOCATION_BUTTON_POLICY
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_SCALE_VIEW_UNIT
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
@@ -109,6 +112,11 @@ class TomTomMapActivity : AppCompatActivity() {
         }
     }
 
+    private fun enableOribsFeature() {
+        FeatureToggleController.initialize(context = this)
+        FeatureToggleController.enable(TomTomOrbisMapFeature)
+    }
+
     private fun enableUserLocation() {
         LogUtil.d(TAG, "[Map View] Enable user location.")
 
@@ -180,6 +188,7 @@ class TomTomMapActivity : AppCompatActivity() {
                     override fun onPermissionGranted() {
                         LogUtil.d(TAG, "[Map Permission] Permission Granted")
                         enableUserLocation()
+                        enableOribsFeature()
                     }
 
                     override fun onPermissionDenied() {
@@ -230,6 +239,7 @@ class TomTomMapActivity : AppCompatActivity() {
             scaleView.units = DEFAULT_SCALE_VIEW_UNIT
             scaleView.isVisible = DEFAULT_IS_SHOW_SCALE_VIEW
             currentLocationButton.visibilityPolicy = DEFAULT_LOCATION_BUTTON_POLICY
+            logoView.visibilityPolicy = DEFAULT_IS_SHOW_TOMTOM_LOGO
         }
     }
 

@@ -3,6 +3,7 @@ package io.module.map.tomtom.legacy.viewmodel
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import com.tomtom.sdk.common.android.Uris
 import com.tomtom.sdk.location.GeoLocation
 import com.tomtom.sdk.location.GeoPoint
 import com.tomtom.sdk.location.LocationProvider
@@ -10,6 +11,7 @@ import com.tomtom.sdk.location.OnLocationUpdateListener
 import com.tomtom.sdk.location.android.AndroidLocationProvider
 import com.tomtom.sdk.map.display.MapOptions
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
+import com.tomtom.sdk.map.display.style.StyleDescriptor
 import com.tomtom.sdk.search.Search
 import com.tomtom.sdk.search.SearchCallback
 import com.tomtom.sdk.search.SearchOptions
@@ -107,7 +109,17 @@ class TomTomMapViewModel @Inject constructor(
     }
 
     private fun createMapOptions(devKey: String) {
-        mapOptions = MapOptions(mapKey = devKey)
+        val lightMode = Uris.forAssetFile("street_driving_light_orbis.json")
+        val darkMode = Uris.forAssetFile("street_driving_dark_orbis.json")
+        val myMapStyleDescriptor = StyleDescriptor(
+            uri = lightMode,
+            darkUri = darkMode
+        )
+
+        mapOptions = MapOptions(
+            mapKey = devKey,
+            mapStyle = myMapStyleDescriptor
+        )
     }
 
     private fun createLocationMarkerOptions() {

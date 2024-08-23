@@ -6,6 +6,7 @@ import com.tomtom.sdk.map.display.camera.CameraTrackingMode
 import com.tomtom.sdk.map.display.location.LocationMarkerOptions
 import com.tomtom.sdk.map.display.ui.MapFragment
 import com.tomtom.sdk.map.display.ui.currentlocation.CurrentLocationButton
+import com.tomtom.sdk.map.display.ui.logo.LogoView
 
 object TomTomMapCustomizer {
 
@@ -24,7 +25,7 @@ object TomTomMapCustomizer {
      * - 20 - Street-level.
      * - 22 - Maximum zoom in.
      * */
-    const val DEFAULT_ZOOM_VALUE = 10.0
+    const val DEFAULT_ZOOM_VALUE = 15.0
 
     /**
      * [Tilt](https://developer.tomtom.com/maps/android/guides/map-display/camera-and-animations#tilt)
@@ -33,7 +34,7 @@ object TomTomMapCustomizer {
      * where the tilt is set to zero 0. When the tilt is 90, the camera is pointing towards the
      * horizon.
      * */
-    const val DEFAULT_VIEW_TILE = 80.0
+    const val DEFAULT_VIEW_TILE = 30.0
 
     /**
      * [Scale view](https://developer.tomtom.com/maps/android/guides/map-display/ui-controls#scale-view)
@@ -78,6 +79,13 @@ object TomTomMapCustomizer {
      * Users can click the current location button to re-center the camera on the device location.
      * */
     val DEFAULT_LOCATION_BUTTON_POLICY = CurrentLocationButton.VisibilityPolicy.Visible
+
+    /**
+     * [Logo view](https://developer.tomtom.com/maps/android/guides/map-display/ui-controls#logo-view)
+     *
+     * The TomTom logo is displayed by default in the bottom left corner of the map.
+     * */
+    val DEFAULT_IS_SHOW_TOMTOM_LOGO = LogoView.VisibilityPolicy.Visible
 
     /* ======================== Map camera ======================== */
 
