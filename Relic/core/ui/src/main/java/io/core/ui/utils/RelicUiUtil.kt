@@ -30,4 +30,10 @@ object RelicUiUtil {
         return LocalConfiguration.current.screenHeightDp.dp
     }
 
+    fun convertPixelToDp(
+        density: Float,
+        pixel: Int
+    ): Dp {
+        return (pixel / density).dp
+    }
 }

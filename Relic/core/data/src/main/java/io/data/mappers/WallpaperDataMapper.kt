@@ -15,8 +15,13 @@ object WallpaperDataMapper {
         this.results?.forEach {
             tempList.add(
                 WallpaperImagesDataModel(
+                    id = it?.id,
                     previewImageUrl = it?.previewURL,
+                    previewImageWidth = it?.previewWidth,
+                    previewImageHeight = it?.previewHeight,
                     largeImageUrl = it?.largeImageURL,
+                    originalImageWidth = it?.imageWidth,
+                    originalImageHeight = it?.imageHeight,
                     author = it?.user,
                     authorAvatarUrl = it?.userImageURL,
                     authorPageUrl = it?.pageURL,

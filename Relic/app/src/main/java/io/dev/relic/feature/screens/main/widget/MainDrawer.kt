@@ -31,7 +31,7 @@ import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor50
 import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
-import io.dev.relic.feature.function.gallery.LocalWallpaperCover
+import io.dev.relic.feature.function.gallery.widget.LocalWallpaperCover
 import io.dev.relic.feature.function.weather.WeatherDataState
 import io.dev.relic.feature.function.weather.ui.WeatherBriefComponent
 

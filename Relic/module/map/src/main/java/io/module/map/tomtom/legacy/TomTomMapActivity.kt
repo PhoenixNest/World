@@ -208,7 +208,12 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun toggleLoadingView(isShow: Boolean) {
-        binding.linearLayoutLoading.visibility = if (isShow) View.VISIBLE else View.GONE
+        binding.apply {
+            linearLayoutLoading.visibility = if (isShow) View.VISIBLE else View.GONE
+            lottieAnimationViewLoading.apply {
+                if (isShow) playAnimation() else pauseAnimation()
+            }
+        }
     }
 
     private fun setupMapFragment() {
