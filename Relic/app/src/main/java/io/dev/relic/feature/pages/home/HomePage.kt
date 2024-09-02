@@ -3,12 +3,12 @@ package io.dev.relic.feature.pages.home
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.LogUtil
@@ -50,11 +50,11 @@ fun HomePageRoute(
 
     // Time-section Food Recipes
     val foodRecipesTimeSectionDataState by foodRecipesViewModel.timeSectionDataStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     // Recommend Food Recipes
     val foodRecipesRecommendDataState by foodRecipesViewModel.recommendDataStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
@@ -113,14 +113,7 @@ fun HomePageRoute(
                 if (canFetchMore) {
                     val currentTab = getSelectedFoodRecipesTab()
                     val queryType = FoodRecipesCategories.entries[currentTab]
-                    val currentOffset = foodRecipesViewModel.getRecommendFoodRecipesOffset()
-                    val newOffset = (currentOffset + 10)
-                    updateRecommendFoodRecipesOffset(newOffset)
-                    fetchMoreRecommendData(
-                        queryType = queryType.name.lowercase(),
-                        offset = getRecommendFoodRecipesOffset(),
-                        isFetchMore = true
-                    )
+                    fetchMoreRecommendData(queryString = queryType.name.lowercase())
                 }
             }
         }

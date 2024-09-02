@@ -12,11 +12,13 @@ import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
+import io.dev.relic.feature.pages.gallery.pageGallery
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.pages.studio.pageStudio
@@ -35,6 +37,7 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUD
  * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
  * @param todoViewModel                 Provide the todo feature to Studio page
  * @param newsViewModel                 Provide the News feature to Studio page
+ * @param galleryViewModel              Provide the gallery feature to Gallery page
  * @param startDestination              The journey begins from here
  * */
 @Composable
@@ -46,6 +49,7 @@ fun MainFeatureNavHost(
     foodRecipesViewModel: FoodRecipesViewModel,
     todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
+    galleryViewModel: GalleryViewModel,
     startDestination: String = START_DESTINATION
 ) {
     val systemUiController = rememberSystemUiController()
@@ -96,6 +100,11 @@ fun MainFeatureNavHost(
             mainViewModel = mainViewModel,
             todoViewModel = todoViewModel,
             newsViewModel = newsViewModel
+        )
+        pageGallery(
+            mainScreenState = mainScreenState,
+            mainViewModel = mainViewModel,
+            galleryViewModel = galleryViewModel
         )
         pageSettings(
             mainScreenState = mainScreenState,

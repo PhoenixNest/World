@@ -21,7 +21,7 @@ interface IWallpaperApi {
      * @param page                  Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
-    @GET
+    @GET("api/")
     suspend fun searchImages(
         @Query("key") apiKey: String,
         @Query("q") keyWords: String,

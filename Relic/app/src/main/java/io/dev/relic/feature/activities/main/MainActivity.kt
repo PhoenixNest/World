@@ -22,6 +22,7 @@ import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
@@ -63,6 +64,13 @@ class MainActivity : AbsBaseActivity() {
      * */
     private val newsViewModel by lazy {
         ViewModelProvider(this)[NewsViewModel::class.java]
+    }
+
+    /**
+     * ViewModel - Gallery
+     * */
+    private val galleryViewModel by lazy {
+        ViewModelProvider(this)[GalleryViewModel::class.java]
     }
 
     companion object {
@@ -111,7 +119,8 @@ class MainActivity : AbsBaseActivity() {
                         geminiAgentViewModel = geminiAgentViewModel,
                         foodRecipesViewModel = foodRecipesViewModel,
                         todoViewModel = todoViewModel,
-                        newsViewModel = newsViewModel
+                        newsViewModel = newsViewModel,
+                        galleryViewModel = galleryViewModel
                     )
                 }
             }

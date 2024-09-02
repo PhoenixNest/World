@@ -16,7 +16,6 @@ import io.core.datastore.RelicDatastoreCenter.readAsyncData
 import io.core.datastore.RelicDatastoreCenter.writeAsyncData
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
-import io.data.mappers.FoodRecipesDataMapper.toEntity
 import io.data.mappers.FoodRecipesDataMapper.toModel
 import io.data.mappers.FoodRecipesDataMapper.toModelList
 import io.data.model.NetworkResult
@@ -128,8 +127,7 @@ class FoodRecipesViewModel @Inject constructor(
 
     fun getRecommendFoodRecipes(
         queryType: String,
-        offset: Int,
-        isFetchMore: Boolean = false
+        offset: Int
     ) {
         operationInViewModelScope {
             getFoodRecipesData(
@@ -137,29 +135,28 @@ class FoodRecipesViewModel @Inject constructor(
                 dataFlow = _recommendDataStateFlow,
                 query = queryType,
                 offset = offset,
-                isFetchMore = isFetchMore
+                isFetchMore = false
             )
         }
     }
 
-    fun fetchMoreRecommendData(
-        queryType: String,
-        offset: Int,
-        isFetchMore: Boolean = false
-    ) {
+    fun fetchMoreRecommendData(queryString: String) {
         if (!canFetchMore) {
             LogUtil.w(TAG, "[Fetch More Recommend Data] Can't get more data from server, skip.")
             return
         }
+
+        val newOffset = (currentRecommendFoodRecipesOffset + 10)
+        currentRecommendFoodRecipesOffset = newOffset
 
         operationInViewModelScope {
             isFetchingMore = true
             getFoodRecipesData(
                 type = RECOMMEND,
                 dataFlow = _recommendDataStateFlow,
-                query = queryType,
-                offset = offset,
-                isFetchMore = isFetchMore
+                query = queryString,
+                offset = newOffset,
+                isFetchMore = true
             )
         }
     }
@@ -178,14 +175,6 @@ class FoodRecipesViewModel @Inject constructor(
             recommendDataList.clear()
             currentSelectedFoodRecipesTab = newIndex
         }
-    }
-
-    fun getRecommendFoodRecipesOffset(): Int {
-        return currentRecommendFoodRecipesOffset
-    }
-
-    fun updateRecommendFoodRecipesOffset(newOffset: Int) {
-        currentRecommendFoodRecipesOffset = newOffset
     }
 
     fun resetRecommendFoodRecipesOffset() {
@@ -250,7 +239,7 @@ class FoodRecipesViewModel @Inject constructor(
      *
      * @see FoodRecipesComplexSearchDTO
      * */
-    private suspend fun getFoodRecipesData(
+    private fun getFoodRecipesData(
         type: FoodRecipesType,
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
         query: String,
@@ -286,7 +275,7 @@ class FoodRecipesViewModel @Inject constructor(
      * @param dataFlow
      * @param result
      * */
-    private suspend fun handleRemoteFoodRecipesData(
+    private fun handleRemoteFoodRecipesData(
         type: FoodRecipesType,
         dataFlow: MutableStateFlow<FoodRecipesDataState>,
         result: NetworkResult<FoodRecipesComplexSearchDTO>,
@@ -306,7 +295,6 @@ class FoodRecipesViewModel @Inject constructor(
             is NetworkResult.Success -> {
                 result.data?.also { dto ->
                     LogUtil.d(TAG, "[Handle Food Recipes Data] Succeed, data: $dto")
-                    val entity = dto.toEntity()
                     val modelList = dto.toModelList()
                     val filteredModelList = modelList.filterNotNull()
 

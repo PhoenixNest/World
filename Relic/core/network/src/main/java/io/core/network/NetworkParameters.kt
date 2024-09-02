@@ -58,7 +58,7 @@ object NetworkParameters {
         /**
          * [Pixabay Api](https://pixabay.com/api/docs/)
          * */
-        const val PIXABAY_WALLPAPER_API_URL = "https://pixabay.com/api/"
+        const val PIXABAY_WALLPAPER_API_URL = "https://pixabay.com/"
 
         /**
          * [Hitokoto Api](https://developer.hitokoto.cn/)
@@ -68,7 +68,7 @@ object NetworkParameters {
 
     object Keys {
         val FOOD_RECIPES_API_DEV_KEY = getString(R.string.spoonacular_dev_key)
-        val HITOKOTO_API_DEV_KEY= getString(R.string.hitokoto_dev_key)
+        val HITOKOTO_API_DEV_KEY = getString(R.string.hitokoto_dev_key)
         val NEWS_API_DEV_KEY = getString(R.string.news_dev_key)
         val PIXABAY_API_KEY = getString(R.string.pixabay_dev_key)
     }

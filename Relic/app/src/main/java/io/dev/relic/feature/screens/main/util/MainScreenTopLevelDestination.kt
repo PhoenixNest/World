@@ -13,13 +13,19 @@ enum class MainScreenTopLevelDestination(
     HOME(
         titleResId = R.string.home_label,
         labelResId = R.string.home_label,
-        selectedIconResId = R.drawable.ic_bottom_tab_home_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_home_unselected,
+        selectedIconResId = R.drawable.ic_bottom_tab_home_selected,
     ),
     STUDIO(
         titleResId = R.string.studio_label,
         labelResId = R.string.studio_label,
         selectedIconResId = R.drawable.ic_bottom_tab_studio_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_studio_unselected,
+    ),
+    GALLERY(
+        titleResId = R.string.gallery_label,
+        labelResId = R.string.gallery_label,
+        selectedIconResId = R.drawable.ic_bottom_tab_gallery_selected,
+        unselectedIconResId = R.drawable.ic_bottom_tab_gallery_unselected
     )
 }

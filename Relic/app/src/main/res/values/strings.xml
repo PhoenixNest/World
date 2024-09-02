@@ -53,6 +53,9 @@
     <!-- Studio Page -->
     <string name="studio_label">Studio</string>
 
+    <!-- Gallery Page -->
+    <string name="gallery_label">Gallery</string>
+
     <!-- Mine Page -->
     <string name="mine_title">Me</string>
 

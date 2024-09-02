@@ -31,7 +31,10 @@ fun OnlineWallpaperCover(
     val context = LocalContext.current
     val density = context.resources.displayMetrics.density
     val imageWidthDp = convertPixelToDp(density, imageWidth)
-    val imageHeightDp = convertPixelToDp(density, imageHeight)
+
+    // 60% Height
+    val imageHeightDp = convertPixelToDp(density, imageHeight) / 6
+
     WallpaperCover(
         url = url,
         modifier = modifier

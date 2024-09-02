@@ -2,12 +2,12 @@ package io.dev.relic.feature.pages.studio
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.RelicConstants.Common.EMPTY_STRING
 import io.common.RelicShareCenter
 import io.data.util.NewsCategory
@@ -36,11 +36,11 @@ fun StudioPageBottomSheet(
 
     // Trending
     val trendingNewsDataState by newsViewModel.trendingNewsDataStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     // Top-headline
     val topHeadlineNewsDataState by newsViewModel.topHeadlineNewsDataStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 

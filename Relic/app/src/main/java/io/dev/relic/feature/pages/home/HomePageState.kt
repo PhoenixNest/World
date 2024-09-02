@@ -25,7 +25,7 @@ data class HomeAgentState(
  * */
 data class HomeAgentAction(
     val onPromptChange: (newPrompt: String) -> Unit,
-    val onStartChat: () -> Unit,
+    val onStartChat: () -> Unit
 )
 
 /* ======================== Food Recipes ======================== */
@@ -81,7 +81,7 @@ data class HomeFoodRecipesAction(
 data class HomeFoodRecipesTimeSectionAction(
     val onItemClick: (recipesData: FoodRecipesComplexSearchModel) -> Unit,
     val onSeeMoreClick: (dishType: String) -> Unit,
-    val onRetryClick: () -> Unit,
+    val onRetryClick: () -> Unit
 )
 
 /**

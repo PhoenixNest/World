@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.core.ui.theme.mainThemeColor
@@ -27,6 +28,7 @@ import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
@@ -45,6 +47,7 @@ import io.dev.relic.feature.screens.main.widget.MainRailAppBar
  * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
  * @param todoViewModel                 Provide the todo feature to Studio page
  * @param newsViewModel                 Provide the News feature to Studio page
+ * @param galleryViewModel              Provide the gallery feature to Gallery page
  * @param mainScreenState
  * */
 @Composable
@@ -57,6 +60,7 @@ fun MainScreen(
     foodRecipesViewModel: FoodRecipesViewModel,
     todoViewModel: TodoViewModel,
     newsViewModel: NewsViewModel,
+    galleryViewModel: GalleryViewModel,
     mainScreenState: MainScreenState = rememberMainScreenState(
         savedInstanceState = savedInstanceState,
         windowSizeClass = windowSizeClass,
@@ -95,11 +99,11 @@ fun MainScreen(
 
     // Location
     val mainState by mainViewModel.mainStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     // Weather
     val weatherState by mainViewModel.weatherDataStateFlow
-        .collectAsState()
+        .collectAsStateWithLifecycle()
 
     LaunchedEffect(mainState) {
         when (mainState) {
@@ -170,7 +174,8 @@ fun MainScreen(
                             geminiAgentViewModel = geminiAgentViewModel,
                             foodRecipesViewModel = foodRecipesViewModel,
                             todoViewModel = todoViewModel,
-                            newsViewModel = newsViewModel
+                            newsViewModel = newsViewModel,
+                            galleryViewModel = galleryViewModel
                         )
                         if (isShowBottomBar) {
                             MainBottomBar(
