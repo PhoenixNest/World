@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
-import io.module.ad.utils.LogUtil
+import io.module.ad.utils.AdLogUtil
 import io.module.ad.core.AdKeys.KEY_IS_FIRST_COLD_START
 import io.module.ad.core.AdSharePreference.readData
 import io.module.ad.core.AdSharePreference.writeData
@@ -135,7 +135,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
      */
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        LogUtil.w(TAG, "[$TAG] Enter Foreground.")
+        AdLogUtil.w(TAG, "[$TAG] Enter Foreground.")
         isInForeground = true
     }
 
@@ -150,7 +150,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
      */
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        LogUtil.w(TAG, "[$TAG] Enter Background.")
+        AdLogUtil.w(TAG, "[$TAG] Enter Background.")
         isInForeground = false
 
         // Only display the splash-ad when user has entered the main unit.
@@ -173,7 +173,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
      * Called when the Activity calls [super.onStart()][Activity.onStart].
      */
     override fun onActivityStarted(activity: Activity) {
-        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
+        AdLogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityStarted")
 
         val checkIsSplashActivity = getActivityName(activity)
             .lowercase()
@@ -204,7 +204,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
      * Called when the Activity calls [super.onResume()][Activity.onResume].
      */
     override fun onActivityResumed(activity: Activity) {
-        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityResumed")
+        AdLogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityResumed")
 
         val application = activity.application
         val checkIsMainActivity = getActivityName(activity)
@@ -258,7 +258,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
      * Called when the Activity calls [super.onDestroy()][Activity.onDestroy].
      */
     override fun onActivityDestroyed(activity: Activity) {
-        LogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityDestroyed")
+        AdLogUtil.d(TAG, "[${activity::class.java.simpleName}] || onActivityDestroyed")
     }
 
 }

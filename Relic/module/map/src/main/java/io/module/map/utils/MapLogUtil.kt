@@ -4,7 +4,7 @@ import android.util.Log
 import io.module.map.BuildConfig
 
 @Suppress("LocalVariableName")
-internal object LogUtil {
+internal object MapLogUtil {
 
     private const val DEFAULT_TAG = "Map - LogUtil"
 

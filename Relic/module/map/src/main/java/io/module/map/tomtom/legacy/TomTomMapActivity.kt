@@ -28,7 +28,7 @@ import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_TRACKING_MODE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_VIEW_TILE
 import io.module.map.tomtom.TomTomMapCustomizer.DEFAULT_ZOOM_VALUE
 import io.module.map.tomtom.legacy.viewmodel.TomTomMapViewModel
-import io.module.map.utils.LogUtil
+import io.module.map.utils.MapLogUtil
 
 class TomTomMapActivity : AppCompatActivity() {
 
@@ -76,26 +76,26 @@ class TomTomMapActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        LogUtil.d(TAG, "[Map Lifecycle] onResume")
+        MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
         mapFragment.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtil.w(TAG, "[Map Lifecycle] onPause")
+        MapLogUtil.w(TAG, "[Map Lifecycle] onPause")
         mapFragment.onPause()
     }
 
     override fun onDestroy() {
-        LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
+        MapLogUtil.e(TAG, "[Map Lifecycle] onDestroy")
         tomtomMap?.setLocationProvider(null)
         tomtomMap = null
 
-        LogUtil.e(TAG, "[Map Host Activity Lifecycle] onDestroy")
+        MapLogUtil.e(TAG, "[Map Host Activity Lifecycle] onDestroy")
         super.onDestroy()
 
         // Avoid OOM
-        LogUtil.e(TAG, "[Map Component] Free component memory.")
+        MapLogUtil.e(TAG, "[Map Component] Free component memory.")
         mapViewModel.mapLocationProvider.close()
     }
 
@@ -120,7 +120,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun enableUserLocation() {
-        LogUtil.d(TAG, "[Map View] Enable user location.")
+        MapLogUtil.d(TAG, "[Map View] Enable user location.")
 
         val isAccessFineLocation = MapPermissionCenter.checkPermission(
             context = this@TomTomMapActivity,
@@ -133,10 +133,10 @@ class TomTomMapActivity : AppCompatActivity() {
         )
 
         if (isAccessFineLocation && isAccessCoarseLocation) {
-            LogUtil.d(TAG, "[Map Permission] Permission granted")
+            MapLogUtil.d(TAG, "[Map Permission] Permission granted")
             showUserLocation()
         } else {
-            LogUtil.w(TAG, "[Map Permission] Request runtime permission")
+            MapLogUtil.w(TAG, "[Map Permission] Request runtime permission")
             val permissionList = listOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -146,7 +146,7 @@ class TomTomMapActivity : AppCompatActivity() {
     }
 
     private fun showUserLocation() {
-        LogUtil.d(TAG, "[User Location] Get the latest location info of user")
+        MapLogUtil.d(TAG, "[User Location] Get the latest location info of user")
         // Enable user location.
         mapViewModel.mapLocationProvider.enable()
         // Binds the location provider.
@@ -158,7 +158,7 @@ class TomTomMapActivity : AppCompatActivity() {
             val geoPoint = it.position
             val latitude = geoPoint.latitude
             val longitude = geoPoint.longitude
-            LogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
+            MapLogUtil.d(TAG, "[User Location] Latest location: ($latitude, $longitude)")
             mapViewModel.unregisterLocationUpdateListener()
             // Smooth animation to the new position.
             tomtomMap?.animateCamera(
@@ -179,7 +179,7 @@ class TomTomMapActivity : AppCompatActivity() {
             )
 
             if (checkPermission) {
-                LogUtil.w(TAG, "[Request Runtime Permission] Already granted, skip...")
+                MapLogUtil.w(TAG, "[Request Runtime Permission] Already granted, skip...")
                 return
             }
 
@@ -188,13 +188,13 @@ class TomTomMapActivity : AppCompatActivity() {
                 requestPermission = permission,
                 permissionListener = object : MapPermissionListener {
                     override fun onPermissionGranted() {
-                        LogUtil.d(TAG, "[Map Permission] Permission Granted")
+                        MapLogUtil.d(TAG, "[Map Permission] Permission Granted")
                         enableUserLocation()
                         enableOribsFeature()
                     }
 
                     override fun onPermissionDenied() {
-                        LogUtil.e(TAG, "[Map Permission] Permission Denied")
+                        MapLogUtil.e(TAG, "[Map Permission] Permission Denied")
                     }
                 }
             )
@@ -225,7 +225,7 @@ class TomTomMapActivity : AppCompatActivity() {
         fragmentTransaction.commitAllowingStateLoss()
 
         mapFragment.getMapAsync {
-            LogUtil.d(TAG, "[TomTomMap] Get map async successful.")
+            MapLogUtil.d(TAG, "[TomTomMap] Get map async successful.")
             toggleLoadingView(false)
             setupMapView(it)
         }

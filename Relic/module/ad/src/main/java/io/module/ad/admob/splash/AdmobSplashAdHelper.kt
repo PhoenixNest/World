@@ -2,7 +2,7 @@ package io.module.ad.admob.splash
 
 import android.content.Context
 import io.module.ad.admob.AdmobAdManager
-import io.module.ad.utils.LogUtil
+import io.module.ad.utils.AdLogUtil
 import io.module.ad.admob.utils.AdmobAdConfig
 import io.module.ad.core.AdErrorCode
 import io.module.ad.core.provider.IAdListener
@@ -31,7 +31,7 @@ object AdmobSplashAdHelper {
         onAdFailed: (errorCode: Int, errorMessage: String) -> Unit,
         onAdClosed: () -> Unit
     ) {
-        LogUtil.d(TAG, "[Load-Ad] Loading...")
+        AdLogUtil.d(TAG, "[Load-Ad] Loading...")
         val isTimeout = loadAd(
             context = context,
             onAdLoaded = onAdLoaded,
@@ -40,7 +40,7 @@ object AdmobSplashAdHelper {
         )
 
         if (isTimeout == null) {
-            LogUtil.d(TAG, "[Admob | Open-Ad] Server Timeout.")
+            AdLogUtil.d(TAG, "[Admob | Open-Ad] Server Timeout.")
             onAdFailed.invoke(AdErrorCode.TIMEOUT, "Server Timeout.")
         }
     }
@@ -53,7 +53,7 @@ object AdmobSplashAdHelper {
      * @see loadSplashAd
      * */
     fun showSplashAd(context: Context) {
-        LogUtil.d(TAG, "[Admob | Open-Ad] Display Ad.")
+        AdLogUtil.d(TAG, "[Admob | Open-Ad] Display Ad.")
         AdmobAdManager.showOpenAd(context)
     }
 
@@ -73,7 +73,7 @@ object AdmobSplashAdHelper {
                          * Callback when ad has already loaded.
                          * */
                         override fun onAdLoaded() {
-                            LogUtil.d(TAG, "[Load-Ad] onAdLoaded")
+                            AdLogUtil.d(TAG, "[Load-Ad] onAdLoaded")
                             onAdLoaded.invoke()
                             it.resume(true)
                         }
@@ -85,7 +85,7 @@ object AdmobSplashAdHelper {
                          * @param errorMessage
                          * */
                         override fun onAdFailToLoad(errorCode: Int, errorMessage: String) {
-                            LogUtil.e(TAG, "[Load-Ad] onAdFailToLoad($errorCode, $errorMessage)")
+                            AdLogUtil.e(TAG, "[Load-Ad] onAdFailToLoad($errorCode, $errorMessage)")
                             onAdFailed.invoke(errorCode, errorMessage)
                             it.resume(false)
                         }
@@ -97,7 +97,7 @@ object AdmobSplashAdHelper {
                          * @param errorMessage
                          * */
                         override fun onAdFailToShow(errorCode: Int, errorMessage: String) {
-                            LogUtil.e(TAG, "[Load-Ad] onAdFailToShow($errorCode, $errorMessage)")
+                            AdLogUtil.e(TAG, "[Load-Ad] onAdFailToShow($errorCode, $errorMessage)")
                             onAdFailed.invoke(errorCode, errorMessage)
                             it.resume(false)
                         }
@@ -106,21 +106,21 @@ object AdmobSplashAdHelper {
                          * Callback when ad has already showed.
                          * */
                         override fun onAdShowed() {
-                            LogUtil.d(TAG, "[Display-Ad] onAdShowed")
+                            AdLogUtil.d(TAG, "[Display-Ad] onAdShowed")
                         }
 
                         /**
                          * Callback when user has performed the click action.
                          * */
                         override fun onAdClicked() {
-                            LogUtil.w(TAG, "[Click-Ad] onAdClicked")
+                            AdLogUtil.w(TAG, "[Click-Ad] onAdClicked")
                         }
 
                         /**
                          * Callback when user has closed the current showed ad.
                          * */
                         override fun onAdClosed() {
-                            LogUtil.d(TAG, "[Close-Ad] onAdClosed")
+                            AdLogUtil.d(TAG, "[Close-Ad] onAdClosed")
                             onAdClosed.invoke()
                         }
 

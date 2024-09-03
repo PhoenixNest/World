@@ -12,7 +12,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
 import com.tomtom.sdk.map.display.TomTomMap
 import com.tomtom.sdk.map.display.ui.MapView
-import io.module.map.utils.LogUtil
+import io.module.map.utils.MapLogUtil
 import kotlinx.coroutines.awaitCancellation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -65,7 +65,7 @@ object TomTomMapToolKit {
         return LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_CREATE -> {
-                    LogUtil.d(TAG, "[Map Lifecycle] onCreate")
+                    MapLogUtil.d(TAG, "[Map Lifecycle] onCreate")
                     if (previousAMapState.value != Lifecycle.Event.ON_STOP) {
                         this.onCreate(Bundle())
                         onCreate.invoke()
@@ -73,31 +73,31 @@ object TomTomMapToolKit {
                 }
 
                 Lifecycle.Event.ON_START -> {
-                    LogUtil.d(TAG, "[Map Lifecycle] onStart")
+                    MapLogUtil.d(TAG, "[Map Lifecycle] onStart")
                     this.onStart()
                     onStart.invoke()
                 }
 
                 Lifecycle.Event.ON_RESUME -> {
-                    LogUtil.d(TAG, "[Map Lifecycle] onResume")
+                    MapLogUtil.d(TAG, "[Map Lifecycle] onResume")
                     this.onResume()
                     onResume.invoke()
                 }
 
                 Lifecycle.Event.ON_PAUSE -> {
-                    LogUtil.w(TAG, "[Map Lifecycle] onPause")
+                    MapLogUtil.w(TAG, "[Map Lifecycle] onPause")
                     this.onPause()
                     onPause.invoke()
                 }
 
                 Lifecycle.Event.ON_STOP -> {
-                    LogUtil.w(TAG, "[Map Lifecycle] onStop")
+                    MapLogUtil.w(TAG, "[Map Lifecycle] onStop")
                     this.onStop()
                     onStop.invoke()
                 }
 
                 Lifecycle.Event.ON_DESTROY -> {
-                    LogUtil.e(TAG, "[Map Lifecycle] onDestroy")
+                    MapLogUtil.e(TAG, "[Map Lifecycle] onDestroy")
                     // Handled in onDispose.
                 }
 

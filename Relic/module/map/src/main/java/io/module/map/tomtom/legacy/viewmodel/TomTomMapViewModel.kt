@@ -19,7 +19,7 @@ import com.tomtom.sdk.search.SearchResponse
 import com.tomtom.sdk.search.common.error.SearchFailure
 import com.tomtom.sdk.search.online.OnlineSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.module.map.utils.LogUtil
+import io.module.map.utils.MapLogUtil
 import javax.inject.Inject
 
 @HiltViewModel
@@ -73,13 +73,13 @@ class TomTomMapViewModel @Inject constructor(
     }
 
     fun registerLocationUpdateListener(onLocationUpdate: (latestLocationInfo: GeoLocation) -> Unit) {
-        LogUtil.d(TAG, "[Location Update Listener] Register the location update listener.")
+        MapLogUtil.d(TAG, "[Location Update Listener] Register the location update listener.")
         mapLocationUpdateListener = OnLocationUpdateListener { onLocationUpdate.invoke(it) }
         mapLocationProvider.addOnLocationUpdateListener(mapLocationUpdateListener)
     }
 
     fun unregisterLocationUpdateListener() {
-        LogUtil.d(TAG, "[Location Update Listener] Unregister the location update listener.")
+        MapLogUtil.d(TAG, "[Location Update Listener] Unregister the location update listener.")
         mapLocationProvider.removeOnLocationUpdateListener(mapLocationUpdateListener)
     }
 
@@ -123,19 +123,19 @@ class TomTomMapViewModel @Inject constructor(
     }
 
     private fun createLocationMarkerOptions() {
-        LogUtil.d(TAG, "[Location Marker Options] Create new options config for map marker.")
+        MapLogUtil.d(TAG, "[Location Marker Options] Create new options config for map marker.")
         mapLocationMarkerOptions = LocationMarkerOptions(
             type = LocationMarkerOptions.Type.Pointer
         )
     }
 
     private fun createLocationProvider(context: Context) {
-        LogUtil.d(TAG, "[Location Provider] Register location provider.")
+        MapLogUtil.d(TAG, "[Location Provider] Register location provider.")
         mapLocationProvider = AndroidLocationProvider(context)
     }
 
     private fun createOnlineSearchApi(context: Context, devKey: String) {
-        LogUtil.d(TAG, "[Online Search] Creates search api.")
+        MapLogUtil.d(TAG, "[Online Search] Creates search api.")
         searchApi = OnlineSearch.create(context, devKey)
     }
 

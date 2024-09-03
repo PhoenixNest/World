@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import io.module.map.utils.LogUtil
+import io.module.map.utils.MapLogUtil
 
 object MapPermissionCenter {
 
@@ -48,7 +48,7 @@ object MapPermissionCenter {
         )
 
         if (isGranted) {
-            LogUtil.d(TAG, "$requestPermission Permission has already granted.")
+            MapLogUtil.d(TAG, "$requestPermission Permission has already granted.")
             permissionListener.onPermissionGranted()
             return
         } else {
@@ -61,7 +61,7 @@ object MapPermissionCenter {
             ) { isSuccess ->
                 if (isSuccess) {
                     // Permission is granted. Continue the action or workflow in your app.
-                    LogUtil.d(TAG, "$requestPermission Permission Granted.")
+                    MapLogUtil.d(TAG, "$requestPermission Permission Granted.")
                     permissionListener.onPermissionGranted()
                 } else {
                     // Explain to the user that the feature is unavailable because the
@@ -69,7 +69,7 @@ object MapPermissionCenter {
                     // same time, respect the user's decision. Don't link to system
                     // settings in an effort to convince the user to change their
                     // decision.
-                    LogUtil.d(TAG, "$requestPermission Permission Denied.")
+                    MapLogUtil.d(TAG, "$requestPermission Permission Denied.")
                     permissionListener.onPermissionDenied()
                 }
             }

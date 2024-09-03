@@ -26,7 +26,7 @@ import io.module.ad.admob.utils.AdmobAdUnitId
 import io.module.ad.core.model.AdInfoWrapper
 import io.module.ad.core.provider.AbsAdProvider
 import io.module.ad.core.provider.IAdListener
-import io.module.ad.utils.LogUtil
+import io.module.ad.utils.AdLogUtil
 
 /**
  * Provide the core function of ad load and show.
@@ -59,7 +59,7 @@ object AdmobAdProvider : AbsAdProvider() {
         adViewContainer: ViewGroup?
     ) {
         val targetAdUnitId = if (BuildConfig.NO_ADS) {
-            LogUtil.w(TAG, "[Load Ad] Enable No-Ads mode.")
+            AdLogUtil.w(TAG, "[Load Ad] Enable No-Ads mode.")
             AdmobAdUnitId.NO_AD
         } else {
             adUnitId
