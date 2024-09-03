@@ -19,8 +19,12 @@ import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.pages.studio.StudioAgentAction
 import io.dev.relic.feature.pages.studio.StudioAgentState
+import io.dev.relic.feature.pages.studio.StudioGalleryAction
+import io.dev.relic.feature.pages.studio.StudioGalleryState
+import io.dev.relic.feature.pages.studio.StudioListState
+import io.dev.relic.feature.pages.studio.StudioMapAction
+import io.dev.relic.feature.pages.studio.StudioMapState
 import io.dev.relic.feature.pages.studio.StudioTodoAction
-import io.dev.relic.feature.pages.studio.StudioTodoListState
 import io.dev.relic.feature.pages.studio.StudioTotoState
 import io.dev.relic.feature.pages.studio.ui.widget.StudioTabBar
 import io.dev.relic.feature.pages.studio.ui.widget.StudioToolsPanel
@@ -30,7 +34,8 @@ fun StudioPageContent(
     onUserClick: () -> Unit,
     todoState: StudioTotoState,
     agentState: StudioAgentState,
-    onMapClick: () -> Unit
+    galleryState: StudioGalleryState,
+    mapState: StudioMapState
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -45,7 +50,8 @@ fun StudioPageContent(
             StudioPageContent(
                 todoState = todoState,
                 agentState = agentState,
-                onMapClick = {}
+                galleryState = galleryState,
+                mapState = mapState
             )
         }
     }
@@ -55,7 +61,8 @@ fun StudioPageContent(
 private fun StudioPageContent(
     todoState: StudioTotoState,
     agentState: StudioAgentState,
-    onMapClick: () -> Unit
+    galleryState: StudioGalleryState,
+    mapState: StudioMapState
 ) {
     LazyColumn(
         modifier = Modifier
@@ -77,8 +84,9 @@ private fun StudioPageContent(
     ) {
         StudioToolsPanel(
             onAgentClick = agentState.action.onStartChatClick,
-            onTodoClick = {},
-            onMapClick = {}
+            onTodoClick = todoState.action.onCheckTodoClick,
+            onGalleryClick = galleryState.action.onStartPreviewClick,
+            onMapClick = mapState.action.onStartExploreClick
         )
     }
 }
@@ -91,11 +99,12 @@ private fun StudioPageContentPreview() {
         todoState = StudioTotoState(
             dataState = TodoDataState.NoTodoData,
             action = StudioTodoAction(
+                onCheckTodoClick = {},
                 onAddClick = {},
                 onItemClick = {},
                 onTailClick = {}
             ),
-            listState = StudioTodoListState(
+            listState = StudioListState(
                 todoListState = rememberLazyListState()
             )
         ),
@@ -104,6 +113,15 @@ private fun StudioPageContentPreview() {
                 onStartChatClick = {}
             )
         ),
-        onMapClick = {}
+        galleryState = StudioGalleryState(
+            action = StudioGalleryAction(
+                onStartPreviewClick = {}
+            )
+        ),
+        mapState = StudioMapState(
+            action = StudioMapAction(
+                onStartExploreClick = {}
+            )
+        )
     )
 }

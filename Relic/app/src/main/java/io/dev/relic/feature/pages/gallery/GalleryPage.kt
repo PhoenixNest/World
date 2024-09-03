@@ -22,7 +22,8 @@ import kotlinx.coroutines.flow.filter
 fun GalleryPageRoute(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
-    galleryViewModel: GalleryViewModel
+    galleryViewModel: GalleryViewModel,
+    onBackClick: () -> Unit
 ) {
 
     /* ======================== Common ======================== */
@@ -56,7 +57,7 @@ fun GalleryPageRoute(
         snapshotFlow {
             galleryListState.stagedGridState.firstVisibleItemIndex
         }.filter {
-            it >= (galleryViewModel.getGalleryList().size - 2)
+            it >= (galleryViewModel.getGalleryList().size / 2)
         }.collect {
             if (galleryViewModel.isFetchingMore) {
                 LogUtil.w("GalleryViewModel", "[Fetch More Gallery Data] Already executed, skip this time.")
@@ -72,12 +73,15 @@ fun GalleryPageRoute(
         }
     }
 
-    GalleryPage(galleryState)
+    GalleryPage(galleryState, onBackClick)
 }
 
 @Composable
-private fun GalleryPage(galleryState: GalleryState) {
-    GalleryPageContent(galleryState)
+private fun GalleryPage(galleryState: GalleryState, onBackClick: () -> Unit) {
+    GalleryPageContent(
+        galleryState = galleryState,
+        onBackClick = onBackClick
+    )
 }
 
 @Preview
@@ -91,9 +95,12 @@ private fun GalleryPagePreview() {
                 onRetryClick = {}
             ),
             listState = GalleryListState(stagedGridState = rememberLazyStaggeredGridState())
-        )
+        ),
+        onBackClick = {}
     )
 }
+
+/* ======================== Page Ui State Builder ======================== */
 
 private fun buildGalleryState(
     dataState: GalleryDataState,

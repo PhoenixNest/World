@@ -21,11 +21,5 @@ enum class MainScreenTopLevelDestination(
         labelResId = R.string.studio_label,
         selectedIconResId = R.drawable.ic_bottom_tab_studio_selected,
         unselectedIconResId = R.drawable.ic_bottom_tab_studio_unselected,
-    ),
-    GALLERY(
-        titleResId = R.string.gallery_label,
-        labelResId = R.string.gallery_label,
-        selectedIconResId = R.drawable.ic_bottom_tab_gallery_selected,
-        unselectedIconResId = R.drawable.ic_bottom_tab_gallery_unselected
     )
 }

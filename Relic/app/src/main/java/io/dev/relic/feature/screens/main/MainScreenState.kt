@@ -17,7 +17,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
-import io.dev.relic.feature.pages.gallery.navigateToGalleryPage
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.pages.studio.navigateToStudioPage
 import io.dev.relic.feature.route.RelicRoute
@@ -99,7 +98,6 @@ class MainScreenState(
         @Composable get() = when (currentDestination?.route) {
             RelicRoute.HOME -> MainScreenTopLevelDestination.HOME
             RelicRoute.STUDIO -> MainScreenTopLevelDestination.STUDIO
-            RelicRoute.GALLERY -> MainScreenTopLevelDestination.GALLERY
             else -> null
         }
 
@@ -156,10 +154,6 @@ class MainScreenState(
 
             MainScreenTopLevelDestination.STUDIO -> {
                 navHostController.navigateToStudioPage(topLevelNavOptions)
-            }
-
-            MainScreenTopLevelDestination.GALLERY -> {
-                navHostController.navigateToGalleryPage(topLevelNavOptions)
             }
         }
     }

@@ -19,13 +19,15 @@ fun NavController.navigateToGalleryPage(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.pageGallery(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
-    galleryViewModel: GalleryViewModel
+    galleryViewModel: GalleryViewModel,
+    onBackClick: () -> Unit
 ) {
     composable(route = GALLERY) {
         GalleryPageRoute(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
-            galleryViewModel = galleryViewModel
+            galleryViewModel = galleryViewModel,
+            onBackClick = onBackClick
         )
     }
 }

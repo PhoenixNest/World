@@ -40,12 +40,14 @@ private const val DEFAULT_MAX_ITEM_PER_ROW = 4
 fun LazyListScope.StudioToolsPanel(
     onAgentClick: () -> Unit,
     onTodoClick: () -> Unit,
+    onGalleryClick: () -> Unit,
     onMapClick: () -> Unit
 ) {
     item {
         StudioToolsFlowRow(
             onAgentClick = onAgentClick,
             onTodoClick = onTodoClick,
+            onGalleryClick = onGalleryClick,
             onMapClick = onMapClick
         )
     }
@@ -56,6 +58,7 @@ fun LazyListScope.StudioToolsPanel(
 private fun StudioToolsFlowRow(
     onAgentClick: () -> Unit,
     onTodoClick: () -> Unit,
+    onGalleryClick: () -> Unit,
     onMapClick: () -> Unit
 ) {
     FlowRow(
@@ -79,6 +82,11 @@ private fun StudioToolsFlowRow(
             iconResId = R.drawable.ic_agent_craft,
             labelResId = R.string.todo_title,
             onClick = onTodoClick
+        )
+        StudioToolsPanelItem(
+            iconResId = R.drawable.ic_gallery,
+            labelResId = R.string.gallery_label,
+            onClick = onGalleryClick
         )
         StudioToolsPanelItem(
             iconResId = R.drawable.ic_explore,
@@ -130,6 +138,7 @@ private fun StudioToolsFlowRowPreview() {
     StudioToolsFlowRow(
         onAgentClick = {},
         onTodoClick = {},
+        onGalleryClick = {},
         onMapClick = {}
     )
 }

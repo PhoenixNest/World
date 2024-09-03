@@ -66,25 +66,25 @@ fun MainFeatureNavHost(
         modifier = Modifier.fillMaxSize(),
         enterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
                 animationSpec = tween(durationMillis = 350)
             )
         },
         exitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Left,
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
                 animationSpec = tween(durationMillis = 350)
             )
         },
         popEnterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
                 animationSpec = tween(durationMillis = 350)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Right,
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
                 animationSpec = tween(durationMillis = 350)
             )
         }
@@ -104,7 +104,8 @@ fun MainFeatureNavHost(
         pageGallery(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
-            galleryViewModel = galleryViewModel
+            galleryViewModel = galleryViewModel,
+            onBackClick = navHostController::popBackStack
         )
         pageSettings(
             mainScreenState = mainScreenState,

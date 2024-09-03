@@ -9,6 +9,7 @@ import io.common.util.LogUtil
 import io.data.dto.wallpaper.WallpaperImagesDTO
 import io.data.mappers.WallpaperDataMapper.toModelList
 import io.data.model.NetworkResult
+import io.data.model.wallpaper.WallpaperImagesDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
 import io.domain.use_case.wallpaper.WallpaperUseCase
@@ -49,20 +50,20 @@ class GalleryViewModel @Inject constructor(
     /**
      * Memory cache list of gallery data.
      * */
-    private val galleryDataList = mutableListOf<GalleryDataState>()
+    private val galleryDataList = mutableListOf<WallpaperImagesDataModel>()
 
     companion object {
         private const val TAG = "GalleryViewModel"
 
         private val DEFAULT_ORIENTATION = WallpaperOrientation.VERTICAL
-        private const val DEFAULT_KEY_WORDS = "dark"
+        private const val DEFAULT_KEY_WORDS = "wallpaper"
         private const val DEFAULT_IMAGE_TYPE = "photo"
         private const val DEFAULT_IMAGE_CATEGORY = "nature"
-        private const val DEFAULT_IS_EDITORS_CHOICE = true
+        private const val DEFAULT_IS_EDITORS_CHOICE = false
         private const val DEFAULT_IS_SAFE_SEARCH = true
         private const val DEFAULT_ORDER_RULE = "popular"
         private const val DEFAULT_START_PAGE = 1
-        private const val DEFAULT_RESULT_SIZE_PER_PAGE = 20
+        private const val DEFAULT_RESULT_SIZE_PER_PAGE = 10
     }
 
     init {
@@ -117,7 +118,7 @@ class GalleryViewModel @Inject constructor(
         }
     }
 
-    fun getGalleryList(): List<GalleryDataState> {
+    fun getGalleryList(): List<WallpaperImagesDataModel> {
         return galleryDataList.toList()
     }
 
@@ -163,7 +164,8 @@ class GalleryViewModel @Inject constructor(
                         return
                     }
 
-                    setState(_galleryDataStateFlow, GalleryDataState.FetchSucceed(filteredModelList.toList()))
+                    galleryDataList.addAll(filteredModelList)
+                    setState(_galleryDataStateFlow, GalleryDataState.FetchSucceed(galleryDataList.toList()))
                     isFetchingMore = false
                 } ?: {
                     LogUtil.d(TAG, "[Handle Gallery Data] Succeed without data")

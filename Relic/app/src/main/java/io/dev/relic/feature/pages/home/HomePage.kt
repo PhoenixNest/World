@@ -60,14 +60,14 @@ fun HomePageRoute(
 
     val drawerState = mainScreenState.drawerState
 
-    // List state
     val foodRecipesListState = HomeFoodRecipesListState(
         timeSectionListState = rememberLazyListState(),
         recommendTabListState = rememberLazyListState(),
         recommendListState = rememberLazyListState()
     )
 
-    // Agent Data state
+    /* ======================== Ui State ======================== */
+
     val agentState = buildAgentState(
         agentPrompt = agentPrompt,
         viewModel = geminiAgentViewModel,
@@ -79,9 +79,6 @@ fun HomePageRoute(
         }
     )
 
-    /* ======================== Ui State ======================== */
-
-    // Food Recipes Data State
     val foodRecipesState = buildFoodRecipesState(
         coroutineScope = coroutineScope,
         timeSectionDataState = foodRecipesTimeSectionDataState,
@@ -197,6 +194,8 @@ private fun HomePagePreview() {
         )
     )
 }
+
+/* ======================== Page Ui State Builder ======================== */
 
 /**
  * Build state to power Agent unit of home page.

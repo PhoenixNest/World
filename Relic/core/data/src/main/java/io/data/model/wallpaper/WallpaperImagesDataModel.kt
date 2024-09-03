@@ -6,8 +6,12 @@ data class WallpaperImagesDataModel(
     val previewImageUrl: String?,
     val previewImageWidth: Int?,
     val previewImageHeight: Int?,
+    /* For preview image usage */
+    val webFormatImageUrl: String?,
+    val webFormatImageWidth: Int?,
+    val webFormatImageHeight: Int?,
     /* For normal image usage */
-    val largeImageUrl: String?,
+    val originalImageUrl: String?,
     val originalImageWidth: Int?,
     val originalImageHeight: Int?,
     /* For author info usage */
