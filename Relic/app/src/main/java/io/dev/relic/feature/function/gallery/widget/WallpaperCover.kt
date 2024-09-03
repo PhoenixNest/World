@@ -2,8 +2,6 @@ package io.dev.relic.feature.function.gallery.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -11,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
-import com.google.accompanist.placeholder.material.placeholder
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.CommonLoadingComponent
 import io.core.ui.R
-import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.utils.RelicUiUtil.convertPixelToDp
 
 @Composable
@@ -70,14 +68,7 @@ private fun WallpaperCover(
     ) {
         when (painter.state) {
             is AsyncImagePainter.State.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .placeholder(
-                            visible = true,
-                            color = mainBackgroundColor,
-                        )
-                )
+                CommonLoadingComponent(iconSize = 72.dp)
             }
 
             is AsyncImagePainter.State.Empty,

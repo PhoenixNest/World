@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -22,7 +23,7 @@ import io.core.ui.theme.mainThemeColor
 fun CommonLoadingComponent(
     modifier: Modifier = Modifier,
     backgroundColor: Color = mainThemeColor,
-    iconSizeModifier: Modifier = Modifier
+    iconSize: Dp = 128.dp
 ) {
 
     val lottieRes by rememberLottieComposition(
@@ -38,7 +39,7 @@ fun CommonLoadingComponent(
     ) {
         LottieAnimation(
             composition = lottieRes,
-            modifier = iconSizeModifier.size(128.dp),
+            modifier = Modifier.size(iconSize),
             restartOnPlay = true,
             iterations = Int.MAX_VALUE,
             alignment = Alignment.Center,
