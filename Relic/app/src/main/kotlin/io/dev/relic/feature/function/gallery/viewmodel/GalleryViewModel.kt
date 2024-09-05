@@ -63,7 +63,7 @@ class GalleryViewModel @Inject constructor(
         private const val DEFAULT_IS_SAFE_SEARCH = true
         private const val DEFAULT_ORDER_RULE = "popular"
         private const val DEFAULT_START_PAGE = 1
-        private const val DEFAULT_RESULT_SIZE_PER_PAGE = 10
+        private const val DEFAULT_RESULT_SIZE_PER_PAGE = 20
     }
 
     init {

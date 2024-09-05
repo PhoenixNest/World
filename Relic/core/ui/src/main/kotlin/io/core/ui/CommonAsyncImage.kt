@@ -53,15 +53,17 @@ fun CommonAsyncImage(
             contentScale = contentScale
         ) {
             when (painter.state) {
-                is AsyncImagePainter.State.Loading -> Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .placeholder(
-                            visible = true,
-                            color = mainBackgroundColor,
-                            highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-                        )
-                )
+                is AsyncImagePainter.State.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .placeholder(
+                                visible = true,
+                                color = mainBackgroundColor,
+                                highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+                            )
+                    )
+                }
 
                 is AsyncImagePainter.State.Empty,
                 is AsyncImagePainter.State.Error -> {
