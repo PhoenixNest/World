@@ -8,17 +8,17 @@ private val pixabayDevKey = localProperties.getProperty("PIXABAY_DEV_KEY") ?: "-
 private val spoonacularDevKey = localProperties.getProperty("SPOONACULAR_DEV_KEY") ?: "-1"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    alias(libs.plugins.kotlin.symbol.processing)
 
     // Parcelize Models
     id("kotlin-parcelize")
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.hilt.android)
 }
 
 android {

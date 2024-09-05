@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    alias(libs.plugins.kotlin.symbol.processing)
 
     // Parcelize Models
     id("kotlin-parcelize")

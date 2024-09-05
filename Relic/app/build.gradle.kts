@@ -10,14 +10,14 @@ private val isNoAds = localProperties.getProperty("NO_ADS") ?: "true"
 private val admobDevKey = localProperties.getProperty("ADMOB_DEV_KEY") ?: "-1"
 
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    alias(libs.plugins.kotlin.symbol.processing)
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.hilt.android)
 
     // Compose
     alias(libs.plugins.compose.compiler)
@@ -181,7 +181,7 @@ dependencies {
     implementation(libs.firebase.crashlytics.ktx)
     implementation(libs.firebase.analytics.ktx)
     // Add the dependency for the Performance Monitoring library
-    implementation(libs.firebase.perf.ktx)
+    implementation(libs.firebase.performance.ktx)
 
     // Hilt
     implementation(libs.hilt.android)

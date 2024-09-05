@@ -2,14 +2,15 @@
 
 [versions]
 accompanist = "0.34.0"
-androidGradlePlugin = "8.5.2"
+androidGradlePlugin = "8.6.0"
+androidTools = "31.6.0"
 appcompat = "1.7.0"
 cardview = "1.0.0"
 coilCompose = "2.7.0"
-composeActivity = "1.9.1"
-composeLifecycleRuntime = "2.8.4"
+composeActivity = "1.9.2"
+composeLifecycleRuntime = "2.8.5"
 composeMarkdown = "0.4.1"
-composeViewbinding = "1.6.8"
+composeViewbinding = "1.7.0"
 constraintlayout = "2.1.4"
 converterMoshi = "2.11.0"
 datastore = "1.1.1"
@@ -31,19 +32,19 @@ kotlinxCoroutinesTest = "1.8.1"
 ktx = "1.13.1"
 leakcanaryAndroid = "2.14"
 lifecycleExtensions = "2.2.0"
-lifecycleLivedataKtx = "2.8.4"
-lifecycleRuntimeKtx = "2.8.4"
-lifecycleViewmodelKtx = "2.8.4"
+lifecycleLivedataKtx = "2.8.5"
+lifecycleRuntimeKtx = "2.8.5"
+lifecycleViewmodelKtx = "2.8.5"
 lottie = "6.5.0"
 lottieCompose = "6.5.0"
 material = "1.12.0"
 moshi = "1.15.1"
 moshiAdapters = "1.15.1"
 moshiKotlinCodegen = "1.15.1"
-navigationCompose = "2.7.7"
-navigationDynamicFeaturesFragment = "2.7.7"
-navigationFragmentKtx = "2.7.7"
-navigationUiKtx = "2.7.7"
+navigationCompose = "2.8.0"
+navigationDynamicFeaturesFragment = "2.8.0"
+navigationFragmentKtx = "2.8.0"
+navigationUiKtx = "2.8.0"
 pagingCommonKtx = "3.3.2"
 pagingCompose = "3.3.2"
 pagingRuntimeKtx = "3.3.2"
@@ -59,8 +60,8 @@ workMultiprocess = "2.9.1"
 workRuntime = "2.9.1"
 workRuntimeKtx = "2.9.1"
 workTesting = "2.9.1"
-kotlin = "2.0.0"
-ksp = "2.0.0-1.0.21"
+kotlin = "2.0.10"
+ksp = "2.0.10-1.0.24"
 org-jetbrains-kotlin-jvm = "2.0.0"
 
 [libraries]
@@ -71,6 +72,8 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 android-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+android-tools-build = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
@@ -100,6 +103,7 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "workTesting" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+compose-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
@@ -107,10 +111,10 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
+firebase-crashlytics-gradle-plugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebase-perf-ktx = { module = "com.google.firebase:firebase-perf-ktx" }
-firebase-perf-plugin = { module = "com.google.firebase:perf-plugin", version.ref = "firebasePerfPlugin" }
+firebase-performance-ktx = { module = "com.google.firebase:firebase-perf-ktx" }
+firebase-performance-gradle-plugin = { module = "com.google.firebase:perf-plugin", version.ref = "firebasePerfPlugin" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
@@ -119,6 +123,8 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
 junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-symbol-processing-gradle-plugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
@@ -145,10 +151,10 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRunti
 room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
-kotlinSymbolProcessingAndroid = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
+kotlin-symbol-processing = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
