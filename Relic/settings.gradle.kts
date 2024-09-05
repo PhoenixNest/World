@@ -68,3 +68,7 @@ include(":core:datastore")
 include(":core:network")
 include(":core:data")
 include(":core:ui")
+
+// Base layer
+include(":build_logic")
+include(":build_logic:convention")

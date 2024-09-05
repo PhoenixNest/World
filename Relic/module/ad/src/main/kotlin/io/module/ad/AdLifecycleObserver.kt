@@ -117,7 +117,7 @@ object AdLifecycleObserver : DefaultLifecycleObserver, Application.ActivityLifec
     /**
      * Get the name of passing Activity
      *
-     * @param activity      The java class of Activity, such as: MainActivity::class.java
+     * @param activity      The kotlin class of Activity, such as: MainActivity::class.kotlin
      * */
     private fun getActivityName(activity: Activity): String {
         return activity::class.java.name
