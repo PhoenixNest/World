@@ -47,7 +47,7 @@ class TrackClassVisitor(
         if (name?.startsWith(MAIN_APP_PACKAGE_PREFIX) == true) {
             interfaces?.forEach {
                 if (it == "android/view/View\$OnClickListener") {
-                    println("Find callback interface with [OnClick] method")
+                    println("Find callback interface function with [OnClick] method")
                     isEnableHook = true
                 }
             }

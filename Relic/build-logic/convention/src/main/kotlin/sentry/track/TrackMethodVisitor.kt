@@ -4,6 +4,7 @@ import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
+import sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
 
 class TrackMethodVisitor(
     private val className: String?,
@@ -32,27 +33,30 @@ class TrackMethodVisitor(
                 /* varIndex = */ index
             )
             box(type)
+            checkOnClick()
+        }
+    }
 
-            if (!className.isNullOrEmpty()
-                && className.contains("$")
-            ) {
-                methodVisitor?.visitMethodInsn(
-                    /* opcode = */ Opcodes.INVOKESTATIC,
-                    /* owner = */ "",
-                    /* name = */ "",
-                    /* descriptor = */ "",
-                    /* isInterface = */ false
-                )
-            } else {
-                methodVisitor?.visitLdcInsn(className)
-                methodVisitor?.visitMethodInsn(
-                    /* opcode = */ Opcodes.INVOKESTATIC,
-                    /* owner = */ "",
-                    /* name = */ "",
-                    /* descriptor = */ "",
-                    /* isInterface = */ false
-                )
-            }
+    private fun checkOnClick() {
+        if (!className.isNullOrEmpty()
+            && className.contains("$")
+        ) {
+            methodVisitor?.visitMethodInsn(
+                /* opcode = */ Opcodes.INVOKESTATIC,
+                /* owner = */ "",
+                /* name = */ "",
+                /* descriptor = */ METHOD_DESCRIPTOR_VIEW,
+                /* isInterface = */ false
+            )
+        } else {
+            methodVisitor?.visitLdcInsn(className)
+            methodVisitor?.visitMethodInsn(
+                /* opcode = */ Opcodes.INVOKESTATIC,
+                /* owner = */ "",
+                /* name = */ "",
+                /* descriptor = */ METHOD_DESCRIPTOR_VIEW,
+                /* isInterface = */ false
+            )
         }
     }
 }
