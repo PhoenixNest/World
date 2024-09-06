@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    java
     `kotlin-dsl`
 }
 
@@ -27,6 +28,11 @@ dependencies {
     compileOnly(libs.firebase.performance.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.kotlin.symbol.processing.gradle.plugin)
+
+    // ASM
+    implementation("org.ow2.asm:asm:9.7")
+    implementation("org.ow2.asm:asm-util:9.7")
+    implementation("org.ow2.asm:asm-commons:9.7")
 }
 
 tasks {
