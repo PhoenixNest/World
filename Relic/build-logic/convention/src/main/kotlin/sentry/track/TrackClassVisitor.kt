@@ -5,6 +5,7 @@ import org.objectweb.asm.MethodVisitor
 import sentry.util.PrefixConstant.MAIN_APP_PACKAGE_PREFIX
 import sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
 import sentry.util.PrefixConstant.ON_CLICK_METHOD_NAME
+import sentry.util.SentryConfig.IS_ENABLE_HOOK
 
 class TrackClassVisitor(
     private val isEnableTrack: Boolean,
@@ -13,7 +14,7 @@ class TrackClassVisitor(
 ) : ClassVisitor(apiVersion, classVisitor) {
 
     private var className: String? = null
-    private var isEnableHook = false
+    private val isEnableHook = IS_ENABLE_HOOK
 
     /**
      * Visits the header of the class.
@@ -46,10 +47,7 @@ class TrackClassVisitor(
 
         if (name?.startsWith(MAIN_APP_PACKAGE_PREFIX) == true) {
             interfaces?.forEach {
-                if (it == "android/view/View\$OnClickListener") {
-                    println("Find callback interface function with [OnClick] method")
-                    isEnableHook = true
-                }
+                checkWithViewInterface(it)
             }
         }
     }
@@ -93,5 +91,12 @@ class TrackClassVisitor(
         }
 
         return methodVisitor
+    }
+
+    private fun checkWithViewInterface(interfaceName: String?) {
+        // Check if the interface is View.OnClickListener
+        if (interfaceName == "android/view/View\$OnClickListener") {
+            println("Find callback interface function with [OnClick] method")
+        }
     }
 }

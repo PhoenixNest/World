@@ -5,6 +5,7 @@ accompanist = "0.34.0"
 androidGradlePlugin = "8.6.0"
 androidTools = "31.6.0"
 appcompat = "1.7.0"
+asm = "9.7"
 cardview = "1.0.0"
 coilCompose = "2.7.0"
 composeActivity = "1.9.2"
@@ -102,6 +103,9 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "workTesting" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
+asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 compose-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }

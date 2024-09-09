@@ -7,12 +7,9 @@ import com.android.build.api.variant.Variant
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import sentry.track.TrackClassVisitorFactory
+import sentry.util.SentryConfig.IS_ENABLE_TRACK
 
 class SentryPlugin : Plugin<Project> {
-
-    companion object {
-        private const val IS_ENABLE_TRACK = true
-    }
 
     /**
      * Apply this plugin to the given target object.
