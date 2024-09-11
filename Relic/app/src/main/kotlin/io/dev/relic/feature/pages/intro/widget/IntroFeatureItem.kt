@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.CommonRoundIcon
 import io.core.ui.theme.RelicFontFamily
-import io.core.ui.theme.mainTextColorDark
+import io.core.ui.theme.mainTextColor
 
 @Composable
 fun IntroFeatureItem(
@@ -36,7 +36,7 @@ fun IntroFeatureItem(
         Text(
             stringResource(textResId),
             style = TextStyle(
-                color = mainTextColorDark,
+                color = mainTextColor,
                 fontSize = textSize,
                 fontFamily = RelicFontFamily.ubuntu
             )

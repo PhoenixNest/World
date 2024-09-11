@@ -16,14 +16,13 @@ import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColorDark
 import io.dev.relic.R
 import io.dev.relic.feature.activities.web.WebActivity
 
 @Composable
 fun IntroPrivacy() {
     val context = LocalContext.current
-    val normalTextColor = mainTextColorDark
+    val normalTextColor = mainTextColor
     val highLightTextColor = mainTextColor
     val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.intro_agreement_part_1))
