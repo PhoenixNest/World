@@ -48,21 +48,27 @@ dependencyResolutionManagement {
 }
 
 // Extension module
-include(":module:ad")
-include(":module:map")
-include(":module:location")
-include(":agent:gemini")
+include(
+    ":module:ad",
+    ":module:map",
+    ":module:location",
+    ":agent:gemini"
+)
 
 // Feature layer
 include(":app")
 
 // Domain layer
-include(":domain")
-include(":common")
+include(
+    ":domain",
+    ":common"
+)
 
 // Core layer
-include(":core:database")
-include(":core:datastore")
-include(":core:network")
-include(":core:data")
-include(":core:ui")
+include(
+    ":core:database",
+    ":core:datastore",
+    ":core:network",
+    ":core:data",
+    ":core:ui"
+)
