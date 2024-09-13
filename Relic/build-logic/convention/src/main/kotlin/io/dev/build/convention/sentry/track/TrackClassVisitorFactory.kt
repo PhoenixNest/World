@@ -1,4 +1,4 @@
-package sentry.track
+package io.dev.build.convention.sentry.track
 
 import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext

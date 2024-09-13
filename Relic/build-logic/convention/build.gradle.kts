@@ -43,5 +43,26 @@ tasks {
 }
 
 gradlePlugin {
-    //
+    plugins {
+        register("androidLibraryCompose") {
+            id = "relic.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("androidFirebase") {
+            id = "relic.android.firebase"
+            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
+        }
+        register("androidRoom") {
+            id = "relic.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
+        register("androidHilt") {
+            id = "relic.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("jvmLibrary") {
+            id = "relic.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package sentry.util
+package io.dev.build.convention.sentry.util
 
 object PrefixConstant {
 

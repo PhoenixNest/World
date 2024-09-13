@@ -1,10 +1,10 @@
-package sentry.track
+package io.dev.build.convention.sentry.track
 
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
-import sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
+import io.dev.build.convention.sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
 
 class TrackMethodVisitor(
     private val className: String?,

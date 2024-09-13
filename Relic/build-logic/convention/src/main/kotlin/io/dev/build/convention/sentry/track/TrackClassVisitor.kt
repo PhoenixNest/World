@@ -1,11 +1,11 @@
-package sentry.track
+package io.dev.build.convention.sentry.track
 
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
-import sentry.util.PrefixConstant.MAIN_APP_PACKAGE_PREFIX
-import sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
-import sentry.util.PrefixConstant.ON_CLICK_METHOD_NAME
-import sentry.util.SentryConfig.IS_ENABLE_HOOK
+import io.dev.build.convention.sentry.util.PrefixConstant.MAIN_APP_PACKAGE_PREFIX
+import io.dev.build.convention.sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
+import io.dev.build.convention.sentry.util.PrefixConstant.ON_CLICK_METHOD_NAME
+import io.dev.build.convention.sentry.util.SentryConfig.IS_ENABLE_HOOK
 
 class TrackClassVisitor(
     private val isEnableTrack: Boolean,
