@@ -72,3 +72,4 @@ include(
     ":core:data",
     ":core:ui"
 )
+include(":module:media")
