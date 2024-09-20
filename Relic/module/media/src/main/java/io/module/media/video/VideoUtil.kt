@@ -1,33 +1,30 @@
-package io.module.media.image
+package io.module.media.video
 
 import android.content.ContentUris
 import android.content.Context
 import android.provider.MediaStore
-import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
-import io.module.media.image.model.ImageInfoModel
-import io.module.media.utils.MediaLogUtil
+import io.module.media.video.model.VideoInfoModel
+import java.util.concurrent.TimeUnit
 
-object ImageUtil {
+object VideoUtil {
 
-    private const val TAG = "ImageUtil"
-
-    fun queryLocalPhoto(context: Context): List<ImageInfoModel> {
+    fun queryLocalVideo(
+        context: Context,
+        minVideoDuration: Long = 5
+    ): List<VideoInfoModel> {
         // Prepare the query parameters.
-        val localImageList = mutableListOf<ImageInfoModel>()
-        val queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val columnId = MediaStore.Images.ImageColumns._ID
-        val columnFileName = MediaStore.Images.ImageColumns.DISPLAY_NAME
-        val columnFolderName = MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
-        val columnWidth = MediaStore.Images.ImageColumns.WIDTH
-        val columnHeight = MediaStore.Images.ImageColumns.HEIGHT
-        val columnSize = MediaStore.Images.ImageColumns.SIZE
-        val columnMimeType = MediaStore.Images.ImageColumns.MIME_TYPE
+        val localVideoList = mutableListOf<VideoInfoModel>()
+        val queryUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        val columnId = MediaStore.Video.VideoColumns._ID
+        val columnFileName = MediaStore.Video.VideoColumns.DISPLAY_NAME
+        val columnFolderName = MediaStore.Video.VideoColumns.BUCKET_DISPLAY_NAME
+        val columnWidth = MediaStore.Video.VideoColumns.WIDTH
+        val columnHeight = MediaStore.Video.VideoColumns.HEIGHT
+        val columnSize = MediaStore.Video.VideoColumns.SIZE
+        val columnMimeType = MediaStore.Video.VideoColumns.MIME_TYPE
 
         // Combine query columns.
         val projection = arrayOf(
@@ -40,14 +37,20 @@ object ImageUtil {
             columnMimeType
         )
 
+        // Show only videos that are at least 5 minutes in duration.
+        val selection = "${MediaStore.Video.Media.DURATION} >= ?"
+        val selectionArgs = arrayOf(
+            TimeUnit.MILLISECONDS.convert(minVideoDuration, TimeUnit.MINUTES).toString()
+        )
+
         // Display videos in alphabetical order based on their display name.
         val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
 
         context.contentResolver.query(
             /* uri = */queryUri,
             /* projection = */ projection,
-            /* selection = */ null,
-            /* selectionArgs = */ null,
+            /* selection = */ selection,
+            /* selectionArgs = */ selectionArgs,
             /* sortOrder = */ sortOrder,
             /* cancellationSignal = */ null
         )?.use { cursor ->
@@ -69,7 +72,7 @@ object ImageUtil {
                 val sizeInfo = cursor.getIntOrNull(indexSize)
                 val sizeMimeType = cursor.getStringOrNull(indexMimeType)
                 val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, idInfo)
-                val localImageInfoModel = ImageInfoModel(
+                val localVideoInfoModel = VideoInfoModel(
                     id = idInfo,
                     contentUri = contentUri,
                     fileName = fileNameInfo,
@@ -82,37 +85,10 @@ object ImageUtil {
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                localImageList.add(localImageInfoModel)
+                localVideoList.add(localVideoInfoModel)
             }
         }
 
-        return localImageList.toList()
-    }
-
-    fun ComponentActivity.createSingleImagePicker(callback: SingleImageCallback): ActivityResultLauncher<PickVisualMediaRequest> {
-        return registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri == null) {
-                MediaLogUtil.e(TAG, "[Image Picker] Uri is null.")
-                callback.onFailed("No media selected")
-            } else {
-                MediaLogUtil.d(TAG, "[Image Picker] pickup uri: $uri")
-                callback.onSucceed(uri)
-            }
-        }
-    }
-
-    fun ComponentActivity.createMultiplyImagePicker(
-        count: Int,
-        callback: MultiplyImageCallback
-    ): ActivityResultLauncher<PickVisualMediaRequest> {
-        return registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(count)) { uriList ->
-            if (uriList.isEmpty()) {
-                MediaLogUtil.e(TAG, "[Image Picker] Uri list is empty.")
-                callback.onFailed("No media selected")
-            } else {
-                MediaLogUtil.d(TAG, "[Image Picker] pickup uriList: $uriList")
-                callback.onSucceed(uriList)
-            }
-        }
+        return localVideoList.toList()
     }
 }
