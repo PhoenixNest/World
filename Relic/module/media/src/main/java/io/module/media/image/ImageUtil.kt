@@ -40,8 +40,8 @@ object ImageUtil {
             columnMimeType
         )
 
-        // Display videos in alphabetical order based on their display name.
-        val sortOrder = "${MediaStore.Video.Media.DISPLAY_NAME} ASC"
+        // Display images in alphabetical order based on their display name.
+        val sortOrder = "${MediaStore.Images.Media.DISPLAY_NAME} ASC"
 
         context.contentResolver.query(
             /* uri = */queryUri,
@@ -60,14 +60,14 @@ object ImageUtil {
             val indexMimeType = cursor.getColumnIndexOrThrow(columnMimeType)
 
             while (cursor.moveToNext()) {
-                // Get values of columns for a given image.
+                // Get the values of columns for a given image.
                 val idInfo = cursor.getLongOrNull(indexId) ?: -1
                 val fileNameInfo = cursor.getStringOrNull(indexFileName)
                 val folderNameInfo = cursor.getStringOrNull(indexFolderName)
                 val widthInfo = cursor.getIntOrNull(indexWidth)
                 val heightInfo = cursor.getIntOrNull(indexHeight)
                 val sizeInfo = cursor.getIntOrNull(indexSize)
-                val sizeMimeType = cursor.getStringOrNull(indexMimeType)
+                val mimeTypeInfo = cursor.getStringOrNull(indexMimeType)
                 val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, idInfo)
                 val localImageInfoModel = ImageInfoModel(
                     id = idInfo,
@@ -77,7 +77,7 @@ object ImageUtil {
                     width = widthInfo,
                     height = heightInfo,
                     size = sizeInfo,
-                    mimeType = sizeMimeType
+                    mimeType = mimeTypeInfo
                 )
 
                 // Stores column values and the contentUri in a local object
