@@ -1,7 +1,7 @@
 package io.module.media.image.model
 
 import android.net.Uri
-import io.module.media.MediaBaseInfoModel
+import io.module.media.model.MediaBaseInfoModel
 
 data class ImageInfoModel(
     override val id: Long?,

@@ -1,5 +1,6 @@
 package io.dev.relic.feature.activities.web
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -104,7 +105,7 @@ class WebActivity : AppCompatActivity() {
     /* ======================== Logical ======================== */
 
     private fun initialization() {
-        setupUi()
+        initUi()
         handleWebProgress()
     }
 
@@ -140,7 +141,7 @@ class WebActivity : AppCompatActivity() {
 
     /* ======================== Ui ======================== */
 
-    private fun setupUi() {
+    private fun initUi() {
         setupWebView()
         setupListener()
     }
@@ -153,6 +154,7 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
         binding.webView.apply {
             // Web client

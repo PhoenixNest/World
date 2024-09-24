@@ -1,7 +1,7 @@
 package io.module.media.audio.model
 
 import android.net.Uri
-import io.module.media.MediaBaseInfoModel
+import io.module.media.model.MediaBaseInfoModel
 
 data class AudioInfoModel(
     override val id: Long?,

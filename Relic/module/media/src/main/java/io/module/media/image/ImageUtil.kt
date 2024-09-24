@@ -17,7 +17,7 @@ object ImageUtil {
 
     private const val TAG = "ImageUtil"
 
-    fun queryLocalPhoto(context: Context): List<ImageInfoModel> {
+    fun queryLocalPhotos(context: Context): List<ImageInfoModel> {
         // Prepare the query parameters.
         val localImageList = mutableListOf<ImageInfoModel>()
         val queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI

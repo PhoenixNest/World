@@ -1,4 +1,4 @@
-package io.module.media.ui
+package io.module.media.ui.widget
 
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
@@ -9,31 +9,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import io.module.media.MediaType
-import io.module.media.MediaType.AUDIO
-import io.module.media.MediaType.IMAGE
-import io.module.media.MediaType.VIDEO
-import io.module.media.image.ImageUtil
 import io.module.media.image.model.ImageInfoModel
 
 private const val ITEMS_PER_ROW = 3
-
-@Composable
-fun MediaPicker(
-    context: Context,
-    type: MediaType
-) {
-    when (type) {
-        IMAGE -> ImagePicker(context)
-        VIDEO -> VideoPicker(context)
-        AUDIO -> AudioPicker(context)
-    }
-}
 
 /* ======================== Image Picker ======================== */
 
@@ -48,14 +30,10 @@ private fun ImagePickerItem(infoModel: ImageInfoModel) {
 }
 
 @Composable
-private fun ImagePicker(context: Context) {
-
-    var localImageList = emptyList<ImageInfoModel>()
-
-    LaunchedEffect(Unit) {
-        localImageList = ImageUtil.queryLocalPhoto(context)
-    }
-
+private fun ImagePicker(
+    context: Context,
+    imagesList: List<ImageInfoModel>
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(ITEMS_PER_ROW),
         modifier = Modifier.fillMaxSize(),
@@ -70,7 +48,7 @@ private fun ImagePicker(context: Context) {
             alignment = Alignment.Start
         )
     ) {
-        items(localImageList) { infoModel ->
+        items(imagesList) { infoModel ->
             ImagePickerItem(infoModel)
         }
     }
@@ -80,12 +58,12 @@ private fun ImagePicker(context: Context) {
 
 @Composable
 private fun VideoPicker(context: Context) {
-
+    //
 }
 
 /* ======================== Audio Picker ======================== */
 
 @Composable
 private fun AudioPicker(context: Context) {
-
+    //
 }

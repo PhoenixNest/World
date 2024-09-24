@@ -1,4 +1,4 @@
-package io.module.media
+package io.module.media.model
 
 import android.net.Uri
 

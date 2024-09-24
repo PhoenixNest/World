@@ -18,11 +18,8 @@ object RelicPermissionDetector {
     private const val TAG = "RelicPermissionDetector"
 
     interface RelicPermissionListener {
-
         fun onPermissionGranted()
-
         fun onPermissionDenied()
-
     }
 
     /**

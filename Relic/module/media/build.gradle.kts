@@ -76,6 +76,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.52")
     ksp("com.google.dagger:hilt-compiler:2.52")
 
+    // Media info
+    implementation("androidx.exifinterface:exifinterface:1.3.6")
+
     /* ======================== Third-party Extension ======================== */
 
     // Lottie
