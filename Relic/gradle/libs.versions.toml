@@ -64,6 +64,7 @@ workTesting = "2.9.1"
 kotlin = "2.0.10"
 ksp = "2.0.10-1.0.24"
 org-jetbrains-kotlin-jvm = "2.0.0"
+uiTextGoogleFonts = "1.7.2"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -97,6 +98,7 @@ androidx-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", ver
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 androidx-work-gcm = { module = "androidx.work:work-gcm", version.ref = "workGcm" }
 androidx-work-multiprocess = { module = "androidx.work:work-multiprocess", version.ref = "workMultiprocess" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
