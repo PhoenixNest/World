@@ -112,9 +112,7 @@ private fun GalleryGridItem(
     likeNumber: Int
 ) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         color = Color.Transparent
     ) {
@@ -175,7 +173,6 @@ private fun GalleryAuthorInfo(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .background(color = mainThemeColor.copy(alpha = 0.6F))
             .padding(8.dp),
         verticalArrangement = Arrangement.Center,

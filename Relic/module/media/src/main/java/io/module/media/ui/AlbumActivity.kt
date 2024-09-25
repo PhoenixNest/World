@@ -2,8 +2,14 @@ package io.module.media.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModelProvider
+import io.module.media.ui.screen.MediaDeniedScreen
+import io.module.media.ui.theme.mainThemeColor
+import io.module.media.ui.theme.mainThemeColorLight
 import io.module.media.ui.viewmodel.AlbumViewModel
 import io.module.media.utils.MediaPermissionDetector
 
@@ -24,10 +30,10 @@ class AlbumActivity : ComponentActivity() {
     /* ======================== Logical ======================== */
 
     private fun initialization() {
-        checkAlbumPermission()
+        checkAndRequestAlbumPermission()
     }
 
-    private fun checkAlbumPermission() {
+    private fun checkAndRequestAlbumPermission() {
         MediaPermissionDetector.AlbumPermissionArray
             .filter { permissionString ->
                 // Filter the denied permission first.
@@ -61,11 +67,40 @@ class AlbumActivity : ComponentActivity() {
 
     private fun initUi() {
         setContent {
-            //
+            enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.auto(
+                    lightScrim = mainThemeColorLight.toArgb(),
+                    darkScrim = mainThemeColor.toArgb()
+                ),
+                navigationBarStyle = SystemBarStyle.auto(
+                    lightScrim = mainThemeColorLight.toArgb(),
+                    darkScrim = mainThemeColor.toArgb()
+                )
+            )
         }
     }
 
     private fun updateDeniedUi() {
+        setContent {
+            enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.auto(
+                    lightScrim = mainThemeColorLight.toArgb(),
+                    darkScrim = mainThemeColor.toArgb()
+                ),
+                navigationBarStyle = SystemBarStyle.auto(
+                    lightScrim = mainThemeColorLight.toArgb(),
+                    darkScrim = mainThemeColor.toArgb()
+                )
+            )
 
+            MediaDeniedScreen(
+                onBackClick = {
+                    finish()
+                },
+                onRetryClick = {
+                    checkAndRequestAlbumPermission()
+                }
+            )
+        }
     }
 }

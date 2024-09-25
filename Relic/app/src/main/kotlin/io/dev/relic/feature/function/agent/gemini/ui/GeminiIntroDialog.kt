@@ -86,9 +86,7 @@ fun GeminiIntroDialog(
                     )
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight(),
+                        modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
