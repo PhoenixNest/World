@@ -14,10 +14,12 @@ private val LightColorPalette = lightColors(
     // Other default colors to override
     background = mainThemeColorLight,
     surface = mainThemeColorLight,
+    error = errorColorAccent,
     onPrimary = mainThemeColorLight,
     onSecondary = mainThemeColorAccent,
     onBackground = mainThemeColorLight,
-    onSurface = mainThemeColorLight
+    onSurface = mainThemeColorLight,
+    onError = errorColorAccent
 )
 
 private val DarkColorPalette = darkColors(
@@ -28,10 +30,12 @@ private val DarkColorPalette = darkColors(
     // Other default colors to override
     background = mainThemeColor,
     surface = mainThemeColor,
+    error = errorColorAccent,
     onPrimary = mainThemeColor,
     onSecondary = mainThemeColorAccent,
     onBackground = mainThemeColor,
-    onSurface = mainThemeColor
+    onSurface = mainThemeColor,
+    onError = errorColorAccent
 )
 
 @Composable

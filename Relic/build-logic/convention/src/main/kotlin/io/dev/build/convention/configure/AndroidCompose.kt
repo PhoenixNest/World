@@ -20,6 +20,8 @@ internal fun Project.configureAndroidCompose(extension: CommonExtension<*, *, *,
             val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.08.00")
             api(composeBom)
             androidTestApi(composeBom)
+            // Material Design 3
+            api(libs.findLibrary("androidx.compose.material3:material3").get())
             // Material Design
             api(libs.findLibrary("androidx.compose.material").get())
             // Android Studio Preview support

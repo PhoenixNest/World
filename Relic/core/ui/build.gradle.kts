@@ -48,6 +48,8 @@ dependencies {
     val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.08.00")
     api(composeBom)
     androidTestApi(composeBom)
+    // Material Design 3
+    api(libs.androidx.compose.material3)
     // Material Design
     api(libs.androidx.compose.material)
     // Android Studio Preview support
