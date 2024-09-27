@@ -50,6 +50,7 @@ dependencies {
     androidTestApi(composeBom)
     // Material Design 3
     api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material3.adaptive.navigation.suite)
     // Material Design
     api(libs.androidx.compose.material)
     // Android Studio Preview support
