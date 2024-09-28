@@ -15,28 +15,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainIconColorLight
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor50
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
@@ -91,16 +83,7 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
             modifier = Modifier.fillMaxWidth(),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 16.sp,
-                fontFamily = ubuntu,
-                fontWeight = FontWeight.Bold,
-                lineHeight = TextUnit(
-                    value = 1.6F,
-                    type = TextUnitType.Em
-                )
-            )
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -108,10 +91,7 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .basicMarquee(),
-            style = TextStyle(
-                color = mainTextColor50,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
@@ -149,16 +129,12 @@ private fun FoodRecipesDescItem(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
             modifier = Modifier.size(22.dp),
-            tint = mainIconColorLight
+            tint = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = content,
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 14.sp,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.labelMedium
         )
     }
 }

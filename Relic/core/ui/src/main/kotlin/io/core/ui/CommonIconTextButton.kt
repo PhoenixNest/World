@@ -10,12 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainTextColor
 
 /* ======================== Horizontal ======================== */
 
@@ -43,7 +43,7 @@ fun CommonHorizontalIconTextButton(
     containerModifier: Modifier = Modifier,
     isEnable: Boolean = true,
     backgroundColor: Color = Color.Transparent,
-    textColor: Color = mainTextColor,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     iconColor: Color = textColor,
     shape: Shape = RoundedCornerShape(16.dp)
 ) {
@@ -53,7 +53,7 @@ fun CommonHorizontalIconTextButton(
         enabled = isEnable,
         shape = shape,
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor
+            containerColor = backgroundColor
         )
     ) {
         Row(
@@ -69,11 +69,8 @@ fun CommonHorizontalIconTextButton(
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = stringResource(id = labelResId),
-                style = TextStyle(
-                    color = textColor,
-                    fontSize = 12.sp,
-                    fontFamily = ubuntu
-                )
+                color = textColor,
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
@@ -87,17 +84,15 @@ fun CommonHorizontalIconTextButton(
     modifier: Modifier = Modifier,
     containerModifier: Modifier = Modifier,
     isEnable: Boolean = true,
-    backgroundColor: Color = Color.Transparent,
-    textColor: Color = mainTextColor,
-    iconColor: Color = mainTextColor
+    backgroundColor: Color = MaterialTheme.colorScheme.primary
 ) {
     TextButton(
         onClick = onClick,
         modifier = containerModifier.wrapContentSize(),
         enabled = isEnable,
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor,
-            contentColor = Color.LightGray
+            containerColor = backgroundColor,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         Row(
@@ -108,16 +103,11 @@ fun CommonHorizontalIconTextButton(
             Icon(
                 imageVector = icon,
                 contentDescription = DEFAULT_DESC,
-                tint = iconColor
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = stringResource(id = labelResId),
-                style = TextStyle(
-                    color = textColor,
-                    fontSize = 12.sp,
-                    fontFamily = ubuntu
-                )
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
@@ -144,7 +134,7 @@ fun CommonVerticalIconTextButton(
     containerModifier: Modifier = Modifier,
     isEnable: Boolean = true,
     backgroundColor: Color = Color.Transparent,
-    textColor: Color = mainTextColor,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     iconColor: Color = textColor,
     shape: Shape = RoundedCornerShape(16.dp)
 ) {
@@ -154,7 +144,7 @@ fun CommonVerticalIconTextButton(
         enabled = isEnable,
         shape = shape,
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor
+            containerColor = backgroundColor
         )
     ) {
         Column(
@@ -170,11 +160,8 @@ fun CommonVerticalIconTextButton(
             Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = stringResource(id = labelResId),
-                style = TextStyle(
-                    color = textColor,
-                    fontSize = 12.sp,
-                    fontFamily = ubuntu
-                )
+                color = textColor,
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
@@ -189,15 +176,15 @@ fun CommonVerticalIconTextButton(
     containerModifier: Modifier = Modifier,
     isEnable: Boolean = true,
     backgroundColor: Color = Color.Transparent,
-    textColor: Color = mainTextColor,
-    iconColor: Color = mainTextColor
+    textColor: Color = MaterialTheme.colorScheme.primary,
+    iconColor: Color = MaterialTheme.colorScheme.primary
 ) {
     TextButton(
         onClick = onClick,
         modifier = containerModifier.wrapContentSize(),
         enabled = isEnable,
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = backgroundColor,
+            containerColor = backgroundColor,
             contentColor = Color.LightGray
         )
     ) {

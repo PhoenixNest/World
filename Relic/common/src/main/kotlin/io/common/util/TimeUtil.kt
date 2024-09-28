@@ -8,6 +8,18 @@ import io.common.util.TimeUtil.TimeSection.NOON
 import io.common.util.TimeUtil.TimeSection.UNKNOWN
 import java.time.Clock
 import java.time.LocalDateTime
+import java.time.Month.APRIL
+import java.time.Month.AUGUST
+import java.time.Month.DECEMBER
+import java.time.Month.FEBRUARY
+import java.time.Month.JANUARY
+import java.time.Month.JULY
+import java.time.Month.JUNE
+import java.time.Month.MARCH
+import java.time.Month.MAY
+import java.time.Month.NOVEMBER
+import java.time.Month.OCTOBER
+import java.time.Month.SEPTEMBER
 import java.time.ZoneId
 import java.util.Calendar
 
@@ -22,6 +34,37 @@ object TimeUtil {
         NIGHT,
         MIDNIGHT,
         UNKNOWN
+    }
+
+    enum class Season {
+        SPRING,
+        SUMMER,
+        AUTUMN,
+        WINTER
+    }
+
+    /**
+     * Get the current month with data-time.
+     * */
+    fun getCurrentSeason(): Season {
+        return when (LocalDateTime.now().month ?: JANUARY) {
+            // Spring begins with every 3, 4, 5 month.
+            MARCH,
+            APRIL,
+            MAY -> Season.SPRING
+            // Winter begins with every 6, 7, 8 month.
+            JUNE,
+            JULY,
+            AUGUST -> Season.SUMMER
+            // Autumn begins with every 9, 10, 11 month.
+            SEPTEMBER,
+            OCTOBER,
+            NOVEMBER -> Season.AUTUMN
+            // Winter begins with every 12, 1, 2 month.
+            DECEMBER,
+            JANUARY,
+            FEBRUARY -> Season.WINTER
+        }
     }
 
     /**

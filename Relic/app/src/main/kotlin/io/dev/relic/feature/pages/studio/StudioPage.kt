@@ -2,9 +2,9 @@ package io.dev.relic.feature.pages.studio
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -21,7 +21,7 @@ import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 import io.module.map.tomtom.legacy.TomTomMapActivity
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudioPageRoute(
     mainScreenState: MainScreenState,
@@ -79,7 +79,7 @@ fun StudioPageRoute(
             topStart = 16.dp,
             topEnd = 16.dp
         ),
-        sheetBackgroundColor = bottomSheetBackgroundColor,
+        sheetContainerColor = bottomSheetBackgroundColor,
         sheetPeekHeight = 140.dp
     ) {
         StudioPageContent(

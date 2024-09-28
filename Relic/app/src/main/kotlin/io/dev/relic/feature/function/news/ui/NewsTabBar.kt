@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonHorizontalIconTextButton
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor30
-import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
 @Composable
@@ -71,13 +69,13 @@ private fun NewsTabBarItem(
             labelResId = tabLabelResId,
             onClick = onTabClick,
             textColor = if (isSelected) {
-                mainTextColor
+                MaterialTheme.colorScheme.onPrimary
             } else {
-                mainTextColor30
+                MaterialTheme.colorScheme.onSecondary
             },
             shape = RoundedCornerShape(16.dp),
             backgroundColor = if (isSelected) {
-                mainThemeColorAccent
+                MaterialTheme.colorScheme.primary
             } else {
                 Color.Transparent
             }
@@ -86,7 +84,7 @@ private fun NewsTabBarItem(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun NewsTabBarPreview() {
     NewsTabBar(
         currentSelectedTab = 0,

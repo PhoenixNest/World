@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ModalDrawer
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
@@ -129,13 +128,7 @@ fun MainScreen(
     /* ======================== Ui ======================== */
 
     // Initialization the App main screen.
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        scaffoldState = rememberScaffoldState(
-            drawerState = mainScreenState.drawerState,
-            snackbarHostState = snackBarHostState
-        )
-    ) { paddingValues ->
+    Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -151,7 +144,7 @@ fun MainScreen(
                 )
             }
 
-            ModalDrawer(
+            ModalNavigationDrawer(
                 drawerState = mainScreenState.drawerState,
                 gesturesEnabled = mainScreenState.isEnableDrawerGesture,
                 drawerContent = {
@@ -164,7 +157,7 @@ fun MainScreen(
                         }
                     )
                 },
-                drawerBackgroundColor = mainThemeColor,
+                scrimColor = MaterialTheme.colorScheme.scrim,
                 content = {
                     Box(modifier = Modifier.fillMaxSize()) {
                         MainFeatureNavHost(

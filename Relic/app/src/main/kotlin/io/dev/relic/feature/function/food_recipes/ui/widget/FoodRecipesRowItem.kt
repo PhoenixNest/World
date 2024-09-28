@@ -12,24 +12,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
@@ -72,12 +67,7 @@ fun FoodRecipesRowItem(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
                 .basicMarquee(),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 18.sp,
-                fontFamily = ubuntu,
-                textAlign = TextAlign.Center
-            )
+            style = MaterialTheme.typography.titleMedium
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -113,14 +103,11 @@ private fun FoodRecipesDesc(
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
-            tint = mainThemeColorAccent
+            tint = MaterialTheme.colorScheme.primary
         )
         Text(
             text = content,
-            style = TextStyle(
-                color = mainTextColor,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.labelMedium
         )
     }
 }

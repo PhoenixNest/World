@@ -15,21 +15,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.core.ui.CommonVerticalIconTextButton
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColor
-import io.core.ui.theme.mainThemeColorAccent
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories
 
@@ -42,7 +37,7 @@ fun FoodRecipesTabBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = mainThemeColor),
+            .background(color = MaterialTheme.colorScheme.onPrimary),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -52,11 +47,7 @@ fun FoodRecipesTabBar(
                 horizontal = 16.dp,
                 vertical = 8.dp
             ),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 18.sp,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.labelLarge
         )
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow(
@@ -102,18 +93,18 @@ private fun FoodRecipesTabItem(
             labelResId = tabLabelResId,
             onClick = onTabClick,
             backgroundColor = if (isSelected) {
-                mainThemeColorAccent
+                MaterialTheme.colorScheme.primary
             } else {
                 Color.Transparent
             },
-            textColor = mainTextColor,
+            textColor = MaterialTheme.colorScheme.onPrimary,
             shape = RoundedCornerShape(12.dp)
         )
     }
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun FoodRecipesTabBarPreview() {
     FoodRecipesTabBar(
         currentSelectedTab = 0,

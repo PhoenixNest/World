@@ -1,10 +1,9 @@
 package io.core.ui.theme.spring
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
 import io.core.ui.R
+import io.core.ui.theme.RelicFontFamily
 
 object SpringType {
     val provider = GoogleFont.Provider(
@@ -13,19 +12,9 @@ object SpringType {
         certificates = R.array.com_google_android_gms_fonts_certs
     )
 
-    val bodyFontFamily = FontFamily(
-        Font(
-            googleFont = GoogleFont("Ubuntu Mono"),
-            fontProvider = provider,
-        )
-    )
+    val bodyFontFamily = RelicFontFamily.ubuntu
 
-    val displayFontFamily = FontFamily(
-        Font(
-            googleFont = GoogleFont("Ubuntu"),
-            fontProvider = provider,
-        )
-    )
+    val displayFontFamily = RelicFontFamily.ubuntu
 
     // Default Material 3 typography values
     val baseline = Typography()

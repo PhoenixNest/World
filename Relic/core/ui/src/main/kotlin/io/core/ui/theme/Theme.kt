@@ -1,58 +1,22 @@
 package io.core.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-
-private val LightColorPalette = lightColors(
-    primary = mainThemeColorLight,
-    primaryVariant = mainThemeColorLight,
-    secondary = mainThemeColorAccent,
-
-    // Other default colors to override
-    background = mainThemeColorLight,
-    surface = mainThemeColorLight,
-    error = errorColorAccent,
-    onPrimary = mainThemeColorLight,
-    onSecondary = mainThemeColorAccent,
-    onBackground = mainThemeColorLight,
-    onSurface = mainThemeColorLight,
-    onError = errorColorAccent
-)
-
-private val DarkColorPalette = darkColors(
-    primary = mainThemeColor,
-    primaryVariant = mainThemeColor,
-    secondary = mainThemeColorAccent,
-
-    // Other default colors to override
-    background = mainThemeColor,
-    surface = mainThemeColor,
-    error = errorColorAccent,
-    onPrimary = mainThemeColor,
-    onSecondary = mainThemeColorAccent,
-    onBackground = mainThemeColor,
-    onSurface = mainThemeColor,
-    onError = errorColorAccent
-)
+import io.common.util.TimeUtil
+import io.common.util.TimeUtil.Season.AUTUMN
+import io.common.util.TimeUtil.Season.SPRING
+import io.common.util.TimeUtil.Season.SUMMER
+import io.common.util.TimeUtil.Season.WINTER
+import io.core.ui.theme.autumn.AutumnTheme
+import io.core.ui.theme.spring.SpringTheme
+import io.core.ui.theme.summer.SummerTheme
+import io.core.ui.theme.winter.WinterTheme
 
 @Composable
-fun RelicAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
+fun RelicAppTheme(content: @Composable () -> Unit) {
+    when (TimeUtil.getCurrentSeason()) {
+        SPRING -> SpringTheme.AppTheme(content = content)
+        SUMMER -> SummerTheme.AppTheme(content = content)
+        AUTUMN -> AutumnTheme.AppTheme(content = content)
+        WINTER -> WinterTheme.AppTheme(content = content)
     }
-
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
 }

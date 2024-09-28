@@ -8,11 +8,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,6 +106,7 @@ class MainActivity : AbsBaseActivity() {
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
                 Surface(
+                    tonalElevation = 5.dp,
                     modifier = Modifier
                         .fillMaxSize()
                         .background(color = Color.Unspecified)

@@ -11,19 +11,16 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.core.ui.CommonLoadingPlaceholder
 import io.core.ui.CommonRetryComponent
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainTextColor
 import io.data.model.food_recipes.FoodRecipesComplexSearchModel
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
@@ -71,21 +68,8 @@ private fun FoodRecipesComponentTitle(
     ) {
         Text(
             text = dishLabel,
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 18.sp,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.titleLarge
         )
-        // CommonHorizontalIconTextButton(
-        //     iconResId = R.drawable.ic_see_more,
-        //     labelResId = R.string.food_recipes_see_more,
-        //     onClick = onSeeMoreClick,
-        //     backgroundColor = mainThemeColorAccent,
-        //     textColor = mainTextColor,
-        //     iconColor = mainIconColorLight,
-        //     shape = RoundedCornerShape(12.dp)
-        // )
     }
 }
 
