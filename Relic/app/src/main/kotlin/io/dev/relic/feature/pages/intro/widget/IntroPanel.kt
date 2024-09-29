@@ -84,7 +84,7 @@ private fun IntroTitlePanel() {
         text = stringResource(R.string.intro_sub_title),
         modifier = Modifier.padding(horizontal = 24.dp),
         color = MaterialTheme.colorScheme.onPrimary,
-        style = MaterialTheme.typography.headlineMedium
+        style = MaterialTheme.typography.headlineSmall
     )
     Spacer(modifier = Modifier.height(24.dp))
 }
@@ -136,7 +136,7 @@ private fun IntroFeaturePanel(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun IntroPanelPreview() {
     IntroPanel(
         isLargeMode = false,
@@ -145,7 +145,10 @@ private fun IntroPanelPreview() {
 }
 
 @Composable
-@Preview(device = "spec:width=673dp,height=841dp,orientation=landscape")
+@Preview(
+    showBackground = true,
+    device = "spec:width=673dp,height=841dp,orientation=landscape"
+)
 private fun IntroPanelLargeModePreview() {
     val screenWidth = getCurrentScreenWidthDp()
     val panelWidth = screenWidth / 3
