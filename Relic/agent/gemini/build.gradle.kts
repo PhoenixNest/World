@@ -1,22 +1,12 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
-private val geminiDevKey: String =
-    gradleLocalProperties(rootDir).getProperty("AGENT_GEMINI_DEV_KEY")
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
+private val geminiDevKey = localProperties.getProperty("AGENT_GEMINI_DEV_KEY") ?: "-1"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
-
-    // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
-
-    // Parcelize Models
-    id("kotlin-parcelize")
-
-
-    // Hilt
-    alias(libs.plugins.hiltAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -24,22 +14,9 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = 26
 
         resValue("string", "agent_gemini_dev_key", geminiDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {
@@ -50,26 +27,23 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
 
-    /* ======================== Module ======================== */
-
-    implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:ui"))
-
-    // Common Module
-    implementation(project(":common"))
-
     /* ======================== Google Official Extension ======================== */
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // Coroutines
+    val coroutinesVersion = "1.8.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 
     // Google AI client SDK for Android
-    implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
+    api("com.google.ai.client.generativeai:generativeai:0.9.0")
 
 }

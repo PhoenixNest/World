@@ -5,6 +5,7 @@
     <string name="no_network_connection_message">Please check your network connection…</string>
     <string name="no_data">No Data…</string>
     <string name="no_data_retry">Retry</string>
+    <string name="title_greeting">Greeting</string>
 
     <!-- Permission -->
     <string name="permission_location">Allow your location</string>
@@ -19,7 +20,7 @@
     <string name="intro_feature_route">Provides excellent navigation route planning</string>
     <string name="intro_feature_coffee">Have a cup of coffee and find your passion</string>
     <string name="intro_feature_weather">Know the weather forecast early</string>
-    <string name="intro_dive_in">Dive in</string>
+    <string name="intro_dive_in">DIVE IN</string>
     <string name="intro_agreement_part_1">"By continuing, you agree to our "</string>
     <string name="intro_agreement_part_2">Terms</string>
     <string name="intro_agreement_part_3">" and "</string>
@@ -29,6 +30,13 @@
     <string name="home_label">Home</string>
     <string name="home_title">@string/home_label</string>
     <string name="home_main_title">Beyond the World</string>
+    <string name="home_greeting_title_day">☀️ Welcome a new day</string>
+    <string name="home_greeting_title_afternoon">🍵 It\'s Teatime</string>
+    <string name="home_greeting_title_night">🌙 Take an early rest</string>
+    <string name="home_navigate_to_explore">EXPLORE MODE</string>
+    <string name="main_drawer_title">THE NIGHTS</string>
+    <string name="main_drawer_subtitle">AVICII</string>
+    <string name="main_drawer_desc">He said one day you\'ll leave this world behind,\nSo live a life you will remember,\nMy father told me when I was just a child,\nThese are the nights that never die</string>
 
     <!-- Explore Page -->
     <string name="explore_label">Explore</string>
@@ -42,17 +50,33 @@
     <string name="explore_bottom_sheet_tab_health_title">Health</string>
     <string name="explore_bottom_sheet_tab_traffic_service_title">Services</string>
 
-    <!-- Hive Page -->
-    <string name="hive_label">Hive</string>
+    <!-- Studio Page -->
+    <string name="studio_label">Studio</string>
+
+    <!-- Gallery Page -->
+    <string name="gallery_label">Gallery</string>
 
     <!-- Mine Page -->
     <string name="mine_title">Me</string>
 
-    <!-- Setting Page -->
-    <string name="setting_title">Setting</string>
+    <!-- Settings Page -->
+    <string name="settings_title">Settings</string>
+    <!-- Settings Page - Terms -->
+    <string name="settings_title_terms">TERMS</string>
+    <string name="settings_terms_user_agreement">User Agreement</string>
+    <string name="settings_terms_privacy_agreement">Privacy Agreement</string>
+    <!-- Settings - Debug -->
+    <string name="settings_title_debug">DEBUG</string>
+    <string name="settings_debug_admob">Admob</string>
 
     <!-- Todo Unit -->
-    <string name="todo_card_title">Check out your todo tasks</string>
+    <string name="todo_intro_title">🚀 Let\'s set goals</string>
+    <string name="todo_intro_goal_title">MY MISSION</string>
+    <string name="todo_intro_goal_1">1. Come on and grow up</string>
+    <string name="todo_intro_goal_2">2. Become an astronaut</string>
+    <string name="todo_intro_goal_3">3. Explore the galaxy</string>
+    <string name="todo_intro_goal_more">…</string>
+    <string name="todo_intro_create">Set Your Tasks</string>
     <string name="todo_title">Todo</string>
     <string name="todo_ext_fab_label">Make a plan</string>
     <string name="todo_create_title_hint">Title</string>
@@ -63,13 +87,23 @@
     <string name="weather_card_title">Today\'s Weather</string>
 
     <!-- Food Recipes Unit -->
-    <string name="food_recipes_card_title">Eat and drink your fill</string>
-    <string name="food_recipes_label_coffee">Coffee</string>
+    <string name="food_recipes_recommend_title">Discover delicious</string>
+    <string name="food_recipes_time_section_title">What\'s for <font color="#DEB654">%s</font></string>
+    <string name="food_recipes_ingredient_title">Ingredients</string>
+    <!-- Food Recipes - Common -->
+    <string name="food_recipes_cook_now">Cook it</string>
+    <string name="food_recipes_see_more">See more</string>
+    <!-- Food Recipes - Dish Type - Time Section-->
     <string name="food_recipes_label_breakfast">Breakfast</string>
     <string name="food_recipes_label_lunch">Lunch</string>
+    <string name="food_recipes_label_teatime">Teatime</string>
     <string name="food_recipes_label_dinner">Dinner</string>
-    <string name="food_recipes_label_cookie">Cookie</string>
+    <string name="food_recipes_label_midnight_snack">Midnight Snack</string>
+    <!-- Food Recipes - Dish Type - Common -->
+    <string name="food_recipes_label_recommend">Recommend</string>
+    <string name="food_recipes_label_coffee">Coffee</string>
     <string name="food_recipes_label_snack">Snack</string>
+    <string name="food_recipes_label_cookie">Cookie</string>
 
     <!-- News Unit -->
     <string name="news_title">Newspaper</string>
@@ -81,5 +115,27 @@
     <string name="news_label_sports">Sports</string>
     <string name="news_label_health">Health</string>
     <string name="news_label_trending">Trending</string>
+
+    <!-- Agent Unit -->
+    <string name="agent_input_area_hint">Ask your Ai assistant…</string>
+    <string name="agent_ask_next">Gemini awaits your next message.</string>
+    <string name="agent_intro_title">🤖 Ask your Ai assistant</string>
+    <string name="agent_intro_question_1">• What\'s the best coffee in the world?</string>
+    <string name="agent_intro_question_2">• Write the \"Hello World\" code by using C++.</string>
+    <string name="agent_intro_question_3">• How to become a good programmer?</string>
+    <string name="agent_intro_more">…</string>
+    <string name="agent_intro_start_chat">Start Chat</string>
+    <!-- Agent Unit - Gemini - Intro -->
+    <string name="gemini">Gemini</string>
+    <string name="gemini_intro_title">The Gemini ecosystem represents Google\'s most capable AI</string>
+    <string name="gemini_intro_content">- Reasoning about vast amounts of information.\n - Better understanding across modalities.\n - Problem-solving with longer blocks of code.</string>
+    <string name="gemini_link_1">Visit the official site of</string>
+    <string name="gemini_link_2">Google DeepMind • Gemini</string>
+    <!-- Agent Unit - Gemini - Waring label -->
+    <string name="agent_awaiting_answer_label">Waiting for Gemini to answer, please be patient.</string>
+    <string name="agent_input_waring">Please enter a valid message</string>
+    <string name="agent_awaiting_answer_waring">Please wait for Gemini\'s response</string>
+    <string name="agent_unknown_cell_type_warning">Unknown Cell Type</string>
+    <string name="gemini_hello_world">Hello Gemini</string>
 
 </resources>

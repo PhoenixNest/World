@@ -1,21 +1,24 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // Dev Key
-private val spoonacularDevKey: String = gradleLocalProperties(rootDir).getProperty("SPOONACULAR_DEV_KEY")
-private val newsDevKey: String = gradleLocalProperties(rootDir).getProperty("NEWS_DEV_KEY")
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
+private val hitokotoDevKey = localProperties.getProperty("HITOKOTO_DEV_KEY") ?: "-1"
+private val newsDevKey = localProperties.getProperty("NEWS_DEV_KEY") ?: "-1"
+private val pixabayDevKey = localProperties.getProperty("PIXABAY_DEV_KEY") ?: "-1"
+private val spoonacularDevKey = localProperties.getProperty("SPOONACULAR_DEV_KEY") ?: "-1"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    alias(libs.plugins.kotlin.symbol.processing)
 
     // Parcelize Models
     id("kotlin-parcelize")
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -23,20 +26,11 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
-        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
+        minSdk = 26
+        resValue("string", "hitokoto_dev_key", hitokotoDevKey)
         resValue("string", "news_dev_key", newsDevKey)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
+        resValue("string", "pixabay_dev_key", pixabayDevKey)
+        resValue("string", "spoonacular_dev_key", spoonacularDevKey)
     }
 
     compileOptions {

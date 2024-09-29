@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Relic" parent="android:Theme.Material.Light.NoActionBar" />
-
-    <style name="Theme.Relic.Debug" parent="Theme.AppCompat">
+    <style name="Theme.Relic" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
 
     <style name="Theme.Relic.Splash" parent="Theme.Relic">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@color/mainThemeColor</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@color/main_theme_color</item>
     </style>
 
 </resources>

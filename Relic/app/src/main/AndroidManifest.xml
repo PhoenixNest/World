@@ -15,15 +15,22 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Relic"
         tools:replace="android:fullBackupContent"
-        tools:targetApi="31">
+        tools:targetApi="s">
+
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
 
         <!-- Battery Receiver Start -->
         <receiver
             android:name="io.common.services.receiver.PowerConnectionReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
@@ -31,7 +38,7 @@
         </receiver>
         <receiver
             android:name="io.common.services.receiver.BatteryLevelReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BATTERY_LOW" />
                 <action android:name="android.intent.action.BATTERY_CHANGED" />
@@ -43,7 +50,6 @@
         <activity
             android:name=".feature.activities.splash.SplashActivity"
             android:exported="true"
-            android:launchMode="singleTop"
             android:theme="@style/Theme.Relic.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,47 +59,58 @@
 
         <activity
             android:name=".feature.activities.intro.IntroActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
-
-        <activity
-            android:name=".feature.activities.login.LoginActivity"
-            android:exported="false"
             android:theme="@style/Theme.Relic" />
 
         <activity
             android:name=".feature.activities.main.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
+            android:theme="@style/Theme.Relic"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".feature.activities.web.WebActivity"
-            android:exported="false"
             android:theme="@style/Theme.Relic" />
 
         <activity
-            android:name="io.module.debug.activities.debug.DebugActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic.Debug" />
+            android:name=".feature.activities.deeplink.DeepLinkActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Relic">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${applicationId}" />
+                <data android:host="relic.dev.io" />
+                <data android:path="/open" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name="io.module.debug.activities.map.amap.AMapActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
-
-        <activity
-            android:name="io.module.debug.activities.map.tomtom.TomTomMapActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
-
-        <activity
-            android:name="io.module.debug.activities.machine_learning.MLKitActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Relic" />
-
-        <activity
-            android:name="io.module.debug.activities.machine_learning.MediaPipeActivity"
-            android:exported="false"
+            android:name="io.module.map.tomtom.legacy.TomTomMapActivity"
             android:theme="@style/Theme.Relic" />
 
         <!-- Firebase Performance plugin -->
@@ -105,11 +122,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_dev_key" />
-
-        <!-- Amap-->
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="@string/amap_dev_key" />
 
     </application>
 

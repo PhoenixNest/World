@@ -2,13 +2,13 @@
 *.iml
 *.DS_Store
 local.properties
-release-config.md
-release-key.jks
 
 # Directory
 .cxx
 .externalNativeBuild
 .gradle
 .idea
+.kotlin
+build
 /app/build
 /properties

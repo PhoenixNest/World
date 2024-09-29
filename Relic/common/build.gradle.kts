@@ -1,9 +1,12 @@
+// Utils Config
+private val logMode = (project.property("LOG_MODE") ?: "false").toString()
+
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 
     // KSP
-    alias(libs.plugins.kotlinSymbolProcessingAndroid)
+    alias(libs.plugins.kotlin.symbol.processing)
 
     // Parcelize Models
     id("kotlin-parcelize")
@@ -12,7 +15,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 
     // Hilt
-    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -20,24 +23,22 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 26
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("boolean", "LOG_MODE", logMode)
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -57,12 +58,12 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     // Legacy-Navigation
-    api("androidx.navigation:navigation-fragment-ktx:2.7.4")
-    api("androidx.navigation:navigation-ui-ktx:2.7.4")
+    api(libs.androidx.navigation.fragment.ktx)
+    api(libs.androidx.navigation.ui.ktx)
     // Optional - Feature module Support
-    api("androidx.navigation:navigation-dynamic-features-fragment:2.7.4")
+    api(libs.androidx.navigation.dynamic.features.fragment)
     // Optional - Jetpack Compose Integration
-    api("androidx.navigation:navigation-compose:2.7.4")
+    api(libs.navigation.compose)
 
     // Navigation
     api(libs.navigation.compose)

@@ -1,11 +1,12 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 // App config
-private val isNoAds: String = gradleLocalProperties(rootDir).getProperty("NO_ADS")
+private val localProperties = gradleLocalProperties(rootDir, project.providers)
+private val isNoAds = localProperties.getProperty("NO_ADS") ?: "false"
 
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -13,22 +14,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
+        minSdk = 26
         buildConfigField("boolean", "NO_ADS", isNoAds)
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
     }
 
     compileOptions {
@@ -39,17 +26,20 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
 
-    /* ======================== Module ======================== */
-
-    // Common Module
-    implementation(project(":common"))
-
     /* ======================== Google Official Extension ======================== */
 
+    // Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-process:2.8.4")
+
     // Admob
-    implementation(libs.play.services.ads)
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 }

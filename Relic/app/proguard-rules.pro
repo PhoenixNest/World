@@ -20,19 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Amap 3d Service
--keep class com.amap.api.maps.**{*;}
--keep class com.autonavi.**{*;}
--keep class com.amap.api.trace.**{*;}
-
-# Amap Location Service
--keep class com.amap.api.location.**{*;}
--keep class com.amap.api.fence.**{*;}
--keep class com.autonavi.aps.amapapi.model.**{*;}
-
-# Amap Serach Service
--keep class com.amap.api.services.**{*;}
-
-# Amap Navigation Service
--keep class com.amap.api.navi.**{*;}
--keep class com.autonavi.**{*;}
+# [ProGuard manual • Kotlin]: https://www.guardsquare.com/manual/languages/kotlin
+-keep class kotlin.Metadata
