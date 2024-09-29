@@ -1,8 +1,10 @@
 package io.dev.relic.feature.pages.studio.ui.bottom_sheet
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 
@@ -19,7 +21,7 @@ fun LazyListScope.StudioNewsTabBar(
             currentSelectedTab = currentSelectedTab,
             lazyListState = lazyListState,
             onTabItemClick = onTabItemClick,
-            modifier = modifier
+            modifier = modifier.background(color = MaterialTheme.colorScheme.secondaryContainer)
         )
     }
 }

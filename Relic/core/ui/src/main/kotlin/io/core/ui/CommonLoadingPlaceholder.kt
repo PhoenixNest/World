@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,13 +24,13 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
-import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.placeHolderHighlightColor
 
 @Composable
 fun CommonLoadingPlaceholder(
     isVertical: Boolean = true,
-    itemCount: Int = 3
+    itemCount: Int = 3,
+    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer
 ) {
     if (isVertical) {
         Column(
@@ -41,7 +42,7 @@ fun CommonLoadingPlaceholder(
             horizontalAlignment = Alignment.Start
         ) {
             repeat(itemCount) {
-                CommonLoadingCardItem()
+                CommonLoadingCardItem(backgroundColor = backgroundColor)
             }
         }
     } else {
@@ -54,14 +55,17 @@ fun CommonLoadingPlaceholder(
             verticalAlignment = Alignment.Top
         ) {
             repeat(itemCount) {
-                CommonLoadingCardItem()
+                CommonLoadingCardItem(backgroundColor = backgroundColor)
             }
         }
     }
 }
 
 @Composable
-private fun CommonLoadingCardItem(modifier: Modifier = Modifier) {
+private fun CommonLoadingCardItem(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer
+) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -72,7 +76,7 @@ private fun CommonLoadingCardItem(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = mainBackgroundColor.copy(alpha = 0.3F))
+                .background(color = backgroundColor)
                 .padding(20.dp)
         ) {
             CommonLoadingIntroItem()
@@ -97,7 +101,7 @@ private fun CommonLoadingIntroItem() {
                 .height(96.dp)
                 .placeholder(
                     visible = true,
-                    color = mainBackgroundColor,
+                    color = Color.LightGray,
                     shape = RoundedCornerShape(16.dp),
                     highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 )
@@ -109,7 +113,7 @@ private fun CommonLoadingIntroItem() {
                 .fillMaxHeight()
                 .placeholder(
                     visible = true,
-                    color = mainBackgroundColor,
+                    color = Color.LightGray,
                     shape = RoundedCornerShape(16.dp),
                     highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 )
@@ -125,7 +129,7 @@ private fun CommonLoadingDescItem() {
             .height(96.dp)
             .placeholder(
                 visible = true,
-                color = mainBackgroundColor,
+                color = Color.LightGray,
                 shape = RoundedCornerShape(16.dp),
                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
             )

@@ -87,11 +87,11 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "By ${data.author ?: "Author"}",
+            text = "By: ${data.author ?: "Author"}",
             modifier = Modifier
                 .fillMaxWidth()
                 .basicMarquee(),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.bodySmall
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
@@ -129,18 +129,18 @@ private fun FoodRecipesDescItem(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
             modifier = Modifier.size(22.dp),
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = content,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun FoodRecipesCardItemPreview() {
     FoodRecipesColumnItem(
         data = FoodRecipesComplexSearchModel(

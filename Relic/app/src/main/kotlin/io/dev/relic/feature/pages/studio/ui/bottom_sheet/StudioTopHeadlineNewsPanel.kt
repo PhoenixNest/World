@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,7 +31,9 @@ fun LazyListScope.StudioTopHeadlineNewsList(
         is TopHeadlineNewsDataState.Init,
         is TopHeadlineNewsDataState.Fetching -> {
             item {
-                CommonLoadingPlaceholder()
+                CommonLoadingPlaceholder(
+                    backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             }
         }
 
@@ -41,7 +44,8 @@ fun LazyListScope.StudioTopHeadlineNewsList(
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     modifier = Modifier.padding(12.dp),
-                    containerHeight = 300.dp
+                    containerHeight = 300.dp,
+                    backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
                 )
             }
         }

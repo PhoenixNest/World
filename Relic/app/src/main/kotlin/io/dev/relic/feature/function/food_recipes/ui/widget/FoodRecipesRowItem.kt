@@ -103,11 +103,11 @@ private fun FoodRecipesDesc(
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = content,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

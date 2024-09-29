@@ -8,14 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.feature.function.todo.TodoDataState
 import io.dev.relic.feature.pages.studio.StudioAgentAction
 import io.dev.relic.feature.pages.studio.StudioAgentState
@@ -39,7 +38,7 @@ fun StudioPageContent(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.Black
+        color = MaterialTheme.colorScheme.primary
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -68,7 +67,7 @@ private fun StudioPageContent(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = mainThemeColorLight.copy(alpha = 0.1F),
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.1F),
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp

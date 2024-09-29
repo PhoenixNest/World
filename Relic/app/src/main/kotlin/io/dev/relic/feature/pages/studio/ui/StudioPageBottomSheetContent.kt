@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.mainThemeColor
 import io.core.ui.utils.RelicUiUtil
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
@@ -44,12 +44,12 @@ fun StudioPageBottomSheetContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(bottomSheetHeight)
-                .background(color = mainThemeColor),
+                .background(color = MaterialTheme.colorScheme.secondaryContainer),
             state = listState.topHeadlineNewsListState,
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            StudioNewsTitle(modifier = Modifier.background(color = mainThemeColor))
+            StudioNewsTitle()
             StudioTrendingNewsList(
                 dataState = trendingNewsDataState,
                 lazyListState = listState.trendingNewsListState,
@@ -60,8 +60,7 @@ fun StudioPageBottomSheetContent(
             StudioNewsTabBar(
                 currentSelectedTab = currentSelectTab,
                 lazyListState = listState.topHeadlineNewsTabListState,
-                onTabItemClick = onTabItemClick,
-                modifier = Modifier.background(color = mainThemeColor)
+                onTabItemClick = onTabItemClick
             )
             item { Spacer(modifier = Modifier.height(8.dp)) }
             StudioTopHeadlineNewsList(

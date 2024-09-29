@@ -31,9 +31,9 @@ import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
-import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainDrawer
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
+import io.dev.relic.feature.screens.main.widget.MaterialMainBottomBar
 
 /**
  * Main Screen entrance
@@ -171,10 +171,10 @@ fun MainScreen(
                             galleryViewModel = galleryViewModel
                         )
                         if (isShowBottomBar) {
-                            MainBottomBar(
+                            MaterialMainBottomBar(
+                                currentDestination = mainScreenState.currentDestination,
                                 destinations = mainScreenState.topLevelDestinations,
                                 onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                                currentDestination = mainScreenState.currentDestination,
                                 modifier = Modifier.align(Alignment.BottomCenter)
                             )
                         }

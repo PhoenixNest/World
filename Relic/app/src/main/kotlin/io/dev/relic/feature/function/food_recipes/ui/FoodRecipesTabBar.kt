@@ -37,7 +37,7 @@ fun FoodRecipesTabBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.onPrimary),
+            .background(color = MaterialTheme.colorScheme.primary),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -47,7 +47,8 @@ fun FoodRecipesTabBar(
                 horizontal = 16.dp,
                 vertical = 8.dp
             ),
-            style = MaterialTheme.typography.labelLarge
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow(
@@ -93,11 +94,15 @@ private fun FoodRecipesTabItem(
             labelResId = tabLabelResId,
             onClick = onTabClick,
             backgroundColor = if (isSelected) {
-                MaterialTheme.colorScheme.primary
+                MaterialTheme.colorScheme.primaryContainer
             } else {
                 Color.Transparent
             },
-            textColor = MaterialTheme.colorScheme.onPrimary,
+            textColor = if (isSelected) {
+                MaterialTheme.colorScheme.onPrimaryContainer
+            } else {
+                MaterialTheme.colorScheme.onPrimary
+            },
             shape = RoundedCornerShape(12.dp)
         )
     }

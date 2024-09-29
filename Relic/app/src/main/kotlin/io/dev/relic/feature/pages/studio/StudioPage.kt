@@ -4,13 +4,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.core.ui.theme.bottomSheetBackgroundColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.TodoDataState
@@ -79,8 +79,8 @@ fun StudioPageRoute(
             topStart = 16.dp,
             topEnd = 16.dp
         ),
-        sheetContainerColor = bottomSheetBackgroundColor,
-        sheetPeekHeight = 140.dp
+        sheetPeekHeight = 120.dp,
+        sheetContainerColor = MaterialTheme.colorScheme.secondaryContainer
     ) {
         StudioPageContent(
             onUserClick = {},

@@ -11,14 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,11 +35,6 @@ import io.common.RelicConstants
 import io.common.util.TimeUtil
 import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.newsReader
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainBackgroundColor
-import io.core.ui.theme.mainButtonColorLightDim
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor50
 import io.data.model.news.NewsArticleModel
 
 @Composable
@@ -54,13 +50,12 @@ fun NewsCardItem(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(16.dp),
-            color = mainBackgroundColor.copy(alpha = 0.3F)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = mainBackgroundColor.copy(alpha = 0.3F))
+                    .background(color = MaterialTheme.colorScheme.tertiaryContainer)
                     .clickable { onCardClick.invoke() }
                     .padding(20.dp),
                 verticalArrangement = Arrangement.Top,
@@ -116,18 +111,16 @@ private fun NewsCardItemIntro(
         ) {
             Text(
                 text = publishDate,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
                 overflow = TextOverflow.Ellipsis,
-                style = TextStyle(
-                    color = mainTextColor,
-                    fontFamily = ubuntu
-                )
+                style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = title,
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(
-                    color = mainTextColor,
+                    color = MaterialTheme.colorScheme.onTertiaryContainer,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = newsReader,
@@ -154,27 +147,18 @@ private fun NewsCardItemDesc(
     ) {
         Text(
             text = "$source - $author",
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
-            style = TextStyle(
-                color = mainTextColor,
-                fontWeight = FontWeight.Bold,
-                fontFamily = ubuntu
-            )
+            style = MaterialTheme.typography.bodySmall
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = description,
+            color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.5F),
             overflow = TextOverflow.Ellipsis,
             maxLines = 5,
-            style = TextStyle(
-                color = mainTextColor50,
-                fontFamily = ubuntu,
-                lineHeight = TextUnit(
-                    value = 1.6F,
-                    type = TextUnitType.Em
-                )
-            )
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -193,21 +177,21 @@ private fun NewsCardFunctionBar(
             Icon(
                 imageVector = Icons.Filled.Favorite,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDim
+                tint = MaterialTheme.colorScheme.onTertiaryContainer
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.Share,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDim
+                tint = MaterialTheme.colorScheme.onTertiaryContainer
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
                 contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = mainButtonColorLightDim
+                tint = MaterialTheme.colorScheme.onTertiaryContainer
             )
         }
     }

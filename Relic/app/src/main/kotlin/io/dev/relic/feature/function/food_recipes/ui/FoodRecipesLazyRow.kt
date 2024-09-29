@@ -68,7 +68,8 @@ private fun FoodRecipesComponentTitle(
     ) {
         Text(
             text = dishLabel,
-            style = MaterialTheme.typography.titleLarge
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleMedium
         )
     }
 }
@@ -83,7 +84,10 @@ private fun FoodRecipesLazyRowContent(
     when (dataState) {
         is FoodRecipesDataState.Init,
         is FoodRecipesDataState.Fetching -> {
-            CommonLoadingPlaceholder(false)
+            CommonLoadingPlaceholder(
+                isVertical = false,
+                backgroundColor = MaterialTheme.colorScheme.onPrimary
+            )
         }
 
         is FoodRecipesDataState.Empty,
@@ -92,7 +96,8 @@ private fun FoodRecipesLazyRowContent(
             CommonRetryComponent(
                 onRetryClick = onRetryClick,
                 modifier = Modifier.padding(12.dp),
-                containerHeight = 300.dp
+                containerHeight = 300.dp,
+                backgroundColor = MaterialTheme.colorScheme.onPrimary
             )
         }
 
