@@ -46,3 +46,14 @@ Recommand to read:
 > `aka with Android-With-Kotlin`, this project is which i use to preatice the `Compose Ui toolkit` and use it to create a Notes App for `Android` platfrom.
 
 Reference link: [How to Make a Clean Architecture Note App (MVVM / CRUD / Jetpack Compose)](https://www.youtube.com/watch?v=8YPXv7xKh2w&t=8s)
+
+---
+
+### 🍵 Relic
+
+> Experimental project to learnning deep with `Android`, `gradle building process` and `ASM`.
+
+Recommand to read:
+
++ [Gradle build overview - Google Official](https://developer.android.com/build/gradle-build-overview)
++ [ASM Official](https://asm.ow2.io/index.html)
