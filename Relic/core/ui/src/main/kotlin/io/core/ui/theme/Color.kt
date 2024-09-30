@@ -19,14 +19,4 @@ val mainTextColor50 = mainTextColor.copy(alpha = 0.5F)
 val mainTextColor80 = mainTextColor.copy(alpha = 0.8F)
 val mainTextColorDark = mainThemeColor.copy(alpha = 0.8F)
 
-val mainIconColor = mainThemeColor.copy(alpha = 0.8F)
 val mainIconColorLight = mainThemeColorLight.copy(alpha = 0.8F)
-
-val mainButtonColor = mainThemeColor
-val mainButtonColorLight = mainTextColor
-val mainButtonColorLightDim = mainButtonColorLight.copy(alpha = 0.8F)
-
-val dividerColor = mainThemeColorLight.copy(alpha = 0.1F)
-val dividerColorDark = mainThemeColor.copy(alpha = 0.1F)
-
-val bottomSheetBackgroundColor = mainThemeColor

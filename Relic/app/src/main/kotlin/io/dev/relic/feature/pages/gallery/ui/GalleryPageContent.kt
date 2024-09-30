@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
@@ -46,8 +45,10 @@ fun GalleryPageContent(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.TopStart)
-                    .statusBarsPadding()
-                    .padding(16.dp)
+                    .padding(
+                        start = 16.dp,
+                        top = 32.dp
+                    )
                     .background(
                         color = mainThemeColor.copy(alpha = 0.3F),
                         shape = CircleShape
@@ -63,8 +64,8 @@ fun GalleryPageContent(
     }
 }
 
-@Preview
 @Composable
+@Preview(showBackground = true, showSystemUi = true)
 private fun GalleryPageContentPreview() {
     GalleryPageContent(
         GalleryState(

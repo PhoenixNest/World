@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -17,12 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import io.core.ui.theme.mainThemeColor
 
 @Composable
 fun CommonLoadingComponent(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = mainThemeColor,
+    backgroundColor: Color = MaterialTheme.colorScheme.primary,
     iconSize: Dp = 128.dp
 ) {
 
@@ -33,8 +32,7 @@ fun CommonLoadingComponent(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(color = backgroundColor)
-            .statusBarsPadding(),
+            .background(color = backgroundColor),
         contentAlignment = Alignment.Center
     ) {
         LottieAnimation(
@@ -49,7 +47,7 @@ fun CommonLoadingComponent(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 private fun CommonLoadingComponentPreview() {
     CommonLoadingComponent()
 }

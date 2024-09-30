@@ -9,6 +9,7 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
@@ -82,7 +83,7 @@ fun StudioPageRoute(
         sheetPeekHeight = 120.dp,
         sheetContainerColor = MaterialTheme.colorScheme.secondaryContainer
     ) {
-        StudioPageContent(
+        StudioPage(
             onUserClick = {},
             todoState = todoState,
             agentState = agentState,
@@ -90,6 +91,58 @@ fun StudioPageRoute(
             mapState = mapState
         )
     }
+}
+
+@Composable
+private fun StudioPage(
+    onUserClick: () -> Unit,
+    todoState: StudioTotoState,
+    agentState: StudioAgentState,
+    galleryState: StudioGalleryState,
+    mapState: StudioMapState
+) {
+    StudioPageContent(
+        onUserClick = onUserClick,
+        todoState = todoState,
+        agentState = agentState,
+        galleryState = galleryState,
+        mapState = mapState
+    )
+}
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+private fun StudioPagePreview() {
+    StudioPage(
+        onUserClick = {},
+        todoState = StudioTotoState(
+            dataState = TodoDataState.NoTodoData,
+            action = StudioTodoAction(
+                onCheckTodoClick = {},
+                onAddClick = {},
+                onItemClick = {},
+                onTailClick = {}
+            ),
+            listState = StudioListState(
+                todoListState = rememberLazyListState()
+            )
+        ),
+        agentState = StudioAgentState(
+            action = StudioAgentAction(
+                onStartChatClick = {}
+            )
+        ),
+        galleryState = StudioGalleryState(
+            action = StudioGalleryAction(
+                onStartPreviewClick = {}
+            )
+        ),
+        mapState = StudioMapState(
+            action = StudioMapAction(
+                onStartExploreClick = {}
+            )
+        )
+    )
 }
 
 /* ======================== Page Ui State Builder ======================== */

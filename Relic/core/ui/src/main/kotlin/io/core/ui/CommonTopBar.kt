@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -105,8 +106,8 @@ fun CommonTopBar(
     containerModifier: Modifier = Modifier,
     hasTitle: Boolean = false,
     title: String = stringResource(id = R.string.app_name),
-    textColor: Color = mainTextColor,
-    iconColor: Color = mainIconColorLight,
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
+    iconColor: Color = MaterialTheme.colorScheme.onPrimary,
     tailContent: @Composable BoxScope.() -> Unit = {}
 ) {
     Row(

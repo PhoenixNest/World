@@ -3,13 +3,14 @@ package io.dev.relic.feature.pages.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.URL.USER_PRIVACY
 import io.common.RelicConstants.URL.USER_TERMS
 import io.core.ui.CommonTopBar
@@ -55,7 +56,7 @@ fun SettingsPage(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding(),
+                .padding(top = 32.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
@@ -75,7 +76,7 @@ fun SettingsPage(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 private fun SettingPagePreview() {
     SettingsPage(
         onBackClick = {},
