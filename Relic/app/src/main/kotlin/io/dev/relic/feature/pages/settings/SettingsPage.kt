@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.URL.USER_PRIVACY
 import io.common.RelicConstants.URL.USER_TERMS
 import io.core.ui.CommonTopBar
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.activities.web.WebActivity
@@ -51,7 +51,7 @@ fun SettingsPage(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = mainThemeColor
+        color = MaterialTheme.colorScheme.primary
     ) {
         Column(
             modifier = Modifier

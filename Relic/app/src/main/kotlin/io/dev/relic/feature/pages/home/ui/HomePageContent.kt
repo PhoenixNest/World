@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.util.TimeUtil.getCurrentTimeSection
-import io.core.ui.dialog.CommonItemDivider
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.pages.home.HomeAgentAction
 import io.dev.relic.feature.pages.home.HomeAgentState
@@ -68,7 +67,6 @@ fun HomePageContent(
                     onItemClick = action.timeSectionAction.onItemClick,
                     onRetryClick = action.timeSectionAction.onRetryClick
                 )
-                item { CommonItemDivider() }
                 HomeFoodRecipesTabBar(
                     currentSelectedTab = currentSelectTab,
                     lazyListState = listState.recommendTabListState,
