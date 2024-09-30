@@ -4,10 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,6 @@ import io.core.ui.CommonLoadingComponent
 import io.core.ui.CommonNoDataComponent
 import io.core.ui.CommonRetryComponent
 import io.core.ui.CommonTopBar
-import io.core.ui.theme.mainThemeColor
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipeInformationModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
@@ -36,7 +36,7 @@ fun FoodRecipeDetailContent(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = mainThemeColor
+        color = MaterialTheme.colorScheme.primary
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             FoodRecipeDataDetailContent(
@@ -48,7 +48,7 @@ fun FoodRecipeDetailContent(
                 hasTitle = false,
                 title = recipeTitle,
                 containerModifier = Modifier
-                    .statusBarsPadding()
+                    .padding(top = 32.dp)
                     .align(Alignment.TopCenter),
                 tailContent = {
                     FoodRecipeLikeButton(

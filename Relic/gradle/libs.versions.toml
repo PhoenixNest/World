@@ -77,10 +77,10 @@ accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-
 android-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
 android-tools-build = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "composeActivity" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
-androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }

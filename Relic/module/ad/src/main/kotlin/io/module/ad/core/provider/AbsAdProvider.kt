@@ -1,9 +1,9 @@
 package io.module.ad.core.provider
 
-import io.module.ad.utils.AdLogUtil
-import io.module.ad.utils.TimeUtil
 import io.module.ad.core.AdConfig
 import io.module.ad.core.model.AdInfoWrapper
+import io.module.ad.utils.AdLogUtil
+import io.module.ad.utils.TimeUtil
 import java.util.concurrent.TimeUnit
 
 abstract class AbsAdProvider : IAdProvider {

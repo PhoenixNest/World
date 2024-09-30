@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,27 +39,27 @@ fun FoodRecipesColumnItem(
 ) {
     val screenWidth = getCurrentScreenWidthDp()
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top
+    Surface(
+        modifier = modifier.padding(horizontal = 16.dp),
+        color = MaterialTheme.colorScheme.primaryContainer,
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Surface(
-            modifier = modifier.wrapContentSize(),
-            shape = RoundedCornerShape(16.dp),
-            color = Color.Transparent
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.Top
         ) {
             CommonAsyncImage(
                 url = data.image,
                 imageWidth = (screenWidth / 3),
                 imageHeight = (screenWidth / 3),
                 modifier = Modifier.clickable { onItemClick.invoke(data) },
-                imageRadius = 16.dp
+                imageRadius = 12.dp
             )
+            FoodRecipesIntro(data = data)
         }
-        FoodRecipesIntro(data = data)
     }
 }
 
@@ -87,11 +85,11 @@ private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "By ${data.author ?: "Author"}",
+            text = "By: ${data.author ?: "Author"}",
             modifier = Modifier
                 .fillMaxWidth()
                 .basicMarquee(),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.bodySmall
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(
@@ -129,18 +127,19 @@ private fun FoodRecipesDescItem(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
             modifier = Modifier.size(22.dp),
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onSecondaryContainer
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = content,
-            style = MaterialTheme.typography.labelMedium
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun FoodRecipesCardItemPreview() {
     FoodRecipesColumnItem(
         data = FoodRecipesComplexSearchModel(

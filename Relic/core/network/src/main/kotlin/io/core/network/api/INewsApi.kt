@@ -1,7 +1,7 @@
 package io.core.network.api
 
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -84,8 +84,8 @@ private fun GalleryPage(galleryState: GalleryState, onBackClick: () -> Unit) {
     )
 }
 
-@Preview
 @Composable
+@Preview(showBackground = true, showSystemUi = true)
 private fun GalleryPagePreview() {
     GalleryPage(
         GalleryState(

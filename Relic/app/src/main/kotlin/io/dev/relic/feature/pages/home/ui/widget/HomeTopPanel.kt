@@ -11,24 +11,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextMotion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.TimeUtil.TimeSection
 import io.common.util.TimeUtil.TimeSection.AFTERNOON
@@ -37,10 +35,6 @@ import io.common.util.TimeUtil.TimeSection.MIDNIGHT
 import io.common.util.TimeUtil.TimeSection.NIGHT
 import io.common.util.TimeUtil.TimeSection.NOON
 import io.common.util.TimeUtil.TimeSection.UNKNOWN
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainButtonColorLight
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColor
 import io.dev.relic.R
 import io.dev.relic.feature.function.agent.ui.AgentSearchBar
 
@@ -127,8 +121,8 @@ private fun HomeTopCover(
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
-                            mainThemeColor.copy(alpha = 0.1F),
-                            mainThemeColor
+                            Color.Transparent,
+                            MaterialTheme.colorScheme.primary
                         )
                     )
                 )
@@ -145,9 +139,12 @@ private fun HomeTopBar(
 ) {
     Box(
         modifier = modifier
-            .padding(8.dp)
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 32.dp
+            )
             .fillMaxWidth()
-            .systemBarsPadding()
     ) {
         IconButton(
             onClick = onOpenDrawer,
@@ -156,19 +153,15 @@ private fun HomeTopBar(
             Icon(
                 painter = painterResource(id = R.drawable.ic_apps),
                 contentDescription = DEFAULT_DESC,
-                tint = mainButtonColorLight
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
         Text(
             text = stringResource(R.string.home_title),
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.Center),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = ubuntu,
-                textMotion = TextMotion.Animated
-            )
+            style = MaterialTheme.typography.titleLarge
         )
         Row(
             Modifier.align(Alignment.CenterEnd),
@@ -179,14 +172,14 @@ private fun HomeTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_explore),
                     contentDescription = DEFAULT_DESC,
-                    tint = mainButtonColorLight
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
             IconButton(onClick = onNavigateToSetting) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_settings),
                     contentDescription = DEFAULT_DESC,
-                    tint = mainButtonColorLight
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }
@@ -220,13 +213,8 @@ private fun HomeAgentPanel(
     ) {
         Text(
             text = stringResource(id = greetingTextResId),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = ubuntu,
-                textMotion = TextMotion.Animated
-            )
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(20.dp))
         AgentSearchBar(

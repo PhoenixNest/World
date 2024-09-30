@@ -42,7 +42,7 @@ fun SettingsTermsPanel(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun SettingsTermsPanelPreview() {
     SettingsTermsPanel(
         onUserAgreementClick = {},

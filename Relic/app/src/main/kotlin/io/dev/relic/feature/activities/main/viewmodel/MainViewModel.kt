@@ -65,7 +65,10 @@ class MainViewModel @Inject constructor(
                     }
 
                     override fun onAccessSucceed(location: Location) {
-                        LogUtil.d(TAG, "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})")
+                        LogUtil.d(
+                            TAG,
+                            "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})"
+                        )
                         latestLocation = location
                         setState(_mainStateFlow, MainState.AccessLocationSucceed(location))
                     }

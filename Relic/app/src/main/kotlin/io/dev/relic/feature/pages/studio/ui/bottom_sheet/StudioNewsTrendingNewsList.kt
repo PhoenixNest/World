@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +32,10 @@ fun LazyListScope.StudioTrendingNewsList(
         when (dataState) {
             is TrendingNewsDataState.Init,
             is TrendingNewsDataState.Fetching -> {
-                CommonLoadingPlaceholder(false)
+                CommonLoadingPlaceholder(
+                    isVertical = false,
+                    backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
             }
 
             is TrendingNewsDataState.Empty,
@@ -40,7 +44,8 @@ fun LazyListScope.StudioTrendingNewsList(
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     modifier = Modifier.padding(12.dp),
-                    containerHeight = 196.dp
+                    containerHeight = 196.dp,
+                    backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
                 )
             }
 

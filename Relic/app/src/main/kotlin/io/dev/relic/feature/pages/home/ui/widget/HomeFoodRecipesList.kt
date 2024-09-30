@@ -3,6 +3,7 @@ package io.dev.relic.feature.pages.home.ui.widget
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonLoadingPlaceholder
@@ -21,7 +22,7 @@ fun LazyListScope.HomeFoodRecipesList(
         is FoodRecipesDataState.Init,
         is FoodRecipesDataState.Fetching -> {
             item {
-                CommonLoadingPlaceholder()
+                CommonLoadingPlaceholder(backgroundColor = MaterialTheme.colorScheme.onPrimary)
             }
         }
 
@@ -32,7 +33,8 @@ fun LazyListScope.HomeFoodRecipesList(
                 CommonRetryComponent(
                     onRetryClick = onRetryClick,
                     modifier = Modifier.padding(12.dp),
-                    containerHeight = 300.dp
+                    containerHeight = 300.dp,
+                    backgroundColor = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

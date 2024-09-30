@@ -11,15 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,21 +45,16 @@ fun FoodRecipesRowItem(
         ),
         horizontalAlignment = Alignment.Start
     ) {
-        Surface(
-            modifier = Modifier.wrapContentSize(),
-            shape = RoundedCornerShape(16.dp),
-            color = Color.Transparent
-        ) {
-            CommonAsyncImage(
-                url = data.image,
-                imageWidth = imageSize,
-                imageHeight = imageSize,
-                modifier = Modifier.clickable { onItemClick.invoke(data) },
-                imageRadius = 16.dp
-            )
-        }
+        CommonAsyncImage(
+            url = data.image,
+            imageWidth = imageSize,
+            imageHeight = imageSize,
+            modifier = Modifier.clickable { onItemClick.invoke(data) },
+            imageRadius = 12.dp
+        )
         Text(
             text = data.title ?: "",
+            color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
@@ -103,17 +95,18 @@ private fun FoodRecipesDesc(
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = DEFAULT_DESC,
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = content,
-            style = MaterialTheme.typography.labelMedium
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun FoodRecipesCardItemPreview() {
     FoodRecipesRowItem(
         data = FoodRecipesComplexSearchModel(

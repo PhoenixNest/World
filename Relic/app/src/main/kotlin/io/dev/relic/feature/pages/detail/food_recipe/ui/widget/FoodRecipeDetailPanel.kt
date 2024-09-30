@@ -1,38 +1,33 @@
 package io.dev.relic.feature.pages.detail.food_recipe.ui.widget
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.StringUtil.formatHTML
 import io.core.ui.CommonAsyncImage
 import io.core.ui.dialog.CommonItemDivider
-import io.core.ui.theme.RelicFontFamily.ubuntu
-import io.core.ui.theme.mainBackgroundColor
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor50
 import io.data.dto.food_recipes.get_recipes_information_by_id.ExtendedIngredientItem
 import io.data.model.food_recipes.FoodRecipeInformationModel
 import io.dev.relic.R
@@ -69,16 +64,9 @@ private fun FoodRecipeSummary(summary: String) {
     }
     Text(
         text = annotatedString,
+        color = MaterialTheme.colorScheme.onPrimary.copy(0.5F),
         modifier = Modifier.padding(horizontal = 16.dp),
-        style = TextStyle(
-            color = mainTextColor50,
-            fontSize = 14.sp,
-            fontFamily = ubuntu,
-            lineHeight = TextUnit(
-                value = 1.6F,
-                type = TextUnitType.Em
-            )
-        )
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 
@@ -87,11 +75,9 @@ private fun FoodRecipeIngredientTitle() {
     Text(
         text = stringResource(R.string.food_recipes_ingredient_title),
         modifier = Modifier.padding(horizontal = 16.dp),
-        style = TextStyle(
-            color = mainTextColor,
-            fontFamily = ubuntu,
-            fontSize = 20.sp,
-        )
+        color = MaterialTheme.colorScheme.onPrimary,
+        fontWeight = FontWeight.Bold,
+        style = MaterialTheme.typography.titleMedium
     )
 }
 
@@ -127,37 +113,38 @@ private fun FoodRecipeIngredientRowItem(
     item: ExtendedIngredientItem,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .wrapContentSize()
-            .background(
-                color = mainBackgroundColor,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        shape = RoundedCornerShape(12.dp)
     ) {
-        CommonAsyncImage(
-            url = item.image,
-            imageWidth = 64.dp,
-            imageHeight = 64.dp,
-            imageRadius = 12.dp
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = item.name ?: UNKNOWN_VALUE_STRING,
-            style = TextStyle(
-                color = mainTextColor,
-                fontFamily = ubuntu,
-                fontWeight = FontWeight.Bold
+        Column(
+            modifier = Modifier
+                .width(72.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CommonAsyncImage(
+                url = item.image,
+                imageWidth = 64.dp,
+                imageHeight = 64.dp,
+                imageRadius = 12.dp
             )
-        )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = item.name ?: UNKNOWN_VALUE_STRING,
+                modifier = Modifier.basicMarquee(),
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
     }
 }
 
 @Composable
-@Preview(showBackground = true, backgroundColor = 0xFF282C34)
+@Preview(showBackground = true)
 private fun FoodRecipeDetailPanelPreview() {
     FoodRecipeDetailPanel(
         model = FoodRecipeInformationModel(

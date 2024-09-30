@@ -93,7 +93,11 @@ object AdSharePreference {
         return sharedPreferences.getFloat(key, default)
     }
 
-    private fun readSyncBooleanData(sharedPreferences: SharedPreferences, key: String, default: Boolean = false): Boolean {
+    private fun readSyncBooleanData(
+        sharedPreferences: SharedPreferences,
+        key: String,
+        default: Boolean = false
+    ): Boolean {
         return sharedPreferences.getBoolean(key, default)
     }
 

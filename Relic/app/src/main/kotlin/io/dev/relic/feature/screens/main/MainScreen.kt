@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -31,9 +31,9 @@ import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
 import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
-import io.dev.relic.feature.screens.main.widget.MainBottomBar
 import io.dev.relic.feature.screens.main.widget.MainDrawer
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar
+import io.dev.relic.feature.screens.main.widget.MaterialMainBottomBar
 
 /**
  * Main Screen entrance
@@ -132,7 +132,7 @@ fun MainScreen(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .consumeWindowInsets(paddingValues),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.Top
         ) {
@@ -171,10 +171,10 @@ fun MainScreen(
                             galleryViewModel = galleryViewModel
                         )
                         if (isShowBottomBar) {
-                            MainBottomBar(
+                            MaterialMainBottomBar(
+                                currentDestination = mainScreenState.currentDestination,
                                 destinations = mainScreenState.topLevelDestinations,
                                 onNavigateToDestination = mainScreenState::navigateToTopLevelDestination,
-                                currentDestination = mainScreenState.currentDestination,
                                 modifier = Modifier.align(Alignment.BottomCenter)
                             )
                         }

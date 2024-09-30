@@ -77,6 +77,12 @@ dependencies {
     // Google fonts
     implementation(libs.androidx.ui.text.google.fonts)
 
+    // Activity
+    implementation(libs.androidx.activity.ktx)
+
+    // Activity-KTX
+    implementation(libs.androidx.activity.ktx)
+
     /* ======================== Third-party Extension ======================== */
 
     // Coil

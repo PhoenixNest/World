@@ -9,16 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.RelicFontFamily
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColorAccent
 
 @Composable
 @Preview
@@ -38,21 +36,25 @@ fun CommonReachTheEndComponent(
         Box(
             modifier = Modifier
                 .width(32.dp)
-                .height(1.dp)
-                .background(color = mainThemeColorAccent)
+                .height(2.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.tertiary,
+                    shape = RoundedCornerShape(12.dp)
+                )
         )
         Text(
             text = text,
-            style = TextStyle(
-                color = mainTextColor,
-                fontFamily = RelicFontFamily.ubuntu
-            )
+            color = MaterialTheme.colorScheme.tertiary,
+            style = MaterialTheme.typography.labelMedium
         )
         Box(
             modifier = Modifier
                 .width(32.dp)
-                .height(1.dp)
-                .background(color = mainThemeColorAccent)
+                .height(2.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.tertiary,
+                    shape = RoundedCornerShape(12.dp)
+                )
         )
     }
 }

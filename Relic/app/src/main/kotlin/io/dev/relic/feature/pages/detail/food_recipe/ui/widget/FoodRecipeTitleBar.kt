@@ -11,19 +11,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
-import io.core.ui.theme.RelicFontFamily
-import io.core.ui.theme.mainTextColor
 import io.dev.relic.R
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -42,15 +39,12 @@ fun FoodRecipeTitleBar(
     ) {
         Text(
             text = title,
+            color = MaterialTheme.colorScheme.onPrimary,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .weight(3F)
                 .basicMarquee(),
-            style = TextStyle(
-                color = mainTextColor,
-                fontSize = 24.sp,
-                fontFamily = RelicFontFamily.ubuntu,
-                fontWeight = FontWeight.Bold
-            )
+            style = MaterialTheme.typography.titleLarge
         )
         Row(
             modifier = Modifier.weight(2F),
@@ -83,15 +77,13 @@ private fun FoodRecipeTimerItem(
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-            tint = mainTextColor
+            tint = MaterialTheme.colorScheme.onPrimary
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = contentString,
-            style = TextStyle(
-                color = mainTextColor,
-                fontFamily = RelicFontFamily.ubuntu
-            )
+            color  = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.labelMedium
         )
     }
 }

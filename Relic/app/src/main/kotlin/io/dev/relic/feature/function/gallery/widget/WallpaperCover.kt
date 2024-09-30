@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -20,7 +21,6 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.R
-import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.placeHolderHighlightColor
 import io.core.ui.utils.RelicUiUtil.convertPixelToDp
 
@@ -78,7 +78,7 @@ private fun WallpaperCover(
                         .fillMaxSize()
                         .placeholder(
                             visible = true,
-                            color = mainBackgroundColor,
+                            color = Color.LightGray,
                             highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                         )
                 )

@@ -2,8 +2,8 @@ package io.data.convertors
 
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
-import io.data.dto.news.trending.TrendingNewsDTO
 import io.data.dto.news.top_headlines.TopHeadlinesNewsDTO
+import io.data.dto.news.trending.TrendingNewsDTO
 
 class NewsDataConvertor {
 

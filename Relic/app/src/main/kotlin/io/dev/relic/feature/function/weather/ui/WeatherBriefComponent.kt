@@ -88,7 +88,7 @@ private fun WeatherBriefPlaceholder() {
                     .height(120.dp)
                     .placeholder(
                         visible = true,
-                        color = mainTextColor30,
+                        color = Color.LightGray.copy(alpha = 0.3F),
                         shape = RoundedCornerShape(16.dp),
                         highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                     )
@@ -114,7 +114,7 @@ private fun WeatherBriefPlaceholder() {
                             .fillMaxSize()
                             .placeholder(
                                 visible = true,
-                                color = mainTextColor30,
+                                color = Color.LightGray.copy(0.3F),
                                 shape = RoundedCornerShape(8.dp),
                                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                             )
