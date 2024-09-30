@@ -133,7 +133,7 @@ private fun FoodRecipesLazyRowContent(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun FoodRecipesLazyRowPreview() {
     FoodRecipesLazyRow(
         title = stringResource(id = R.string.food_recipes_label_recommend),

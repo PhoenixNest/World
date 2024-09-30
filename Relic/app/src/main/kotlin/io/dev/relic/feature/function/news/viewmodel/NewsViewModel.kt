@@ -67,7 +67,8 @@ class NewsViewModel @Inject constructor(
     /**
      * The data flow of top-headline news.
      * */
-    private val _topHeadlineNewsDataStateFlow = MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
+    private val _topHeadlineNewsDataStateFlow =
+        MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
     val topHeadlineNewsDataStateFlow: StateFlow<TopHeadlineNewsDataState> get() = _topHeadlineNewsDataStateFlow
 
     companion object {

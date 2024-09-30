@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -132,7 +132,7 @@ fun MainScreen(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .consumeWindowInsets(paddingValues),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.Top
         ) {

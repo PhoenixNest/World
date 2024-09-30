@@ -3,7 +3,6 @@ package io.dev.relic.feature.pages.studio.ui.widget
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,9 +29,12 @@ fun StudioTabBar(
 ) {
     Box(
         modifier = modifier
-            .padding(8.dp)
             .fillMaxWidth()
-            .systemBarsPadding()
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 32.dp
+            )
     ) {
         IconButton(
             onClick = onUserClick,
@@ -58,7 +60,7 @@ fun StudioTabBar(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun StudioTabBarPreview() {
     StudioTabBar(onUserClick = {})
 }

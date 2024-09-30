@@ -36,7 +36,7 @@ fun StudioPageBottomSheetContent(
     onScrollToTopClick: () -> Unit
 ) {
     val screenHeight = RelicUiUtil.getCurrentScreenHeightDp()
-    val studioPageTopBarHeight = 64.dp
+    val studioPageTopBarHeight = (64 + 32).dp
     val bottomSheetHeight = screenHeight - studioPageTopBarHeight
 
     bottomSheetState.apply {

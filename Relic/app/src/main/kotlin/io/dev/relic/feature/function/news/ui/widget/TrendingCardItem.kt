@@ -1,5 +1,6 @@
 package io.dev.relic.feature.function.news.ui.widget
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,10 @@ fun TrendingCardItem(
     data.apply {
         Surface(
             modifier = modifier.width(300.dp),
+            border = BorderStroke(
+                width = 2.dp,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            ),
             shape = RoundedCornerShape(16.dp)
         ) {
             Box(

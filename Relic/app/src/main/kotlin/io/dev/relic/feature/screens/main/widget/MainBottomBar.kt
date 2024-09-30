@@ -4,14 +4,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.LogUtil
@@ -27,9 +25,7 @@ fun MaterialMainBottomBar(
 ) {
     NavigationBar(
         modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        tonalElevation = 5.dp
+        containerColor = MaterialTheme.colorScheme.secondaryContainer
     ) {
         destinations.forEach { destination: MainScreenTopLevelDestination ->
             val isSelected = currentDestination.isTopLevelDestinationInHierarchy(destination)
@@ -54,20 +50,10 @@ fun MaterialMainBottomBar(
                 label = {
                     Text(
                         text = stringResource(destination.labelResId),
-                        style = if (isSelected) {
-                            MaterialTheme.typography.labelMedium
-                        } else {
-                            MaterialTheme.typography.labelSmall
-                        }
+                        style = MaterialTheme.typography.labelMedium
                     )
                 },
-                alwaysShowLabel = true,
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.secondary,
-                    selectedTextColor = MaterialTheme.colorScheme.secondary,
-                    unselectedIconColor = MaterialTheme.colorScheme.tertiary,
-                    unselectedTextColor = MaterialTheme.colorScheme.tertiary
-                )
+                alwaysShowLabel = true
             )
         }
     }

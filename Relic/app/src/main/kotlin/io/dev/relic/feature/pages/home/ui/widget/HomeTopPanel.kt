@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -120,7 +121,7 @@ private fun HomeTopCover(
                 .background(
                     brush = Brush.verticalGradient(
                         listOf(
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1F),
+                            Color.Transparent,
                             MaterialTheme.colorScheme.primary
                         )
                     )
@@ -138,7 +139,11 @@ private fun HomeTopBar(
 ) {
     Box(
         modifier = modifier
-            .padding(8.dp)
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 32.dp
+            )
             .fillMaxWidth()
     ) {
         IconButton(

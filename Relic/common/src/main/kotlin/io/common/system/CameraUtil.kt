@@ -20,7 +20,8 @@ object CameraUtil {
                     for (cameraId in cameraIdList) {
                         val characteristics = manager.getCameraCharacteristics(cameraId)
                         val cameraLensFacing = characteristics.get(CameraCharacteristics.LENS_FACING)
-                        val cameraCapabilities = characteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)
+                        val cameraCapabilities =
+                            characteristics.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)
 
                         // check if the selected camera device supports basic features
                         // ensures backward compatibility with the original Camera API

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -59,7 +58,7 @@ fun CommonAsyncImage(
                             .fillMaxSize()
                             .placeholder(
                                 visible = true,
-                                color = MaterialTheme.colorScheme.background,
+                                color = Color.LightGray,
                                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                             )
                     )
