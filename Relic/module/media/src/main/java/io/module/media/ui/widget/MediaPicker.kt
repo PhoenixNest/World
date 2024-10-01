@@ -1,6 +1,5 @@
 package io.module.media.ui.widget
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,26 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import io.module.media.image.model.ImageInfoModel
+import io.module.media.model.MediaBaseInfoModel
 
 private const val ITEMS_PER_ROW = 3
 
 /* ======================== Image Picker ======================== */
 
 @Composable
-private fun ImagePickerItem(infoModel: ImageInfoModel) {
-    val configuration = LocalConfiguration.current
-    val screenWidthDp = configuration.screenWidthDp
-    val widthPerItem = ((screenWidthDp.dp - (4 * 2).dp) / ITEMS_PER_ROW)
-    with(infoModel) {
-        //
-    }
-}
-
-@Composable
-private fun ImagePicker(
-    context: Context,
-    imagesList: List<ImageInfoModel>
-) {
+fun ImagePicker(infoModelList: List<MediaBaseInfoModel>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(ITEMS_PER_ROW),
         modifier = Modifier.fillMaxSize(),
@@ -48,22 +35,33 @@ private fun ImagePicker(
             alignment = Alignment.Start
         )
     ) {
-        items(imagesList) { infoModel ->
-            ImagePickerItem(infoModel)
+        items(infoModelList) { infoModel ->
+            val imageModel = (infoModel as? ImageInfoModel) ?: return@items
+            ImagePickerItem(imageModel)
         }
+    }
+}
+
+@Composable
+private fun ImagePickerItem(infoModel: ImageInfoModel) {
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp
+    val widthPerItem = ((screenWidthDp.dp - (4 * 2).dp) / ITEMS_PER_ROW)
+    with(infoModel) {
+        //
     }
 }
 
 /* ======================== Video Picker ======================== */
 
 @Composable
-private fun VideoPicker(context: Context) {
+fun VideoPicker(infoModelList: List<MediaBaseInfoModel>) {
     //
 }
 
 /* ======================== Audio Picker ======================== */
 
 @Composable
-private fun AudioPicker(context: Context) {
+fun AudioPicker(infoModelList: List<MediaBaseInfoModel>) {
     //
 }

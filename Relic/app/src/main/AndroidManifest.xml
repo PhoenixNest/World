@@ -113,6 +113,10 @@
             android:name="io.module.map.tomtom.legacy.TomTomMapActivity"
             android:theme="@style/Theme.Relic" />
 
+        <activity
+            android:name="io.module.media.ui.AlbumActivity"
+            android:theme="@style/Theme.Relic" />
+
         <!-- Firebase Performance plugin -->
         <meta-data
             android:name="firebase_performance_logcat_enabled"

@@ -23,8 +23,6 @@ object ViewModelExt {
         stateFlow: MutableStateFlow<T>,
         newState: T
     ) {
-        operationInViewModelScope {
-            stateFlow.emit(newState)
-        }
+        stateFlow.tryEmit(newState)
     }
 }

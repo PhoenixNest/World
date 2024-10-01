@@ -172,6 +172,9 @@ dependencies {
     // Map Module
     implementation(project(":module:map"))
 
+    // Media Module
+    implementation(project(":module:media"))
+
     /* ======================== Google Official Extension ======================== */
 
     // Firebase BOM

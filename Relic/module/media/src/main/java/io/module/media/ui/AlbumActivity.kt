@@ -1,27 +1,45 @@
 package io.module.media.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.material3.MaterialTheme
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.module.media.MediaType.IMAGE
 import io.module.media.ui.screen.MediaDeniedScreen
-import io.module.media.ui.theme.mainThemeColor
-import io.module.media.ui.theme.mainThemeColorLight
-import io.module.media.ui.viewmodel.AlbumViewModel
-import io.module.media.utils.MediaPermissionDetector
+import io.module.media.ui.screen.MediaScreen
+import io.module.media.ui.viewmodel.MediaViewModel
 
 class AlbumActivity : ComponentActivity() {
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[AlbumViewModel::class]
+        ViewModelProvider(this)[MediaViewModel::class]
+    }
+
+    companion object {
+        private const val TAG = "AlbumActivity"
+
+        fun start(context: Context) {
+            context.startActivity(
+                Intent(
+                    /* packageContext = */ context,
+                    /* cls = */ AlbumActivity::class.java
+                ).apply {
+                    //
+                }
+            )
+        }
     }
 
     /* ======================== Lifecycle ======================== */
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         initialization()
         initUi()
@@ -30,77 +48,40 @@ class AlbumActivity : ComponentActivity() {
     /* ======================== Logical ======================== */
 
     private fun initialization() {
-        checkAndRequestAlbumPermission()
+        requestMediaPermission()
     }
 
-    private fun checkAndRequestAlbumPermission() {
-        MediaPermissionDetector.AlbumPermissionArray
-            .filter { permissionString ->
-                // Filter the denied permission first.
-                !MediaPermissionDetector.checkPermission(
-                    context = this@AlbumActivity,
-                    requestPermission = permissionString
-                )
-            }.forEach { permissionString ->
-                // Then, request the runtime permission one by one.
-                MediaPermissionDetector.requestRuntimePermission(
-                    activity = this@AlbumActivity,
-                    requestPermission = permissionString,
-                    permissionListener = object : MediaPermissionDetector.MediaPermissionListener {
-                        override fun onPermissionGranted() {
-                            loadAlbumContent()
-                        }
-
-                        override fun onPermissionDenied() {
-                            updateDeniedUi()
-                        }
-                    }
-                )
-            }
-    }
-
-    private fun loadAlbumContent() {
-        viewModel.queryLocalPhotos()
+    private fun requestMediaPermission() {
+        viewModel.checkAndRequestAlbumPermission(
+            activity = this@AlbumActivity,
+            type = IMAGE
+        )
     }
 
     /* ======================== Ui ======================== */
 
     private fun initUi() {
         setContent {
-            enableEdgeToEdge(
-                statusBarStyle = SystemBarStyle.auto(
-                    lightScrim = mainThemeColorLight.toArgb(),
-                    darkScrim = mainThemeColor.toArgb()
-                ),
-                navigationBarStyle = SystemBarStyle.auto(
-                    lightScrim = mainThemeColorLight.toArgb(),
-                    darkScrim = mainThemeColor.toArgb()
-                )
-            )
-        }
-    }
+            MaterialTheme {
+                val isPermissionGranted = viewModel.permissionFlow
+                    .collectAsStateWithLifecycle().value
 
-    private fun updateDeniedUi() {
-        setContent {
-            enableEdgeToEdge(
-                statusBarStyle = SystemBarStyle.auto(
-                    lightScrim = mainThemeColorLight.toArgb(),
-                    darkScrim = mainThemeColor.toArgb()
-                ),
-                navigationBarStyle = SystemBarStyle.auto(
-                    lightScrim = mainThemeColorLight.toArgb(),
-                    darkScrim = mainThemeColor.toArgb()
-                )
-            )
-
-            MediaDeniedScreen(
-                onBackClick = {
-                    finish()
-                },
-                onRetryClick = {
-                    checkAndRequestAlbumPermission()
+                BackHandler {
+                    // Disabled back button.
                 }
-            )
+
+                if (isPermissionGranted) {
+                    MediaScreen(
+                        type = IMAGE,
+                        infoModelList = viewModel.getMediaList(IMAGE)
+                    )
+                } else {
+                    MediaDeniedScreen(
+                        onBackClick = { finish() },
+                        onRetryClick = { requestMediaPermission() }
+                    )
+                }
+            }
         }
     }
 }

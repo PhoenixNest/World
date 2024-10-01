@@ -52,7 +52,7 @@ object TimeUtil {
             MARCH,
             APRIL,
             MAY -> Season.SPRING
-            // Winter begins with every 6, 7, 8 month.
+            // Summer begins with every 6, 7, 8 month.
             JUNE,
             JULY,
             AUGUST -> Season.SUMMER

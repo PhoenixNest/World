@@ -17,45 +17,47 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.module.media.R
-import io.module.media.ui.theme.FontFamily.ubuntu
 
 @Composable
 fun MediaDeniedScreen(
     onBackClick: () -> Unit,
     onRetryClick: () -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
-    ) {
-        MediaDeniedBackBtn(
-            onClick = onBackClick,
-            modifier = Modifier.align(Alignment.TopStart)
-        )
-        MediaDeniedDesc(
-            onClick = onRetryClick,
-            modifier = Modifier.align(Alignment.Center)
-        )
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 32.dp
+                )
+        ) {
+            MediaDeniedBackBtn(
+                onClick = onBackClick,
+                modifier = Modifier.align(Alignment.TopStart)
+            )
+            MediaDeniedDesc(
+                onClick = onRetryClick,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
     }
 }
 
@@ -104,23 +106,17 @@ private fun MediaDeniedDesc(
         Spacer(modifier = Modifier.height(32.dp))
         Text(
             text = stringResource(R.string.no_permission_title),
-            style = TextStyle(
-                color = Color.Black.copy(alpha = 0.8F),
-                fontSize = 18.sp,
-                fontFamily = ubuntu,
-                fontWeight = FontWeight.Bold
-            )
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleLarge
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = context.getString(R.string.no_permission_desc_image_video, appName),
             modifier = Modifier.width(240.dp),
-            style = TextStyle(
-                color = Color.Black.copy(alpha = 0.8F),
-                fontSize = 14.sp
-            )
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.bodyMedium
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         MediaDeniedRetryButton(onRetryClick = onClick)
     }
 }
@@ -128,9 +124,11 @@ private fun MediaDeniedDesc(
 @Composable
 private fun MediaDeniedRetryButton(onRetryClick: () -> Unit) {
     Surface(
-        modifier = Modifier.width(240.dp),
+        modifier = Modifier
+            .width(240.dp)
+            .height(52.dp),
         shape = RoundedCornerShape(8.dp),
-        color = Color.DarkGray
+        color = MaterialTheme.colorScheme.primary
     ) {
         Row(
             modifier = Modifier.clickable {
@@ -141,22 +139,21 @@ private fun MediaDeniedRetryButton(onRetryClick: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.Rounded.Refresh,
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimary
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = stringResource(R.string.no_permission_button_label),
-                style = TextStyle(
-                    color = Color.White.copy(alpha = 0.8F),
-                    fontSize = 14.sp
-                )
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.labelMedium
             )
         }
     }
 }
 
-@Preview
 @Composable
+@Preview(showBackground = true, showSystemUi = true)
 private fun MediaDeniedScreenPreview() {
     MediaDeniedScreen(
         onBackClick = {},

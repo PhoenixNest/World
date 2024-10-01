@@ -50,9 +50,7 @@ dependencies {
     implementation(composeBom)
     androidTestImplementation(composeBom)
     // Material Design 3
-    implementation ("androidx.compose.material3:material3")
-    // Material Design
-    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.material3:material3")
     // Android Studio Preview support
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -68,7 +66,7 @@ dependencies {
     // Optional - Add window size utils
     implementation("androidx.compose.material3:material3-window-size-class")
     // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.9.1")
+    implementation("androidx.activity:activity-compose:1.9.2")
     // Optional - Integration with ViewModels
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     // Optional - Integration with LiveData
@@ -80,6 +78,24 @@ dependencies {
 
     // Media info
     implementation("androidx.exifinterface:exifinterface:1.3.6")
+
+    // Activity
+    implementation("androidx.activity:activity:1.9.2")
+
+    // Activity-KTX
+    implementation("androidx.activity:activity-ktx:1.9.2")
+
+    // Lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+
+    // Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 
     /* ======================== Third-party Extension ======================== */
 
