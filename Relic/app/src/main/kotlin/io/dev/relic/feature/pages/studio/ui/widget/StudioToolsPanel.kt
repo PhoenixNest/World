@@ -23,14 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.dev.relic.R
-import io.module.media.ui.AlbumActivity
 
 private const val DEFAULT_MAX_ITEM_PER_ROW = 4
 
@@ -59,8 +57,6 @@ private fun StudioToolsFlowRow(
     onGalleryClick: () -> Unit,
     onMapClick: () -> Unit
 ) {
-    val context = LocalContext.current
-
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(
@@ -92,13 +88,6 @@ private fun StudioToolsFlowRow(
             iconResId = R.drawable.ic_explore,
             labelResId = R.string.explore_label,
             onClick = onMapClick
-        )
-        StudioToolsPanelItem(
-            iconResId = R.drawable.ic_explore,
-            labelResId = R.string.explore_label,
-            onClick = {
-                AlbumActivity.start(context)
-            }
         )
     }
 }
