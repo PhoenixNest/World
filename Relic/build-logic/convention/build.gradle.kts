@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
+    `java-gradle-plugin`
     `kotlin-dsl`
 }
 
@@ -65,8 +66,12 @@ gradlePlugin {
             implementationClass = "JvmLibraryConventionPlugin"
         }
         register("sentry") {
-            id = "relic.dev.sentry"
+            id = "relic.dev.plugin.sentry"
             implementationClass = "SentryPlugin"
+        }
+        register("output") {
+            id = "relic.dev.plugin.output"
+            implementationClass = "OutputPlugin"
         }
     }
 }
