@@ -22,23 +22,28 @@ class SentryPlugin : Plugin<Project> {
      * @param target The target object
      */
     override fun apply(target: Project) {
-        target.extensions.getByType(AndroidComponentsExtension::class.java).apply {
-            onVariants { variant ->
-                variant.apply {
-                    registerTrackVisitor()
-                }
+        // Queries for the extension set by the Android Application plugin.
+        // This is the second of two entry points into the Android Gradle plugin
+        val androidComponents = target.extensions.getByType(AndroidComponentsExtension::class.java)
+        // Registers a callback to be called, when a new variant is configured
+        androidComponents.onVariants { variant ->
+            variant.apply {
+                print("[Variant] Current variant is: ${variant.name}")
+                registerTrackVisitor()
             }
         }
     }
 
     private fun Variant.registerTrackVisitor() {
-        transformClassesWith(
+        // Call the "transformClassesWith" API: 
+        // supply the class visitor factory, and specify the scope and parameters
+        instrumentation.transformClassesWith(
             classVisitorFactoryImplClass = TrackClassVisitorFactory::class.java,
             scope = InstrumentationScope.ALL,
-            instrumentationParamsConfig = {
-                it.isEnable.set(IS_ENABLE_TRACK)
+            instrumentationParamsConfig = { params ->
+                params.isEnable.set(IS_ENABLE_TRACK)
             }
         )
-        setAsmFramesComputationMode(FramesComputationMode.COPY_FRAMES)
+        instrumentation.setAsmFramesComputationMode(FramesComputationMode.COPY_FRAMES)
     }
 }

@@ -52,17 +52,21 @@ gradlePlugin {
             id = "relic.android.firebase"
             implementationClass = "AndroidApplicationFirebaseConventionPlugin"
         }
-        register("androidRoom") {
-            id = "relic.android.room"
-            implementationClass = "AndroidRoomConventionPlugin"
-        }
         register("androidHilt") {
             id = "relic.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidRoom") {
+            id = "relic.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
         register("jvmLibrary") {
             id = "relic.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
+        }
+        register("sentry") {
+            id = "relic.dev.sentry"
+            implementationClass = "SentryPlugin"
         }
     }
 }

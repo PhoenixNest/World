@@ -1,4 +1,4 @@
-package io.dev.build.convention
+package io.dev.build.convention.android
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension

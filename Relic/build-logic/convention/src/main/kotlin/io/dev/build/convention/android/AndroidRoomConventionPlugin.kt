@@ -1,4 +1,4 @@
-package io.dev.build.convention
+package io.dev.build.convention.android
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

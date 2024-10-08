@@ -24,6 +24,7 @@ abstract class TrackClassVisitorFactory : AsmClassVisitorFactory<TrackClassVisit
      * This method must handle asynchronous calls.
      */
     override fun isInstrumentable(classData: ClassData): Boolean {
+        // return classData.className.contains("Some criteria")
         return true
     }
 

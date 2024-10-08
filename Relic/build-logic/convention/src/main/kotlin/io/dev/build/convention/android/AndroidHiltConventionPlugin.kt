@@ -1,4 +1,4 @@
-package io.dev.build.convention
+package io.dev.build.convention.android
 
 import com.android.build.gradle.api.AndroidBasePlugin
 import io.dev.build.convention.ext.ProjectExt.libs
