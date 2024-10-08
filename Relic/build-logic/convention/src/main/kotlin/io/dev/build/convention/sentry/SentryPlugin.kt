@@ -4,11 +4,16 @@ import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.Variant
-import org.gradle.api.Plugin
-import org.gradle.api.Project
 import io.dev.build.convention.sentry.track.TrackClassVisitorFactory
 import io.dev.build.convention.sentry.util.SentryConfig.IS_ENABLE_TRACK
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
+/**
+ * Reference docs
+ *
+ * – [刚学会Transform，你告诉我就要被移除了](https://juejin.cn/post/7114863832954044446)
+ * */
 class SentryPlugin : Plugin<Project> {
 
     /**

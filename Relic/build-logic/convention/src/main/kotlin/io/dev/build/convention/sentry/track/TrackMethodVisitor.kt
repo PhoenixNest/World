@@ -1,10 +1,9 @@
 package io.dev.build.convention.sentry.track
 
+import io.dev.build.convention.sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
 import org.objectweb.asm.MethodVisitor
-import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
-import io.dev.build.convention.sentry.util.PrefixConstant.METHOD_DESCRIPTOR_VIEW
 
 class TrackMethodVisitor(
     private val className: String?,
@@ -29,7 +28,7 @@ class TrackMethodVisitor(
         for (index in argumentTypes.indices) {
             val type = argumentArray.get(index)
             methodVisitor?.visitVarInsn(
-                /* opcode = */ Opcodes.INVOKESTATIC,
+                /* opcode = */ INVOKESTATIC,
                 /* varIndex = */ index
             )
             box(type)
@@ -42,7 +41,7 @@ class TrackMethodVisitor(
             && className.contains("$")
         ) {
             methodVisitor?.visitMethodInsn(
-                /* opcode = */ Opcodes.INVOKESTATIC,
+                /* opcode = */ INVOKESTATIC,
                 /* owner = */ "",
                 /* name = */ "",
                 /* descriptor = */ METHOD_DESCRIPTOR_VIEW,
@@ -51,7 +50,7 @@ class TrackMethodVisitor(
         } else {
             methodVisitor?.visitLdcInsn(className)
             methodVisitor?.visitMethodInsn(
-                /* opcode = */ Opcodes.INVOKESTATIC,
+                /* opcode = */ INVOKESTATIC,
                 /* owner = */ "",
                 /* name = */ "",
                 /* descriptor = */ METHOD_DESCRIPTOR_VIEW,
