@@ -82,7 +82,7 @@ private fun FoodRecipeTimerItem(
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = contentString,
-            color  = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.labelMedium
         )
     }

@@ -53,7 +53,7 @@ abstract class TrackClassVisitorFactory : AsmClassVisitorFactory<TrackClassVisit
         classContext: ClassContext,
         nextClassVisitor: ClassVisitor
     ): ClassVisitor {
-        val isEnable = parameters.orNull?.isEnable?.get() ?: false
+        val isEnable = parameters.orNull?.isEnable?.get() == true
         val apiVersion = instrumentationContext.apiVersion.get()
         return TrackClassVisitor(
             isEnableTrack = isEnable,

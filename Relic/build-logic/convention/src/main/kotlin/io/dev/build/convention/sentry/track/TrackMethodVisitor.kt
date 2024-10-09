@@ -26,7 +26,7 @@ class TrackMethodVisitor(
         super.onMethodEnter()
 
         for (index in argumentTypes.indices) {
-            val type = argumentArray.get(index)
+            val type = argumentArray[index]
             methodVisitor?.visitVarInsn(
                 /* opcode = */ INVOKESTATIC,
                 /* varIndex = */ index

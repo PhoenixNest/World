@@ -32,7 +32,6 @@ import io.common.RelicConstants
 import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily
 import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainTextColor80
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.placeHolderHighlightColor
