@@ -35,6 +35,14 @@ object MediaPermissionDetector {
         }
 
     /**
+     * Permission array of Camera, such as front or rear camera.
+     * */
+    val CameraPermissionArray
+        get() = arrayOf(
+            Manifest.permission.CAMERA
+        )
+
+    /**
      * Permission array for Audio.
      * */
     val AudioPermissionArray

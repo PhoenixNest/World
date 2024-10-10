@@ -97,6 +97,24 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 
+    /* ======================== Media Library Extension ======================== */
+
+    // CameraX
+    val camerax_version = "1.2.2"
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation("androidx.camera:camera-video:${camerax_version}")
+
+    implementation("androidx.camera:camera-view:${camerax_version}")
+    implementation("androidx.camera:camera-extensions:${camerax_version}")
+
+    // Media3
+    val media3_version = "1.4.1"
+    implementation("androidx.media3:media3-exoplayer:${media3_version}")
+    implementation("androidx.media3:media3-exoplayer-dash:${media3_version}")
+    implementation("androidx.media3:media3-ui:${media3_version}")
+
     /* ======================== Third-party Extension ======================== */
 
     // Lottie

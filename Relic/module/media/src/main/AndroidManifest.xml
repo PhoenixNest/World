@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Camera hardware support-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
+
     <!-- Required only if your app needs to access images or photos that other apps created. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 

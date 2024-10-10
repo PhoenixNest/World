@@ -51,6 +51,7 @@ dependencyResolutionManagement {
 include(
     ":module:ad",
     ":module:map",
+    ":module:media",
     ":module:location",
     ":agent:gemini"
 )
@@ -72,4 +73,3 @@ include(
     ":core:data",
     ":core:ui"
 )
-include(":module:media")
