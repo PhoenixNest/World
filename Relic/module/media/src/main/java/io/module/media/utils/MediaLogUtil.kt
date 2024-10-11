@@ -54,8 +54,8 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
-    fun e(TAG: String = DEFAULT_TAG, message: String): Int {
-        return if (BuildConfig.DEBUG) Log.e(TAG, message) else -1
+    fun e(TAG: String = DEFAULT_TAG, message: String, throwable: Throwable? = null): Int {
+        return if (BuildConfig.DEBUG) Log.e(TAG, message, throwable) else -1
     }
 
 }

@@ -35,14 +35,6 @@ object MediaPermissionDetector {
         }
 
     /**
-     * Permission array of Camera, such as front or rear camera.
-     * */
-    val CameraPermissionArray
-        get() = arrayOf(
-            Manifest.permission.CAMERA
-        )
-
-    /**
      * Permission array for Audio.
      * */
     val AudioPermissionArray
@@ -54,6 +46,19 @@ object MediaPermissionDetector {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
         }
+
+    /**
+     * Permission array of Camera, such as front or rear camera.
+     * */
+    val CameraPermissionArray
+        get() = mutableListOf (
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO
+        ).apply {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }.toTypedArray()
 
     interface MediaPermissionListener {
         fun onPermissionGranted()
