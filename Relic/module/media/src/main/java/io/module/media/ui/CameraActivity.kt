@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.module.media.camera.CameraUsageType
 import io.module.media.camera.CameraUtil
 import io.module.media.ui.screen.MediaDeniedScreen
 import io.module.media.ui.viewmodel.CameraViewModel
@@ -101,7 +102,8 @@ class CameraActivity : ComponentActivity() {
                     update = { view ->
                         CameraUtil.startCamera(
                             activity = this,
-                            previewView = view
+                            previewView = view,
+                            type = CameraUsageType.TAKE_PHOTO
                         )
                     }
                 )

@@ -12,9 +12,20 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.FallbackStrategy
+import androidx.camera.video.MediaStoreOutputOptions
+import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
+import androidx.camera.video.Recorder
+import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
+import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import androidx.core.util.Consumer
+import io.module.media.camera.CameraUsageType.*
 import io.module.media.utils.MediaLogUtil
+import io.module.media.utils.MediaPermissionDetector
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.ExecutorService
@@ -31,6 +42,11 @@ object CameraUtil {
     private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
     private var imageCapture: ImageCapture? = null
+    private var imageAnalyzer: ImageAnalysis? = null
+
+    private var videoCapture: VideoCapture<Recorder>? = null
+    private var recording: Recording? = null
+
     private lateinit var cameraExecutor: ExecutorService
 
     fun setupCameraExecutor(executor: ExecutorService) {
@@ -43,7 +59,8 @@ object CameraUtil {
 
     fun startCamera(
         activity: ComponentActivity,
-        previewView: PreviewView
+        previewView: PreviewView,
+        type: CameraUsageType
     ) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(activity)
 
@@ -60,33 +77,56 @@ object CameraUtil {
                             preview.setSurfaceProvider(previewView.surfaceProvider)
                         }
 
-                    // Feature: Capture image
-                    imageCapture = ImageCapture.Builder().build()
-
-                    // Feature: Analyze
-                    val imageAnalyzer = ImageAnalysis.Builder()
-                        .build()
-                        .also {
-                            it.setAnalyzer(
-                                /* executor = */ cameraExecutor,
-                                /* analyzer = */ LuminosityAnalyzer { luma ->
-                                    MediaLogUtil.d(TAG, "[Average luminosity: $luma]")
-                                }
-                            )
-                        }
-
                     // Select back camera as a default
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
                     try {
                         // Unbind use cases before rebinding
                         cameraProvider.unbindAll()
 
-                        // Bind use cases to camera
-                        cameraProvider.bindToLifecycle(
-                            /* lifecycleOwner = */ activity,
-                            /* cameraSelector = */ cameraSelector,
-                            /* ...useCases = */ preview, imageCapture, imageAnalyzer
-                        )
+                        when (type) {
+                            TAKE_PHOTO -> {
+                                // Feature: Capture image
+                                imageCapture = ImageCapture.Builder().build()
+
+                                // Feature: Analyze
+                                imageAnalyzer = ImageAnalysis.Builder()
+                                    .build()
+                                    .also {
+                                        it.setAnalyzer(
+                                            /* executor = */ cameraExecutor,
+                                            /* analyzer = */ LuminosityAnalyzer { luma ->
+                                                MediaLogUtil.d(TAG, "[Average luminosity: $luma]")
+                                            }
+                                        )
+                                    }
+
+                                // Bind use cases to camera
+                                cameraProvider.bindToLifecycle(
+                                    /* lifecycleOwner = */ activity,
+                                    /* cameraSelector = */ cameraSelector,
+                                    /* ...useCases = */preview, imageCapture
+                                )
+                            }
+
+                            RECORD_VIDEO -> {
+                                // Feature: Capture video with audio
+                                val quality = Quality.HIGHEST
+                                val fallbackQuality = Quality.SD
+                                val fallbackStrategy = FallbackStrategy.higherQualityOrLowerThan(fallbackQuality)
+                                val qualitySelector = QualitySelector.from(quality, fallbackStrategy)
+                                val recorder = Recorder.Builder()
+                                    .setQualitySelector(qualitySelector)
+                                    .build()
+                                videoCapture = VideoCapture.withOutput(recorder)
+
+                                // Bind use cases to camera
+                                cameraProvider.bindToLifecycle(
+                                    /* lifecycleOwner = */ activity,
+                                    /* cameraSelector = */ cameraSelector,
+                                    /* ...useCases = */preview, videoCapture
+                                )
+                            }
+                        }
                     } catch (exception: Exception) {
                         exception.printStackTrace()
                     }
@@ -144,5 +184,92 @@ object CameraUtil {
                 }
             }
         )
+    }
+
+    fun captureVideo(
+        context: Context,
+        listener: VideoCaptureListener
+    ) {
+        val videoCapture = videoCapture ?: return
+        val curRecording = recording
+        if (curRecording != null) {
+            // Stop the current recording session.
+            curRecording.stop()
+            recording = null
+            return
+        }
+
+        // create and start a new recording session
+        val name = SimpleDateFormat(
+            FILENAME_FORMAT,
+            Locale.getDefault()
+        ).format(Calendar.getInstance().timeInMillis)
+
+        val contentValue = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Video.Media.RELATIVE_PATH, "Movies/CameraX-Video")
+            }
+        }
+
+        val mediaStoreOutputOptions = MediaStoreOutputOptions
+            .Builder(
+                /* contentResolver = */ context.contentResolver,
+                /* collectionUri = */ MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            ).setContentValues(contentValue)
+            .build()
+
+        recording = videoCapture.output.prepareRecording(
+            /* context = */ context,
+            /* mediaStoreOutputOptions = */ mediaStoreOutputOptions
+        ).apply {
+            val recordAudioPermission = MediaPermissionDetector.CameraPermissionArray.first { permission ->
+                permission == android.Manifest.permission.RECORD_AUDIO
+            }
+            if (MediaPermissionDetector.checkPermission(context, recordAudioPermission)) {
+                withAudioEnabled()
+            }
+        }.start(
+            /* listenerExecutor = */ ContextCompat.getMainExecutor(context),
+            /* listener = */ object : Consumer<VideoRecordEvent> {
+                override fun accept(recordEvent: VideoRecordEvent) {
+                    when (recordEvent) {
+                        is VideoRecordEvent.Start -> {
+                            listener.onRecordStart()
+                        }
+
+                        is VideoRecordEvent.Resume -> {
+                            listener.onRecordResume()
+                        }
+
+                        is VideoRecordEvent.Pause -> {
+                            listener.onRecordPause()
+                        }
+
+                        is VideoRecordEvent.Finalize -> {
+                            if (recordEvent.hasError()) {
+                                recording?.close()
+                                recording == null
+                                MediaLogUtil.e(TAG, "[Capture Video] Error, message: ${recordEvent.error}")
+                                listener.onRecordError()
+                            } else {
+                                val outputUri = recordEvent.outputResults.outputUri
+                                MediaLogUtil.d(TAG, "[Capture Video] Succeed, output uri: $outputUri")
+                                listener.onRecordFinalize()
+                            }
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    interface VideoCaptureListener {
+        fun onRecordStart()
+        fun onRecordResume()
+        fun onRecordPause()
+        fun onRecordError()
+        fun onRecordFinalize()
     }
 }
