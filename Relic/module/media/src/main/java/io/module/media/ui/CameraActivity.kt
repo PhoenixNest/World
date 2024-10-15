@@ -86,27 +86,25 @@ class CameraActivity : ComponentActivity() {
                 }
 
                 if (isPermissionGranted) {
-                    //
+                    AndroidView(
+                        factory = { context ->
+                            PreviewView(context)
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                        update = { view ->
+                            CameraUtil.startCamera(
+                                activity = this,
+                                previewView = view,
+                                type = CameraUsageType.TAKE_PHOTO
+                            )
+                        }
+                    )
                 } else {
                     MediaDeniedScreen(
                         onBackClick = { finish() },
                         onRetryClick = { requestMediaPermission() }
                     )
                 }
-
-                AndroidView(
-                    factory = { context ->
-                        PreviewView(context)
-                    },
-                    modifier = Modifier.fillMaxSize(),
-                    update = { view ->
-                        CameraUtil.startCamera(
-                            activity = this,
-                            previewView = view,
-                            type = CameraUsageType.TAKE_PHOTO
-                        )
-                    }
-                )
             }
         }
     }
