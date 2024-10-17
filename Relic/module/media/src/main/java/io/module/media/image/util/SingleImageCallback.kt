@@ -1,4 +1,4 @@
-package io.module.media.image
+package io.module.media.image.util
 
 import android.net.Uri
 

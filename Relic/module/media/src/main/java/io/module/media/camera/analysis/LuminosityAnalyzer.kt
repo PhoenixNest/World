@@ -1,4 +1,4 @@
-package io.module.media.camera
+package io.module.media.camera.analysis
 
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy

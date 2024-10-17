@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.module.media.camera.CameraUsageType
-import io.module.media.camera.CameraUtil
+import io.module.media.camera.util.CameraUsageType
+import io.module.media.camera.CameraManager
 import io.module.media.ui.screen.MediaDeniedScreen
 import io.module.media.ui.viewmodel.CameraViewModel
 import java.util.concurrent.Executors
@@ -54,7 +54,7 @@ class CameraActivity : ComponentActivity() {
         super.onDestroy()
 
         // Avoid OOM
-        CameraUtil.getCameraExecutor().shutdown()
+        CameraManager.getCameraExecutor().shutdown()
     }
 
     /* ======================== Logical ======================== */
@@ -66,7 +66,7 @@ class CameraActivity : ComponentActivity() {
 
     private fun initParams() {
         val executors = Executors.newSingleThreadExecutor()
-        CameraUtil.setupCameraExecutor(executors)
+        CameraManager.setupCameraExecutor(executors)
     }
 
     private fun requestMediaPermission() {
@@ -92,7 +92,7 @@ class CameraActivity : ComponentActivity() {
                         },
                         modifier = Modifier.fillMaxSize(),
                         update = { view ->
-                            CameraUtil.startCamera(
+                            CameraManager.startCamera(
                                 activity = this,
                                 previewView = view,
                                 type = CameraUsageType.TAKE_PHOTO

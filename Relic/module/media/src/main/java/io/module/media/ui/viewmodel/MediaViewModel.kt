@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.module.media.MediaType
 import io.module.media.MediaType.*
-import io.module.media.audio.AudioUtil
+import io.module.media.audio.AudioManager
 import io.module.media.audio.model.AudioInfoModel
-import io.module.media.image.ImageUtil
+import io.module.media.image.ImageManager
 import io.module.media.image.model.ImageInfoModel
 import io.module.media.model.MediaBaseInfoModel
 import io.module.media.utils.MediaPermissionDetector
-import io.module.media.video.VideoUtil
+import io.module.media.video.VideoManager
 import io.module.media.video.model.VideoInfoModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -80,7 +80,7 @@ class MediaViewModel @Inject constructor(
 
     fun queryLocalPhotos() {
         viewModelScope.launch {
-            val localImageList = ImageUtil
+            val localImageList = ImageManager
                 .queryLocalPhotos(application.applicationContext)
                 .filter {
                     it.contentUri != null
@@ -92,7 +92,7 @@ class MediaViewModel @Inject constructor(
 
     fun queryLocalVideo() {
         viewModelScope.launch {
-            val localVideoList = VideoUtil
+            val localVideoList = VideoManager
                 .queryLocalVideo(application.applicationContext)
                 .filter {
                     it.contentUri != null
@@ -104,7 +104,7 @@ class MediaViewModel @Inject constructor(
 
     fun queryLocalAudio() {
         viewModelScope.launch {
-            val localAudioList = AudioUtil
+            val localAudioList = AudioManager
                 .queryLocalAudio(application.applicationContext)
                 .filter {
                     it.contentUri != null

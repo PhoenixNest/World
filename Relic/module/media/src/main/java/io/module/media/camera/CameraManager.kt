@@ -23,7 +23,9 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.util.Consumer
-import io.module.media.camera.CameraUsageType.*
+import io.module.media.camera.util.CameraUsageType
+import io.module.media.camera.util.CameraUsageType.*
+import io.module.media.camera.analysis.LuminosityAnalyzer
 import io.module.media.utils.MediaLogUtil
 import io.module.media.utils.MediaPermissionDetector
 import java.text.SimpleDateFormat
@@ -36,9 +38,9 @@ import java.util.concurrent.ExecutorService
  * - [CameraX overview](https://developer.android.google.cn/media/camera/camerax?hl=en)
  * - [Getting Started with CameraX](https://developer.android.google.cn/codelabs/camerax-getting-started#0)
  * */
-object CameraUtil {
+object CameraManager {
 
-    private const val TAG = "CameraUtil"
+    private const val TAG = "CameraManager"
     private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
     private var imageCapture: ImageCapture? = null

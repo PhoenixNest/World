@@ -11,11 +11,13 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import io.module.media.image.model.ImageInfoModel
+import io.module.media.image.util.MultiplyImageCallback
+import io.module.media.image.util.SingleImageCallback
 import io.module.media.utils.MediaLogUtil
 
-object ImageUtil {
+object ImageManager {
 
-    private const val TAG = "ImageUtil"
+    private const val TAG = "ImageManager"
 
     fun queryLocalPhotos(context: Context): List<ImageInfoModel> {
         // Prepare the query parameters.
