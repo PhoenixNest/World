@@ -4,6 +4,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!-- Keep the screen from dimming or the processor from sleeping. -->
+    <!-- You should always use wake locks sparingly and hold them only for as long
+    as truly necessary, because they significantly reduce the battery life of the device.-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <!-- Camera hardware support-->
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -23,5 +28,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Request the FOREGROUND_SERVICE permission to run a foreground service. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 </manifest>

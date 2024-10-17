@@ -101,19 +101,23 @@ dependencies {
 
     // CameraX
     val cameraxVersion = "1.2.2"
-    implementation("androidx.camera:camera-core:${cameraxVersion}")
     implementation("androidx.camera:camera-camera2:${cameraxVersion}")
+    implementation("androidx.camera:camera-core:${cameraxVersion}")
+    implementation("androidx.camera:camera-extensions:${cameraxVersion}")
     implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")
     implementation("androidx.camera:camera-video:${cameraxVersion}")
-
     implementation("androidx.camera:camera-view:${cameraxVersion}")
-    implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
     // Media3
     val media3Version = "1.4.1"
     implementation("androidx.media3:media3-exoplayer:${media3Version}")
     implementation("androidx.media3:media3-exoplayer-dash:${media3Version}")
+    implementation("androidx.media3:media3-session:${media3Version}")
     implementation("androidx.media3:media3-ui:${media3Version}")
+    // Media3 Transformer
+    implementation("androidx.media3:media3-transformer:${media3Version}")
+    implementation("androidx.media3:media3-effect:${media3Version}")
+    implementation("androidx.media3:media3-common:${media3Version}")
 
     /* ======================== Third-party Extension ======================== */
 

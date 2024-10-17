@@ -11,8 +11,8 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import io.module.media.image.model.ImageInfoModel
-import io.module.media.image.util.MultiplyImageCallback
-import io.module.media.image.util.SingleImageCallback
+import io.module.media.image.util.IMultiplyImageCallback
+import io.module.media.image.util.ISingleImageCallback
 import io.module.media.utils.MediaLogUtil
 
 object ImageManager {
@@ -91,7 +91,7 @@ object ImageManager {
         return localImageList.toList()
     }
 
-    fun ComponentActivity.createSingleImagePicker(callback: SingleImageCallback): ActivityResultLauncher<PickVisualMediaRequest> {
+    fun ComponentActivity.createSingleImagePicker(callback: ISingleImageCallback): ActivityResultLauncher<PickVisualMediaRequest> {
         return registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri == null) {
                 MediaLogUtil.e(TAG, "[Image Picker] Uri is null.")
@@ -105,7 +105,7 @@ object ImageManager {
 
     fun ComponentActivity.createMultiplyImagePicker(
         count: Int,
-        callback: MultiplyImageCallback
+        callback: IMultiplyImageCallback
     ): ActivityResultLauncher<PickVisualMediaRequest> {
         return registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(count)) { uriList ->
             if (uriList.isEmpty()) {
