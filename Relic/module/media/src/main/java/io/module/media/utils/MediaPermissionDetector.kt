@@ -21,7 +21,7 @@ object MediaPermissionDetector {
     /**
      * Permission array for Album, such as image the video.
      * */
-    val AlbumPermissionArray
+    val PERMISSION_ARRAY_ALBUM
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arrayOf(
                 Manifest.permission.READ_MEDIA_IMAGES,
@@ -37,7 +37,7 @@ object MediaPermissionDetector {
     /**
      * Permission array for Audio.
      * */
-    val AudioPermissionArray
+    val PERMISSION_ARRAY_AUDIO
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arrayOf(Manifest.permission.READ_MEDIA_AUDIO)
         } else {
@@ -50,8 +50,8 @@ object MediaPermissionDetector {
     /**
      * Permission array of Camera, such as front or rear camera.
      * */
-    val CameraPermissionArray
-        get() = mutableListOf (
+    val PERMISSION_ARRAY_CAMERA
+        get() = mutableListOf(
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO
         ).apply {

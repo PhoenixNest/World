@@ -52,7 +52,7 @@ class AlbumActivity : ComponentActivity() {
     }
 
     private fun requestMediaPermission() {
-        viewModel.checkAndRequestAlbumPermission(
+        viewModel.checkAndRequestMediaPermission(
             activity = this@AlbumActivity,
             type = IMAGE
         )

@@ -44,15 +44,15 @@ class MediaViewModel @Inject constructor(
         }
     }
 
-    fun checkAndRequestAlbumPermission(
+    fun checkAndRequestMediaPermission(
         activity: ComponentActivity,
         type: MediaType
     ) {
         when (type) {
             IMAGE,
-            VIDEO -> MediaPermissionDetector.AlbumPermissionArray
+            VIDEO -> MediaPermissionDetector.PERMISSION_ARRAY_ALBUM
 
-            AUDIO -> MediaPermissionDetector.AudioPermissionArray
+            AUDIO -> MediaPermissionDetector.PERMISSION_ARRAY_AUDIO
         }.filter { permissionString ->
             // Filter the denied permission first.
             !MediaPermissionDetector.checkPermission(

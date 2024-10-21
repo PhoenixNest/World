@@ -24,7 +24,7 @@ fun SettingsPageContent(
             onUserAgreementClick = onUserAgreementClick,
             onPrivacyClick = onPrivacyClick
         )
-        if (BuildConfig.DEBUG_MODE) {
+        if (BuildConfig.DEBUG) {
             SettingsDebugPanel()
         }
     }

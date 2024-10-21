@@ -6,4 +6,6 @@
     <string name="no_permission_desc_image_video">"%1$s" needs your permission to access the storage of local <b>Images and Videos</b> data.</string>
     <string name="no_permission_desc_audio">"%1$s" needs your permission to access the storage of local <b>Audios</b> data.</string>
     <string name="no_permission_button_label">ALLOWS ACCESS</string>
+
+    <string name="wallpaper_description">This is a Wallpaper.</string>
 </resources>

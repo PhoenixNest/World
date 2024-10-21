@@ -226,7 +226,7 @@ object CameraManager {
             /* context = */ context,
             /* mediaStoreOutputOptions = */ mediaStoreOutputOptions
         ).apply {
-            val recordAudioPermission = MediaPermissionDetector.CameraPermissionArray.first { permission ->
+            val recordAudioPermission = MediaPermissionDetector.PERMISSION_ARRAY_CAMERA.first { permission ->
                 permission == android.Manifest.permission.RECORD_AUDIO
             }
             if (MediaPermissionDetector.checkPermission(context, recordAudioPermission)) {

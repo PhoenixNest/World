@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <!-- Keep the screen from dimming or the processor from sleeping. -->
     <!-- You should always use wake locks sparingly and hold them only for as long
     as truly necessary, because they significantly reduce the battery life of the device.-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- Camera hardware support-->
-    <uses-feature android:name="android.hardware.camera.any" />
 
     <!-- Required only if your app needs to access images or photos that other apps created. -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -31,5 +25,20 @@
 
     <!-- Request the FOREGROUND_SERVICE permission to run a foreground service. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- ========== Camera Start ========== -->
+    <!-- Camera hardware support-->
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- ========== Camera End ========== -->
+
+    <!-- ========== Wallpaper Start ========== -->
+    <!-- Wallpaper software support-->
+    <uses-feature android:name="android.software.live_wallpaper" />
+
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <!-- ========== Wallpaper Start ========== -->
 
 </manifest>

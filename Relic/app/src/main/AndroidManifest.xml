@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Camera -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
 
     <application
         android:name=".global.RelicApplication"
@@ -116,6 +112,38 @@
         <activity
             android:name="io.module.media.ui.AlbumActivity"
             android:theme="@style/Theme.Relic" />
+
+        <service
+            android:name="io.module.media.wallpaper.service.StaticWallpaperService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_WALLPAPER">
+
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper" />
+
+        </service>
+
+        <service
+            android:name="io.module.media.wallpaper.service.LiveWallpaperService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_WALLPAPER">
+
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper" />
+
+        </service>
 
         <!-- Firebase Performance plugin -->
         <meta-data

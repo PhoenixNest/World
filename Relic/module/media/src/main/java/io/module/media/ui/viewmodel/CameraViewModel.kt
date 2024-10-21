@@ -20,7 +20,7 @@ class CameraViewModel @Inject constructor(
     }
 
     fun checkAndRequestCameraPermission(activity: ComponentActivity) {
-        MediaPermissionDetector.CameraPermissionArray
+        MediaPermissionDetector.PERMISSION_ARRAY_CAMERA
             .filter { permissionString ->
                 // Filter the denied permission first.
                 !MediaPermissionDetector.checkPermission(
