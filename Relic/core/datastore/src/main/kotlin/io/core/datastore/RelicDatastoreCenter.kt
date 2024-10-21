@@ -1,5 +1,6 @@
 package io.core.datastore
 
+import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
@@ -7,14 +8,21 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import io.common.app.BaseApplication.Companion.getApplicationContext
-import io.core.datastore.kit.ContextExt.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
+
+/**
+ * Access the global datastore file with Context.
+ * */
+@ActivityRetainedScoped
+val Context.dataStore by preferencesDataStore("relic_datastore")
 
 object RelicDatastoreCenter {
 
