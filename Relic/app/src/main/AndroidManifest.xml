@@ -114,7 +114,7 @@
             android:theme="@style/Theme.Relic" />
 
         <service
-            android:name="io.module.media.wallpaper.service.StaticWallpaperService"
+            android:name="io.module.media.wallpaper.live.StaticWallpaperService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_WALLPAPER">
@@ -130,7 +130,7 @@
         </service>
 
         <service
-            android:name="io.module.media.wallpaper.service.LiveWallpaperService"
+            android:name="io.module.media.wallpaper.live.LiveWallpaperService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_WALLPAPER">

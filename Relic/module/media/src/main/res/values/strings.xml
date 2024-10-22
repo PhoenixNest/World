@@ -8,4 +8,6 @@
     <string name="no_permission_button_label">ALLOWS ACCESS</string>
 
     <string name="wallpaper_description">This is a Wallpaper.</string>
+    <string name="wallpaper_change_title">Change Wallpaper</string>
+    <string name="wallpaper_change_desc">Your wallpaper has been changed successfully when $1%s</string>
 </resources>

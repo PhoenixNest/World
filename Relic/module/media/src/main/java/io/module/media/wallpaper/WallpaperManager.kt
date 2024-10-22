@@ -10,8 +10,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import io.module.media.utils.MediaLogUtil
-import io.module.media.wallpaper.service.LiveWallpaperService
-import io.module.media.wallpaper.service.StaticWallpaperService
+import io.module.media.wallpaper.live.LiveWallpaperService
 import java.io.InputStream
 
 object WallpaperManager {
@@ -39,7 +38,9 @@ object WallpaperManager {
                 /* fullImage = */ bitmap,
                 /* visibleCropHint = */ null,
                 /* allowBackup = */ true
-            )
+            ).also {
+                MediaLogUtil.d(TAG, "[Set `Bitmap` wallpaper] Success.")
+            }
         } else {
             MediaLogUtil.w(TAG, "[Set wallpaper] Failed, please make sure you have SET_WALLPAPER permission already.")
         }
@@ -50,7 +51,9 @@ object WallpaperManager {
         resId: Int
     ) {
         if (checkPermission(context)) {
-            WallpaperManager.getInstance(context).setResource(resId)
+            WallpaperManager.getInstance(context).setResource(resId).also {
+                MediaLogUtil.d(TAG, "[Set `Res` wallpaper] Success.")
+            }
         } else {
             MediaLogUtil.w(TAG, "[Set wallpaper] Failed, please make sure you have SET_WALLPAPER permission already.")
         }
@@ -58,7 +61,9 @@ object WallpaperManager {
 
     fun setStreamWallpaper(context: Context, inputStream: InputStream) {
         if (checkPermission(context)) {
-            WallpaperManager.getInstance(context).setStream(inputStream)
+            WallpaperManager.getInstance(context).setStream(inputStream).also {
+                MediaLogUtil.d(TAG, "[Set `Stream` wallpaper] Success.")
+            }
         } else {
             MediaLogUtil.w(TAG, "[Set wallpaper] Failed, please make sure you have SET_WALLPAPER permission already.")
         }
@@ -78,18 +83,6 @@ object WallpaperManager {
     }
 
     /* ======================== Service type function ======================== */
-
-    fun setStaticWallpaper(context: Context, wallpaperUri: Uri) {
-        val wallpaperService = StaticWallpaperService()
-        val componentName = ComponentName(context, wallpaperService::class.java)
-        context.startActivity(
-            Intent(
-                WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER
-            ).apply {
-                putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, componentName)
-            }
-        )
-    }
 
     fun setLiveWallpaper(context: Context, wallpaperUri: Uri) {
         val wallpaperService = LiveWallpaperService()
