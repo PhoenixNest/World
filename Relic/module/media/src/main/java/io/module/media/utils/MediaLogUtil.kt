@@ -14,6 +14,7 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
+    @JvmStatic
     fun v(TAG: String = DEFAULT_TAG, message: String): Int {
         return if (BuildConfig.DEBUG) Log.v(TAG, message) else -1
     }
@@ -24,6 +25,7 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
+    @JvmStatic
     fun d(TAG: String = DEFAULT_TAG, message: String): Int {
         return if (BuildConfig.DEBUG) Log.d(TAG, message) else -1
     }
@@ -34,6 +36,7 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
+    @JvmStatic
     fun i(TAG: String = DEFAULT_TAG, message: String): Int {
         return if (BuildConfig.DEBUG) Log.i(TAG, message) else -1
     }
@@ -44,6 +47,7 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
+    @JvmStatic
     fun w(TAG: String = DEFAULT_TAG, message: String): Int {
         return if (BuildConfig.DEBUG) Log.w(TAG, message) else -1
     }
@@ -54,6 +58,7 @@ internal object MediaLogUtil {
      * @param TAG
      * @param message
      * */
+    @JvmStatic
     fun e(TAG: String = DEFAULT_TAG, message: String, throwable: Throwable? = null): Int {
         return if (BuildConfig.DEBUG) Log.e(TAG, message, throwable) else -1
     }

@@ -13,20 +13,26 @@ import android.service.wallpaper.WallpaperService;
 import android.view.SurfaceHolder;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import io.module.media.utils.MediaLogUtil;
+
 public class LiveWallpaperService extends WallpaperService {
 
     private static final String TAG = "LiveWallpaperService";
+
     private static final String KEY_ACTION_CHANGE_LIVE_WALLPAPER = "key_action_change_live_wallpaper";
+
     private static final int KEY_ACTION_CODE_CHANGE_LIVE_WALLPAPER = 10086;
 
     private volatile Engine liveWallpaperEngine;
 
     public static void changeWallpaper(Context context, Uri uri) {
-        //
+        LiveWallpaperModel model = LiveWallpaperModel.getInstance(context);
+        model.setUri(uri);
     }
 
     public static void changeWallpaper(Context context, InputStream inputStream) {
@@ -37,11 +43,13 @@ public class LiveWallpaperService extends WallpaperService {
 
     public class LiveWallpaperEngine extends WallpaperService.Engine {
 
-        private MediaPlayer mediaPlayer;
+        private static final int EGL_VERSION = 2;
 
         private LiveWallpaperGLSurfaceView glSurfaceView;
 
         private LiveWallpaperVideoRender videoRender;
+
+        private BroadcastReceiver liveWallpaperChangeReceiver;
 
         /* ======================== override ======================== */
 
@@ -49,6 +57,12 @@ public class LiveWallpaperService extends WallpaperService {
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
             initialization();
+        }
+
+        @Override
+        public void onVisibilityChanged(boolean visible) {
+            super.onVisibilityChanged(visible);
+            toggleGLSurfaceViewStatus(visible);
         }
 
         @Override
@@ -64,6 +78,7 @@ public class LiveWallpaperService extends WallpaperService {
         @Override
         public void onDestroy() {
             super.onDestroy();
+            onDestroyAction();
         }
 
         /* ======================== Logical ======================== */
@@ -74,13 +89,14 @@ public class LiveWallpaperService extends WallpaperService {
         }
 
         private void initVideoRender() {
-            videoRender = new LiveWallpaperVideoRender();
+            videoRender = new LiveWallpaperVideoRender(getApplicationContext());
         }
 
         private void initGLSurfaceView() {
             Context context = getApplicationContext();
             SurfaceHolder surfaceHolder = getSurfaceHolder();
             glSurfaceView = new LiveWallpaperGLSurfaceView(context, surfaceHolder);
+            glSurfaceView.setEGLContextClientVersion(EGL_VERSION);
             glSurfaceView.setRenderer(videoRender);
             glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
             registerBroadcastReceiver();
@@ -89,20 +105,17 @@ public class LiveWallpaperService extends WallpaperService {
         @SuppressLint("UnspecifiedRegisterReceiverFlag")
         private void registerBroadcastReceiver() {
             IntentFilter intentFilter = new IntentFilter(KEY_ACTION_CHANGE_LIVE_WALLPAPER);
+            liveWallpaperChangeReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    onReceiveAction(intent);
+                }
+            };
+
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        onReceiveAction(intent);
-                    }
-                }, intentFilter, Context.RECEIVER_EXPORTED);
+                registerReceiver(liveWallpaperChangeReceiver, intentFilter, Context.RECEIVER_EXPORTED);
             } else {
-                registerReceiver(new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        onReceiveAction(intent);
-                    }
-                }, intentFilter);
+                registerReceiver(liveWallpaperChangeReceiver, intentFilter);
             }
         }
 
@@ -117,6 +130,30 @@ public class LiveWallpaperService extends WallpaperService {
                     @Override
                     public void run() {
                         //
+                    }
+                });
+            }
+        }
+
+        private void onDestroyAction() {
+            videoRender.onDestroy();
+            glSurfaceView.onDestroy();
+            unregisterReceiver(liveWallpaperChangeReceiver);
+        }
+
+        private void toggleGLSurfaceViewStatus(boolean isVisible) {
+            if (isVisible) {
+                glSurfaceView.queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            } else {
+                glSurfaceView.queueEvent(new Runnable() {
+                    @Override
+                    public void run() {
+
                     }
                 });
             }
@@ -137,9 +174,27 @@ public class LiveWallpaperService extends WallpaperService {
 
     private static class LiveWallpaperVideoRender implements GLSurfaceView.Renderer {
 
+        private static final String TAG = "LiveWallpaperVideoRender";
+
+        private final WeakReference<Context> contextWeakReference;
+
+        private MediaPlayer mediaPlayer;
+
+        private int videoWidth;
+
+        private int videoHeight;
+
+        public LiveWallpaperVideoRender(Context context) {
+            contextWeakReference = new WeakReference<>(context);
+        }
+
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            //
+            MediaLogUtil.d(TAG, "onSurfaceCreated");
+            Context context = contextWeakReference.get();
+            LiveWallpaperModel model = LiveWallpaperModel.getInstance(context);
+            mediaPlayer = MediaPlayer.create(context, model.getUri());
+            playNewVideo();
         }
 
         @Override
@@ -150,6 +205,68 @@ public class LiveWallpaperService extends WallpaperService {
         @Override
         public void onDrawFrame(GL10 gl) {
             //
+        }
+
+        public void playVideo() {
+            if (mediaPlayer == null) {
+                return;
+            }
+
+            if (!mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
+        }
+
+        public void pauseVideo() {
+            if (mediaPlayer == null) {
+                return;
+            }
+
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            }
+        }
+
+        public void onDestroy() {
+            if (mediaPlayer == null) {
+                return;
+            }
+
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        private void playNewVideo() {
+            if (mediaPlayer == null) {
+                return;
+            }
+
+            try {
+                Context context = contextWeakReference.get();
+                LiveWallpaperModel model = LiveWallpaperModel.getInstance(context);
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(context, model.getUri());
+                mediaPlayer.setVolume(0, 0);
+                mediaPlayer.setOnPreparedListener(player -> {
+                    player.setLooping(true);
+                    // player.setScreenOnWhilePlaying(true);
+                    player.start();
+                });
+                mediaPlayer.setOnVideoSizeChangedListener((player, width, height) -> {
+                    videoWidth = width;
+                    videoHeight = height;
+                });
+                mediaPlayer.setOnErrorListener((player, what, extra) -> {
+                    String errorMessage = String.format("[Play New Video] Error, Type: $1%s, ExtraCode: $2%s)", what, extra);
+                    player.pause();
+                    MediaLogUtil.e(TAG, errorMessage, null);
+                    return false;
+                });
+                mediaPlayer.prepareAsync();
+            } catch (Exception exception) {
+                MediaLogUtil.e(TAG, String.format(exception.getMessage()), exception);
+            }
         }
     }
 
