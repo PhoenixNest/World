@@ -89,9 +89,12 @@ object WallpaperManager {
         context.startActivity(intent)
     }
 
-    fun clearWallpaper(context: Context) {
+    fun clearWallpaper(
+        context: Context,
+        type: WallpaperType
+    ) {
         if (checkPermission(context)) {
-            WallpaperManager.getInstance(context).clear()
+            WallpaperManager.getInstance(context).clear(type.typeId)
         } else {
             MediaLogUtil.w(TAG, "[Clear wallpaper] Failed, please make sure you have SET_WALLPAPER permission already.")
         }
