@@ -8,14 +8,14 @@ import io.core.database.DatabaseParameters.dataBaseVersion
 import io.core.database.DatabaseParameters.exportSchema
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
+import io.core.database.dao.PixabayDao
 import io.core.database.dao.TodoDao
-import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.core.database.dao.agent.AgentDao
 import io.core.database.dao.agent.AgentGeminiDao
 import io.data.convertors.FoodRecipesDataConvertor
 import io.data.convertors.NewsDataConvertor
-import io.data.convertors.WallpaperDataConvertor
+import io.data.convertors.PixabayDataConvertor
 import io.data.convertors.WeatherDataConvertor
 import io.data.entity.agent.AgentChatEntity
 import io.data.entity.agent.AgentGeminiChatEntity
@@ -24,8 +24,8 @@ import io.data.entity.news.TopHeadlineNewsArticleEntity
 import io.data.entity.news.TopHeadlinesNewsEntity
 import io.data.entity.news.TrendingNewsArticleEntity
 import io.data.entity.news.TrendingNewsEntity
+import io.data.entity.pixabay.PixabayImagesEntity
 import io.data.entity.todo.TodoEntity
-import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
 
 @Database(
@@ -33,7 +33,7 @@ import io.data.entity.weather.WeatherEntity
         // Feature: Home
         WeatherEntity::class,
         FoodRecipesComplexSearchEntity::class,
-        WallpaperImagesEntity::class,
+        PixabayImagesEntity::class,
         // Feature: Studio
         TodoEntity::class,
         TrendingNewsEntity::class,
@@ -52,7 +52,7 @@ import io.data.entity.weather.WeatherEntity
         WeatherDataConvertor::class,
         FoodRecipesDataConvertor::class,
         NewsDataConvertor::class,
-        WallpaperDataConvertor::class
+        PixabayDataConvertor::class
     ],
     builtInTypeConverters = BuiltInTypeConverters()
 )
@@ -66,7 +66,7 @@ abstract class RelicDatabase : RoomDatabase() {
 
     abstract fun newsDao(): NewsDao
 
-    abstract fun wallpaperDao(): WallpaperDao
+    abstract fun pixabayDao(): PixabayDao
 
     abstract fun agentDao(): AgentDao
 

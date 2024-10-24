@@ -1,6 +1,6 @@
 package io.dev.relic.feature.function.gallery
 
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.model.pixabay.PixabayDataModel
 
 sealed interface GalleryDataState {
 
@@ -19,7 +19,7 @@ sealed interface GalleryDataState {
     /* Succeed */
 
     data class FetchSucceed(
-        val modelList: List<WallpaperImagesDataModel?>
+        val modelList: List<PixabayDataModel?>
     ) : GalleryDataState
 
     /* Failed */

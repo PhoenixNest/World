@@ -1,20 +1,20 @@
 package io.data.mappers
 
-import io.data.dto.wallpaper.WallpaperImagesDTO
-import io.data.entity.wallpaper.WallpaperImagesEntity
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.dto.pixabay.PixabayImagesDTO
+import io.data.entity.pixabay.PixabayImagesEntity
+import io.data.model.pixabay.PixabayDataModel
 
-object WallpaperDataMapper {
+object PixabayDataMapper {
 
-    fun WallpaperImagesDTO.toEntity(): WallpaperImagesEntity {
-        return WallpaperImagesEntity(datasource = this)
+    fun PixabayImagesDTO.toEntity(): PixabayImagesEntity {
+        return PixabayImagesEntity(datasource = this)
     }
 
-    fun WallpaperImagesDTO.toModelList(): List<WallpaperImagesDataModel?> {
-        val tempList = mutableListOf<WallpaperImagesDataModel?>()
+    fun PixabayImagesDTO.toModelList(): List<PixabayDataModel?> {
+        val tempList = mutableListOf<PixabayDataModel?>()
         this.results?.forEach {
             tempList.add(
-                WallpaperImagesDataModel(
+                PixabayDataModel(
                     id = it?.id,
                     previewImageUrl = it?.previewURL,
                     previewImageWidth = it?.previewWidth,

@@ -1,22 +1,22 @@
 package io.domain.repository.impl
 
-import io.core.network.api.IWallpaperApi
-import io.data.dto.wallpaper.WallpaperImagesDTO
+import io.core.network.api.IPixabayApi
+import io.data.dto.pixabay.PixabayImagesDTO
 import io.data.model.NetworkResult
-import io.domain.repository.IWallpaperDataRepository
+import io.domain.repository.IPixabayDataRepository
 import javax.inject.Inject
 
 /**
- * @see IWallpaperDataRepository
+ * @see IPixabayDataRepository
  * */
-class WallpaperDataRepositoryImpl @Inject constructor(
-    private val wallpaperApi: IWallpaperApi
-) : IWallpaperDataRepository {
+class PixabayDataRepositoryImpl @Inject constructor(
+    private val pixabayApi: IPixabayApi
+) : IPixabayDataRepository {
 
-    private var searchImagesResult: NetworkResult<WallpaperImagesDTO> = NetworkResult.Loading()
+    private var searchImagesResult: NetworkResult<PixabayImagesDTO> = NetworkResult.Loading()
 
     companion object {
-        private const val TAG = "WallpaperDataRepository"
+        private const val TAG = "PixabayDataRepositor"
     }
 
     /**
@@ -46,9 +46,9 @@ class WallpaperDataRepositoryImpl @Inject constructor(
         orderBy: String,
         page: Int,
         perPage: Int
-    ): NetworkResult<WallpaperImagesDTO> {
+    ): NetworkResult<PixabayImagesDTO> {
         searchImagesResult = try {
-            val data = wallpaperApi.searchImages(
+            val data = pixabayApi.searchImages(
                 apiKey = apiKey,
                 keyWords = keyWords,
                 language = language,

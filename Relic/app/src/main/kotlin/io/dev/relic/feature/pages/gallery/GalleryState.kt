@@ -1,7 +1,7 @@
 package io.dev.relic.feature.pages.gallery
 
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 
 data class GalleryState(
@@ -11,7 +11,7 @@ data class GalleryState(
 )
 
 data class GalleryAction(
-    val onItemClick: (dataModel: WallpaperImagesDataModel) -> Unit,
+    val onItemClick: (dataModel: PixabayDataModel) -> Unit,
     val onRetryClick: () -> Unit
 )
 

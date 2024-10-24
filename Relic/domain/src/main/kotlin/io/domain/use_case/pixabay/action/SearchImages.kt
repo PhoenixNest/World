@@ -1,13 +1,18 @@
-package io.domain.repository
+package io.domain.use_case.pixabay.action
 
-import io.data.dto.wallpaper.WallpaperImagesDTO
+import io.core.network.NetworkParameters.Keys.PIXABAY_API_KEY
+import io.data.dto.pixabay.PixabayImagesDTO
 import io.data.model.NetworkResult
-import io.domain.repository.impl.WallpaperDataRepositoryImpl
+import io.domain.repository.IPixabayDataRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-/**
- * @see WallpaperDataRepositoryImpl
- * */
-interface IWallpaperDataRepository {
+class SearchImages @Inject constructor(
+    private val pixabayDataRepository: IPixabayDataRepository
+) {
 
     /**
      * [Search Images](https://pixabay.com/api/docs/#api_search_images)
@@ -24,8 +29,8 @@ interface IWallpaperDataRepository {
      * @param page                  Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
-    suspend fun searchImages(
-        apiKey: String,
+    operator fun invoke(
+        apiKey: String = PIXABAY_API_KEY,
         keyWords: String,
         language: String,
         imageType: String,
@@ -36,6 +41,23 @@ interface IWallpaperDataRepository {
         orderBy: String,
         page: Int,
         perPage: Int
-    ): NetworkResult<WallpaperImagesDTO>
+    ): Flow<NetworkResult<PixabayImagesDTO>> {
+        return flow {
+            val result = pixabayDataRepository.searchImages(
+                apiKey = apiKey,
+                keyWords = keyWords,
+                language = language,
+                imageType = imageType,
+                orientation = orientation,
+                category = category,
+                isEditorsChoice = isEditorsChoice,
+                isSafeSearch = isSafeSearch,
+                orderBy = orderBy,
+                page = page,
+                perPage = perPage
+            )
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+    }
 
 }

@@ -37,7 +37,7 @@ import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.utils.RelicUiUtil
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 
 private const val DEFAULT_AUTHOR = "Unknown Artist"
@@ -72,7 +72,7 @@ fun GalleryStaggeredGrid(
 
 @Composable
 private fun GalleryStaggeredGrid(
-    imageList: List<WallpaperImagesDataModel?>,
+    imageList: List<PixabayDataModel?>,
     lazyStaggeredGridState: LazyStaggeredGridState
 ) {
     val screenWidthDp = RelicUiUtil.getCurrentScreenWidthDp()

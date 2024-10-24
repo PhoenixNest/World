@@ -3,16 +3,16 @@ package io.core.database.repository
 import io.core.database.RelicDatabase
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
+import io.core.database.dao.PixabayDao
 import io.core.database.dao.TodoDao
-import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.data.entity.food_recipes.FoodRecipesComplexSearchEntity
 import io.data.entity.news.TopHeadlineNewsArticleEntity
 import io.data.entity.news.TopHeadlinesNewsEntity
 import io.data.entity.news.TrendingNewsArticleEntity
 import io.data.entity.news.TrendingNewsEntity
+import io.data.entity.pixabay.PixabayImagesEntity
 import io.data.entity.todo.TodoEntity
-import io.data.entity.wallpaper.WallpaperImagesEntity
 import io.data.entity.weather.WeatherEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class RelicDatabaseRepository @Inject constructor(
     private val weatherDao: WeatherDao,
     private val foodRecipesDao: FoodRecipesDao,
     private val newsDao: NewsDao,
-    private val wallpaperDao: WallpaperDao
+    private val pixabayDao: PixabayDao
 ) {
 
     /* ======================== Todo ======================== */
@@ -116,14 +116,14 @@ class RelicDatabaseRepository @Inject constructor(
         newsDao.insertTopHeadlineNewsArticle(articleEntity)
     }
 
-    /* ======================== Wallpaper ======================== */
+    /* ======================== Pixaaby ======================== */
 
-    fun queryAllImagesWallpaperData(): Flow<List<WallpaperImagesEntity>> {
-        return wallpaperDao.queryAllImagesData()
+    fun queryAllPixabayImagesData(): Flow<List<PixabayImagesEntity>> {
+        return pixabayDao.queryAllImagesData()
     }
 
-    suspend fun insertWallpaperImagesData(wallpaperImagesEntity: WallpaperImagesEntity) {
-        wallpaperDao.insertImagesData(wallpaperImagesEntity)
+    suspend fun insertPixabxyImagesData(pixabayImagesEntity: PixabayImagesEntity) {
+        pixabayDao.insertImagesData(pixabayImagesEntity)
     }
 
 }

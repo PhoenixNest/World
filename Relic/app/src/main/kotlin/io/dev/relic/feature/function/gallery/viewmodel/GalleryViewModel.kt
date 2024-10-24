@@ -6,13 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
-import io.data.dto.wallpaper.WallpaperImagesDTO
-import io.data.mappers.WallpaperDataMapper.toModelList
+import io.data.dto.pixabay.PixabayImagesDTO
+import io.data.mappers.PixabayDataMapper.toModelList
 import io.data.model.NetworkResult
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
-import io.domain.use_case.wallpaper.WallpaperUseCase
+import io.domain.use_case.pixabay.PixabayUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     application: Application,
-    private val wallpaperUseCase: WallpaperUseCase
+    private val pixabayUseCase: PixabayUseCase
 ) : AndroidViewModel(application) {
 
     /**
@@ -50,7 +50,7 @@ class GalleryViewModel @Inject constructor(
     /**
      * Memory cache list of gallery data.
      * */
-    private val galleryDataList = mutableListOf<WallpaperImagesDataModel>()
+    private val galleryDataList = mutableListOf<PixabayDataModel>()
 
     companion object {
         private const val TAG = "GalleryViewModel"
@@ -94,7 +94,7 @@ class GalleryViewModel @Inject constructor(
         isFetchMore: Boolean = false
     ) {
         operationInViewModelScope { scope ->
-            wallpaperUseCase.searchImages.invoke(
+            pixabayUseCase.searchImages.invoke(
                 keyWords = DEFAULT_KEY_WORDS,
                 language = Locale.getDefault().toString().lowercase(),
                 imageType = DEFAULT_IMAGE_TYPE,
@@ -118,7 +118,7 @@ class GalleryViewModel @Inject constructor(
         }
     }
 
-    fun getGalleryList(): List<WallpaperImagesDataModel> {
+    fun getGalleryList(): List<PixabayDataModel> {
         return galleryDataList.toList()
     }
 
@@ -136,7 +136,7 @@ class GalleryViewModel @Inject constructor(
      * @param result
      * */
     private fun handleRemoteGalleryData(
-        result: NetworkResult<WallpaperImagesDTO>,
+        result: NetworkResult<PixabayImagesDTO>,
         isFetchMore: Boolean = false
     ) {
         when (result) {

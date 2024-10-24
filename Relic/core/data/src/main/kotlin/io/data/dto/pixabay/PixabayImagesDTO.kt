@@ -1,20 +1,20 @@
-package io.data.dto.wallpaper
+package io.data.dto.pixabay
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class WallpaperImagesDTO(
+data class PixabayImagesDTO(
     @Json(name = "total")
     val total: Int?,
     @Json(name = "totalHits")
     val totalHits: Int?,
     @Json(name = "hits")
-    val results: List<WallpaperResultDTO?>?
+    val results: List<PixabayResultDTO?>?
 )
 
 @JsonClass(generateAdapter = true)
-data class WallpaperResultDTO(
+data class PixabayResultDTO(
     @Json(name = "id")
     val id: Int?,
     @Json(name = "pageURL")

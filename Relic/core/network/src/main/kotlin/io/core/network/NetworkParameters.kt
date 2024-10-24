@@ -58,7 +58,7 @@ object NetworkParameters {
         /**
          * [Pixabay Api](https://pixabay.com/api/docs/)
          * */
-        const val PIXABAY_WALLPAPER_API_URL = "https://pixabay.com/"
+        const val PIXABAY_API_URL = "https://pixabay.com/"
 
         /**
          * [Hitokoto Api](https://developer.hitokoto.cn/)

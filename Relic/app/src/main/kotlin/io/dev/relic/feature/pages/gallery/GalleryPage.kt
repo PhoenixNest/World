@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.LogUtil
-import io.data.model.wallpaper.WallpaperImagesDataModel
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
@@ -106,7 +106,7 @@ private fun buildGalleryState(
     dataState: GalleryDataState,
     viewModel: GalleryViewModel,
     listState: GalleryListState,
-    onCheckDetail: (dataModel: WallpaperImagesDataModel) -> Unit
+    onCheckDetail: (dataModel: PixabayDataModel) -> Unit
 ): GalleryState {
     return GalleryState(
         dataState = dataState,

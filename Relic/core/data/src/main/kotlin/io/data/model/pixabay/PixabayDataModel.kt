@@ -1,6 +1,6 @@
-package io.data.model.wallpaper
+package io.data.model.pixabay
 
-data class WallpaperImagesDataModel(
+data class PixabayDataModel(
     val id: Int?,
     /* For preview image usage */
     val previewImageUrl: String?,

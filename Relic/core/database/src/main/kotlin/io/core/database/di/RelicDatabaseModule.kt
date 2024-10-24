@@ -9,8 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import io.core.database.RelicDatabase
 import io.core.database.dao.FoodRecipesDao
 import io.core.database.dao.NewsDao
+import io.core.database.dao.PixabayDao
 import io.core.database.dao.TodoDao
-import io.core.database.dao.WallpaperDao
 import io.core.database.dao.WeatherDao
 import io.core.database.dao.agent.AgentDao
 import io.core.database.dao.agent.AgentGeminiDao
@@ -62,8 +62,8 @@ class RelicDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideWallpaperDao(database: RelicDatabase): WallpaperDao {
-        return database.wallpaperDao()
+    fun providePixabayDao(database: RelicDatabase): PixabayDao {
+        return database.pixabayDao()
     }
 
     @Provides

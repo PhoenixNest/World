@@ -1,10 +1,10 @@
 package io.core.network.api
 
-import io.data.dto.wallpaper.WallpaperImagesDTO
+import io.data.dto.pixabay.PixabayImagesDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface IWallpaperApi {
+interface IPixabayApi {
 
     /**
      * [Search Images](https://pixabay.com/api/docs/#api_search_images)
@@ -34,6 +34,6 @@ interface IWallpaperApi {
         @Query("order") orderBy: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): WallpaperImagesDTO
+    ): PixabayImagesDTO
 
 }
