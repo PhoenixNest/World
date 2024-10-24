@@ -16,7 +16,7 @@ class PixabayDataRepositoryImpl @Inject constructor(
     private var searchImagesResult: NetworkResult<PixabayImagesDTO> = NetworkResult.Loading()
 
     companion object {
-        private const val TAG = "PixabayDataRepositor"
+        private const val TAG = "PixabayDataRepository"
     }
 
     /**

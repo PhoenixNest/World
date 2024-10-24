@@ -2,6 +2,10 @@ package io.dev.relic.feature.function.gallery.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
@@ -11,11 +15,15 @@ import io.data.mappers.PixabayDataMapper.toModelList
 import io.data.model.NetworkResult
 import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
+import io.dev.relic.feature.function.gallery.paging.GalleryPagingSource
 import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
 import io.domain.use_case.pixabay.PixabayUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import java.util.Locale
 import javax.inject.Inject
@@ -70,6 +78,30 @@ class GalleryViewModel @Inject constructor(
         getGalleryData()
     }
 
+    fun getGalleryPager(imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION) {
+        operationInViewModelScope {
+            Pager(
+                // Configure how data is loaded by passing additional properties to
+                // PagingConfig, such as prefetchDistance.
+                config = PagingConfig(pageSize = DEFAULT_RESULT_SIZE_PER_PAGE),
+                pagingSourceFactory = {
+                    GalleryPagingSource(
+                        pixabayUseCase = pixabayUseCase,
+                        keyWords = DEFAULT_KEY_WORDS,
+                        language = Locale.getDefault().toString().lowercase(),
+                        imageType = DEFAULT_IMAGE_TYPE,
+                        orientation = imageOrientation.name.lowercase(),
+                        category = DEFAULT_IMAGE_CATEGORY,
+                        isEditorsChoice = DEFAULT_IS_EDITORS_CHOICE,
+                        isSafeSearch = DEFAULT_IS_SAFE_SEARCH,
+                        orderBy = DEFAULT_ORDER_RULE,
+                        perPage = DEFAULT_RESULT_SIZE_PER_PAGE
+                    )
+                }
+            ).flow.cachedIn(viewModelScope)
+        }
+    }
+
     fun fetchMoreGalleryData() {
         if (!canFetchMore) {
             LogUtil.w(TAG, "[Fetch More Gallery Data] Can't get more data from server, skip.")
@@ -93,8 +125,8 @@ class GalleryViewModel @Inject constructor(
         imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION,
         isFetchMore: Boolean = false
     ) {
-        operationInViewModelScope { scope ->
-            pixabayUseCase.searchImages.invoke(
+        val resultFlow = flow {
+            val result = pixabayUseCase.searchImages.invoke(
                 keyWords = DEFAULT_KEY_WORDS,
                 language = Locale.getDefault().toString().lowercase(),
                 imageType = DEFAULT_IMAGE_TYPE,
@@ -105,7 +137,12 @@ class GalleryViewModel @Inject constructor(
                 orderBy = DEFAULT_ORDER_RULE,
                 page = pageIndex,
                 perPage = DEFAULT_RESULT_SIZE_PER_PAGE
-            ).stateIn(
+            )
+            emit(result)
+        }.flowOn(Dispatchers.IO)
+
+        operationInViewModelScope { scope ->
+            resultFlow.stateIn(
                 scope = scope,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()

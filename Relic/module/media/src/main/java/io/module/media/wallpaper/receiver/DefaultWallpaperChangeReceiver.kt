@@ -53,6 +53,7 @@ class DefaultWallpaperChangeReceiver : BroadcastReceiver() {
      * @param context The Context in which the receiver is running.
      * @param intent The Intent being received.
      */
+    @Suppress("DEPRECATION")
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.run {
             if (action == Intent.ACTION_WALLPAPER_CHANGED) {

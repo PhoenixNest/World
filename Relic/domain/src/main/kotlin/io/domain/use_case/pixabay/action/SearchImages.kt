@@ -4,10 +4,6 @@ import io.core.network.NetworkParameters.Keys.PIXABAY_API_KEY
 import io.data.dto.pixabay.PixabayImagesDTO
 import io.data.model.NetworkResult
 import io.domain.repository.IPixabayDataRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SearchImages @Inject constructor(
@@ -29,7 +25,7 @@ class SearchImages @Inject constructor(
      * @param page                  Returned search results are paginated. Use this parameter to select the page number. Default: 1
      * @param perPage               Determine the number of results per page. `Accepted values: 3 - 200.` Default: 20
      * */
-    operator fun invoke(
+    suspend operator fun invoke(
         apiKey: String = PIXABAY_API_KEY,
         keyWords: String,
         language: String,
@@ -41,23 +37,20 @@ class SearchImages @Inject constructor(
         orderBy: String,
         page: Int,
         perPage: Int
-    ): Flow<NetworkResult<PixabayImagesDTO>> {
-        return flow {
-            val result = pixabayDataRepository.searchImages(
-                apiKey = apiKey,
-                keyWords = keyWords,
-                language = language,
-                imageType = imageType,
-                orientation = orientation,
-                category = category,
-                isEditorsChoice = isEditorsChoice,
-                isSafeSearch = isSafeSearch,
-                orderBy = orderBy,
-                page = page,
-                perPage = perPage
-            )
-            emit(result)
-        }.flowOn(Dispatchers.IO)
+    ): NetworkResult<PixabayImagesDTO> {
+        return pixabayDataRepository.searchImages(
+            apiKey = apiKey,
+            keyWords = keyWords,
+            language = language,
+            imageType = imageType,
+            orientation = orientation,
+            category = category,
+            isEditorsChoice = isEditorsChoice,
+            isSafeSearch = isSafeSearch,
+            orderBy = orderBy,
+            page = page,
+            perPage = perPage
+        )
     }
 
 }
