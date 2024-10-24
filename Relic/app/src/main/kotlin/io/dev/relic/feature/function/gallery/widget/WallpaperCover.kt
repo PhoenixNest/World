@@ -62,8 +62,10 @@ private fun WallpaperCover(
     url: String,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+
     SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest.Builder(context)
             .data(url)
             .crossfade(true)
             .build(),

@@ -19,6 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import coil.Coil
+import coil.ImageLoader
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.core.ui.theme.RelicAppTheme
@@ -94,7 +98,24 @@ class MainActivity : AbsBaseActivity() {
     /* ======================== Logical ======================== */
 
     override fun initialization(savedInstanceState: Bundle?) {
-        //
+        setupCoilImageLoader()
+    }
+
+    private fun setupCoilImageLoader() {
+        val imageLoader = ImageLoader.Builder(this)
+            .memoryCache {
+                MemoryCache.Builder(this)
+                    .maxSizePercent(0.25)
+                    .build()
+            }
+            .diskCache {
+                DiskCache.Builder()
+                    .directory(this.cacheDir.resolve("image_cache"))
+                    .maxSizePercent(0.2)
+                    .build()
+            }
+            .build()
+        Coil.setImageLoader(imageLoader)
     }
 
     /* ======================== Ui ======================== */
