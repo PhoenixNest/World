@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.navOptions
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.LogUtil
@@ -89,7 +90,11 @@ fun HomePageRoute(
             // Navigate to the details page.
             navController.navigateToFoodRecipeDetailPage(
                 recipeId = recipeId,
-                recipeTitle = recipeTitle
+                recipeTitle = recipeTitle,
+                navOptions = navOptions {
+                    launchSingleTop = true
+                    restoreState = true
+                }
             )
         }
     )

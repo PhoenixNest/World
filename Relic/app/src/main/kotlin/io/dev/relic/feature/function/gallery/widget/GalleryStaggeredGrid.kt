@@ -1,7 +1,11 @@
 package io.dev.relic.feature.function.gallery.widget
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,10 +48,14 @@ private const val DEFAULT_AUTHOR = "Unknown Artist"
 private const val DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL = ""
 private const val DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL = ""
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GalleryStaggeredGrid(
     galleryDataState: GalleryDataState,
-    lazyStaggeredGridState: LazyStaggeredGridState
+    lazyStaggeredGridState: LazyStaggeredGridState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    onItemClick: (model: PixabayDataModel) -> Unit
 ) {
     when (galleryDataState) {
         is GalleryDataState.Init,
@@ -64,16 +72,33 @@ fun GalleryStaggeredGrid(
         is GalleryDataState.FetchSucceed -> {
             GalleryStaggeredGrid(
                 imageList = galleryDataState.modelList,
-                lazyStaggeredGridState = lazyStaggeredGridState
+                lazyStaggeredGridState = lazyStaggeredGridState,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
+                onItemClick = onItemClick
+            )
+        }
+
+        is GalleryDataState.FetchMoreFailed -> {
+            GalleryStaggeredGrid(
+                imageList = galleryDataState.cacheModelList,
+                lazyStaggeredGridState = lazyStaggeredGridState,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
+                onItemClick = onItemClick
             )
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun GalleryStaggeredGrid(
     imageList: List<PixabayDataModel?>,
-    lazyStaggeredGridState: LazyStaggeredGridState
+    lazyStaggeredGridState: LazyStaggeredGridState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
+    onItemClick: (model: PixabayDataModel) -> Unit
 ) {
     val screenWidthDp = RelicUiUtil.getCurrentScreenWidthDp()
     val galleryItemSize = (screenWidthDp / 2) - 16.dp
@@ -86,16 +111,25 @@ private fun GalleryStaggeredGrid(
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        items(imageList) { dataModel ->
-            dataModel?.apply {
-                GalleryGridItem(
-                    author = author ?: DEFAULT_AUTHOR,
-                    authorAvatarUrl = authorAvatarUrl ?: DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL,
-                    previewImageUrl = originalImageUrl ?: DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL,
-                    previewImageWidth = originalImageWidth ?: 0,
-                    previewImageHeight = (originalImageHeight ?: 0) / 6,
-                    likeNumber = likes ?: 0
-                )
+        items(imageList) { data ->
+            data?.apply {
+                with(sharedTransitionScope) {
+                    GalleryGridItem(
+                        author = author ?: DEFAULT_AUTHOR,
+                        authorAvatarUrl = authorAvatarUrl ?: DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL,
+                        previewImageUrl = originalImageUrl ?: DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL,
+                        previewImageWidth = originalImageWidth ?: 0,
+                        previewImageHeight = (originalImageHeight ?: 0) / 6,
+                        likeNumber = likes ?: 0,
+                        onItemClick = {
+                            onItemClick.invoke(data)
+                        },
+                        modifier = Modifier.sharedBounds(
+                            sharedContentState = sharedTransitionScope.rememberSharedContentState("image$id"),
+                            animatedVisibilityScope = animatedContentScope
+                        )
+                    )
+                }
             }
         }
     }
@@ -108,14 +142,22 @@ private fun GalleryGridItem(
     previewImageUrl: String,
     previewImageWidth: Int,
     previewImageHeight: Int,
-    likeNumber: Int
+    likeNumber: Int,
+    onItemClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         color = Color.Transparent
     ) {
-        Box(modifier = Modifier.wrapContentSize()) {
+        Box(
+            modifier = modifier
+                .wrapContentSize()
+                .clickable {
+                    onItemClick.invoke()
+                }
+        ) {
             OnlineWallpaperCover(
                 url = previewImageUrl,
                 imageWidth = previewImageWidth,

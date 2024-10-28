@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -27,14 +29,25 @@ import io.core.ui.utils.RelicUiUtil.convertPixelToDp
 @Composable
 fun OnlineWallpaperCover(
     url: String,
-    imageWidth: Int,
-    imageHeight: Int,
+    imageWidth: Int = 0,
+    imageHeight: Int = 0,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val density = context.resources.displayMetrics.density
-    val imageWidthDp = convertPixelToDp(density, imageWidth)
-    val imageHeightDp = convertPixelToDp(density, imageHeight)
+
+    val imageWidthDp = if (imageWidth == 0) {
+        configuration.screenWidthDp.dp
+    } else {
+        convertPixelToDp(density, imageWidth)
+    }
+
+    val imageHeightDp = if (imageHeight == 0) {
+        configuration.screenHeightDp.dp
+    }else{
+        convertPixelToDp(density, imageHeight)
+    }
 
     WallpaperCover(
         url = url,

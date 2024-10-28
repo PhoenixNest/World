@@ -14,6 +14,7 @@ object RelicRoute {
 
     const val DETAIL_FOOD_RECIPE = "route_detail_food_recipe"
     const val DETAIL_NEWS = "route_detail_news"
+    const val DETAIL_GALLERY = "route_detail_gallery"
 
     /**
      * Route Config

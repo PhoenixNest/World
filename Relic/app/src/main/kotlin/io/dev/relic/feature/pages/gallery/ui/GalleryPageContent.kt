@@ -1,11 +1,13 @@
 package io.dev.relic.feature.pages.gallery.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -15,20 +17,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
-import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.widget.GalleryStaggeredGrid
-import io.dev.relic.feature.pages.gallery.GalleryAction
-import io.dev.relic.feature.pages.gallery.GalleryListState
 import io.dev.relic.feature.pages.gallery.GalleryState
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GalleryPageContent(
     galleryState: GalleryState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     onBackClick: () -> Unit
 ) {
     Surface(
@@ -38,7 +39,12 @@ fun GalleryPageContent(
         Box(modifier = Modifier.fillMaxSize()) {
             GalleryStaggeredGrid(
                 galleryDataState = galleryState.dataState,
-                lazyStaggeredGridState = galleryState.listState.stagedGridState
+                lazyStaggeredGridState = galleryState.listState.stagedGridState,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
+                onItemClick = { dataModel ->
+                    galleryState.action.onItemClick.invoke(dataModel)
+                }
             )
             IconButton(
                 onClick = onBackClick,
@@ -62,20 +68,4 @@ fun GalleryPageContent(
             }
         }
     }
-}
-
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-private fun GalleryPageContentPreview() {
-    GalleryPageContent(
-        GalleryState(
-            dataState = GalleryDataState.Init,
-            action = GalleryAction(
-                onItemClick = {},
-                onRetryClick = {}
-            ),
-            listState = GalleryListState(stagedGridState = rememberLazyStaggeredGridState())
-        ),
-        onBackClick = {}
-    )
 }

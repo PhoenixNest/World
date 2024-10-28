@@ -128,7 +128,6 @@ private fun FoodRecipesLazyRowContent(
                 }
             }
         }
-
     }
 }
 

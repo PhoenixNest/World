@@ -28,4 +28,10 @@ sealed interface GalleryDataState {
         val errorCode: Int?,
         val errorMessage: String?
     ) : GalleryDataState
+
+    data class FetchMoreFailed(
+        val cacheModelList: List<PixabayDataModel?>,
+        val errorCode: Int?,
+        val errorMessage: String?
+    ): GalleryDataState
 }

@@ -1,6 +1,8 @@
 package io.dev.relic.feature.route
 
 import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
+import io.dev.relic.feature.pages.detail.gallery.pageGalleryDetail
 import io.dev.relic.feature.pages.detail.news.pageNewsDetail
 import io.dev.relic.feature.pages.gallery.pageGallery
 import io.dev.relic.feature.pages.home.pageHome
@@ -30,6 +33,11 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUD
 /**
  * Main Screen navigation route host
  *
+ * Reference docs:
+ *
+ * - [Shared elements with Navigation Compose](https://developer.android.google.cn/develop/ui/compose/animation/shared-elements/navigation#predictive-back)
+ * - [Shared Element Transitions in Compose](https://developer.android.google.cn/develop/ui/compose/animation/shared-elements)
+ *
  * @param mainScreenState
  * @param navHostController
  * @param mainViewModel                 Global ViewModel
@@ -40,6 +48,7 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUD
  * @param galleryViewModel              Provide the gallery feature to Gallery page
  * @param startDestination              The journey begins from here
  * */
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MainFeatureNavHost(
     mainScreenState: MainScreenState,
@@ -60,70 +69,81 @@ fun MainFeatureNavHost(
         else -> systemUiController.updateStatusBarColor(darkIcons = false)
     }
 
-    NavHost(
-        navController = navHostController,
-        startDestination = startDestination,
-        modifier = Modifier.fillMaxSize(),
-        enterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(durationMillis = 350)
+    SharedTransitionLayout(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        val sharedTransitionScope = this
+
+        NavHost(
+            navController = navHostController,
+            startDestination = startDestination,
+            modifier = Modifier.fillMaxSize(),
+            enterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(durationMillis = 350)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(durationMillis = 350)
+                )
+            },
+            popEnterTransition = {
+                slideIntoContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(durationMillis = 350)
+                )
+            },
+            popExitTransition = {
+                slideOutOfContainer(
+                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(durationMillis = 350)
+                )
+            }
+        ) {
+            pageHome(
+                mainScreenState = mainScreenState,
+                mainViewModel = mainViewModel,
+                geminiAgentViewModel = geminiAgentViewModel,
+                foodRecipesViewModel = foodRecipesViewModel
             )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(durationMillis = 350)
+            pageStudio(
+                mainScreenState = mainScreenState,
+                mainViewModel = mainViewModel,
+                todoViewModel = todoViewModel,
+                newsViewModel = newsViewModel
             )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(durationMillis = 350)
+            pageGallery(
+                mainScreenState = mainScreenState,
+                mainViewModel = mainViewModel,
+                galleryViewModel = galleryViewModel,
+                sharedTransitionScope = sharedTransitionScope,
+                onBackClick = navHostController::popBackStack
             )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(durationMillis = 350)
+            pageSettings(
+                mainScreenState = mainScreenState,
+                mainViewModel = mainViewModel,
+                onBackClick = navHostController::popBackStack
+            )
+            pageAgentChat(
+                mainScreenState = mainScreenState,
+                mainViewModel = mainViewModel,
+                geminiAgentViewModel = geminiAgentViewModel,
+                onBackClick = navHostController::popBackStack
+            )
+            pageFoodRecipeDetail(
+                foodRecipesViewModel = foodRecipesViewModel,
+                onBackClick = navHostController::popBackStack
+            )
+            pageNewsDetail(
+                onBackClick = navHostController::popBackStack
+            )
+            pageGalleryDetail(
+                onBackClick = navHostController::popBackStack,
+                shareTransitionScope = sharedTransitionScope
             )
         }
-    ) {
-        pageHome(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            geminiAgentViewModel = geminiAgentViewModel,
-            foodRecipesViewModel = foodRecipesViewModel
-        )
-        pageStudio(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            todoViewModel = todoViewModel,
-            newsViewModel = newsViewModel
-        )
-        pageGallery(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            galleryViewModel = galleryViewModel,
-            onBackClick = navHostController::popBackStack
-        )
-        pageSettings(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            onBackClick = navHostController::popBackStack
-        )
-        pageAgentChat(
-            mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            geminiAgentViewModel = geminiAgentViewModel,
-            onBackClick = navHostController::popBackStack
-        )
-        pageFoodRecipeDetail(
-            foodRecipesViewModel = foodRecipesViewModel,
-            onBackClick = navHostController::popBackStack
-        )
-        pageNewsDetail(
-            onBackClick = navHostController::popBackStack
-        )
     }
 }

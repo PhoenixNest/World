@@ -1,7 +1,6 @@
 package io.dev.relic.feature.function.food_recipes.ui.widget
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,7 +62,6 @@ fun FoodRecipesColumnItem(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun FoodRecipesIntro(data: FoodRecipesComplexSearchModel) {
     Column(

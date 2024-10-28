@@ -1,5 +1,9 @@
 package io.dev.relic.feature.pages.gallery
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -16,17 +20,36 @@ fun NavController.navigateToGalleryPage(navOptions: NavOptions? = null) {
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.pageGallery(
     mainScreenState: MainScreenState,
     mainViewModel: MainViewModel,
     galleryViewModel: GalleryViewModel,
+    sharedTransitionScope: SharedTransitionScope,
     onBackClick: () -> Unit
 ) {
-    composable(route = GALLERY) {
+    composable(
+        route = GALLERY,
+        enterTransition = {
+            fadeIn()
+        },
+        exitTransition = {
+            fadeOut()
+        },
+        popEnterTransition = {
+            fadeIn()
+        },
+        popExitTransition = {
+            fadeOut()
+        }
+    ) {
+        val animatedContentScope = this
         GalleryPageRoute(
             mainScreenState = mainScreenState,
             mainViewModel = mainViewModel,
             galleryViewModel = galleryViewModel,
+            sharedTransitionScope = sharedTransitionScope,
+            animatedContentScope = animatedContentScope,
             onBackClick = onBackClick
         )
     }

@@ -215,8 +215,13 @@ class GalleryViewModel @Inject constructor(
                 val errorCode = result.code
                 val errorMessage = result.message
                 LogUtil.e(TAG, "[Handle Gallery Data] Failed, ($errorCode, $errorMessage)")
-                setState(_galleryDataStateFlow, GalleryDataState.FetchFailed(errorCode, errorMessage))
                 isFetchingMore = false
+                if (isFetchMore) {
+                    val fetchMoreFailedState = GalleryDataState.FetchMoreFailed(galleryDataList, errorCode, errorMessage)
+                    setState(_galleryDataStateFlow, fetchMoreFailedState)
+                } else {
+                    setState(_galleryDataStateFlow, GalleryDataState.FetchFailed(errorCode, errorMessage))
+                }
             }
         }
     }
