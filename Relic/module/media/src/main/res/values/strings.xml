@@ -10,4 +10,7 @@
     <string name="wallpaper_description">This is a Wallpaper.</string>
     <string name="wallpaper_change_title">Change Wallpaper</string>
     <string name="wallpaper_change_desc">Your wallpaper has been changed successfully when $1%s</string>
+
+    <string name="wallpaper_preview_on">Hide Preview</string>
+    <string name="wallpaper_preview_off">Show Preview</string>
 </resources>

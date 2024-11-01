@@ -4,34 +4,40 @@ import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.pages.detail.gallery.ui.GalleryDetailPageContent
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GalleryDetailPageRoute(
-    id: Int?,
-    originalImageUrl: String?,
-    author: String?,
-    authorAvatarUrl: String?,
-    authorPageUrl: String?,
+    model: PixabayDataModel,
     shareTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
-    val sharedContentState = shareTransitionScope.rememberSharedContentState(key = "image$id")
+    val sharedContentState = shareTransitionScope
+        .rememberSharedContentState(key = "image${model.id}")
+
+    var isShowPreview by remember {
+        mutableStateOf(false)
+    }
 
     with(shareTransitionScope) {
         GalleryDetailPage(
-            id = id,
-            originalImageUrl = originalImageUrl,
-            authorName = author,
-            authorAvatarUrl = authorAvatarUrl,
-            authorPageUrl = authorPageUrl,
+            model = model,
+            isShowPreview = isShowPreview,
             onBackClick = onBackClick,
+            onPreviewClick = {
+                isShowPreview = !isShowPreview
+            },
             onSetWallpaperClick = {
                 // WallpaperManager.setWallpaper()
             },
@@ -48,23 +54,19 @@ fun GalleryDetailPageRoute(
 
 @Composable
 private fun GalleryDetailPage(
-    id: Int?,
-    originalImageUrl: String?,
-    authorName: String?,
-    authorAvatarUrl: String?,
-    authorPageUrl: String?,
+    model: PixabayDataModel,
+    isShowPreview: Boolean,
     onBackClick: () -> Unit,
+    onPreviewClick: () -> Unit,
     onSetWallpaperClick: () -> Unit,
     onSetBothClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     GalleryDetailPageContent(
-        id = id,
-        originalImageUrl = originalImageUrl,
-        authorName = authorName,
-        authorAvatarUrl = authorAvatarUrl,
-        authorPageUrl = authorPageUrl,
+        model = model,
+        isShowPreview = isShowPreview,
         onBackClick = onBackClick,
+        onPreviewClick = onPreviewClick,
         onSetWallpaperClick = onSetWallpaperClick,
         onSetBothClick = onSetBothClick,
         modifier = modifier
@@ -75,12 +77,25 @@ private fun GalleryDetailPage(
 @Preview(showBackground = true)
 private fun GalleryDetailPageContentPreview() {
     GalleryDetailPageContent(
-        id = -1,
-        originalImageUrl = "",
-        authorName = "",
-        authorAvatarUrl = "",
-        authorPageUrl = "",
+        model = PixabayDataModel(
+            id = null,
+            previewImageUrl = null,
+            previewImageWidth = null,
+            previewImageHeight = null,
+            webFormatImageUrl = null,
+            webFormatImageWidth = null,
+            webFormatImageHeight = null,
+            originalImageUrl = null,
+            originalImageWidth = null,
+            originalImageHeight = null,
+            author = null,
+            authorAvatarUrl = null,
+            authorPageUrl = null,
+            likes = null
+        ),
+        isShowPreview = false,
         onBackClick = {},
+        onPreviewClick = {},
         onSetWallpaperClick = {},
         onSetBothClick = {}
     )

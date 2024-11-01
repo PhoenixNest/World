@@ -16,6 +16,7 @@ import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
+import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.route.RelicRoute.DETAIL_GALLERY
 
 private const val KEY_PIXABAY_ID = "key_pixabay_id"
@@ -84,12 +85,25 @@ fun NavGraphBuilder.pageGalleryDetail(
             val author = getString(KEY_PIXABAY_AUTHOR, DEFAULT_PLACEHOLDER_URL)
             val authorAvatarUrl = getString(KEY_PIXABAY_AUTHOR_AVATAR_URL, DEFAULT_PLACEHOLDER_URL)
             val authorPageUrl = getString(KEY_PIXABAY_AUTHOR_PAGE_URL, DEFAULT_PLACEHOLDER_URL)
-            GalleryDetailPageRoute(
+
+            val model = PixabayDataModel(
                 id = id,
+                previewImageUrl = null,
+                previewImageWidth = null,
+                previewImageHeight = null,
+                webFormatImageUrl = null,
+                webFormatImageWidth = null,
+                webFormatImageHeight = null,
                 originalImageUrl = originalImageUrl,
+                originalImageWidth = null,
+                originalImageHeight = null,
                 author = author,
                 authorAvatarUrl = authorAvatarUrl,
                 authorPageUrl = authorPageUrl,
+                likes = null
+            )
+            GalleryDetailPageRoute(
+                model = model,
                 shareTransitionScope = shareTransitionScope,
                 animatedContentScope = animatedContentScope,
                 onBackClick = onBackClick,
