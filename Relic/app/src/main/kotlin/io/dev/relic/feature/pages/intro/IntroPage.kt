@@ -34,7 +34,7 @@ fun IntroPage(onNavigateClick: () -> Unit) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun IntroPagePreview() {
     IntroPage(onNavigateClick = {})
 }

@@ -4,6 +4,10 @@ import io.common.RelicResCenter.getString
 
 object NetworkParameters {
 
+    val REQUEST_PROPERTY = "Charset" to "UTF-8"
+    const val REQUEST_TYPE_GET = "GET"
+    const val REQUEST_TYPE_POST = "POST"
+
     /**
      * Parameters of the okHttpClient constructor builder.
      *

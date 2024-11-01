@@ -160,7 +160,7 @@ private fun HomePage(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun HomePagePreview() {
     HomePage(
         onOpenDrawer = {},

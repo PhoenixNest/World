@@ -120,7 +120,7 @@ private fun AgentChatPage(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun AgentChatPagePreview() {
     val chatHistory = listOf<AbsGeminiCell>(
         GeminiTextCell(

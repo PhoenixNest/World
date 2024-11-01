@@ -111,7 +111,7 @@ private fun StudioPage(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun StudioPagePreview() {
     StudioPage(
         onUserClick = {},

@@ -84,7 +84,7 @@ fun HomePageContent(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun HomePageContentPreview() {
     HomePageContent(
         onOpenDrawer = {},

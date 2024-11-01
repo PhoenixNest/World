@@ -76,7 +76,7 @@ fun SettingsPage(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun SettingPagePreview() {
     SettingsPage(
         onBackClick = {},

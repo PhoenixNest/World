@@ -47,7 +47,7 @@ fun CommonLoadingComponent(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun CommonLoadingComponentPreview() {
     CommonLoadingComponent()
 }

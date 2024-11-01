@@ -72,7 +72,7 @@ private fun GalleryDetailPage(
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun GalleryDetailPageContentPreview() {
     GalleryDetailPageContent(
         id = -1,
