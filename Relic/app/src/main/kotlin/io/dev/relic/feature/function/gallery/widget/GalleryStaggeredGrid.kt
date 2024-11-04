@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
@@ -111,8 +111,12 @@ private fun GalleryStaggeredGrid(
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        items(imageList) { data ->
+        itemsIndexed(imageList) { index, data ->
             data?.apply {
+                val itemDecorationModifier = Modifier.padding(
+                    top = if (index < 2) 24.dp else 0.dp,
+                    bottom = if (index == imageList.size - 1) 100.dp else 0.dp
+                )
                 with(sharedTransitionScope) {
                     GalleryGridItem(
                         author = author ?: DEFAULT_AUTHOR,
@@ -124,7 +128,7 @@ private fun GalleryStaggeredGrid(
                         onItemClick = {
                             onItemClick.invoke(data)
                         },
-                        modifier = Modifier.sharedBounds(
+                        modifier = itemDecorationModifier.sharedBounds(
                             sharedContentState = sharedTransitionScope.rememberSharedContentState("image$id"),
                             animatedVisibilityScope = animatedContentScope
                         )
@@ -147,12 +151,12 @@ private fun GalleryGridItem(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         color = Color.Transparent
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .wrapContentSize()
                 .clickable {
                     onItemClick.invoke()
