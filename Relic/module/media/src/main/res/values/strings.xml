@@ -13,4 +13,7 @@
 
     <string name="wallpaper_preview_on">Hide Preview</string>
     <string name="wallpaper_preview_off">Show Preview</string>
+
+    <string name="wallpaper_setter_home">Home screen</string>
+    <string name="wallpaper_setter_home_lock">Home &amp; Lock screens</string>
 </resources>

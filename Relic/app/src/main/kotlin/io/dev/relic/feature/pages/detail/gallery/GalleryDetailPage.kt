@@ -3,6 +3,8 @@ package io.dev.relic.feature.pages.detail.gallery
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,24 +33,20 @@ fun GalleryDetailPageRoute(
     }
 
     with(shareTransitionScope) {
-        GalleryDetailPage(
-            model = model,
-            isShowPreview = isShowPreview,
-            onBackClick = onBackClick,
-            onPreviewClick = {
-                isShowPreview = !isShowPreview
-            },
-            onSetWallpaperClick = {
-                // WallpaperManager.setWallpaper()
-            },
-            onSetBothClick = {
-                // WallpaperManager.setWallpaper()
-            },
-            modifier = Modifier.sharedBounds(
-                sharedContentState = sharedContentState,
-                animatedVisibilityScope = animatedContentScope
+        Box(modifier = Modifier.fillMaxSize()){
+            GalleryDetailPage(
+                model = model,
+                isShowPreview = isShowPreview,
+                onBackClick = onBackClick,
+                onPreviewClick = {
+                    isShowPreview = !isShowPreview
+                },
+                modifier = Modifier.sharedBounds(
+                    sharedContentState = sharedContentState,
+                    animatedVisibilityScope = animatedContentScope
+                )
             )
-        )
+        }
     }
 }
 
@@ -58,8 +56,6 @@ private fun GalleryDetailPage(
     isShowPreview: Boolean,
     onBackClick: () -> Unit,
     onPreviewClick: () -> Unit,
-    onSetWallpaperClick: () -> Unit,
-    onSetBothClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     GalleryDetailPageContent(
@@ -67,8 +63,6 @@ private fun GalleryDetailPage(
         isShowPreview = isShowPreview,
         onBackClick = onBackClick,
         onPreviewClick = onPreviewClick,
-        onSetWallpaperClick = onSetWallpaperClick,
-        onSetBothClick = onSetBothClick,
         modifier = modifier
     )
 }
@@ -95,8 +89,6 @@ private fun GalleryDetailPageContentPreview() {
         ),
         isShowPreview = false,
         onBackClick = {},
-        onPreviewClick = {},
-        onSetWallpaperClick = {},
-        onSetBothClick = {}
+        onPreviewClick = {}
     )
 }

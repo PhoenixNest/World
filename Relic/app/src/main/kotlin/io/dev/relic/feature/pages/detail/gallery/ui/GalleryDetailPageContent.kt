@@ -43,8 +43,6 @@ fun GalleryDetailPageContent(
     isShowPreview: Boolean,
     onBackClick: () -> Unit,
     onPreviewClick: () -> Unit,
-    onSetWallpaperClick: () -> Unit,
-    onSetBothClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -184,8 +182,6 @@ private fun GalleryDetailPageContentPreview() {
         ),
         isShowPreview = false,
         onBackClick = {},
-        onPreviewClick = {},
-        onSetWallpaperClick = {},
-        onSetBothClick = {}
+        onPreviewClick = {}
     )
 }
