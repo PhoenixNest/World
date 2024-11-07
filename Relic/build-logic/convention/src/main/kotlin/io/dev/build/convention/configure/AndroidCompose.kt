@@ -1,9 +1,9 @@
 package io.dev.build.convention.configure
 
 import com.android.build.api.dsl.CommonExtension
-import io.dev.build.convention.ext.DependencyHandlerScopeExt.androidTestApi
-import io.dev.build.convention.ext.DependencyHandlerScopeExt.api
-import io.dev.build.convention.ext.DependencyHandlerScopeExt.debugApi
+import io.dev.build.convention.ext.DependencyHandlerScopeExt.androidTestImplementation
+import io.dev.build.convention.ext.DependencyHandlerScopeExt.debugImplementation
+import io.dev.build.convention.ext.DependencyHandlerScopeExt.implementation
 import io.dev.build.convention.ext.ProjectExt.libs
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Dependency
@@ -18,34 +18,41 @@ internal fun Project.configureAndroidCompose(extension: CommonExtension<*, *, *,
 
         dependencies {
             val composeBom: Dependency = platform("androidx.compose:compose-bom:2024.08.00")
-            api(composeBom)
-            androidTestApi(composeBom)
+            implementation(composeBom)
+            androidTestImplementation(composeBom)
             // Material Design 3
-            api(libs.findLibrary("androidx.compose.material3:material3").get())
+            implementation(libs.findLibrary("androidx.compose.material3:material3").get())
             // Material Design
-            api(libs.findLibrary("androidx.compose.material").get())
+            implementation(libs.findLibrary("androidx.compose.material").get())
             // Android Studio Preview support
-            api(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
-            debugApi(libs.findLibrary("androidx.compose.ui.tooling").get())
+            implementation(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+            debugImplementation(libs.findLibrary("androidx.compose.ui.tooling").get())
             // UI Tests
-            androidTestApi(libs.findLibrary("androidx.compose.ui.test.junit4").get())
-            debugApi(libs.findLibrary("androidx.compose.ui.test.manifest").get())
+            androidTestImplementation(libs.findLibrary("androidx.compose.ui.test.junit4").get())
+            debugImplementation(libs.findLibrary("androidx.compose.ui.test.manifest").get())
             // Optional - Included automatically by material, only add when you need
             // the icons but not the material library (e.g. when using Material3 or a
             // custom design system based on Foundation)
-            api(libs.findLibrary("androidx.compose.material.icons.core").get())
+            implementation(libs.findLibrary("androidx.compose.material.icons.core").get())
             // Optional - Add full set of material icons
-            api(libs.findLibrary("androidx.compose.material.icons.extended").get())
+            implementation(libs.findLibrary("androidx.compose.material.icons.extended").get())
             // Optional - Add window size utils
-            api(libs.findLibrary("androidx.compose.material3.window.size").get())
+            implementation(libs.findLibrary("androidx.compose.material3.window.size").get())
             // Optional - Integration with LiveData
-            api(libs.findLibrary("androidx.compose.runtime.livedata").get())
+            implementation(libs.findLibrary("androidx.compose.runtime.livedata").get())
             // Optional - Integration with activities
-            api(libs.findLibrary("androidx.compose.activity").get())
+            implementation(libs.findLibrary("androidx.compose.activity").get())
             // Optional - Integration with ViewModels
-            api(libs.findLibrary("androidx.compose.viewmodel").get())
+            implementation(libs.findLibrary("androidx.compose.viewmodel").get())
             // Optional - Integration with View Binding
-            api(libs.findLibrary("androidx.compose.ui.viewbinding").get())
+            implementation(libs.findLibrary("androidx.compose.ui.viewbinding").get())
+        }
+
+        testOptions {
+            unitTests {
+                // For Robolectric
+                isIncludeAndroidResources = true
+            }
         }
     }
 }

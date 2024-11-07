@@ -13,10 +13,6 @@ object FileUtil {
         return context.filesDir.absolutePath
     }
 
-    fun getDownloadFileName(url: String): String {
-        return url.substring(url.lastIndexOf("/") + 1)
-    }
-
     fun checkFileExist(fileName: String): Boolean {
         val file = File(fileName)
         return file.exists()
@@ -25,5 +21,9 @@ object FileUtil {
     fun createCacheFile(context: Context, fileName: String): File {
         val localCacheDirPath = getLocalCacheDirPath(context)
         return File(localCacheDirPath, fileName)
+    }
+
+    fun getDownloadFileName(url: String): String {
+        return url.substring(url.lastIndexOf("/") + 1)
     }
 }

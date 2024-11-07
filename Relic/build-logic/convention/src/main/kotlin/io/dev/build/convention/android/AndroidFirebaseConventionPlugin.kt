@@ -8,7 +8,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
-class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
+class AndroidFirebaseConventionPlugin : Plugin<Project> {
 
     /**
      * Apply this plugin to the given target object.

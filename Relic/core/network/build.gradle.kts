@@ -55,6 +55,24 @@ dependencies {
 
     /* ======================== Google Official Extension ======================== */
 
+    // JUnit test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    // Optional -- Robolectric environment
+    testImplementation(libs.androidx.test.core)
+    // Optional -- Mockito framework
+    testImplementation(libs.mockito.core)
+    // Optional -- Mockito android
+    androidTestImplementation(libs.mockito.android)
+    // Optional -- mockito-kotlin
+    testImplementation(libs.mockito.kotlin)
+    // Optional -- Mockk framework
+    testImplementation(libs.mockk)
+
+    // Coroutine Test
+    testImplementation(libs.kotlinx.coroutines.test)
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

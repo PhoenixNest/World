@@ -45,32 +45,32 @@ tasks {
 
 gradlePlugin {
     plugins {
-        register("androidLibraryCompose") {
-            id = "relic.android.library.compose"
-            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        register("androidComposeLibrary") {
+            id = "android.compose.library"
+            implementationClass = "AndroidComposeLibraryConventionPlugin"
         }
-        register("androidFirebase") {
-            id = "relic.android.firebase"
-            implementationClass = "AndroidApplicationFirebaseConventionPlugin"
+        register("androidFirebaseLibrary") {
+            id = "android.firebase"
+            implementationClass = "AndroidFirebaseConventionPlugin"
         }
-        register("androidHilt") {
-            id = "relic.android.hilt"
+        register("androidHiltPlugin") {
+            id = "android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
-        register("androidRoom") {
-            id = "relic.android.room"
+        register("androidRoomPlugin") {
+            id = "android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
         register("jvmLibrary") {
-            id = "relic.jvm.library"
+            id = "jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
-        register("sentry") {
-            id = "relic.dev.plugin.sentry"
+        register("sentryPlugin") {
+            id = "sentry.plugin"
             implementationClass = "SentryPlugin"
         }
-        register("output") {
-            id = "relic.dev.plugin.output"
+        register("outputPlugin") {
+            id = "output.plugin"
             implementationClass = "OutputPlugin"
         }
     }

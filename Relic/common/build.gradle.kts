@@ -24,6 +24,7 @@ android {
 
     defaultConfig {
         minSdk = 26
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("boolean", "LOG_MODE", logMode)
     }
@@ -48,10 +49,6 @@ dependencies {
 
     api(libs.android.ktx)
     api(libs.appcompat)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -93,7 +90,6 @@ dependencies {
     // Coroutines
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
-    testApi(libs.kotlinx.coroutines.test)
 
     // Paging
     api(libs.androidx.paging.runtime.ktx)

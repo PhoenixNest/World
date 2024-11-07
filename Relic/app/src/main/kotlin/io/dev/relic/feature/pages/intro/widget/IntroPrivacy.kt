@@ -2,6 +2,7 @@ package io.dev.relic.feature.pages.intro.widget
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,15 +16,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants
 import io.core.ui.theme.RelicFontFamily
-import io.core.ui.theme.mainTextColor
 import io.dev.relic.R
 import io.dev.relic.feature.activities.web.WebActivity
 
 @Composable
 fun IntroPrivacy() {
     val context = LocalContext.current
-    val normalTextColor = mainTextColor
-    val highLightTextColor = mainTextColor
+    val normalTextColor = MaterialTheme.colorScheme.onPrimary
+    val highLightTextColor = MaterialTheme.colorScheme.onSecondary
     val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.intro_agreement_part_1))
         pushStringAnnotation(

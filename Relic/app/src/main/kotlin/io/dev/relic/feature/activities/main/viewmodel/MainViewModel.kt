@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    application: Application,
+    private val application: Application,
     private val locationUseCase: LocationUseCase,
     private val weatherUseCase: WeatherUseCase,
 ) : AndroidViewModel(application) {
@@ -65,10 +65,9 @@ class MainViewModel @Inject constructor(
                     }
 
                     override fun onAccessSucceed(location: Location) {
-                        LogUtil.d(
-                            TAG,
-                            "[Access Device Location] Access succeed, (${location.latitude}, ${location.longitude})"
-                        )
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        LogUtil.d(TAG, "[Access Device Location] Access succeed, ($latitude, $longitude)")
                         latestLocation = location
                         setState(_mainStateFlow, MainState.AccessLocationSucceed(location))
                     }

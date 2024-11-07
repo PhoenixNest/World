@@ -4,6 +4,7 @@
 accompanist = "0.34.0"
 androidGradlePlugin = "8.6.0"
 androidTools = "31.6.0"
+androidXTestCore = "1.6.1"
 appcompat = "1.7.0"
 asm = "9.7"
 cardview = "1.0.0"
@@ -40,6 +41,10 @@ lottie = "6.5.0"
 lottieCompose = "6.5.0"
 material = "1.12.0"
 material3AdaptiveNavigationSuiteVersion = "1.3.0"
+mockitoAndroid = "5.14.2"
+mockitoCore = "5.14.2"
+mockitoKotlin = "5.4.0"
+mockk = "1.13.13"
 moshi = "1.15.1"
 moshiAdapters = "1.15.1"
 moshiKotlinCodegen = "1.15.1"
@@ -79,6 +84,7 @@ android-tools-build = { group = "com.android.tools.build", name = "gradle", vers
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "composeActivity" }
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidXTestCore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
@@ -146,6 +152,10 @@ lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoAndroid" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshiAdapters" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
@@ -167,3 +177,12 @@ kotlin-symbol-processing = { id = "com.google.devtools.ksp", version.ref = "ksp"
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+# Plugins defined by this project
+android-compose-library = { id = "android.compose.library" }
+android-firebase = { id = "android.firebase" }
+android-hilt = { id = "android.hilt" }
+android-room = { id = "android.room" }
+jvm-library = { id = "jvm.library" }
+sentry-plugin = { id = "sentry.plugin" }
+output-plugin = { id = "output.plugin" }

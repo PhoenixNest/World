@@ -19,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
+import io.core.network.download.DownloadManager
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
@@ -34,6 +36,8 @@ import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
 import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.domain.app.AbsBaseActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AbsBaseActivity() {
@@ -99,6 +103,10 @@ class MainActivity : AbsBaseActivity() {
 
     override fun initialization(savedInstanceState: Bundle?) {
         setupCoilImageLoader()
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val download = DownloadManager.download(application, "https://static.monknow.com/newtab/wallpaper/e7b8e46709ca847d7e7376cbbe55dd37.jpg")
+        }
     }
 
     private fun setupCoilImageLoader() {

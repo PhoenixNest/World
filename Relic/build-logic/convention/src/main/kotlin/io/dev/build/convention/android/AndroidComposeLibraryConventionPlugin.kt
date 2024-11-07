@@ -7,7 +7,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.getByType
 
-class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
+class AndroidComposeLibraryConventionPlugin : Plugin<Project> {
 
     /**
      * Apply this plugin to the given target object.
