@@ -1,5 +1,8 @@
 package io.dev.relic.feature.pages.detail.gallery.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -32,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonNoDataComponent
+import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
 import io.data.model.pixabay.PixabayDataModel
@@ -43,16 +48,19 @@ fun GalleryDetailPageContent(
     isShowPreview: Boolean,
     onBackClick: () -> Unit,
     onPreviewClick: () -> Unit,
+    onOpenSetterSheetClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val originalImageUrl = model.originalImageUrl
+
     Box(modifier = modifier.fillMaxSize()) {
-        if (model.originalImageUrl.isNullOrEmpty()) {
+        if (originalImageUrl.isNullOrEmpty()) {
             CommonNoDataComponent()
             return
         }
 
         OnlineWallpaperCover(
-            url = model.originalImageUrl!!,
+            url = originalImageUrl,
             modifier = Modifier.fillMaxSize()
         )
         GalleryDetailPageTopBar(
@@ -61,6 +69,14 @@ fun GalleryDetailPageContent(
             onPreviewClick = onPreviewClick,
             modifier = Modifier.align(Alignment.TopCenter)
         )
+        AnimatedVisibility(
+            visible = !isShowPreview,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier.align(Alignment.BottomCenter)
+        ) {
+            GalleryDetailPageSetterButton(onClick = onOpenSetterSheetClick)
+        }
     }
 }
 
@@ -161,6 +177,29 @@ private fun GalleryDetailPreviewButton(
 }
 
 @Composable
+private fun GalleryDetailPageSetterButton(onClick: () -> Unit) {
+    Surface(
+        modifier = Modifier
+            .navigationBarsPadding()
+            .padding(bottom = 32.dp),
+        color = Color.DarkGray.copy(alpha = 0.3F),
+        shape = CircleShape
+    ) {
+        Text(
+            text = stringResource(io.module.media.R.string.wallpaper_setter_label),
+            modifier = Modifier
+                .clickable { onClick.invoke() }
+                .padding(
+                    horizontal = 32.dp,
+                    vertical = 16.dp
+                ),
+            color = Color.White,
+            fontFamily = ubuntu
+        )
+    }
+}
+
+@Composable
 @Preview(showBackground = true)
 private fun GalleryDetailPageContentPreview() {
     GalleryDetailPageContent(
@@ -182,6 +221,7 @@ private fun GalleryDetailPageContentPreview() {
         ),
         isShowPreview = false,
         onBackClick = {},
-        onPreviewClick = {}
+        onPreviewClick = {},
+        onOpenSetterSheetClick = {}
     )
 }

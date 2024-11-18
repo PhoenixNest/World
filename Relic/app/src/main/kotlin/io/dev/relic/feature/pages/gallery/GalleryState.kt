@@ -16,5 +16,5 @@ data class GalleryAction(
 )
 
 data class GalleryListState(
-    val stagedGridState: LazyStaggeredGridState
+    val lazyStaggeredGridState: LazyStaggeredGridState
 )

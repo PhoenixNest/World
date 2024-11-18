@@ -39,7 +39,7 @@ fun GalleryPageContent(
         Box(modifier = Modifier.fillMaxSize()) {
             GalleryStaggeredGrid(
                 galleryDataState = galleryState.dataState,
-                lazyStaggeredGridState = galleryState.listState.stagedGridState,
+                lazyStaggeredGridState = galleryState.listState.lazyStaggeredGridState,
                 sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = animatedContentScope,
                 onItemClick = { dataModel ->

@@ -52,8 +52,7 @@ class GalleryViewModel @Inject constructor(
     /**
      * The Gallery data flow.
      * */
-    private val _galleryDataStateFlow = MutableStateFlow<GalleryDataState>(GalleryDataState.Init)
-    val galleryDataStateFlow: StateFlow<GalleryDataState> get() = _galleryDataStateFlow
+    private val galleryDataStateFlow = MutableStateFlow<GalleryDataState>(GalleryDataState.Init)
 
     /**
      * Memory cache list of gallery data.
@@ -155,6 +154,10 @@ class GalleryViewModel @Inject constructor(
         }
     }
 
+    fun getGalleryDataFlow(): StateFlow<GalleryDataState> {
+        return galleryDataStateFlow
+    }
+
     fun getGalleryList(): List<PixabayDataModel> {
         return galleryDataList.toList()
     }
@@ -183,7 +186,7 @@ class GalleryViewModel @Inject constructor(
                     // setState(dataFlow, GalleryDataState.FetchingMore)
                 } else {
                     LogUtil.d(TAG, "[Handle Gallery Data] Loading...")
-                    setState(_galleryDataStateFlow, GalleryDataState.Fetching)
+                    setState(galleryDataStateFlow, GalleryDataState.Fetching)
                 }
             }
 
@@ -202,11 +205,11 @@ class GalleryViewModel @Inject constructor(
                     }
 
                     galleryDataList.addAll(filteredModelList)
-                    setState(_galleryDataStateFlow, GalleryDataState.FetchSucceed(galleryDataList.toList()))
+                    setState(galleryDataStateFlow, GalleryDataState.FetchSucceed(galleryDataList.toList()))
                     isFetchingMore = false
                 } ?: {
                     LogUtil.d(TAG, "[Handle Gallery Data] Succeed without data")
-                    setState(_galleryDataStateFlow, GalleryDataState.NoImageData)
+                    setState(galleryDataStateFlow, GalleryDataState.NoImageData)
                     isFetchingMore = false
                 }
             }
@@ -217,10 +220,10 @@ class GalleryViewModel @Inject constructor(
                 LogUtil.e(TAG, "[Handle Gallery Data] Failed, ($errorCode, $errorMessage)")
                 isFetchingMore = false
                 if (isFetchMore) {
-                    val fetchMoreFailedState = GalleryDataState.FetchMoreFailed(galleryDataList, errorCode, errorMessage)
-                    setState(_galleryDataStateFlow, fetchMoreFailedState)
+                    val newState = GalleryDataState.FetchMoreFailed(galleryDataList, errorCode, errorMessage)
+                    setState(galleryDataStateFlow, newState)
                 } else {
-                    setState(_galleryDataStateFlow, GalleryDataState.FetchFailed(errorCode, errorMessage))
+                    setState(galleryDataStateFlow, GalleryDataState.FetchFailed(errorCode, errorMessage))
                 }
             }
         }

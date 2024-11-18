@@ -42,12 +42,12 @@ fun GalleryPageRoute(
 
     /* ======================== Field ======================== */
 
-    val galleryDataState by galleryViewModel.galleryDataStateFlow
+    val galleryDataState by galleryViewModel.getGalleryDataFlow()
         .collectAsStateWithLifecycle()
 
     /* ======================== Ui ======================== */
 
-    val galleryListState = GalleryListState(stagedGridState = rememberLazyStaggeredGridState())
+    val galleryListState = GalleryListState(lazyStaggeredGridState = rememberLazyStaggeredGridState())
 
     /* ======================== Ui State ======================== */
 
@@ -70,9 +70,9 @@ fun GalleryPageRoute(
         }
     )
 
-    LaunchedEffect(galleryListState.stagedGridState) {
+    LaunchedEffect(galleryListState.lazyStaggeredGridState) {
         snapshotFlow {
-            galleryListState.stagedGridState.firstVisibleItemIndex
+            galleryListState.lazyStaggeredGridState.firstVisibleItemIndex
         }.filter {
             it >= (galleryViewModel.getGalleryList().size / 2)
         }.collect {

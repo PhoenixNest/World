@@ -14,6 +14,12 @@
     <string name="wallpaper_preview_on">Hide Preview</string>
     <string name="wallpaper_preview_off">Show Preview</string>
 
+    <string name="wallpaper_setter_label">Set Wallpaper</string>
     <string name="wallpaper_setter_home">Home screen</string>
+    <string name="wallpaper_setter_lock">Lock screen</string>
     <string name="wallpaper_setter_home_lock">Home &amp; Lock screens</string>
+
+    <string name="wallpaper_setter_succeed">Your wallpaper has been changed successfully</string>
+    <string name="wallpaper_setter_failed">Change wallpaper failed, please try again later.</string>
+    <string name="wallpaper_go_to_desktop">Go to desktop</string>
 </resources>
