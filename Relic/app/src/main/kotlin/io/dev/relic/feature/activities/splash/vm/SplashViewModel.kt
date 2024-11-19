@@ -1,4 +1,4 @@
-package io.dev.relic.feature.activities.splash.viewmodel
+package io.dev.relic.feature.activities.splash.vm
 
 import android.app.Application
 import android.content.Context

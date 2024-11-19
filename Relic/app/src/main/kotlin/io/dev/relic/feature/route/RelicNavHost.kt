@@ -11,7 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel

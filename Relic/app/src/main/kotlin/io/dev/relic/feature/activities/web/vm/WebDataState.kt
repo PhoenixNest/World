@@ -1,4 +1,4 @@
-package io.dev.relic.feature.activities.web.viewmodel
+package io.dev.relic.feature.activities.web.vm
 
 sealed class WebDataState {
 

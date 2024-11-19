@@ -13,8 +13,8 @@ import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.dev.relic.R
 import io.dev.relic.databinding.ActivityWebBinding
-import io.dev.relic.feature.activities.web.viewmodel.WebDataState
-import io.dev.relic.feature.activities.web.viewmodel.WebViewModel
+import io.dev.relic.feature.activities.web.vm.WebDataState
+import io.dev.relic.feature.activities.web.vm.WebViewModel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 

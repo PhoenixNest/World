@@ -13,7 +13,7 @@ import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicResCenter.getString
 import io.dev.relic.R
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel

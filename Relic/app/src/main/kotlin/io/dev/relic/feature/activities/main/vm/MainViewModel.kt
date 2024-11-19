@@ -1,4 +1,4 @@
-package io.dev.relic.feature.activities.main.viewmodel
+package io.dev.relic.feature.activities.main.vm
 
 import android.app.Application
 import android.location.Location

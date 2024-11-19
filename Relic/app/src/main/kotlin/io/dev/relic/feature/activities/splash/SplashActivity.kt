@@ -21,7 +21,7 @@ import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.BuildConfig
 import io.dev.relic.feature.activities.intro.IntroActivity
 import io.dev.relic.feature.activities.main.MainActivity
-import io.dev.relic.feature.activities.splash.viewmodel.SplashViewModel
+import io.dev.relic.feature.activities.splash.vm.SplashViewModel
 import io.dev.relic.feature.screens.splash.SplashScreen
 import io.dev.relic.global.RelicApplication
 import io.dev.relic.global.RelicLifecycleObserver

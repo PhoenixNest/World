@@ -14,7 +14,7 @@ import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.function.food_recipes.util.FoodRecipesCategories

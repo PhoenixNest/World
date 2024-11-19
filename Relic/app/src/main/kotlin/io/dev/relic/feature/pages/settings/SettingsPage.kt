@@ -16,7 +16,7 @@ import io.common.RelicConstants.URL.USER_PRIVACY
 import io.common.RelicConstants.URL.USER_TERMS
 import io.core.ui.CommonTopBar
 import io.dev.relic.R
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.activities.web.WebActivity
 import io.dev.relic.feature.pages.settings.ui.SettingsPageContent
 import io.dev.relic.feature.screens.main.MainScreenState

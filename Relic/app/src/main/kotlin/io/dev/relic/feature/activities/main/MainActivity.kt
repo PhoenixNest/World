@@ -26,7 +26,7 @@ import coil.memory.MemoryCache
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.core.ui.theme.RelicAppTheme
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel

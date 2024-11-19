@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.dev.relic.R
-import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
+import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
