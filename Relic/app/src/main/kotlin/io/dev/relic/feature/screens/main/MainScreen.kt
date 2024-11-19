@@ -25,11 +25,11 @@ import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
-import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
-import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
-import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
-import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
+import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
+import io.dev.relic.feature.function.news.vm.NewsViewModel
+import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainDrawer
 import io.dev.relic.feature.screens.main.widget.MainRailAppBar

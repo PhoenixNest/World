@@ -12,11 +12,11 @@ import androidx.navigation.compose.NavHost
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
-import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
-import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
-import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
-import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
+import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
+import io.dev.relic.feature.function.news.vm.NewsViewModel
+import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.gallery.pageGalleryDetail

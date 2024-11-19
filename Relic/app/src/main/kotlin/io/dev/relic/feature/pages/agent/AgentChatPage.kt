@@ -16,7 +16,7 @@ import io.dev.relic.R
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
-import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
+import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.pages.agent.ui.AgentChatPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
 

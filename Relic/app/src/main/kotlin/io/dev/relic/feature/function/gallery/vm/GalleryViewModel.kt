@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.gallery.viewmodel
+package io.dev.relic.feature.function.gallery.vm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

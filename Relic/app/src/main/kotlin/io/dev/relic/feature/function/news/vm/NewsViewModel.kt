@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.news.viewmodel
+package io.dev.relic.feature.function.news.vm
 
 import android.app.Application
 import androidx.compose.runtime.getValue

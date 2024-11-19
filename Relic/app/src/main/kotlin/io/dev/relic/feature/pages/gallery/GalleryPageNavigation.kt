@@ -9,7 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
+import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
 import io.dev.relic.feature.route.RelicRoute.GALLERY
 import io.dev.relic.feature.screens.main.MainScreenState
 

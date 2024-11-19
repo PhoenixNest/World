@@ -12,7 +12,7 @@ import androidx.navigation.Navigator
 import androidx.navigation.compose.composable
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
-import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
+import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
 import io.dev.relic.feature.route.RelicRoute.DETAIL_FOOD_RECIPE
 
 private const val KEY_FOOD_RECIPE_ID = "key_food_recipe_id"

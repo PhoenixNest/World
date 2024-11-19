@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.agent.gemini.viewmodel
+package io.dev.relic.feature.function.agent.gemini.vm
 
 import android.app.Application
 import androidx.compose.runtime.getValue

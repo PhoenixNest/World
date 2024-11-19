@@ -13,9 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.news.vm.NewsViewModel
 import io.dev.relic.feature.function.todo.TodoDataState
-import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
+import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.gallery.navigateToGalleryPage
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent

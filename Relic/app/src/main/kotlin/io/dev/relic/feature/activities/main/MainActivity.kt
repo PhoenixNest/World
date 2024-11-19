@@ -27,11 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
-import io.dev.relic.feature.function.agent.gemini.viewmodel.GeminiAgentViewModel
-import io.dev.relic.feature.function.food_recipes.viewmodel.FoodRecipesViewModel
-import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
-import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
-import io.dev.relic.feature.function.todo.viewmodel.TodoViewModel
+import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
+import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
+import io.dev.relic.feature.function.news.vm.NewsViewModel
+import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.domain.app.AbsBaseActivity
 

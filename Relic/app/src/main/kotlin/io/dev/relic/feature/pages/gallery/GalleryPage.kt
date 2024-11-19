@@ -16,7 +16,7 @@ import io.common.util.LogUtil
 import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.activities.main.viewmodel.MainViewModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
-import io.dev.relic.feature.function.gallery.viewmodel.GalleryViewModel
+import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
 import io.dev.relic.feature.pages.detail.gallery.navigateToGalleryDetailPage
 import io.dev.relic.feature.pages.gallery.ui.GalleryPageContent
 import io.dev.relic.feature.screens.main.MainScreenState

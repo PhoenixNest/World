@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.todo.viewmodel
+package io.dev.relic.feature.function.todo.vm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

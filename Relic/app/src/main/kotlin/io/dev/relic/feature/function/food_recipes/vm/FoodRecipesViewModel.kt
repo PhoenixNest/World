@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.food_recipes.viewmodel
+package io.dev.relic.feature.function.food_recipes.vm
 
 import android.app.Application
 import androidx.compose.runtime.getValue

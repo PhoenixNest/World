@@ -14,7 +14,7 @@ import io.data.util.NewsCategory
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
 import io.data.util.NewsConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
-import io.dev.relic.feature.function.news.viewmodel.NewsViewModel
+import io.dev.relic.feature.function.news.vm.NewsViewModel
 import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
 import io.dev.relic.feature.pages.studio.ui.StudioPageBottomSheetContent
 import io.dev.relic.feature.screens.main.MainScreenState
