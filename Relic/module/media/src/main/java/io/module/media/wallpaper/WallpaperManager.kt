@@ -103,6 +103,7 @@ object WallpaperManager {
 
     /* ======================== Tools function ======================== */
 
+    @Suppress("DEPRECATION")
     fun getCacheImageUri(
         context: Context,
         bitmap: Bitmap,
