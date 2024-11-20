@@ -12,9 +12,9 @@ object SpringType {
         certificates = R.array.com_google_android_gms_fonts_certs
     )
 
-    val bodyFontFamily = RelicFontFamily.ubuntu
+    val bodyFontFamily = RelicFontFamily.googleSans
 
-    val displayFontFamily = RelicFontFamily.ubuntu
+    val displayFontFamily = RelicFontFamily.googleSans
 
     // Default Material 3 typography values
     val baseline = Typography()

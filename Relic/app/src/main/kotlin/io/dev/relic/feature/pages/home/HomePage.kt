@@ -24,7 +24,6 @@ import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailP
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.module.map.tomtom.legacy.TomTomMapActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
@@ -135,7 +134,9 @@ fun HomePageRoute(
                 }
             }
         },
-        onNavigateToExplore = { TomTomMapActivity.start(context) },
+        onNavigateToExplore = {
+            // TomTomMapActivity.start(context)
+        },
         onNavigateToSetting = navController::navigateToSettingsPage,
         agentState = agentState,
         foodRecipesState = foodRecipesState

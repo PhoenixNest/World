@@ -103,29 +103,13 @@
             </intent-filter>
         </activity>
 
-        <activity
+        <!-- <activity
             android:name="io.module.map.tomtom.legacy.TomTomMapActivity"
-            android:theme="@style/Theme.Relic" />
+            android:theme="@style/Theme.Relic" /> -->
 
         <activity
             android:name="io.module.media.ui.AlbumActivity"
             android:theme="@style/Theme.Relic" />
-
-        <service
-            android:name="io.module.media.wallpaper.live.StaticWallpaperService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_WALLPAPER">
-
-            <intent-filter>
-                <action android:name="android.service.wallpaper.WallpaperService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.service.wallpaper"
-                android:resource="@xml/wallpaper" />
-
-        </service>
 
         <service
             android:name="io.module.media.wallpaper.live.LiveWallpaperService"
@@ -140,8 +124,18 @@
             <meta-data
                 android:name="android.service.wallpaper"
                 android:resource="@xml/wallpaper" />
-
         </service>
+
+        <receiver
+            android:name=".feature.rv.WeatherAppWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_weather_resource" />
+        </receiver>
 
         <!-- Firebase Performance plugin -->
         <meta-data

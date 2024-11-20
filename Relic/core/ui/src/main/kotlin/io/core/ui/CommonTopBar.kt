@@ -29,8 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
-import io.core.ui.theme.RelicFontFamily.ubuntu
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 
@@ -81,7 +81,7 @@ fun CommonTopBar(
                         color = textColor,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = ubuntu,
+                        fontFamily = googleSans,
                         textAlign = TextAlign.Center
                     )
                 )

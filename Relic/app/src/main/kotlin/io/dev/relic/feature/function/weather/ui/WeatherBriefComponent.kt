@@ -143,7 +143,7 @@ private fun WeatherBriefContent(
                 color = mainTextColor,
                 fontSize = 50.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = RelicFontFamily.ubuntu
+                fontFamily = RelicFontFamily.googleSans
             )
         )
         Column(
@@ -167,7 +167,7 @@ private fun WeatherBriefContent(
                 style = TextStyle(
                     color = mainTextColor,
                     fontSize = 16.sp,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = RelicFontFamily.googleSans
                 )
             )
         }

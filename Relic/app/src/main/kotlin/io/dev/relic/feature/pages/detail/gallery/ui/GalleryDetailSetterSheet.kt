@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.ComposeBottomSheetDialog
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 
 @Composable
 fun GalleryDetailSetterSheet(
@@ -90,7 +90,7 @@ private fun GalleryDetailSetterSheetItem(
             Text(
                 text = stringResource(labelResId),
                 color = MaterialTheme.colorScheme.onPrimary,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         }
     }

@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonNoDataComponent
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
 import io.data.model.pixabay.PixabayDataModel
@@ -194,7 +194,7 @@ private fun GalleryDetailPageSetterButton(onClick: () -> Unit) {
                     vertical = 16.dp
                 ),
             color = Color.White,
-            fontFamily = ubuntu
+            fontFamily = googleSans
         )
     }
 }

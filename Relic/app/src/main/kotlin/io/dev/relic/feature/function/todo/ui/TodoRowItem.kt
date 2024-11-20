@@ -72,7 +72,7 @@ fun TodoRowItem(
                     style = TextStyle(
                         color = mainTextColor,
                         fontSize = 16.sp,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = RelicFontFamily.googleSans,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -83,7 +83,7 @@ fun TodoRowItem(
                     overflow = TextOverflow.Ellipsis,
                     style = TextStyle(
                         color = mainTextColor,
-                        fontFamily = RelicFontFamily.ubuntu,
+                        fontFamily = RelicFontFamily.googleSans,
                         lineHeight = TextUnit(
                             value = 1.6F,
                             type = TextUnitType.Em
@@ -123,7 +123,7 @@ private fun TodoItemIntro(
                 maxLines = 1,
                 style = TextStyle(
                     color = mainTextColor,
-                    fontFamily = RelicFontFamily.ubuntu
+                    fontFamily = RelicFontFamily.googleSans
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))

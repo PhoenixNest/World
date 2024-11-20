@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColor
 import io.dev.relic.R
 
@@ -47,7 +47,7 @@ fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
             text = indicatorText,
             style = TextStyle(
                 color = mainTextColor,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         )
     }

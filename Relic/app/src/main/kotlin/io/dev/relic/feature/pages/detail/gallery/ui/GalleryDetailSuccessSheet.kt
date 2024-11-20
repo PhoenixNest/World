@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.ComposeBottomSheetDialog
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 
 @Composable
@@ -81,7 +81,7 @@ private fun GalleryDetailSuccessDesc() {
             text = stringResource(io.module.media.R.string.wallpaper_setter_succeed),
             color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 16.sp,
-            fontFamily = ubuntu,
+            fontFamily = googleSans,
             textAlign = TextAlign.Center
         )
     }
@@ -104,7 +104,7 @@ private fun GalleryDetailSuccessButton(onClick: () -> Unit) {
         ) {
             Text(
                 text = stringResource(io.module.media.R.string.wallpaper_go_to_desktop),
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         }
     }

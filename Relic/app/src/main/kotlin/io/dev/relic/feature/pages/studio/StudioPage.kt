@@ -20,7 +20,6 @@ import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.gallery.navigateToGalleryPage
 import io.dev.relic.feature.pages.studio.ui.StudioPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.module.map.tomtom.legacy.TomTomMapActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +64,9 @@ fun StudioPageRoute(
     )
 
     val mapState = buildMapState(
-        onNavigateToMapActivity = { TomTomMapActivity.start(context) }
+        onNavigateToMapActivity = {
+            // TomTomMapActivity.start(context)
+        }
     )
 
     BottomSheetScaffold(

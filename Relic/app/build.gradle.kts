@@ -145,12 +145,12 @@ android {
         jniLibs.pickFirsts.add("lib/**/libc++_shared.so")
     }
 
-    configurations {
-        implementation.configure {
-            exclude(module = "protobuf-javalite")
-            exclude(module = "protolite-well-known-types")
-        }
-    }
+    // configurations {
+    //     implementation.configure {
+    //         exclude(module = "protobuf-javalite")
+    //         exclude(module = "protolite-well-known-types")
+    //     }
+    // }
 }
 
 dependencies {
@@ -170,7 +170,7 @@ dependencies {
     implementation(project(":module:location"))
 
     // Map Module
-    implementation(project(":module:map"))
+    // implementation(project(":module:map"))
 
     // Media Module
     implementation(project(":module:media"))

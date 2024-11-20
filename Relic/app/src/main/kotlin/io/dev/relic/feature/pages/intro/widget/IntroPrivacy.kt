@@ -61,7 +61,7 @@ fun IntroPrivacy() {
         style = TextStyle(
             color = normalTextColor,
             fontSize = 11.sp,
-            fontFamily = RelicFontFamily.ubuntu,
+            fontFamily = RelicFontFamily.googleSans,
             textAlign = TextAlign.Center
         ),
         onClick = { offset ->

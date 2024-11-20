@@ -97,7 +97,7 @@ fun AgentMessageCell(
     Box(modifier = modifier.fillMaxWidth()) {
         MarkdownText(
             markdown = cellContent,
-            fontResource = io.core.ui.R.font.ubuntu_regular,
+            fontResource = io.core.ui.R.font.google_sans_display_regular,
             modifier = Modifier
                 .align(cellGravity)
                 .background(

@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
 
@@ -96,7 +96,7 @@ private fun GalleryLikesNumber(
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 12.sp,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         )
     }
@@ -128,7 +128,7 @@ private fun GalleryAuthorInfo(
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 12.sp,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         )
     }

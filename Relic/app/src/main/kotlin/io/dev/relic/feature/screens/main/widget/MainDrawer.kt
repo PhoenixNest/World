@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.util.TimeUtil.getCurrentFormattedTime
-import io.core.ui.theme.RelicFontFamily.ubuntu
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor50
 import io.core.ui.theme.mainThemeColor
@@ -101,7 +101,7 @@ private fun BoxScope.MainDrawerBriefPanel(
     ) {
         Text(
             text = getCurrentFormattedTime(),
-            fontFamily = ubuntu,
+            fontFamily = googleSans,
             style = TextStyle(
                 color = mainTextColor,
                 fontSize = 16.sp
@@ -140,7 +140,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
             style = TextStyle(
                 color = mainTextColor50,
                 fontSize = 16.sp,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -150,7 +150,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
                 color = mainTextColor,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = ubuntu
+                fontFamily = googleSans
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -159,7 +159,7 @@ private fun BoxScope.MainDrawerMaximPanel() {
             style = TextStyle(
                 color = mainTextColor50,
                 fontSize = 16.sp,
-                fontFamily = ubuntu,
+                fontFamily = googleSans,
                 lineHeight = TextUnit(
                     value = 1.6F,
                     type = TextUnitType.Em
