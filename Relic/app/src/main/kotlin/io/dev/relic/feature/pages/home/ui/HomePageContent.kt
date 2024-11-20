@@ -24,8 +24,6 @@ import io.dev.relic.feature.pages.home.HomeFoodRecipesRecommendAction
 import io.dev.relic.feature.pages.home.HomeFoodRecipesState
 import io.dev.relic.feature.pages.home.HomeFoodRecipesTimeSectionAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesAutoTimeComponent
-import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesList
-import io.dev.relic.feature.pages.home.ui.widget.HomeFoodRecipesTabBar
 import io.dev.relic.feature.pages.home.ui.widget.HomeTopPanel
 
 @Composable
@@ -67,17 +65,18 @@ fun HomePageContent(
                     onItemClick = action.timeSectionAction.onItemClick,
                     onRetryClick = action.timeSectionAction.onRetryClick
                 )
-                HomeFoodRecipesTabBar(
-                    currentSelectedTab = currentSelectTab,
-                    lazyListState = listState.recommendTabListState,
-                    onTabItemClick = action.recommendAction.onTabItemClick
-                )
-                item { Spacer(modifier = Modifier.height(16.dp)) }
-                HomeFoodRecipesList(
-                    dataState = dataState.recommendDataState,
-                    onItemClick = action.recommendAction.onItemClick,
-                    onRetryClick = action.recommendAction.onRetryClick
-                )
+                // item { Spacer(modifier = Modifier.height(32.dp)) }
+                // HomeFoodRecipesTabBar(
+                //     currentSelectedTab = currentSelectTab,
+                //     lazyListState = listState.recommendTabListState,
+                //     onTabItemClick = action.recommendAction.onTabItemClick
+                // )
+                // item { Spacer(modifier = Modifier.height(16.dp)) }
+                // HomeFoodRecipesList(
+                //     dataState = dataState.recommendDataState,
+                //     onItemClick = action.recommendAction.onItemClick,
+                //     onRetryClick = action.recommendAction.onRetryClick
+                // )
             }
         }
     }

@@ -37,9 +37,6 @@ fun CommonAsyncImage(
     contentScale: ContentScale = ContentScale.Crop
 ) {
     Surface(
-        modifier = modifier
-            .width(imageWidth)
-            .height(imageHeight),
         shape = imageShape,
         color = Color.Transparent
     ) {
@@ -48,7 +45,9 @@ fun CommonAsyncImage(
                 .data(url)
                 .build(),
             contentDescription = DEFAULT_DESC,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier
+                .width(imageWidth)
+                .height(imageHeight),
             contentScale = contentScale
         ) {
             when (painter.state) {
