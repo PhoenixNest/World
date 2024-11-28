@@ -13,10 +13,11 @@ import io.domain.repository.ITodoDataRepository
 import io.domain.repository.IWeatherDataRepository
 import io.domain.use_case.food_receipes.FoodRecipesUseCase
 import io.domain.use_case.food_receipes.action.complex_search.CacheComplexSearchData
-import io.domain.use_case.food_receipes.action.complex_search.GetComplexRecipesData
+import io.domain.use_case.food_receipes.action.complex_search.GetComplexSearchData
 import io.domain.use_case.food_receipes.action.complex_search.QueryCachedComplexRecipesData
 import io.domain.use_case.food_receipes.action.complex_search.RemoveComplexSearchData
 import io.domain.use_case.food_receipes.action.information.GetFoodRecipeInformationById
+import io.domain.use_case.food_receipes.action.random.GetRandomRecipesData
 import io.domain.use_case.maxim.MaximUseCase
 import io.domain.use_case.maxim.action.GetRandomMaxim
 import io.domain.use_case.news.NewsUseCase
@@ -76,10 +77,11 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): FoodRecipesUseCase {
         return FoodRecipesUseCase(
-            getComplexRecipesData = GetComplexRecipesData(recipesDataRepository),
+            getComplexSearchData = GetComplexSearchData(recipesDataRepository),
             cacheComplexSearchData = CacheComplexSearchData(databaseRepository),
             deleteAllComplexSearchData = RemoveComplexSearchData(databaseRepository),
             queryCachedComplexRecipesData = QueryCachedComplexRecipesData(databaseRepository),
+            getRandomRecipesData = GetRandomRecipesData(recipesDataRepository),
             getRecipeInformationById = GetFoodRecipeInformationById(recipesDataRepository)
         )
     }

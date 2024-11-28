@@ -2,12 +2,12 @@ package io.dev.relic.global.ext
 
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
+import io.dev.relic.feature.screens.main.util.AppTopLevelDestinations
 
 object NavDestinationExt {
 
     fun NavDestination?.isTopLevelDestinationInHierarchy(
-        destination: MainScreenTopLevelDestination
+        destination: AppTopLevelDestinations
     ): Boolean {
         return this?.hierarchy?.any { navDestination ->
             navDestination.route?.contains(

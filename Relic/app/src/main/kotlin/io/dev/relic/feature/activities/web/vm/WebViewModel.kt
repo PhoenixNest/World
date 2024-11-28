@@ -9,13 +9,14 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.common.RelicConstants
-import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,7 +57,7 @@ class WebViewModel @Inject constructor(
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                operationInViewModelScope {
+                viewModelScope.launch {
                     LogUtil.d(TAG, "[Web Data State] Fetch succeed.")
                     setState(_webDataStateFlow, WebDataState.FetchSucceed)
                 }
@@ -69,7 +70,7 @@ class WebViewModel @Inject constructor(
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 val errorCode = error?.errorCode
                 val errorMessage = error?.description.toString()
-                operationInViewModelScope {
+                viewModelScope.launch {
                     LogUtil.e(TAG, "[Web Data] Fetch failed, ($errorCode, $errorMessage)")
                     setState(_webDataStateFlow, WebDataState.FetchFailed(errorCode, errorMessage))
                 }
@@ -80,7 +81,7 @@ class WebViewModel @Inject constructor(
     private fun initWebChromeClient() {
         mWebChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                operationInViewModelScope {
+                viewModelScope.launch {
                     LogUtil.d(TAG, "[Web Data State] Fetching, latest progress: $newProgress")
                     setState(_webDataStateFlow, WebDataState.Fetching(newProgress))
                 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="NightAdjusted.Theme.Relic" parent="android:Theme.Material.NoActionBar" />
+
+    <style name="Theme.Relic.Splash" parent="Theme.Relic">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">#282C34</item>
+
+        <!-- Optional: set for a light status bar with dark content. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Optional: set for a light navigation bar with dark content. -->
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+    </style>
+</resources>

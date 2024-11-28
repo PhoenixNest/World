@@ -2,83 +2,28 @@ package io.dev.relic.feature.activities.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
 import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
+import io.core.ui.theme.RelicAppBackground
 import io.core.ui.theme.RelicAppTheme
-import io.dev.relic.feature.activities.main.vm.MainViewModel
-import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
-import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
-import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
-import io.dev.relic.feature.function.news.vm.NewsViewModel
-import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.screens.main.MainScreen
 import io.domain.app.AbsBaseActivity
 
 @AndroidEntryPoint
 class MainActivity : AbsBaseActivity() {
-
-    /**
-     * ViewModel - Main
-     * */
-    private val mainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
-    }
-
-    /**
-     * ViewModel - Agent
-     * */
-    private val geminiAgentViewModel by lazy {
-        ViewModelProvider(this)[GeminiAgentViewModel::class.java]
-    }
-
-    /**
-     * ViewModel - Food Recipes
-     * */
-    private val foodRecipesViewModel by lazy {
-        ViewModelProvider(this)[FoodRecipesViewModel::class.java]
-    }
-
-    /**
-     * ViewModel - Todo
-     * */
-    private val todoViewModel by lazy {
-        ViewModelProvider(this)[TodoViewModel::class.java]
-    }
-
-    /**
-     * ViewModel - News
-     * */
-    private val newsViewModel by lazy {
-        ViewModelProvider(this)[NewsViewModel::class.java]
-    }
-
-    /**
-     * ViewModel - Gallery
-     * */
-    private val galleryViewModel by lazy {
-        ViewModelProvider(this)[GalleryViewModel::class.java]
-    }
 
     companion object {
         private const val TAG = "MainActivity"
@@ -133,37 +78,25 @@ class MainActivity : AbsBaseActivity() {
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
-                        android.graphics.Color.TRANSPARENT,
-                        android.graphics.Color.TRANSPARENT
-                    ) { isDarkTheme },
+                        lightScrim = Color.TRANSPARENT,
+                        darkScrim = Color.TRANSPARENT,
+                        detectDarkMode = { isDarkTheme }
+                    ),
                     navigationBarStyle = SystemBarStyle.auto(
-                        android.graphics.Color.TRANSPARENT,
-                        android.graphics.Color.TRANSPARENT
-                    ) { isDarkTheme },
+                        lightScrim = Color.TRANSPARENT,
+                        darkScrim = Color.TRANSPARENT,
+                        detectDarkMode = { isDarkTheme }
+                    )
                 )
                 onDispose {}
             }
 
-            // A surface container using the 'background' color from the theme
             RelicAppTheme {
-                Surface(
-                    tonalElevation = 5.dp,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = Color.Unspecified)
-                        .imePadding()
-                        .navigationBarsPadding()
-                ) {
+                RelicAppBackground {
                     MainScreen(
                         savedInstanceState = savedInstanceState,
                         windowSizeClass = calculateWindowSizeClass(activity = this),
-                        networkMonitor = networkMonitor,
-                        mainViewModel = mainViewModel,
-                        geminiAgentViewModel = geminiAgentViewModel,
-                        foodRecipesViewModel = foodRecipesViewModel,
-                        todoViewModel = todoViewModel,
-                        newsViewModel = newsViewModel,
-                        galleryViewModel = galleryViewModel
+                        networkMonitor = networkMonitor
                     )
                 }
             }

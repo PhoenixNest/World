@@ -3,6 +3,7 @@ package io.domain.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import io.common.util.LogUtil
@@ -25,7 +26,6 @@ abstract class AbsBaseActivity : ComponentActivity() {
     /* ======================== Lifecycle ======================== */
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        activeImmersiveMode()
         super.onCreate(savedInstanceState)
 
         preInitialization(
@@ -68,11 +68,14 @@ abstract class AbsBaseActivity : ComponentActivity() {
 
     private fun preInitUi(doOnFinish: () -> Unit) {
         lifecycleScope.launch {
+            activeImmersiveMode()
             doOnFinish.invoke()
         }
     }
 
     private fun activeImmersiveMode() {
+        val window = window ?: return
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
     }
 

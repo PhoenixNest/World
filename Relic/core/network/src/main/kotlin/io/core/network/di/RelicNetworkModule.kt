@@ -14,7 +14,6 @@ import io.core.network.NetworkParameters.BaseUrl.HITOKOTO_API_URL
 import io.core.network.NetworkParameters.BaseUrl.NEWS_API_URL
 import io.core.network.NetworkParameters.BaseUrl.PIXABAY_API_URL
 import io.core.network.NetworkParameters.BaseUrl.WEATHER_API_URL
-import io.core.network.NetworkParameters.MAX_DISK_CACHE_SIZE
 import io.core.network.NetworkParameters.MAX_OFFLINE_CACHE_TIME
 import io.core.network.NetworkParameters.MAX_ONLINE_CACHE_TIME
 import io.core.network.NetworkParameters.MAX_RETRY_TIMES
@@ -32,7 +31,6 @@ import io.core.network.interceptor.OfflineCacheInterceptor
 import io.core.network.interceptor.OnlineCacheInterceptor
 import io.core.network.interceptor.RetryInterceptor
 import io.core.network.interceptor.SimpleLogInterceptor
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -129,7 +127,7 @@ object RelicNetworkModule {
             .addInterceptor(offlineCacheInterceptor)
             .addNetworkInterceptor(onlineCacheInterceptor)
             .addInterceptor(retryInterceptor)
-            .cache(Cache(context.cacheDir, MAX_DISK_CACHE_SIZE))
+            // .cache(Cache(context.cacheDir, MAX_DISK_CACHE_SIZE))
             .build()
     }
 

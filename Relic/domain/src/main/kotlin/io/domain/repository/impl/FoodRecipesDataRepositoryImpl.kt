@@ -3,7 +3,7 @@ package io.domain.repository.impl
 import io.core.network.api.IFoodRecipesApi
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
-import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
+import io.data.dto.food_recipes.random_search.FoodRecipesRandomDTO
 import io.data.model.NetworkResult
 import io.domain.repository.IFoodRecipesDataRepository
 import javax.inject.Inject
@@ -18,16 +18,16 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
     /**
      * Remote server result of complex search.
      *
-     * @see IFoodRecipesApi.complexSearchData
+     * @see IFoodRecipesApi.complexSearch
      * */
     private var complexSearchResult: NetworkResult<FoodRecipesComplexSearchDTO> = NetworkResult.Loading()
 
     /**
      * Remote server result of random search.
      *
-     * @see IFoodRecipesApi.randomSearchData
+     * @see IFoodRecipesApi.random
      * */
-    private var randomSearchResult: NetworkResult<FoodRecipesRandomSearchDTO> = NetworkResult.Loading()
+    private var randomResult: NetworkResult<FoodRecipesRandomDTO> = NetworkResult.Loading()
 
     /**
      * Remote server result of recipe information.
@@ -63,14 +63,13 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
         offset: Int
     ): NetworkResult<FoodRecipesComplexSearchDTO> {
         complexSearchResult = try {
-            val data = foodRecipesApi.complexSearchData(
+            val data = foodRecipesApi.complexSearch(
                 apiKey = apiKey,
                 query = query,
                 addRecipeInformation = addRecipeInformation,
                 addRecipeNutrition = addRecipeNutrition,
                 offset = offset
             )
-
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -84,35 +83,37 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
      *
      * Find random (popular) recipes. `If you need to filter recipes by diet, nutrition etc.`
      * you might want to consider using the complex recipe search endpoint
-     * and set the sort request parameter to random.
+     * and set the `sort` request parameter to `random`.
      *
      * @param apiKey            Your dev api key.
-     * @param limitLicense      Whether the recipes should have an open license that allows display with proper attribution.
-     * @param tags              The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must have.
+     * @param includeNutrition  Whether to include nutritional information to returned recipes.
+     * @param includeTags       The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must have.
+     * @param excludeTags       The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must NOT have.
      * @param number            The number of random recipes to be returned (between 1 and 100).
      *
-     * @see FoodRecipesRandomSearchDTO
+     * @see FoodRecipesRandomDTO
      * */
-    override suspend fun getRandomSearchRecipesData(
+    override suspend fun getRandomRecipesData(
         apiKey: String,
-        limitLicense: Boolean,
-        tags: String,
+        includeNutrition: Boolean,
+        includeTags: String,
+        excludeTags: String,
         number: Int
-    ): NetworkResult<FoodRecipesRandomSearchDTO> {
-        randomSearchResult = try {
-            val data = foodRecipesApi.randomSearchData(
+    ): NetworkResult<FoodRecipesRandomDTO> {
+        randomResult = try {
+            val data = foodRecipesApi.random(
                 apiKey = apiKey,
-                limitLicense = limitLicense,
-                tags = tags,
+                includeNutrition = includeNutrition,
+                includeTags = includeTags,
+                excludeTags = excludeTags,
                 number = number
             )
-
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()
             NetworkResult.Failed(message = exception.message ?: "Unknown error occurred.")
         }
-        return randomSearchResult
+        return randomResult
     }
 
     /**
@@ -138,7 +139,6 @@ class FoodRecipesDataRepositoryImpl @Inject constructor(
                 id = id,
                 includeNutrition = includeNutrition
             )
-
             NetworkResult.Success(data)
         } catch (exception: Exception) {
             exception.printStackTrace()

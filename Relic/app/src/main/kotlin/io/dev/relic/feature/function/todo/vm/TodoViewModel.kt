@@ -2,8 +2,8 @@ package io.dev.relic.feature.function.todo.vm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.data.entity.todo.TodoEntity
@@ -13,6 +13,7 @@ import io.domain.use_case.todo.TodoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,27 +37,27 @@ class TodoViewModel @Inject constructor(
     }
 
     fun createTodo(entity: TodoEntity) {
-        operationInViewModelScope {
+        viewModelScope.launch {
             todoUseCase.addTodo.invoke(entity)
         }
     }
 
     fun updateTodo(entity: TodoEntity) {
-        operationInViewModelScope {
+        viewModelScope.launch {
             todoUseCase.updateTodo.invoke(entity)
         }
     }
 
     fun removeTodo(entity: TodoEntity) {
-        operationInViewModelScope {
+        viewModelScope.launch {
             todoUseCase.deleteTodo.invoke(entity)
         }
     }
 
     private fun queryTodoData() {
-        operationInViewModelScope { scope ->
+        viewModelScope.launch {
             todoUseCase.getAllTodos()
-                .stateIn(scope)
+                .stateIn(this)
                 .collect {
                     handleTodoData(it)
                 }

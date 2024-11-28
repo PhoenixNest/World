@@ -1,206 +1,24 @@
 package io.dev.relic.feature.pages.studio
 
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.dev.relic.feature.activities.main.vm.MainViewModel
-import io.dev.relic.feature.function.news.vm.NewsViewModel
-import io.dev.relic.feature.function.todo.TodoDataState
-import io.dev.relic.feature.function.todo.vm.TodoViewModel
-import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
-import io.dev.relic.feature.pages.gallery.navigateToGalleryPage
-import io.dev.relic.feature.pages.studio.ui.StudioPageContent
-import io.dev.relic.feature.screens.main.MainScreenState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
+import io.core.ui.theme.RelicFontFamily
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StudioPageRoute(
-    mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel,
-    todoViewModel: TodoViewModel,
-    newsViewModel: NewsViewModel
-) {
-
-    /* ======================== Common ======================== */
-
-    val context = LocalContext.current
-    val navController = mainScreenState.navHostController
-
-    /* ======================== Field ======================== */
-
-    val todoDataState by todoViewModel.todoDataStateFlow
-        .collectAsStateWithLifecycle()
-
-    /* ======================== Ui ======================== */
-
-    val todoRowListState = rememberLazyListState()
-
-    /* ======================== Ui State ======================== */
-
-    val todoListState = StudioListState(
-        todoListState = todoRowListState
-    )
-
-    val todoState = buildTodoState(
-        dataState = todoDataState,
-        listState = todoListState
-    )
-
-    val agentState = buildAgentState(
-        onNavigateToChatPage = navController::navigateToAgentChatPage
-    )
-
-    val galleryState = buildGalleryState(
-        onNavigateToGalleryPage = navController::navigateToGalleryPage
-    )
-
-    val mapState = buildMapState(
-        onNavigateToMapActivity = {
-            // TomTomMapActivity.start(context)
-        }
-    )
-
-    BottomSheetScaffold(
-        sheetContent = {
-            StudioPageBottomSheet(
-                newsViewModel = newsViewModel,
-                mainScreenState = mainScreenState
-            )
-        },
-        scaffoldState = rememberBottomSheetScaffoldState(),
-        sheetShape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp
-        ),
-        sheetPeekHeight = 120.dp,
-        sheetContainerColor = MaterialTheme.colorScheme.secondaryContainer
+fun StudioPageRoute() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        StudioPage(
-            onUserClick = {},
-            todoState = todoState,
-            agentState = agentState,
-            galleryState = galleryState,
-            mapState = mapState
+        Text(
+            text = "Studio",
+            fontSize = 32.sp,
+            fontFamily = RelicFontFamily.googleSans
         )
     }
-}
-
-@Composable
-private fun StudioPage(
-    onUserClick: () -> Unit,
-    todoState: StudioTotoState,
-    agentState: StudioAgentState,
-    galleryState: StudioGalleryState,
-    mapState: StudioMapState
-) {
-    StudioPageContent(
-        onUserClick = onUserClick,
-        todoState = todoState,
-        agentState = agentState,
-        galleryState = galleryState,
-        mapState = mapState
-    )
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun StudioPagePreview() {
-    StudioPage(
-        onUserClick = {},
-        todoState = StudioTotoState(
-            dataState = TodoDataState.NoTodoData,
-            action = StudioTodoAction(
-                onCheckTodoClick = {},
-                onAddClick = {},
-                onItemClick = {},
-                onTailClick = {}
-            ),
-            listState = StudioListState(
-                todoListState = rememberLazyListState()
-            )
-        ),
-        agentState = StudioAgentState(
-            action = StudioAgentAction(
-                onStartChatClick = {}
-            )
-        ),
-        galleryState = StudioGalleryState(
-            action = StudioGalleryAction(
-                onStartPreviewClick = {}
-            )
-        ),
-        mapState = StudioMapState(
-            action = StudioMapAction(
-                onStartExploreClick = {}
-            )
-        )
-    )
-}
-
-/* ======================== Page Ui State Builder ======================== */
-
-/**
- * Build state to power the Todo unit of studio page
- *
- * @param dataState     Data state flow of todo.
- * @param listState     List state for row and column.
- * */
-private fun buildTodoState(
-    dataState: TodoDataState,
-    listState: StudioListState
-): StudioTotoState {
-    return StudioTotoState(
-        dataState = dataState,
-        action = StudioTodoAction(
-            onCheckTodoClick = {},
-            onAddClick = {},
-            onItemClick = {},
-            onTailClick = {}
-        ),
-        listState = listState
-    )
-}
-
-/**
- * Build state to power the Agent unit of studio page.
- *
- * @param onNavigateToChatPage      Navigate to the next page to continue chat with your Agent.
- * */
-private fun buildAgentState(onNavigateToChatPage: () -> Unit): StudioAgentState {
-    return StudioAgentState(
-        action = StudioAgentAction(onStartChatClick = onNavigateToChatPage)
-    )
-}
-
-/**
- * Build state to power the Agent unit of studio page.
- *
- * @param onNavigateToGalleryPage      Navigate to the next page to preview the gallery by using pixabay api.
- * */
-private fun buildGalleryState(onNavigateToGalleryPage: () -> Unit): StudioGalleryState {
-    return StudioGalleryState(
-        action = StudioGalleryAction(onStartPreviewClick = onNavigateToGalleryPage)
-    )
-}
-
-/**
- * Build state to power the Agent unit of studio page.
- *
- * @param onNavigateToMapActivity      Navigate to the next page to explore the poi by using TomTom map.
- * */
-private fun buildMapState(onNavigateToMapActivity: () -> Unit): StudioMapState {
-    return StudioMapState(
-        action = StudioMapAction(
-            onStartExploreClick = onNavigateToMapActivity
-        )
-    )
 }

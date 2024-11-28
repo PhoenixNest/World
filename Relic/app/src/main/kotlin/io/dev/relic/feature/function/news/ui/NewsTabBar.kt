@@ -69,13 +69,13 @@ private fun NewsTabBarItem(
             labelResId = tabLabelResId,
             onClick = onTabClick,
             textColor = if (isSelected) {
-                MaterialTheme.colorScheme.onTertiary
+                MaterialTheme.colorScheme.onPrimary
             } else {
-                MaterialTheme.colorScheme.tertiary
+                MaterialTheme.colorScheme.primary
             },
             shape = RoundedCornerShape(16.dp),
             backgroundColor = if (isSelected) {
-                MaterialTheme.colorScheme.tertiary
+                MaterialTheme.colorScheme.primary
             } else {
                 Color.Transparent
             }

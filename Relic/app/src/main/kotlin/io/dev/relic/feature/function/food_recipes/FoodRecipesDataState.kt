@@ -24,7 +24,8 @@ sealed interface FoodRecipesDataState {
 
     data class FetchFailed(
         val errorCode: Int?,
-        val errorMessage: String?
+        val errorMessage: String?,
+        val cacheDataList: List<Any>? = null
     ) : FoodRecipesDataState
 
 }

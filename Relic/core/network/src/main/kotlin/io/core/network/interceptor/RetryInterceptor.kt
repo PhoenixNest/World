@@ -24,8 +24,6 @@ open class RetryInterceptor internal constructor(builder: Builder) : Interceptor
 
     /* ======================== constructor ======================== */
 
-    constructor() : this(Builder())
-
     class Builder() {
 
         internal var maxRetryTimes = DEFAULT_MAX_RETRY_TIMES

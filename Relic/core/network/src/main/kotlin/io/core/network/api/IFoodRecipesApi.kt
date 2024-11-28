@@ -2,7 +2,7 @@ package io.core.network.api
 
 import io.data.dto.food_recipes.complex_search.FoodRecipesComplexSearchDTO
 import io.data.dto.food_recipes.get_recipes_information_by_id.FoodRecipesInformationDTO
-import io.data.dto.food_recipes.random_search.FoodRecipesRandomSearchDTO
+import io.data.dto.food_recipes.random_search.FoodRecipesRandomDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,7 +28,7 @@ interface IFoodRecipesApi {
      * @see FoodRecipesComplexSearchDTO
      * */
     @GET("complexSearch?")
-    suspend fun complexSearchData(
+    suspend fun complexSearch(
         @Query("apiKey") apiKey: String,
         @Query("query") query: String,
         @Query("addRecipeInformation") addRecipeInformation: Boolean,
@@ -41,22 +41,24 @@ interface IFoodRecipesApi {
      *
      * Find random (popular) recipes. `If you need to filter recipes by diet, nutrition etc.`
      * you might want to consider using the complex recipe search endpoint
-     * and set the sort request parameter to random.
+     * and set the `sort` request parameter to `random`.
      *
      * @param apiKey            Your dev api key.
-     * @param limitLicense      Whether the recipes should have an open license that allows display with proper attribution.
-     * @param tags              The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must have.
+     * @param includeNutrition  Whether to include nutritional information to returned recipes.
+     * @param includeTags       The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must have.
+     * @param excludeTags       The tags (can be diets, meal types, cuisines, or intolerances) that the recipe must NOT have.
      * @param number            The number of random recipes to be returned (between 1 and 100).
      *
-     * @see FoodRecipesRandomSearchDTO
+     * @see FoodRecipesRandomDTO
      * */
     @GET("random?")
-    suspend fun randomSearchData(
+    suspend fun random(
         @Query("apiKey") apiKey: String,
-        @Query("limitLicense") limitLicense: Boolean,
-        @Query("tags") tags: String,
+        @Query("includeNutrition") includeNutrition: Boolean,
+        @Query("include-tags") includeTags: String,
+        @Query("exclude-tags") excludeTags: String,
         @Query("number") number: Int
-    ): FoodRecipesRandomSearchDTO
+    ): FoodRecipesRandomDTO
 
     /**
      * [Get Recipe Information](https://spoonacular.com/food-api/docs#Get-Recipe-Information)

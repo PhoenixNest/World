@@ -1,6 +1,5 @@
 package io.dev.relic.feature.function.news.ui.widget
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,9 +29,10 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.common.RelicConstants
+import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.TimeUtil
 import io.core.ui.CommonAsyncImage
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.data.model.news.NewsArticleModel
 
@@ -50,15 +49,19 @@ fun NewsCardItem(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
+            color = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.tertiaryContainer)
                     .clickable { onCardClick.invoke() }
                     .padding(20.dp),
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 12.dp,
+                    alignment = Alignment.Top
+                ),
                 horizontalAlignment = Alignment.Start
             ) {
                 NewsCardItemIntro(
@@ -66,17 +69,15 @@ fun NewsCardItem(
                     thumbnailImageUrl = thumbnailImageUrl,
                     publishDate = publishDate ?: TimeUtil.getCurrentTime().toString()
                 )
-                Spacer(modifier = Modifier.height(18.dp))
                 NewsCardItemDesc(
                     author = author ?: "Author",
                     description = subtitle ?: "Subtitle",
                     source = source ?: ""
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                NewsCardFunctionBar(
-                    onLikeClick = onLikeClick,
-                    onShareClick = onShareClick
-                )
+                // NewsCardFunctionBar(
+                //     onLikeClick = onLikeClick,
+                //     onShareClick = onShareClick
+                // )
             }
         }
     }
@@ -100,35 +101,37 @@ private fun NewsCardItemIntro(
                 url = thumbnailImageUrl,
                 imageWidth = 96.dp,
                 imageHeight = 96.dp,
-                imageRadius = 16.dp
+                imageRadius = 12.dp
             )
             Spacer(modifier = Modifier.width(12.dp))
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.Top
+            ),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = publishDate,
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
+                fontFamily = googleSans,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodyMedium
             )
-            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = title,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                fontFamily = newsReader,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
                 overflow = TextOverflow.Ellipsis,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = newsReader,
-                    lineHeight = TextUnit(
-                        value = 1.6F,
-                        type = TextUnitType.Em
-                    )
-                )
+                lineHeight = TextUnit(
+                    value = 1.4F,
+                    type = TextUnitType.Em
+                ),
+                style = MaterialTheme.typography.titleMedium
             )
         }
     }
@@ -148,6 +151,7 @@ private fun NewsCardItemDesc(
         Text(
             text = "$source - $author",
             color = MaterialTheme.colorScheme.onTertiaryContainer,
+            fontFamily = googleSans,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             style = MaterialTheme.typography.bodySmall
@@ -156,6 +160,7 @@ private fun NewsCardItemDesc(
         Text(
             text = description,
             color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.5F),
+            fontFamily = googleSans,
             overflow = TextOverflow.Ellipsis,
             maxLines = 5,
             style = MaterialTheme.typography.bodyMedium
@@ -176,22 +181,22 @@ private fun NewsCardFunctionBar(
         IconButton(onClick = onLikeClick) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                contentDescription = DEFAULT_DESC,
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.Share,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                contentDescription = DEFAULT_DESC,
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
         IconButton(onClick = onShareClick) {
             Icon(
                 imageVector = Icons.Filled.MoreVert,
-                contentDescription = RelicConstants.ComposeUi.DEFAULT_DESC,
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                contentDescription = DEFAULT_DESC,
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
     }

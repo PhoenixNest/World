@@ -8,7 +8,7 @@
     <string name="title_greeting">Greeting</string>
 
     <!-- Permission -->
-    <string name="permission_location">Allow your location</string>
+    <string name="permission_location">Assess to your current location</string>
     <string name="permission_location_desc">Your location information will be used to obtain local weather conditions.</string>
     <string name="permission_location_denied">Unable to obtain current location information, please check permissions</string>
     <string name="permission_accept">Sure, i\'d Like that</string>
@@ -70,15 +70,10 @@
     <string name="settings_debug_admob">Admob</string>
 
     <!-- Todo Unit -->
-    <string name="todo_intro_title">🚀 Let\'s set goals</string>
-    <string name="todo_intro_goal_title">MY MISSION</string>
-    <string name="todo_intro_goal_1">1. Come on and grow up</string>
-    <string name="todo_intro_goal_2">2. Become an astronaut</string>
-    <string name="todo_intro_goal_3">3. Explore the galaxy</string>
-    <string name="todo_intro_goal_more">…</string>
+    <string name="todo_feature_title">Make a plan</string>
+    <string name="todo_intro_title">@string/todo_feature_title</string>
     <string name="todo_intro_create">Set Your Tasks</string>
     <string name="todo_title">Todo</string>
-    <string name="todo_ext_fab_label">Make a plan</string>
     <string name="todo_create_title_hint">Title</string>
     <string name="todo_create_subtitle_hint">Subtitle</string>
     <string name="todo_create_content_hint">Content</string>
@@ -87,7 +82,8 @@
     <string name="weather_card_title">Today\'s Weather</string>
 
     <!-- Food Recipes Unit -->
-    <string name="food_recipes_recommend_title">Discover delicious</string>
+    <string name="food_recipes_feature_title">Discover delicious</string>
+    <string name="food_recipes_recommend_title">Time for %1$s</string>
     <string name="food_recipes_time_section_title">What\'s for <font color="#DEB654">%s</font></string>
     <string name="food_recipes_ingredient_title">Ingredients</string>
     <!-- Food Recipes - Common -->
@@ -96,7 +92,7 @@
     <!-- Food Recipes - Dish Type - Time Section-->
     <string name="food_recipes_label_breakfast">Breakfast</string>
     <string name="food_recipes_label_lunch">Lunch</string>
-    <string name="food_recipes_label_teatime">Teatime</string>
+    <string name="food_recipes_label_teatime">Afternoon Tea</string>
     <string name="food_recipes_label_dinner">Dinner</string>
     <string name="food_recipes_label_midnight_snack">Midnight Snack</string>
     <!-- Food Recipes - Dish Type - Common -->
@@ -106,7 +102,7 @@
     <string name="food_recipes_label_cookie">Cookie</string>
 
     <!-- News Unit -->
-    <string name="news_title">Newspaper</string>
+    <string name="news_title">Daily News</string>
     <string name="news_label_for_you">For you</string>
     <string name="news_label_technology">Technology</string>
     <string name="news_label_science">Science</string>
@@ -117,14 +113,20 @@
     <string name="news_label_trending">Trending</string>
 
     <!-- Agent Unit -->
-    <string name="agent_input_area_hint">Ask your Ai assistant…</string>
+    <string name="agent_title">Agent</string>
+    <string name="agent_feature_title">Ask your Ai assistant</string>
+    <string name="agent_input_area_hint">@string/agent_feature_title</string>
     <string name="agent_ask_next">Gemini awaits your next message.</string>
-    <string name="agent_intro_title">🤖 Ask your Ai assistant</string>
-    <string name="agent_intro_question_1">• What\'s the best coffee in the world?</string>
-    <string name="agent_intro_question_2">• Write the \"Hello World\" code by using C++.</string>
-    <string name="agent_intro_question_3">• How to become a good programmer?</string>
-    <string name="agent_intro_more">…</string>
+    <string name="agent_intro_title">Ask your Ai assistant</string>
     <string name="agent_intro_start_chat">Start Chat</string>
+    <!-- Agent Unit - Question-->
+    <string name="agent_quick_question_title">Quick Prompts</string>
+    <string name="agent_question_1">What\'s the best coffee in the world?</string>
+    <string name="agent_question_2">Write the \"Hello World\" code by using C++.</string>
+    <string name="agent_question_3">How to become a good programmer?</string>
+    <string name="agent_question_4">How to learn Mathematics effectively?</string>
+    <string name="agent_question_5">Tell me a joke.</string>
+    <string name="agent_question_6">Recommend some snacks and drinks.</string>
     <!-- Agent Unit - Gemini - Intro -->
     <string name="gemini">Gemini</string>
     <string name="gemini_intro_title">The Gemini ecosystem represents Google\'s most capable AI</string>

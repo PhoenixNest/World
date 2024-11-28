@@ -2,51 +2,54 @@ package io.dev.relic.feature.pages.agent
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicResCenter.getString
 import io.dev.relic.R
-import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.pages.agent.ui.AgentChatPageContent
-import io.dev.relic.feature.screens.main.MainScreenState
 
 @Composable
 fun AgentChatPageRoute(
-    mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel,
-    geminiAgentViewModel: GeminiAgentViewModel,
-    onBackClick: () -> Unit
+    prompt: String?,
+    onBackClick: () -> Unit,
+    geminiAgentViewModel: GeminiAgentViewModel = hiltViewModel()
 ) {
-
-    /* ======================== Common ======================== */
-
-    val coroutineScope = mainScreenState.coroutineScope
 
     /* ======================== Field ======================== */
 
-    val agentDataState by geminiAgentViewModel.agentChatDataStateFlow
+    val agentDataState by geminiAgentViewModel.getChatDataStateFlow()
         .collectAsStateWithLifecycle()
 
-    val inputMessage = geminiAgentViewModel.agentSearchContent
+    val inputMessage = geminiAgentViewModel.getSearchContent()
 
-    val chatHistory = geminiAgentViewModel.agentChatHistory
+    val chatHistory = geminiAgentViewModel.getChatHistory()
 
-    val isEnableSendButton = geminiAgentViewModel.isAllowUserInput
+    val isEnableSendButton = geminiAgentViewModel.getInputStatus()
             && inputMessage.isNotEmpty()
             && inputMessage.isNotBlank()
 
     var isShowHelpDialog by remember {
         mutableStateOf(false)
+    }
+
+    LaunchedEffect(Unit) {
+        if (prompt.isNullOrEmpty()) {
+            return@LaunchedEffect
+        }
+
+        geminiAgentViewModel.sendTextMessage(prompt)
     }
 
     /* ======================== Ui ======================== */
@@ -62,7 +65,7 @@ fun AgentChatPageRoute(
         },
         onSendMessage = {
             geminiAgentViewModel.apply {
-                sendTextMessage(agentSearchContent)
+                sendTextMessage(getSearchContent())
             }
         },
         onInfoClick = {

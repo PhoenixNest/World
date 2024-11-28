@@ -4,19 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.common.RelicConstants.IntentAction.INTENT_ACTION_VIEW
 import io.common.util.LogUtil
 import io.core.ui.ext.SystemUiControllerExt.enableImmersiveMode
+import io.core.ui.theme.RelicAppBackground
 import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.activities.main.MainActivity
 import io.dev.relic.feature.screens.intro.IntroScreen
@@ -121,7 +119,7 @@ class IntroActivity : AbsBaseActivity() {
 
             // A surface container using the 'background' color from the theme
             RelicAppTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+                RelicAppBackground {
                     IntroScreen(
                         isLargeScreen = isLargeScreen,
                         onNavigateClick = multiplePermissionsState::launchMultiplePermissionRequest

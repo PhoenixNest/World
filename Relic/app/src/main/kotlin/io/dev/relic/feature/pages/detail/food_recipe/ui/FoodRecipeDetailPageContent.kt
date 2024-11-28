@@ -3,8 +3,11 @@ package io.dev.relic.feature.pages.detail.food_recipe.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_INT
+import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
 import io.core.ui.CommonAsyncImage
 import io.core.ui.CommonLoadingComponent
 import io.core.ui.CommonNoDataComponent
@@ -22,8 +27,10 @@ import io.core.ui.CommonTopBar
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.data.model.food_recipes.FoodRecipeInformationModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeDetailPanel
+import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeIngredientsRow
 import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeLikeButton
+import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeSummary
+import io.dev.relic.feature.pages.detail.food_recipe.ui.widget.FoodRecipeTitleBar
 
 @Composable
 fun FoodRecipeDetailContent(
@@ -36,10 +43,10 @@ fun FoodRecipeDetailContent(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.primary
+        color = MaterialTheme.colorScheme.surfaceContainer
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            FoodRecipeDataDetailContent(
+            FoodRecipesDetailContent(
                 dataState = dataState,
                 onRetryClick = onRetryClick
             )
@@ -47,9 +54,10 @@ fun FoodRecipeDetailContent(
                 onBackClick = onBackClick,
                 hasTitle = false,
                 title = recipeTitle,
-                containerModifier = Modifier
-                    .padding(top = 32.dp)
+                modifier = Modifier
+                    .statusBarsPadding()
                     .align(Alignment.TopCenter),
+                iconColor = MaterialTheme.colorScheme.onSurface,
                 tailContent = {
                     FoodRecipeLikeButton(
                         isLike = isLike,
@@ -62,10 +70,13 @@ fun FoodRecipeDetailContent(
 }
 
 @Composable
-private fun FoodRecipeDataDetailContent(
+private fun FoodRecipesDetailContent(
     dataState: FoodRecipesDataState,
     onRetryClick: () -> Unit
 ) {
+    val widthDp = getCurrentScreenWidthDp()
+    val heightDp = 320.dp
+
     when (dataState) {
         is FoodRecipesDataState.Init,
         is FoodRecipesDataState.Fetching -> {
@@ -77,11 +88,47 @@ private fun FoodRecipeDataDetailContent(
         }
 
         is FoodRecipesDataState.FetchSucceed<*> -> {
-            val data = dataState.data
-            if (data == null) {
-                CommonNoDataComponent(isShowText = true)
-            } else {
-                FoodRecipeDataDetailContent(model = data as FoodRecipeInformationModel)
+            val model = dataState.data
+                    as? FoodRecipeInformationModel ?: return
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(
+                        state = rememberScrollState(),
+                        enabled = true
+                    ),
+                verticalArrangement = Arrangement.spacedBy(
+                    space = 12.dp,
+                    alignment = Alignment.Top
+                ),
+                horizontalAlignment = Alignment.Start
+            ) {
+                CommonAsyncImage(
+                    url = model.image,
+                    imageWidth = widthDp,
+                    imageHeight = heightDp,
+                    imageShape = RoundedCornerShape(
+                        bottomStart = 16.dp,
+                        bottomEnd = 16.dp
+                    ),
+                    imageRadius = 16.dp
+                )
+                FoodRecipeTitleBar(
+                    title = model.title ?: UNKNOWN_VALUE_STRING,
+                    cookTime = model.readyInMinutes ?: UNKNOWN_VALUE_INT,
+                    healthScore = model.healthScore ?: UNKNOWN_VALUE_INT,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+                FoodRecipeSummary(
+                    summary = model.summary ?: UNKNOWN_VALUE_STRING,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+                FoodRecipeIngredientsRow(
+                    ingredientList = model.extendedIngredients ?: emptyList(),
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+                Spacer(modifier = Modifier.height(100.dp))
             }
         }
 
@@ -89,34 +136,5 @@ private fun FoodRecipeDataDetailContent(
         is FoodRecipesDataState.NoFoodRecipesData -> {
             CommonNoDataComponent(isShowText = true)
         }
-    }
-}
-
-@Composable
-private fun FoodRecipeDataDetailContent(model: FoodRecipeInformationModel) {
-    val widthDp = getCurrentScreenWidthDp()
-    val heightDp = 320.dp
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(
-                state = rememberScrollState(),
-                enabled = true
-            ),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ) {
-        CommonAsyncImage(
-            url = model.image,
-            imageWidth = widthDp,
-            imageHeight = heightDp,
-            imageShape = RoundedCornerShape(
-                bottomStart = 16.dp,
-                bottomEnd = 16.dp
-            ),
-            imageRadius = 16.dp
-        )
-        FoodRecipeDetailPanel(model)
     }
 }

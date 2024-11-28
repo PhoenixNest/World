@@ -15,8 +15,6 @@ open class AuthInterceptor internal constructor(builder: Builder) : Interceptor 
 
     /* ======================== constructor ======================== */
 
-    constructor() : this(Builder())
-
     class Builder() {
 
         internal var authHeaderValue = "relic-header"

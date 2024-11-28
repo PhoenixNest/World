@@ -1,6 +1,10 @@
 package io.core.ui.theme
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import io.common.util.TimeUtil
 import io.common.util.TimeUtil.Season.AUTUMN
 import io.common.util.TimeUtil.Season.SPRING
@@ -18,5 +22,15 @@ fun RelicAppTheme(content: @Composable () -> Unit) {
         SUMMER -> SummerTheme.AppTheme(content = content)
         AUTUMN -> AutumnTheme.AppTheme(content = content)
         WINTER -> WinterTheme.AppTheme(content = content)
+    }
+}
+
+@Composable
+fun RelicAppBackground(content: @Composable () -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.surfaceContainer
+    ) {
+        content.invoke()
     }
 }

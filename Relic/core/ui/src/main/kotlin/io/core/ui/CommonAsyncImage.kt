@@ -57,7 +57,7 @@ fun CommonAsyncImage(
                             .fillMaxSize()
                             .placeholder(
                                 visible = true,
-                                color = Color.LightGray,
+                                color = Color.LightGray.copy(alpha = 0.3F),
                                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                             )
                     )

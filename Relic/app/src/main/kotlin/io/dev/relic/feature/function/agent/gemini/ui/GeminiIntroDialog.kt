@@ -1,6 +1,7 @@
 package io.dev.relic.feature.function.agent.gemini.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Icon
@@ -20,10 +22,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,14 +43,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import io.agent.gemini.GeminiAgent.GEMINI_OFFICIAL_SITE
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.theme.RelicFontFamily.googleSansDisplay
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
+import io.core.ui.theme.mainTextColorDark
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.mainThemeColorAccent
+import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 import io.dev.relic.feature.activities.web.WebActivity
 
@@ -101,6 +110,56 @@ fun GeminiIntroDialog(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun GeminiLottieComponent() {
+
+    val lottieRes by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.lottie_gemini)
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        Image(
+            painter = painterResource(id = R.mipmap.gemini_mind),
+            contentDescription = DEFAULT_DESC,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        LottieAnimation(
+            composition = lottieRes,
+            modifier = Modifier.fillMaxSize(),
+            restartOnPlay = false,
+            speed = 0.6F,
+            iterations = Int.MAX_VALUE,
+            alignment = Alignment.Center,
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            text = stringResource(R.string.gemini),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .wrapContentSize()
+                .background(
+                    color = mainThemeColorLight,
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 6.dp
+                ),
+            style = TextStyle(
+                color = mainTextColorDark,
+                fontFamily = googleSansDisplay,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        )
     }
 }
 

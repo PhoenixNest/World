@@ -8,8 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import io.dev.relic.feature.activities.main.vm.MainViewModel
-import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
 import io.dev.relic.feature.route.RelicRoute.GALLERY
 import io.dev.relic.feature.screens.main.MainScreenState
 
@@ -23,8 +21,6 @@ fun NavController.navigateToGalleryPage(navOptions: NavOptions? = null) {
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.pageGallery(
     mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel,
-    galleryViewModel: GalleryViewModel,
     sharedTransitionScope: SharedTransitionScope,
     onBackClick: () -> Unit
 ) {
@@ -46,8 +42,6 @@ fun NavGraphBuilder.pageGallery(
         val animatedContentScope = this
         GalleryPageRoute(
             mainScreenState = mainScreenState,
-            mainViewModel = mainViewModel,
-            galleryViewModel = galleryViewModel,
             sharedTransitionScope = sharedTransitionScope,
             animatedContentScope = animatedContentScope,
             onBackClick = onBackClick

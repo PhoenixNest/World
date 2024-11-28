@@ -37,8 +37,6 @@ class OfflineCacheInterceptor internal constructor(builder: Builder) : Intercept
 
     /* ======================== constructor ======================== */
 
-    constructor() : this(Builder())
-
     class Builder() {
 
         internal var applicationContext: Context? = null

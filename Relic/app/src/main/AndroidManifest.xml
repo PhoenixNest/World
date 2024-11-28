@@ -12,7 +12,6 @@
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Relic"
         tools:replace="android:fullBackupContent"
         tools:targetApi="s">
 

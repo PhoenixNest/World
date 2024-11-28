@@ -103,7 +103,6 @@ fun CommonTopBar(
 fun CommonTopBar(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    containerModifier: Modifier = Modifier,
     hasTitle: Boolean = false,
     title: String = stringResource(id = R.string.app_name),
     textColor: Color = MaterialTheme.colorScheme.onPrimary,
@@ -111,7 +110,7 @@ fun CommonTopBar(
     tailContent: @Composable BoxScope.() -> Unit = {}
 ) {
     Row(
-        modifier = containerModifier
+        modifier = modifier
             .fillMaxWidth()
             .height(56.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -120,7 +119,7 @@ fun CommonTopBar(
         // Back button
         IconButton(
             onClick = onBackClick,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .weight(1F)
         ) {
@@ -132,7 +131,7 @@ fun CommonTopBar(
         }
         // Title
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .weight(3F),
             contentAlignment = Alignment.Center
@@ -154,7 +153,7 @@ fun CommonTopBar(
         }
         // Tail content, such as: menu, balloon window, popup window
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .weight(1F),
             contentAlignment = Alignment.Center

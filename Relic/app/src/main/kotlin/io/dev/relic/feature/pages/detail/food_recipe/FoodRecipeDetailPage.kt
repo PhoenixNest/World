@@ -1,35 +1,40 @@
 package io.dev.relic.feature.pages.detail.food_recipe
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
-import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
 import io.dev.relic.feature.pages.detail.food_recipe.ui.FoodRecipeDetailContent
+import io.dev.relic.feature.pages.detail.food_recipe.vm.FoodRecipesDetailViewModel
 
 @Composable
 fun FoodRecipeDetailPageRoute(
     recipeId: Int,
     recipeTitle: String,
-    foodRecipesViewModel: FoodRecipesViewModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    detailViewModel: FoodRecipesDetailViewModel = hiltViewModel()
 ) {
 
-    val isLike by foodRecipesViewModel.isLikeRecipe(recipeId).collectAsStateWithLifecycle(initialValue = false)
-    val recipesDataState by foodRecipesViewModel.informationDataStateFlow.collectAsStateWithLifecycle()
+    val isLike by detailViewModel.isLikeRecipe(recipeId)
+        .collectAsStateWithLifecycle(initialValue = false)
+
+    val recipesDataState by detailViewModel.getInformationDataStateFlow()
+        .collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        detailViewModel.getRecipeInformationById(recipeId)
+    }
 
     FoodRecipeDetailPage(
         isLike = isLike,
         recipeTitle = recipeTitle,
         dataState = recipesDataState,
         onBackClick = onBackClick,
-        onLikeClick = {
-            foodRecipesViewModel.updateLikeStatus(recipeId, isLike)
-        },
-        onRetryClick = {
-            foodRecipesViewModel.getRecipeInformationById(recipeId)
-        }
+        onLikeClick = { detailViewModel.updateLikeStatus(recipeId, isLike) },
+        onRetryClick = { detailViewModel.getRecipeInformationById(recipeId) }
     )
 }
 

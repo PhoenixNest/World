@@ -28,7 +28,7 @@ fun CommonReachTheEndComponent(
         modifier = Modifier
             .fillMaxWidth()
             .height(52.dp)
-            .padding(vertical = 8.dp)
+            .padding(vertical = 12.dp)
             .clickable { onScrollToTopClick.invoke() },
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -38,13 +38,13 @@ fun CommonReachTheEndComponent(
                 .width(32.dp)
                 .height(2.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = MaterialTheme.colorScheme.primary,
                     shape = RoundedCornerShape(12.dp)
                 )
         )
         Text(
             text = text,
-            color = MaterialTheme.colorScheme.tertiary,
+            color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelMedium
         )
         Box(
@@ -52,7 +52,7 @@ fun CommonReachTheEndComponent(
                 .width(32.dp)
                 .height(2.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = MaterialTheme.colorScheme.primary,
                     shape = RoundedCornerShape(12.dp)
                 )
         )

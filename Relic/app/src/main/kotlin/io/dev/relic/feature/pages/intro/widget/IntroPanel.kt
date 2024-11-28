@@ -2,7 +2,6 @@ package io.dev.relic.feature.pages.intro.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonTextButton
 import io.core.ui.dialog.CommonItemDivider
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
 import io.dev.relic.R
 
@@ -34,7 +34,7 @@ fun IntroPanel(
     Column(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.surfaceContainer,
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp
@@ -54,19 +54,6 @@ fun IntroPanel(
 
 @Composable
 private fun IntroTitlePanel() {
-    Spacer(modifier = Modifier.height(16.dp))
-    Box(modifier = Modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier
-                .height(4.dp)
-                .width(96.dp)
-                .align(Alignment.Center)
-                .background(
-                    color = MaterialTheme.colorScheme.primary,
-                    shape = RoundedCornerShape(16.dp)
-                )
-        )
-    }
     Spacer(modifier = Modifier.height(32.dp))
     Row(
         modifier = Modifier.padding(horizontal = 24.dp),
@@ -75,7 +62,8 @@ private fun IntroTitlePanel() {
     ) {
         Text(
             text = stringResource(id = R.string.intro_title),
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontFamily = googleSans,
             style = MaterialTheme.typography.headlineLarge
         )
     }
@@ -83,7 +71,8 @@ private fun IntroTitlePanel() {
     Text(
         text = stringResource(R.string.intro_sub_title),
         modifier = Modifier.padding(horizontal = 24.dp),
-        color = MaterialTheme.colorScheme.onPrimary,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontFamily = googleSans,
         style = MaterialTheme.typography.headlineSmall
     )
     Spacer(modifier = Modifier.height(24.dp))
@@ -98,7 +87,7 @@ private fun IntroFeaturePanel(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp

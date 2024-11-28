@@ -17,14 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.CommonAsyncImage
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicFontFamily.googleSans
+import io.core.ui.theme.RelicFontFamily.newsReader
 import io.data.model.news.NewsArticleModel
 
 @Composable
@@ -38,7 +38,7 @@ fun TrendingCardItem(
             modifier = modifier.width(300.dp),
             border = BorderStroke(
                 width = 2.dp,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
+                color = MaterialTheme.colorScheme.primary
             ),
             shape = RoundedCornerShape(16.dp)
         ) {
@@ -59,7 +59,7 @@ fun TrendingCardItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.8F))
+                        .background(color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8F))
                         .padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(
                         space = 6.dp,
@@ -69,26 +69,27 @@ fun TrendingCardItem(
                 ) {
                     Text(
                         text = title ?: "Title",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = newsReader,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = RelicFontFamily.newsReader
-                        )
+                        style = MaterialTheme.typography.titleMedium
                     )
                     Text(
                         text = "$source - $author",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        fontFamily = googleSans,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.labelSmall
                     )
                     Text(
                         text = publishDate ?: "",
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                        style = MaterialTheme.typography.bodySmall
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        fontFamily = googleSans,
+                        style = MaterialTheme.typography.labelSmall
                     )
                 }
             }

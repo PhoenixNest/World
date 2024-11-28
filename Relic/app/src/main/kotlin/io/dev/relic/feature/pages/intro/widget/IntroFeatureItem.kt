@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.CommonRoundIcon
+import io.dev.relic.R
 
 @Composable
 fun IntroFeatureItem(
@@ -29,14 +31,24 @@ fun IntroFeatureItem(
     ) {
         CommonRoundIcon(
             iconRes = iconResId,
-            iconColor = MaterialTheme.colorScheme.onPrimary,
-            backgroundColor = MaterialTheme.colorScheme.primary
+            iconColor = MaterialTheme.colorScheme.onSurface,
+            backgroundColor = MaterialTheme.colorScheme.surfaceContainerHighest
         )
         Spacer(modifier = Modifier.width(12.dp))
         Text(
             text = stringResource(textResId),
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleMedium
         )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun IntroFeatureItemPreview() {
+    IntroFeatureItem(
+        isLargeMode = false,
+        iconResId = R.drawable.ic_route,
+        textResId = R.string.intro_feature_route
+    )
 }

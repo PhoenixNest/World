@@ -7,7 +7,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.data.dto.pixabay.PixabayImagesDTO
@@ -25,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -78,7 +78,7 @@ class GalleryViewModel @Inject constructor(
     }
 
     fun getGalleryPager(imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION) {
-        operationInViewModelScope {
+        viewModelScope.launch {
             Pager(
                 // Configure how data is loaded by passing additional properties to
                 // PagingConfig, such as prefetchDistance.
@@ -110,7 +110,7 @@ class GalleryViewModel @Inject constructor(
         val newPageIndex = currentGalleryPageIndex + 1
         currentGalleryPageIndex = newPageIndex
 
-        operationInViewModelScope {
+        viewModelScope.launch {
             isFetchingMore = true
             getGalleryData(
                 pageIndex = newPageIndex,
@@ -140,9 +140,9 @@ class GalleryViewModel @Inject constructor(
             emit(result)
         }.flowOn(Dispatchers.IO)
 
-        operationInViewModelScope { scope ->
+        viewModelScope.launch {
             resultFlow.stateIn(
-                scope = scope,
+                scope = this,
                 started = SharingStarted.WhileSubscribed(5 * 1000L),
                 initialValue = NetworkResult.Loading()
             ).collect { result ->

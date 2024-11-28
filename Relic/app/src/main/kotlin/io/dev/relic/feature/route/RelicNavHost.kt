@@ -1,22 +1,13 @@
 package io.dev.relic.feature.route
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import io.core.ui.ext.SystemUiControllerExt.updateStatusBarColor
-import io.dev.relic.feature.activities.main.vm.MainViewModel
-import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
-import io.dev.relic.feature.function.food_recipes.vm.FoodRecipesViewModel
-import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
-import io.dev.relic.feature.function.news.vm.NewsViewModel
-import io.dev.relic.feature.function.todo.vm.TodoViewModel
 import io.dev.relic.feature.pages.agent.pageAgentChat
 import io.dev.relic.feature.pages.detail.food_recipe.pageFoodRecipeDetail
 import io.dev.relic.feature.pages.detail.gallery.pageGalleryDetail
@@ -27,8 +18,10 @@ import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.pages.studio.pageStudio
 import io.dev.relic.feature.route.RelicRoute.START_DESTINATION
 import io.dev.relic.feature.screens.main.MainScreenState
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.HOME
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUDIO
+
+var LocalNavHostController = staticCompositionLocalOf<NavHostController> {
+    error("Error, couldn't provider controller.")
+}
 
 /**
  * Main Screen navigation route host
@@ -39,46 +32,27 @@ import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination.STUD
  * - [Shared Element Transitions in Compose](https://developer.android.google.cn/develop/ui/compose/animation/shared-elements)
  *
  * @param mainScreenState
- * @param navHostController
- * @param mainViewModel                 Global ViewModel
- * @param geminiAgentViewModel          Provide the Ai Chat feature to Home page
- * @param foodRecipesViewModel          Provide the Food Recipes feature to Home page
- * @param todoViewModel                 Provide the todo feature to Studio page
- * @param newsViewModel                 Provide the News feature to Studio page
- * @param galleryViewModel              Provide the gallery feature to Gallery page
  * @param startDestination              The journey begins from here
  * */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MainFeatureNavHost(
     mainScreenState: MainScreenState,
-    navHostController: NavHostController,
-    mainViewModel: MainViewModel,
-    geminiAgentViewModel: GeminiAgentViewModel,
-    foodRecipesViewModel: FoodRecipesViewModel,
-    todoViewModel: TodoViewModel,
-    newsViewModel: NewsViewModel,
-    galleryViewModel: GalleryViewModel,
-    startDestination: String = START_DESTINATION
+    startDestination: String = START_DESTINATION,
+    modifier: Modifier = Modifier
 ) {
-    val systemUiController = rememberSystemUiController()
-
-    when (mainScreenState.currentTopLevelDestination) {
-        HOME -> systemUiController.updateStatusBarColor(darkIcons = false)
-        STUDIO -> systemUiController.updateStatusBarColor(darkIcons = false)
-        else -> systemUiController.updateStatusBarColor(darkIcons = false)
-    }
+    val navHostController = mainScreenState.navHostController
 
     SharedTransitionLayout(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         val sharedTransitionScope = this
 
         NavHost(
-            navController = navHostController,
+            navController = mainScreenState.navHostController,
             startDestination = startDestination,
             modifier = Modifier.fillMaxSize(),
-            enterTransition = {
+            /*enterTransition = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Left,
                     animationSpec = tween(durationMillis = 350)
@@ -101,49 +75,17 @@ fun MainFeatureNavHost(
                     towards = AnimatedContentTransitionScope.SlideDirection.Right,
                     animationSpec = tween(durationMillis = 350)
                 )
-            }
+            }*/
         ) {
-            pageHome(
-                mainScreenState = mainScreenState,
-                mainViewModel = mainViewModel,
-                geminiAgentViewModel = geminiAgentViewModel,
-                foodRecipesViewModel = foodRecipesViewModel
-            )
-            pageStudio(
-                mainScreenState = mainScreenState,
-                mainViewModel = mainViewModel,
-                todoViewModel = todoViewModel,
-                newsViewModel = newsViewModel
-            )
-            pageGallery(
-                mainScreenState = mainScreenState,
-                mainViewModel = mainViewModel,
-                galleryViewModel = galleryViewModel,
-                sharedTransitionScope = sharedTransitionScope,
-                onBackClick = navHostController::popBackStack
-            )
-            pageSettings(
-                mainScreenState = mainScreenState,
-                mainViewModel = mainViewModel,
-                onBackClick = navHostController::popBackStack
-            )
-            pageAgentChat(
-                mainScreenState = mainScreenState,
-                mainViewModel = mainViewModel,
-                geminiAgentViewModel = geminiAgentViewModel,
-                onBackClick = navHostController::popBackStack
-            )
-            pageFoodRecipeDetail(
-                foodRecipesViewModel = foodRecipesViewModel,
-                onBackClick = navHostController::popBackStack
-            )
-            pageNewsDetail(
-                onBackClick = navHostController::popBackStack
-            )
-            pageGalleryDetail(
-                onBackClick = navHostController::popBackStack,
-                shareTransitionScope = sharedTransitionScope
-            )
+            pageHome(mainScreenState)
+            pageStudio(mainScreenState)
+            pageSettings(navHostController::popBackStack)
+            pageAgentChat(navHostController::popBackStack)
+            pageFoodRecipeDetail(navHostController::popBackStack)
+            pageNewsDetail(navHostController::popBackStack)
+
+            pageGallery(mainScreenState, sharedTransitionScope, navHostController::popBackStack)
+            pageGalleryDetail(sharedTransitionScope, navHostController::popBackStack)
         }
     }
 }

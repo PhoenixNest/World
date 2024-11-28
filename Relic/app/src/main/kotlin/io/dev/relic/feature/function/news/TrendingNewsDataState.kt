@@ -19,7 +19,7 @@ sealed interface TrendingNewsDataState {
     /* Succeed */
 
     data class FetchSucceed(
-        val modelList: List<NewsArticleModel?>?
+        val modelList: List<NewsArticleModel?>
     ) : TrendingNewsDataState
 
     /* Failed */

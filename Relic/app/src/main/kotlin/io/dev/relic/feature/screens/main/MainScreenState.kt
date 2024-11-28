@@ -1,9 +1,6 @@
 package io.dev.relic.feature.screens.main
 
 import android.os.Bundle
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -20,7 +17,7 @@ import io.core.network.monitor.NetworkStatus
 import io.dev.relic.feature.pages.home.navigateToHomePage
 import io.dev.relic.feature.pages.studio.navigateToStudioPage
 import io.dev.relic.feature.route.RelicRoute
-import io.dev.relic.feature.screens.main.util.MainScreenTopLevelDestination
+import io.dev.relic.feature.screens.main.util.AppTopLevelDestinations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -31,16 +28,14 @@ fun rememberMainScreenState(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navHostController: NavHostController = rememberNavController(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    navHostController: NavHostController = rememberNavController()
 ): MainScreenState {
     return remember(
         keys = arrayOf(
             windowSizeClass,
             networkMonitor,
             coroutineScope,
-            navHostController,
-            drawerState
+            navHostController
         )
     ) {
         MainScreenState(
@@ -48,8 +43,7 @@ fun rememberMainScreenState(
             windowSizeClass = windowSizeClass,
             networkMonitor = networkMonitor,
             coroutineScope = coroutineScope,
-            navHostController = navHostController,
-            drawerState = drawerState
+            navHostController = navHostController
         )
     }
 }
@@ -61,7 +55,6 @@ fun rememberMainScreenState(
  * @param windowSizeClass
  * @param networkMonitor
  * @param navHostController
- * @param drawerState
  * */
 @Stable
 class MainScreenState(
@@ -69,8 +62,7 @@ class MainScreenState(
     val windowSizeClass: WindowSizeClass,
     val networkMonitor: NetworkMonitor,
     val coroutineScope: CoroutineScope,
-    val navHostController: NavHostController,
-    val drawerState: DrawerState
+    val navHostController: NavHostController
 ) {
 
     /**
@@ -96,8 +88,8 @@ class MainScreenState(
      * */
     val currentTopLevelDestination
         @Composable get() = when (currentDestination?.route) {
-            RelicRoute.HOME -> MainScreenTopLevelDestination.HOME
-            RelicRoute.STUDIO -> MainScreenTopLevelDestination.STUDIO
+            RelicRoute.HOME -> AppTopLevelDestinations.HOME
+            RelicRoute.STUDIO -> AppTopLevelDestinations.STUDIO
             else -> null
         }
 
@@ -105,25 +97,25 @@ class MainScreenState(
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
-    val topLevelDestinations = MainScreenTopLevelDestination.entries
+    val topLevelDestinations = AppTopLevelDestinations.entries
 
     /**
      * Check the current screen size and toggle the visibility of bottom bar.
      * */
-    val shouldShowBottomBar
+    val isShowBottomBar
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
     /**
      * Check the current screen size and toggle the visibility of rail bar.
      * */
-    val shouldShowRailBar
-        get() = !shouldShowBottomBar
+    val isShowRailBar
+        get() = !isShowBottomBar
 
     /**
      * Check the current destination of nav host and toggle the gesture of main screen drawer.
      * */
     val isEnableDrawerGesture
-        @Composable get() = (currentTopLevelDestination == MainScreenTopLevelDestination.HOME)
+        @Composable get() = (currentTopLevelDestination == AppTopLevelDestinations.HOME)
 
     /**
      * UI logic for navigating to a top level destination in the app. Top level destinations have
@@ -132,7 +124,7 @@ class MainScreenState(
      *
      * @param topLevelDestination   The destination the app needs to navigate to.
      */
-    fun navigateToTopLevelDestination(topLevelDestination: MainScreenTopLevelDestination) {
+    fun navigateToTopLevelDestination(topLevelDestination: AppTopLevelDestinations) {
 
         val topLevelNavOptions = navOptions {
             // Pop up to the start destination of the graph to
@@ -148,11 +140,11 @@ class MainScreenState(
         }
 
         when (topLevelDestination) {
-            MainScreenTopLevelDestination.HOME -> {
+            AppTopLevelDestinations.HOME -> {
                 navHostController.navigateToHomePage(topLevelNavOptions)
             }
 
-            MainScreenTopLevelDestination.STUDIO -> {
+            AppTopLevelDestinations.STUDIO -> {
                 navHostController.navigateToStudioPage(topLevelNavOptions)
             }
         }

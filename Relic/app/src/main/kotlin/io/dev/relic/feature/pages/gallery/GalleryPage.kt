@@ -10,11 +10,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.navOptions
 import io.common.util.LogUtil
 import io.data.model.pixabay.PixabayDataModel
-import io.dev.relic.feature.activities.main.vm.MainViewModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
 import io.dev.relic.feature.pages.detail.gallery.navigateToGalleryDetailPage
@@ -26,19 +26,17 @@ import kotlinx.coroutines.flow.filter
 @Composable
 fun GalleryPageRoute(
     mainScreenState: MainScreenState,
-    mainViewModel: MainViewModel,
-    galleryViewModel: GalleryViewModel,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    galleryViewModel: GalleryViewModel = hiltViewModel()
 ) {
 
     /* ======================== Common ======================== */
 
     val context = LocalContext.current
-    val localFocusManager = LocalFocusManager.current
-    val coroutineScope = mainScreenState.coroutineScope
     val navController = mainScreenState.navHostController
+    val localFocusManager = LocalFocusManager.current
 
     /* ======================== Field ======================== */
 

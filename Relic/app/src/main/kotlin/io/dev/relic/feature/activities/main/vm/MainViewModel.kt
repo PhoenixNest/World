@@ -5,7 +5,6 @@ import android.location.Location
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.common.ext.ViewModelExt.operationInViewModelScope
 import io.common.ext.ViewModelExt.setState
 import io.common.util.LogUtil
 import io.data.dto.weather.WeatherForecastDTO
@@ -13,7 +12,7 @@ import io.data.mappers.WeatherDataMapper.toModel
 import io.data.mappers.WeatherDataMapper.toWeatherEntity
 import io.data.model.NetworkResult
 import io.dev.relic.feature.function.weather.WeatherDataState
-import io.dev.relic.feature.screens.main.MainState
+import io.dev.relic.feature.screens.main.LocationState
 import io.domain.use_case.weather.WeatherUseCase
 import io.module.location.ILocationListener
 import io.module.location.use_case.LocationUseCase
@@ -21,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,10 +33,10 @@ class MainViewModel @Inject constructor(
     var latestLocation: Location? = null
 
     /**
-     * The data flow of the main screen.
+     * The data flow of the location information service.
      * */
-    private val _mainStateFlow = MutableStateFlow<MainState>(MainState.Init)
-    val mainStateFlow: StateFlow<MainState> get() = _mainStateFlow
+    private val _locationStateFlow = MutableStateFlow<LocationState>(LocationState.Init)
+    val locationStateFlow: StateFlow<LocationState> get() = _locationStateFlow
 
     /**
      * The data flow of weather forecast.
@@ -56,12 +56,12 @@ class MainViewModel @Inject constructor(
      * Try to access the current location of the device first
      * */
     private fun accessDeviceLocation() {
-        operationInViewModelScope {
+        viewModelScope.launch {
             locationUseCase.getCurrentLocation.invoke(
                 listener = object : ILocationListener {
                     override fun onAccessing() {
                         LogUtil.d(TAG, "[Access Device Location] Accessing...")
-                        setState(_mainStateFlow, MainState.AccessingLocation)
+                        setState(_locationStateFlow, LocationState.AccessingLocation)
                     }
 
                     override fun onAccessSucceed(location: Location) {
@@ -69,12 +69,12 @@ class MainViewModel @Inject constructor(
                         val longitude = location.longitude
                         LogUtil.d(TAG, "[Access Device Location] Access succeed, ($latitude, $longitude)")
                         latestLocation = location
-                        setState(_mainStateFlow, MainState.AccessLocationSucceed(location))
+                        setState(_locationStateFlow, LocationState.AccessLocationSucceed(location))
                     }
 
                     override fun onAccessFailed(errorMessage: String) {
                         LogUtil.e(TAG, "[Access Device Location] Access failed, errorMessage: $errorMessage")
-                        setState(_mainStateFlow, MainState.AccessLocationFailed(null, errorMessage))
+                        setState(_locationStateFlow, LocationState.AccessLocationFailed(null, errorMessage))
                     }
                 }
             )
@@ -91,7 +91,7 @@ class MainViewModel @Inject constructor(
         latitude: Double,
         longitude: Double
     ) {
-        operationInViewModelScope {
+        viewModelScope.launch {
             weatherUseCase.getWeatherData.invoke(
                 latitude = latitude,
                 longitude = longitude

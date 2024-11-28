@@ -22,8 +22,8 @@ import io.dev.relic.feature.activities.web.WebActivity
 @Composable
 fun IntroPrivacy() {
     val context = LocalContext.current
-    val normalTextColor = MaterialTheme.colorScheme.onPrimary
-    val highLightTextColor = MaterialTheme.colorScheme.onSecondary
+    val normalTextColor = MaterialTheme.colorScheme.onSurface
+    val highLightTextColor = MaterialTheme.colorScheme.onSurface
     val annotatedText = buildAnnotatedString {
         append(stringResource(R.string.intro_agreement_part_1))
         pushStringAnnotation(
