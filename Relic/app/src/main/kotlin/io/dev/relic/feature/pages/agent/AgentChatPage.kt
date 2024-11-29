@@ -14,11 +14,14 @@ import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicResCenter.getString
+import io.core.datastore.RelicDatastoreCenter
+import io.core.datastore.RelicDatastoreCenter.readSyncData
 import io.dev.relic.R
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
 import io.dev.relic.feature.pages.agent.ui.AgentChatPageContent
+import io.domain.preference_key.UserPreferenceKey.KEY_IS_FIRST_CHAT_WITH_AGENT
 
 @Composable
 fun AgentChatPageRoute(
@@ -42,6 +45,14 @@ fun AgentChatPageRoute(
 
     var isShowHelpDialog by remember {
         mutableStateOf(false)
+    }
+
+    LaunchedEffect(Unit) {
+        val isFirstChat = readSyncData(KEY_IS_FIRST_CHAT_WITH_AGENT, true)
+        if (isFirstChat) {
+            isShowHelpDialog = true
+            RelicDatastoreCenter.writeAsyncData(KEY_IS_FIRST_CHAT_WITH_AGENT, false)
+        }
     }
 
     LaunchedEffect(Unit) {

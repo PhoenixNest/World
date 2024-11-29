@@ -16,4 +16,9 @@ object UserPreferenceKey {
      * A marker used to identify whether the user agrees to the privacy agreement.
      * */
     const val KEY_IS_AGREE_USER_PRIVACY = "key_is_agree_user_privacy"
+
+    /**
+     * A marker used to identify whether the user was chat with agent first.
+     * */
+    const val KEY_IS_FIRST_CHAT_WITH_AGENT = "key_is_first_chat_with_agent"
 }
