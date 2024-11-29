@@ -41,7 +41,7 @@ class HomeFoodRecipesViewModel @Inject constructor(
     private var currentDishQueryParameter = ""
 
     companion object {
-        private const val TAG = "HomeViewModel"
+        private const val TAG = "HomeFoodRecipesViewModel"
     }
 
     init {

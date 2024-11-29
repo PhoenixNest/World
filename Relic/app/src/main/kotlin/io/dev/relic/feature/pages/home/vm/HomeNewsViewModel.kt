@@ -70,7 +70,7 @@ class HomeNewsViewModel @Inject constructor(
     private val topHeadlineNewsStateFlow = MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
 
     companion object {
-        private const val TAG = "NewsViewModel"
+        private const val TAG = "HomeNewsViewModel"
         private const val DEFAULT_STOP_TIMEOUT_MILLIS = 5 * 1000L
         private const val DEFAULT_LAST_REFRESH_TIME = 0L
     }
