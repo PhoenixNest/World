@@ -26,9 +26,7 @@ import io.dev.relic.feature.pages.home.ui.isAvailableContent
 data class HomeTopHeadlineNewsColumnAction(
     val state: TopHeadlineNewsDataState,
     @Stable val lazyListState: LazyListState,
-    @Stable val onCardClick: (model: NewsArticleModel) -> Unit,
-    @Stable val onLikeClick: (model: NewsArticleModel) -> Unit,
-    @Stable val onShareClick: (model: NewsArticleModel) -> Unit,
+    @Stable val onItemClick: (model: NewsArticleModel) -> Unit,
     @Stable val onRetryClick: () -> Unit,
     @Stable val onScrollToTopClick: () -> Unit
 )
@@ -67,9 +65,7 @@ fun LazyListScope.HomeTopHeadlineNewsColumn(newsColumnAction: HomeTopHeadlineNew
                     if (isAvailableContent(data)) {
                         NewsCardItem(
                             data = data,
-                            onCardClick = { newsColumnAction.onCardClick.invoke(data) },
-                            onLikeClick = { newsColumnAction.onLikeClick.invoke(data) },
-                            onShareClick = { newsColumnAction.onShareClick.invoke(data) }
+                            onItemClick = { newsColumnAction.onItemClick.invoke(data) }
                         )
                     }
                     if (index == sortList.size - 1) {
@@ -116,9 +112,7 @@ private fun HomeTopHeadlineNewsColumnPreview() {
                     )
                 ),
                 lazyListState = lazyListState,
-                onCardClick = {},
-                onLikeClick = {},
-                onShareClick = {},
+                onItemClick = {},
                 onRetryClick = {},
                 onScrollToTopClick = {}
             )

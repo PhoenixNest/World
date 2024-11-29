@@ -27,7 +27,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.navOptions
 import io.common.RelicConstants.Common.EMPTY_STRING
-import io.common.RelicShareCenter
 import io.common.util.LogUtil
 import io.core.ui.utils.RelicUiUtil
 import io.core.ui.utils.RelicUiUtil.DEFAULT_NAVIGATION_BAR_HEIGHT
@@ -167,20 +166,10 @@ fun HomePageRoute(
     val topHeadlineNewsColumnAction = HomeTopHeadlineNewsColumnAction(
         state = topHeadlineNewsDataState,
         lazyListState = topHeadlineNewsListState,
-        onCardClick = { model ->
+        onItemClick = { model ->
             navHostController.navigateToNewsDetailPage(
                 title = model.title,
                 contUrl = model.contentUrl
-            )
-        },
-        onLikeClick = {
-            //
-        },
-        onShareClick = {
-            RelicShareCenter.shareWebLink(
-                context = context,
-                title = it.title,
-                url = it.contentUrl
             )
         },
         onRetryClick = { newsViewModel.getTopHeadlineNewsData() },

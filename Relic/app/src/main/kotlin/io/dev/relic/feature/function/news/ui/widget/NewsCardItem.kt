@@ -39,9 +39,7 @@ import io.data.model.news.NewsArticleModel
 @Composable
 fun NewsCardItem(
     data: NewsArticleModel,
-    onCardClick: () -> Unit,
-    onLikeClick: () -> Unit,
-    onShareClick: () -> Unit,
+    onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     data.apply {
@@ -56,7 +54,7 @@ fun NewsCardItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onCardClick.invoke() }
+                    .clickable { onItemClick.invoke() }
                     .padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(
                     space = 12.dp,
@@ -74,10 +72,6 @@ fun NewsCardItem(
                     description = subtitle ?: "Subtitle",
                     source = source ?: ""
                 )
-                // NewsCardFunctionBar(
-                //     onLikeClick = onLikeClick,
-                //     onShareClick = onShareClick
-                // )
             }
         }
     }
@@ -215,8 +209,6 @@ private fun NewsListItemPreview() {
             contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
             source = "Mmo-champion.com"
         ),
-        onCardClick = {},
-        onLikeClick = {},
-        onShareClick = {}
+        onItemClick = {}
     )
 }
