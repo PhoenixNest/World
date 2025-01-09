@@ -1,9 +1,9 @@
 package io.dev.relic.feature.route
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -55,16 +55,16 @@ fun MainFeatureNavHost(
             startDestination = startDestination,
             modifier = Modifier.fillMaxSize(),
             enterTransition = {
-                EnterTransition.None
+                fadeIn()
             },
             exitTransition = {
-                ExitTransition.None
+                fadeOut()
             },
             popEnterTransition = {
-                EnterTransition.None
+                fadeIn()
             },
             popExitTransition = {
-                ExitTransition.None
+                fadeOut()
             }
         ) {
             // Top Level

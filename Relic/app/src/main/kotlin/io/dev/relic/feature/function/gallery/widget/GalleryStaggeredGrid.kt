@@ -88,10 +88,7 @@ private fun GalleryStaggeredGrid(
         itemsIndexed(imageList) { index, data ->
             data?.apply {
                 val itemDecorationModifier = Modifier
-                    .padding(
-                        top = if (index < 2) 24.dp else 0.dp,
-                        bottom = if (index == imageList.size - 1) 100.dp else 0.dp
-                    )
+                    .padding(bottom = if (index == imageList.size - 1) 100.dp else 0.dp)
                 with(sharedTransitionScope) {
                     GalleryGridItem(
                         author = author ?: DEFAULT_AUTHOR,
