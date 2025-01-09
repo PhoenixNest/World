@@ -2,16 +2,19 @@ package io.dev.relic.feature.function.agent.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.agent.gemini.model.AbsGeminiCell
+import io.core.ui.RelicUiUtil.DEFAULT_BOTTOM_NAVIGATION_BAR_HEIGHT
 import io.dev.relic.feature.function.agent.ui.widget.AgentMessageCell
 
 @Composable
@@ -20,6 +23,16 @@ fun AgentChatList(
     lazyListState: LazyListState,
     modifier: Modifier = Modifier
 ) {
+    val gestureBarHeight = NavigationBarDefaults.windowInsets.asPaddingValues().calculateBottomPadding()
+    val defaultPlaceholder = 100.dp
+    val waitAnswerLottieHeight = 24.dp
+    val waitAnswerTitleHeight = 32.dp
+    val toBottomPadding = DEFAULT_BOTTOM_NAVIGATION_BAR_HEIGHT +
+            defaultPlaceholder +
+            waitAnswerTitleHeight +
+            waitAnswerLottieHeight +
+            gestureBarHeight
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         state = lazyListState,
@@ -33,7 +46,7 @@ fun AgentChatList(
         itemsIndexed(chatHistory) { index, cell ->
             val itemDecorationModifier = Modifier.padding(
                 top = if (index == 0) 16.dp else 0.dp,
-                bottom = if (index == chatHistory.size - 1) 160.dp else 0.dp
+                bottom = if (index == chatHistory.size - 1) toBottomPadding else 0.dp
             )
             AgentMessageCell(
                 geminiCellContent = cell,

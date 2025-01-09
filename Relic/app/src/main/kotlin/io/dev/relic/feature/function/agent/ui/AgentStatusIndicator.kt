@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +22,6 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.theme.RelicFontFamily.googleSans
-import io.core.ui.theme.mainTextColor
 import io.dev.relic.R
 
 @Composable
@@ -46,7 +46,7 @@ fun AgentStatusIndicator(isAwaitingAnswer: Boolean) {
         Text(
             text = indicatorText,
             style = TextStyle(
-                color = mainTextColor,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = googleSans
             )
         )
@@ -75,13 +75,13 @@ private fun AgentAwaitAnswerLottie() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun AgentAwaitingAnswerIndicatorPreview() {
     AgentStatusIndicator(true)
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun AgentReceivedAnswerIndicatorPreview() {
     AgentStatusIndicator(false)
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +36,10 @@ fun CommonInputField(
     hintTextStyle: TextStyle = TextStyle(),
     isEnabled: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
+    // Keyboard Config
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Done,
+    isEnabledAutoCorrect: Boolean = false,
     // Keyboard Action
     onDone: () -> Unit = {},
     onGo: () -> Unit = {},
@@ -54,8 +59,9 @@ fun CommonInputField(
         ),
         maxLines = maxLines,
         keyboardOptions = KeyboardOptions(
-            autoCorrectEnabled = false,
-            imeAction = ImeAction.Done
+            autoCorrectEnabled = isEnabledAutoCorrect,
+            imeAction = imeAction,
+            keyboardType = keyboardType
         ),
         keyboardActions = KeyboardActions(
             onDone = { onDone.invoke() },

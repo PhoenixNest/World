@@ -1,6 +1,8 @@
 package io.dev.relic.feature.pages.agent
 
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -120,17 +122,19 @@ private fun AgentChatPage(
         is GeminiAgentDataState.SendingQuestion -> true
     }
 
-    AgentChatPageContent(
-        chatLazyListState = rememberLazyListState(),
-        inputMessage = inputMessage,
-        isEnableSendButton = isEnableSendButton,
-        isAwaitingAnswer = isAwaitingAnswer,
-        chatHistory = agentChatList,
-        onMessageValueChange = onMessageValueChange,
-        onSendMessage = onSendMessage,
-        onBackClick = onBackClick,
-        onInfoClick = onInfoClick
-    )
+    Surface(color = MaterialTheme.colorScheme.surface) {
+        AgentChatPageContent(
+            chatLazyListState = rememberLazyListState(),
+            inputMessage = inputMessage,
+            isEnableSendButton = isEnableSendButton,
+            isAwaitingAnswer = isAwaitingAnswer,
+            chatHistory = agentChatList,
+            onMessageValueChange = onMessageValueChange,
+            onSendMessage = onSendMessage,
+            onBackClick = onBackClick,
+            onInfoClick = onInfoClick
+        )
+    }
 }
 
 @Composable

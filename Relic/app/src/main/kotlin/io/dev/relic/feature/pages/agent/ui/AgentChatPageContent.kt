@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -20,8 +20,6 @@ import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.theme.mainIconColorLight
-import io.core.ui.theme.mainThemeColor
 import io.core.ui.widget.CommonTopBar
 import io.dev.relic.R
 import io.dev.relic.feature.pages.agent.ui.widget.AgentChatArea
@@ -38,50 +36,46 @@ fun AgentChatPageContent(
     onBackClick: () -> Unit,
     onInfoClick: () -> Unit
 ) {
-    LaunchedEffect(chatHistory) {
-        chatLazyListState.animateScrollToItem(chatHistory.size)
+    LaunchedEffect(chatHistory.size) {
+        val lastIndexOfList = (chatHistory.size - 1).coerceAtLeast(0)
+        chatLazyListState.animateScrollToItem(lastIndexOfList)
     }
 
-    Surface(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        color = mainThemeColor
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start
-        ) {
-            CommonTopBar(
-                onBackClick = onBackClick,
-                modifier = Modifier.statusBarsPadding(),
-                hasTitle = false,
-                title = stringResource(R.string.title_greeting),
-                iconColor = mainIconColorLight,
-                tailContent = {
-                    IconButton(onClick = onInfoClick) {
-                        Icon(
-                            painter = painterResource(id = io.core.ui.R.drawable.ic_info),
-                            contentDescription = DEFAULT_DESC,
-                            tint = mainIconColorLight
-                        )
-                    }
+        CommonTopBar(
+            onBackClick = onBackClick,
+            modifier = Modifier.statusBarsPadding(),
+            hasTitle = false,
+            title = stringResource(R.string.title_greeting),
+            iconColor = MaterialTheme.colorScheme.onSurface,
+            tailContent = {
+                IconButton(onClick = onInfoClick) {
+                    Icon(
+                        painter = painterResource(id = io.core.ui.R.drawable.ic_info),
+                        contentDescription = DEFAULT_DESC,
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
                 }
-            )
-            AgentChatArea(
-                chatLazyListState = chatLazyListState,
-                inputMessage = inputMessage,
-                isEnableSendButton = isEnableSendButton,
-                isAwaitingAnswer = isAwaitingAnswer,
-                chatHistory = chatHistory,
-                onMessageValueChange = onMessageValueChange,
-                onSendMessage = onSendMessage,
-            )
-        }
+            }
+        )
+        AgentChatArea(
+            chatLazyListState = chatLazyListState,
+            inputMessage = inputMessage,
+            isEnableSendButton = isEnableSendButton,
+            isAwaitingAnswer = isAwaitingAnswer,
+            chatHistory = chatHistory,
+            onMessageValueChange = onMessageValueChange,
+            onSendMessage = onSendMessage,
+        )
     }
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun AgentChatPageContentPreview() {
     val chatHistory = listOf<AbsGeminiCell>(
         GeminiTextCell(

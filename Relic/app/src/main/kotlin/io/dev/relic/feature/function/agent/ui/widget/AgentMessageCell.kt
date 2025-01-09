@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +30,6 @@ import io.agent.gemini.utils.GeminiChatRole.ERROR
 import io.agent.gemini.utils.GeminiChatRole.USER
 import io.common.util.ToastUtil
 import io.core.ui.theme.errorColorAccent
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainThemeColor
-import io.core.ui.theme.mainThemeColorAccent
-import io.core.ui.theme.mainThemeColorLight
 import io.dev.relic.R
 
 private val startShape = RoundedCornerShape(
@@ -68,9 +66,9 @@ fun AgentMessageCell(
     }
 
     val cellBackgroundColor = when (geminiCellContent.roleId) {
-        USER.roleId -> mainThemeColorAccent
-        ERROR.roleId -> errorColorAccent
-        AGENT.roleId -> mainThemeColorLight
+        USER.roleId -> MaterialTheme.colorScheme.primaryContainer
+        ERROR.roleId -> MaterialTheme.colorScheme.error
+        AGENT.roleId -> MaterialTheme.colorScheme.secondaryContainer
         else -> errorColorAccent
     }
 
@@ -87,12 +85,7 @@ fun AgentMessageCell(
         else -> stringResource(id = R.string.agent_unknown_cell_type_warning)
     }
 
-    val cellContentColor = when (geminiCellContent.roleId) {
-        USER.roleId -> mainTextColor
-        AGENT.roleId -> mainThemeColor
-        ERROR.roleId -> mainTextColor
-        else -> errorColorAccent
-    }
+    val cellContentColor = MaterialTheme.colorScheme.contentColorFor(cellBackgroundColor)
 
     Box(modifier = modifier.fillMaxWidth()) {
         MarkdownText(

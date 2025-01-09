@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +24,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.theme.mainBackgroundColor
-import io.core.ui.theme.mainIconColorLight
-import io.core.ui.theme.mainTextColor
-import io.core.ui.theme.mainTextColor30
-import io.core.ui.theme.mainThemeColorAccent
-import io.core.ui.theme.mainThemeColorLight
 import io.core.ui.widget.CommonInputField
 import io.dev.relic.R
 
@@ -42,14 +37,14 @@ fun AgentInputField(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .imePadding(),
-        color = mainBackgroundColor,
+        modifier = modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceContainer,
         shape = RectangleShape
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .imePadding(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -69,20 +64,23 @@ fun AgentInputField(
                         .fillMaxWidth()
                         .weight(4F)
                         .background(
-                            color = mainThemeColorLight.copy(alpha = 0.1F),
+                            color = MaterialTheme.colorScheme.surfaceContainerHigh,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .padding(16.dp),
-                    contentTextStyle = TextStyle(mainTextColor),
-                    hintTextStyle = TextStyle(mainTextColor30),
-                    onDone = onSendMessage
+                    contentTextStyle = TextStyle(MaterialTheme.colorScheme.onSurface),
+                    hintTextStyle = TextStyle(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3F)),
+                    onDone = onSendMessage,
+                    onGo = onSendMessage,
+                    onNext = onSendMessage,
+                    onSend = onSendMessage
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Surface(
                     color = if (isEnableSend) {
-                        mainThemeColorAccent
+                        MaterialTheme.colorScheme.primary
                     } else {
-                        mainIconColorLight.copy(alpha = 0.3F)
+                        MaterialTheme.colorScheme.inversePrimary
                     },
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -94,9 +92,9 @@ fun AgentInputField(
                             .clickable { onSendMessage.invoke() }
                             .padding(12.dp),
                         tint = if (isEnableSend) {
-                            mainIconColorLight
+                            MaterialTheme.colorScheme.onPrimary
                         } else {
-                            mainIconColorLight.copy(alpha = 0.3F)
+                            MaterialTheme.colorScheme.onPrimary
                         }
                     )
                 }
