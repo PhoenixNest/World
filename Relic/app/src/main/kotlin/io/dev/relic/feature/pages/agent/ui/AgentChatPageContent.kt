@@ -20,9 +20,9 @@ import io.agent.gemini.model.AbsGeminiCell
 import io.agent.gemini.model.GeminiTextCell
 import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
+import io.core.ui.widget.CommonTopBar
 import io.dev.relic.R
 import io.dev.relic.feature.pages.agent.ui.widget.AgentChatArea
 

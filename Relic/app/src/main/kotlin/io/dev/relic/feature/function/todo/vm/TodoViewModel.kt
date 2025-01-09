@@ -25,8 +25,7 @@ class TodoViewModel @Inject constructor(
     /**
      * The todo data flow.
      * */
-    private val _todoDataStateFlow = MutableStateFlow<TodoDataState>(TodoDataState.Init)
-    val todoDataStateFlow: StateFlow<TodoDataState> get() = _todoDataStateFlow
+    private val todoDataStateFlow = MutableStateFlow<TodoDataState>(TodoDataState.Init)
 
     companion object {
         private const val TAG = "TodoViewModel"
@@ -34,6 +33,10 @@ class TodoViewModel @Inject constructor(
 
     init {
         queryTodoData()
+    }
+
+    fun getTodoDataStateFlow(): StateFlow<TodoDataState> {
+        return todoDataStateFlow
     }
 
     fun createTodo(entity: TodoEntity) {
@@ -68,10 +71,10 @@ class TodoViewModel @Inject constructor(
         if (todoEntities.isNotEmpty()) {
             LogUtil.d(TAG, "[Handle Todo Data] Succeed, data: $todoEntities")
             val todoModelList = todoEntities.toModelList()
-            setState(_todoDataStateFlow, TodoDataState.QuerySucceed(todoModelList))
+            setState(todoDataStateFlow, TodoDataState.QuerySucceed(todoModelList))
         } else {
             LogUtil.w(TAG, "[Handle Todo Data] No Data.")
-            setState(_todoDataStateFlow, TodoDataState.NoTodoData)
+            setState(todoDataStateFlow, TodoDataState.NoTodoData)
         }
     }
 

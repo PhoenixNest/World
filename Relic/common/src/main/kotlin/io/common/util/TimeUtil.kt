@@ -97,9 +97,13 @@ object TimeUtil {
      * */
     fun getCurrentFormattedTime(): String {
         val year = LocalDateTime.now().year
-        val monthFormat = monthFormat(LocalDateTime.now().month.value)
+        val monthFormat = getCurrentFormattedMonth(LocalDateTime.now().dayOfMonth)
         val dayOfMonth = LocalDateTime.now().dayOfMonth
         return "$year ${monthFormat}'${dayOfMonth}"
+    }
+
+    fun getCurrentFormattedMonth(monthValue: Int): String {
+        return monthFormat(monthValue)
     }
 
     /**

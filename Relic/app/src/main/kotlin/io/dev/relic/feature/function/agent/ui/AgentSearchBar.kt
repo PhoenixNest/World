@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.CommonInputField
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainThemeColorLight
+import io.core.ui.widget.CommonInputField
 import io.dev.relic.R
 
 @Composable

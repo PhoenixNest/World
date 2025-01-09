@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.URL.USER_PRIVACY
 import io.common.RelicConstants.URL.USER_TERMS
-import io.core.ui.CommonTopBar
+import io.core.ui.widget.CommonTopBar
 import io.dev.relic.R
 import io.dev.relic.feature.activities.web.WebActivity
 import io.dev.relic.feature.pages.settings.ui.SettingsPageContent

@@ -14,7 +14,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.core.ui.utils.RelicUiUtil
+import io.core.ui.RelicUiUtil
 import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.GalleryDataState
 

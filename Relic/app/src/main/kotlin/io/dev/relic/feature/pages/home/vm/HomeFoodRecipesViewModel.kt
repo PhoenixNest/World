@@ -38,10 +38,13 @@ class HomeFoodRecipesViewModel @Inject constructor(
      * */
     private val recommendDataList = mutableListOf<FoodRecipesRandomModel>()
 
+    /**
+     * Memory cache data of search query parameter.
+     * */
     private var currentDishQueryParameter = ""
 
     companion object {
-        private const val TAG = "HomeFoodRecipesViewModel"
+        private const val TAG = "Home_FoodRecipes"
     }
 
     init {

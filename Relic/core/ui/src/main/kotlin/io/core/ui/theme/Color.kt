@@ -20,3 +20,5 @@ val mainTextColor80 = mainTextColor.copy(alpha = 0.8F)
 val mainTextColorDark = mainThemeColor.copy(alpha = 0.8F)
 
 val mainIconColorLight = mainThemeColorLight.copy(alpha = 0.8F)
+
+val commonLoadingShimmerColor = Color.LightGray.copy(alpha = 0.3F)

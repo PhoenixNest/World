@@ -24,8 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.ComposeBottomSheetDialog
+import io.core.ui.dialog.ComposeBottomSheetDialog
 import io.core.ui.theme.RelicFontFamily.googleSans
+import io.module.media.R
 
 @Composable
 fun GalleryDetailSetterSheet(
@@ -50,13 +51,13 @@ fun GalleryDetailSetterSheet(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 GalleryDetailSetterSheetItem(
-                    iconResId = io.module.media.R.drawable.ic_wallpaper_setter_home,
-                    labelResId = io.module.media.R.string.wallpaper_setter_home,
+                    iconResId = R.drawable.ic_wallpaper_setter_home,
+                    labelResId = R.string.wallpaper_setter_home,
                     onClick = onSetHomeClick
                 )
                 GalleryDetailSetterSheetItem(
-                    iconResId = io.module.media.R.drawable.ic_wallpaper_setter_home_lock,
-                    labelResId = io.module.media.R.string.wallpaper_setter_home_lock,
+                    iconResId = R.drawable.ic_wallpaper_setter_home_lock,
+                    labelResId = R.string.wallpaper_setter_home_lock,
                     onClick = onSetBothClick
                 )
             }

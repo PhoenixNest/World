@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
+import io.core.ui.RelicUiUtil.getCurrentScreenWidthDp
 import io.dev.relic.feature.pages.intro.widget.IntroPager
 import io.dev.relic.feature.pages.intro.widget.IntroPanel
 

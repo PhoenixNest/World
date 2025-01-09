@@ -29,12 +29,13 @@ import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants
-import io.core.ui.CommonRetryComponent
 import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.commonLoadingShimmerColor
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor80
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.theme.placeHolderHighlightColor
+import io.core.ui.widget.CommonRetryComponent
 import io.data.model.weather.WeatherDataModel
 import io.data.model.weather.WeatherType
 import io.dev.relic.feature.function.weather.WeatherDataState
@@ -87,7 +88,7 @@ private fun WeatherBriefPlaceholder() {
                     .height(120.dp)
                     .placeholder(
                         visible = true,
-                        color = Color.LightGray.copy(alpha = 0.3F),
+                        color = commonLoadingShimmerColor,
                         shape = RoundedCornerShape(16.dp),
                         highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                     )
@@ -113,7 +114,7 @@ private fun WeatherBriefPlaceholder() {
                             .fillMaxSize()
                             .placeholder(
                                 visible = true,
-                                color = Color.LightGray.copy(0.3F),
+                                color = commonLoadingShimmerColor,
                                 shape = RoundedCornerShape(8.dp),
                                 highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                             )
@@ -178,7 +179,7 @@ private fun WeatherBriefContent(
 private fun WeatherBriefRetry(onRetryClick: () -> Unit) {
     CommonRetryComponent(
         onRetryClick = onRetryClick,
-        containerHeight = 96.dp,
+        modifier = Modifier.height(96.dp),
         backgroundColor = mainThemeColor.copy(alpha = 0.7F)
     )
 }

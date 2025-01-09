@@ -52,6 +52,9 @@
 
     <!-- Studio Page -->
     <string name="studio_label">Studio</string>
+    <string name="studio_function_type_label_monitor">Monitor</string>
+    <string name="studio_function_type_label_develop">Develop</string>
+    <string name="studio_function_type_label_media">Media</string>
 
     <!-- Gallery Page -->
     <string name="gallery_label">Gallery</string>

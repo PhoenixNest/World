@@ -70,7 +70,7 @@ class HomeNewsViewModel @Inject constructor(
     private val topHeadlineNewsStateFlow = MutableStateFlow<TopHeadlineNewsDataState>(TopHeadlineNewsDataState.Init)
 
     companion object {
-        private const val TAG = "HomeNewsViewModel"
+        private const val TAG = "Home_News"
         private const val DEFAULT_STOP_TIMEOUT_MILLIS = 5 * 1000L
         private const val DEFAULT_LAST_REFRESH_TIME = 0L
     }
@@ -187,7 +187,10 @@ class HomeNewsViewModel @Inject constructor(
                             )
                         } ?: {
                             LogUtil.w(TAG, "[Handle Top-headline News Cache] Succeed without [Articles] data")
-                            setState(this@HomeNewsViewModel.topHeadlineNewsStateFlow, TopHeadlineNewsDataState.NoNewsData)
+                            setState(
+                                this@HomeNewsViewModel.topHeadlineNewsStateFlow,
+                                TopHeadlineNewsDataState.NoNewsData
+                            )
                         }
                     } else {
                         LogUtil.e(TAG, "[Handle Top-headline News Cache] Succeed without data")

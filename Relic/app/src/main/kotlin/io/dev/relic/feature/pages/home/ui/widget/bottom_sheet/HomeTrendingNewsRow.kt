@@ -2,6 +2,7 @@ package io.dev.relic.feature.pages.home.ui.widget.bottom_sheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.CommonLoadingPlaceholder
-import io.core.ui.CommonRetryComponent
+import io.core.ui.widget.CommonLoadingPlaceholder
+import io.core.ui.widget.CommonRetryComponent
 import io.data.model.news.NewsArticleModel
 import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.function.news.ui.widget.TrendingCardItem
@@ -35,7 +36,7 @@ fun HomeTrendingNewsRow(action: HomeTrendingNewsRowAction) {
         is TrendingNewsDataState.Fetching -> {
             CommonLoadingPlaceholder(
                 isVertical = false,
-                backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+                backgroundColor = MaterialTheme.colorScheme.surfaceContainer
             )
         }
 
@@ -44,9 +45,10 @@ fun HomeTrendingNewsRow(action: HomeTrendingNewsRowAction) {
         is TrendingNewsDataState.NoNewsData -> {
             CommonRetryComponent(
                 onRetryClick = action.onRetryClick,
-                modifier = Modifier.padding(12.dp),
-                containerHeight = 196.dp,
-                backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
+                modifier = Modifier
+                    .height(196.dp)
+                    .padding(12.dp),
+                backgroundColor = MaterialTheme.colorScheme.surfaceContainer
             )
         }
 

@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.common.RelicConstants.Common.ANDROID
 import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
-import io.core.ui.CommonComposeWebView
-import io.core.ui.CommonTopBar
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
+import io.core.ui.widget.CommonComposeWebView
+import io.core.ui.widget.CommonTopBar
 
 @Composable
 fun NewsDetailPageRoute(

@@ -14,6 +14,7 @@ composeLifecycleRuntime = "2.8.5"
 composeMarkdown = "0.4.1"
 composeViewbinding = "1.7.0"
 constraintlayout = "2.1.4"
+constraintlayoutCompose = "1.1.0"
 converterMoshi = "2.11.0"
 datastore = "1.1.1"
 datastorePreferences = "1.1.1"
@@ -87,6 +88,7 @@ androidx-cardview = { group = "androidx.cardview", name = "cardview", version.re
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidXTestCore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-compose-activity = { module = "androidx.activity:activity-compose", version.ref = "composeActivity" }
+androidx-compose-constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }

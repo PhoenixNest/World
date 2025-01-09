@@ -32,9 +32,10 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.TimeUtil
-import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.googleSans
+import io.core.ui.theme.commonLoadingShimmerColor
 import io.core.ui.theme.placeHolderHighlightColor
+import io.core.ui.widget.CommonAsyncImage
 import io.data.model.food_recipes.FoodRecipesRandomModel
 import io.dev.relic.R
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
@@ -252,7 +253,7 @@ private fun HomeRecommendFoodItemPlaceholder(modifier: Modifier = Modifier) {
                 .height(150.dp)
                 .placeholder(
                     visible = true,
-                    color = Color.LightGray.copy(alpha = 0.3F),
+                    color = commonLoadingShimmerColor,
                     highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                 )
         )

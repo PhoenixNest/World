@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -23,8 +22,9 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.R
+import io.core.ui.RelicUiUtil.convertPixelToDp
+import io.core.ui.theme.commonLoadingShimmerColor
 import io.core.ui.theme.placeHolderHighlightColor
-import io.core.ui.utils.RelicUiUtil.convertPixelToDp
 
 @Composable
 fun OnlineWallpaperCover(
@@ -45,7 +45,7 @@ fun OnlineWallpaperCover(
 
     val imageHeightDp = if (imageHeight == 0) {
         configuration.screenHeightDp.dp
-    }else{
+    } else {
         convertPixelToDp(density, imageHeight)
     }
 
@@ -93,7 +93,7 @@ private fun WallpaperCover(
                         .fillMaxSize()
                         .placeholder(
                             visible = true,
-                            color = Color.LightGray,
+                            color = commonLoadingShimmerColor,
                             highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
                         )
                 )

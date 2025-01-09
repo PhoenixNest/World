@@ -55,8 +55,15 @@ fun MainNavigationBarScaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(snackBarHostState) }
+        contentWindowInsets = WindowInsets(
+            left = 0,
+            top = 0,
+            right = 0,
+            bottom = 0
+        ),
+        snackbarHost = {
+            SnackbarHost(snackBarHostState)
+        }
     ) { paddingValues ->
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -101,8 +108,8 @@ private fun MainNavigationBottomBar(
                 durationMillis = 400,
                 easing = LinearOutSlowInEasing
             ),
-            initialOffsetY = {
-                2 * it
+            initialOffsetY = { fullHeight ->
+                2 * fullHeight
             }
         ),
         exit = slideOutVertically(
@@ -110,8 +117,8 @@ private fun MainNavigationBottomBar(
                 durationMillis = 400,
                 easing = LinearOutSlowInEasing
             ),
-            targetOffsetY = {
-                it
+            targetOffsetY = { fullHeight ->
+                fullHeight
             }
         ),
         label = "AnimatedVisibility_MainNavigationBar"
@@ -131,7 +138,7 @@ private fun MainNavigationBottomBar(
     onItemClick: (nextDestinations: AppTopLevelDestinations) -> Unit
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
         modifier = Modifier.fillMaxWidth(),
         contentColor = MaterialTheme.colorScheme.onSurface
     ) {

@@ -1,7 +1,6 @@
 package io.dev.relic.feature.pages.home.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,52 +20,42 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeQuickPromptsPanel
 import io.dev.relic.feature.pages.home.ui.widget.HomeQuickPromptsPanelAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeRecommendFoodsPanel
 import io.dev.relic.feature.pages.home.ui.widget.HomeRecommendFoodsPanelAction
-import io.dev.relic.feature.pages.home.ui.widget.HomeTopBar
-import io.dev.relic.feature.pages.home.ui.widget.HomeTopBarAction
 
 @Composable
 fun HomePageContent(
-    topBarAction: HomeTopBarAction,
     featurePanelAction: HomeFeaturePanelAction,
     quickPromptsPanelAction: HomeQuickPromptsPanelAction,
     recommendFoodsPanelAction: HomeRecommendFoodsPanelAction
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+        verticalArrangement = Arrangement.spacedBy(
+            space = 12.dp,
+            alignment = Alignment.Top
+        ),
+        horizontalAlignment = Alignment.Start,
+        contentPadding = PaddingValues(top = 12.dp)
     ) {
-        HomeTopBar(action = topBarAction)
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(
-                space = 12.dp,
-                alignment = Alignment.Top
-            ),
-            horizontalAlignment = Alignment.Start,
-            contentPadding = PaddingValues(top = 12.dp)
-        ) {
-            item {
-                HomeFeaturesPanel(
-                    action = featurePanelAction,
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
-            }
-            item {
-                HomeQuickPromptsPanel(
-                    action = quickPromptsPanelAction,
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
-            }
-            item {
-                HomeRecommendFoodsPanel(
-                    state = recommendFoodsPanelAction.state,
-                    action = recommendFoodsPanelAction,
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
-            }
-            item { Spacer(Modifier.height(160.dp)) }
+        item {
+            HomeFeaturesPanel(
+                action = featurePanelAction,
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
         }
+        item {
+            HomeQuickPromptsPanel(
+                action = quickPromptsPanelAction,
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
+        }
+        item {
+            HomeRecommendFoodsPanel(
+                state = recommendFoodsPanelAction.state,
+                action = recommendFoodsPanelAction,
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
+        }
+        item { Spacer(Modifier.height(160.dp)) }
     }
 }
 
@@ -74,10 +63,6 @@ fun HomePageContent(
 @Preview(showBackground = true)
 private fun HomePageContentPreview() {
     HomePageContent(
-        topBarAction = HomeTopBarAction(
-            onOpenDrawerClick = {},
-            onSettingClick = {}
-        ),
         featurePanelAction = HomeFeaturePanelAction(
             onAgentClick = {},
             onFoodRecipesClick = {},

@@ -3,13 +3,15 @@ package io.dev.relic.feature.pages.gallery
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.navOptions
@@ -28,15 +30,12 @@ fun GalleryPageRoute(
     mainScreenState: MainScreenState,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
-    onBackClick: () -> Unit,
     galleryViewModel: GalleryViewModel = hiltViewModel()
 ) {
 
     /* ======================== Common ======================== */
 
-    val context = LocalContext.current
     val navController = mainScreenState.navHostController
-    val localFocusManager = LocalFocusManager.current
 
     /* ======================== Field ======================== */
 
@@ -91,8 +90,7 @@ fun GalleryPageRoute(
     GalleryPage(
         galleryState = galleryState,
         sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope,
-        onBackClick = onBackClick
+        animatedContentScope = animatedContentScope
     )
 }
 
@@ -101,15 +99,18 @@ fun GalleryPageRoute(
 private fun GalleryPage(
     galleryState: GalleryState,
     sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-    onBackClick: () -> Unit
+    animatedContentScope: AnimatedContentScope
 ) {
-    GalleryPageContent(
-        galleryState = galleryState,
-        sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope,
-        onBackClick = onBackClick
-    )
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.surface
+    ) {
+        GalleryPageContent(
+            galleryState = galleryState,
+            sharedTransitionScope = sharedTransitionScope,
+            animatedContentScope = animatedContentScope
+        )
+    }
 }
 
 /* ======================== Page Ui State Builder ======================== */

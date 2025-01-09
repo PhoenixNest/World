@@ -100,7 +100,7 @@ private fun HomeQuestionItem(
 
     Surface(
         onClick = { onClick.invoke(question) },
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        color = MaterialTheme.colorScheme.surfaceContainer,
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(

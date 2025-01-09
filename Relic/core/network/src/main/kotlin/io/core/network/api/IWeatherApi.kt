@@ -9,8 +9,9 @@ import retrofit2.http.Query
  * */
 interface IWeatherApi {
 
-    @GET("forecast?hourly=temperature_2m,relativehumidity_2m,weathercode,surface_pressure,windspeed_10m,is_day")
+    @GET("forecast")
     suspend fun getWeatherData(
+        @Query("hourly") hourly: String = "temperature_2m,relativehumidity_2m,weathercode,surface_pressure,windspeed_10m,is_day",
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
     ): WeatherForecastDTO

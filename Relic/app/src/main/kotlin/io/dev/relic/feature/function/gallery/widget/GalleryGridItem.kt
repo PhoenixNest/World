@@ -27,10 +27,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
+import io.core.ui.widget.CommonAsyncImage
 
 @Composable
 fun GalleryGridItem(

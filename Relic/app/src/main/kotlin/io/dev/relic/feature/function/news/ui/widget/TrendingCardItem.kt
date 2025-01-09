@@ -22,9 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
+import io.core.ui.widget.CommonAsyncImage
 import io.data.model.news.NewsArticleModel
 
 @Composable
@@ -59,7 +59,7 @@ fun TrendingCardItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8F))
+                        .background(color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.8F))
                         .padding(12.dp),
                     verticalArrangement = Arrangement.spacedBy(
                         space = 6.dp,
@@ -69,7 +69,7 @@ fun TrendingCardItem(
                 ) {
                     Text(
                         text = title ?: "Title",
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = newsReader,
@@ -79,7 +79,7 @@ fun TrendingCardItem(
                     )
                     Text(
                         text = "$source - $author",
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontFamily = googleSans,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
@@ -87,7 +87,7 @@ fun TrendingCardItem(
                     )
                     Text(
                         text = publishDate ?: "",
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontFamily = googleSans,
                         style = MaterialTheme.typography.labelSmall
                     )
@@ -100,16 +100,23 @@ fun TrendingCardItem(
 @Composable
 @Preview(showBackground = true)
 private fun TrendingCardItemPreview() {
-    TrendingCardItem(
-        data = NewsArticleModel(
-            title = "Just this... and WoW will be perfect for me.",
-            subtitle = "(First of all, English is not my first language so forgive me if something is weird..) \\n \\nIt seems that the gypsy witch who stopped me one day while I was going to work and told me that you are all NPCs, this is just a simulation and the world conspires in my…",
-            author = "Fantazma",
-            thumbnailImageUrl = "null",
-            publishDate = "2023-11-28 T00:40:11Z",
-            contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
-            source = "Mmo-champion.com"
-        ),
-        onCardClick = {}
-    )
+    Box(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.surface)
+            .padding(12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        TrendingCardItem(
+            data = NewsArticleModel(
+                title = "Just this... and WoW will be perfect for me.",
+                subtitle = "(First of all, English is not my first language so forgive me if something is weird..) \\n \\nIt seems that the gypsy witch who stopped me one day while I was going to work and told me that you are all NPCs, this is just a simulation and the world conspires in my…",
+                author = "Fantazma",
+                thumbnailImageUrl = "null",
+                publishDate = "2023-11-28 T00:40:11Z",
+                contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
+                source = "Mmo-champion.com"
+            ),
+            onCardClick = {}
+        )
+    }
 }

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
+import io.core.ui.RelicUiUtil.getCurrentScreenWidthDp
 
 @Composable
 fun SystemMonitorComponent() {

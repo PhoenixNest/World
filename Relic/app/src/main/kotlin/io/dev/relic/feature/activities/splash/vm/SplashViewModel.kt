@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
     private var isAdLoading = false
 
     companion object {
-        private const val TAG = "SplashViewModel"
+        private const val TAG = "Splash"
     }
 
     fun execute(

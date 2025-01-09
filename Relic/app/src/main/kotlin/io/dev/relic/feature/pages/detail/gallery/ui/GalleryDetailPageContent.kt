@@ -35,10 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.CommonNoDataComponent
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
+import io.core.ui.widget.CommonNoDataComponent
 import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.function.gallery.widget.OnlineWallpaperCover
 

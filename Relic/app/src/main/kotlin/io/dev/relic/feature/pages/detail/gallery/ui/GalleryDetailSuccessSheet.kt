@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.ComposeBottomSheetDialog
+import io.core.ui.dialog.ComposeBottomSheetDialog
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 

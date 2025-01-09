@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.core.ui.CommonTextButton
-import io.core.ui.dialog.CommonItemDivider
+import io.core.ui.RelicUiUtil.getCurrentScreenWidthDp
 import io.core.ui.theme.RelicFontFamily.googleSans
-import io.core.ui.utils.RelicUiUtil.getCurrentScreenWidthDp
+import io.core.ui.widget.CommonItemDivider
+import io.core.ui.widget.CommonTextButton
 import io.dev.relic.R
 
 @Composable

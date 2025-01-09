@@ -74,6 +74,9 @@ dependencies {
     // Optional - Integration with View Binding
     api(libs.androidx.compose.ui.viewbinding)
 
+    // Compose ConstraintLayout
+    api(libs.androidx.compose.constraintlayout)
+
     // Google fonts
     implementation(libs.androidx.ui.text.google.fonts)
 

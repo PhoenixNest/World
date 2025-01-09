@@ -4,20 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.core.ui.theme.RelicFontFamily.newsReader
-import io.core.ui.utils.RelicUiUtil
+import io.core.ui.RelicUiUtil.getCurrentScreenHeightDp
 import io.data.model.news.NewsArticleModel
-import io.dev.relic.R
+import io.dev.relic.feature.pages.home.ui.widget.HomeNewsTitle
 import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeBottomSheetNewsTabBar
 import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeNewsTabBarAction
 import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTopHeadlineNewsColumn
@@ -30,7 +24,7 @@ import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTrendingNewsRo
  *
  * @param data      Original news article data.
  * */
-fun isAvailableContent(data: NewsArticleModel): Boolean {
+internal fun isAvailableContent(data: NewsArticleModel): Boolean {
     return data.title.toString()
         .lowercase()
         .trim()
@@ -45,15 +39,13 @@ fun HomePageBottomSheet(
     topHeadlineNewsColumnAction: HomeTopHeadlineNewsColumnAction
 ) {
     val statusBarHeight = 24.dp
-    val topBarHeight = 72.dp
-    val currentScreenHeightDp = RelicUiUtil.getCurrentScreenHeightDp()
-    val sheetContentHeight = currentScreenHeightDp - statusBarHeight - topBarHeight
+    val currentScreenHeightDp = getCurrentScreenHeightDp()
+    val sheetContentHeight = currentScreenHeightDp - statusBarHeight
 
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .height(sheetContentHeight)
-            .navigationBarsPadding(),
+            .height(sheetContentHeight),
         state = topHeadlineNewsColumnAction.lazyListState,
         verticalArrangement = Arrangement.spacedBy(
             space = 12.dp,
@@ -61,17 +53,7 @@ fun HomePageBottomSheet(
         ),
         horizontalAlignment = Alignment.Start
     ) {
-        item {
-            Text(
-                text = stringResource(R.string.news_title),
-                modifier = Modifier.fillMaxWidth(),
-                color = MaterialTheme.colorScheme.onSurface,
-                fontFamily = newsReader,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                style = MaterialTheme.typography.headlineMedium
-            )
-        }
+        item { HomeNewsTitle() }
         item { HomeTrendingNewsRow(action = trendingNewsRowAction) }
         item { HomeBottomSheetNewsTabBar(action = newsTabBarAction) }
         HomeTopHeadlineNewsColumn(newsColumnAction = topHeadlineNewsColumnAction)

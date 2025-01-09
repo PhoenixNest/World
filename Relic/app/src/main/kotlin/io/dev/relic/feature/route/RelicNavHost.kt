@@ -1,5 +1,7 @@
 package io.dev.relic.feature.route
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,40 +54,50 @@ fun MainFeatureNavHost(
             navController = mainScreenState.navHostController,
             startDestination = startDestination,
             modifier = Modifier.fillMaxSize(),
-            /*enterTransition = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(durationMillis = 350)
-                )
+            enterTransition = {
+                EnterTransition.None
             },
             exitTransition = {
-                slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(durationMillis = 350)
-                )
+                ExitTransition.None
             },
             popEnterTransition = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(durationMillis = 350)
-                )
+                EnterTransition.None
             },
             popExitTransition = {
-                slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(durationMillis = 350)
-                )
-            }*/
+                ExitTransition.None
+            }
         ) {
-            pageHome(mainScreenState)
-            pageStudio(mainScreenState)
-            pageSettings(navHostController::popBackStack)
-            pageAgentChat(navHostController::popBackStack)
-            pageFoodRecipeDetail(navHostController::popBackStack)
-            pageNewsDetail(navHostController::popBackStack)
+            // Top Level
+            pageHome(
+                mainScreenState = mainScreenState
+            )
+            pageStudio(
+                mainScreenState = mainScreenState
+            )
+            pageGallery(
+                mainScreenState = mainScreenState,
+                sharedTransitionScope = sharedTransitionScope
+            )
+            pageSettings(
+                onBackClick = navHostController::popBackStack
+            )
 
-            pageGallery(mainScreenState, sharedTransitionScope, navHostController::popBackStack)
-            pageGalleryDetail(sharedTransitionScope, navHostController::popBackStack)
+            // Inner function
+            pageAgentChat(
+                onBackClick = navHostController::popBackStack
+            )
+
+            // Detail
+            pageFoodRecipeDetail(
+                onBackClick = navHostController::popBackStack
+            )
+            pageNewsDetail(
+                onBackClick = navHostController::popBackStack
+            )
+            pageGalleryDetail(
+                shareTransitionScope = sharedTransitionScope,
+                onBackClick = navHostController::popBackStack
+            )
         }
     }
 }

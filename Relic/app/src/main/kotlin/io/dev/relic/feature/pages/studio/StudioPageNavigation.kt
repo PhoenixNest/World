@@ -16,6 +16,6 @@ fun NavController.navigateToStudioPage(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.pageStudio(mainScreenState: MainScreenState) {
     composable(route = STUDIO) {
-        StudioPageRoute()
+        StudioPageRoute(mainScreenState = mainScreenState)
     }
 }

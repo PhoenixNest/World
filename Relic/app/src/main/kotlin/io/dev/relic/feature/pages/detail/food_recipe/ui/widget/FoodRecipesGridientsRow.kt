@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.Common.UNKNOWN_VALUE_STRING
-import io.core.ui.CommonAsyncImage
 import io.core.ui.theme.RelicFontFamily.googleSans
+import io.core.ui.widget.CommonAsyncImage
 import io.data.dto.food_recipes.get_recipes_information_by_id.ExtendedIngredientItem
 import io.dev.relic.R
 

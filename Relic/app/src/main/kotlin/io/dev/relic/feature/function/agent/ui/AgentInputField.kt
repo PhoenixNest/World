@@ -23,13 +23,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.CommonInputField
 import io.core.ui.theme.mainBackgroundColor
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainTextColor30
 import io.core.ui.theme.mainThemeColorAccent
 import io.core.ui.theme.mainThemeColorLight
+import io.core.ui.widget.CommonInputField
 import io.dev.relic.R
 
 @Composable
