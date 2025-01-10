@@ -1,10 +1,10 @@
 package io.dev.relic.feature.pages.studio.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,31 +25,36 @@ fun StudioPageContent(
     functionPanelAction: StudioFunctionPanelAction,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(12.dp),
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(
             space = 32.dp,
             alignment = Alignment.CenterVertically
         ),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = PaddingValues(12.dp)
     ) {
-        CommonTextClock(
-            calendarTextColor = MaterialTheme.colorScheme.onSurface,
-            clockBlockContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3F),
-            clockTextColor = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth()
-        )
-        StudioFunctionPanel(
-            action = functionPanelAction,
-            modifier = Modifier.fillMaxWidth()
-        )
-        StudioMaximWidget(
-            action = maximWidgetAction,
-            maximTextColor = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth()
-        )
+        item {
+            CommonTextClock(
+                calendarTextColor = MaterialTheme.colorScheme.onSurface,
+                clockBlockContainerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3F),
+                clockTextColor = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        item {
+            StudioFunctionPanel(
+                action = functionPanelAction,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        item {
+            StudioMaximWidget(
+                action = maximWidgetAction,
+                maximTextColor = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

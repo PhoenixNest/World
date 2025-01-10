@@ -36,39 +36,37 @@ fun NewsCardItem(
     onItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    data.apply {
-        Surface(
-            modifier = modifier
+    Surface(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainer,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-            shape = RoundedCornerShape(16.dp)
+                .clickable { onItemClick.invoke() }
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(
+                space = 12.dp,
+                alignment = Alignment.Top
+            ),
+            horizontalAlignment = Alignment.Start
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onItemClick.invoke() }
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 12.dp,
-                    alignment = Alignment.Top
-                ),
-                horizontalAlignment = Alignment.Start
-            ) {
-                NewsCardItemIntro(
-                    title = title ?: "Title",
-                    thumbnailImageUrl = thumbnailImageUrl,
-                    publishDate = publishDate ?: TimeUtil.getCurrentTime().toString(),
-                    contentTextColor = MaterialTheme.colorScheme.onSurface
-                )
-                NewsCardItemDesc(
-                    author = author ?: "Author",
-                    description = subtitle ?: "Subtitle",
-                    source = source ?: "",
-                    contentTextColor = MaterialTheme.colorScheme.onSurface
-                )
-            }
+            NewsCardItemIntro(
+                title = data.title ?: "Title",
+                thumbnailImageUrl = data.thumbnailImageUrl,
+                publishDate = data.publishDate ?: TimeUtil.getCurrentTime().toString(),
+                contentTextColor = MaterialTheme.colorScheme.onSurface
+            )
+            NewsCardItemDesc(
+                author = data.author ?: "Author",
+                description = data.subtitle ?: "Subtitle",
+                source = data.source ?: "",
+                contentTextColor = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }
