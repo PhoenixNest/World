@@ -5,26 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.common.ext.ViewModelExt.setState
-import io.common.util.LogUtil
-import io.data.dto.pixabay.PixabayImagesDTO
-import io.data.mappers.PixabayDataMapper.toModelList
-import io.data.model.NetworkResult
 import io.data.model.pixabay.PixabayDataModel
-import io.dev.relic.feature.function.gallery.GalleryDataState
 import io.dev.relic.feature.function.gallery.paging.GalleryPagingSource
 import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
 import io.domain.use_case.pixabay.PixabayUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 import java.util.Locale
 import javax.inject.Inject
 
@@ -33,31 +21,6 @@ class GalleryViewModel @Inject constructor(
     application: Application,
     private val pixabayUseCase: PixabayUseCase
 ) : AndroidViewModel(application) {
-
-    /**
-     * Indicate the status of fetch more.
-     * */
-    var isFetchingMore = false
-
-    /**
-     * Indicate the available status of fetch more.
-     * */
-    var canFetchMore = true
-
-    /**
-     * The number of results to skip (between 0 and 900).
-     * */
-    private var currentGalleryPageIndex = DEFAULT_START_PAGE
-
-    /**
-     * The Gallery data flow.
-     * */
-    private val galleryDataStateFlow = MutableStateFlow<GalleryDataState>(GalleryDataState.Init)
-
-    /**
-     * Memory cache list of gallery data.
-     * */
-    private val galleryDataList = mutableListOf<PixabayDataModel>()
 
     companion object {
         private const val TAG = "GalleryViewModel"
@@ -73,159 +36,27 @@ class GalleryViewModel @Inject constructor(
         private const val DEFAULT_RESULT_SIZE_PER_PAGE = 20
     }
 
-    init {
-        getGalleryData()
-    }
-
-    fun getGalleryPager(imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION) {
-        viewModelScope.launch {
-            Pager(
-                // Configure how data is loaded by passing additional properties to
-                // PagingConfig, such as prefetchDistance.
-                config = PagingConfig(pageSize = DEFAULT_RESULT_SIZE_PER_PAGE),
-                pagingSourceFactory = {
-                    GalleryPagingSource(
-                        pixabayUseCase = pixabayUseCase,
-                        keyWords = DEFAULT_KEY_WORDS,
-                        language = Locale.getDefault().toString().lowercase(),
-                        imageType = DEFAULT_IMAGE_TYPE,
-                        orientation = imageOrientation.name.lowercase(),
-                        category = DEFAULT_IMAGE_CATEGORY,
-                        isEditorsChoice = DEFAULT_IS_EDITORS_CHOICE,
-                        isSafeSearch = DEFAULT_IS_SAFE_SEARCH,
-                        orderBy = DEFAULT_ORDER_RULE,
-                        perPage = DEFAULT_RESULT_SIZE_PER_PAGE
-                    )
-                }
-            ).flow.cachedIn(viewModelScope)
-        }
-    }
-
-    fun fetchMoreGalleryData() {
-        if (!canFetchMore) {
-            LogUtil.w(TAG, "[Fetch More Gallery Data] Can't get more data from server, skip.")
-            return
-        }
-
-        val newPageIndex = currentGalleryPageIndex + 1
-        currentGalleryPageIndex = newPageIndex
-
-        viewModelScope.launch {
-            isFetchingMore = true
-            getGalleryData(
-                pageIndex = newPageIndex,
-                isFetchMore = true
-            )
-        }
-    }
-
-    fun getGalleryData(
-        pageIndex: Int = DEFAULT_START_PAGE,
-        imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION,
-        isFetchMore: Boolean = false
-    ) {
-        val resultFlow = flow {
-            val result = pixabayUseCase.searchImages.invoke(
-                keyWords = DEFAULT_KEY_WORDS,
-                language = Locale.getDefault().toString().lowercase(),
-                imageType = DEFAULT_IMAGE_TYPE,
-                orientation = imageOrientation.name.lowercase(),
-                category = DEFAULT_IMAGE_CATEGORY,
-                isEditorsChoice = DEFAULT_IS_EDITORS_CHOICE,
-                isSafeSearch = DEFAULT_IS_SAFE_SEARCH,
-                orderBy = DEFAULT_ORDER_RULE,
-                page = pageIndex,
-                perPage = DEFAULT_RESULT_SIZE_PER_PAGE
-            )
-            emit(result)
-        }.flowOn(Dispatchers.IO)
-
-        viewModelScope.launch {
-            resultFlow.stateIn(
-                scope = this,
-                started = SharingStarted.WhileSubscribed(5 * 1000L),
-                initialValue = NetworkResult.Loading()
-            ).collect { result ->
-                handleRemoteGalleryData(
-                    result = result,
-                    isFetchMore = isFetchMore
+    fun getGalleryPager(
+        imageOrientation: WallpaperOrientation = DEFAULT_ORIENTATION
+    ): Flow<PagingData<PixabayDataModel>> {
+        return Pager(
+            // Configure how data is loaded by passing additional properties to
+            // PagingConfig, such as prefetchDistance.
+            config = PagingConfig(pageSize = DEFAULT_RESULT_SIZE_PER_PAGE),
+            pagingSourceFactory = {
+                GalleryPagingSource(
+                    pixabayUseCase = pixabayUseCase,
+                    keyWords = DEFAULT_KEY_WORDS,
+                    language = Locale.getDefault().toString().lowercase(),
+                    imageType = DEFAULT_IMAGE_TYPE,
+                    orientation = imageOrientation.name.lowercase(),
+                    category = DEFAULT_IMAGE_CATEGORY,
+                    isEditorsChoice = DEFAULT_IS_EDITORS_CHOICE,
+                    isSafeSearch = DEFAULT_IS_SAFE_SEARCH,
+                    orderBy = DEFAULT_ORDER_RULE,
+                    perPage = DEFAULT_RESULT_SIZE_PER_PAGE
                 )
             }
-        }
-    }
-
-    fun getGalleryDataFlow(): StateFlow<GalleryDataState> {
-        return galleryDataStateFlow
-    }
-
-    fun getGalleryList(): List<PixabayDataModel> {
-        return galleryDataList.toList()
-    }
-
-    fun resetGalleryPageIndex() {
-        currentGalleryPageIndex = 0
-    }
-
-    fun resetCanFetchMoreStatus() {
-        canFetchMore = true
-    }
-
-    /**
-     * Handle the remote-data of Gallery information.
-     *
-     * @param result
-     * */
-    private fun handleRemoteGalleryData(
-        result: NetworkResult<PixabayImagesDTO>,
-        isFetchMore: Boolean = false
-    ) {
-        when (result) {
-            is NetworkResult.Loading -> {
-                if (isFetchMore) {
-                    LogUtil.d(TAG, "[Handle Gallery Data - Fetch more] Loading...")
-                    // setState(dataFlow, GalleryDataState.FetchingMore)
-                } else {
-                    LogUtil.d(TAG, "[Handle Gallery Data] Loading...")
-                    setState(galleryDataStateFlow, GalleryDataState.Fetching)
-                }
-            }
-
-            is NetworkResult.Success -> {
-                result.data?.also { dto ->
-                    LogUtil.d(TAG, "[Handle Gallery Data] Succeed, data: $dto")
-                    val modelList = dto.toModelList()
-                    val filteredModelList = modelList.filterNotNull()
-
-                    if (isFetchMore && filteredModelList.isEmpty()) {
-                        LogUtil.w(TAG, "[Fetch More Gallery Data] Server data is depleted, we can't get anymore sir.")
-                        currentGalleryPageIndex -= 1
-                        isFetchingMore = false
-                        canFetchMore = false
-                        return
-                    }
-
-                    galleryDataList.addAll(filteredModelList)
-                    setState(galleryDataStateFlow, GalleryDataState.FetchSucceed(galleryDataList.toList()))
-                    isFetchingMore = false
-                } ?: {
-                    LogUtil.d(TAG, "[Handle Gallery Data] Succeed without data")
-                    setState(galleryDataStateFlow, GalleryDataState.NoImageData)
-                    isFetchingMore = false
-                }
-            }
-
-            is NetworkResult.Failed -> {
-                val errorCode = result.code
-                val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Gallery Data] Failed, ($errorCode, $errorMessage)")
-                isFetchingMore = false
-                if (isFetchMore) {
-                    val newState = GalleryDataState.FetchMoreFailed(galleryDataList, errorCode, errorMessage)
-                    setState(galleryDataStateFlow, newState)
-                } else {
-                    setState(galleryDataStateFlow, GalleryDataState.FetchFailed(errorCode, errorMessage))
-                }
-            }
-        }
+        ).flow.cachedIn(viewModelScope)
     }
 }

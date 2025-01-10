@@ -6,60 +6,51 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.core.ui.RelicUiUtil
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import io.data.model.pixabay.PixabayDataModel
-import io.dev.relic.feature.function.gallery.GalleryDataState
 
 private const val DEFAULT_AUTHOR = "Unknown Artist"
 private const val DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL = ""
 private const val DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL = ""
 
 @OptIn(ExperimentalSharedTransitionApi::class)
+data class GalleryStaggeredGridAction(
+    val pagingItems: LazyPagingItems<PixabayDataModel>,
+    @Stable val lazyStaggeredGridState: LazyStaggeredGridState,
+    @Stable val sharedTransitionScope: SharedTransitionScope,
+    @Stable val animatedContentScope: AnimatedContentScope,
+    @Stable val onItemClick: (model: PixabayDataModel) -> Unit
+)
+
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GalleryStaggeredGrid(
-    galleryDataState: GalleryDataState,
-    lazyStaggeredGridState: LazyStaggeredGridState,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope,
-    onItemClick: (model: PixabayDataModel) -> Unit
-) {
-    when (galleryDataState) {
-        is GalleryDataState.Init,
-        is GalleryDataState.Fetching -> {
-            //
+fun GalleryStaggeredGrid(action: GalleryStaggeredGridAction) {
+    val pagingItems = action.pagingItems
+    val loadState = pagingItems.loadState
+    when (loadState.refresh) {
+        is LoadState.Loading -> {
+
         }
 
-        is GalleryDataState.Empty,
-        is GalleryDataState.NoImageData,
-        is GalleryDataState.FetchFailed -> {
-            //
+        is LoadState.Error -> {
+
         }
 
-        is GalleryDataState.FetchSucceed -> {
-            GalleryStaggeredGrid(
-                imageList = galleryDataState.modelList,
-                lazyStaggeredGridState = lazyStaggeredGridState,
-                sharedTransitionScope = sharedTransitionScope,
-                animatedContentScope = animatedContentScope,
-                onItemClick = onItemClick
-            )
-        }
-
-        is GalleryDataState.FetchMoreFailed -> {
-            GalleryStaggeredGrid(
-                imageList = galleryDataState.cacheModelList,
-                lazyStaggeredGridState = lazyStaggeredGridState,
-                sharedTransitionScope = sharedTransitionScope,
-                animatedContentScope = animatedContentScope,
-                onItemClick = onItemClick
+        is LoadState.NotLoading -> {
+            GalleryStaggeredGridContent(
+                galleryPagingItems = pagingItems,
+                lazyStaggeredGridState = action.lazyStaggeredGridState,
+                sharedTransitionScope = action.sharedTransitionScope,
+                animatedContentScope = action.animatedContentScope,
+                onItemClick = action.onItemClick
             )
         }
     }
@@ -67,45 +58,37 @@ fun GalleryStaggeredGrid(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GalleryStaggeredGrid(
-    imageList: List<PixabayDataModel?>,
+private fun GalleryStaggeredGridContent(
+    galleryPagingItems: LazyPagingItems<PixabayDataModel>,
     lazyStaggeredGridState: LazyStaggeredGridState,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     onItemClick: (model: PixabayDataModel) -> Unit
 ) {
-    val screenWidthDp = RelicUiUtil.getCurrentScreenWidthDp()
-    val galleryItemSize = (screenWidthDp / 2) - 16.dp
-
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Adaptive(galleryItemSize),
+        columns = StaggeredGridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
         state = lazyStaggeredGridState,
         contentPadding = PaddingValues(4.dp),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        itemsIndexed(imageList) { index, data ->
-            data?.apply {
-                val itemDecorationModifier = Modifier
-                    .padding(bottom = if (index == imageList.size - 1) 100.dp else 0.dp)
-                with(sharedTransitionScope) {
-                    GalleryGridItem(
-                        author = author ?: DEFAULT_AUTHOR,
-                        authorAvatarUrl = authorAvatarUrl ?: DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL,
-                        previewImageUrl = originalImageUrl ?: DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL,
-                        previewImageWidth = originalImageWidth ?: 0,
-                        previewImageHeight = (originalImageHeight ?: 0) / 6,
-                        likeNumber = likes ?: 0,
-                        onItemClick = {
-                            onItemClick.invoke(data)
-                        },
-                        modifier = itemDecorationModifier.sharedBounds(
-                            sharedContentState = sharedTransitionScope.rememberSharedContentState("image$id"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
+        items(galleryPagingItems.itemCount) { index ->
+            val data = galleryPagingItems[index] ?: return@items
+            with(sharedTransitionScope) {
+                GalleryGridItem(
+                    author = data.author ?: DEFAULT_AUTHOR,
+                    authorAvatarUrl = data.authorAvatarUrl ?: DEFAULT_AUTHOR_AVATAR_PLACEHOLDER_URL,
+                    previewImageUrl = data.originalImageUrl ?: DEFAULT_PREVIEW_IMAGE_PLACEHOLDER_URL,
+                    previewImageWidth = data.originalImageWidth ?: 0,
+                    previewImageHeight = (data.originalImageHeight ?: 0) / 6,
+                    likeNumber = data.likes ?: 0,
+                    onItemClick = { onItemClick.invoke(data) },
+                    modifier = Modifier.sharedBounds(
+                        sharedContentState = sharedTransitionScope.rememberSharedContentState("image$index"),
+                        animatedVisibilityScope = animatedContentScope
                     )
-                }
+                )
             }
         }
     }

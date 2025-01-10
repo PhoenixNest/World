@@ -1,26 +1,27 @@
 package io.dev.relic.feature.pages.gallery.ui
 
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import io.dev.relic.feature.function.gallery.widget.GalleryStaggeredGrid
-import io.dev.relic.feature.pages.gallery.GalleryState
+import io.dev.relic.feature.function.gallery.widget.GalleryStaggeredGridAction
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GalleryPageContent(
-    galleryState: GalleryState,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
+    galleryStaggeredGridAction: GalleryStaggeredGridAction
 ) {
-    GalleryStaggeredGrid(
-        galleryDataState = galleryState.dataState,
-        lazyStaggeredGridState = galleryState.listState.lazyStaggeredGridState,
-        sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope,
-        onItemClick = { dataModel ->
-            galleryState.action.onItemClick.invoke(dataModel)
-        }
-    )
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(
+            space = 12.dp,
+            alignment = Alignment.Top
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        GalleryStaggeredGrid(action = galleryStaggeredGridAction)
+    }
 }

@@ -61,7 +61,7 @@ fun HomePageContent(
 
 @Composable
 @Preview(showBackground = true)
-private fun HomePageContentPreview() {
+private fun HomePageCompatModeContentPreview() {
     HomePageContent(
         featurePanelAction = HomeFeaturePanelAction(
             onAgentClick = {},

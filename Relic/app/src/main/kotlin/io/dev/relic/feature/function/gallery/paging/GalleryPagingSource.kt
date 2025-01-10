@@ -2,12 +2,14 @@ package io.dev.relic.feature.function.gallery.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import coil.network.HttpException
 import io.common.util.LogUtil
 import io.data.dto.pixabay.PixabayImagesDTO
 import io.data.mappers.PixabayDataMapper.toModelList
 import io.data.model.NetworkResult
 import io.data.model.pixabay.PixabayDataModel
 import io.domain.use_case.pixabay.PixabayUseCase
+import okio.IOException
 
 /**
  * Reference docs:
@@ -28,7 +30,7 @@ class GalleryPagingSource(
 ) : PagingSource<Int, PixabayDataModel>() {
 
     companion object {
-        private const val TAG = "GalleryPagingSource"
+        private const val TAG = "Gallery_Paging"
     }
 
     /**
@@ -98,10 +100,14 @@ class GalleryPagingSource(
             )
 
             handlePixabayNetworkResult(nextPageIndex, result)
-        } catch (exception: Exception) {
+        } catch (exception: HttpException) {
             // Handle errors in this block and return LoadResult.Error for
             // expected errors (such as a network failure).
-            LoadResult.Error<Int, PixabayDataModel>(exception)
+            LoadResult.Error(exception)
+        } catch (exception: IOException) {
+            LoadResult.Error(exception)
+        } catch (exception: Exception) {
+            LoadResult.Error(exception)
         }
     }
 
@@ -125,7 +131,11 @@ class GalleryPagingSource(
                     LogUtil.d(TAG, "[Handle Gallery Data] Succeed, data: $dto")
                     val modelList = dto.toModelList()
                     val filteredModelList = modelList.filterNotNull()
-                    loadResult = LoadResult.Page(filteredModelList, null, nextPageIndex)
+                    loadResult = LoadResult.Page(
+                        data = filteredModelList,
+                        prevKey = null,
+                        nextKey = nextPageIndex
+                    )
                 } ?: {
                     LogUtil.d(TAG, "[Handle Gallery Data] Succeed without data")
                 }

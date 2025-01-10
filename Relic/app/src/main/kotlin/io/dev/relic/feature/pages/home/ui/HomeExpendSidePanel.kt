@@ -10,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeBottomSheetNewsTabBar
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeNewsTabBarAction
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTopHeadlineNewsColumn
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTopHeadlineNewsColumnAction
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTrendingNewsRow
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTrendingNewsRowAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeNewsTabBar
+import io.dev.relic.feature.pages.home.ui.widget.HomeNewsTabBarAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeTopHeadlineNewsColumn
+import io.dev.relic.feature.pages.home.ui.widget.HomeTopHeadlineNewsColumnAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeTrendingNewsRow
+import io.dev.relic.feature.pages.home.ui.widget.HomeTrendingNewsRowAction
 
 @Composable
 fun HomeExpendSidePanel(
@@ -34,9 +34,8 @@ fun HomeExpendSidePanel(
         contentPadding = PaddingValues(top = 12.dp)
     ) {
         item { HomeTrendingNewsRow(action = trendingNewsRowAction) }
-        item { HomeBottomSheetNewsTabBar(action = newsTabBarAction) }
+        item { HomeNewsTabBar(action = newsTabBarAction) }
         HomeTopHeadlineNewsColumn(newsColumnAction = topHeadlineNewsColumnAction)
         item { Spacer(modifier = Modifier.height(100.dp)) }
     }
 }
-

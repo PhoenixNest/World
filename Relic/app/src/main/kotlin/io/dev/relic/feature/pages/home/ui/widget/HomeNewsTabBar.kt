@@ -1,4 +1,4 @@
-package io.dev.relic.feature.pages.home.ui.widget.bottom_sheet
+package io.dev.relic.feature.pages.home.ui.widget
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -15,7 +15,7 @@ data class HomeNewsTabBarAction(
 )
 
 @Composable
-fun HomeBottomSheetNewsTabBar(
+fun HomeNewsTabBar(
     action: HomeNewsTabBarAction,
     modifier: Modifier = Modifier
 ) {
@@ -29,8 +29,8 @@ fun HomeBottomSheetNewsTabBar(
 
 @Composable
 @Preview(showBackground = true)
-private fun HomeBottomSheetNewsTabBarPreview() {
-    HomeBottomSheetNewsTabBar(
+private fun HomeNewsTabBarPreview() {
+    HomeNewsTabBar(
         action = HomeNewsTabBarAction(
             currentSelectedTab = 0,
             lazyListState = rememberLazyListState(),

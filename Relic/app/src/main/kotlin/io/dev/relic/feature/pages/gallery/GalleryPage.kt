@@ -8,21 +8,16 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.navOptions
-import io.common.util.LogUtil
-import io.data.model.pixabay.PixabayDataModel
-import io.dev.relic.feature.function.gallery.GalleryDataState
+import androidx.paging.compose.collectAsLazyPagingItems
+import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
+import io.dev.relic.feature.function.gallery.widget.GalleryStaggeredGridAction
 import io.dev.relic.feature.pages.detail.gallery.navigateToGalleryDetailPage
 import io.dev.relic.feature.pages.gallery.ui.GalleryPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
-import kotlinx.coroutines.flow.filter
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -39,19 +34,19 @@ fun GalleryPageRoute(
 
     /* ======================== Field ======================== */
 
-    val galleryDataState by galleryViewModel.getGalleryDataFlow()
-        .collectAsStateWithLifecycle()
+    val lazyPagingItems = galleryViewModel.getGalleryPager(
+        imageOrientation = WallpaperOrientation.VERTICAL
+    ).collectAsLazyPagingItems()
 
     /* ======================== Ui ======================== */
 
-    val galleryListState = GalleryListState(lazyStaggeredGridState = rememberLazyStaggeredGridState())
+    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
 
-    /* ======================== Ui State ======================== */
-
-    val galleryState = buildGalleryState(
-        dataState = galleryDataState,
-        viewModel = galleryViewModel,
-        listState = galleryListState,
+    val galleryStaggeredGridAction = GalleryStaggeredGridAction(
+        pagingItems = lazyPagingItems,
+        lazyStaggeredGridState = lazyStaggeredGridState,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
         onItemClick = { model ->
             navController.navigateToGalleryDetailPage(
                 id = model.id,
@@ -67,66 +62,22 @@ fun GalleryPageRoute(
         }
     )
 
-    LaunchedEffect(galleryListState.lazyStaggeredGridState) {
-        snapshotFlow {
-            galleryListState.lazyStaggeredGridState.firstVisibleItemIndex
-        }.filter {
-            it >= (galleryViewModel.getGalleryList().size / 2)
-        }.collect {
-            if (galleryViewModel.isFetchingMore) {
-                LogUtil.w("GalleryViewModel", "[Fetch More Gallery Data] Already executed, skip this time.")
-                return@collect
-            }
+    /* ======================== Ui State ======================== */
 
-            // Fetch more gallery data.
-            galleryViewModel.apply {
-                if (canFetchMore) {
-                    fetchMoreGalleryData()
-                }
-            }
-        }
-    }
-
-    GalleryPage(
-        galleryState = galleryState,
-        sharedTransitionScope = sharedTransitionScope,
-        animatedContentScope = animatedContentScope
-    )
+    GalleryPage(galleryStaggeredGridAction = galleryStaggeredGridAction)
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun GalleryPage(
-    galleryState: GalleryState,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
+    galleryStaggeredGridAction: GalleryStaggeredGridAction
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.surface
     ) {
         GalleryPageContent(
-            galleryState = galleryState,
-            sharedTransitionScope = sharedTransitionScope,
-            animatedContentScope = animatedContentScope
+            galleryStaggeredGridAction = galleryStaggeredGridAction
         )
     }
-}
-
-/* ======================== Page Ui State Builder ======================== */
-
-private fun buildGalleryState(
-    dataState: GalleryDataState,
-    viewModel: GalleryViewModel,
-    listState: GalleryListState,
-    onItemClick: (dataModel: PixabayDataModel) -> Unit
-): GalleryState {
-    return GalleryState(
-        dataState = dataState,
-        action = GalleryAction(
-            onItemClick = onItemClick,
-            onRetryClick = { viewModel.getGalleryData() }
-        ),
-        listState = listState
-    )
 }

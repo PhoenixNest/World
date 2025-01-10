@@ -128,7 +128,7 @@ private fun NavigationSuitText(@StringRes labelResId: Int) {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 private fun MainNavigationSuiteScaffoldHorizontalPreview() {
     MainNavigationSuiteScaffold(
         currentDestination = null,
@@ -140,7 +140,7 @@ private fun MainNavigationSuiteScaffoldHorizontalPreview() {
 }
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_fold")
+@Preview(showBackground = true, device = "id:pixel_fold")
 private fun MainNavigationSuiteScaffoldVerticalPreview() {
     MainNavigationSuiteScaffold(
         currentDestination = null,

@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.navOptions
@@ -43,7 +44,11 @@ import io.data.util.NewsCategory
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
 import io.data.util.NewsConfig.TopHeadline.DEFAULT_NEWS_COUNTRY_TYPE
+import io.dev.relic.feature.function.agent.AgentQuestionModel
 import io.dev.relic.feature.function.agent.gemini.vm.GeminiAgentViewModel
+import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
+import io.dev.relic.feature.function.news.TopHeadlineNewsDataState
+import io.dev.relic.feature.function.news.TrendingNewsDataState
 import io.dev.relic.feature.pages.agent.navigateToAgentChatPage
 import io.dev.relic.feature.pages.detail.food_recipe.navigateToFoodRecipeDetailPage
 import io.dev.relic.feature.pages.detail.news.navigateToNewsDetailPage
@@ -52,13 +57,13 @@ import io.dev.relic.feature.pages.home.ui.HomePageBottomSheet
 import io.dev.relic.feature.pages.home.ui.HomePageContent
 import io.dev.relic.feature.pages.home.ui.HomePageDrawer
 import io.dev.relic.feature.pages.home.ui.widget.HomeFeaturePanelAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeNewsTabBarAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeQuickPromptsPanelAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeRecommendFoodsPanelAction
 import io.dev.relic.feature.pages.home.ui.widget.HomeTopBar
 import io.dev.relic.feature.pages.home.ui.widget.HomeTopBarAction
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeNewsTabBarAction
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTopHeadlineNewsColumnAction
-import io.dev.relic.feature.pages.home.ui.widget.bottom_sheet.HomeTrendingNewsRowAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeTopHeadlineNewsColumnAction
+import io.dev.relic.feature.pages.home.ui.widget.HomeTrendingNewsRowAction
 import io.dev.relic.feature.pages.home.vm.HomeFoodRecipesViewModel
 import io.dev.relic.feature.pages.home.vm.HomeNewsViewModel
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
@@ -339,6 +344,92 @@ private fun HomePageExpendModeContent(
             trendingNewsRowAction = trendingNewsRowAction,
             newsTabBarAction = newsTabBarAction,
             topHeadlineNewsColumnAction = topHeadlineNewsColumnAction
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun HomePageCompatModeContentPreview() {
+    HomePageCompatModeContent(
+        featurePanelAction = HomeFeaturePanelAction(
+            onAgentClick = {},
+            onFoodRecipesClick = {},
+            onTodoClick = {}
+        ),
+        quickPromptsPanelAction = HomeQuickPromptsPanelAction(
+            questions = AgentQuestionModel.getRandomQuestions(),
+            onRefreshClick = {},
+            onPromptClick = {}
+        ),
+        recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
+            state = FoodRecipesDataState.Init,
+            onRefreshClick = {},
+            onItemClick = {}
+        ),
+        trendingNewsRowAction = HomeTrendingNewsRowAction(
+            state = TrendingNewsDataState.Fetching,
+            lazyListState = rememberLazyListState(),
+            onRetryClick = {},
+            onItemClick = {}
+        ),
+        newsTabBarAction = HomeNewsTabBarAction(
+            currentSelectedTab = 0,
+            lazyListState = rememberLazyListState(),
+            onTabItemClick = { _, _ -> }
+        ),
+        topHeadlineNewsColumnAction = HomeTopHeadlineNewsColumnAction(
+            state = TopHeadlineNewsDataState.Fetching,
+            lazyListState = rememberLazyListState(),
+            onItemClick = {},
+            onRetryClick = {},
+            onScrollToTopClick = {}
+        )
+    )
+}
+
+@Composable
+@Preview(showBackground = true, device = "id:pixel_fold")
+private fun HomePageExpendModeContentPreview() {
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        HomePageExpendModeContent(
+            featurePanelAction = HomeFeaturePanelAction(
+                onAgentClick = {},
+                onFoodRecipesClick = {},
+                onTodoClick = {}
+            ),
+            quickPromptsPanelAction = HomeQuickPromptsPanelAction(
+                questions = AgentQuestionModel.getRandomQuestions(),
+                onRefreshClick = {},
+                onPromptClick = {}
+            ),
+            recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
+                state = FoodRecipesDataState.Init,
+                onRefreshClick = {},
+                onItemClick = {}
+            ),
+            trendingNewsRowAction = HomeTrendingNewsRowAction(
+                state = TrendingNewsDataState.Fetching,
+                lazyListState = rememberLazyListState(),
+                onRetryClick = {},
+                onItemClick = {}
+            ),
+            newsTabBarAction = HomeNewsTabBarAction(
+                currentSelectedTab = 0,
+                lazyListState = rememberLazyListState(),
+                onTabItemClick = { _, _ -> }
+            ),
+            topHeadlineNewsColumnAction = HomeTopHeadlineNewsColumnAction(
+                state = TopHeadlineNewsDataState.Fetching,
+                lazyListState = rememberLazyListState(),
+                onItemClick = {},
+                onRetryClick = {},
+                onScrollToTopClick = {}
+            )
         )
     }
 }

@@ -12,7 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import io.dev.relic.feature.pages.intro.widget.IntroPanel
 
 @Composable
-fun IntroPage(onNavigateClick: () -> Unit) {
+fun IntroPage(
+    isCompatMode: Boolean,
+    onNavigateClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -31,5 +34,17 @@ fun IntroPage(onNavigateClick: () -> Unit) {
 @Composable
 @Preview(showBackground = true)
 private fun IntroPagePreview() {
-    IntroPage(onNavigateClick = {})
+    IntroPage(
+        isCompatMode = false,
+        onNavigateClick = {}
+    )
+}
+
+@Composable
+@Preview(showBackground = true, device = "id:pixel_fold")
+private fun IntroPageExpendModePreview() {
+    IntroPage(
+        isCompatMode = true,
+        onNavigateClick = {}
+    )
 }

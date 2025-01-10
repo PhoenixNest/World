@@ -107,7 +107,7 @@ class IntroActivity : AbsBaseActivity() {
         setContent {
             val multiplePermissionsState = rememberMultiplePermissionsState(RelicSdkManager.permissionList)
             val windowSizeClass = calculateWindowSizeClass(activity = this)
-            val isLargeScreen = (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded)
+            val isCompatMode = (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded)
 
             LaunchedEffect(multiplePermissionsState.allPermissionsGranted) {
                 val isGranted = multiplePermissionsState.allPermissionsGranted
@@ -121,8 +121,10 @@ class IntroActivity : AbsBaseActivity() {
             RelicAppTheme {
                 RelicAppBackground {
                     IntroScreen(
-                        isLargeScreen = isLargeScreen,
-                        onNavigateClick = multiplePermissionsState::launchMultiplePermissionRequest
+                        isCompatMode = isCompatMode,
+                        onNavigateClick = {
+                            multiplePermissionsState.launchMultiplePermissionRequest()
+                        }
                     )
                 }
             }
