@@ -1,14 +1,14 @@
-package io.dev.relic.feature.function.gallery.paging
+package io.domain.use_case.pixabay.action
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import coil.network.HttpException
 import io.common.util.LogUtil
-import io.data.dto.pixabay.PixabayImagesDTO
+import io.core.network.NetworkParameters.Keys.PIXABAY_API_KEY
 import io.data.mappers.PixabayDataMapper.toModelList
 import io.data.model.NetworkResult
 import io.data.model.pixabay.PixabayDataModel
-import io.domain.use_case.pixabay.PixabayUseCase
+import io.domain.repository.IPixabayDataRepository
 import okio.IOException
 
 /**
@@ -17,7 +17,7 @@ import okio.IOException
  * [Paging library overview](https://developer.android.google.cn/topic/libraries/architecture/paging/v3-overview)
  * */
 class GalleryPagingSource(
-    private val pixabayUseCase: PixabayUseCase,
+    private val repository: IPixabayDataRepository,
     private val keyWords: String,
     private val language: String,
     private val imageType: String,
@@ -26,6 +26,7 @@ class GalleryPagingSource(
     private val isEditorsChoice: Boolean,
     private val isSafeSearch: Boolean,
     private val orderBy: String,
+    private val startPage: Int,
     private val perPage: Int
 ) : PagingSource<Int, PixabayDataModel>() {
 
@@ -67,12 +68,14 @@ class GalleryPagingSource(
         // here.
         //  * prevKey == null -> anchorPage is the first page.
         //  * nextKey == null -> anchorPage is the last page.
-        //  * both prevKey and nextKey are null -> anchorPage is the
-        //    initial page, so return null.
-        return state.anchorPosition?.let { anchorPosition ->
+        //  * both prevKey and nextKey are null -> anchorPage is the initial page, so return null.
+        val refreshKey = state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
+
+        LogUtil.d(TAG, "[Refresh Key] Current refresh key: $refreshKey")
+        return refreshKey
     }
 
     /**
@@ -83,10 +86,12 @@ class GalleryPagingSource(
     override suspend fun load(
         params: LoadParams<Int>
     ): LoadResult<Int, PixabayDataModel> {
+        LogUtil.d(TAG, "[Load] Current params: (key: ${params.key}, loadSize: ${params.loadSize})")
         return try {
             // Start refresh at page 1 if undefined.
-            val nextPageIndex = params.key ?: 1
-            val result = pixabayUseCase.searchImages.invoke(
+            val pageIndex = params.key ?: startPage
+            val result = repository.searchImages(
+                apiKey = PIXABAY_API_KEY,
                 keyWords = keyWords,
                 language = language,
                 imageType = imageType,
@@ -95,11 +100,48 @@ class GalleryPagingSource(
                 isEditorsChoice = isEditorsChoice,
                 isSafeSearch = isSafeSearch,
                 orderBy = orderBy,
-                page = nextPageIndex,
+                page = pageIndex,
                 perPage = perPage
             )
 
-            handlePixabayNetworkResult(nextPageIndex, result)
+            val preKey = if (params.key == 1) null else params.key?.minus(1)
+            val nextKey = params.key?.plus(1)
+
+            var loadResult: LoadResult<Int, PixabayDataModel> = LoadResult.Invalid()
+            when (result) {
+                is NetworkResult.Loading -> {
+                    //
+                }
+
+                is NetworkResult.Success -> {
+                    result.data?.also { dto ->
+                        LogUtil.d(TAG, "[Handle Remote Data] Succeed, data: $dto")
+                        val modelList = dto.toModelList()
+                        val filteredModelList = modelList.filterNotNull()
+
+                        loadResult = LoadResult.Page(
+                            data = filteredModelList,
+                            prevKey = preKey,
+                            nextKey = nextKey
+                        )
+                    } ?: {
+                        LogUtil.w(TAG, "[Handle Remote Data] Succeed without data")
+                        loadResult = LoadResult.Page(
+                            data = emptyList(),
+                            prevKey = preKey,
+                            nextKey = null
+                        )
+                    }
+                }
+
+                is NetworkResult.Failed -> {
+                    val errorCode = result.code
+                    val errorMessage = result.message
+                    LogUtil.e(TAG, "[Handle Remote Data] Failed, ($errorCode, $errorMessage)")
+                }
+            }
+
+            return loadResult
         } catch (exception: HttpException) {
             // Handle errors in this block and return LoadResult.Error for
             // expected errors (such as a network failure).
@@ -109,45 +151,5 @@ class GalleryPagingSource(
         } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
-    }
-
-    /**
-     * Handle the remote-data of Gallery information.
-     *
-     * @param result
-     * */
-    private fun handlePixabayNetworkResult(
-        nextPageIndex: Int,
-        result: NetworkResult<PixabayImagesDTO>
-    ): LoadResult<Int, PixabayDataModel> {
-        var loadResult: LoadResult<Int, PixabayDataModel> = LoadResult.Invalid()
-        when (result) {
-            is NetworkResult.Loading -> {
-                //
-            }
-
-            is NetworkResult.Success -> {
-                result.data?.also { dto ->
-                    LogUtil.d(TAG, "[Handle Gallery Data] Succeed, data: $dto")
-                    val modelList = dto.toModelList()
-                    val filteredModelList = modelList.filterNotNull()
-                    loadResult = LoadResult.Page(
-                        data = filteredModelList,
-                        prevKey = null,
-                        nextKey = nextPageIndex
-                    )
-                } ?: {
-                    LogUtil.d(TAG, "[Handle Gallery Data] Succeed without data")
-                }
-            }
-
-            is NetworkResult.Failed -> {
-                val errorCode = result.code
-                val errorMessage = result.message
-                LogUtil.e(TAG, "[Handle Gallery Data] Failed, ($errorCode, $errorMessage)")
-            }
-        }
-
-        return loadResult
     }
 }

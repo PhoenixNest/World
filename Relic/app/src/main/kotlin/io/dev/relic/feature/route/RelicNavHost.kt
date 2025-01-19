@@ -68,32 +68,20 @@ fun MainFeatureNavHost(
             }
         ) {
             // Top Level
-            pageHome(
-                mainScreenState = mainScreenState
-            )
-            pageStudio(
-                mainScreenState = mainScreenState
-            )
+            pageHome(mainScreenState = mainScreenState)
+            pageStudio(mainScreenState = mainScreenState)
             pageGallery(
                 mainScreenState = mainScreenState,
                 sharedTransitionScope = sharedTransitionScope
             )
-            pageSettings(
-                onBackClick = navHostController::popBackStack
-            )
+            pageSettings(onBackClick = navHostController::popBackStack)
 
             // Inner function
-            pageAgentChat(
-                onBackClick = navHostController::popBackStack
-            )
+            pageAgentChat(onBackClick = navHostController::popBackStack)
 
             // Detail
-            pageFoodRecipeDetail(
-                onBackClick = navHostController::popBackStack
-            )
-            pageNewsDetail(
-                onBackClick = navHostController::popBackStack
-            )
+            pageFoodRecipeDetail(onBackClick = navHostController::popBackStack)
+            pageNewsDetail(onBackClick = navHostController::popBackStack)
             pageGalleryDetail(
                 shareTransitionScope = sharedTransitionScope,
                 onBackClick = navHostController::popBackStack

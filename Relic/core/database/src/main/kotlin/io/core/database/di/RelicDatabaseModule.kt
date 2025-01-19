@@ -39,7 +39,7 @@ class RelicDatabaseModule {
     @Provides
     @Singleton
     fun provideTodoDao(database: RelicDatabase): TodoDao {
-        return database.notesDao()
+        return database.todoDao()
     }
 
     @Provides

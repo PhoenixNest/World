@@ -30,17 +30,14 @@ import io.data.entity.weather.WeatherEntity
 
 @Database(
     entities = [
-        // Feature: Home
         WeatherEntity::class,
         FoodRecipesComplexSearchEntity::class,
         PixabayImagesEntity::class,
-        // Feature: Studio
-        TodoEntity::class,
+        TrendingNewsArticleEntity::class,
         TrendingNewsEntity::class,
         TopHeadlinesNewsEntity::class,
-        TrendingNewsArticleEntity::class,
         TopHeadlineNewsArticleEntity::class,
-        // Feature: Ai
+        TodoEntity::class,
         AgentChatEntity::class,
         AgentGeminiChatEntity::class
     ],
@@ -58,7 +55,7 @@ import io.data.entity.weather.WeatherEntity
 )
 abstract class RelicDatabase : RoomDatabase() {
 
-    abstract fun notesDao(): TodoDao
+    abstract fun todoDao(): TodoDao
 
     abstract fun weatherDao(): WeatherDao
 

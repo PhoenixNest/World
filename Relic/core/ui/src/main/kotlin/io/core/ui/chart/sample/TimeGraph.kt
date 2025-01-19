@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.core.ui.chart
+package io.core.ui.chart.sample
 
 import androidx.compose.foundation.layout.LayoutScopeMarker
 import androidx.compose.foundation.layout.padding

@@ -69,7 +69,7 @@ fun AgentChatPageContent(
             isAwaitingAnswer = isAwaitingAnswer,
             chatHistory = chatHistory,
             onMessageValueChange = onMessageValueChange,
-            onSendMessage = onSendMessage,
+            onSendMessage = onSendMessage
         )
     }
 }

@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.navOptions
 import androidx.paging.compose.collectAsLazyPagingItems
-import io.dev.relic.feature.function.gallery.util.WallpaperOrientation
 import io.dev.relic.feature.function.gallery.vm.GalleryViewModel
 import io.dev.relic.feature.function.gallery.widget.GalleryStaggeredGridAction
 import io.dev.relic.feature.pages.detail.gallery.navigateToGalleryDetailPage
 import io.dev.relic.feature.pages.gallery.ui.GalleryPageContent
 import io.dev.relic.feature.screens.main.MainScreenState
+import io.domain.use_case.pixabay.action.util.WallpaperOrientation
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -34,17 +34,15 @@ fun GalleryPageRoute(
 
     /* ======================== Field ======================== */
 
-    val lazyPagingItems = galleryViewModel.getGalleryPager(
+    val galleryPagingItems = galleryViewModel.getGalleryPager(
         imageOrientation = WallpaperOrientation.VERTICAL
     ).collectAsLazyPagingItems()
 
     /* ======================== Ui ======================== */
 
-    val lazyStaggeredGridState = rememberLazyStaggeredGridState()
-
     val galleryStaggeredGridAction = GalleryStaggeredGridAction(
-        pagingItems = lazyPagingItems,
-        lazyStaggeredGridState = lazyStaggeredGridState,
+        pagingItems = galleryPagingItems,
+        lazyStaggeredGridState = rememberLazyStaggeredGridState(),
         sharedTransitionScope = sharedTransitionScope,
         animatedContentScope = animatedContentScope,
         onItemClick = { model ->
@@ -67,7 +65,6 @@ fun GalleryPageRoute(
     GalleryPage(galleryStaggeredGridAction = galleryStaggeredGridAction)
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun GalleryPage(
     galleryStaggeredGridAction: GalleryStaggeredGridAction

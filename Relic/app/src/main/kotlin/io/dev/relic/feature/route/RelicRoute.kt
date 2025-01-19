@@ -25,5 +25,5 @@ object RelicRoute {
     /**
      * Route Config
      * */
-    const val START_DESTINATION = STUDIO
+    const val START_DESTINATION = GALLERY
 }

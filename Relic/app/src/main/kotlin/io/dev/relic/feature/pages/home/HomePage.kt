@@ -77,7 +77,6 @@ fun HomePageRoute(
     foodRecipesViewModel: HomeFoodRecipesViewModel = hiltViewModel(),
     newsViewModel: HomeNewsViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val navHostController = mainScreenState.navHostController
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(
@@ -277,7 +276,7 @@ private fun HomePageCompatModeContent(
     recommendFoodsPanelAction: HomeRecommendFoodsPanelAction,
     trendingNewsRowAction: HomeTrendingNewsRowAction,
     newsTabBarAction: HomeNewsTabBarAction,
-    topHeadlineNewsColumnAction: HomeTopHeadlineNewsColumnAction,
+    topHeadlineNewsColumnAction: HomeTopHeadlineNewsColumnAction
 ) {
     val gestureBarHeight = NavigationBarDefaults.windowInsets.asPaddingValues().calculateBottomPadding()
     val sheetPeakHeight = DEFAULT_SHEET_DRAG_HANDLE_HEIGHT + DEFAULT_BOTTOM_NAVIGATION_BAR_HEIGHT + gestureBarHeight
@@ -395,7 +394,7 @@ private fun HomePageExpendModeContentPreview() {
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         HomePageExpendModeContent(
             featurePanelAction = HomeFeaturePanelAction(
                 onAgentClick = {},

@@ -2,9 +2,15 @@ package io.data.entity.todo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-@Entity(tableName = "table_todo")
+@Entity(
+    tableName = "table_todo",
+    indices = [Index(value = ["uid"], unique = true)]
+)
 data class TodoEntity(
     @ColumnInfo(name = "title")
     val title: String,
@@ -14,14 +20,12 @@ data class TodoEntity(
     val content: String,
     @ColumnInfo(name = "priority")
     val priority: Int,
-    @ColumnInfo(name = "color_hex")
-    val color: Long,
     @ColumnInfo(name = "update_time")
-    val updateTime: String,
-    @ColumnInfo(name = "isFinish")
+    val updateTime: String = DateTimeFormatter.ofPattern("yyyy-MM-dd HH").format(LocalDateTime.now()),
+    @ColumnInfo(name = "is_finished")
     val isFinish: Boolean
 ) {
-    @ColumnInfo(name = "uid", index = true)
+    @ColumnInfo(name = "uid")
     @PrimaryKey(autoGenerate = true)
     var uid: Int = 0
 }

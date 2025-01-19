@@ -155,7 +155,7 @@ class HomeNewsViewModel @Inject constructor(
                             setState(trendingNewsStateFlow, TrendingNewsDataState.NoNewsData)
                         }
                     } else {
-                        LogUtil.e(TAG, "[Handle Trending News Cache] Succeed without data")
+                        LogUtil.w(TAG, "[Handle Trending News Cache] Succeed without data")
                         setState(trendingNewsStateFlow, TrendingNewsDataState.NoNewsData)
                     }
                 }
@@ -193,7 +193,7 @@ class HomeNewsViewModel @Inject constructor(
                             )
                         }
                     } else {
-                        LogUtil.e(TAG, "[Handle Top-headline News Cache] Succeed without data")
+                        LogUtil.w(TAG, "[Handle Top-headline News Cache] Succeed without data")
                         setState(this@HomeNewsViewModel.topHeadlineNewsStateFlow, TopHeadlineNewsDataState.NoNewsData)
                     }
                 }

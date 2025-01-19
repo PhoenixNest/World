@@ -29,6 +29,7 @@ import io.domain.use_case.news.action.top_headline.GetTopHeadlineNewsData
 import io.domain.use_case.news.action.top_headline.QueryAllTopHeadlineNewsData
 import io.domain.use_case.pixabay.PixabayUseCase
 import io.domain.use_case.pixabay.action.SearchImages
+import io.domain.use_case.pixabay.action.SearchImagesPaging
 import io.domain.use_case.todo.TodoUseCase
 import io.domain.use_case.todo.action.AddTodo
 import io.domain.use_case.todo.action.DeleteTodo
@@ -109,7 +110,8 @@ class RelicUseCaseModule {
         databaseRepository: RelicDatabaseRepository
     ): PixabayUseCase {
         return PixabayUseCase(
-            searchImages = SearchImages(pixabayRepository)
+            searchImages = SearchImages(pixabayRepository),
+            searchImagesPaging = SearchImagesPaging(pixabayRepository)
         )
     }
 

@@ -1,6 +1,8 @@
 package io.dev.relic.feature.function.todo.ui.widget
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +32,7 @@ fun TodoPreviewItem(
     onClick: () -> Unit
 ) {
 
-    val containerColor = MaterialTheme.colorScheme.tertiaryContainer
+    val containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
     val contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor)
 
     Card(
@@ -105,18 +107,23 @@ fun TodoPreviewItem(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun TodoPreviewItemPreview() {
-    TodoPreviewItem(
-        model = TodoDataModel(
-            title = "Hello World",
-            subtitle = "This is a test subtitle",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.",
-            priority = 0,
-            color = 0xFF00000,
-            updateTime = LocalDateTime.now().toString(),
-            isFinish = false
-        ),
-        onClick = {}
-    )
+    Box(
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.surfaceContainer)
+            .padding(16.dp)
+    ) {
+        TodoPreviewItem(
+            model = TodoDataModel(
+                title = "Hello World",
+                subtitle = "This is a test subtitle",
+                content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.",
+                priority = 0,
+                updateTime = LocalDateTime.now().toString(),
+                isFinish = false
+            ),
+            onClick = {}
+        )
+    }
 }

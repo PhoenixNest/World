@@ -1,4 +1,4 @@
-package io.dev.relic.feature.function.gallery.util
+package io.domain.use_case.pixabay.action.util
 
 enum class WallpaperOrientation {
     ALL,

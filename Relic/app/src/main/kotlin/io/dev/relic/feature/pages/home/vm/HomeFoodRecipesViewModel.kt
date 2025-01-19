@@ -131,7 +131,7 @@ class HomeFoodRecipesViewModel @Inject constructor(
                     recommendDataList.addAll(filteredModelList)
                     setState(recommendDataStateFlow, FoodRecipesDataState.FetchSucceed(recommendDataList))
                 } ?: {
-                    LogUtil.d(TAG, "[Handle Random Data] Succeed without data")
+                    LogUtil.w(TAG, "[Handle Random Data] Succeed without data")
                     setState(recommendDataStateFlow, FoodRecipesDataState.NoFoodRecipesData)
                 }
             }

@@ -5,7 +5,6 @@ data class TodoDataModel(
     val subtitle: String,
     val content: String,
     val priority: Int,
-    val color: Long,
     val updateTime: String,
     val isFinish: Boolean
 )

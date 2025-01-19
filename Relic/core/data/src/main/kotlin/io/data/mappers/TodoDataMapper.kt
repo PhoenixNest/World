@@ -24,7 +24,6 @@ object TodoDataMapper {
             subtitle = subtitle,
             content = content,
             priority = priority,
-            color = color,
             updateTime = updateTime,
             isFinish = isFinish
         )

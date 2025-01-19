@@ -100,7 +100,7 @@ class FoodRecipesDetailViewModel @Inject constructor(
                     val model = dto.toModel()
                     setState(informationDataStateFlow, FoodRecipesDataState.FetchSucceed(model))
                 } ?: {
-                    LogUtil.d(TAG, "[Handle Food Recipe Information Data] Succeed without data")
+                    LogUtil.w(TAG, "[Handle Food Recipe Information Data] Succeed without data")
                     setState(informationDataStateFlow, FoodRecipesDataState.NoFoodRecipesData)
                 }
             }

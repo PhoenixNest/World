@@ -107,18 +107,18 @@ object DownloadManager {
                         }
 
                         val file = FileUtil.createCacheFile(context, fileName)
-                        val fileOutputStream: FileOutputStream? = FileOutputStream(file)
+                        val fileOutputStream = FileOutputStream(file)
                         val contentLength = httpURLConnection.contentLength / 1000
                         val byteArray = ByteArray(contentLength)
                         LogUtil.d(TAG, "[Download] Start to write the input stream into output stream.")
 
                         while (inputStream.read(byteArray) != -1) {
                             LogUtil.d(TAG, "[Download] Write to output stream.")
-                            fileOutputStream?.write(byteArray)
+                            fileOutputStream.write(byteArray)
                         }
 
-                        fileOutputStream?.flush()
-                        fileOutputStream?.close()
+                        fileOutputStream.flush()
+                        fileOutputStream.close()
                         continuation.resume(file.absolutePath)
                         LogUtil.d(TAG, "[Download] Output finished, filePath: ${file.absolutePath}")
                     } else {

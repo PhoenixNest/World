@@ -66,7 +66,7 @@ class StudioMaximViewModel @Inject constructor(
                     val model = dto.toModel()
                     setState(maximDataStateFlow, MaximDataState.FetchSucceed(model))
                 } ?: {
-                    LogUtil.d(TAG, "[Handle Random Data] Succeed without data")
+                    LogUtil.w(TAG, "[Handle Random Data] Succeed without data")
                     setState(maximDataStateFlow, MaximDataState.NoMaximData)
                 }
             }

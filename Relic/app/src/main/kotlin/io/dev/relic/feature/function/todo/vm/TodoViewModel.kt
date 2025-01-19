@@ -61,21 +61,16 @@ class TodoViewModel @Inject constructor(
         viewModelScope.launch {
             todoUseCase.getAllTodos()
                 .stateIn(this)
-                .collect {
-                    handleTodoData(it)
+                .collect { todoEntities ->
+                    if (todoEntities.isNotEmpty()) {
+                        LogUtil.d(TAG, "[Handle Todo Data] Succeed, data: $todoEntities")
+                        val todoModelList = todoEntities.toModelList()
+                        setState(todoDataStateFlow, TodoDataState.QuerySucceed(todoModelList))
+                    } else {
+                        LogUtil.w(TAG, "[Handle Todo Data] No Data.")
+                        setState(todoDataStateFlow, TodoDataState.NoTodoData)
+                    }
                 }
         }
     }
-
-    private fun handleTodoData(todoEntities: List<TodoEntity>) {
-        if (todoEntities.isNotEmpty()) {
-            LogUtil.d(TAG, "[Handle Todo Data] Succeed, data: $todoEntities")
-            val todoModelList = todoEntities.toModelList()
-            setState(todoDataStateFlow, TodoDataState.QuerySucceed(todoModelList))
-        } else {
-            LogUtil.w(TAG, "[Handle Todo Data] No Data.")
-            setState(todoDataStateFlow, TodoDataState.NoTodoData)
-        }
-    }
-
 }

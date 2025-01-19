@@ -77,9 +77,16 @@
     <string name="todo_intro_title">@string/todo_feature_title</string>
     <string name="todo_intro_create">Set Your Tasks</string>
     <string name="todo_title">Todo</string>
-    <string name="todo_create_title_hint">Title</string>
-    <string name="todo_create_subtitle_hint">Subtitle</string>
-    <string name="todo_create_content_hint">Content</string>
+    <string name="todo_create_form_title">Create a new To-do task</string>
+    <string name="todo_create_title_label">Title</string>
+    <string name="todo_create_title_hint">@string/todo_create_title_label</string>
+    <string name="todo_create_subtitle_label">Subtitle</string>
+    <string name="todo_create_subtitle_hint">@string/todo_create_subtitle_label</string>
+    <string name="todo_create_description_label">Description</string>
+    <string name="todo_create_description_hint">@string/todo_create_description_label</string>
+    <string name="todo_create_priority_label">Priority</string>
+    <string name="todo_create_last_modified_time">Last Modified Time: %1$s</string>
+    <string name="todo_create_submit_button">Submit</string>
 
     <!-- Weather Unit -->
     <string name="weather_card_title">Today\'s Weather</string>
