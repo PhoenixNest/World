@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.widget.CommonTextClock
 import io.data.model.maxim.MaximModel
 import io.dev.relic.feature.function.maxim.MaximDataState
@@ -61,24 +62,26 @@ fun StudioPageContent(
 @Composable
 @Preview(showBackground = true)
 private fun StudioPageContentPreview() {
-    StudioPageContent(
-        maximWidgetAction = StudioMaximWidgetAction(
-            state = MaximDataState.FetchSucceed(
-                data = MaximModel(
-                    hitokoto = "羌笛何须怨杨柳，春风不度玉门关。",
-                    from = "凉州词二首·其一",
-                    fromWho = "王之涣",
-                    creator = "---",
-                    createdAt = "---"
-                )
+    RelicAppTheme {
+        StudioPageContent(
+            maximWidgetAction = StudioMaximWidgetAction(
+                state = MaximDataState.FetchSucceed(
+                    data = MaximModel(
+                        hitokoto = "羌笛何须怨杨柳，春风不度玉门关。",
+                        from = "凉州词二首·其一",
+                        fromWho = "王之涣",
+                        creator = "---",
+                        createdAt = "---"
+                    )
+                ),
+                onRefreshClick = {},
+                onRetryClick = {}
             ),
-            onRefreshClick = {},
-            onRetryClick = {}
-        ),
-        functionPanelAction = StudioFunctionPanelAction(
-            onDevelopClick = {},
-            onMonitorClick = {},
-            onMediaClick = {}
+            functionPanelAction = StudioFunctionPanelAction(
+                onDevelopClick = {},
+                onMonitorClick = {},
+                onMediaClick = {}
+            )
         )
-    )
+    }
 }

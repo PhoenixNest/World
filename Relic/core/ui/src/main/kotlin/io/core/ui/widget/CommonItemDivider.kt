@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 
 @Composable
 fun CommonItemDivider(
@@ -42,7 +43,9 @@ fun CommonItemDivider(
 @Composable
 @Preview(showBackground = true)
 private fun CommonItemDividerPreview() {
-    Box {
-        CommonItemDivider()
+    RelicAppTheme {
+        Box {
+            CommonItemDivider()
+        }
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.pages.intro.widget.IntroPanel
 
 @Composable
@@ -34,17 +35,21 @@ fun IntroPage(
 @Composable
 @Preview(showBackground = true)
 private fun IntroPagePreview() {
-    IntroPage(
-        isCompatMode = false,
-        onNavigateClick = {}
-    )
+    RelicAppTheme {
+        IntroPage(
+            isCompatMode = false,
+            onNavigateClick = {}
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true, device = "id:pixel_fold")
 private fun IntroPageExpendModePreview() {
-    IntroPage(
-        isCompatMode = true,
-        onNavigateClick = {}
-    )
+    RelicAppTheme {
+        IntroPage(
+            isCompatMode = true,
+            onNavigateClick = {}
+        )
+    }
 }

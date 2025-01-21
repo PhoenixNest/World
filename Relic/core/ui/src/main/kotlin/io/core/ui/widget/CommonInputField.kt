@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.R
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColorDark
 
@@ -141,59 +142,63 @@ fun CommonInputField(
 @Composable
 @Preview(showBackground = true)
 private fun CommonInputFieldNoContentPreview() {
-    Box(
-        modifier = Modifier
-            .padding(12.dp)
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        CommonInputField(
-            content = "",
-            hintResId = R.string.common_input_field_hint,
-            onValueChange = {},
+    RelicAppTheme {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = Color.LightGray.copy(alpha = 0.3F),
-                    shape = RoundedCornerShape(16.dp)
+                .padding(12.dp)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            CommonInputField(
+                content = "",
+                hintResId = R.string.common_input_field_hint,
+                onValueChange = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = Color.LightGray.copy(alpha = 0.3F),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(20.dp),
+                contentTextStyle = TextStyle(
+                    color = mainTextColorDark
+                ),
+                hintTextStyle = TextStyle(
+                    color = mainTextColorDark.copy(alpha = 0.3F)
                 )
-                .padding(20.dp),
-            contentTextStyle = TextStyle(
-                color = mainTextColorDark
-            ),
-            hintTextStyle = TextStyle(
-                color = mainTextColorDark.copy(alpha = 0.3F)
             )
-        )
+        }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun CommonInputFieldPreview() {
-    Box(
-        modifier = Modifier
-            .padding(12.dp)
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-        CommonInputField(
-            content = stringResource(id = R.string.app_name),
-            hintResId = R.string.common_input_field_hint,
-            onValueChange = {},
+    RelicAppTheme {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = Color.LightGray.copy(alpha = 0.3F),
-                    shape = RoundedCornerShape(16.dp)
+                .padding(12.dp)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            CommonInputField(
+                content = stringResource(id = R.string.app_name),
+                hintResId = R.string.common_input_field_hint,
+                onValueChange = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = Color.LightGray.copy(alpha = 0.3F),
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .padding(20.dp),
+                contentTextStyle = TextStyle(
+                    color = mainTextColorDark
+                ),
+                hintTextStyle = TextStyle(
+                    color = mainTextColorDark.copy(alpha = 0.3F)
                 )
-                .padding(20.dp),
-            contentTextStyle = TextStyle(
-                color = mainTextColorDark
-            ),
-            hintTextStyle = TextStyle(
-                color = mainTextColorDark.copy(alpha = 0.3F)
             )
-        )
+        }
     }
 }

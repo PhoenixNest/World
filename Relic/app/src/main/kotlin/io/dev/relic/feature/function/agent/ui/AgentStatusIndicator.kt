@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 
@@ -77,11 +78,15 @@ private fun AgentAwaitAnswerLottie() {
 @Composable
 @Preview(showBackground = true)
 private fun AgentAwaitingAnswerIndicatorPreview() {
-    AgentStatusIndicator(true)
+    RelicAppTheme {
+        AgentStatusIndicator(true)
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun AgentReceivedAnswerIndicatorPreview() {
-    AgentStatusIndicator(false)
+    RelicAppTheme {
+        AgentStatusIndicator(false)
+    }
 }

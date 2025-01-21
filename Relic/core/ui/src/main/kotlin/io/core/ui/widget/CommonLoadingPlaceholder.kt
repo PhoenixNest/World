@@ -68,9 +68,7 @@ private fun CommonLoadingCardItem(
     backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         color = Color.Transparent
     ) {
@@ -138,7 +136,9 @@ private fun CommonLoadingDescItem() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun CommonLoadingCardItemPreview() {
-    CommonLoadingCardItem()
+    Box {
+        CommonLoadingCardItem(modifier = Modifier.padding(12.dp))
+    }
 }

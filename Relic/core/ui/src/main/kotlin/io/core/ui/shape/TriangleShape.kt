@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import kotlin.math.PI
 import kotlin.math.atan
 import kotlin.math.cos
@@ -95,17 +96,19 @@ class TriangleShape(
 @Composable
 @Preview(showBackground = true)
 private fun TriangleShapePreview() {
-    Box(
-        modifier = Modifier.size(300.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Surface(
-            shape = TriangleShape(48F),
-            onClick = {},
-            color = Color.DarkGray,
-            modifier = Modifier.size(240.dp)
+    RelicAppTheme {
+        Box(
+            modifier = Modifier.size(300.dp),
+            contentAlignment = Alignment.Center
         ) {
-            //
+            Surface(
+                shape = TriangleShape(48F),
+                onClick = {},
+                color = Color.DarkGray,
+                modifier = Modifier.size(240.dp)
+            ) {
+                //
+            }
         }
     }
 }

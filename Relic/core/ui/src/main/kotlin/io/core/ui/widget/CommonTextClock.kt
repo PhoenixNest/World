@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import io.common.util.LogUtil
 import io.common.util.TimeUtil
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import java.time.LocalDateTime
 
@@ -96,45 +97,46 @@ fun CommonTextClock(
         }
     }
 
-    ConstraintLayout {
+    RelicAppTheme {
+        ConstraintLayout {
+            val (calendar, clock) = createRefs()
 
-        val (calendar, clock) = createRefs()
-
-        if (isShowCalendar) {
-            CommonCalendarPanel(
-                year = year,
-                month = month,
-                dayOfMonth = dayOfMonth,
-                textColor = calendarTextColor,
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .constrainAs(
-                        ref = calendar,
-                        constrainBlock = {
-                            start.linkTo(clock.start)
-                            end.linkTo(clock.end)
-                            bottom.linkTo(clock.top)
-                        }
-                    )
+            if (isShowCalendar) {
+                CommonCalendarPanel(
+                    year = year,
+                    month = month,
+                    dayOfMonth = dayOfMonth,
+                    textColor = calendarTextColor,
+                    modifier = Modifier
+                        .padding(bottom = 16.dp)
+                        .constrainAs(
+                            ref = calendar,
+                            constrainBlock = {
+                                start.linkTo(clock.start)
+                                end.linkTo(clock.end)
+                                bottom.linkTo(clock.top)
+                            }
+                        )
+                )
+            }
+            CommonTextClockPanel(
+                hour = hour,
+                minute = minute,
+                second = second,
+                isBlink = isBlink,
+                isShowAMPM = isShowAMPM,
+                containerColor = clockBlockContainerColor,
+                contentColor = clockTextColor,
+                modifier = Modifier.constrainAs(
+                    ref = clock,
+                    constrainBlock = {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(calendar.bottom)
+                    }
+                )
             )
         }
-        CommonTextClockPanel(
-            hour = hour,
-            minute = minute,
-            second = second,
-            isBlink = isBlink,
-            isShowAMPM = isShowAMPM,
-            containerColor = clockBlockContainerColor,
-            contentColor = clockTextColor,
-            modifier = Modifier.constrainAs(
-                ref = clock,
-                constrainBlock = {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(calendar.bottom)
-                }
-            )
-        )
     }
 }
 

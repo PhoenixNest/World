@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.feature.screens.main.util.AppTopLevelDestinations
 import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
@@ -130,23 +131,27 @@ private fun NavigationSuitText(@StringRes labelResId: Int) {
 @Composable
 @Preview(showBackground = true)
 private fun MainNavigationSuiteScaffoldHorizontalPreview() {
-    MainNavigationSuiteScaffold(
-        currentDestination = null,
-        destinations = AppTopLevelDestinations.entries.toList(),
-        onItemClick = {},
-        snackBarHostState = SnackbarHostState(),
-        content = {}
-    )
+    RelicAppTheme {
+        MainNavigationSuiteScaffold(
+            currentDestination = null,
+            destinations = AppTopLevelDestinations.entries.toList(),
+            onItemClick = {},
+            snackBarHostState = SnackbarHostState(),
+            content = {}
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true, device = "id:pixel_fold")
 private fun MainNavigationSuiteScaffoldVerticalPreview() {
-    MainNavigationSuiteScaffold(
-        currentDestination = null,
-        destinations = AppTopLevelDestinations.entries.toList(),
-        onItemClick = {},
-        snackBarHostState = SnackbarHostState(),
-        content = {}
-    )
+    RelicAppTheme {
+        MainNavigationSuiteScaffold(
+            currentDestination = null,
+            destinations = AppTopLevelDestinations.entries.toList(),
+            onItemClick = {},
+            snackBarHostState = SnackbarHostState(),
+            content = {}
+        )
+    }
 }

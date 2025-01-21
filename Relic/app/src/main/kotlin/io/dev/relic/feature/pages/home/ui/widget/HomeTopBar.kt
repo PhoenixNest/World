@@ -16,7 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
-import io.core.ui.theme.RelicFontFamily
+import io.core.ui.theme.RelicAppTheme
+import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 
 @Stable
@@ -31,6 +32,13 @@ fun HomeTopBar(
     action: HomeTopBarAction,
     modifier: Modifier = Modifier
 ) {
+
+    val titleRes = if (isCompactMode) {
+        R.string.home_title
+    } else {
+        R.string.home_title_expend_mode
+    }
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceContainer
@@ -51,10 +59,10 @@ fun HomeTopBar(
                 )
             }
             Text(
-                text = stringResource(R.string.home_title),
+                text = stringResource(titleRes),
                 modifier = Modifier.align(Alignment.Center),
                 color = MaterialTheme.colorScheme.onSurface,
-                fontFamily = RelicFontFamily.googleSans,
+                fontFamily = googleSans,
                 style = MaterialTheme.typography.titleMedium
             )
             IconButton(
@@ -74,11 +82,13 @@ fun HomeTopBar(
 @Composable
 @Preview(showBackground = true)
 private fun HomeTopBarPreview() {
-    HomeTopBar(
-        isCompactMode = true,
-        action = HomeTopBarAction(
-            onOpenDrawerClick = {},
-            onSettingClick = {}
+    RelicAppTheme {
+        HomeTopBar(
+            isCompactMode = true,
+            action = HomeTopBarAction(
+                onOpenDrawerClick = {},
+                onSettingClick = {}
+            )
         )
-    )
+    }
 }

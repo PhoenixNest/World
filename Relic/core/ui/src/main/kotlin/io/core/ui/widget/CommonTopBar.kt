@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.R
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.mainIconColorLight
@@ -166,37 +167,43 @@ fun CommonTopBar(
 @Composable
 @Preview(showBackground = true)
 private fun CommonTopBarPreview() {
-    CommonTopBar(
-        onBackClick = {},
-        titleResId = R.string.app_name
-    )
+    RelicAppTheme {
+        CommonTopBar(
+            onBackClick = {},
+            titleResId = R.string.app_name
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun CommonTopBarWithTitlePreview() {
-    CommonTopBar(
-        onBackClick = {},
-        hasTitle = true,
-        titleResId = R.string.app_name
-    )
+    RelicAppTheme {
+        CommonTopBar(
+            onBackClick = {},
+            hasTitle = true,
+            titleResId = R.string.app_name
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun CommonTopBarWithTitleAndTailPreview() {
-    CommonTopBar(
-        onBackClick = {},
-        hasTitle = true,
-        titleResId = R.string.app_name,
-        tailContent = {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = DEFAULT_DESC,
-                    tint = mainIconColorLight
-                )
+    RelicAppTheme {
+        CommonTopBar(
+            onBackClick = {},
+            hasTitle = true,
+            titleResId = R.string.app_name,
+            tailContent = {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = DEFAULT_DESC,
+                        tint = mainIconColorLight
+                    )
+                }
             }
-        }
-    )
+        )
+    }
 }

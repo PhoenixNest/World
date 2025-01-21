@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import io.common.RelicConstants.Common.ANDROID
 import io.common.RelicConstants.URL.DEFAULT_PLACEHOLDER_URL
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
 import io.core.ui.widget.CommonComposeWebView
@@ -56,9 +57,11 @@ private fun NewsDetailPage(
 @Composable
 @Preview(showBackground = true)
 private fun NewsDetailPagePreview() {
-    NewsDetailPage(
-        title = ANDROID,
-        contentUrl = DEFAULT_PLACEHOLDER_URL,
-        onBackClick = {}
-    )
+    RelicAppTheme {
+        NewsDetailPage(
+            title = ANDROID,
+            contentUrl = DEFAULT_PLACEHOLDER_URL,
+            onBackClick = {}
+        )
+    }
 }

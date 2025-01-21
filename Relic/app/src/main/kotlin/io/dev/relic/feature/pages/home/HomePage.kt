@@ -39,6 +39,7 @@ import io.core.ui.RelicUiUtil
 import io.core.ui.RelicUiUtil.DEFAULT_BOTTOM_NAVIGATION_BAR_HEIGHT
 import io.core.ui.RelicUiUtil.DEFAULT_RAIL_BAR_WIDTH
 import io.core.ui.RelicUiUtil.DEFAULT_SHEET_DRAG_HANDLE_HEIGHT
+import io.core.ui.theme.RelicAppTheme
 import io.data.util.NewsCategory
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_INDEX
 import io.data.util.NewsConfig.DEFAULT_INIT_NEWS_PAGE_SIZE
@@ -352,52 +353,8 @@ private fun HomePageExpendModeContent(
 @Composable
 @Preview(showBackground = true)
 private fun HomePageCompatModeContentPreview() {
-    HomePageCompatModeContent(
-        featurePanelAction = HomeFeaturePanelAction(
-            onAgentClick = {},
-            onFoodRecipesClick = {},
-            onTodoClick = {}
-        ),
-        quickPromptsPanelAction = HomeQuickPromptsPanelAction(
-            questions = AgentQuestionModel.getRandomQuestions(),
-            onRefreshClick = {},
-            onPromptClick = {}
-        ),
-        recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
-            state = FoodRecipesDataState.Init,
-            onRefreshClick = {},
-            onItemClick = {}
-        ),
-        trendingNewsRowAction = HomeTrendingNewsRowAction(
-            state = TrendingNewsDataState.Fetching,
-            lazyListState = rememberLazyListState(),
-            onRetryClick = {},
-            onItemClick = {}
-        ),
-        newsTabBarAction = HomeNewsTabBarAction(
-            currentSelectedTab = 0,
-            lazyListState = rememberLazyListState(),
-            onTabItemClick = { _, _ -> }
-        ),
-        topHeadlineNewsColumnAction = HomeTopHeadlineNewsColumnAction(
-            state = TopHeadlineNewsDataState.Fetching,
-            lazyListState = rememberLazyListState(),
-            onItemClick = {},
-            onRetryClick = {},
-            onScrollToTopClick = {}
-        )
-    )
-}
-
-@Composable
-@Preview(showBackground = true, device = "id:pixel_fold")
-private fun HomePageExpendModeContentPreview() {
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        HomePageExpendModeContent(
+    RelicAppTheme {
+        HomePageCompatModeContent(
             featurePanelAction = HomeFeaturePanelAction(
                 onAgentClick = {},
                 onFoodRecipesClick = {},
@@ -432,5 +389,53 @@ private fun HomePageExpendModeContentPreview() {
                 onScrollToTopClick = {}
             )
         )
+    }
+}
+
+@Composable
+@Preview(showBackground = true, device = "id:pixel_fold")
+private fun HomePageExpendModeContentPreview() {
+    RelicAppTheme {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HomePageExpendModeContent(
+                featurePanelAction = HomeFeaturePanelAction(
+                    onAgentClick = {},
+                    onFoodRecipesClick = {},
+                    onTodoClick = {}
+                ),
+                quickPromptsPanelAction = HomeQuickPromptsPanelAction(
+                    questions = AgentQuestionModel.getRandomQuestions(),
+                    onRefreshClick = {},
+                    onPromptClick = {}
+                ),
+                recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
+                    state = FoodRecipesDataState.Init,
+                    onRefreshClick = {},
+                    onItemClick = {}
+                ),
+                trendingNewsRowAction = HomeTrendingNewsRowAction(
+                    state = TrendingNewsDataState.Fetching,
+                    lazyListState = rememberLazyListState(),
+                    onRetryClick = {},
+                    onItemClick = {}
+                ),
+                newsTabBarAction = HomeNewsTabBarAction(
+                    currentSelectedTab = 0,
+                    lazyListState = rememberLazyListState(),
+                    onTabItemClick = { _, _ -> }
+                ),
+                topHeadlineNewsColumnAction = HomeTopHeadlineNewsColumnAction(
+                    state = TopHeadlineNewsDataState.Fetching,
+                    lazyListState = rememberLazyListState(),
+                    onItemClick = {},
+                    onRetryClick = {},
+                    onScrollToTopClick = {}
+                )
+            )
+        }
     }
 }

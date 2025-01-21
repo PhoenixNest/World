@@ -8,6 +8,23 @@ import io.module.media.R
 
 object FontFamily {
 
+    val googleSans = FontFamily(
+        Font(R.font.google_sans_regular, FontWeight.Normal),
+        Font(R.font.google_sans_bold, FontWeight.Bold),
+        Font(R.font.google_sans_bold_italic, FontWeight.Bold, FontStyle.Italic),
+        Font(R.font.google_sans_italic, FontWeight.Normal, FontStyle.Italic),
+        Font(R.font.google_sans_medium, FontWeight.Medium),
+        Font(R.font.google_sans_medium_italic, FontWeight.Medium, FontStyle.Italic)
+    )
+
+    val googleSansDisplay = FontFamily(
+        Font(R.font.google_sans_display_regular, FontWeight.Normal),
+    )
+
+    val googleProductSans = FontFamily(
+        Font(R.font.google_product_sans, FontWeight.Normal)
+    )
+
     /**
      * [Google fonts > Ubuntu](https://fonts.google.com/specimen/Ubuntu)
      * */

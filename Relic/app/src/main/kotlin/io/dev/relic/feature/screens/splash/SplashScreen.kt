@@ -3,10 +3,13 @@ package io.dev.relic.feature.screens.splash
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.widget.CommonLoadingComponent
 
 @Composable
 @Preview(showBackground = true)
 fun SplashScreen(modifier: Modifier = Modifier) {
-    CommonLoadingComponent()
+    RelicAppTheme {
+        CommonLoadingComponent()
+    }
 }

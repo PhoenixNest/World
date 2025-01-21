@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainIconColorLight
 import io.core.ui.theme.mainThemeColor
@@ -202,26 +203,28 @@ private fun GalleryDetailPageSetterButton(onClick: () -> Unit) {
 @Composable
 @Preview(showBackground = true)
 private fun GalleryDetailPageContentPreview() {
-    GalleryDetailPageContent(
-        model = PixabayDataModel(
-            id = null,
-            previewImageUrl = null,
-            previewImageWidth = null,
-            previewImageHeight = null,
-            webFormatImageUrl = null,
-            webFormatImageWidth = null,
-            webFormatImageHeight = null,
-            originalImageUrl = null,
-            originalImageWidth = null,
-            originalImageHeight = null,
-            author = null,
-            authorAvatarUrl = null,
-            authorPageUrl = null,
-            likes = null
-        ),
-        isShowPreview = false,
-        onBackClick = {},
-        onPreviewClick = {},
-        onOpenSetterSheetClick = {}
-    )
+    RelicAppTheme {
+        GalleryDetailPageContent(
+            model = PixabayDataModel(
+                id = null,
+                previewImageUrl = null,
+                previewImageWidth = null,
+                previewImageHeight = null,
+                webFormatImageUrl = null,
+                webFormatImageWidth = null,
+                webFormatImageHeight = null,
+                originalImageUrl = null,
+                originalImageWidth = null,
+                originalImageHeight = null,
+                author = null,
+                authorAvatarUrl = null,
+                authorPageUrl = null,
+                likes = null
+            ),
+            isShowPreview = false,
+            onBackClick = {},
+            onPreviewClick = {},
+            onOpenSetterSheetClick = {}
+        )
+    }
 }

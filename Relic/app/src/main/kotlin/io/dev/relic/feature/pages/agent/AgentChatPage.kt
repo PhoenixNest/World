@@ -18,6 +18,7 @@ import io.agent.gemini.utils.GeminiChatRole
 import io.common.RelicResCenter.getString
 import io.core.datastore.RelicDatastoreCenter
 import io.core.datastore.RelicDatastoreCenter.readSyncData
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.R
 import io.dev.relic.feature.function.agent.gemini.GeminiAgentDataState
 import io.dev.relic.feature.function.agent.gemini.ui.GeminiIntroDialog
@@ -157,14 +158,17 @@ private fun AgentChatPagePreview() {
             textContent = "This is an test error message."
         )
     )
-    AgentChatPage(
-        inputMessage = "",
-        isEnableSendButton = false,
-        agentDataState = GeminiAgentDataState.Init,
-        agentChatList = chatHistory,
-        onMessageValueChange = {},
-        onSendMessage = {},
-        onBackClick = {},
-        onInfoClick = {}
-    )
+
+    RelicAppTheme {
+        AgentChatPage(
+            inputMessage = "",
+            isEnableSendButton = false,
+            agentDataState = GeminiAgentDataState.Init,
+            agentChatList = chatHistory,
+            onMessageValueChange = {},
+            onSendMessage = {},
+            onBackClick = {},
+            onInfoClick = {}
+        )
+    }
 }

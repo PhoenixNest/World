@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.widget.CommonHorizontalIconTextButton
 import io.dev.relic.feature.function.news.util.NewsTopHeadlineCategories
 
@@ -86,9 +87,11 @@ private fun NewsTabBarItem(
 @Composable
 @Preview(showBackground = true)
 private fun NewsTabBarPreview() {
-    NewsTabBar(
-        currentSelectedTab = 0,
-        onTabItemClick = { _, _ -> },
-        lazyListState = rememberLazyListState()
-    )
+    RelicAppTheme {
+        NewsTabBar(
+            currentSelectedTab = 0,
+            onTabItemClick = { _, _ -> },
+            lazyListState = rememberLazyListState()
+        )
+    }
 }

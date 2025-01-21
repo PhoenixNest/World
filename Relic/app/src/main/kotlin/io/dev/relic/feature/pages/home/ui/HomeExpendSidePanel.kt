@@ -31,7 +31,11 @@ fun HomeExpendSidePanel(
             alignment = Alignment.Top
         ),
         horizontalAlignment = Alignment.Start,
-        contentPadding = PaddingValues(top = 12.dp)
+        contentPadding = PaddingValues(
+            start = 12.dp,
+            end = 12.dp,
+            top = 12.dp
+        )
     ) {
         item { HomeTrendingNewsRow(action = trendingNewsRowAction) }
         item { HomeNewsTabBar(action = newsTabBarAction) }

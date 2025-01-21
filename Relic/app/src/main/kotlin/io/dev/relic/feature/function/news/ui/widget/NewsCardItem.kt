@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.common.util.TimeUtil
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.widget.CommonAsyncImage
@@ -37,9 +38,7 @@ fun NewsCardItem(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.onSurface,
         shape = RoundedCornerShape(16.dp)
@@ -161,16 +160,21 @@ private fun NewsCardItemDesc(
 @Composable
 @Preview
 private fun NewsListItemPreview() {
-    NewsCardItem(
-        data = NewsArticleModel(
-            title = "Just this... and WoW will be perfect for me.",
-            subtitle = "(First of all, English is not my first language so forgive me if something is weird..) \\n \\nIt seems that the gypsy witch who stopped me one day while I was going to work and told me that you are all NPCs, this is just a simulation and the world conspires in my…",
-            author = "Fantazma",
-            thumbnailImageUrl = "null",
-            publishDate = "2023-11-28 T00:40:11Z",
-            contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
-            source = "Mmo-champion.com"
-        ),
-        onItemClick = {}
-    )
+    RelicAppTheme {
+        Surface {
+            NewsCardItem(
+                data = NewsArticleModel(
+                    title = "Just this... and WoW will be perfect for me.",
+                    subtitle = "(First of all, English is not my first language so forgive me if something is weird..) \\n \\nIt seems that the gypsy witch who stopped me one day while I was going to work and told me that you are all NPCs, this is just a simulation and the world conspires in my…",
+                    author = "Fantazma",
+                    thumbnailImageUrl = "null",
+                    publishDate = "2023-11-28 T00:40:11Z",
+                    contentUrl = "https://www.mmo-champion.com/threads/2644396-Just-this-and-WoW-will-be-perfect-for-me?p=54329863#post54329863",
+                    source = "Mmo-champion.com"
+                ),
+                onItemClick = {},
+                modifier = Modifier.padding(12.dp)
+            )
+        }
+    }
 }

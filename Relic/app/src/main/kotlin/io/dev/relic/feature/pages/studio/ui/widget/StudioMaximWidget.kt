@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.commonLoadingShimmerColor
 import io.core.ui.theme.placeHolderHighlightColor
@@ -202,50 +203,56 @@ private fun StudioMaximNoDataWidget(
 @Composable
 @Preview(showBackground = true)
 private fun StudioMaximPlaceholderPreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        StudioMaximPlaceholder(
+    RelicAppTheme {
+        Box(
             modifier = Modifier
-                .width(300.dp)
-                .height(72.dp)
-        )
+                .fillMaxWidth()
+                .height(100.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            StudioMaximPlaceholder(
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(72.dp)
+            )
+        }
     }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun StudioMaximWidgetPreview() {
-    StudioMaximWidget(
-        model = MaximModel(
-            hitokoto = "羌笛何须怨杨柳，春风不度玉门关。",
-            from = "凉州词二首·其一",
-            fromWho = "王之涣",
-            creator = "---",
-            createdAt = "---"
-        ),
-        maximTextColor = Color.DarkGray,
-        onClick = {}
-    )
+    RelicAppTheme {
+        StudioMaximWidget(
+            model = MaximModel(
+                hitokoto = "羌笛何须怨杨柳，春风不度玉门关。",
+                from = "凉州词二首·其一",
+                fromWho = "王之涣",
+                creator = "---",
+                createdAt = "---"
+            ),
+            maximTextColor = Color.DarkGray,
+            onClick = {}
+        )
+    }
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun StudioMaximNoDataWidgetPreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        StudioMaximNoDataWidget(
-            onRetryClick = {},
+    RelicAppTheme {
+        Box(
             modifier = Modifier
-                .width(300.dp)
-                .height(72.dp)
-        )
+                .fillMaxWidth()
+                .height(100.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            StudioMaximNoDataWidget(
+                onRetryClick = {},
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(72.dp)
+            )
+        }
     }
 }

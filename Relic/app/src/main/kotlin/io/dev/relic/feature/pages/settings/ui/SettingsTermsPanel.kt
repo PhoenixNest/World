@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.R
 
 @Composable
@@ -94,8 +95,10 @@ private fun SettingsPanelItem(
 @Composable
 @Preview(showBackground = true)
 private fun SettingsTermsPanelPreview() {
-    SettingsTermsPanel(
-        onUserAgreementClick = {},
-        onPrivacyClick = {}
-    )
+    RelicAppTheme {
+        SettingsTermsPanel(
+            onUserAgreementClick = {},
+            onPrivacyClick = {}
+        )
+    }
 }

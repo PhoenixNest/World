@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.common.util.ToastUtil
+import io.core.ui.theme.RelicAppTheme
 import io.data.model.pixabay.PixabayDataModel
 import io.dev.relic.feature.pages.detail.gallery.ui.GalleryDetailPageContent
 import io.dev.relic.feature.pages.detail.gallery.ui.GalleryDetailSetterSheet
@@ -157,26 +158,28 @@ private fun GalleryDetailPage(
 @Composable
 @Preview(showBackground = true)
 private fun GalleryDetailPageContentPreview() {
-    GalleryDetailPageContent(
-        model = PixabayDataModel(
-            id = null,
-            previewImageUrl = null,
-            previewImageWidth = null,
-            previewImageHeight = null,
-            webFormatImageUrl = null,
-            webFormatImageWidth = null,
-            webFormatImageHeight = null,
-            originalImageUrl = null,
-            originalImageWidth = null,
-            originalImageHeight = null,
-            author = null,
-            authorAvatarUrl = null,
-            authorPageUrl = null,
-            likes = null
-        ),
-        isShowPreview = false,
-        onBackClick = {},
-        onPreviewClick = {},
-        onOpenSetterSheetClick = {}
-    )
+    RelicAppTheme {
+        GalleryDetailPageContent(
+            model = PixabayDataModel(
+                id = null,
+                previewImageUrl = null,
+                previewImageWidth = null,
+                previewImageHeight = null,
+                webFormatImageUrl = null,
+                webFormatImageWidth = null,
+                webFormatImageHeight = null,
+                originalImageUrl = null,
+                originalImageWidth = null,
+                originalImageHeight = null,
+                author = null,
+                authorAvatarUrl = null,
+                authorPageUrl = null,
+                likes = null
+            ),
+            isShowPreview = false,
+            onBackClick = {},
+            onPreviewClick = {},
+            onOpenSetterSheetClick = {}
+        )
+    }
 }

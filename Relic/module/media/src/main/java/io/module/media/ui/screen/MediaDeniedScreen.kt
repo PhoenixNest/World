@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +34,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.module.media.R
+import io.module.media.ui.theme.FontFamily.googleSans
 
 @Composable
 fun MediaDeniedScreen(
@@ -43,11 +45,8 @@ fun MediaDeniedScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    start = 8.dp,
-                    end = 8.dp,
-                    top = 32.dp
-                )
+                .padding(12.dp)
+                .statusBarsPadding()
         ) {
             MediaDeniedBackBtn(
                 onClick = onBackClick,
@@ -72,7 +71,8 @@ private fun MediaDeniedBackBtn(
     ) {
         Icon(
             imageVector = Icons.Rounded.Close,
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurface
         )
     }
 }
@@ -107,6 +107,7 @@ private fun MediaDeniedDesc(
         Text(
             text = stringResource(R.string.no_permission_title),
             color = MaterialTheme.colorScheme.onSurface,
+            fontFamily = googleSans,
             style = MaterialTheme.typography.titleLarge
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -114,6 +115,7 @@ private fun MediaDeniedDesc(
             text = context.getString(R.string.no_permission_desc_image_video, appName),
             modifier = Modifier.width(240.dp),
             color = MaterialTheme.colorScheme.onSurface,
+            fontFamily = googleSans,
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -146,6 +148,7 @@ private fun MediaDeniedRetryButton(onRetryClick: () -> Unit) {
             Text(
                 text = stringResource(R.string.no_permission_button_label),
                 color = MaterialTheme.colorScheme.onPrimary,
+                fontFamily = googleSans,
                 style = MaterialTheme.typography.labelMedium
             )
         }

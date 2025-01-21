@@ -32,6 +32,7 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.shimmer
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.common.util.TimeUtil
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.commonLoadingShimmerColor
 import io.core.ui.theme.placeHolderHighlightColor
@@ -226,36 +227,40 @@ private fun HomeRecommendFoodItem(
 @Composable
 @Preview(showBackground = true)
 private fun HomeRecommendFoodItemPreview() {
-    HomeRecommendFoodItem(
-        model = FoodRecipesRandomModel(
-            id = null,
-            title = "Food Recipes",
-            image = null,
-            isVegan = true,
-            healthScore = 10,
-            cookTime = 10
-        ),
-        onClick = {}
-    )
+    RelicAppTheme {
+        HomeRecommendFoodItem(
+            model = FoodRecipesRandomModel(
+                id = null,
+                title = "Food Recipes",
+                image = null,
+                isVegan = true,
+                healthScore = 10,
+                cookTime = 10
+            ),
+            onClick = {}
+        )
+    }
 }
 
 @Composable
 @Preview
 private fun HomeRecommendFoodItemPlaceholder(modifier: Modifier = Modifier) {
-    Surface(
-        color = Color.Transparent,
-        shape = RoundedCornerShape(12.dp),
-        modifier = modifier
-    ) {
-        Box(
-            modifier = Modifier
-                .width(120.dp)
-                .height(150.dp)
-                .placeholder(
-                    visible = true,
-                    color = commonLoadingShimmerColor,
-                    highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
-                )
-        )
+    RelicAppTheme {
+        Surface(
+            color = Color.Transparent,
+            shape = RoundedCornerShape(12.dp),
+            modifier = modifier
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(120.dp)
+                    .height(150.dp)
+                    .placeholder(
+                        visible = true,
+                        color = commonLoadingShimmerColor,
+                        highlight = PlaceholderHighlight.shimmer(highlightColor = placeHolderHighlightColor)
+                    )
+            )
+        }
     }
 }

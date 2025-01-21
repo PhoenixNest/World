@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 
 @Composable
@@ -46,5 +47,7 @@ fun HomeTitleBar(titleStr: String) {
 @Composable
 @Preview(showBackground = true)
 private fun HomeTitleBarPreview() {
-    HomeTitleBar("HOME")
+    RelicAppTheme {
+        HomeTitleBar("HOME")
+    }
 }

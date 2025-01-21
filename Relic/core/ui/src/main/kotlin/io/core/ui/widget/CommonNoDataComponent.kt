@@ -27,6 +27,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.R
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.mainTextColor
 import io.core.ui.theme.mainThemeColor
@@ -82,5 +83,7 @@ fun CommonNoDataComponent(
 @Composable
 @Preview(showBackground = true)
 private fun CommonNoDataComponentPreview() {
-    CommonNoDataComponent()
+    RelicAppTheme {
+        CommonNoDataComponent()
+    }
 }

@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.widget.CommonInputField
 import io.data.entity.todo.TodoEntity
@@ -304,5 +305,7 @@ private fun TodoFormSubmitButton(onClick: () -> Unit) {
 @Composable
 @Preview(showBackground = true)
 private fun TodoFormPreview() {
-    TodoForm(onSubmit = {})
+    RelicAppTheme {
+        TodoForm(onSubmit = {})
+    }
 }

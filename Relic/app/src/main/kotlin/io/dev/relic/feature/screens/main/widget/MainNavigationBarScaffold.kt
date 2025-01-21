@@ -5,9 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.feature.screens.main.util.AppTopLevelDestinations
 import io.dev.relic.global.ext.NavDestinationExt.isTopLevelDestinationInHierarchy
@@ -121,7 +120,7 @@ private fun MainNavigationBottomBar(
                 fullHeight
             }
         ),
-        label = "AnimatedVisibility_MainNavigationBar"
+        label = "AnimatedVisibility_MainNavigationBottomBar"
     ) {
         MainNavigationBottomBar(
             currentDestination = currentDestination,
@@ -176,25 +175,25 @@ private fun MainNavigationRailBar(
     AnimatedVisibility(
         visible = isVisible,
         modifier = Modifier.fillMaxHeight(),
-        enter = slideInHorizontally(
+        /*enter = slideInHorizontally(
             animationSpec = tween(
                 durationMillis = 400,
                 easing = LinearOutSlowInEasing
             ),
-            initialOffsetX = {
-                2 * it
+            initialOffsetX = { fullWidth ->
+                -2 * fullWidth
             }
         ),
         exit = slideOutHorizontally(
             animationSpec = tween(
                 durationMillis = 400,
-                easing = LinearOutSlowInEasing
+                easing = FastOutLinearInEasing
             ),
-            targetOffsetX = {
-                it
+            targetOffsetX = { fullWidth ->
+                -fullWidth
             }
-        ),
-        label = "AnimatedVisibility_MainNavigationBar"
+        ),*/
+        label = "AnimatedVisibility_MainNavigationRailBar"
     ) {
         MainNavigationRailBar(
             currentDestination = currentDestination,
@@ -260,10 +259,24 @@ private fun NavigationBarText(@StringRes labelResId: Int) {
 
 @Composable
 @Preview(showBackground = true)
-private fun MainNavigationBarPreview() {
-    MainNavigationBottomBar(
-        currentDestination = null,
-        destinations = AppTopLevelDestinations.entries.toList(),
-        onItemClick = {}
-    )
+private fun MainNavigationBottomBarPreview() {
+    RelicAppTheme {
+        MainNavigationBottomBar(
+            currentDestination = null,
+            destinations = AppTopLevelDestinations.entries.toList(),
+            onItemClick = {}
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun MainNavigationRailBarPreview() {
+    RelicAppTheme {
+        MainNavigationRailBar(
+            currentDestination = null,
+            destinations = AppTopLevelDestinations.entries.toList(),
+            onItemClick = {}
+        )
+    }
 }

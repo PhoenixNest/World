@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
 import io.core.ui.dialog.ComposeBottomSheetDialog
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.module.media.R
 
@@ -100,10 +101,12 @@ private fun GalleryDetailSetterSheetItem(
 @Composable
 @Preview(showBackground = true)
 private fun GalleryDetailSetterSheetPreview() {
-    GalleryDetailSetterSheet(
-        isShow = true,
-        onSetHomeClick = {},
-        onSetBothClick = {},
-        onDismissRequest = {}
-    )
+    RelicAppTheme {
+        GalleryDetailSetterSheet(
+            isShow = true,
+            onSetHomeClick = {},
+            onSetBothClick = {},
+            onDismissRequest = {}
+        )
+    }
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.function.agent.AgentQuestionModel
 import io.dev.relic.feature.function.food_recipes.FoodRecipesDataState
 import io.dev.relic.feature.pages.home.ui.widget.HomeFeaturePanelAction
@@ -62,21 +63,23 @@ fun HomePageContent(
 @Composable
 @Preview(showBackground = true)
 private fun HomePageCompatModeContentPreview() {
-    HomePageContent(
-        featurePanelAction = HomeFeaturePanelAction(
-            onAgentClick = {},
-            onFoodRecipesClick = {},
-            onTodoClick = {}
-        ),
-        quickPromptsPanelAction = HomeQuickPromptsPanelAction(
-            questions = AgentQuestionModel.getRandomQuestions(),
-            onRefreshClick = {},
-            onPromptClick = {}
-        ),
-        recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
-            state = FoodRecipesDataState.Init,
-            onRefreshClick = {},
-            onItemClick = {}
+    RelicAppTheme {
+        HomePageContent(
+            featurePanelAction = HomeFeaturePanelAction(
+                onAgentClick = {},
+                onFoodRecipesClick = {},
+                onTodoClick = {}
+            ),
+            quickPromptsPanelAction = HomeQuickPromptsPanelAction(
+                questions = AgentQuestionModel.getRandomQuestions(),
+                onRefreshClick = {},
+                onPromptClick = {}
+            ),
+            recommendFoodsPanelAction = HomeRecommendFoodsPanelAction(
+                state = FoodRecipesDataState.Init,
+                onRefreshClick = {},
+                onItemClick = {}
+            )
         )
-    )
+    }
 }

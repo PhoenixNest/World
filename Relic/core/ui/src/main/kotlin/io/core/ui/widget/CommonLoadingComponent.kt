@@ -18,6 +18,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import io.core.ui.R
+import io.core.ui.theme.RelicAppTheme
 
 @Composable
 fun CommonLoadingComponent(
@@ -50,5 +51,7 @@ fun CommonLoadingComponent(
 @Composable
 @Preview(showBackground = true)
 private fun CommonLoadingComponentPreview() {
-    CommonLoadingComponent()
+    RelicAppTheme {
+        CommonLoadingComponent()
+    }
 }

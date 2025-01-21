@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.core.ui.chart.sample.data.SleepGraphData
 import io.core.ui.chart.sample.data.sleepData
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import java.time.DayOfWeek
 import java.time.format.TextStyle
@@ -141,5 +142,7 @@ private fun HoursHeader(hours: List<Int>) {
 @Composable
 @Preview(showBackground = true)
 private fun JetLaggedTimeGraphPreview() {
-    JetLaggedTimeGraph(sleepGraphData = sleepData)
+    RelicAppTheme {
+        JetLaggedTimeGraph(sleepGraphData = sleepData)
+    }
 }

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.widget.CommonRoundIcon
 import io.dev.relic.R
 
@@ -46,9 +47,11 @@ fun IntroFeatureItem(
 @Composable
 @Preview(showBackground = true)
 private fun IntroFeatureItemPreview() {
-    IntroFeatureItem(
-        isLargeMode = false,
-        iconResId = R.drawable.ic_route,
-        textResId = R.string.intro_feature_route
-    )
+    RelicAppTheme {
+        IntroFeatureItem(
+            isLargeMode = false,
+            iconResId = R.drawable.ic_route,
+            textResId = R.string.intro_feature_route
+        )
+    }
 }

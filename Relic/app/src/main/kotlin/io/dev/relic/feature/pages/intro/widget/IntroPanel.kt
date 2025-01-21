@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.core.ui.RelicUiUtil.getCurrentScreenWidthDp
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.widget.CommonItemDivider
 import io.core.ui.widget.CommonTextButton
@@ -129,24 +130,25 @@ private fun IntroFeaturePanel(
 @Composable
 @Preview(showBackground = true)
 private fun IntroPanelPreview() {
-    IntroPanel(
-        isLargeMode = false,
-        onClick = {}
-    )
+    RelicAppTheme {
+        IntroPanel(
+            isLargeMode = false,
+            onClick = {}
+        )
+    }
 }
 
 @Composable
-@Preview(
-    showBackground = true,
-    device = "spec:width=673dp,height=841dp,orientation=landscape"
-)
+@Preview(showBackground = true, device = "spec:width=673dp,height=841dp,orientation=landscape")
 private fun IntroPanelLargeModePreview() {
-    val screenWidth = getCurrentScreenWidthDp()
-    val panelWidth = screenWidth / 3
-    IntroPanel(
-        isLargeMode = true,
-        onClick = {},
-        modifier = Modifier.width(panelWidth)
-    )
+    RelicAppTheme {
+        val screenWidth = getCurrentScreenWidthDp()
+        val panelWidth = screenWidth / 3
+        IntroPanel(
+            isLargeMode = true,
+            onClick = {},
+            modifier = Modifier.width(panelWidth)
+        )
+    }
 }
 

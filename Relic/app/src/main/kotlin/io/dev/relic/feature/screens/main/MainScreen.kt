@@ -12,7 +12,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +22,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.core.network.monitor.NetworkMonitor
 import io.core.network.monitor.NetworkStatus
 import io.dev.relic.R
-import io.dev.relic.feature.route.LocalNavHostController
 import io.dev.relic.feature.route.MainFeatureNavHost
 import io.dev.relic.feature.screens.main.widget.MainNavigationBarScaffold
 
@@ -75,13 +73,16 @@ fun MainScreen(
     val isShowBottomBar = mainScreenState.isShowBottomBar
             && (mainScreenState.currentTopLevelDestination != null)
 
+    val isShowRailBar = mainScreenState.isShowRailBar
+            && (mainScreenState.currentTopLevelDestination != null)
+
     // Initialization the App main screen.
     MainNavigationBarScaffold(
         currentDestination = mainScreenState.currentDestination,
         destinations = mainScreenState.topLevelDestinations,
         onItemClick = { mainScreenState.navigateToTopLevelDestination(it) },
         isShowBottomBar = isShowBottomBar,
-        isShowRailBar = mainScreenState.isShowRailBar,
+        isShowRailBar = isShowRailBar,
         snackBarHostState = snackBarHostState
     ) { paddingValues ->
         MainFeatureNavHost(

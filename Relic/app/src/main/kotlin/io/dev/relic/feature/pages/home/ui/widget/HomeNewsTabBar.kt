@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import io.core.ui.theme.RelicAppTheme
 import io.dev.relic.feature.function.news.ui.NewsTabBar
 
 data class HomeNewsTabBarAction(
@@ -30,11 +31,13 @@ fun HomeNewsTabBar(
 @Composable
 @Preview(showBackground = true)
 private fun HomeNewsTabBarPreview() {
-    HomeNewsTabBar(
-        action = HomeNewsTabBarAction(
-            currentSelectedTab = 0,
-            lazyListState = rememberLazyListState(),
-            onTabItemClick = { _, _ -> }
+    RelicAppTheme {
+        HomeNewsTabBar(
+            action = HomeNewsTabBarAction(
+                currentSelectedTab = 0,
+                lazyListState = rememberLazyListState(),
+                onTabItemClick = { _, _ -> }
+            )
         )
-    )
+    }
 }

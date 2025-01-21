@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import io.common.RelicConstants.ComposeUi.DEFAULT_DESC
+import io.core.ui.theme.RelicAppTheme
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 import io.dev.relic.feature.function.agent.AgentQuestionModel
@@ -127,11 +128,13 @@ private fun HomeQuestionItem(
 @Composable
 @Preview(showBackground = true)
 private fun HomeQuickPromptsPanelPreview() {
-    HomeQuickPromptsPanel(
-        action = HomeQuickPromptsPanelAction(
-            questions = AgentQuestionModel.getRandomQuestions(),
-            onRefreshClick = {},
-            onPromptClick = {}
+    RelicAppTheme {
+        HomeQuickPromptsPanel(
+            action = HomeQuickPromptsPanelAction(
+                questions = AgentQuestionModel.getRandomQuestions(),
+                onRefreshClick = {},
+                onPromptClick = {}
+            )
         )
-    )
+    }
 }
