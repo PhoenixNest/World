@@ -27,6 +27,7 @@ data class HomeTopBarAction(
 
 @Composable
 fun HomeTopBar(
+    isCompactMode: Boolean,
     action: HomeTopBarAction,
     modifier: Modifier = Modifier
 ) {
@@ -74,6 +75,7 @@ fun HomeTopBar(
 @Preview(showBackground = true)
 private fun HomeTopBarPreview() {
     HomeTopBar(
+        isCompactMode = true,
         action = HomeTopBarAction(
             onOpenDrawerClick = {},
             onSettingClick = {}

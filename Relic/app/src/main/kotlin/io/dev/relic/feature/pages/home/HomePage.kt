@@ -29,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -238,7 +237,10 @@ private fun HomePage(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start
         ) {
-            HomeTopBar(action = topBarAction)
+            HomeTopBar(
+                isCompactMode = isCompactMode,
+                action = topBarAction
+            )
             Row(
                 modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Start,

@@ -38,14 +38,21 @@ object WallpaperManager {
         context: Context,
         bitmap: Bitmap,
         type: WallpaperType = WallpaperType.SYSTEM
-    ) {
-        WallpaperManager.getInstance(context).setBitmap(
-            /* fullImage = */ bitmap,
-            /* visibleCropHint = */ null,
-            /* allowBackup = */ false,
-            /* which = */ type.typeId
-        ).also {
-            MediaLogUtil.d(TAG, "[Set `Bitmap` wallpaper] Success.")
+    ): Boolean {
+        return try {
+            WallpaperManager.getInstance(context)?.setBitmap(
+                /* fullImage = */ bitmap,
+                /* visibleCropHint = */ null,
+                /* allowBackup = */ false,
+                /* which = */ type.typeId
+            ).also {
+                MediaLogUtil.d(TAG, "[Set `Bitmap` wallpaper: $type] Succeed.")
+            }
+
+            true
+        } catch (exception: Exception) {
+            MediaLogUtil.e(TAG, "[Set `Bitmap` wallpaper: $type] Failed, message: ${exception.message}")
+            false
         }
     }
 
@@ -53,27 +60,42 @@ object WallpaperManager {
         context: Context,
         resId: Int,
         type: WallpaperType = WallpaperType.SYSTEM
-    ) {
-        WallpaperManager.getInstance(context).setResource(
-            /* resid = */ resId,
-            /* which = */ type.typeId
-        ).also {
-            MediaLogUtil.d(TAG, "[Set `Res` wallpaper] Success.")
+    ): Boolean {
+        return try {
+            WallpaperManager.getInstance(context)?.setResource(
+                /* resid = */ resId,
+                /* which = */ type.typeId
+            ).also {
+                MediaLogUtil.d(TAG, "[Set `Res` wallpaper: $type] Success.")
+            }
+
+            true
+        } catch (exception: Exception) {
+            MediaLogUtil.e(TAG, "[Set `Res` wallpaper: $type] Failed, message: ${exception.message}")
+            false
         }
+
     }
 
     fun setStreamWallpaper(
         context: Context,
         inputStream: InputStream,
         type: WallpaperType = WallpaperType.SYSTEM
-    ) {
-        WallpaperManager.getInstance(context).setStream(
-            /* bitmapData = */ inputStream,
-            /* visibleCropHint = */ null,
-            /* allowBackup = */ false,
-            /* which = */ type.typeId
-        ).also {
-            MediaLogUtil.d(TAG, "[Set `Stream` wallpaper] Success.")
+    ): Boolean {
+        return try {
+            WallpaperManager.getInstance(context)?.setStream(
+                /* bitmapData = */ inputStream,
+                /* visibleCropHint = */ null,
+                /* allowBackup = */ false,
+                /* which = */ type.typeId
+            ).also {
+                MediaLogUtil.d(TAG, "[Set `Stream` wallpaper: $type] Success.")
+            }
+
+            true
+        } catch (exception: Exception) {
+            MediaLogUtil.e(TAG, "[Set `Stream` wallpaper: $type] Failed, message: ${exception.message}")
+            false
         }
     }
 
@@ -86,7 +108,14 @@ object WallpaperManager {
         context: Context,
         type: WallpaperType
     ) {
-        WallpaperManager.getInstance(context).clear(type.typeId)
+        try {
+            WallpaperManager.getInstance(context)?.clear(type.typeId)
+                .also {
+                    MediaLogUtil.d(TAG, "[Clear wallpaper: $type] Success.")
+                }
+        } catch (exception: Exception) {
+            MediaLogUtil.e(TAG, "[Clear wallpaper: $type] Failed, message: ${exception.message}")
+        }
     }
 
     /* ======================== Service type function ======================== */

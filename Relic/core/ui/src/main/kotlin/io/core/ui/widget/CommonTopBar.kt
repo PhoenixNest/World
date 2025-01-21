@@ -33,7 +33,6 @@ import io.core.ui.R
 import io.core.ui.theme.RelicFontFamily.googleSans
 import io.core.ui.theme.RelicFontFamily.newsReader
 import io.core.ui.theme.mainIconColorLight
-import io.core.ui.theme.mainTextColor
 
 @Composable
 fun CommonTopBar(
@@ -41,8 +40,8 @@ fun CommonTopBar(
     modifier: Modifier = Modifier,
     containerModifier: Modifier = Modifier,
     @StringRes titleResId: Int = -1,
-    textColor: Color = mainTextColor,
-    iconColor: Color = mainIconColorLight,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
+    iconColor: Color = textColor,
     hasTitle: Boolean = (titleResId != -1),
     tailContent: @Composable BoxScope.() -> Unit = {}
 ) {
@@ -165,7 +164,7 @@ fun CommonTopBar(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun CommonTopBarPreview() {
     CommonTopBar(
         onBackClick = {},
@@ -174,7 +173,7 @@ private fun CommonTopBarPreview() {
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun CommonTopBarWithTitlePreview() {
     CommonTopBar(
         onBackClick = {},
