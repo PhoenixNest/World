@@ -67,6 +67,7 @@ import io.dev.relic.feature.pages.home.ui.widget.HomeTrendingNewsRowAction
 import io.dev.relic.feature.pages.home.vm.HomeFoodRecipesViewModel
 import io.dev.relic.feature.pages.home.vm.HomeNewsViewModel
 import io.dev.relic.feature.pages.settings.navigateToSettingsPage
+import io.dev.relic.feature.pages.todo.navigateToTodoPage
 import io.dev.relic.feature.screens.main.MainScreenState
 import kotlinx.coroutines.launch
 
@@ -113,7 +114,7 @@ fun HomePageRoute(
     val featurePanelAction = HomeFeaturePanelAction(
         onAgentClick = { navHostController.navigateToAgentChatPage(null) },
         onFoodRecipesClick = {},
-        onTodoClick = {}
+        onTodoClick = { navHostController.navigateToTodoPage() }
     )
 
     val quickPromptsPanelAction = HomeQuickPromptsPanelAction(

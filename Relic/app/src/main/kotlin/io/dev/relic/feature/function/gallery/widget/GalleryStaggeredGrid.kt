@@ -37,11 +37,11 @@ fun GalleryStaggeredGrid(action: GalleryStaggeredGridAction) {
     val loadState = pagingItems.loadState
     when (loadState.refresh) {
         is LoadState.Loading -> {
-
+            //
         }
 
         is LoadState.Error -> {
-
+            //
         }
 
         is LoadState.NotLoading -> {

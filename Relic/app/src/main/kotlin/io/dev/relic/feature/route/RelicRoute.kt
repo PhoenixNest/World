@@ -13,6 +13,7 @@ object RelicRoute {
      * Route Const - Inner Function
      * */
     const val AGENT_CHAT = "route_agent_chat"
+    const val TODO_TASK = "route_todo_task"
     const val SETTINGS = "route_settings"
 
     /**

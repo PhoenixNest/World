@@ -1,6 +1,5 @@
-package io.dev.relic.feature.pages.home.ui.widget
+package io.dev.relic.feature.pages.todo.ui.widget
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,19 +38,21 @@ import io.core.ui.theme.RelicFontFamily.googleSans
 import io.dev.relic.R
 
 @Stable
-data class HomeFeaturePanelAction(
-    val onAgentClick: () -> Unit,
-    val onFoodRecipesClick: () -> Unit,
-    val onTodoClick: () -> Unit
+data class TodoFeaturePanelAction(
+    val onUrgentTasksClick: () -> Unit,
+    val onHighTasksClick: () -> Unit,
+    val onNormalTasksClick: () -> Unit,
+    val onCreateTasksClick: () -> Unit
 )
 
 @Composable
-fun HomeFeaturesPanel(
-    action: HomeFeaturePanelAction,
+fun TodoFeaturesPanel(
+    action: TodoFeaturePanelAction,
     modifier: Modifier = Modifier
 ) {
+    val totalNormalItemNums = 3
     val featureNormalItemHeight = 100
-    val featureLargeItemHeight = ((featureNormalItemHeight * 2) + 12)
+    val featureLargeItemHeight = ((featureNormalItemHeight * totalNormalItemNums) + 24)
 
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -61,16 +62,33 @@ fun HomeFeaturesPanel(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        HomeFeaturesPanelItem(
-            iconResId = R.drawable.ic_agent_craft,
-            labelResId = R.string.agent_feature_title,
-            onClick = action.onAgentClick,
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            fontSize = 20.sp,
+        Column(
             modifier = Modifier
                 .weight(1F)
-                .height(featureLargeItemHeight.dp)
-        )
+                .height(featureLargeItemHeight.dp),
+            verticalArrangement = Arrangement.spacedBy(
+                space = 12.dp,
+                alignment = Alignment.Top
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TodoFeaturesPanelItem(
+                iconEmoji = "🤠",
+                labelResId = R.string.todo_create_task,
+                onClick = action.onUrgentTasksClick,
+                backgroundColor = MaterialTheme.colorScheme.primary,
+                fontSize = 20.sp,
+                modifier = Modifier.weight(1F)
+            )
+            TodoFeaturesPanelItem(
+                iconEmoji = "🧐",
+                labelResId = R.string.todo_all_task,
+                onClick = action.onUrgentTasksClick,
+                backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
+                fontSize = 20.sp,
+                modifier = Modifier.weight(1F)
+            )
+        }
         Column(
             modifier = Modifier.weight(1F),
             verticalArrangement = Arrangement.spacedBy(
@@ -79,18 +97,25 @@ fun HomeFeaturesPanel(
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeFeaturesPanelItem(
-                iconResId = R.drawable.ic_foods,
-                labelResId = R.string.food_recipes_feature_title,
-                onClick = action.onFoodRecipesClick,
-                backgroundColor = MaterialTheme.colorScheme.secondary,
+            TodoFeaturesPanelItem(
+                iconEmoji = "🙂",
+                labelResId = R.string.todo_priority_normal,
+                onClick = action.onNormalTasksClick,
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.height(featureNormalItemHeight.dp)
             )
-            HomeFeaturesPanelItem(
-                iconResId = R.drawable.ic_todo,
-                labelResId = R.string.todo_feature_title,
-                onClick = action.onTodoClick,
-                backgroundColor = MaterialTheme.colorScheme.tertiary,
+            TodoFeaturesPanelItem(
+                iconEmoji = "😮",
+                labelResId = R.string.todo_priority_high,
+                onClick = action.onHighTasksClick,
+                backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
+                modifier = Modifier.height(featureNormalItemHeight.dp)
+            )
+            TodoFeaturesPanelItem(
+                iconEmoji = "🤯",
+                labelResId = R.string.todo_priority_urgent,
+                onClick = action.onHighTasksClick,
+                backgroundColor = MaterialTheme.colorScheme.errorContainer,
                 modifier = Modifier.height(featureNormalItemHeight.dp)
             )
         }
@@ -98,8 +123,8 @@ fun HomeFeaturesPanel(
 }
 
 @Composable
-private fun HomeFeaturesPanelItem(
-    @DrawableRes iconResId: Int,
+private fun TodoFeaturesPanelItem(
+    iconEmoji: String,
     @StringRes labelResId: Int,
     onClick: () -> Unit,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
@@ -120,9 +145,8 @@ private fun HomeFeaturesPanelItem(
         shape = RoundedCornerShape(16.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            Icon(
-                painter = painterResource(iconResId),
-                contentDescription = DEFAULT_DESC,
+            Text(
+                text = iconEmoji,
                 modifier = Modifier
                     .padding(12.dp)
                     .background(
@@ -130,8 +154,7 @@ private fun HomeFeaturesPanelItem(
                         shape = CircleShape
                     )
                     .padding(12.dp)
-                    .align(Alignment.TopStart),
-                tint = contentColor
+                    .align(Alignment.TopStart)
             )
             Icon(
                 painter = painterResource(R.drawable.ic_arrow_right),
@@ -166,15 +189,16 @@ private fun HomeFeaturesPanelItem(
 }
 
 @Composable
-@Preview(showBackground = true)
-private fun HomeFeaturesPanelPreview() {
+@Preview
+private fun TodoFeaturesPanelPreview() {
     RelicAppTheme {
         Surface {
-            HomeFeaturesPanel(
-                action = HomeFeaturePanelAction(
-                    onAgentClick = {},
-                    onFoodRecipesClick = {},
-                    onTodoClick = {}
+            TodoFeaturesPanel(
+                action = TodoFeaturePanelAction(
+                    onUrgentTasksClick = {},
+                    onHighTasksClick = {},
+                    onNormalTasksClick = {},
+                    onCreateTasksClick = {}
                 ),
                 modifier = Modifier.padding(12.dp)
             )

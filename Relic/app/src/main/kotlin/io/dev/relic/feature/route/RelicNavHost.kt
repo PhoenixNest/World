@@ -18,6 +18,7 @@ import io.dev.relic.feature.pages.gallery.pageGallery
 import io.dev.relic.feature.pages.home.pageHome
 import io.dev.relic.feature.pages.settings.pageSettings
 import io.dev.relic.feature.pages.studio.pageStudio
+import io.dev.relic.feature.pages.todo.pageTodo
 import io.dev.relic.feature.route.RelicRoute.START_DESTINATION
 import io.dev.relic.feature.screens.main.MainScreenState
 
@@ -48,8 +49,6 @@ fun MainFeatureNavHost(
     SharedTransitionLayout(
         modifier = modifier.fillMaxSize()
     ) {
-        val sharedTransitionScope = this
-
         NavHost(
             navController = mainScreenState.navHostController,
             startDestination = startDestination,
@@ -72,18 +71,23 @@ fun MainFeatureNavHost(
             pageStudio(mainScreenState = mainScreenState)
             pageGallery(
                 mainScreenState = mainScreenState,
-                sharedTransitionScope = sharedTransitionScope
+                sharedTransitionScope = this@SharedTransitionLayout
             )
             pageSettings(onBackClick = navHostController::popBackStack)
 
             // Inner function
             pageAgentChat(onBackClick = navHostController::popBackStack)
+            pageTodo(
+                mainScreenState = mainScreenState,
+                sharedTransitionScope = this@SharedTransitionLayout,
+                onBackClick = navHostController::popBackStack
+            )
 
             // Detail
             pageFoodRecipeDetail(onBackClick = navHostController::popBackStack)
             pageNewsDetail(onBackClick = navHostController::popBackStack)
             pageGalleryDetail(
-                shareTransitionScope = sharedTransitionScope,
+                shareTransitionScope = this@SharedTransitionLayout,
                 onBackClick = navHostController::popBackStack
             )
         }

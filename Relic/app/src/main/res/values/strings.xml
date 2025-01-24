@@ -75,8 +75,12 @@
 
     <!-- Todo Unit -->
     <string name="todo_feature_title">Make a plan</string>
-    <string name="todo_intro_title">@string/todo_feature_title</string>
-    <string name="todo_intro_create">Set Your Tasks</string>
+    <string name="todo_tasks_title">My Todo Tasks</string>
+    <string name="todo_priority_normal">Daily Tasks</string>
+    <string name="todo_priority_high">High Level Tasks</string>
+    <string name="todo_priority_urgent">Urgent Level Tasks</string>
+    <string name="todo_create_task">Create Your Tasks</string>
+    <string name="todo_all_task">All Tasks</string>
     <string name="todo_title">Todo</string>
     <string name="todo_create_form_title">Create a new To-do task</string>
     <string name="todo_create_title_label">Title</string>
