@@ -1,9 +1,11 @@
 package io.core.ui
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.palette.graphics.Palette
 
 object RelicUiUtil {
 
@@ -50,6 +52,22 @@ object RelicUiUtil {
         pixel: Int
     ): Dp {
         return (pixel / density).dp
+    }
+
+    // Generate palette synchronously and return it.
+    fun createPaletteSync(bitmap: Bitmap): Palette {
+        return Palette.from(bitmap).generate()
+    }
+
+    // Generate palette asynchronously and use it on a different thread using onGenerated().
+    fun createPaletteAsync(
+        bitmap: Bitmap,
+        onExtractColor: (palette: Palette?) -> Unit
+    ) {
+        Palette.from(bitmap).generate { palette ->
+            // Use generated instance.
+            onExtractColor.invoke(palette)
+        }
     }
 
     @Composable

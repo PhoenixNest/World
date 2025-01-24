@@ -72,6 +72,7 @@ kotlin = "2.0.10"
 ksp = "2.0.10-1.0.24"
 org-jetbrains-kotlin-jvm = "2.0.0"
 uiTextGoogleFonts = "1.7.2"
+paletteKtx = "1.0.0"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -170,6 +171,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCom
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 room-testing = { module = "androidx.room:room-testing", version.ref = "roomTesting" }
+androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "paletteKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

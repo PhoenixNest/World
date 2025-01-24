@@ -77,14 +77,17 @@ dependencies {
     // Compose ConstraintLayout
     api(libs.androidx.compose.constraintlayout)
 
+    // Color Palette
+    api(libs.androidx.palette.ktx)
+
     // Google fonts
-    implementation(libs.androidx.ui.text.google.fonts)
+    api(libs.androidx.ui.text.google.fonts)
 
     // Activity
-    implementation(libs.androidx.activity.ktx)
+    api(libs.androidx.activity.ktx)
 
     // Activity-KTX
-    implementation(libs.androidx.activity.ktx)
+    api(libs.androidx.activity.ktx)
 
     /* ======================== Third-party Extension ======================== */
 
