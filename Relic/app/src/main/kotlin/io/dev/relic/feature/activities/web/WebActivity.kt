@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.webkit.WebSettings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -81,9 +82,12 @@ class WebActivity : AppCompatActivity() {
         super.onDestroy()
 
         // Avoid OOM
-        binding.apply {
-            root.removeAllViews()
-            webView.destroy()
+        binding.webView.apply {
+            stopLoading()
+            clearHistory()
+            clearCache(true)
+            removeAllViews()
+            destroy()
         }
     }
 
@@ -154,7 +158,6 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
         binding.webView.apply {
             // Web client
@@ -162,29 +165,34 @@ class WebActivity : AppCompatActivity() {
             webViewModel.mWebChromeClient?.also { webChromeClient = it }
 
             // Web Settings
-            settings.apply {
-                // JavaScript support
-                javaScriptEnabled = true
-
-                // Auto-size content
-                // Resize the picture content to adjust with system screen
-                useWideViewPort = true
-                // Resize the content to adjust with system screen
-                loadWithOverviewMode = true
-
-                // Zoom-in/out
-                setSupportZoom(true)
-                builtInZoomControls = true
-                // Hide the system zoom-in/out ui component
-                displayZoomControls = false
-
-                // Other setting
-                // Allow the webView to access the phone file
-                allowFileAccess = true
-                loadsImagesAutomatically = true
-                defaultTextEncodingName = "utf-8"
-            }
+            configWebViewSettings(settings)
         }.loadUrl(intent.getStringExtra(ARG_REQUEST_URL) ?: "https://www.bing.com")
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun configWebViewSettings(settings: WebSettings) {
+        settings.apply {
+            // JavaScript support
+            javaScriptEnabled = true
+
+            // Auto-size content
+            // Resize the picture content to adjust with system screen
+            useWideViewPort = true
+            // Resize the content to adjust with system screen
+            loadWithOverviewMode = true
+
+            // Zoom-in/out
+            setSupportZoom(true)
+            builtInZoomControls = true
+            // Hide the system zoom-in/out ui component
+            displayZoomControls = false
+
+            // Other setting
+            // Allow the webView to access the phone file
+            allowFileAccess = true
+            loadsImagesAutomatically = true
+            defaultTextEncodingName = "utf-8"
+        }
     }
 
     private fun showLoadingView() {
